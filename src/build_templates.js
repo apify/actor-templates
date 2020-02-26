@@ -15,7 +15,11 @@ const rimraf = require("rimraf");
     for (const templateName of templatesFolders) {
         if (fs.lstatSync(templateName).isDirectory()) {
             const archive = archiver(`../${templatesZipsFld}/${templateName}.zip`);
-            await archive.directory(templateName);
+            const files = fs.readdirSync(templateName);
+            const promises = files.map((fileName) => {
+                return archive.append(`./${templateName}/${fileName}`, { name: fileName });
+            });
+            await Promise.all(promises);
             await archive.finalize();
         }
     }
