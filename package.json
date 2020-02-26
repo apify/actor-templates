@@ -1,0 +1,24 @@
+{
+  "name": "actor-templates",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apifytech/actor-templates.git"
+  },
+  "author": "Jakub Drobnik <jakub.drobnik@apify.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apifytech/actor-templates/issues"
+  },
+  "homepage": "https://github.com/apifytech/actor-templates#readme",
+  "dependencies": {
+    "archiver-promise": "^1.0.0",
+    "fstream": "^1.0.12",
+    "rimraf": "^3.0.2"
+  }
+}
