@@ -18,8 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Create local changes
-      - run: npm install
-      - run: npm build
+        run: |
+          npm install
+          npm build
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
