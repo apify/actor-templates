@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 180000 --recursive",
+    "build": "node ./src/build_templates.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,15 @@
   "homepage": "https://github.com/apifytech/actor-templates#readme",
   "dependencies": {
     "archiver-promise": "^1.0.0",
-    "fstream": "^1.0.12",
+    "globby": "^11.0.0",
     "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-as-promised": "^7.1.1",
+    "load-json-file": "^6.2.0",
+    "mocha": "^5.2.0",
+    "recursive-copy": "^2.0.10",
+    "sinon": "^9.0.0"
   }
 }
