@@ -2,10 +2,10 @@ name: Build archives
 
 on:
   push:
-    branches:
-      - master
     paths-ignore:
       - 'build/**'
+    branches:
+      - master
 
 jobs:
   build:
