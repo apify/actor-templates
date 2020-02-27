@@ -15,7 +15,8 @@ const { TEMPLATES_NAME, BUILD_DIR_NAME, TEMPLATES_DIR_NAME, } = require('./const
 
     for (const templateName of TEMPLATES_NAME) {
         if (fs.lstatSync(templateName).isDirectory()) {
-            const archive = archiver(`../${BUILD_DIR_NAME}/${templateName}.zip`);
+            const zipName = `${templateName}.zip`;
+            const archive = archiver(`../${BUILD_DIR_NAME}/${zipName}`);
             const files = await globby([`${templateName}/*`, `${templateName}/**/**`]);
 
             const promises = files.map((fileName) => {
@@ -23,8 +24,10 @@ const { TEMPLATES_NAME, BUILD_DIR_NAME, TEMPLATES_DIR_NAME, } = require('./const
                 return archive.file(`./${templateName}/${fileName}`, { name: fileName });
             });
 
+            console.log(`Creating zip ${zipName}`);
             await Promise.all(promises);
             await archive.finalize();
         }
     }
+    console.log('Templates zips were created!');
 })();
