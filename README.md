@@ -1,6 +1,9 @@
-# Apify Actor templates
+<img src="actor-logo.png" align="right" />
 
-This repository stores boilerplate templates for Apify Actor.
+# Apify Actor templates
+> A curated list of Apify Actor boilerplate templates and code examples
+
+This repository stores boilerplate templates for [Apify Actor](https://apify.com/actors).
 The template helps you to get started with your Apify project quickly.
 
 ## Templates
