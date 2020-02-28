@@ -3,6 +3,26 @@
 This repository stores boilerplate templates for Apify Actor.
 The template helps you to get started with your Apify project quickly.
 
+## Templates
+
+### [Hello world](./templates/hello_world)
+The smallest actor you will see today, it only takes input and generates output.
+
+### [Puppeteer crawler](./templates/puppeteer_crawler)
+Recursively crawl a website using Chrome and Puppeteer.
+
+### [Puppeteer single page](./templates/puppeteer_single_page)
+Load a single web page using Chrome and Puppeteer and extract data from it.
+
+### [Cheerio crawler](./templates/cheerio_crawler)
+Recursively crawl a website using raw HTTP requests and Cheerio HTML parser.
+
+### [Basic crawler](./templates/basic_crawler)
+Crawl a list of URLs using raw HTTP requests and Cheerio HTML parser.
+
+### [Apify project](./templates/apify_project)
+Standardized template containing boilerplate and code style rules used for Apify Marketplace projects.
+
 ## Usage
 
 You can start using them right away in Apify command-line client:
