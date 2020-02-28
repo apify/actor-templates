@@ -31,5 +31,10 @@ RUN npm --quiet set progress=false \
 # for simple source file changes.
 COPY . ./
 
-# Specify how to run the source code
-CMD npm start
+# Optionally, specify how to launch the source code of your actor.
+# By default, Apify's base Docker images define the CMD instruction
+# that runs the Node.js source code using the command specified
+# in the "scripts.start" section of the package.json file.
+# In short, the instruction looks something like this:
+#
+# CMD npm start
