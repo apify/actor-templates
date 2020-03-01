@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "strict": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "allowSyntheticDefaultImports": false,
+    "esModuleInterop": false,
+    "outDir": "lib/"
+  },
+  "files": [
+    "./main.ts"
+  ]
+}

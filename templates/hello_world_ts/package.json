@@ -1,0 +1,21 @@
+{
+    "name": "my-awesome-actor",
+    "version": "0.0.1",
+    "description": "This is a boilerplate of an Apify actor.",
+    "dependencies": {
+        "apify": "^0.19.1"
+    },
+    "devDependencies": {
+        "@types/node": "^13.7.7",
+        "@types/cheerio": "^0.22.16",
+        "@types/puppeteer": "^2.0.1",
+        "typescript": "^3.8.3"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "start": "node lib/main.js",
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    },
+    "author": "It's not you it's me",
+    "license": "ISC"
+}
