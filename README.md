@@ -40,6 +40,12 @@ If you want to create a new template, you need to add a new folder into `./templ
 Then you need to do stuff as for updating template.
 If you want to propagate this template to Apify system, you need to add template metadata to [apify-shared package](https://github.com/apifytech/apify-shared-js/blob/master/src/consts.js#L479).
 
+## How to propagate templates into Apify CLI
+
+Selected templates defined in [apify-shared package](https://github.com/apifytech/apify-shared-js/blob/master/src/consts.js#L479) are propagated to Apify CLI templates, you can choose these templates using `apify create` command.
+The propagation happens after committing a new version of templates into `master` branch. After tests succeeded the Github action build archives of each template and pushed these archives into the repository. The CLI command them directly download archive depends on templates and use it as boilerplate.
+We did it this way because we can update template structure/code without publishing any package to npm. It makes templates changes agile.
+
 ## Reference
 - [Apify Actor documentation](https://docs.apify.com/actor)
 - [Apify CLI](https://docs.apify.com/cli)
