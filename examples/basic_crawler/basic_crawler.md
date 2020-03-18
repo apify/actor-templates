@@ -3,8 +3,6 @@ id: basic-crawler
 title: Basic crawler
 ---
 
-@import "/../templates/basic_crawler/main.js"
-
  This is the most basic example of the Apify SDK, which demonstrates some of its
  elementary tools, such as the
  [`BasicCrawler`](/docs/api/basic-crawler)
@@ -18,8 +16,4 @@ title: Basic crawler
  on the source tab of your actor configuration.
 
 
-
-
-```javascript
-{{ HERE_COMES_THE_CODE }}
-```
+{{#code}}../../templates/basic_crawler/main.js{{/code}}

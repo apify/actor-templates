@@ -35,9 +35,7 @@ It Produces a new array of values by mapping each value in the list through a tr
  and options parameter.
 The map method used to check if are there more than 5 header elements on each page in the incoming example.
 
-```javascript
-{{{ INSERT_CODE: 'map.js' }}}
-```
+{{#code}}../../examples/map_and_reduce/map.js{{/code}}
 
 The `pagesWithMoreThan5headers` variable will be array of heading counts where number of headers is greater than 5.
 
@@ -50,9 +48,7 @@ It also iterates through dataset items. It uses the "memo" argument to send the 
 because the item is reduced (through away) in each iteration.
 The reduce method is used to get the number of all headers from scraped pages (all items in the dataset) in this example.
 
-```javascript
-{{ reduce.js }}
-```
+{{#code}}../../examples/map_and_reduce/reduce.js{{/code}}
 
 The original dataset will be reduced to a single value `pagesHeadingCount` which contains
 the count of all headers  for all scraped pages (all dataset items).

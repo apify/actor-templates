@@ -11,28 +11,5 @@ title: Puppeteer sitemap
  To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` base image
  on the source tab of your actor configuration.
 
-```javascript
-const Apify = require('apify');
 
-Apify.main(async () => {
-    const requestList = new Apify.RequestList({
-        sources: [{ requestsFromUrl: 'https://edition.cnn.com/sitemaps/cnn/news.xml' }],
-    });
-    await requestList.initialize();
-
-    const crawler = new Apify.PuppeteerCrawler({
-        requestList,
-        handlePageFunction: async ({ page, request }) => {
-            console.log(`Processing ${request.url}...`);
-            await Apify.pushData({
-                url: request.url,
-                title: await page.title(),
-                html: await page.content(),
-            });
-        },
-    });
-
-    await crawler.run();
-    console.log('Done.');
-});
-```
+{{#code}}../../examples/puppeteer_sitemap/puppeteer_sitemap.js{{/code}}
