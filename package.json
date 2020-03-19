@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 180000 --recursive",
+    "test": "jest --testTimeout=20000",
     "build": "node ./src/build_templates.js"
   },
   "repository": {
@@ -22,6 +22,7 @@
     "apify-shared": "^0.2.8",
     "archiver-promise": "^1.0.0",
     "globby": "^11.0.0",
+    "jest-codemods": "^0.22.1",
     "mustache": "^4.0.1",
     "rimraf": "^3.0.2"
   },
@@ -29,8 +30,9 @@
     "chai": "^4.0.2",
     "chai-as-promised": "^7.1.1",
     "load-json-file": "^6.2.0",
-    "mocha": "^5.2.0",
     "recursive-copy": "^2.0.10",
-    "sinon": "^9.0.0"
+    "sinon": "^9.0.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.3.0"
   }
 }

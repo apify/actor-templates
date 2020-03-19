@@ -42,7 +42,7 @@ const checkTemplateStructureAndRun = async (actorName) => {
 let prevEnvHeadless;
 
 describe('templates', () => {
-    before(async () => {
+    beforeAll(async () => {
         prevEnvHeadless = process.env[ENV_VARS.HEADLESS];
         process.env[ENV_VARS.HEADLESS] = '1';
 
@@ -50,7 +50,7 @@ describe('templates', () => {
         process.chdir(TEST_ACTORS_FOLDER);
     });
 
-    after(async () => {
+    afterAll(async () => {
         process.env[ENV_VARS.HEADLESS] = prevEnvHeadless;
 
         process.chdir('../');
@@ -66,7 +66,7 @@ describe('templates', () => {
     });
 
     TEMPLATES_NAME.forEach((templateName) => {
-        it(`${templateName} works`, async () => {
+        test(`${templateName} works`, async () => {
             const actorName = `cli-test-${templateName.replace(/_/g, '-')}`;
             await copy(`../templates/${templateName}`, actorName, { dot: true });
             await checkTemplateStructureAndRun(actorName, templateName);
