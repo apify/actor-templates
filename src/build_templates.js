@@ -7,7 +7,7 @@ const { TEMPLATES_NAME, BUILD_DIR_NAME, TEMPLATES_DIR_NAME, } = require('./const
 /**
  * Creates zips of all templates
  */
-(async () => {
+exports.buildTemplates = async function() {
     if (fs.existsSync(BUILD_DIR_NAME)) rimraf.sync(BUILD_DIR_NAME);
 
     fs.mkdirSync(BUILD_DIR_NAME);
@@ -30,4 +30,4 @@ const { TEMPLATES_NAME, BUILD_DIR_NAME, TEMPLATES_DIR_NAME, } = require('./const
         }
     }
     console.log('Templates zips were created!');
-})();
+};

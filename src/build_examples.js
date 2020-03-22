@@ -1,12 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const Mustache = require('mustache');
-const { EXAMPLES_DIR_NAME } = require('./consts');
+const rimraf = require('rimraf');
+const { EXAMPLES_DIR_NAME, BUILD_DIR_NAME } = require('./consts');
 
-buildAllExamples(EXAMPLES_DIR_NAME);
-
-function buildAllExamples(dirName) {
+exports.buildExamples = async function() {
+    const dirName = '../' + EXAMPLES_DIR_NAME;
+    process.chdir('../' + BUILD_DIR_NAME);
     const dirPath = path.join(__dirname, dirName);
+    if (fs.existsSync(EXAMPLES_DIR_NAME)) rimraf.sync(EXAMPLES_DIR_NAME);
+    fs.mkdirSync(EXAMPLES_DIR_NAME);
     try {
         return fs
             .readdirSync(dirPath).forEach( exampleDir => {
@@ -15,10 +18,11 @@ function buildAllExamples(dirName) {
     } catch (err) {
         console.log('No examples found for example directory');
     }
-}
+    console.log('All examples were created!')
+};
 
 function loadExamples(dirname) {
-    const dirPath = path.join(__dirname, EXAMPLES_DIR_NAME, dirname);
+    const dirPath = path.join(__dirname, '../examples', dirname);
     try {
         return fs
             .readdirSync(dirPath)
@@ -55,7 +59,7 @@ function capitalize(string) {
 
 function buildExample(exampleName) {
     const filename = `${exampleName}.md`;
-    const templatePath = path.join(__dirname, EXAMPLES_DIR_NAME, exampleName, filename);
+    const templatePath = path.join(__dirname, '../examples', exampleName, filename);
     const template = fs.readFileSync(templatePath, 'utf8');
     const view = getView(exampleName);
     const partials = {
@@ -64,6 +68,6 @@ function buildExample(exampleName) {
     const markdown = Mustache.render(template, view, partials);
     const buildFilename = `${exampleName}.md`;
     const buildPath = path.join(__dirname, '../build/examples',  buildFilename);
+    console.log(`Creating markdown ${buildFilename}`);
     fs.writeFileSync(buildPath, markdown);
 }
-
