@@ -8,6 +8,7 @@ Apify.main(async () => {
 
     const crawler = new Apify.PuppeteerCrawler({
         requestList,
+        maxRequestsPerCrawl: 10,
         handlePageFunction: async ({ page, request }) => {
             console.log(`Processing ${request.url}...`);
             await Apify.pushData({

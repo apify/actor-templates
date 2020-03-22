@@ -14,20 +14,21 @@ but both methods don't update the dataset in any way.
 Examples for both methods are going to be demonstrated on a simple Dataset that contains results of a
 scraped page with the `URL` and hypothetical number of h1 - h3 header elements under `headingCount` key.
 
-```javascript
-const datasetItems = [
+```json
+[
     {
         "url": "https://apify.com/",
-        "headingCount": 11,
+        "headingCount": 11
     },
     {
         "url": "https://apify.com/storage",
-        "headingCount": 8,
+        "headingCount": 8
     },
     {
         "url": "https://apify.com/proxy",
-        "headingCount": 4,
-    }];
+        "headingCount": 4
+    }
+]
 ```
 
 The Dataset Map method is very similar to standard mapping methods on an Array.
@@ -38,6 +39,9 @@ The map method used to check if are there more than 5 header elements on each pa
 {{#code}}../../examples/map_and_reduce/map.js{{/code}}
 
 The `pagesWithMoreThan5headers` variable will be array of heading counts where number of headers is greater than 5.
+
+The result value of the map method that is going to be saved to the 
+[Key-value store](https://sdk.apify.com/docs/api/key-value-store) should be:
 
 ```javascript
 [ 11, 8 ]
@@ -52,6 +56,9 @@ The reduce method is used to get the number of all headers from scraped pages (a
 
 The original dataset will be reduced to a single value `pagesHeadingCount` which contains
 the count of all headers  for all scraped pages (all dataset items).
+
+The result value of the reduce method that is going to be saved to the 
+[Key-value store](https://sdk.apify.com/docs/api/key-value-store) should be:
 
 ```javascript
 23
