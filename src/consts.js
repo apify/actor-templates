@@ -19,7 +19,7 @@ const EXAMPLES_NAME = [
 
 const BUILD_DIR_NAME = 'build';
 const TEMPLATES_DIR_NAME = 'templates';
-const EXAMPLES_DIR_NAME = '../examples';
+const EXAMPLES_DIR_NAME = 'examples';
 
 module.exports = {
     TEMPLATES_NAME,
