@@ -21,7 +21,7 @@ Apify.main(async () => {
 
     // Do something useful here...
     if (input?.message) {
-        log.info('Message is', input.message);
+        log.info(`Message is: ${input.message}`);
     }
 
     // Save output

@@ -3,17 +3,18 @@
     "version": "0.0.1",
     "description": "This is a boilerplate of an Apify actor.",
     "dependencies": {
-        "apify": "^0.19.1"
+        "apify": "^0.20.2",
+        "ts-node": "^8.8.1",
+        "typescript": "^3.8.3"
     },
     "devDependencies": {
-        "@types/node": "^13.7.7",
-        "@types/cheerio": "^0.22.16",
-        "@types/puppeteer": "^2.0.1",
-        "typescript": "^3.8.3"
+        "@types/node": "^12",
+        "@types/cheerio": "^0.22.17",
+        "@types/puppeteer": "^2.0.1"
     },
     "scripts": {
         "build": "tsc -p tsconfig.json",
-        "start": "node lib/main.js",
+        "start": "node -r ts-node/register/transpile-only main.ts",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
