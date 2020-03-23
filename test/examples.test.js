@@ -1,7 +1,7 @@
 const Apify = require('apify');
 
 
-describe('Examples - testing runnable codes behaviour ', async () => {
+describe('Examples - testing runnable codes behaviour ', () => {
 
     let exampleFunc, callData;
     let dataSetData, kvStoreData = [];
@@ -68,8 +68,6 @@ describe('Examples - testing runnable codes behaviour ', async () => {
         require('../examples/forms/forms.js');
         await exampleFunc();
 
-        expect(dataSetData).toBeDefined();
-        expect(Array.isArray(dataSetData)).toBe(true);
         expect(dataSetData.length).toBeGreaterThan(0);
         dataSetData.forEach( result => {
             expect(result).toBeInstanceOf(Object);
@@ -107,6 +105,7 @@ describe('Examples - testing runnable codes behaviour ', async () => {
         require('../examples/puppeteer_sitemap/puppeteer_sitemap.js');
         await exampleFunc();
 
+        expect(dataSetData.length).toBeGreaterThan(0);
         dataSetData.forEach( item => {
             expect(item).toBeDefined();
             expect(item).toHaveProperty('url');
@@ -164,12 +163,12 @@ describe('Examples - testing runnable codes behaviour ', async () => {
         require('../examples/synchronous_run/synchronous_run.js');
         await exampleFunc();
 
-        const kvStore = await Apify.openKeyValueStore();
-        const { key, content } = kvStoreData[0];
-        expect(Buffer.isBuffer(content)).toBe(true);
-
-        const sourceValue = await kvStore.getValue(key);
-        expect(sourceValue).toBeDefined();
-        expect(Buffer.isBuffer(sourceValue)).toBe(true);
+        expect(dataSetData.length).toBeGreaterThan(0);
+        dataSetData.forEach( text => {
+            expect(typeof text).toBe('string');
+            expect(text).toBeTruthy();
+            expect(text.includes('Did you know')).toBe(true);
+        });
     });
+
 });
