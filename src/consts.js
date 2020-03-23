@@ -1,3 +1,5 @@
+const path = require("path");
+
 const TEMPLATES_NAME = [
     'apify_project',
     'basic_crawler',
@@ -20,11 +22,13 @@ const EXAMPLES_NAME = [
 const BUILD_DIR_NAME = 'build';
 const TEMPLATES_DIR_NAME = 'templates';
 const EXAMPLES_DIR_NAME = 'examples';
+const LOCAL_STORAGE_DIR = path.join(__dirname, '..', 'tmp', 'local-emulation-dir');
 
 module.exports = {
     TEMPLATES_NAME,
     BUILD_DIR_NAME,
     TEMPLATES_DIR_NAME,
     EXAMPLES_DIR_NAME,
-    EXAMPLES_NAME
+    EXAMPLES_NAME,
+    LOCAL_STORAGE_DIR
 };
