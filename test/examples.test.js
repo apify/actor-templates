@@ -1,16 +1,19 @@
 const Apify = require('apify');
+const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
 
 
 describe('Examples - testing runnable codes behaviour ', () => {
-
+    let localStorageEmulator;
     let exampleFunc, callData;
     let dataSetData, kvStoreData = [];
-    const originalSetValue =  Apify.setValue;
-    const originalPushData =  Apify.pushData;
+    const originalSetValue = Apify.setValue;
+    const originalPushData = Apify.pushData;
     const originalCall = Apify.call;
 
+    beforeAll(async () => {
+        localStorageEmulator = new LocalStorageDirEmulator();
+        await localStorageEmulator.init();
 
-    beforeAll(() => {
         Apify.main = (func ) => {
             exampleFunc = func
         };
@@ -29,21 +32,62 @@ describe('Examples - testing runnable codes behaviour ', () => {
         };
     });
 
+    beforeEach( async () => {
+        await localStorageEmulator.clean();
+    });
+
 
     afterEach(async () => {
-        const dataset = await Apify.openDataset();
-        await dataset.drop();
-        const kvStore = await Apify.openKeyValueStore();
-        await kvStore.drop();
+        await localStorageEmulator.clean();
         dataSetData = [];
         kvStoreData = [];
         callData = null;
     });
 
-    afterAll(() => {
+    afterAll(async () => {
+        await localStorageEmulator.destroy();
         Apify.setValue = originalSetValue;
         Apify.pushData = originalPushData;
         Apify.call = originalCall;
+    });
+
+    test('should accept user run example runnable code works', async () => {
+        const originalLog = console.log;
+        let logs = [];
+        console.log = log => {
+            logs.push(log);
+        };
+        const kvStore = await Apify.openKeyValueStore();
+        const input = { test: 'testing input' };
+        await kvStore.setValue('INPUT', input );
+
+        require('../examples/accept_user_input/accept_user_input.js');
+        await exampleFunc();
+
+        expect(logs.length).toBeGreaterThan(0);
+        const savedInput = logs[0];
+        expect(typeof savedInput).toBe('object');
+        expect(savedInput).toHaveProperty('test');
+
+        console.log = originalLog;
+    });
+
+    test('should add data to dataset example runnable code works', async () => {
+        require('../examples/add_data_to_dataset/add_data_to_dataset.js');
+        await exampleFunc();
+
+        const dataset = await Apify.openDataset("my-cool-dataset");
+        const data = await dataset.getData();
+
+        const { items } = data;
+        expect(items.length).toBe(3);
+        items.forEach( result => {
+            expect(typeof result).toBe('object');
+            expect(result).toHaveProperty('url');
+            expect(result['url']).toBeTruthy();
+        });
+
+        await dataset.drop();
     });
 
 
@@ -52,9 +96,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/call_actor/call_actor.js');
         await exampleFunc();
 
-        const { act, input } = callData;
+        const { input } = callData;
         const { to , subject, html } = input;
-        expect(act).toBe('apify/send-mail');
         expect(to).toBe(email);
         expect(subject).toBe('Kraken.com BTC');
         expect(html.includes('<div class="key">Last</div>')).toBe(true);
