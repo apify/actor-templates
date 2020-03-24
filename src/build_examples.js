@@ -16,9 +16,8 @@ exports.buildExamples = async function() {
                 buildExample(exampleDir);
                 });
     } catch (err) {
-        console.log('No examples found for example directory');
+        throw err;
     }
-    console.log('All examples were created!')
 };
 
 function loadExamples(dirname) {
