@@ -16,4 +16,4 @@ title: Basic crawler
  on the source tab of your actor configuration.
 
 
-{{#code}}../../templates/basic_crawler/main.js{{/code}}
+{{#code}}../../examples/basic_crawler/basic_crawler.js{{/code}}

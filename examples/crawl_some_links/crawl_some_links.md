@@ -1,18 +1,19 @@
 ---
-id: crawl-all-links
-title: Crawl all links on a website
+id: crawl-some-links
+title: Crawl some links on a website
 ---
 
-This example uses the `Apify.enqueueLinks` method to add new links to the `RequestQueue` as the crawler navigates from page to page. If only the required parameters are defined, all links will be crawled.
+This example uses the `pseudoUrls` property in the `Apify.enqueueLinks` method to only add links to 
+the `RequestList` queue if they match the specified regular expression.
 
 <!--DOCUSAURUS_CODE_TABS-->
 
 <!-- CheerioCrawler -->
 
-{{#code}}../../examples/crawl_all_links/crawl_all_links_cheerio.js{{/code}}
+{{#code}}../../examples/crawl_some_links/crawl_some_links_cheerio.js{{/code}}
 
 <!-- PuppeteerCrawler -->
 
-{{#code}}../../examples/crawl_all_links/crawl_all_links_puppeteer.js{{/code}}
+{{#code}}../../examples/crawl_some_links/crawl_some_links_puppeteer.js{{/code}}
 
 <!--END_DOCUSAURUS_CODE_TABS-->

@@ -13,4 +13,4 @@ title: Puppeteer crawler
  To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` base image
  on the source tab of your actor configuration.
 
-{{#code}}../../templates/puppeteer_crawler/main.js{{/code}}
+{{#code}}../../examples/puppeteer_crawler/puppeteer_crawler.js{{/code}}

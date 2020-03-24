@@ -8,10 +8,11 @@ Apify.main(async () => {
     // Function called for each URL
     const handlePageFunction = async ({ request, page }) => {
         console.log(request.url);
-        // Add all links from page to RequestQueue
+        // Add some links from page to RequestQueue
         await Apify.enqueueLinks({
-            page,
-            requestQueue
+            $,
+            requestQueue,
+            pseudoUrls: ["http[s?]://apify.com/store[.*]"]
         });
     };
     // Create a PuppeteerCrawler

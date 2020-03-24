@@ -1,18 +1,11 @@
 ---
-id: accept-user-input
-title: Accept user input
+id: helloworld
+title: Hello World
 ---
 
-This example accepts and logs user input:
+Run the following example to perform a recursive crawl of a website using Puppeteer.
 
-{{#code}}../../examples/accept_user_input/accept_user_input.js{{/code}}
+To run this example on the Apify Platform, select the `Node.js 8 + Chrome on Debian (apify/actor-node-chrome)` base image
+on the source tab of your actor configuration.
 
-To provide the actor with input, create an `INPUT.JSON` file inside the "default" key-value store:
-
-```bash
-{PROJECT_FOLDER}/apify_storage/key-value-stores/default/INPUT.json
-```
-
-Anything in this file will be available to the actor when it runs.
-
-To learn about other ways to provide an actor with input, refer to the [Apify Platform Documentation](https://apify.com/docs/actor#run).
+{{#code}}../../examples/hello_world/hello_world.js{{/code}}

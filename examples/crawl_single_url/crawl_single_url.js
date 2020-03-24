@@ -1,9 +1,7 @@
 const Apify = require("apify");
 
-const request = require("request-promise");
 Apify.main(async () => {
     // Get the HTML of a web page
-    const html = await request("https://www.example.com");
+    const { body } = await Apify.utils.requestAsBrowser({ url: 'https://www.example.com' });
+    console.log(body);
 });
-
-// TODO: change request to apify.utils.requestAsBrowser

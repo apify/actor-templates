@@ -22,4 +22,3 @@ Apify.main(async () => {
     // Run the crawler
     await crawler.run();
 });
-

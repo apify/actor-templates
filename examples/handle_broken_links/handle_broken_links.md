@@ -1,11 +1,9 @@
 ---
-id: crawl-single-url
-title: Crawl a single URL
+id: handle-broken-links
+title: Handle broken links
 ---
 
-This example uses the [`request-promise`](https://github.com/request/request-promise) library to grab the 
-HTML of a web page.
+This example uses the `handleFailedRequestFunction` function to log failed requests. In a real-world project,
+ you might choose to keep track of these failed requests by [saving them to a dataset](add-data-dataset).
 
-{{#code}}../../examples/crawl_single_url/crawl_single_url.js{{/code}}
-
-If you don't want to hard-code the URL into the script, refer to the [Accept User Input](accept-user-input) example.
+{{#code}}../../examples/handle_broken_links/handle_broken_links.js{{/code}}
