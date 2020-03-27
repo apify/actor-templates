@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/apifytech/actor-templates#readme",
   "dependencies": {
-    "apify": "^0.20.0",
+    "apify": "^0.20.2",
     "apify-shared": "^0.2.8",
     "archiver-promise": "^1.0.0",
     "globby": "^11.0.0",
