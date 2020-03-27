@@ -10,8 +10,8 @@ title: Puppeteer with proxy
  Just set it to the [`APIFY_PROXY_PASSWORD`](../guides/environment-variables#APIFY_PROXY_PASSWORD)
  environment variable or run the script using the CLI.
 
- To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` base image
- on the source tab of your actor configuration.
+ > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
+ >base image on the **Source** tab when configuring the actor.
 
 
 {{#code}}../../examples/puppeteer_with_proxy/puppeteer_with_proxy.js{{/code}}

@@ -34,14 +34,17 @@ Apify.main(async () => {
         maxRequestRetries: 1,
 
         // Increase the timeout for processing of each page.
-        handlePageTimeoutSecs: 60,
+        handlePageTimeoutSecs: 30,
+
+        // Limit to 10 requests per one crawl
+        maxRequestsPerCrawl: 10,
 
         // This function will be called for each URL to crawl.
         // It accepts a single parameter, which is an object with the following fields:
         // - request: an instance of the Request class with information such as URL and HTTP method
-        // - html: contains raw HTML of the page
+        // - body: contains raw HTML of the page
         // - $: the cheerio object containing parsed HTML
-        handlePageFunction: async ({ request, html, $ }) => {
+        handlePageFunction: async ({ request, body, $ }) => {
             console.log(`Processing ${request.url}...`);
 
             // Extract data from the page using cheerio.
@@ -59,7 +62,7 @@ Apify.main(async () => {
                 url: request.url,
                 title,
                 h1texts,
-                html
+                html: body
             });
         },
 

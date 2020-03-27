@@ -24,7 +24,7 @@ Apify.main(async () => {
         handleRequestFunction: async ({ request }) => {
             console.log(`Processing ${request.url}...`);
 
-            // Fetch the page HTML via request as browser function
+            // Fetch the page HTML via Apify utils requestAsBrowser
             const { body } = await Apify.utils.requestAsBrowser({url: request.url});
 
             // Store the HTML and URL to the default dataset.

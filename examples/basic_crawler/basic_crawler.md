@@ -12,8 +12,4 @@ title: Basic crawler
  convenience function and stores their raw HTML and URL to the default dataset.
  In local configuration, the data will be stored as JSON files in `./apify_storage/datasets/default`.
 
- To run this example on the Apify Platform, select the `Node.js 12 on Alpine Linux (apify/actor-node-basic)` base image
- on the source tab of your actor configuration.
-
-
 {{#code}}../../examples/basic_crawler/basic_crawler.js{{/code}}
