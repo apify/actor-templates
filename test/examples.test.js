@@ -1,14 +1,27 @@
 const Apify = require('apify');
 const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
 
+const urlRegex = '^https?:\/\/w{0,3}\.?.+';
+const exampleData = [
+    {
+        "url": "https://apify.com/",
+        "headingCount": 11
+    },
+    {
+        "url": "https://apify.com/storage",
+        "headingCount": 8
+    },
+    {
+        "url": "https://apify.com/proxy",
+        "headingCount": 4
+    }
+];
+
 
 describe('Examples - testing runnable codes behaviour ', () => {
     let localStorageEmulator;
     let exampleFunc, callData;
-    let dataSetData, kvStoreData = [];
-    const originalSetValue = Apify.setValue;
-    const originalPushData = Apify.pushData;
-    const originalCall = Apify.call;
+    let dataSetData = [], kvStoreData = [], logs = []
 
     beforeAll(async () => {
         localStorageEmulator = new LocalStorageDirEmulator();
@@ -30,9 +43,12 @@ describe('Examples - testing runnable codes behaviour ', () => {
         Apify.call = (act, input) => {
             callData = { act, input };
         };
+        console.log  = log => {
+            logs.push(log);
+        };
     });
 
-    beforeEach( async () => {
+    beforeEach(async () => {
         await localStorageEmulator.clean();
     });
 
@@ -41,22 +57,15 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await localStorageEmulator.clean();
         dataSetData = [];
         kvStoreData = [];
+        logs = [];
         callData = null;
     });
 
     afterAll(async () => {
         await localStorageEmulator.destroy();
-        Apify.setValue = originalSetValue;
-        Apify.pushData = originalPushData;
-        Apify.call = originalCall;
     });
 
-    test('should accept user run example runnable code works', async () => {
-        const originalLog = console.log;
-        let logs = [];
-        console.log = log => {
-            logs.push(log);
-        };
+    test('should accept user input example runnable code works', async () => {
         const kvStore = await Apify.openKeyValueStore();
         const input = { test: 'testing input' };
         await kvStore.setValue('INPUT', input );
@@ -64,12 +73,14 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/accept_user_input/accept_user_input.js');
         await exampleFunc();
 
-        expect(logs.length).toBeGreaterThan(0);
+        expect(logs.length).toBe(1);
         const savedInput = logs[0];
         expect(typeof savedInput).toBe('object');
         expect(savedInput).toHaveProperty('test');
+        const { test } = savedInput;
+        expect(test).toBe('testing input');
 
-        console.log = originalLog;
+        await kvStore.drop();
     });
 
     test('should add data to dataset example runnable code works', async () => {
@@ -84,27 +95,185 @@ describe('Examples - testing runnable codes behaviour ', () => {
         items.forEach( result => {
             expect(typeof result).toBe('object');
             expect(result).toHaveProperty('url');
-            expect(result['url']).toBeTruthy();
+            expect(result.url).toBeTruthy();
         });
 
         await dataset.drop();
     });
 
+    test('should basic crawler example runnable code works', async () => {
+        require('../examples/basic_crawler/basic_crawler.js');
+        await exampleFunc();
+
+        expect(dataSetData.length).toBe(4);
+        dataSetData.forEach( result => {
+            expect(result).toBeInstanceOf(Object);
+            expect(result).toHaveProperty('url');
+            expect(result.url).toBeTruthy();
+            expect(result).toHaveProperty('html');
+            expect(result.url).toBeTruthy();
+        });
+    });
 
     test('should call actor example runnable code works', async () => {
-        const { email } = await Apify.client.users.getUser();
         require('../examples/call_actor/call_actor.js');
         await exampleFunc();
 
+        const { email } = await Apify.client.users.getUser();
         const { input } = callData;
-        const { to , subject, html } = input;
+        const { to , html } = input;
+
         expect(to).toBe(email);
-        expect(subject).toBe('Kraken.com BTC');
+        expect(html).toBeTruthy();
         expect(html.includes('<div class="key">Last</div>')).toBe(true);
         expect(html.includes('<div class="key">High</div>')).toBe(true);
         expect(html.includes('<div class="key">Low</div>')).toBe(true);
         expect(html.includes('<div class="key">24 Hour Volume</div>')).toBe(true);
         expect(html.includes('<div class="key">Weighted Avg</div>')).toBe(true);
+    });
+
+    test('should capture screenshot - puppeteer example runnable code works', async () => {
+        const url = 'http://www.example.com/';
+        require('../examples/capture_screenshot/capture_screenshot_puppeteer.js');
+        await exampleFunc();
+
+        expect(kvStoreData.length).toBe(1);
+        const { key, storeValue } = kvStoreData[0];
+        expect(key).toBe(url.replace(/[:/]/g, "_"));
+        expect(storeValue).toBeDefined();
+        expect(Buffer.isBuffer(storeValue)).toBe(true);
+    });
+
+    test('should capture screenshot - puppeteer crawler example runnable code works', async () => {
+        require('../examples/capture_screenshot/capture_screenshot_puppeteer_crawler.js');
+        await exampleFunc();
+
+        expect(kvStoreData.length).toBe(3);
+        kvStoreData.forEach( result => {
+            expect(typeof result).toBe('object');
+            expect(result).toHaveProperty('key');
+            expect(result.key).toBeTruthy();
+            expect(result).toHaveProperty('storeValue');
+            expect(Buffer.isBuffer(result.storeValue)).toBe(true);
+        });
+    });
+
+    test('should cheerio crawler example runnable code works', async () => {
+        require('../examples/cheerio_crawler/cheerio_crawler.js');
+        await exampleFunc();
+
+        expect(dataSetData.length).toBeGreaterThan(0);
+        kvStoreData.forEach( result => {
+            expect(typeof result).toBe('object');
+            expect(result).toHaveProperty('url');
+            expect(result).toHaveProperty('title');
+            expect(result).toHaveProperty('h1texts');
+            expect(result).toHaveProperty('html');
+            expect(result.url).toBeTruthy();
+            expect(result.title).toBeTruthy();
+            expect(Array.isArray(result.h1texts)).toBe(true);
+            expect(result.html).toBeTruthy();
+        });
+    });
+
+    test('should crawl sitemap - basic crawler example runnable code works', async () => {
+        require('../examples/crawl_sitemap/crawl_sitemap_basic.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBeGreaterThan(0);
+    });
+
+    test('should crawl sitemap - cheerio crawler example runnable code works', async () => {
+        require('../examples/crawl_sitemap/crawl_sitemap_cheerio.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBeGreaterThan(0);
+    });
+
+    test('should crawl sitemap - puppeteer crawler example runnable code works', async () => {
+        require('../examples/crawl_sitemap/crawl_sitemap_puppeteer.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBeGreaterThan(0);
+
+        await localStorageEmulator.clean();
+    });
+
+    test('should crawl all links - cheerio crawler example runnable code works', async () => {
+        require('../examples/crawl_all_links/crawl_all_links_cheerio.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBeGreaterThan(0);
+    });
+
+    test('should crawl all links - puppeteer crawler example runnable code works', async () => {
+        require('../examples/crawl_all_links/crawl_all_links_puppeteer.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBeGreaterThan(0);
+    });
+
+    test('should crawl multiple urls - basic crawler example runnable code works', async () => {
+        require('../examples/crawl_multiple_urls/crawl_multiple_urls_basic.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBe(3);
+    });
+
+    test('should crawl multiple urls - cheerio crawler example runnable code works', async () => {
+        require('../examples/crawl_multiple_urls/crawl_multiple_urls_cheerio.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBe(3);
+    });
+
+    test('should crawl multiple urls - puppeteer crawler example runnable code works', async () => {
+        require('../examples/crawl_multiple_urls/crawl_multiple_urls_puppeteer.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBe(3);
+    });
+
+    test('should crawl relative links example runnable code works', async () => {
+        require('../examples/crawl_relative_links/crawl_relative_links.js');
+        await exampleFunc();
+
+        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        expect(crawledUrls.length).toBeGreaterThan(0);
+    });
+
+    test('should crawl single url example runnable code works', async () => {
+        require('../examples/crawl_single_url/crawl_single_url.js');
+        await exampleFunc();
+
+        expect(logs.length).toBe(1);
+        const body = logs[0];
+        expect(body).toBeTruthy();
+        expect(body.includes('<html>'));
+    });
+
+    test('should crawl some links - cheerio example runnable code works', async () => {
+        require('../examples/crawl_some_links/crawl_some_links_cheerio.js');
+        await exampleFunc();
+
+        const successPages = logs.filter(log => log.includes('https://apify.com/'));
+        expect(successPages.length).toBeGreaterThan(0);
+    });
+
+    test('should crawl some links - puppeteer example runnable code works', async () => {
+        require('../examples/crawl_some_links/crawl_some_links_puppeteer.js');
+        await exampleFunc();
+
+        const successPages = logs.filter(log => log.includes('https://apify.com/'));
+        expect(successPages.length).toBeGreaterThan(0);
     });
 
     test('should forms example runnable code works', async () => {
@@ -115,13 +284,31 @@ describe('Examples - testing runnable codes behaviour ', () => {
         dataSetData.forEach( result => {
             expect(result).toBeInstanceOf(Object);
             expect(result).toHaveProperty('url');
-            expect(result['url']).toBeTruthy();
+            expect(result.url).toBeTruthy();
             expect(result).toHaveProperty('name');
-            expect(result['name']).toBeTruthy();
+            expect(result.name).toBeTruthy();
         });
     });
 
+    test('should handle broken links example runnable code works', async () => {
+        require('../examples/handle_broken_links/handle_broken_links.js');
+        await exampleFunc();
+
+        const successPages = logs.filter(log => log.includes('[success]'));
+        expect(successPages.length).toBe(3);
+    });
+
+    test('should puppeteer recursive crawl example runnable code works', async () => {
+        require('../examples/puppeteer_recursive_crawl/puppeteer_recursive_crawl.js');
+        await exampleFunc();
+
+        const titles = logs.filter(log => log.includes('Title of'));
+        expect(titles.length).toBeGreaterThan(0);
+    });
+
     test('should map example runnable code works', async () => {
+        const dataset = await Apify.openDataset();
+        await dataset.pushData(exampleData);
         require('../examples/map_and_reduce/map.js');
         await exampleFunc();
 
@@ -131,9 +318,12 @@ describe('Examples - testing runnable codes behaviour ', () => {
         expect(Array.isArray(storeValue)).toBe(true);
         expect(storeValue.length).toBe(2);
 
+        await dataset.drop();
     });
 
     test('should reduce example runnable code works', async () => {
+        const dataset = await Apify.openDataset();
+        await dataset.pushData(exampleData);
         require('../examples/map_and_reduce/reduce.js');
         await exampleFunc();
 
@@ -142,6 +332,24 @@ describe('Examples - testing runnable codes behaviour ', () => {
         expect(storeValue).toBeDefined();
         expect(storeValue).toBe(23);
 
+        await dataset.drop();
+    });
+
+
+    test('should puppeteer crawler example runnable code works', async () => {
+        require('../examples/puppeteer_crawler/puppeteer_crawler.js');
+        await exampleFunc();
+
+        expect(dataSetData.length).toBeGreaterThan(0);
+        dataSetData.forEach( item => {
+            expect(item).toBeDefined();
+            expect(item).toHaveProperty('title');
+            expect(item.title).toBeTruthy();
+            expect(item).toHaveProperty('rank');
+            expect(item.rank).toBeTruthy();
+            expect(item).toHaveProperty('href');
+            expect(item.href).toBeTruthy();
+        });
     });
 
     test('should puppeteer sitemap example runnable code works', async () => {
@@ -152,33 +360,23 @@ describe('Examples - testing runnable codes behaviour ', () => {
         dataSetData.forEach( item => {
             expect(item).toBeDefined();
             expect(item).toHaveProperty('url');
-            expect(item['url']).toBeTruthy();
+            expect(item.url).toBeTruthy();
             expect(item).toHaveProperty('title');
-            expect(item['title']).toBeTruthy();
+            expect(item.title).toBeTruthy();
             expect(item).toHaveProperty('html');
-            expect(item['html']).toBeTruthy();
+            expect(item.html).toBeTruthy();
         });
     });
 
     test('should puppeteer with proxy example runnable code works', async () => {
-        const originalLog = console.log;
-        let logs = [];
-        console.log  = log => {
-           logs.push(log);
-        };
         require('../examples/puppeteer_with_proxy/puppeteer_with_proxy.js');
         await exampleFunc();
 
-        expect(logs.length).toBe(4);
-        expect(logs[1]).toBe('Running Puppeteer script...');
-        expect(logs[2]).toBeDefined();
-        const title = logs[2].split(':')[1];
+        const titleLog = logs.find(log => log.includes('Page title:'));
+        expect(titleLog).toBeDefined();
+        const title = titleLog.split(':')[1];
         expect(title).toBeTruthy();
-        expect(logs[3]).toBe('Puppeteer closed.');
-
-        console.log = originalLog;
     });
-
 
     test('should screenshots example runnable code works', async () => {
         const kvStore = await Apify.openKeyValueStore();
@@ -197,7 +395,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
             expect(sourceValue).toBeDefined();
 
             const { storeValue } = sourceValue;
-
             expect(Buffer.isBuffer(storeValue)).toBe(true);
         }
     });
@@ -213,5 +410,4 @@ describe('Examples - testing runnable codes behaviour ', () => {
             expect(text.includes('Did you know')).toBe(true);
         });
     });
-
 });
