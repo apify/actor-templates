@@ -3,7 +3,7 @@ id: crawl-single-url
 title: Crawl a single URL
 ---
 
-This example uses the [`request-promise`](https://github.com/request/request-promise) library to grab the 
+This example uses the [`Apify.utils.requestAsBrowser`](/docs/api/utils#utilsrequestasbrowseroptions) to grab the 
 HTML of a web page.
 
 ```javascript

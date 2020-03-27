@@ -8,29 +8,25 @@ title: Cheerio crawler
  load each URL using a plain HTTP request, parse the HTML using [cheerio](https://www.npmjs.com/package/cheerio)
  and extract some data from it: the page title and all H1 tags.
 
- To run this example on the Apify Platform, select the `Node.js 12 on Alpine Linux (apify/actor-node-basic)` base image
- on the source tab of your actor configuration.
-
 
 ```javascript
-const Apify = require('apify');
+const Apify = require("apify");
 
 // Apify.utils contains various utilities, e.g. for logging.
 // Here we turn off the logging of unimportant messages.
 const { log } = Apify.utils;
 log.setLevel(log.LEVELS.WARNING);
 
+// A link to a list of Fortune 500 companies' websites available on GitHub.
+const CSV_LINK =
+    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
+
 // Apify.main() function wraps the crawler logic (it is optional).
 Apify.main(async () => {
-    // Create and initialize an instance of the RequestList class that contains
-    // a list of URLs to crawl. Here we use just a few hard-coded URLs.
+    // Create an instance of the RequestList class that contains a list of URLs to crawl.
+    // Here we download and parse the list of URLs from an external file.
     const requestList = new Apify.RequestList({
-        sources: [
-            { url: 'http://www.google.com/' },
-            { url: 'http://www.example.com/' },
-            { url: 'http://www.bing.com/' },
-            { url: 'http://www.wikipedia.com/' },
-        ],
+        sources: [{ requestsFromUrl: CSV_LINK }]
     });
     await requestList.initialize();
 
@@ -50,22 +46,25 @@ Apify.main(async () => {
         maxRequestRetries: 1,
 
         // Increase the timeout for processing of each page.
-        handlePageTimeoutSecs: 60,
+        handlePageTimeoutSecs: 30,
+
+        // Limit to 10 requests per one crawl
+        maxRequestsPerCrawl: 10,
 
         // This function will be called for each URL to crawl.
         // It accepts a single parameter, which is an object with the following fields:
         // - request: an instance of the Request class with information such as URL and HTTP method
-        // - html: contains raw HTML of the page
+        // - body: contains raw HTML of the page
         // - $: the cheerio object containing parsed HTML
-        handlePageFunction: async ({ request, html, $ }) => {
+        handlePageFunction: async ({ request, body, $ }) => {
             console.log(`Processing ${request.url}...`);
 
             // Extract data from the page using cheerio.
-            const title = $('title').text();
+            const title = $("title").text();
             const h1texts = [];
-            $('h1').each((index, el) => {
+            $("h1").each((index, el) => {
                 h1texts.push({
-                    text: $(el).text(),
+                    text: $(el).text()
                 });
             });
 
@@ -75,19 +74,19 @@ Apify.main(async () => {
                 url: request.url,
                 title,
                 h1texts,
-                html,
+                html: body
             });
         },
 
         // This function is called if the page processing failed more than maxRequestRetries+1 times.
         handleFailedRequestFunction: async ({ request }) => {
             console.log(`Request ${request.url} failed twice.`);
-        },
+        }
     });
 
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-    console.log('Crawler finished.');
+    console.log("Crawler finished.");
 });
 ```

@@ -3,25 +3,25 @@ id: capture-screenshot
 title: Capture a screenshot
 ---
 
-> To run Puppeteer examples on the Apify Platform, select the `Node.js 8 + Chrome on Debian (apify/actor-node-chrome)` 
->base image on the **Source** tab when configuring the actor.
+ > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
+ >base image on the **Source** tab when configuring the actor.
 
 This example captures of a screenshot of a web page using Puppeteer:
 
 ```javascript
 const Apify = require("apify");
 Apify.main(async () => {
-    const url = "http://www.example.com";
+    const url = "http://www.example.com/";
     // Launch Puppeteer
     const browser = await Apify.launchPuppeteer();
     // Open a new page
     const page = await browser.newPage();
     // Navigate to the URL
-    await page.goto(url);
+    const response = await page.goto(url);
     // Capture the screenshot
     const screenshot = await page.screenshot();
     // Convert the URL into a valid key
-    const key = request.url.replace(/[:/]/g, "_");
+    const key = response.url().replace(/[:/]/g, "_");
     // Save the screenshot to the default key-value store
     await Apify.setValue(key, screenshot, { contentType: "image/png" });
     // Close Puppeteer

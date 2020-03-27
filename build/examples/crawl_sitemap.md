@@ -12,10 +12,14 @@ This example downloads and crawls the URLs from a sitemap.
 ```javascript
 const Apify = require("apify");
 
+// A link to a list of Fortune 500 companies' websites available on GitHub.
+const CSV_LINK =
+    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
+
 Apify.main(async () => {
     // Add URLs to a RequestList from a sitemap
     const requestList = new Apify.RequestList({
-        sources: [{ requestsFromUrl: "SITEMAP_URL_GOES_HERE" }]
+        sources: [{ requestsFromUrl: CSV_LINK }] // Sitemap url goes here
     });
     // Initialize the RequestList
     await requestList.initialize();
@@ -26,7 +30,8 @@ Apify.main(async () => {
     // Create a BasicCrawler
     const crawler = new Apify.BasicCrawler({
         requestList,
-        handleRequestFunction
+        handleRequestFunction,
+        maxRequestsPerCrawl: 10 // Limitation for only 10 requests (do not use if you want to crawl a sitemap)
     });
     // Run the crawler
     await crawler.run();
@@ -38,10 +43,13 @@ Apify.main(async () => {
 ```javascript
 const Apify = require("apify");
 
+const CSV_LINK =
+    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
+
 Apify.main(async () => {
     // Add URLs to a RequestList from a sitemap
     const requestList = new Apify.RequestList({
-        sources: [{ requestsFromUrl: "SITEMAP_URL_GOES_HERE" }]
+        sources: [{ requestsFromUrl: CSV_LINK }] // Sitemap url goes here
     });
     // Initialize the RequestList
     await requestList.initialize();
@@ -52,7 +60,8 @@ Apify.main(async () => {
     // Create a CheerioCrawler
     const crawler = new Apify.CheerioCrawler({
         requestList,
-        handlePageFunction
+        handlePageFunction,
+        maxRequestsPerCrawl: 10 // Limitation for only 10 requests (do not use if you want to crawl a sitemap)
     });
     // Run the crawler
     await crawler.run();
@@ -61,13 +70,19 @@ Apify.main(async () => {
 
 <!-- PuppeteerCrawler -->
 
+ > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
+ >base image on the **Source** tab when configuring the actor.
+
 ```javascript
 const Apify = require("apify");
+
+const CSV_LINK =
+    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
 
 Apify.main(async () => {
     // Add URLs to a RequestList from a sitemap
     const requestList = new Apify.RequestList({
-        sources: [{ requestsFromUrl: "SITEMAP_URL_GOES_HERE" }]
+        sources: [{ requestsFromUrl: CSV_LINK }] // Sitemap url goes here
     });
     // Initialize the RequestList
     await requestList.initialize();
@@ -78,7 +93,8 @@ Apify.main(async () => {
     // Create a PuppeteerCrawler
     const crawler = new Apify.PuppeteerCrawler({
         requestList,
-        handlePageFunction
+        handlePageFunction,
+        maxRequestsPerCrawl: 10 // Limitation for only 10 requests (do not use if you want to crawl a sitemap)
     });
     // Run the crawler
     await crawler.run();

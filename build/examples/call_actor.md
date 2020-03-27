@@ -14,9 +14,11 @@ The script extracts the current Bitcoin prices from [Kraken.com](https://www.kra
  and set it to the [`APIFY_TOKEN`](/docs/guides/environment-variables#APIFY_TOKEN) environment variable, or run the script using the CLI.
  If you deploy this actor to the Apify Cloud then you can set up a scheduler for early
  morning.
-
- To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` base image
- on the source tab of your actor configuration.
+ 
+ To see what other actors are available, visit the [Apify Store](https://apify.com/store).
+ 
+ > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
+ >base image on the **Source** tab when configuring the actor.
 
 
 ```javascript

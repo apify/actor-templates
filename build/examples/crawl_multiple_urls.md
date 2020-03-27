@@ -69,6 +69,9 @@ Apify.main(async () => {
 
 <!-- PuppeteerCrawler -->
 
+ > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
+ >base image on the **Source** tab when configuring the actor.
+
 ```javascript
 const Apify = require("apify");
 
