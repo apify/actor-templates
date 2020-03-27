@@ -24,9 +24,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
     let dataSetData = [], kvStoreData = [], logs = []
 
     beforeAll(async () => {
-        localStorageEmulator = new LocalStorageDirEmulator();
-        await localStorageEmulator.init();
-
         Apify.main = (func ) => {
             exampleFunc = func
         };
@@ -49,12 +46,15 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     beforeEach(async () => {
-        await localStorageEmulator.clean();
+        localStorageEmulator = new LocalStorageDirEmulator();
+        await localStorageEmulator.init();
     });
 
 
     afterEach(async () => {
         await localStorageEmulator.clean();
+        const queue = await Apify.openRequestQueue();
+        await queue.drop();
         dataSetData = [];
         kvStoreData = [];
         logs = [];
