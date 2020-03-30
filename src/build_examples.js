@@ -2,11 +2,15 @@ const fs = require('fs');
 const path = require('path');
 const Mustache = require('mustache');
 const rimraf = require('rimraf');
-const { EXAMPLES_DIR_NAME, BUILD_DIR_NAME } = require('./consts');
+const { EXAMPLES_DIR_NAME, DIST_DIR_NAME } = require('./consts');
 
 exports.buildExamples = async function() {
+    process.chdir('../');
+    if (fs.existsSync(DIST_DIR_NAME)) rimraf.sync(DIST_DIR_NAME);
+    fs.mkdirSync(DIST_DIR_NAME);
+
+    process.chdir(DIST_DIR_NAME);
     const dirName = '../' + EXAMPLES_DIR_NAME;
-    process.chdir('../' + BUILD_DIR_NAME);
     const dirPath = path.join(__dirname, dirName);
     if (fs.existsSync(EXAMPLES_DIR_NAME)) rimraf.sync(EXAMPLES_DIR_NAME);
     fs.mkdirSync(EXAMPLES_DIR_NAME);
@@ -66,7 +70,7 @@ function buildExample(exampleName) {
     };
     const markdown = Mustache.render(template, view, partials);
     const buildFilename = `${exampleName}.md`;
-    const buildPath = path.join(__dirname, '../build/examples',  buildFilename);
+    const buildPath = path.join(__dirname, '../dist/examples',  buildFilename);
     console.log(`Creating markdown ${buildFilename}`);
     fs.writeFileSync(buildPath, markdown);
 }
