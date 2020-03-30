@@ -10,12 +10,16 @@ the `RequestList` queue if they match the specified regular expression.
 
 <!-- CheerioCrawler -->
 
+Using CheerioCrawler:
+
 {{#code}}../../examples/crawl_some_links/crawl_some_links_cheerio.js{{/code}}
 
 <!-- PuppeteerCrawler -->
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
  >base image on the **Source** tab when configuring the actor.
+ 
+Using PuppeteerCrawler:
 
 {{#code}}../../examples/crawl_some_links/crawl_some_links_puppeteer.js{{/code}}
 
