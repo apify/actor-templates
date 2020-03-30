@@ -10,12 +10,16 @@ from page to page. If only the required parameters are defined, all links will b
 
 <!-- CheerioCrawler -->
 
+Using CheerioCrawler:
+
 {{#code}}../../examples/crawl_all_links/crawl_all_links_cheerio.js{{/code}}
 
 <!-- PuppeteerCrawler -->
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
  >base image on the **Source** tab when configuring the actor.
+ 
+Using PuppeteerCrawler:
 
 {{#code}}../../examples/crawl_all_links/crawl_all_links_puppeteer.js{{/code}}
 
