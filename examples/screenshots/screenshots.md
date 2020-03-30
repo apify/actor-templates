@@ -7,7 +7,7 @@ title: Screenshots
  [`Apify.getValue()`](/docs/api/apify#getValue) and [`Apify.setValue()`](/docs/api/apify#setValue).
 
   The script crawls a list of URLs using Puppeteer,
- captures a screenshot of each page and saves it to the store. The list of URLs is
+ captures a screenshot of each page, and saves it to the store. The list of URLs is
  provided as actor input that is also read from the store.
 
  In local configuration, the input is stored in the default key-value store's directory as a JSON file at
@@ -23,7 +23,7 @@ title: Screenshots
  For more details, see [Input and output](https://docs.apify.com/actor/run#input-and-output)
  in the Apify Actor documentation.
 
- To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` base image
- on the source tab of your actor configuration.
+ > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` base image
+ > on the source tab of your actor configuration.
 
 {{#code}}../../examples/screenshots/screenshots.js{{/code}}
