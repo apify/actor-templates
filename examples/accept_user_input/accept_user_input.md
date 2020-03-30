@@ -7,7 +7,7 @@ This example accepts and logs user input:
 
 {{#code}}../../examples/accept_user_input/accept_user_input.js{{/code}}
 
-To provide the actor with input, create an `INPUT.JSON` file inside the "default" key-value store:
+To provide the actor with input, create a `INPUT.json` file inside the "default" key-value store:
 
 ```bash
 {PROJECT_FOLDER}/apify_storage/key-value-stores/default/INPUT.json
