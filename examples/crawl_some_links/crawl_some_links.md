@@ -3,7 +3,7 @@ id: crawl-some-links
 title: Crawl some links on a website
 ---
 
-This example uses the `pseudoUrls` property in the `Apify.enqueueLinks` method to only add links to 
+This example uses the `pseudoUrls` property in the `Apify.enqueueLinks()` method to only add links to 
 the `RequestList` queue if they match the specified regular expression.
 
 <!--DOCUSAURUS_CODE_TABS-->
