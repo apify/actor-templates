@@ -1,4 +1,4 @@
-const Apify = require("apify");
+const Apify = require('apify');
 
 // Apify.main() function wraps the crawler logic (it is optional).
 Apify.main(async () => {
@@ -6,10 +6,10 @@ Apify.main(async () => {
     // a list of URLs to crawl. Here we use just a few hard-coded URLs.
     const requestList = new Apify.RequestList({
         sources: [
-            { url: "http://www.google.com/" },
-            { url: "http://www.example.com/" },
-            { url: "http://www.bing.com/" },
-            { url: "http://www.wikipedia.com/" }
+            { url: 'http://www.google.com/' },
+            { url: 'http://www.example.com/' },
+            { url: 'http://www.bing.com/' },
+            { url: 'http://www.wikipedia.com/' }
         ]
     });
     await requestList.initialize();
@@ -38,5 +38,5 @@ Apify.main(async () => {
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-    console.log("Crawler finished.");
+    console.log('Crawler finished.');
 });

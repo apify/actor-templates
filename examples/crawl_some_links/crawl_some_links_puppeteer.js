@@ -1,10 +1,10 @@
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
     // Create a RequestQueue
     const requestQueue = await Apify.openRequestQueue();
     // Define the starting URL
-    await requestQueue.addRequest({ url: "https://apify.com/store" });
+    await requestQueue.addRequest({ url: 'https://apify.com/store' });
     // Function called for each URL
     const handlePageFunction = async ({ request, page }) => {
         console.log(request.url);

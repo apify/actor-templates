@@ -1,4 +1,4 @@
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
     // Create a RequestQueue

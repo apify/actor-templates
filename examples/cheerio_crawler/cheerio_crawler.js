@@ -1,4 +1,4 @@
-const Apify = require("apify");
+const Apify = require('apify');
 
 // Apify.utils contains various utilities, e.g. for logging.
 // Here we turn off the logging of unimportant messages.
@@ -7,7 +7,7 @@ log.setLevel(log.LEVELS.WARNING);
 
 // A link to a list of Fortune 500 companies' websites available on GitHub.
 const CSV_LINK =
-    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
+    'https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv';
 
 // Apify.main() function wraps the crawler logic (it is optional).
 Apify.main(async () => {
@@ -48,9 +48,9 @@ Apify.main(async () => {
             console.log(`Processing ${request.url}...`);
 
             // Extract data from the page using cheerio.
-            const title = $("title").text();
+            const title = $('title').text();
             const h1texts = [];
-            $("h1").each((index, el) => {
+            $('h1').each((index, el) => {
                 h1texts.push({
                     text: $(el).text()
                 });
@@ -75,5 +75,5 @@ Apify.main(async () => {
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-    console.log("Crawler finished.");
+    console.log('Crawler finished.');
 });

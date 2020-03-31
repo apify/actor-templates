@@ -1,7 +1,7 @@
-const Apify = require("apify");
+const Apify = require('apify');
 
 const CSV_LINK =
-    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
+    'https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv';
 
 Apify.main(async () => {
     // Add URLs to a RequestList from a sitemap

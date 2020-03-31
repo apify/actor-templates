@@ -1,10 +1,10 @@
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
     // Apify.openRequestQueue() is a factory to get a preconfigured RequestQueue instance.
     // We add our first request to it - the initial page the crawler will visit.
     const requestQueue = await Apify.openRequestQueue();
-    await requestQueue.addRequest({ url: "https://news.ycombinator.com/" });
+    await requestQueue.addRequest({ url: 'https://news.ycombinator.com/' });
 
     // Create an instance of the PuppeteerCrawler class - a crawler
     // that automatically loads the URLs in headless Chrome / Puppeteer.
@@ -36,15 +36,15 @@ Apify.main(async () => {
                 // We're getting the title, rank and URL of each post on Hacker News.
                 $posts.forEach($post => {
                     data.push({
-                        title: $post.querySelector(".title a").innerText,
-                        rank: $post.querySelector(".rank").innerText,
-                        href: $post.querySelector(".title a").href
+                        title: $post.querySelector('.title a').innerText,
+                        rank: $post.querySelector('.rank').innerText,
+                        href: $post.querySelector('.title a').href
                     });
                 });
 
                 return data;
             };
-            const data = await page.$$eval(".athing", pageFunction);
+            const data = await page.$$eval('.athing', pageFunction);
 
             // Store the results to the default dataset.
             await Apify.pushData(data);
@@ -53,7 +53,7 @@ Apify.main(async () => {
             const infos = await Apify.utils.enqueueLinks({
                 page,
                 requestQueue,
-                selector: ".morelink"
+                selector: '.morelink'
             });
 
             if (infos.length === 0) console.log(`${request.url} is the last page!`);
@@ -63,7 +63,7 @@ Apify.main(async () => {
         handleFailedRequestFunction: async ({ request }) => {
             console.log(`Request ${request.url} failed too many times`);
             await Apify.pushData({
-                "#debug": Apify.utils.createRequestDebugInfo(request)
+                '#debug': Apify.utils.createRequestDebugInfo(request)
             });
         }
     });
@@ -71,5 +71,5 @@ Apify.main(async () => {
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-    console.log("Crawler finished.");
+    console.log('Crawler finished.');
 });

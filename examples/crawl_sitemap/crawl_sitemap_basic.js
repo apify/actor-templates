@@ -1,8 +1,8 @@
-const Apify = require("apify");
+const Apify = require('apify');
 
 // A link to a list of Fortune 500 companies' websites available on GitHub.
 const CSV_LINK =
-    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
+    'https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv';
 
 Apify.main(async () => {
     // Add URLs to a RequestList from a sitemap
