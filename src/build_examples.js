@@ -10,6 +10,7 @@ exports.buildExamples = async function() {
     fs.mkdirSync(DIST_DIR_NAME);
 
     process.chdir(DIST_DIR_NAME);
+    fs.mkdirSync(EXAMPLES_DIR_NAME);
     const dirName = '../' + EXAMPLES_DIR_NAME;
     const dirPath = path.join(__dirname, dirName);
     if (fs.existsSync(EXAMPLES_DIR_NAME)) rimraf.sync(EXAMPLES_DIR_NAME);

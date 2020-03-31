@@ -29,5 +29,4 @@ exports.buildTemplates = async function() {
             await archive.finalize();
         }
     }
-    console.log('Templates zips were created!');
 };

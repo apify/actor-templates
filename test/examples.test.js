@@ -21,7 +21,7 @@ const exampleData = [
 describe('Examples - testing runnable codes behaviour ', () => {
     let localStorageEmulator;
     let exampleFunc, callData;
-    let dataSetData = [], kvStoreData = [], logs = []
+    let dataSetData = [], kvStoreData = [], logs = [];
 
     beforeAll(async () => {
         Apify.main = (func ) => {
