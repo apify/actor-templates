@@ -1,5 +1,5 @@
 ---
-id: map-reduce
+id: map-and-reduce
 title: Dataset Map and Reduce methods
 ---
 

@@ -1,5 +1,5 @@
 ---
-id: add-data-dataset
+id: add-data-to-dataset
 title: Add data to dataset
 ---
 
