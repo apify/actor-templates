@@ -1,18 +1,17 @@
 const Apify = require('apify');
+
 Apify.main(async () => {
-    const url = "http://www.example.com/";
-    // Launch Puppeteer
+    const url = 'http://www.example.com/';
+    // Start a browser
     const browser = await Apify.launchPuppeteer();
-    // Open a new page
+    // Open new tab in the browser
     const page = await browser.newPage();
     // Navigate to the URL
-    const response = await page.goto(url);
+    await page.goto(url);
     // Capture the screenshot
     const screenshot = await page.screenshot();
-    // Convert the URL into a valid key
-    const key = response.url().replace(/[:/]/g, '_');
     // Save the screenshot to the default key-value store
-    await Apify.setValue(key, screenshot, { contentType: 'image/png' });
+    await Apify.setValue('my-key', screenshot, { contentType: 'image/png' });
     // Close Puppeteer
     await browser.close();
 });
