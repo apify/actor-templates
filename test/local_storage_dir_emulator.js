@@ -40,7 +40,7 @@ class LocalStorageDirEmulator {
      * @return {Promise<void>}
      */
     async destroy() {
-        fs.removeSync(this.localStorageDir);
+        await fs.removeSync(this.localStorageDir);
         delete process.env.APIFY_LOCAL_STORAGE_DIR;
     }
 

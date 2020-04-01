@@ -440,9 +440,4 @@ describe('Examples - testing runnable codes behaviour ', () => {
             expect(text.includes('Did you know')).toBe(true);
         });
     });
-
-    test('should be local storage emulator destroyed ', async () => {
-        await localStorageEmulator.clean();
-        await localStorageEmulator.destroy();
-    });
 });
