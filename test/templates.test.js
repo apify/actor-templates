@@ -6,8 +6,8 @@ const { ENV_VARS } = require('apify-shared/consts');
 const { spawnSync } = require('child_process');
 const loadJson = require('load-json-file');
 const rimraf = require('rimraf');
-const { TEMPLATE_NAMES } = require('../src/consts');
 const copy = require('recursive-copy');
+const { TEMPLATE_NAMES } = require('../src/consts');
 
 
 const TEST_ACTORS_FOLDER = 'test-actors';
