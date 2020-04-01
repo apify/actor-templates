@@ -13,14 +13,14 @@ Apify.main(async () => {
             $,
             requestQueue,
             baseUrl: request.loadedUrl,
-            pseudoUrls: ['http[s?]://apify.com/[.+]/[.+]']
+            pseudoUrls: ['http[s?]://apify.com/[.+]/[.+]'],
         });
     };
     // Create a CheerioCrawler
     const crawler = new Apify.CheerioCrawler({
         requestQueue,
         handlePageFunction,
-        maxRequestsPerCrawl: 10 // Limitation for only 10 requests (do not use if you want to crawl all links)
+        maxRequestsPerCrawl: 10, // Limitation for only 10 requests (do not use if you want to crawl all links)
     });
     // Run the crawler
     await crawler.run();

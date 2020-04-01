@@ -30,21 +30,20 @@ Apify.main(async () => {
             console.log(`Processing ${request.url}...`);
 
             // A function to be evaluated by Puppeteer within the browser context.
-            const pageFunction = $posts => {
-                const data = [];
+            const data = await page.$$eval('.athing', ($posts) => {
+                const scrapedData = [];
 
                 // We're getting the title, rank and URL of each post on Hacker News.
-                $posts.forEach($post => {
-                    data.push({
+                $posts.forEach(($post) => {
+                    scrapedData.push({
                         title: $post.querySelector('.title a').innerText,
                         rank: $post.querySelector('.rank').innerText,
-                        href: $post.querySelector('.title a').href
+                        href: $post.querySelector('.title a').href,
                     });
                 });
 
-                return data;
-            };
-            const data = await page.$$eval('.athing', pageFunction);
+                return scrapedData;
+            });
 
             // Store the results to the default dataset.
             await Apify.pushData(data);
@@ -53,7 +52,7 @@ Apify.main(async () => {
             const infos = await Apify.utils.enqueueLinks({
                 page,
                 requestQueue,
-                selector: '.morelink'
+                selector: '.morelink',
             });
 
             if (infos.length === 0) console.log(`${request.url} is the last page!`);
@@ -63,9 +62,9 @@ Apify.main(async () => {
         handleFailedRequestFunction: async ({ request }) => {
             console.log(`Request ${request.url} failed too many times`);
             await Apify.pushData({
-                '#debug': Apify.utils.createRequestDebugInfo(request)
+                '#debug': Apify.utils.createRequestDebugInfo(request),
             });
-        }
+        },
     });
 
     // Run the crawler and wait for it to finish.

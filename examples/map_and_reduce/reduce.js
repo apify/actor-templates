@@ -5,7 +5,7 @@ Apify.main(async () => {
     const dataSet = await Apify.openDataset();
 
     // calling reduce function and using memo to calculate number of headers
-    const pagesHeadingCount = await dataSet.reduce((memo, value)=> {
+    const pagesHeadingCount = await dataSet.reduce((memo, value) => {
         memo += value.headingCount;
         return memo;
     }, 0);

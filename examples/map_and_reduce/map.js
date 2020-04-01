@@ -5,8 +5,8 @@ Apify.main(async () => {
     const dataSet = await Apify.openDataset();
 
     // calling map function and filtering through mapped items
-    const pagesWithMoreThan5headers = (await dataSet.map(item => item.headingCount)).filter(count => count > 5);
+    const moreThan5headers = (await dataSet.map(item => item.headingCount)).filter(count => count > 5);
 
     // saving result of map to default Key-value store
-    await Apify.setValue('pages_with_more_than_5_headers', pagesWithMoreThan5headers);
+    await Apify.setValue('pages_with_more_than_5_headers', moreThan5headers);
 });

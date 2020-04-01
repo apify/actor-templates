@@ -9,7 +9,7 @@ This example shows an easy use-case of the [Apify dataset](https://docs.apify.co
 dataset results workflow process. Both can be called on the [dataset](/docs/api/dataset) directly.
 
 Important to mention is that both methods return a new result (`map` returns a new array and `reduce` 
-can return almost any type) - neither method updates the dataset in any way.
+can return any type) - neither method updates the dataset in any way.
 
 Examples for both methods are demonstrated on a simple dataset containing the results scraped from a page: 
 the `URL` and a hypothetical number of `h1` - `h3` header elements under the `headingCount` key.
@@ -44,9 +44,9 @@ The dataset `map` method is very similar to standard Array mapping methods.
  
 The `map` method used to check if are there more than 5 header elements on each page:
 
-{{#code}}../../examples/map_and_reduce/map.js{{/code}}
+{{#code}}map.js{{/code}}
 
-The `pagesWithMoreThan5headers` variable is an array of `headingCount` attributes where the number 
+The `moreThan5headers` variable is an array of `headingCount` attributes where the number 
 of headers is greater than 5.
 
 The `map` method's result value saved to the [`key-value store`](/docs/api/key-value-store) should be:
@@ -66,7 +66,7 @@ while the item just processed is reduced (removed).
 Using the `reduce` method to get the total number of headers scraped (all items in the dataset):
 
 
-{{#code}}../../examples/map_and_reduce/reduce.js{{/code}}
+{{#code}}reduce.js{{/code}}
 
 The original dataset will be reduced to a single value, `pagesHeadingCount`, which contains
 the count of all headers for all scraped pages (all dataset items).

@@ -1,4 +1,5 @@
 const Apify = require('apify');
+
 Apify.main(async () => {
     // Launch web browser.
     const browser = await Apify.launchPuppeteer({ headless: true });
@@ -9,9 +10,8 @@ Apify.main(async () => {
 
     // Get all "Did you know" items from the page.
     console.log('Getting "Did you know" items from the page.');
-    const results = await page.$$eval('div#mp-dyk > ul li', nodes =>
-        nodes.map(node => node.innerText.replace('...', 'Did you know'))
-    );
+    const results = await page.$$eval('div#mp-dyk > ul li',
+        nodes => nodes.map(node => node.innerText.replace('...', 'Did you know')));
     console.log(results);
 
     // Save all the items to the Apify dataSet.

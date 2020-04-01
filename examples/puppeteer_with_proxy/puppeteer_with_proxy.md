@@ -14,4 +14,4 @@ title: Puppeteer with proxy
  >base image on the **Source** tab when configuring the actor.
 
 
-{{#code}}../../examples/puppeteer_with_proxy/puppeteer_with_proxy.js{{/code}}
+{{#code}}puppeteer_with_proxy.js{{/code}}

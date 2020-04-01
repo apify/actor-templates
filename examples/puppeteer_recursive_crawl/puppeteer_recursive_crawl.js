@@ -14,11 +14,11 @@ Apify.main(async () => {
                 page,
                 selector: 'a',
                 pseudoUrls,
-                requestQueue
+                requestQueue,
             });
         },
         maxRequestsPerCrawl: 10,
-        maxConcurrency: 10
+        maxConcurrency: 10,
     });
 
     await crawler.run();

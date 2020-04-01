@@ -12,4 +12,4 @@ title: Puppeteer sitemap
  >base image on the **Source** tab when configuring the actor.
 
 
-{{#code}}../../examples/puppeteer_sitemap/puppeteer_sitemap.js{{/code}}
+{{#code}}puppeteer_sitemap.js{{/code}}

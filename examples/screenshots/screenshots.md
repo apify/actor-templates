@@ -26,4 +26,4 @@ title: Screenshots
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` base image
  > on the source tab of your actor configuration.
 
-{{#code}}../../examples/screenshots/screenshots.js{{/code}}
+{{#code}}screenshots.js{{/code}}
