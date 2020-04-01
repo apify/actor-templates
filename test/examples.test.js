@@ -1,5 +1,5 @@
 const Apify = require('apify');
-const { LocalStorageDirEmulator } = require('../local_storage_dir_emulator');
+const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
 
 const urlRegex = '^https?:\/\/w{0,3}\.?.+';
 const exampleData = [
@@ -57,14 +57,11 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await localStorageEmulator.clean();
         const queue = await Apify.openRequestQueue();
         await queue.drop();
+        await localStorageEmulator.destroy();
         dataSetData = [];
         kvStoreData = [];
         logs = [];
         callData = null;
-    });
-
-    afterAll(async () => {
-        await localStorageEmulator.destroy();
     });
 
     test('should accept user input example runnable code works', async () => {
