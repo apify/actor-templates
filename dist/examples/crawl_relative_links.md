@@ -8,7 +8,7 @@ have trouble following them.
  This is why it is important to set the `baseUrl` property within `Apify.enqueueLinks()` to `request.loadedUrl`:
 
 ```javascript
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
     // Create a RequestQueue
@@ -22,14 +22,14 @@ Apify.main(async () => {
         await Apify.utils.enqueueLinks({
             $,
             requestQueue,
-            baseUrl: request.loadedUrl
+            baseUrl: request.loadedUrl, // <-------------- important to set the base url here
         });
     };
     // Create a CheerioCrawler
     const crawler = new Apify.CheerioCrawler({
         requestQueue,
         handlePageFunction,
-        maxRequestsPerCrawl: 10 // Limitation for only 10 requests (do not use if you want to crawl all links)
+        maxRequestsPerCrawl: 10, // Limitation for only 10 requests (do not use if you want to crawl all links)
     });
     // Run the crawler
     await crawler.run();

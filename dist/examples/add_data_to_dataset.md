@@ -7,27 +7,25 @@ This example opens a dataset named `"my-cool-dataset"` and adds the URL of each 
  If the dataset doesn't exist, it will be created.
 
 ```javascript
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
-    const requestList = new Apify.RequestList({
-        sources: [
-            { url: "http://www.example.com/page-1" },
-            { url: "http://www.example.com/page-2" },
-            { url: "http://www.example.com/page-3" }
-        ]
-    });
-    await requestList.initialize();
+    const requestList = Apify.openRequestList('my-list',
+        [
+            { url: 'http://www.example.com/page-1' },
+            { url: 'http://www.example.com/page-2' },
+            { url: 'http://www.example.com/page-3' },
+        ]);
     // Function called for each URL
     const handleRequestFunction = async ({ request }) => {
         // Open a dataset
-        const dataset = await Apify.openDataset("my-cool-dataset");
+        const dataset = await Apify.openDataset('my-cool-dataset');
         // Add data to dataset
         await dataset.pushData({ url: request.url });
     };
     const crawler = new Apify.BasicCrawler({
         requestList,
-        handleRequestFunction
+        handleRequestFunction,
     });
     // Run the crawler
     await crawler.run();

@@ -4,8 +4,7 @@ title: Basic crawler
 ---
 
  This is the most basic example of the Apify SDK, which demonstrates some of its
- elementary tools such as the
- [`BasicCrawler`](/docs/api/basic-crawler)
+ elementary tools such as the [`BasicCrawler`](/docs/api/basic-crawler)
  and [`RequestList`](/docs/api/request-list) classes.
  The script simply downloads several web pages with plain HTTP requests using the
  [`Apify.utils.requestAsBrowser()`](/docs/api/utils#requestasbrowser)
@@ -13,21 +12,19 @@ title: Basic crawler
  In local configuration, the data will be stored as JSON files in `./apify_storage/datasets/default`.
 
 ```javascript
-const Apify = require("apify");
+const Apify = require('apify');
 
 // Apify.main() function wraps the crawler logic (it is optional).
 Apify.main(async () => {
     // Create and initialize an instance of the RequestList class that contains
     // a list of URLs to crawl. Here we use just a few hard-coded URLs.
-    const requestList = new Apify.RequestList({
-        sources: [
-            { url: "http://www.google.com/" },
-            { url: "http://www.example.com/" },
-            { url: "http://www.bing.com/" },
-            { url: "http://www.wikipedia.com/" }
-        ]
-    });
-    await requestList.initialize();
+    const requestList = await Apify.openRequestList('my-list',
+        [
+            { url: 'http://www.google.com/' },
+            { url: 'http://www.example.com/' },
+            { url: 'http://www.bing.com/' },
+            { url: 'http://www.wikipedia.com/' },
+        ]);
 
     // Create a BasicCrawler - the simplest crawler that enables
     // users to implement the crawling logic themselves.
@@ -40,19 +37,19 @@ Apify.main(async () => {
             console.log(`Processing ${request.url}...`);
 
             // Fetch the page HTML via Apify utils requestAsBrowser
-            const { body } = await Apify.utils.requestAsBrowser({url: request.url});
+            const { body } = await Apify.utils.requestAsBrowser({ url: request.url });
 
             // Store the HTML and URL to the default dataset.
             await Apify.pushData({
                 url: request.url,
-                html: body
+                html: body,
             });
-        }
+        },
     });
 
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-    console.log("Crawler finished.");
+    console.log('Crawler finished.');
 });
 ```

@@ -9,7 +9,7 @@ This example shows an easy use-case of the [Apify dataset](https://docs.apify.co
 dataset results workflow process. Both can be called on the [dataset](/docs/api/dataset) directly.
 
 Important to mention is that both methods return a new result (`map` returns a new array and `reduce` 
-can return almost any type) - neither method updates the dataset in any way.
+can return any type) - neither method updates the dataset in any way.
 
 Examples for both methods are demonstrated on a simple dataset containing the results scraped from a page: 
 the `URL` and a hypothetical number of `h1` - `h3` header elements under the `headingCount` key.
@@ -17,7 +17,7 @@ the `URL` and a hypothetical number of `h1` - `h3` header elements under the `he
 This data structure is stored in the default dataset under 
 `{PROJECT_FOLDER}/apify_storage/datasets/default/`.
 If you want to simulate the functionality, you can use the [`dataset.PushData()`](/docs/api/dataset#pushdata) method
- to save the example JSON array to your dataset.
+ to save the example `JSON array` to your dataset.
 
 
 ```json
@@ -52,14 +52,14 @@ Apify.main(async () => {
     const dataSet = await Apify.openDataset();
 
     // calling map function and filtering through mapped items
-    const pagesWithMoreThan5headers = (await dataSet.map(item => item.headingCount)).filter(count => count > 5);
+    const moreThan5headers = (await dataSet.map(item => item.headingCount)).filter(count => count > 5);
 
     // saving result of map to default Key-value store
-    await Apify.setValue('pages_with_more_than_5_headers', pagesWithMoreThan5headers);
+    await Apify.setValue('pages_with_more_than_5_headers', moreThan5headers);
 });
 ```
 
-The `pagesWithMoreThan5headers` variable is an array of `headingCount` attributes where the number 
+The `moreThan5headers` variable is an array of `headingCount` attributes where the number 
 of headers is greater than 5.
 
 The `map` method's result value saved to the [`key-value store`](/docs/api/key-value-store) should be:
@@ -87,7 +87,7 @@ Apify.main(async () => {
     const dataSet = await Apify.openDataset();
 
     // calling reduce function and using memo to calculate number of headers
-    const pagesHeadingCount = await dataSet.reduce((memo, value)=> {
+    const pagesHeadingCount = await dataSet.reduce((memo, value) => {
         memo += value.headingCount;
         return memo;
     }, 0);

@@ -11,7 +11,9 @@ The script extracts the current Bitcoin prices from [Kraken.com](https://www.kra
 
  To make the example work, you'll need an [Apify account](https://my.apify.com/).
  Go to the [Account - Integrations](https://my.apify.com/account#/integrations) page to obtain your API token
- and set it to the [`APIFY_TOKEN`](/docs/guides/environment-variables#APIFY_TOKEN) environment variable, or run the script using the Apify CLI. If you deploy this actor to the Apify Cloud, you can do things like set up a scheduler to run your actor early in the morning.
+ and set it to the [`APIFY_TOKEN`](/docs/guides/environment-variables#APIFY_TOKEN) environment variable,
+ or run the script using the Apify CLI. If you deploy this actor to the Apify Cloud, you can do things like set
+ up a scheduler to run your actor early in the morning.
  
  To see what other actors are available, visit the [Apify Store](https://apify.com/store).
  

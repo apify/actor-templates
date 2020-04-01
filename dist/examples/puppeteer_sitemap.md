@@ -17,7 +17,7 @@ const Apify = require('apify');
 
 Apify.main(async () => {
     const requestList = new Apify.RequestList({
-        sources: [{ requestsFromUrl: 'https://edition.cnn.com/sitemaps/cnn/news.xml' }],
+        sources: [{ requestsFromUrl: 'https://apify.com/sitemaps.xml' }],
     });
     await requestList.initialize();
 

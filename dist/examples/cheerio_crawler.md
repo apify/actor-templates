@@ -4,32 +4,30 @@ title: Cheerio crawler
 ---
 
  This example demonstrates how to use [`CheerioCrawler`](/docs/api/cheerio-crawler)
- to crawl a list of URLs from an external file,
- load each URL using a plain HTTP request, parse the HTML using the [Cheerio library](https://www.npmjs.com/package/cheerio)
+ to crawl a list of URLs from an external file, load each URL using a plain HTTP request, 
+ parse the HTML using the [Cheerio library](https://www.npmjs.com/package/cheerio)
  and extract some data from it: the page title and all `h1` tags.
 
 
 ```javascript
-const Apify = require("apify");
+const Apify = require('apify');
 
 // Apify.utils contains various utilities, e.g. for logging.
-// Here we turn off the logging of unimportant messages.
+// Here we use debug level of logging to improve the debugging experience.
+// This functionality is optional!
 const { log } = Apify.utils;
-log.setLevel(log.LEVELS.WARNING);
-
-// A link to a list of Fortune 500 companies' websites available on GitHub.
-const CSV_LINK =
-    "https://gist.githubusercontent.com/hrbrmstr/ae574201af3de035c684/raw/f1000.csv";
+log.setLevel(log.LEVELS.DEBUG);
 
 // Apify.main() function wraps the crawler logic (it is optional).
 Apify.main(async () => {
     // Create an instance of the RequestList class that contains a list of URLs to crawl.
-    // Here we download and parse the list of URLs from an external file.
-    const requestList = new Apify.RequestList({
-        sources: [{ requestsFromUrl: CSV_LINK }]
-    });
-    await requestList.initialize();
-
+    // Add URLs to a RequestList
+    const requestList = await Apify.openRequestList('my-list',
+        [
+            { url: 'http://www.example.com/page-1' },
+            { url: 'http://www.example.com/page-2' },
+            { url: 'http://www.example.com/page-3' },
+        ]);
     // Create an instance of the CheerioCrawler class - a crawler
     // that automatically loads the URLs and parses their HTML using the cheerio library.
     const crawler = new Apify.CheerioCrawler({
@@ -52,19 +50,20 @@ Apify.main(async () => {
         maxRequestsPerCrawl: 10,
 
         // This function will be called for each URL to crawl.
-        // It accepts a single parameter, which is an object with the following fields:
+        // It accepts a single parameter, which is an object with options as:
+        // https://sdk.apify.com/docs/typedefs/cheerio-crawler-options#handlepagefunction
+        // We use for demonstration only 2 of them:
         // - request: an instance of the Request class with information such as URL and HTTP method
-        // - body: contains raw HTML of the page
         // - $: the cheerio object containing parsed HTML
-        handlePageFunction: async ({ request, body, $ }) => {
-            console.log(`Processing ${request.url}...`);
+        handlePageFunction: async ({ request, $ }) => {
+            log.debug(`Processing ${request.url}...`);
 
             // Extract data from the page using cheerio.
-            const title = $("title").text();
+            const title = $('title').text();
             const h1texts = [];
-            $("h1").each((index, el) => {
+            $('h1').each((index, el) => {
                 h1texts.push({
-                    text: $(el).text()
+                    text: $(el).text(),
                 });
             });
 
@@ -74,19 +73,18 @@ Apify.main(async () => {
                 url: request.url,
                 title,
                 h1texts,
-                html: body
             });
         },
 
         // This function is called if the page processing failed more than maxRequestRetries+1 times.
         handleFailedRequestFunction: async ({ request }) => {
-            console.log(`Request ${request.url} failed twice.`);
-        }
+            log.debug(`Request ${request.url} failed twice.`);
+        },
     });
 
     // Run the crawler and wait for it to finish.
     await crawler.run();
 
-    console.log("Crawler finished.");
+    log.debug('Crawler finished.');
 });
 ```

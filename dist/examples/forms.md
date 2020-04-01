@@ -3,12 +3,9 @@ id: forms
 title: Forms
 ---
 
-
- This example demonstrates how to use
- [`PuppeteerCrawler`](/docs/api/puppeteer-crawler)
+ This example demonstrates how to use [`PuppeteerCrawler`](/docs/api/puppeteer-crawler)
  to automatically fill and submit a search form to look up repositories on
- [GitHub](https://news.ycombinator.com)
- using headless Chrome / Puppeteer.
+ [GitHub](https://github.com) using headless Chrome / Puppeteer.
  The actor first fills in the search term, repository owner, start date and
  language of the repository, then submits the form and prints out the results.
  Finally, the results are saved either on the Apify platform to the default
@@ -17,7 +14,6 @@ title: Forms
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
  >base image on the **Source** tab when configuring the actor.
-
 
 ```javascript
 const Apify = require('apify');
@@ -42,13 +38,13 @@ Apify.main(async () => {
     console.log('Submit search form');
     await Promise.all([
         page.waitForNavigation(),
-        page.click('#adv_code_search button[type="submit"]')
+        page.click('#adv_code_search button[type="submit"]'),
     ]);
 
     // Obtain and print list of search results
-    const results = await page.$$eval('div.codesearch-results ul.repo-list li div.mt-n1 div.f4.text-normal a', nodes => nodes.map(node => ({
+    const results = await page.$$eval('div.f4.text-normal a', nodes => nodes.map(node => ({
         url: node.href,
-        name: node.innerText
+        name: node.innerText,
     })));
     console.log('Results:', results);
 

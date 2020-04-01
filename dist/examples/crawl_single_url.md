@@ -7,7 +7,7 @@ This example uses the [`Apify.utils.requestAsBrowser()`](/docs/api/utils#utilsre
 HTML of a web page.
 
 ```javascript
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
     // Get the HTML of a web page

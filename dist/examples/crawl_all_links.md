@@ -9,11 +9,11 @@ from page to page. If only the required parameters are defined, all links will b
 <!--DOCUSAURUS_CODE_TABS-->
 
 <!-- CheerioCrawler -->
-
-Using CheerioCrawler:
+/
+Using `CheerioCrawler`:
 
 ```javascript
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
     // Create a RequestQueue
@@ -27,14 +27,14 @@ Apify.main(async () => {
         await Apify.utils.enqueueLinks({
             $,
             requestQueue,
-            baseUrl: request.loadedUrl
+            baseUrl: request.loadedUrl,
         });
     };
     // Create a CheerioCrawler
     const crawler = new Apify.CheerioCrawler({
         requestQueue,
         handlePageFunction,
-        maxRequestsPerCrawl: 10 // Limitation for only 10 requests (do not use if you want to crawl all links)
+        maxRequestsPerCrawl: 10, // Limitation for only 10 requests (do not use if you want to crawl all links)
     });
     // Run the crawler
     await crawler.run();
@@ -42,14 +42,14 @@ Apify.main(async () => {
 ```
 
 <!-- PuppeteerCrawler -->
-
-Using PuppeteerCrawler:
+/
+Using `PuppeteerCrawler`:
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
  >base image on the **Source** tab when configuring the actor.
 
 ```javascript
-const Apify = require("apify");
+const Apify = require('apify');
 
 Apify.main(async () => {
     // Create a RequestQueue
@@ -62,14 +62,14 @@ Apify.main(async () => {
         // Add all links from page to RequestQueue
         await Apify.utils.enqueueLinks({
             page,
-            requestQueue
+            requestQueue,
         });
     };
     // Create a PuppeteerCrawler
     const crawler = new Apify.PuppeteerCrawler({
         requestQueue,
         handlePageFunction,
-        maxRequestsPerCrawl: 10 // Limitation for only 10 requests (do not use if you want to crawl all links)
+        maxRequestsPerCrawl: 10, // Limitation for only 10 requests (do not use if you want to crawl all links)
     });
     // Run the crawler
     await crawler.run();
