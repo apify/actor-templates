@@ -439,5 +439,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
             expect(text).toBeTruthy();
             expect(text.includes('Did you know')).toBe(true);
         });
+        await localStorageEmulator.destroy();
     });
 });
