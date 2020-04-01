@@ -1,5 +1,5 @@
 const Apify = require('apify');
-const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
+const { LocalStorageDirEmulator } = require('../local_storage_dir_emulator');
 
 const urlRegex = '^https?:\/\/w{0,3}\.?.+';
 const exampleData = [
