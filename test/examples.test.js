@@ -4,43 +4,45 @@ const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
 const urlRegex = '^https?:\/\/w{0,3}\.?.+';
 const exampleData = [
     {
-        "url": "https://apify.com/",
-        "headingCount": 11,
+        url: 'https://apify.com/',
+        headingCount: 11,
     },
     {
-        "url": "https://apify.com/storage",
-        "headingCount": 8,
+        url: 'https://apify.com/storage',
+        headingCount: 8,
     },
     {
-        "url": "https://apify.com/proxy",
-        "headingCount": 4,
+        url: 'https://apify.com/proxy',
+        headingCount: 4,
     },
 ];
 
 
 describe('Examples - testing runnable codes behaviour ', () => {
     let localStorageEmulator;
-    let exampleFunc, callData;
-    let dataSetData = [], kvStoreData = [], logs = [];
+    let exampleFunc; let
+        callData;
+    let dataSetData = []; let kvStoreData = []; let
+        logs = [];
 
     beforeAll(async () => {
-        Apify.main = (func ) => {
-            exampleFunc = func
+        Apify.main = (func) => {
+            exampleFunc = func;
         };
 
-        Apify.setValue  = (key, storeValue) => {
-                kvStoreData.push({
-                    key,
-                    storeValue
-                });
+        Apify.setValue = (key, storeValue) => {
+            kvStoreData.push({
+                key,
+                storeValue,
+            });
         };
-        Apify.pushData = data => {
-           Array.isArray(data) ? dataSetData = data : dataSetData.push(data);
+        Apify.pushData = (data) => {
+            Array.isArray(data) ? dataSetData = data : dataSetData.push(data);
         };
         Apify.call = (act, input) => {
             callData = { act, input };
         };
-        console.log  = log => {
+        console.log = (log) => {
             logs.push(log);
         };
     });
@@ -68,7 +70,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     test('should accept user input example runnable code works', async () => {
         const kvStore = await Apify.openKeyValueStore();
         const input = { test: 'testing input' };
-        await kvStore.setValue('INPUT', input );
+        await kvStore.setValue('INPUT', input);
 
         require('../examples/accept_user_input/accept_user_input.js');
         await exampleFunc();
@@ -87,12 +89,12 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/add_data_to_dataset/add_data_to_dataset.js');
         await exampleFunc();
 
-        const dataset = await Apify.openDataset("my-cool-dataset");
+        const dataset = await Apify.openDataset('my-cool-dataset');
         const data = await dataset.getData();
 
         const { items } = data;
         expect(items.length).toBe(3);
-        items.forEach( result => {
+        items.forEach((result) => {
             expect(typeof result).toBe('object');
             expect(result).toHaveProperty('url');
             expect(result.url).toBeTruthy();
@@ -106,7 +108,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(dataSetData.length).toBe(4);
-        dataSetData.forEach( result => {
+        dataSetData.forEach((result) => {
             expect(result).toBeInstanceOf(Object);
             expect(result).toHaveProperty('url');
             expect(result.url).toBeTruthy();
@@ -149,7 +151,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
         const store = await Apify.openKeyValueStore();
         await store.forEachKey(async (key) => {
-            expect(key.includes('my-key')).toBe(true);
             const storeValue = await store.getValue(key);
             expect(storeValue).toBeDefined();
             expect(Buffer.isBuffer(storeValue)).toBe(true);
@@ -162,7 +163,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(kvStoreData.length).toBe(3);
-        kvStoreData.forEach( result => {
+        kvStoreData.forEach((result) => {
             expect(typeof result).toBe('object');
             expect(result).toHaveProperty('key');
             expect(result.key).toBeTruthy();
@@ -178,7 +179,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         const store = await Apify.openKeyValueStore();
         let items = 0;
         await store.forEachKey(async (key) => {
-            items ++;
+            items++;
             const storeValue = await store.getValue(key);
             expect(storeValue).toBeDefined();
             expect(Buffer.isBuffer(storeValue)).toBe(true);
@@ -192,7 +193,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
-        kvStoreData.forEach( result => {
+        kvStoreData.forEach((result) => {
             expect(typeof result).toBe('object');
             expect(result).toHaveProperty('url');
             expect(result).toHaveProperty('title');
@@ -300,7 +301,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
-        dataSetData.forEach( result => {
+        dataSetData.forEach((result) => {
             expect(result).toBeInstanceOf(Object);
             expect(result).toHaveProperty('url');
             expect(result.url).toBeTruthy();
@@ -363,7 +364,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
-        dataSetData.forEach( item => {
+        dataSetData.forEach((item) => {
             expect(item).toBeDefined();
             expect(item).toHaveProperty('title');
             expect(item.title).toBeTruthy();
@@ -379,12 +380,11 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
-        dataSetData.forEach( item => {
+        dataSetData.forEach((item) => {
             expect(item).toBeDefined();
             expect(item).toHaveProperty('url');
             expect(item.url).toBeTruthy();
             expect(item).toHaveProperty('title');
-            expect(item.title).toBeTruthy();
             expect(item).toHaveProperty('html');
             expect(item.html).toBeTruthy();
         });
@@ -402,8 +402,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
     test('should screenshots example runnable code works', async () => {
         const kvStore = await Apify.openKeyValueStore();
-        const input = { sources: [{ "url": "https://www.google.com" }, { "url": "https://www.duckduckgo.com" }] };
-        await kvStore.setValue('INPUT', input );
+        const input = { sources: [{ url: 'https://www.google.com' }, { url: 'https://www.duckduckgo.com' }] };
+        await kvStore.setValue('INPUT', input);
 
         require('../examples/screenshots/screenshots.js');
         await exampleFunc();
@@ -413,7 +413,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
             const { url } = source;
             const key = url.replace(/[:/]/g, '_');
 
-            const sourceValue = kvStoreData.find( item => item.key === key);
+            const sourceValue = kvStoreData.find(item => item.key === key);
             expect(sourceValue).toBeDefined();
 
             const { storeValue } = sourceValue;
@@ -426,7 +426,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
-        dataSetData.forEach( text => {
+        dataSetData.forEach((text) => {
             expect(typeof text).toBe('string');
             expect(text).toBeTruthy();
             expect(text.includes('Did you know')).toBe(true);
