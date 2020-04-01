@@ -1,22 +1,12 @@
-const path = require("path");
+const path = require('path');
 
-const TEMPLATES_NAME = [
+const TEMPLATE_NAMES = [
     'apify_project',
     'basic_crawler',
     'cheerio_crawler',
     'hello_world',
     'puppeteer_crawler',
     'puppeteer_single_page',
-];
-
-const EXAMPLES_NAME = [
-    'map_and_reduce',
-    'forms',
-    'call_actor',
-    'puppeteer_sitemap',
-    'puppeteer_with_proxy',
-    'screenshots',
-    'synchronous_run'
 ];
 
 const BUILD_DIR_NAME = 'build';
@@ -26,11 +16,10 @@ const DIST_DIR_NAME = 'dist';
 const LOCAL_STORAGE_DIR = path.join(__dirname, '..', 'tmp', 'local-emulation-dir');
 
 module.exports = {
-    TEMPLATES_NAME,
+    TEMPLATE_NAMES,
     BUILD_DIR_NAME,
     TEMPLATES_DIR_NAME,
     EXAMPLES_DIR_NAME,
-    EXAMPLES_NAME,
     LOCAL_STORAGE_DIR,
-    DIST_DIR_NAME
+    DIST_DIR_NAME,
 };

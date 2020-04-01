@@ -11,5 +11,3 @@ const { buildExamples } = require('./build_examples');
     await buildExamples();
     console.log('Example markdowns were created!');
 })();
-
-

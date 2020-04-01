@@ -6,7 +6,7 @@ const { ENV_VARS } = require('apify-shared/consts');
 const { spawnSync } = require('child_process');
 const loadJson = require('load-json-file');
 const rimraf = require('rimraf');
-const { TEMPLATES_NAME } = require('../src/consts');
+const { TEMPLATE_NAMES } = require('../src/consts');
 const copy = require('recursive-copy');
 
 
@@ -65,7 +65,7 @@ describe('templates', () => {
         console.log.restore();
     });
 
-    TEMPLATES_NAME.forEach((templateName) => {
+    TEMPLATE_NAMES.forEach((templateName) => {
         test(`${templateName} works`, async () => {
             const actorName = `cli-test-${templateName.replace(/_/g, '-')}`;
             await copy(`../templates/${templateName}`, actorName, { dot: true });

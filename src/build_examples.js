@@ -4,22 +4,21 @@ const Mustache = require('mustache');
 const rimraf = require('rimraf');
 const { EXAMPLES_DIR_NAME, DIST_DIR_NAME } = require('./consts');
 
-exports.buildExamples = async function() {
+exports.buildExamples = async function () {
     process.chdir('../');
     if (fs.existsSync(DIST_DIR_NAME)) rimraf.sync(DIST_DIR_NAME);
     fs.mkdirSync(DIST_DIR_NAME);
 
     process.chdir(DIST_DIR_NAME);
-    fs.mkdirSync(EXAMPLES_DIR_NAME);
-    const dirName = '../' + EXAMPLES_DIR_NAME;
+    const dirName = `../${EXAMPLES_DIR_NAME}`;
     const dirPath = path.join(__dirname, dirName);
     if (fs.existsSync(EXAMPLES_DIR_NAME)) rimraf.sync(EXAMPLES_DIR_NAME);
     fs.mkdirSync(EXAMPLES_DIR_NAME);
     try {
         return fs
-            .readdirSync(dirPath).forEach( exampleDir => {
+            .readdirSync(dirPath).forEach((exampleDir) => {
                 buildExample(exampleDir);
-                });
+            });
     } catch (err) {
         throw err;
     }
@@ -46,14 +45,12 @@ function getView(dirname) {
         name: dirname,
         capitalizedName: dirname.split('-').map(capitalize).join(' '),
         code: () => (filename) => {
-            const codeFile = path.join(__dirname, '../', dirname, 'code', filename);
+            const codeFile = path.join(__dirname, '../examples', dirname, filename);
             const code = fs.readFileSync(codeFile, 'utf8');
             const header = '```javascript\n';
             const footer = '```';
             return header + code + footer;
         },
-        dontForget: dirname === 'web' ? '(don\'t forget to tick that **Inject jQuery** box)' : '',
-        eq1: dirname === 'puppeteer-scraper' ? 'els[1]' : '.eq(1)',
     };
 }
 
@@ -71,7 +68,7 @@ function buildExample(exampleName) {
     };
     const markdown = Mustache.render(template, view, partials);
     const buildFilename = `${exampleName}.md`;
-    const buildPath = path.join(__dirname, '../dist/examples',  buildFilename);
+    const buildPath = path.join(__dirname, '../dist/examples', buildFilename);
     console.log(`Creating markdown ${buildFilename}`);
     fs.writeFileSync(buildPath, markdown);
 }
