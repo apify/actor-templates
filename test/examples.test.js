@@ -57,11 +57,14 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await localStorageEmulator.clean();
         const queue = await Apify.openRequestQueue();
         await queue.drop();
-        await localStorageEmulator.destroy();
         dataSetData = [];
         kvStoreData = [];
         logs = [];
         callData = null;
+    });
+
+    afterAll(async () => {
+        await localStorageEmulator.destroy();
     });
 
     test('should accept user input example runnable code works', async () => {
