@@ -5,7 +5,7 @@ title: Forms
 
  This example demonstrates how to use [`PuppeteerCrawler`](/docs/api/puppeteer-crawler)
  to automatically fill and submit a search form to look up repositories on
- [GitHub](https://github.com/search/advanced) using headless Chrome / Puppeteer.
+ [GitHub](https://github.com) using headless Chrome / Puppeteer.
  The actor first fills in the search term, repository owner, start date and
  language of the repository, then submits the form and prints out the results.
  Finally, the results are saved either on the Apify platform to the default

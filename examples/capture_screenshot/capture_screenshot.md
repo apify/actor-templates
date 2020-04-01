@@ -11,13 +11,13 @@ This example captures of a screenshot of a web page using `Puppeteer`:
 <!--DOCUSAURUS_CODE_TABS-->
 
 <!-- PageScreenshot -->
-
+\
 Using `page.screenshot()`:
 
 {{#code}}puppeteer_page_screenshot.js{{/code}}
 
-<!-- ApifySaveSnapshot -->
-
+<!-- ApifySnapshot -->
+\
 Using `Apify.utils.puppeteer.saveSnapshot()`:
 
 {{#code}}puppeteer_apify_snapshot.js{{/code}}
@@ -29,13 +29,13 @@ This example captures a screenshot of multiple web pages when using `PuppeteerCr
 <!--DOCUSAURUS_CODE_TABS-->
 
 <!-- PageScreenshot -->
-
+\
 Using `page.screenshot()`:
 
 {{#code}}puppeteer_crawler_page_screenshot.js{{/code}}
 
-<!-- ApifySaveSnapshot -->
-
+<!-- ApifySnapshot -->
+\
 Using `Apify.utils.puppeteer.saveSnapshot()`:
 
 {{#code}}puppeteer_crawler_apify_snapshot.js{{/code}}

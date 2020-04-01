@@ -17,7 +17,7 @@ the `URL` and a hypothetical number of `h1` - `h3` header elements under the `he
 This data structure is stored in the default dataset under 
 `{PROJECT_FOLDER}/apify_storage/datasets/default/`.
 If you want to simulate the functionality, you can use the [`dataset.PushData()`](/docs/api/dataset#pushdata) method
- to save the example JSON array to your dataset.
+ to save the example `JSON array` to your dataset.
 
 
 ```json
