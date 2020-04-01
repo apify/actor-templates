@@ -4,15 +4,13 @@ const Apify = require('apify');
 Apify.main(async () => {
     // Create and initialize an instance of the RequestList class that contains
     // a list of URLs to crawl. Here we use just a few hard-coded URLs.
-    const requestList = new Apify.RequestList({
-        sources: [
+    const requestList = await Apify.openRequestList('my-list',
+        [
             { url: 'http://www.google.com/' },
             { url: 'http://www.example.com/' },
             { url: 'http://www.bing.com/' },
-            { url: 'http://www.wikipedia.com/' }
-        ]
-    });
-    await requestList.initialize();
+            { url: 'http://www.wikipedia.com/' },
+        ]);
 
     // Create a BasicCrawler - the simplest crawler that enables
     // users to implement the crawling logic themselves.
@@ -25,14 +23,14 @@ Apify.main(async () => {
             console.log(`Processing ${request.url}...`);
 
             // Fetch the page HTML via Apify utils requestAsBrowser
-            const { body } = await Apify.utils.requestAsBrowser({url: request.url});
+            const { body } = await Apify.utils.requestAsBrowser({ url: request.url });
 
             // Store the HTML and URL to the default dataset.
             await Apify.pushData({
                 url: request.url,
-                html: body
+                html: body,
             });
-        }
+        },
     });
 
     // Run the crawler and wait for it to finish.
