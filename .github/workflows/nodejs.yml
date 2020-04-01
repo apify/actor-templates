@@ -17,12 +17,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: install required packages
-      run: |
-       sudo apt-get install xvfb
     - run: npm install
     - run: npm test
       env:
+        APIFY_HEADLESS: 1
         APIFY_PROXY_PASSWORD: ${{ secrets.APIFY_PROXY_PASSWORD }}
     - run: npm run build
       env:
