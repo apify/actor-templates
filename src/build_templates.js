@@ -8,7 +8,6 @@ const { TEMPLATE_NAMES, BUILD_DIR_NAME, TEMPLATES_DIR_NAME } = require('./consts
  * Creates zips of all templates
  */
 exports.buildTemplates = async function () {
-    process.chdir('..');
     if (fs.existsSync(BUILD_DIR_NAME)) rimraf.sync(BUILD_DIR_NAME);
 
     fs.mkdirSync(BUILD_DIR_NAME);
