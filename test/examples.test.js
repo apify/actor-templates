@@ -55,8 +55,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
     afterEach(async () => {
         await localStorageEmulator.clean();
-        const queue = await Apify.openRequestQueue();
-        await queue.drop();
         dataSetData = [];
         kvStoreData = [];
         logs = [];
@@ -64,6 +62,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     afterAll(async () => {
+        await localStorageEmulator.clean();
         await localStorageEmulator.destroy();
     });
 
@@ -439,6 +438,5 @@ describe('Examples - testing runnable codes behaviour ', () => {
             expect(text).toBeTruthy();
             expect(text.includes('Did you know')).toBe(true);
         });
-        await localStorageEmulator.destroy();
     });
 });
