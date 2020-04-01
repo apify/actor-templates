@@ -1,4 +1,5 @@
 const Apify = require('apify');
+const fs = require('fs');
 const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
 
 const urlRegex = '^https?:\/\/w{0,3}\.?.+';
@@ -65,6 +66,14 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
     afterAll(async () => {
         await localStorageEmulator.destroy();
+        console.log('***********************');
+        console.dir(process.env);
+        console.log('***********************');
+        fs.removeSync('../tmp');
+        delete process.env.APIFY_LOCAL_STORAGE_DIR;
+        console.log('***********************');
+        console.dir(process.env);
+        console.log('***********************');
     });
 
     test('should accept user input example runnable code works', async () => {
