@@ -67,12 +67,12 @@ describe('Examples - testing runnable codes behaviour ', () => {
     afterAll(async () => {
         await localStorageEmulator.destroy();
         console.log('***********************');
-        console.dir(process.env);
+        console.dir(process.env.APIFY_LOCAL_STORAGE_DIR);
         console.log('***********************');
         fs.removeSync('../tmp');
         delete process.env.APIFY_LOCAL_STORAGE_DIR;
         console.log('***********************');
-        console.dir(process.env);
+        console.dir(process.env.APIFY_LOCAL_STORAGE_DIR);
         console.log('***********************');
     });
 
