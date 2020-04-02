@@ -10,7 +10,7 @@ This example opens a dataset named `"my-cool-dataset"` and adds the URL of each 
 const Apify = require('apify');
 
 Apify.main(async () => {
-    const requestList = Apify.openRequestList('my-list',
+    const requestList = await Apify.openRequestList('my-list',
         [
             { url: 'http://www.example.com/page-1' },
             { url: 'http://www.example.com/page-2' },
