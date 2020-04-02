@@ -6,8 +6,8 @@ const { ENV_VARS } = require('apify-shared/consts');
 const { spawnSync } = require('child_process');
 const loadJson = require('load-json-file');
 const rimraf = require('rimraf');
-const { TEMPLATES_NAME } = require('../src/consts');
 const copy = require('recursive-copy');
+const { TEMPLATE_NAMES } = require('../src/consts');
 
 
 const TEST_ACTORS_FOLDER = 'test-actors';
@@ -42,7 +42,7 @@ const checkTemplateStructureAndRun = async (actorName) => {
 let prevEnvHeadless;
 
 describe('templates', () => {
-    before(async () => {
+    beforeAll(async () => {
         prevEnvHeadless = process.env[ENV_VARS.HEADLESS];
         process.env[ENV_VARS.HEADLESS] = '1';
 
@@ -50,7 +50,7 @@ describe('templates', () => {
         process.chdir(TEST_ACTORS_FOLDER);
     });
 
-    after(async () => {
+    afterAll(async () => {
         process.env[ENV_VARS.HEADLESS] = prevEnvHeadless;
 
         process.chdir('../');
@@ -65,8 +65,8 @@ describe('templates', () => {
         console.log.restore();
     });
 
-    TEMPLATES_NAME.forEach((templateName) => {
-        it(`${templateName} works`, async () => {
+    TEMPLATE_NAMES.forEach((templateName) => {
+        test(`${templateName} works`, async () => {
             const actorName = `cli-test-${templateName.replace(/_/g, '-')}`;
             await copy(`../templates/${templateName}`, actorName, { dot: true });
             await checkTemplateStructureAndRun(actorName, templateName);

@@ -19,6 +19,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm test
+      env:
+        APIFY_HEADLESS: 1
+        APIFY_PROXY_PASSWORD: ${{ secrets.APIFY_PROXY_PASSWORD }}
     - run: npm run build
       env:
         CI: true

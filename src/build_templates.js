@@ -2,18 +2,18 @@ const fs = require('fs');
 const archiver = require('archiver-promise');
 const rimraf = require('rimraf');
 const globby = require('globby');
-const { TEMPLATES_NAME, BUILD_DIR_NAME, TEMPLATES_DIR_NAME, } = require('./consts');
+const { TEMPLATE_NAMES, BUILD_DIR_NAME, TEMPLATES_DIR_NAME } = require('./consts');
 
 /**
  * Creates zips of all templates
  */
-(async () => {
+exports.buildTemplates = async function () {
     if (fs.existsSync(BUILD_DIR_NAME)) rimraf.sync(BUILD_DIR_NAME);
 
     fs.mkdirSync(BUILD_DIR_NAME);
     process.chdir(TEMPLATES_DIR_NAME);
 
-    for (const templateName of TEMPLATES_NAME) {
+    for (const templateName of TEMPLATE_NAMES) {
         if (fs.lstatSync(templateName).isDirectory()) {
             const zipName = `${templateName}.zip`;
             const archive = archiver(`../${BUILD_DIR_NAME}/${zipName}`);
@@ -29,5 +29,4 @@ const { TEMPLATES_NAME, BUILD_DIR_NAME, TEMPLATES_DIR_NAME, } = require('./const
             await archive.finalize();
         }
     }
-    console.log('Templates zips were created!');
-})();
+};

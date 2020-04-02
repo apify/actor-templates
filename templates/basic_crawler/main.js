@@ -5,8 +5,6 @@
 // Include Apify SDK. For more information, see https://sdk.apify.com/
 const Apify = require('apify');
 
-const rp = require('request-promise');
-
 Apify.main(async () => {
     // Get input of the actor (here only for demonstration purposes).
     // If you'd like to have your input checked and have Apify display
@@ -25,10 +23,11 @@ Apify.main(async () => {
     const basicCrawler = new Apify.BasicCrawler({
         requestList,
         handleRequestFunction: async ({ request }) => {
+            const { body } = await Apify.utils.requestAsBrowser({url: request.url});
             await Apify.pushData({
                 request,
                 finishedAt: new Date(),
-                html: await rp(request.url),
+                html: body,
                 '#debug': Apify.utils.createRequestDebugInfo(request),
             });
         },

@@ -4,31 +4,38 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 180000 --recursive",
-    "build": "node ./src/build_templates.js"
+    "test": "jest templates.test.js --testTimeout=60000 & jest examples.test.js --testTimeout=60000",
+    "build": "node ./src/build.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/apifytech/actor-templates.git"
   },
   "author": "Jakub Drobnik <jakub.drobnik@apify.com>",
+  "contributors": [
+    "Jan Bárta <jan.barta@apify.com>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/apifytech/actor-templates/issues"
   },
   "homepage": "https://github.com/apifytech/actor-templates#readme",
   "dependencies": {
+    "apify": "^0.20.2",
     "apify-shared": "^0.2.8",
     "archiver-promise": "^1.0.0",
     "globby": "^11.0.0",
+    "mustache": "^4.0.1",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@apify/eslint-config": "^0.0.3",
     "chai": "^4.0.2",
     "chai-as-promised": "^7.1.1",
     "load-json-file": "^6.2.0",
-    "mocha": "^5.2.0",
     "recursive-copy": "^2.0.10",
-    "sinon": "^9.0.0"
+    "sinon": "^9.0.0",
+    "jest": "^24.9.0",
+    "eslint": "^6.8.0"
   }
 }
