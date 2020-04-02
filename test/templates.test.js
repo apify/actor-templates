@@ -48,6 +48,11 @@ describe('templates', () => {
 
         if (!fs.existsSync(TEST_ACTORS_FOLDER)) fs.mkdirSync(TEST_ACTORS_FOLDER);
         process.chdir(TEST_ACTORS_FOLDER);
+
+        console.log('************');
+        console.log(process.env);
+        console.dir(process.env.APIFY_LOCAL_STORAGE_DIR);
+        console.log('************');
     });
 
     afterAll(async () => {
