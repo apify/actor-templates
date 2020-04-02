@@ -9,13 +9,13 @@ from page to page. If only the required parameters are defined, all links will b
 <!--DOCUSAURUS_CODE_TABS-->
 
 <!-- CheerioCrawler -->
-/
+\
 Using `CheerioCrawler`:
 
 {{#code}}crawl_all_links_cheerio.js{{/code}}
 
 <!-- PuppeteerCrawler -->
-/
+\
 Using `PuppeteerCrawler`:
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 

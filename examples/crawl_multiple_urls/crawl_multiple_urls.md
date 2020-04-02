@@ -8,19 +8,19 @@ This example crawls the specified list of URLs.
 <!--DOCUSAURUS_CODE_TABS-->
 
 <!-- BasicCrawler -->
-/
+\
 Using `BasicCrawler`:
 
 {{#code}}crawl_multiple_urls_basic.js{{/code}}
 
 <!-- CheerioCrawler -->
-/
+\
 Using `CheerioCrawler`:
 
 {{#code}}crawl_multiple_urls_cheerio.js{{/code}}
 
 <!-- PuppeteerCrawler -->
-/
+\
 Using `PuppeteerCrawler`:
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
