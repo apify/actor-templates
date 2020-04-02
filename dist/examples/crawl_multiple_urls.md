@@ -8,7 +8,7 @@ This example crawls the specified list of URLs.
 <!--DOCUSAURUS_CODE_TABS-->
 
 <!-- BasicCrawler -->
-/
+\
 Using `BasicCrawler`:
 
 ```javascript
@@ -37,7 +37,7 @@ Apify.main(async () => {
 ```
 
 <!-- CheerioCrawler -->
-/
+\
 Using `CheerioCrawler`:
 
 ```javascript
@@ -66,7 +66,7 @@ Apify.main(async () => {
 ```
 
 <!-- PuppeteerCrawler -->
-/
+\
 Using `PuppeteerCrawler`:
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
