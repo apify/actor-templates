@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest templates.test.js --testTimeout=60000 & jest examples.test.js --testTimeout=60000",
+    "test": "jest --testTimeout=60000",
     "build": "node ./src/build.js"
   },
   "repository": {
