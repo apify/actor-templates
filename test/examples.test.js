@@ -1,6 +1,8 @@
 const Apify = require('apify');
 const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
+const { ENV_VARS } = require('apify-shared/consts');
 
+// eslint-disable-next-line no-useless-escape
 const urlRegex = '^https?:\/\/w{0,3}\.?.+';
 const exampleData = [
     {
@@ -16,7 +18,7 @@ const exampleData = [
         headingCount: 4,
     },
 ];
-
+let prevEnvHeadless;
 
 describe('Examples - testing runnable codes behaviour ', () => {
     let localStorageEmulator;
@@ -26,6 +28,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
         logs = [];
 
     beforeAll(async () => {
+        prevEnvHeadless = process.env[ENV_VARS.HEADLESS];
+        process.env[ENV_VARS.HEADLESS] = '1';
         Apify.main = (func) => {
             exampleFunc = func;
         };
@@ -50,13 +54,13 @@ describe('Examples - testing runnable codes behaviour ', () => {
     beforeEach(async () => {
         localStorageEmulator = new LocalStorageDirEmulator();
         await localStorageEmulator.init();
+        const queue = await Apify.openRequestQueue();
+        await queue.drop();
     });
 
 
     afterEach(async () => {
         await localStorageEmulator.clean();
-        const queue = await Apify.openRequestQueue();
-        await queue.drop();
         dataSetData = [];
         kvStoreData = [];
         logs = [];
@@ -65,6 +69,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
     afterAll(async () => {
         await localStorageEmulator.destroy();
+        process.env[ENV_VARS.HEADLESS] = prevEnvHeadless;
     });
 
     test('should accept user input example runnable code works', async () => {
