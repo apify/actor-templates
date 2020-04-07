@@ -24,6 +24,8 @@ Apify.main(async () => {
         subject: 'Kraken.com BTC',
         html: `<h1>Kraken.com BTC</h1>${tradedPricesHtml}`,
     });
-
     console.log('Email sent. Good luck!');
+
+    // Close Browser
+    await browser.close();
 });

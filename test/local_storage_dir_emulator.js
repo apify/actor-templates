@@ -2,9 +2,11 @@ const Apify = require('apify');
 const { cryptoRandomObjectId } = require('apify-shared/utilities');
 const { LOCAL_STORAGE_SUBDIRS, LOCAL_ENV_VARS, ENV_VARS } = require('apify-shared/consts');
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 const fs = require('fs-extra');
 const path = require('path');
-const { utils : { log } } = Apify;
+
+const { utils: { log } } = Apify;
 
 const { LOCAL_STORAGE_DIR } = require('../src/consts.js');
 
@@ -63,5 +65,5 @@ class LocalStorageDirEmulator {
 }
 
 module.exports = {
-    LocalStorageDirEmulator
+    LocalStorageDirEmulator,
 };

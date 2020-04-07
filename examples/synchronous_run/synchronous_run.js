@@ -17,4 +17,7 @@ Apify.main(async () => {
     // Save all the items to the Apify dataSet.
     await Apify.pushData(results);
     console.log('Actor finished.');
+
+    // Close browser
+    await browser.close();
 });
