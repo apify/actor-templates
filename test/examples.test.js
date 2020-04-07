@@ -77,7 +77,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         const input = { test: 'testing input' };
         await kvStore.setValue('INPUT', input);
 
-        await require('../examples/accept_user_input/accept_user_input.js');
+        require('../examples/accept_user_input/accept_user_input.js');
         await exampleFunc();
 
         expect(logs.length).toBe(1);
@@ -91,7 +91,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should add data to dataset example runnable code works', async () => {
-        await require('../examples/add_data_to_dataset/add_data_to_dataset.js');
+        require('../examples/add_data_to_dataset/add_data_to_dataset.js');
         await exampleFunc();
 
         const dataset = await Apify.openDataset('my-cool-dataset');
@@ -109,7 +109,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should basic crawler example runnable code works', async () => {
-        await require('../examples/basic_crawler/basic_crawler.js');
+        require('../examples/basic_crawler/basic_crawler.js');
         await exampleFunc();
 
         expect(dataSetData.length).toBe(4);
@@ -129,7 +129,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
                 email: 'jan.barta@apify.com',
             };
         };
-        await require('../examples/call_actor/call_actor.js');
+        require('../examples/call_actor/call_actor.js');
         await exampleFunc();
 
         const { email } = await Apify.client.users.getUser();
@@ -148,7 +148,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should capture screenshot - puppeteer page screenshot example runnable code works', async () => {
-        await require('../examples/capture_screenshot/puppeteer_page_screenshot.js');
+        require('../examples/capture_screenshot/puppeteer_page_screenshot.js');
         await exampleFunc();
 
         expect(kvStoreData.length).toBe(1);
@@ -158,9 +158,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
         expect(Buffer.isBuffer(storeValue)).toBe(true);
     });
 
-    // TODO check if forEach is not the problem
     test('should capture screenshot - puppeteer apify snapshot example runnable code works', async () => {
-        await require('../examples/capture_screenshot/puppeteer_apify_snapshot.js');
+        require('../examples/capture_screenshot/puppeteer_apify_snapshot.js');
         await exampleFunc();
 
         const store = await Apify.openKeyValueStore();
@@ -173,7 +172,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should capture screenshot - puppeteer crawler page screenshot example runnable code works', async () => {
-        await require('../examples/capture_screenshot/puppeteer_crawler_page_screenshot.js');
+        require('../examples/capture_screenshot/puppeteer_crawler_page_screenshot.js');
         await exampleFunc();
 
         expect(kvStoreData.length).toBe(3);
@@ -186,9 +185,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
         });
     });
 
-    // TODO check if forEach is not the problem
     test('should capture screenshot - puppeteer crawler apify snapshot example runnable code works', async () => {
-        await require('../examples/capture_screenshot/puppeteer_crawler_apify_snapshot.js');
+        require('../examples/capture_screenshot/puppeteer_crawler_apify_snapshot.js');
         await exampleFunc();
 
         const store = await Apify.openKeyValueStore();
@@ -204,7 +202,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should cheerio crawler example runnable code works', async () => {
-        await require('../examples/cheerio_crawler/cheerio_crawler.js');
+        require('../examples/cheerio_crawler/cheerio_crawler.js');
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
@@ -220,7 +218,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl sitemap - basic crawler example runnable code works', async () => {
-        await require('../examples/crawl_sitemap/crawl_sitemap_basic.js');
+        require('../examples/crawl_sitemap/crawl_sitemap_basic.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -228,7 +226,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl sitemap - cheerio crawler example runnable code works', async () => {
-        await require('../examples/crawl_sitemap/crawl_sitemap_cheerio.js');
+        require('../examples/crawl_sitemap/crawl_sitemap_cheerio.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -236,7 +234,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl sitemap - puppeteer crawler example runnable code works', async () => {
-        await require('../examples/crawl_sitemap/crawl_sitemap_puppeteer.js');
+        require('../examples/crawl_sitemap/crawl_sitemap_puppeteer.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -244,7 +242,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl all links - cheerio crawler example runnable code works', async () => {
-        await require('../examples/crawl_all_links/crawl_all_links_cheerio.js');
+        require('../examples/crawl_all_links/crawl_all_links_cheerio.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -252,7 +250,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl all links - puppeteer crawler example runnable code works', async () => {
-        await require('../examples/crawl_all_links/crawl_all_links_puppeteer.js');
+        require('../examples/crawl_all_links/crawl_all_links_puppeteer.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -260,7 +258,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl multiple urls - basic crawler example runnable code works', async () => {
-        await require('../examples/crawl_multiple_urls/crawl_multiple_urls_basic.js');
+        require('../examples/crawl_multiple_urls/crawl_multiple_urls_basic.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -268,7 +266,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl multiple urls - cheerio crawler example runnable code works', async () => {
-        await require('../examples/crawl_multiple_urls/crawl_multiple_urls_cheerio.js');
+        require('../examples/crawl_multiple_urls/crawl_multiple_urls_cheerio.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -276,7 +274,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl multiple urls - puppeteer crawler example runnable code works', async () => {
-        await require('../examples/crawl_multiple_urls/crawl_multiple_urls_puppeteer.js');
+        require('../examples/crawl_multiple_urls/crawl_multiple_urls_puppeteer.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -284,7 +282,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl relative links example runnable code works', async () => {
-        await require('../examples/crawl_relative_links/crawl_relative_links.js');
+        require('../examples/crawl_relative_links/crawl_relative_links.js');
         await exampleFunc();
 
         const crawledUrls = logs.filter(log => log.match(urlRegex));
@@ -292,7 +290,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl single url example runnable code works', async () => {
-        await require('../examples/crawl_single_url/crawl_single_url.js');
+        require('../examples/crawl_single_url/crawl_single_url.js');
         await exampleFunc();
 
         expect(logs.length).toBe(1);
@@ -302,7 +300,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should crawl some links - cheerio example runnable code works', async () => {
-        await require('../examples/crawl_some_links/crawl_some_links_cheerio.js');
+        require('../examples/crawl_some_links/crawl_some_links_cheerio.js');
         await exampleFunc();
 
         const successPages = logs.filter(log => log.includes('https://apify.com/'));
@@ -310,7 +308,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should forms example runnable code works', async () => {
-        await require('../examples/forms/forms.js');
+        require('../examples/forms/forms.js');
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
@@ -324,7 +322,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should handle broken links example runnable code works', async () => {
-        await require('../examples/handle_broken_links/handle_broken_links.js');
+        require('../examples/handle_broken_links/handle_broken_links.js');
         await exampleFunc();
 
         const successPages = logs.filter(log => log.includes('[success]'));
@@ -334,7 +332,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should puppeteer recursive crawl example runnable code works', async () => {
-        await require('../examples/puppeteer_recursive_crawl/puppeteer_recursive_crawl.js');
+        require('../examples/puppeteer_recursive_crawl/puppeteer_recursive_crawl.js');
         await exampleFunc();
 
         const titles = logs.filter(log => log.includes('Title of'));
@@ -344,7 +342,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     test('should map example runnable code works', async () => {
         const dataset = await Apify.openDataset();
         await dataset.pushData(exampleData);
-        await require('../examples/map_and_reduce/map.js');
+        require('../examples/map_and_reduce/map.js');
         await exampleFunc();
 
         const { key, storeValue } = kvStoreData[0];
@@ -359,7 +357,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     test('should reduce example runnable code works', async () => {
         const dataset = await Apify.openDataset();
         await dataset.pushData(exampleData);
-        await require('../examples/map_and_reduce/reduce.js');
+        require('../examples/map_and_reduce/reduce.js');
         await exampleFunc();
 
         const { key, storeValue } = kvStoreData[0];
@@ -372,7 +370,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
 
     test('should puppeteer crawler example runnable code works', async () => {
-        await require('../examples/puppeteer_crawler/puppeteer_crawler.js');
+        require('../examples/puppeteer_crawler/puppeteer_crawler.js');
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
@@ -388,7 +386,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should puppeteer sitemap example runnable code works', async () => {
-        await require('../examples/puppeteer_sitemap/puppeteer_sitemap.js');
+        require('../examples/puppeteer_sitemap/puppeteer_sitemap.js');
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
@@ -403,7 +401,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should puppeteer with proxy example runnable code works', async () => {
-        await require('../examples/puppeteer_with_proxy/puppeteer_with_proxy.js');
+        require('../examples/puppeteer_with_proxy/puppeteer_with_proxy.js');
         await exampleFunc();
 
         const titleLog = logs.find(log => log.includes('Page title:'));
@@ -417,7 +415,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         const input = { sources: [{ url: 'https://www.google.com' }, { url: 'https://www.duckduckgo.com' }] };
         await kvStore.setValue('INPUT', input);
 
-        await require('../examples/screenshots/screenshots.js');
+        require('../examples/screenshots/screenshots.js');
         await exampleFunc();
 
         const { sources } = input;
@@ -434,7 +432,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('should synchronous run example runnable code works', async () => {
-        await require('../examples/synchronous_run/synchronous_run.js');
+        require('../examples/synchronous_run/synchronous_run.js');
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
