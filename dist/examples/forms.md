@@ -50,5 +50,8 @@ Apify.main(async () => {
 
     // Store data in default dataset
     await Apify.pushData(results);
+
+    // Close browser
+    await browser.close();
 });
 ```
