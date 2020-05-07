@@ -7,7 +7,7 @@
 const Apify = require('apify');
 const { handleStart, handleList, handleDetail } = require('./src/routes');
 
-const { utils: { log, createRequestDebugInfo } } = Apify;
+const { utils: { log } } = Apify;
 
 Apify.main(async () => {
     const { startUrls } = await Apify.getInput();
@@ -40,14 +40,6 @@ Apify.main(async () => {
                 default:
                     return handleStart(context);
             }
-        },
-        handleFailedRequestFunction: async ({ request, error }) => {
-            const { url, userData: { label } } = request;
-            log.exception(error, 'Failed to process request.', { label, url });
-            // Remove the below lines if you absolutely need to have no other items
-            // in dataset than results. Otherwise, keep it. It's useful for debugging.
-            const debugInfo = createRequestDebugInfo(request, {}, request.userData);
-            await Apify.pushData({ '#error': true, '#debug': debugInfo });
         },
     });
 
