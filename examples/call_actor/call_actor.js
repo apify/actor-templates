@@ -7,13 +7,13 @@ Apify.main(async () => {
     console.log('Obtaining email address...');
     const user = await Apify.client.users.getUser();
 
-    // Load Kraken.com charts and get last traded price of BTC
-    console.log('Extracting data from kraken.com...');
+    // Load randomword.com and get a random word
+    console.log('Fetching a random word.');
     const page = await browser.newPage();
-    await page.goto('https://www.kraken.com/charts');
-    const tradedPricesHtml = await page.$eval('#ticker-top ul', el => el.outerHTML);
+    await page.goto('https://randomword.com/');
+    const randomWord = await page.$eval('#shared_section', el => el.outerHTML);
 
-    // Send prices to your email. For that, you can use an actor we already
+    // Send random word to your email. For that, you can use an actor we already
     // have available on the platform under the name: apify/send-mail.
     // The second parameter to the Apify.call() invocation is the actor's
     // desired input. You can find the required input parameters by checking
@@ -21,8 +21,8 @@ Apify.main(async () => {
     console.log(`Sending email to ${user.email}...`);
     await Apify.call('apify/send-mail', {
         to: user.email,
-        subject: 'Kraken.com BTC',
-        html: `<h1>Kraken.com BTC</h1>${tradedPricesHtml}`,
+        subject: 'Random Word',
+        html: `<h1>Random Word</h1>${randomWord}`,
     });
     console.log('Email sent. Good luck!');
 

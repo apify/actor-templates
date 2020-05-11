@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+
 const Apify = require('apify');
 const { ENV_VARS } = require('apify-shared/consts');
 const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
@@ -22,10 +24,11 @@ let prevEnvHeadless;
 
 describe('Examples - testing runnable codes behaviour ', () => {
     let localStorageEmulator;
-    let exampleFunc; let
-        callData;
-    let dataSetData = []; let kvStoreData = []; let
-        logs = [];
+    let exampleFunc;
+    let callData;
+    let dataSetData = [];
+    let kvStoreData = [];
+    let logs = [];
 
     beforeAll(async () => {
         prevEnvHeadless = process.env[ENV_VARS.HEADLESS];
@@ -41,7 +44,11 @@ describe('Examples - testing runnable codes behaviour ', () => {
             });
         };
         Apify.pushData = (data) => {
-            Array.isArray(data) ? dataSetData = data : dataSetData.push(data);
+            if (Array.isArray(data)) {
+                dataSetData = data;
+            } else {
+                dataSetData.push(data);
+            }
         };
         Apify.call = (act, input) => {
             callData = { act, input };
@@ -138,11 +145,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
         expect(to).toBe(email);
         expect(html).toBeTruthy();
-        expect(html.includes('<div class="key">Last</div>')).toBe(true);
-        expect(html.includes('<div class="key">High</div>')).toBe(true);
-        expect(html.includes('<div class="key">Low</div>')).toBe(true);
-        expect(html.includes('<div class="key">24 Hour Volume</div>')).toBe(true);
-        expect(html.includes('<div class="key">Weighted Avg</div>')).toBe(true);
+        expect(html).toContain('<div id="random_word">');
+        expect(html).toContain('<div id="random_word_definition">');
 
         Apify.client.users.getUser = originalGetUser;
     });
