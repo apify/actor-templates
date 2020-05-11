@@ -1,77 +1,49 @@
+/**
+ * This template is a production ready boilerplate for developing with `CheerioCrawler`.
+ * Use this to bootstrap your projects using the most up-to-date code.
+ * If you're looking for examples or want to learn more, see README.
+ */
+
 const Apify = require('apify');
+const { handleStart, handleList, handleDetail } = require('./src/routes');
 
-// Apify.utils contains various utilities, e.g. for logging.
-// Here we turn off the logging of unimportant messages.
-const { log } = Apify.utils;
-log.setLevel(log.LEVELS.WARNING);
+const { utils: { log } } = Apify;
 
-// Apify.main() function wraps the crawler logic (it is optional).
 Apify.main(async () => {
-    // Create and initialize an instance of the RequestList class that contains
-    // a list of URLs to crawl. Here we use just a few hard-coded URLs.
-    const requestList = new Apify.RequestList({
-        sources: [
-            { url: 'http://www.google.com/' },
-            { url: 'http://www.example.com/' },
-            { url: 'http://www.bing.com/' },
-            { url: 'http://www.wikipedia.com/' },
-        ],
-    });
-    await requestList.initialize();
+    const { startUrls } = await Apify.getInput();
 
-    // Create an instance of the CheerioCrawler class - a crawler
-    // that automatically loads the URLs and parses their HTML using the cheerio library.
+    const requestList = await Apify.openRequestList('start-urls', startUrls);
+    const requestQueue = await Apify.openRequestQueue();
+
     const crawler = new Apify.CheerioCrawler({
-        // Let the crawler fetch URLs from our list.
         requestList,
-
-        // The crawler downloads and processes the web pages in parallel, with a concurrency
-        // automatically managed based on the available system memory and CPU (see AutoscaledPool class).
-        // Here we define some hard limits for the concurrency.
-        minConcurrency: 10,
+        requestQueue,
+        useApifyProxy: true,
+        useSessionPool: true,
+        persistCookiesPerSession: true,
+        // Be nice to the websites.
+        // Remove to unleash full power.
         maxConcurrency: 50,
-
-        // On error, retry each page at most once.
-        maxRequestRetries: 1,
-
-        // Increase the timeout for processing of each page.
-        handlePageTimeoutSecs: 60,
-
-        // This function will be called for each URL to crawl.
-        // It accepts a single parameter, which is an object with the following fields:
-        // - request: an instance of the Request class with information such as URL and HTTP method
-        // - html: contains raw HTML of the page
-        // - $: the cheerio object containing parsed HTML
-        handlePageFunction: async ({ request, html, $ }) => {
-            console.log(`Processing ${request.url}...`);
-
-            // Extract data from the page using cheerio.
-            const title = $('title').text();
-            const h1texts = [];
-            $('h1').each((index, el) => {
-                h1texts.push({
-                    text: $(el).text(),
-                });
-            });
-
-            // Store the results to the default dataset. In local configuration,
-            // the data will be stored as JSON files in ./apify_storage/datasets/default
-            await Apify.pushData({
-                url: request.url,
-                title,
-                h1texts,
-                html,
-            });
-        },
-
-        // This function is called if the page processing failed more than maxRequestRetries+1 times.
-        handleFailedRequestFunction: async ({ request }) => {
-            console.log(`Request ${request.url} failed twice.`);
+        // You can remove this if you won't
+        // be scraping any JSON endpoints.
+        additionalMimeTypes: [
+            'application/json',
+        ],
+        handlePageFunction: async (context) => {
+            const { url, userData: { label } } = context.request;
+            log.info('Page opened.', { label, url });
+            switch (label) {
+                case 'LIST':
+                    return handleList(context);
+                case 'DETAIL':
+                    return handleDetail(context);
+                default:
+                    return handleStart(context);
+            }
         },
     });
 
-    // Run the crawler and wait for it to finish.
+    log.info('Starting the crawl.');
     await crawler.run();
-
-    console.log('Crawler finished.');
+    log.info('Crawl finished.');
 });

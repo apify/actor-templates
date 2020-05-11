@@ -1,12 +1,11 @@
-# My beautiful actor
+# CheerioCrawler project
 
-The `README.md` file contains a documentation what your actor does and how to use it,
-which is then displayed in the app or Apify Store. It's always a good
-idea to write a good `README.md`, in a few months not even you
-will remember all the details about the actor.
+This template is a production ready boilerplate for developing with `PuppeteerCrawler`.
+Use this to bootstrap your projects using the most up-to-date code.
 
-You can use [Markdown](https://www.markdownguide.org/cheat-sheet)
-language for rich formatting.
+If you're looking for examples or want to learn more visit:
+- [Documentation](https://sdk.apify.com/docs/api/puppeteer-crawler) 
+- [Examples](https://sdk.apify.com/docs/examples/puppeteer-crawler) 
 
 ## Documentation reference
 
