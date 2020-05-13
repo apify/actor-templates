@@ -23,7 +23,7 @@ Apify.main(async () => {
     const basicCrawler = new Apify.BasicCrawler({
         requestList,
         handleRequestFunction: async ({ request }) => {
-            const { body } = await Apify.utils.requestAsBrowser({url: request.url});
+            const { body } = await Apify.utils.requestAsBrowser({ url: request.url });
             await Apify.pushData({
                 request,
                 finishedAt: new Date(),

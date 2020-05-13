@@ -1,11 +1,11 @@
 /**
- * This template is a production ready boilerplate for developing with `PuppeteerCrawler`.
+ * This template is a production ready boilerplate for developing with `CheerioCrawler`.
  * Use this to bootstrap your projects using the most up-to-date code.
  * If you're looking for examples or want to learn more, see README.
  */
 
 const Apify = require('apify');
-const { handleStart, handleList, handleDetail } = require('./src/routes');
+const { handleStart, handleList, handleDetail } = require('./routes');
 
 const { utils: { log } } = Apify;
 
@@ -15,18 +15,20 @@ Apify.main(async () => {
     const requestList = await Apify.openRequestList('start-urls', startUrls);
     const requestQueue = await Apify.openRequestQueue();
 
-    const crawler = new Apify.PuppeteerCrawler({
+    const crawler = new Apify.CheerioCrawler({
         requestList,
         requestQueue,
+        useApifyProxy: true,
         useSessionPool: true,
         persistCookiesPerSession: true,
-        launchPuppeteerOptions: {
-            useApifyProxy: true,
-            // Chrome with stealth should work for most websites.
-            // If it doesn't, feel free to remove this.
-            useChrome: true,
-            stealth: true,
-        },
+        // Be nice to the websites.
+        // Remove to unleash full power.
+        maxConcurrency: 50,
+        // You can remove this if you won't
+        // be scraping any JSON endpoints.
+        additionalMimeTypes: [
+            'application/json',
+        ],
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;
             log.info('Page opened.', { label, url });
