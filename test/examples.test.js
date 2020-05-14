@@ -22,6 +22,8 @@ const exampleData = [
 ];
 let prevEnvHeadless;
 
+jest.retryTimes(3);
+
 describe('Examples - testing runnable codes behaviour ', () => {
     let localStorageEmulator;
     let exampleFunc;

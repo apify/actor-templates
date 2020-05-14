@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/apifytech/actor-templates#readme",
   "dependencies": {
-    "apify": "^0.20.2",
-    "apify-shared": "^0.2.8",
+    "apify": "^0.20.4",
+    "apify-shared": "^0.2.15",
     "archiver-promise": "^1.0.0",
     "globby": "^11.0.0",
     "mustache": "^4.0.1",
@@ -30,12 +30,13 @@
   },
   "devDependencies": {
     "@apify/eslint-config": "^0.0.3",
-    "chai": "^4.0.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "eslint": "^7.0.0",
+    "jest": "^26.0.1",
+    "jest-circus": "^26.0.1",
     "load-json-file": "^6.2.0",
     "recursive-copy": "^2.0.10",
-    "sinon": "^9.0.0",
-    "jest": "^24.9.0",
-    "eslint": "^6.8.0"
+    "sinon": "^9.0.2"
   }
 }
