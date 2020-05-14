@@ -1,6 +1,6 @@
 {
-  "name": "actor-templates",
-  "version": "1.0.0",
+  "name": "@apify/actor-templates",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,22 +21,21 @@
   },
   "homepage": "https://github.com/apifytech/actor-templates#readme",
   "dependencies": {
-    "apify": "^0.20.4",
-    "apify-shared": "^0.2.15",
-    "archiver-promise": "^1.0.0",
-    "globby": "^11.0.0",
-    "mustache": "^4.0.1",
-    "rimraf": "^3.0.2"
+    "@apify/http-request": "^1.2.0"
   },
   "devDependencies": {
     "@apify/eslint-config": "^0.0.3",
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
+    "apify": "^0.20.4",
+    "apify-shared": "^0.2.15",
+    "archiver-promise": "^1.0.0",
     "eslint": "^7.0.0",
+    "globby": "^11.0.0",
     "jest": "^26.0.1",
     "jest-circus": "^26.0.1",
     "load-json-file": "^6.2.0",
+    "mustache": "^4.0.1",
     "recursive-copy": "^2.0.10",
+    "rimraf": "^3.0.2",
     "sinon": "^9.0.2"
   }
 }

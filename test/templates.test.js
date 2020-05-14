@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const fs = require('fs');
 const sinon = require('sinon');
 const path = require('path');
@@ -20,23 +19,23 @@ const checkTemplateStructureAndRun = async (actorName) => {
 
     const apifyJsonPath = path.join(actorName, 'apify.json');
     // Check files structure
-    expect(fs.existsSync(actorName)).to.be.true;
-    expect(fs.existsSync(path.join(actorName, 'package.json'))).to.be.true;
-    expect(fs.existsSync(apifyJsonPath)).to.be.true;
+    expect(fs.existsSync(actorName)).toBe(true);
+    expect(fs.existsSync(path.join(actorName, 'package.json'))).toBe(true);
+    expect(fs.existsSync(apifyJsonPath)).toBe(true);
 
     // Check if template has the latest apify package version
     const apifyModulePackageJson = path.join(actorName, 'node_modules', 'apify', 'package.json');
-    expect(loadJson.sync(apifyModulePackageJson).version).to.be.eql(APIFY_LATEST_VERSION);
+    expect(loadJson.sync(apifyModulePackageJson).version).toEqual(APIFY_LATEST_VERSION);
 
     // Check if actor was created without errors
-    expect(console.log.args.map(arg => arg[0])).to.not.include('Error:');
+    expect(console.log.args.map(arg => arg[0])).not.toContain('Error:');
 
     process.chdir(actorName);
     spawnSync('apify', ['run']);
     process.chdir('../');
 
     // Check if actor run without errors
-    expect(console.log.args.map(arg => arg[0])).to.not.include('Error:');
+    expect(console.log.args.map(arg => arg[0])).not.toContain('Error:');
 };
 
 let prevEnvHeadless;
