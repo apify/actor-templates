@@ -10,3 +10,5 @@ exports.fetchManifest = async () => {
     });
     return body;
 };
+
+exports.manifestUrl = MANIFEST_URL;
