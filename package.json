@@ -1,8 +1,11 @@
 {
   "name": "@apify/actor-templates",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "A manifest of Apify actor templates.",
+  "main": "src/index.js",
+  "files": [
+    "src/index.js"
+  ],
   "scripts": {
     "test": "jest --testTimeout=60000 --forceExit",
     "build": "node ./src/build.js"
@@ -13,14 +16,15 @@
   },
   "author": "Jakub Drobnik <jakub.drobnik@apify.com>",
   "contributors": [
-    "Jan Bárta <jan.barta@apify.com>"
+    "Jan Bárta <jan.barta@apify.com>",
+    "Ondra Urban <ondra@apify.com>"
   ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/apifytech/actor-templates/issues"
   },
   "homepage": "https://github.com/apifytech/actor-templates#readme",
-  "dependencies": {
+  "peerDependencies": {
     "@apify/http-request": "^1.2.0"
   },
   "devDependencies": {

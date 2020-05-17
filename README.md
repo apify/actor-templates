@@ -22,29 +22,39 @@ apify create my-hello-world --template basic_crawler
 It creates a boilerplate template in your current director with a basic_crawler template.
 You can check Apify command-line client documentation for more details.
 
+### Fetching information about the templates
+
+The [template manifest](./templates/manifest.json) can be fetched programmatically.
+Apify CLI uses this to always fetch the most up to date templates.
+
+```
+npm i @apify/actor-templates
+```
+
+```js
+const templates = require('@apify/actor-templates');
+
+const manifest = await templates.fetchManifest(); 
+```
+
 ## Publish updated/new template
 
 All templates are stores in `./templates` directory.
-For each template needs to create an archive of whole source code into `./build` directory.
+For each template needs to create an archive of whole source code into `./dist/templates` directory.
 The archive is used to to create a boilerplate template in apify CLI or other places in Apify system.
-Metadata same as URL of template archive is store in the [apify-shared package](https://github.com/apifytech/apify-shared-js/blob/master/src/consts.js#L479).
 
-### Update
+### Update and add templates
 
-If you want to change template, you need to update their structure and them push it to master.
-After committing to master, the archive will be automatically build using Github actions pipeline.
-
-### New
-
-If you want to create a new template, you need to add a new folder into `./templates`.
-Then you need to do stuff as for updating template.
-If you want to propagate this template to Apify system, you need to add template metadata to [apify-shared package](https://github.com/apifytech/apify-shared-js/blob/master/src/consts.js#L479).
+If you want to change template, you need to update the files and [`manifest.json`](./templates/manifest.json)
+and then push to master. After pushing to master, the archive will be automatically built using Github actions.
 
 ## How to propagate templates into Apify CLI
 
-Selected templates defined in [apify-shared package](https://github.com/apifytech/apify-shared-js/blob/master/src/consts.js#L479) are propagated to Apify CLI templates, you can choose these templates using `apify create` command.
-The propagation happens after committing a new version of templates into `master` branch. After tests succeeded the Github action build archives of each template and pushed these archives into the repository. The CLI command them directly download archive depends on templates and use it as boilerplate.
-We did it this way because we can update template structure/code without publishing any package to npm. It makes templates changes agile.
+Templates are propagated to Apify CLI templates, you can choose one of the templates when using the `apify create` command.
+The propagation happens after committing a new version of templates into `master` branch. After tests succeeded the Github action
+builds archives of each template and pushes these archives into the repository. The CLI command then uses those archives
+to bootstrap your project folder. We did it this way because we can update template structure/code without publishing
+any package to npm. It makes templates changes agile.
 
 ## Reference
 - [Apify Actor documentation](https://docs.apify.com/actor)
