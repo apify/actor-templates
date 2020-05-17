@@ -8,6 +8,6 @@ const { buildExamples } = require('./build_examples');
     console.log('Templates zips were created!');
 
     // build examples
-    // await buildExamples();
-    // console.log('Example markdowns were created!');
+    await buildExamples();
+    console.log('Example markdowns were created!');
 })();
