@@ -1,0 +1,67 @@
+{
+  "templates": [
+    {
+      "name": "Project: Empty - Standard and up to date project template with very little boilerplate code.",
+      "value": "project_empty",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/project_empty.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 3600,
+        "memoryMbytes": 2048
+      }
+    },
+    {
+      "name": "Project: CheerioCrawler - Standard and up to date template for developing with CheerioCrawler.",
+      "value": "project_cheerio_crawler",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/project_cheerio_crawler.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 3600,
+        "memoryMbytes": 512
+      },
+      "skipOptionalDeps": true
+    },
+    {
+      "name": "Project: PuppeteerCrawler - Standard and up to date template for developing with PuppeteerCrawler.",
+      "value": "project_puppeteer_crawler",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/project_puppeteer_crawler.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 0,
+        "memoryMbytes": 2048
+      }
+    },
+    {
+      "name": "Example: Hello world - The smallest actor you will see today, it only takes input and generates output.",
+      "value": "example_hello_world",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/example_hello_world.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 0,
+        "memoryMbytes": 256
+      },
+      "skipOptionalDeps": true
+    },
+    {
+      "name": "Example: BasicCrawler - Crawl a list of URLs using raw HTTP requests.",
+      "value": "example_basic_crawler",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/example_basic_crawler.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 3600,
+        "memoryMbytes": 512
+      },
+      "skipOptionalDeps": true
+    },
+    {
+      "name": "Example: Puppeteer single page - Load a single web page using Chrome and Puppeteer and extract data from it.",
+      "value": "example_puppeteer_single_page",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/example_puppeteer_single_page.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 0,
+        "memoryMbytes": 2048
+      }
+    }
+  ]
+}

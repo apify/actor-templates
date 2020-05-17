@@ -1,5 +1,5 @@
 {
-    "name": "my-awesome-actor",
+    "name": "project-cheerio-crawler",
     "version": "0.0.1",
     "description": "This is a boilerplate of an Apify actor.",
     "dependencies": {
@@ -11,8 +11,6 @@
     },
     "scripts": {
         "start": "node src/main.js",
-        "lint": "./node_modules/.bin/eslint ./src --ext .js,.jsx",
-        "lint:fix": "./node_modules/.bin/eslint ./src --ext .js,.jsx --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",

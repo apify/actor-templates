@@ -1,7 +1,7 @@
 {
-    "name": "my-awesome-actor",
+    "name": "example-hello-world",
     "version": "0.0.1",
-    "description": "This is a boilerplate of an Apify actor.",
+    "description": "This is an example of an Apify actor.",
     "dependencies": {
         "apify": "^0.20.0"
     },
