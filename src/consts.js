@@ -1,13 +1,6 @@
 const path = require('path');
 
-const TEMPLATE_NAMES = [
-    'apify_project',
-    'basic_crawler',
-    'cheerio_crawler',
-    'hello_world',
-    'puppeteer_crawler',
-    'puppeteer_single_page',
-];
+const TEMPLATE_NAMES = require('../templates/manifest').templates.map(t => t.name);
 
 const BUILD_DIR_NAME = 'build';
 const TEMPLATES_DIR_NAME = 'templates';
