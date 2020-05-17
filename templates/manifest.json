@@ -3,7 +3,7 @@
     {
       "name": "project_empty",
       "description": "Project: Empty - Standard and up to date project template with very little boilerplate code.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/project_empty.zip?raw=true",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
         "timeoutSecs": 3600,
@@ -13,7 +13,7 @@
     {
       "name": "project_cheerio_crawler",
       "description": "Project: CheerioCrawler - Standard and up to date template for developing with CheerioCrawler.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/project_cheerio_crawler.zip?raw=true",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_cheerio_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
         "timeoutSecs": 3600,
@@ -24,7 +24,7 @@
     {
       "name": "project_puppeteer_crawler",
       "description": "Project: PuppeteerCrawler - Standard and up to date template for developing with PuppeteerCrawler.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/project_puppeteer_crawler.zip?raw=true",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_puppeteer_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
         "timeoutSecs": 0,
@@ -34,7 +34,7 @@
     {
       "name": "example_hello_world",
       "description": "Example: Hello world - The smallest actor you will see today, it only takes input and generates output.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/example_hello_world.zip?raw=true",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_hello_world.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
         "timeoutSecs": 0,
@@ -45,7 +45,7 @@
     {
       "name": "example_basic_crawler",
       "description": "Example: BasicCrawler - Crawl a list of URLs using raw HTTP requests.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/example_basic_crawler.zip?raw=true",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_basic_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
         "timeoutSecs": 3600,
@@ -56,7 +56,7 @@
     {
       "name": "example_puppeteer_single_page",
       "description": "Example: Puppeteer single page - Load a single web page using Chrome and Puppeteer and extract data from it.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/build/example_puppeteer_single_page.zip?raw=true",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_puppeteer_single_page.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
         "timeoutSecs": 0,
