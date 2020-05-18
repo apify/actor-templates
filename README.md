@@ -27,9 +27,9 @@ apify run
 The example templates provide a quick and easy way to get to know Apify actors.
 Just install the CLI and watch your actor run.
 
-- [Hello world](./templates/example_hello_world) -The smallest actor you will see today, it only takes input and generates output.
+- [Hello world](./templates/example_hello_world) - The smallest actor you will see today, it only takes input and generates output.
 - [Puppeteer single page](./templates/example_puppeteer_single_page) - Load a single web page using Chrome and Puppeteer and extract data from it.
-- [Basic crawler](./templates/example_basic_crawler) - Crawl a list of URLs using raw HTTP requests and Cheerio HTML parser.
+- [Basic crawler](./templates/example_basic_crawler) - Crawl a list of URLs using raw HTTP requests.
 
 You can find more code examples in the [examples folder](./examples) and in the
 [Apify SDK documentation](https://sdk.apify.com/docs/examples/puppeteer-crawler/).
