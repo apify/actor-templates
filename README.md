@@ -4,25 +4,44 @@
 > This repository stores boilerplate templates and code examples for [Apify Actor](https://apify.com/actors).
   The template helps you to get started with your Apify project quickly.
 
-- [Hello world](./templates/hello_world) -The smallest actor you will see today, it only takes input and generates output.
-- [Puppeteer crawler](./templates/puppeteer_crawler) - Recursively crawl a website using Chrome and Puppeteer.
-- [Puppeteer single page](./templates/puppeteer_single_page) - Load a single web page using Chrome and Puppeteer and extract data from it.
-- [Cheerio crawler](./templates/cheerio_crawler) - Recursively crawl a website using raw HTTP requests and Cheerio HTML parser.
-- [Basic crawler](./templates/basic_crawler) - Crawl a list of URLs using raw HTTP requests and Cheerio HTML parser.
-- [Apify project](./templates/apify_project) - Standardized template containing boilerplate and code style rules used for Apify Marketplace projects.
+## How to use the templates
 
-## Usage
-
-You can start using them right away in Apify command-line client:
+You can start using them right away in Apify command-line interface:
 
 ```
 npm -g install apify-cli
-apify create my-hello-world --template basic_crawler
+apify create my-actor
 ```
-It creates a boilerplate template in your current director with a basic_crawler template.
-You can check Apify command-line client documentation for more details.
 
-### Fetching information about the templates
+It displays an interactive list of templates for you to choose from.
+See [Apify CLI documentation](https://docs.apify.com/cli) for more details.
+
+To run the template:
+
+```
+cd my-actor
+apify run
+```
+
+## Example templates
+The example templates provide a quick and easy way to get to know Apify actors.
+Just install the CLI and watch your actor run.
+
+- [Hello world](./templates/example_hello_world) -The smallest actor you will see today, it only takes input and generates output.
+- [Puppeteer single page](./templates/example_puppeteer_single_page) - Load a single web page using Chrome and Puppeteer and extract data from it.
+- [Basic crawler](./templates/example_basic_crawler) - Crawl a list of URLs using raw HTTP requests and Cheerio HTML parser.
+
+You can find more code examples in the [examples folder](./examples) and in the
+[Apify SDK documentation](https://sdk.apify.com/docs/examples/puppeteer-crawler/).
+
+## Project boilerplate
+If you're already familiar with actors, you can use the following templates to bootstrap new projects quickly:
+
+- [Empty project](./templates/project_empty) - Template with very little boilerplate code.
+- [Cheerio crawler](./templates/project_cheerio_crawler) - Standard and up to date template for developing with CheerioCrawler.
+- [Puppeteer crawler](./templates/project_puppeteer_crawler) - Standard and up to date template for developing with PuppeteerCrawler.
+
+## Templates API
 
 The [template manifest](./templates/manifest.json) can be fetched programmatically.
 Apify CLI uses this to always fetch the most up to date templates.
