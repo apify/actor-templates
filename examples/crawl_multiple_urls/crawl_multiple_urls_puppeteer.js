@@ -9,8 +9,9 @@ Apify.main(async () => {
             { url: 'http://www.example.com/page-3' },
         ]);
     // Function called for each URL
-    const handlePageFunction = async ({ request }) => {
-        console.log(request.url);
+    const handlePageFunction = async ({ request, page }) => {
+        const title = await page.title();
+        console.log(`URL: ${request.url}\nTITLE: ${title}`);
     };
     // Create a PuppeteerCrawler
     const crawler = new Apify.PuppeteerCrawler({

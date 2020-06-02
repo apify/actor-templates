@@ -7,12 +7,6 @@ This example crawls the specified list of URLs.
 
 <!--DOCUSAURUS_CODE_TABS-->
 
-<!-- BasicCrawler -->
-\
-Using `BasicCrawler`:
-
-{{#code}}crawl_multiple_urls_basic.js{{/code}}
-
 <!-- CheerioCrawler -->
 \
 Using `CheerioCrawler`:
@@ -27,6 +21,12 @@ Using `PuppeteerCrawler`:
  >base image on the **Source** tab when configuring the actor.
 
 {{#code}}crawl_multiple_urls_puppeteer.js{{/code}}
+
+<!-- BasicCrawler -->
+\
+Using `BasicCrawler`:
+
+{{#code}}crawl_multiple_urls_basic.js{{/code}}
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 

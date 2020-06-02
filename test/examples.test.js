@@ -267,7 +267,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_multiple_urls/crawl_multiple_urls_basic.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter(log => log.match('<title>Example Domain</title>'));
         expect(crawledUrls.length).toBe(3);
     });
 
@@ -275,7 +275,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_multiple_urls/crawl_multiple_urls_cheerio.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter(log => log.match('TITLE: Example Domain'));
         expect(crawledUrls.length).toBe(3);
     });
 
@@ -283,7 +283,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_multiple_urls/crawl_multiple_urls_puppeteer.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter(log => log.match('TITLE: Example Domain'));
         expect(crawledUrls.length).toBe(3);
     });
 

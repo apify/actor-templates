@@ -10,7 +10,8 @@ Apify.main(async () => {
         ]);
     // Function called for each URL
     const handleRequestFunction = async ({ request }) => {
-        console.log(request.url);
+        const { body } = await Apify.utils.requestAsBrowser(request);
+        console.log(`URL: ${request.url}\nHTML:\n${body}`);
     };
     // Create a BasicCrawler
     const crawler = new Apify.BasicCrawler({
