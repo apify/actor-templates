@@ -25,14 +25,16 @@
   },
   "homepage": "https://github.com/apifytech/actor-templates#readme",
   "peerDependencies": {
-    "@apify/http-request": "^1.2.0"
+    "@apify/http-request": "^2.0.0"
   },
   "devDependencies": {
     "@apify/eslint-config": "^0.0.3",
-    "apify": "^0.20.4",
+    "@types/fs-extra": "^9.0.1",
+    "apify": "beta",
     "apify-shared": "^0.2.15",
     "archiver-promise": "^1.0.0",
     "eslint": "^7.0.0",
+    "fs-extra": "^9.0.1",
     "globby": "^11.0.0",
     "jest": "^26.0.1",
     "jest-circus": "^26.0.1",

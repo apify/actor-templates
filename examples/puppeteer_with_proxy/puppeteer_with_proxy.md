@@ -6,9 +6,8 @@ title: Puppeteer with proxy
  This example demonstrates how to load pages in headless Chrome / Puppeteer
  over [Apify Proxy](https://docs.apify.com/proxy).
  To make it work, you'll need an Apify account with access to the proxy.
- The proxy password is available on the [Proxy](https://my.apify.com/proxy) page in the app.
- Just set it to the [`APIFY_PROXY_PASSWORD`](/docs/guides/environment-variables#apify_proxy_password)
- environment variable or run the script using the CLI.
+ Visit the [Apify platform introduction](/docs/guides/apify-platform) to find
+ how to log into your account from the SDK.
 
  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
  >base image on the **Source** tab when configuring the actor.
