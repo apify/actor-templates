@@ -33,7 +33,6 @@ class LocalStorageDirEmulator {
         await this._ensureStructure(localStorageDir);
         process.env.APIFY_LOCAL_STORAGE_DIR = localStorageDir;
         this.localStorageDirs.push(localStorageDir);
-        console.debug(`Created local storage emulation in folder ${localStorageDir}`);
         return localStorageDir;
     }
 
