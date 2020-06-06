@@ -30,7 +30,7 @@
   "devDependencies": {
     "@apify/eslint-config": "^0.0.3",
     "@types/fs-extra": "^9.0.1",
-    "apify": "beta",
+    "apify": "^0.21.0",
     "apify-shared": "^0.2.15",
     "archiver-promise": "^1.0.0",
     "eslint": "^7.0.0",
