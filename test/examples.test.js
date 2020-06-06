@@ -60,8 +60,11 @@ describe('Examples - testing runnable codes behaviour ', () => {
         };
     });
 
-    beforeEach(async () => {
+    beforeAll(() => {
         localStorageEmulator = new LocalStorageDirEmulator();
+    });
+
+    beforeEach(async () => {
         await localStorageEmulator.init();
         const queue = await Apify.openRequestQueue();
         await queue.drop();
@@ -69,7 +72,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
 
     afterEach(async () => {
-        await localStorageEmulator.clean();
         dataSetData = [];
         kvStoreData = [];
         logs = [];

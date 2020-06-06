@@ -1,25 +1,21 @@
 const Apify = require('apify');
 
 Apify.main(async () => {
-    // Apify.launchPuppeteer() is similar to Puppeteer's launch() function.
-    // It accepts the same parameters and returns a preconfigured Puppeteer.Browser instance.
-    // Moreover, it accepts several additional options, such as useApifyProxy.
-    const options = {
-        useApifyProxy: true,
-    };
-    const browser = await Apify.launchPuppeteer(options);
+    const requestList = await Apify.openRequestList('my-list', [
+        'https://en.wikipedia.org/wiki/Main_Page',
+    ]);
+    const proxyConfiguration = await Apify.createProxyConfiguration();
+
+    const crawler = new Apify.PuppeteerCrawler({
+        requestList,
+        proxyConfiguration,
+        handlePageFunction: async ({ page }) => {
+            const title = await page.title();
+            console.log(`Page title: ${title}`);
+        },
+    });
 
     console.log('Running Puppeteer script...');
-
-    // Proceed with a plain Puppeteer script.
-    const page = await browser.newPage();
-    const url = 'https://en.wikipedia.org/wiki/Main_Page';
-    await page.goto(url);
-    const title = await page.title();
-
-    console.log(`Page title: ${title}`);
-
-    // Cleaning up after yourself is always good.
-    await browser.close();
+    await crawler.run();
     console.log('Puppeteer closed.');
 });

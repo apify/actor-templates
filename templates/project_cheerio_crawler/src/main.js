@@ -14,11 +14,12 @@ Apify.main(async () => {
 
     const requestList = await Apify.openRequestList('start-urls', startUrls);
     const requestQueue = await Apify.openRequestQueue();
+    const proxyConfiguration = await Apify.createProxyConfiguration();
 
     const crawler = new Apify.CheerioCrawler({
         requestList,
         requestQueue,
-        useApifyProxy: true,
+        proxyConfiguration,
         useSessionPool: true,
         persistCookiesPerSession: true,
         // Be nice to the websites.
