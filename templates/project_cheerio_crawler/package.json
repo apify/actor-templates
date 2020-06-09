@@ -6,7 +6,7 @@
         "apify": "^0.21.0"
     },
     "devDependencies": {
-        "@apify/eslint-config": "0.0.3",
+        "@apify/eslint-config": "0.1.0",
         "eslint": "^7.0.0"
     },
     "scripts": {
