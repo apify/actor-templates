@@ -28,7 +28,7 @@
     "@apify/http-request": "^2.0.0"
   },
   "devDependencies": {
-    "@apify/eslint-config": "^0.0.3",
+    "@apify/eslint-config": "^0.1.0",
     "@types/fs-extra": "^9.0.1",
     "apify": "^0.21.0",
     "apify-shared": "^0.2.15",
