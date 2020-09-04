@@ -12,7 +12,7 @@ Apify.main(async () => {
     // Fill form fields and select desired search options
     console.log('Fill in search form');
     await page.type('#adv_code_search input.js-advanced-search-input', 'apify-js');
-    await page.type('#search_from', 'apifytech');
+    await page.type('#search_from', 'apify');
     await page.type('#search_date', '>2015');
     await page.select('select#search_language', 'JavaScript');
 
