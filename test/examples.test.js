@@ -70,7 +70,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await queue.drop();
     });
 
-
     afterEach(async () => {
         dataSetData = [];
         kvStoreData = [];
@@ -198,14 +197,15 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         const store = await Apify.openKeyValueStore();
-        let items = 0;
+        let imageCount = 0;
         await store.forEachKey(async (key) => {
-            items++;
-            const storeValue = await store.getValue(key);
-            expect(storeValue).toBeDefined();
-            expect(Buffer.isBuffer(storeValue)).toBe(true);
+            if (/^http.*?www\.example\.com.*?\d$/.test(key)) {
+                imageCount++;
+                const storeValue = await store.getValue(key);
+                expect(Buffer.isBuffer(storeValue)).toBe(true);
+            }
         });
-        expect(items).toBe(4);
+        expect(imageCount).toBe(3);
         await store.drop();
     });
 
@@ -229,7 +229,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_sitemap/crawl_sitemap_basic.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter((log) => log.match(urlRegex));
         expect(crawledUrls.length).toBeGreaterThan(0);
     });
 
@@ -237,7 +237,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_sitemap/crawl_sitemap_cheerio.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter((log) => log.match(urlRegex));
         expect(crawledUrls.length).toBeGreaterThan(0);
     });
 
@@ -245,7 +245,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_sitemap/crawl_sitemap_puppeteer.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter((log) => log.match(urlRegex));
         expect(crawledUrls.length).toBeGreaterThan(0);
     });
 
@@ -253,7 +253,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_all_links/crawl_all_links_cheerio.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter((log) => log.match(urlRegex));
         expect(crawledUrls.length).toBeGreaterThan(0);
     });
 
@@ -261,7 +261,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_all_links/crawl_all_links_puppeteer.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter((log) => log.match(urlRegex));
         expect(crawledUrls.length).toBeGreaterThan(0);
     });
 
@@ -269,7 +269,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_multiple_urls/crawl_multiple_urls_basic.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match('<title>Example Domain</title>'));
+        const crawledUrls = logs.filter((log) => log.match('<title>Example Domain</title>'));
         expect(crawledUrls.length).toBe(3);
     });
 
@@ -277,7 +277,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_multiple_urls/crawl_multiple_urls_cheerio.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match('TITLE: Example Domain'));
+        const crawledUrls = logs.filter((log) => log.match('TITLE: Example Domain'));
         expect(crawledUrls.length).toBe(3);
     });
 
@@ -285,7 +285,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_multiple_urls/crawl_multiple_urls_puppeteer.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match('TITLE: Example Domain'));
+        const crawledUrls = logs.filter((log) => log.match('TITLE: Example Domain'));
         expect(crawledUrls.length).toBe(3);
     });
 
@@ -293,7 +293,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_relative_links/crawl_relative_links.js');
         await exampleFunc();
 
-        const crawledUrls = logs.filter(log => log.match(urlRegex));
+        const crawledUrls = logs.filter((log) => log.match(urlRegex));
         expect(crawledUrls.length).toBeGreaterThan(0);
     });
 
@@ -311,7 +311,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/crawl_some_links/crawl_some_links_cheerio.js');
         await exampleFunc();
 
-        const successPages = logs.filter(log => log.includes('https://apify.com/'));
+        const successPages = logs.filter((log) => log.includes('https://apify.com/'));
         expect(successPages.length).toBeGreaterThan(0);
     });
 
@@ -333,9 +333,9 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/handle_broken_links/handle_broken_links.js');
         await exampleFunc();
 
-        const successPages = logs.filter(log => log.includes('[success]'));
+        const successPages = logs.filter((log) => log.includes('[success]'));
         expect(successPages.length).toBe(2);
-        const failedPages = logs.filter(log => log.includes('[failed]'));
+        const failedPages = logs.filter((log) => log.includes('[failed]'));
         expect(failedPages.length).toBe(1);
     });
 
@@ -343,7 +343,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/puppeteer_recursive_crawl/puppeteer_recursive_crawl.js');
         await exampleFunc();
 
-        const titles = logs.filter(log => log.includes('Title of'));
+        const titles = logs.filter((log) => log.includes('Title of'));
         expect(titles.length).toBeGreaterThan(0);
     });
 
@@ -375,7 +375,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
         await dataset.drop();
     });
-
 
     test('should puppeteer crawler example runnable code works', async () => {
         require('../examples/puppeteer_crawler/puppeteer_crawler.js');
@@ -412,7 +411,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/puppeteer_with_proxy/puppeteer_with_proxy.js');
         await exampleFunc();
 
-        const titleLog = logs.find(log => log.includes('Page title:'));
+        const titleLog = logs.find((log) => log.includes('Page title:'));
         expect(titleLog).toBeDefined();
         const title = titleLog.split(':')[1];
         expect(title).toBeTruthy();
@@ -431,7 +430,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
             const { url } = source;
             const key = url.replace(/[:/]/g, '_');
 
-            const sourceValue = kvStoreData.find(item => item.key === key);
+            const sourceValue = kvStoreData.find((item) => item.key === key);
             expect(sourceValue).toBeDefined();
 
             const { storeValue } = sourceValue;
