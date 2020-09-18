@@ -3,7 +3,7 @@ id: use-stealth-mode
 title: use-stealth-mode
 ---
 
-Stealth mode allows you to bypass anti-scraping techniques which use [browser fingerprinting](https://pixelprivacy.com/resources/browser-fingerprinting/). It overrides the attributes specified for [headless](https://developers.google.com/web/updates/2017/04/headless-chrome) browser mode, making your headless browser harder to distinguish from normal or headful Chrome. 
+Stealth mode allows you to bypass anti-scraping techniques which use [browser fingerprinting](https://pixelprivacy.com/resources/browser-fingerprinting/). It overrides the attributes specified for [headless](https://developers.google.com/web/updates/2017/04/headless-chrome) browser mode, making your headless browser harder to distinguish from the full Chrome browser. 
 
 To activate stalth mode, set the `headless` and `stealth` parameters in `launchPuppeteerOptions` to `true`.
 
