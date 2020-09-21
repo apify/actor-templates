@@ -455,10 +455,10 @@ describe('Examples - testing runnable codes behaviour ', () => {
         await exampleFunc();
 
         expect(dataSetData.length).toBeGreaterThan(0);
-        dataSetData.forEach((title) => {
-            expect(typeof title.text).toBe('string');
-            expect(title.text).toBeTruthy();
-            expect(title.text.includes('The title is')).toBe(true);
+        dataSetData.forEach((item) => {
+            expect(item).toBeDefined();
+            expect(item).toHaveProperty('title');
+            expect(item.title).toBeTruthy();
         });
     });
 });
