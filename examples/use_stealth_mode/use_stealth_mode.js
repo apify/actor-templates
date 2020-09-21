@@ -42,4 +42,4 @@ Apify.main(async () => {
         },
     });
     await crawler.run();
-})
+});
