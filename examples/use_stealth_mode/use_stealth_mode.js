@@ -2,18 +2,17 @@ const Apify = require('apify');
 
 Apify.main(async () => {
     const requestList = await Apify.openRequestList('my-list', [
-        { url: 'http://www.example.com/page-1' },
-        { url: 'http://www.example.com/page-2' },
-        { url: 'http://www.example.com/page-3' },
+        { url: 'https://news.ycombinator.com/' },
     ]);
 
     const crawler = new Apify.PuppeteerCrawler({
         requestList,
-        launchPuppeteerOptions: {    
-            headless: true,    
-            stealth: true,    
-            useChrome: true,    
-            stealthOptions: {        
+        launchPuppeteerOptions: {
+            headless: true,
+            stealth: true,
+            useChrome: true,
+            // Set stealth options
+            stealthOptions: {
                 addPlugins: false,
                 emulateWindowFrame: false,
                 emulateWebGL: false,
@@ -26,9 +25,20 @@ Apify.main(async () => {
                 mockDeviceMemory: false,
             },
         },
-        handlePageFunction: async ({ request, $ }) => {
-            const title = $('title').text();
-            console.log(`The title of "${request.url}" is: ${title}.`);
+        handlePageFunction: async ({ request, page }) => {
+            const data = await page.$$eval('.athing', $posts => {
+                const scrapedData = [];
+                // Get the title of each post on Hacker News
+                $posts.forEach($post => {
+                    const title = $post.querySelector('.title a').innerText;
+                    scrapedData.push({
+                        title: `The title is: ${title}`,
+                    });
+                });
+                return scrapedData;
+            });
+            // Save the data array to the Apify dataSet
+            await Apify.pushData(data);
         },
     });
     await crawler.run();

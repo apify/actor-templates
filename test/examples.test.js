@@ -449,4 +449,16 @@ describe('Examples - testing runnable codes behaviour ', () => {
             expect(text.includes('Did you know')).toBe(true);
         });
     });
+
+    test('should use stealth mode code works', async () => {
+        require('../examples/use_stealth_mode/use_stealth_mode.js');
+        await exampleFunc();
+
+        expect(dataSetData.length).toBeGreaterThan(0);
+        dataSetData.forEach((text) => {
+            expect(typeof text).toBe('string');
+            expect(text).toBeTruthy();
+            expect(text.includes('The title is')).toBe(true);
+        });
+    });
 });
