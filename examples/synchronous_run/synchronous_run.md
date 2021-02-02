@@ -12,7 +12,6 @@ title: Synchronous run
  [Run actor synchronously](https://apify.com/docs/api/v2#/reference/actors/run-actor-synchronously/without-input)
  Apify API endpoint.
 
-  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
-  >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 {{#code}}synchronous_run.js{{/code}}

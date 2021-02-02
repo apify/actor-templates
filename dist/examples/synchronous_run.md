@@ -12,8 +12,7 @@ title: Synchronous run
  [Run actor synchronously](https://apify.com/docs/api/v2#/reference/actors/run-actor-synchronously/without-input)
  Apify API endpoint.
 
-  > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
-  >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 ```javascript
 const Apify = require('apify');
@@ -28,8 +27,10 @@ Apify.main(async () => {
 
     // Get all "Did you know" items from the page.
     console.log('Getting "Did you know" items from the page.');
-    const results = await page.$$eval('div#mp-dyk > ul li',
-        nodes => nodes.map(node => node.innerText.replace('...', 'Did you know')));
+    const results = await page.$$eval(
+        'div#mp-dyk > ul li',
+        (nodes) => nodes.map((node) => node.innerText.replace('...', 'Did you know')),
+    );
     console.log(results);
 
     // Save all the items to the Apify dataSet.

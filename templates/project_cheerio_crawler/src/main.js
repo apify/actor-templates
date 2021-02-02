@@ -20,16 +20,9 @@ Apify.main(async () => {
         requestList,
         requestQueue,
         proxyConfiguration,
-        useSessionPool: true,
-        persistCookiesPerSession: true,
         // Be nice to the websites.
         // Remove to unleash full power.
         maxConcurrency: 50,
-        // You can remove this if you won't
-        // be scraping any JSON endpoints.
-        additionalMimeTypes: [
-            'application/json',
-        ],
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;
             log.info('Page opened.', { label, url });

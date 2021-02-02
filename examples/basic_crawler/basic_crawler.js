@@ -4,7 +4,7 @@ const Apify = require('apify');
 Apify.main(async () => {
     // Create and initialize an instance of the RequestList class that contains
     // a list of URLs to crawl. Here we use just a few hard-coded URLs.
-    const requestList = await Apify.openRequestList('my-list',
+    const requestList = await Apify.openRequestList('start-urls',
         [
             { url: 'http://www.google.com/' },
             { url: 'http://www.example.com/' },
@@ -23,7 +23,7 @@ Apify.main(async () => {
             console.log(`Processing ${request.url}...`);
 
             // Fetch the page HTML via Apify utils requestAsBrowser
-            const { body } = await Apify.utils.requestAsBrowser({ url: request.url });
+            const { body } = await Apify.utils.requestAsBrowser(request);
 
             // Store the HTML and URL to the default dataset.
             await Apify.pushData({

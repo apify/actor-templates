@@ -41,8 +41,7 @@ Apify.main(async () => {
 \
 Using `PuppeteerCrawler`:
 
- > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
- >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 ```javascript
 const Apify = require('apify');
@@ -70,9 +69,9 @@ Apify.main(async () => {
 });
 ```
 
-<!-- BasicCrawler -->
+<!-- PlaywrightCrawler -->
 \
-Using `BasicCrawler`:
+Using `PlaywrightCrawler`:
 
 ```javascript
 const Apify = require('apify');
@@ -86,19 +85,21 @@ Apify.main(async () => {
             { url: 'http://www.example.com/page-3' },
         ]);
     // Function called for each URL
-    const handleRequestFunction = async ({ request }) => {
-        const { body } = await Apify.utils.requestAsBrowser(request);
-        console.log(`URL: ${request.url}\nHTML:\n${body}`);
+    const handlePageFunction = async ({ request, page }) => {
+        const title = await page.title();
+        console.log(`URL: ${request.url}\nTITLE: ${title}`);
     };
-    // Create a BasicCrawler
-    const crawler = new Apify.BasicCrawler({
+    // Create a PuppeteerCrawler
+    const crawler = new Apify.PlaywrightCrawler({
         requestList,
-        handleRequestFunction,
+        handlePageFunction,
     });
     // Run the crawler
     await crawler.run();
 });
 ```
+
+> To run this example on the Apify Platform, select the `apify/actor-node-playwright-chrome` image for your Dockerfile.
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 

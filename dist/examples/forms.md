@@ -12,8 +12,7 @@ title: Forms
  [`dataset`](/docs/api/dataset)
  or on the local machine as JSON files in `./apify_storage/datasets/default`.
 
- > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
- >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 ```javascript
 const Apify = require('apify');
@@ -42,7 +41,7 @@ Apify.main(async () => {
     ]);
 
     // Obtain and print list of search results
-    const results = await page.$$eval('div.f4.text-normal a', nodes => nodes.map(node => ({
+    const results = await page.$$eval('div.f4.text-normal a', (nodes) => nodes.map((node) => ({
         url: node.href,
         name: node.innerText,
     })));

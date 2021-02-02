@@ -5,7 +5,17 @@ title: use-stealth-mode
 
 Stealth mode allows you to bypass anti-scraping techniques which use [browser fingerprinting](https://pixelprivacy.com/resources/browser-fingerprinting/). It overrides the attributes specified for [headless](https://developers.google.com/web/updates/2017/04/headless-chrome) browser mode, making your headless browser harder to distinguish from the full Chrome browser. 
 
-To activate stalth mode, set the `headless` and `stealth` parameters in `launchPuppeteerOptions` to `true`.
+To activate stealth mode, you need to `useChrome`, run `headless` and turn `stealth` on in your [`launchContext`](https://sdk.apify.com/docs/typedefs/puppeteer-crawler-options#launchcontext).
+
+```js
+const launchContext = {
+    useChrome: true,
+    stealth: true,
+    launchOptions: {
+        headless: true,
+    },
+}
+```
 
 {{#code}}use_stealth_mode.js{{/code}}
 
@@ -15,25 +25,5 @@ While the default configuration will be fine in many cases, you can adapt the op
 
 ### Single-browser instances
 
-You can also use stealth mode in single-browser instances when using [`Apify.launchPuppeteer`](https://sdk.apify.com/docs/typedefs/launch-puppeteer#docsNav). You can define the launch options (including [stealth options](https://sdk.apify.com/docs/typedefs/stealth-options)) as an object, then pass it to the `launchPuppeteer` function call.
+You can also use stealth mode in single-browser instances when using [`Apify.launchPuppeteer`](https://sdk.apify.com/docs/api/apify#launchpuppeteer). The `launchContext` is the same.
 
-```js
-const puppeteerOptions = {
-    headless: false,
-    stealth: true,
-    useChrome: true,
-    stealthOptions: {
-        addPlugins: false,
-        emulateWindowFrame: false,
-        emulateWebGL: false,
-        emulateConsoleDebug: false,
-        addLanguage: false,
-        hideWebDriver: true,
-        hackPermissions: false,
-        mockChrome: false,
-        mockChromeInIframe: false,
-        mockDeviceMemory: false,
-    },
-};
-const browser = await Apify.launchPuppeteer(puppeteerOptions);
-```
