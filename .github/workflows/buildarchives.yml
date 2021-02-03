@@ -3,7 +3,7 @@ name: Build archives
 on:
   push:
     paths-ignore:
-      - 'build/**'
+      - 'dist/**'
     branches:
       - master
 
@@ -25,7 +25,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add build/*
+          git add dist/*
           git commit -m "Updated zips build from CI" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
