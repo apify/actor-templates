@@ -84,6 +84,16 @@ describe('Examples - testing runnable codes behaviour ', () => {
         process.env[ENV_VARS.HEADLESS] = prevEnvHeadless;
     });
 
+    // This test should be first, because Template tests ruin the proxy setup
+    // probably because of "apify run".
+    test('puppeteer with proxy example works', async () => {
+        require('../examples/puppeteer_with_proxy/puppeteer_with_proxy.js');
+        await exampleFunc();
+
+        const isConnected = logs.some((log) => log.includes('Proxy Status: Connected'));
+        expect(isConnected).toBe(true);
+    });
+
     test('accept user input example works', async () => {
         const kvStore = await Apify.openKeyValueStore();
         const input = { test: 'testing input' };
@@ -407,16 +417,6 @@ describe('Examples - testing runnable codes behaviour ', () => {
             expect(item).toHaveProperty('href');
             expect(item.href).toBeTruthy();
         });
-    });
-
-    test('puppeteer with proxy example works', async () => {
-        require('../examples/puppeteer_with_proxy/puppeteer_with_proxy.js');
-        await exampleFunc();
-
-        const titleLog = logs.find((log) => log.includes('Page title:'));
-        expect(titleLog).toBeDefined();
-        const title = titleLog.split(':')[1];
-        expect(title).toBeTruthy();
     });
 
     test('synchronous run example works', async () => {

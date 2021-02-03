@@ -2,7 +2,7 @@ const Apify = require('apify');
 
 Apify.main(async () => {
     const requestList = await Apify.openRequestList('start-urls', [
-        'https://en.wikipedia.org/wiki/Main_Page',
+        'http://proxy.apify.com',
     ]);
 
     // Proxy connection is automatically established in the Crawler
@@ -12,8 +12,8 @@ Apify.main(async () => {
         requestList,
         proxyConfiguration,
         handlePageFunction: async ({ page }) => {
-            const title = await page.title();
-            console.log(`Page title: ${title}`);
+            const status = await page.$eval('td.status', (el) => el.textContent);
+            console.log(`Proxy Status: ${status}`);
         },
     });
 

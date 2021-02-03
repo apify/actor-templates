@@ -8,7 +8,6 @@ const rimraf = require('rimraf');
 const copy = require('recursive-copy');
 const { TEMPLATE_NAMES } = require('../src/consts');
 
-
 const TEST_ACTORS_FOLDER = 'test-actors';
 const APIFY_LATEST_VERSION = spawnSync('npm', ['view', 'apify', 'version']).stdout.toString().trim();
 
@@ -28,14 +27,14 @@ const checkTemplateStructureAndRun = async (actorName) => {
     expect(loadJson.sync(apifyModulePackageJson).version).toEqual(APIFY_LATEST_VERSION);
 
     // Check if actor was created without errors
-    expect(console.log.args.map(arg => arg[0])).not.toContain('Error:');
+    expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
 
     process.chdir(actorName);
     spawnSync('apify', ['run']);
     process.chdir('../');
 
     // Check if actor run without errors
-    expect(console.log.args.map(arg => arg[0])).not.toContain('Error:');
+    expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
 };
 
 let prevEnvHeadless;
