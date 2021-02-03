@@ -9,8 +9,7 @@ title: Puppeteer with proxy
  Visit the [Apify platform introduction](/docs/guides/apify-platform) to find
  how to log into your account from the SDK.
 
- > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
- >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 
 ```javascript
@@ -20,6 +19,8 @@ Apify.main(async () => {
     const requestList = await Apify.openRequestList('my-list', [
         'https://en.wikipedia.org/wiki/Main_Page',
     ]);
+
+    // Proxy connection is automatically established in the Crawler
     const proxyConfiguration = await Apify.createProxyConfiguration();
 
     const crawler = new Apify.PuppeteerCrawler({

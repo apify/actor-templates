@@ -1,7 +1,7 @@
 const Apify = require('apify');
 
 Apify.main(async () => {
-    // Apify.openRequestQueue() is a factory to get a preconfigured RequestQueue instance.
+    // Apify.openRequestQueue() creates a preconfigured RequestQueue instance.
     // We add our first request to it - the initial page the crawler will visit.
     const requestQueue = await Apify.openRequestQueue();
     await requestQueue.addRequest({ url: 'https://news.ycombinator.com/' });
@@ -12,13 +12,15 @@ Apify.main(async () => {
         requestQueue,
 
         // Here you can set options that are passed to the Apify.launchPuppeteer() function.
-        launchPuppeteerOptions: {
-            // For example, by adding "slowMo" you'll slow down Puppeteer operations to simplify debugging
-            // slowMo: 500,
+        launchContext: {
+            launchOptions: {
+                headless: true,
+                // Other Puppeteer options
+            },
         },
 
         // Stop crawling after several pages
-        maxRequestsPerCrawl: 10,
+        maxRequestsPerCrawl: 50,
 
         // This function will be called for each URL to crawl.
         // Here you can write the Puppeteer scripts you are familiar with,
@@ -60,10 +62,7 @@ Apify.main(async () => {
 
         // This function is called if the page processing failed more than maxRequestRetries+1 times.
         handleFailedRequestFunction: async ({ request }) => {
-            console.log(`Request ${request.url} failed too many times`);
-            await Apify.pushData({
-                '#debug': Apify.utils.createRequestDebugInfo(request),
-            });
+            console.log(`Request ${request.url} failed too many times.`);
         },
     });
 

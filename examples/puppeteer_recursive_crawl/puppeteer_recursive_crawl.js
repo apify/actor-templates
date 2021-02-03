@@ -3,7 +3,6 @@ const Apify = require('apify');
 Apify.main(async () => {
     const requestQueue = await Apify.openRequestQueue();
     await requestQueue.addRequest({ url: 'https://www.iana.org/' });
-    const pseudoUrls = [new Apify.PseudoUrl('https://www.iana.org/[.*]')];
 
     const crawler = new Apify.PuppeteerCrawler({
         requestQueue,
@@ -12,13 +11,11 @@ Apify.main(async () => {
             console.log(`Title of ${request.url}: ${title}`);
             await Apify.utils.enqueueLinks({
                 page,
-                selector: 'a',
-                pseudoUrls,
                 requestQueue,
+                pseudoUrls: ['https://www.iana.org/[.*]'],
             });
         },
         maxRequestsPerCrawl: 10,
-        maxConcurrency: 10,
     });
 
     await crawler.run();

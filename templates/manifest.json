@@ -6,29 +6,39 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 3600,
+        "timeoutSecs": 0,
         "memoryMbytes": 2048
       }
     },
     {
       "name": "project_cheerio_crawler",
-      "description": "Project: CheerioCrawler - Standard and up to date template for developing with CheerioCrawler.",
+      "description": "Project: CheerioCrawler - Standard and up to date template for developing with Cheerio.",
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_cheerio_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 3600,
+        "timeoutSecs": 0,
         "memoryMbytes": 512
       },
       "skipOptionalDeps": true
     },
     {
       "name": "project_puppeteer_crawler",
-      "description": "Project: PuppeteerCrawler - Standard and up to date template for developing with PuppeteerCrawler.",
+      "description": "Project: PuppeteerCrawler - Standard and up to date template for developing with Puppeteer.",
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_puppeteer_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
         "timeoutSecs": 0,
-        "memoryMbytes": 2048
+        "memoryMbytes": 4096
+      }
+    },
+    {
+      "name": "project_playwright_crawler",
+      "description": "Project: PlaywrightCrawler - Standard and up to date template for developing with Playwright.",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_playwright_crawler.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 0,
+        "memoryMbytes": 4096
       }
     },
     {
@@ -39,17 +49,6 @@
         "build": "latest",
         "timeoutSecs": 0,
         "memoryMbytes": 256
-      },
-      "skipOptionalDeps": true
-    },
-    {
-      "name": "example_basic_crawler",
-      "description": "Example: BasicCrawler - Crawl a list of URLs using raw HTTP requests.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_basic_crawler.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "timeoutSecs": 3600,
-        "memoryMbytes": 512
       },
       "skipOptionalDeps": true
     },

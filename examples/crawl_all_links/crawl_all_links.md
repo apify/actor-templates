@@ -18,9 +18,16 @@ Using `CheerioCrawler`:
 \
 Using `PuppeteerCrawler`:
 
- > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
- >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 {{#code}}crawl_all_links_puppeteer.js{{/code}}
+
+<!-- PlaywrightCrawler -->
+\
+Using `PlaywrightCrawler`:
+
+{{#code}}crawl_all_links_playwright.js{{/code}}
+
+> To run this example on the Apify Platform, select the `apify/actor-node-playwright-chrome` image for your Dockerfile.
 
 <!--END_DOCUSAURUS_CODE_TABS-->

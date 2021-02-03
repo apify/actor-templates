@@ -24,7 +24,7 @@ Apify.main(async () => {
     ]);
 
     // Obtain and print list of search results
-    const results = await page.$$eval('div.f4.text-normal a', nodes => nodes.map(node => ({
+    const results = await page.$$eval('div.f4.text-normal a', (nodes) => nodes.map((node) => ({
         url: node.href,
         name: node.innerText,
     })));

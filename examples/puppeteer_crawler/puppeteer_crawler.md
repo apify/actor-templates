@@ -11,7 +11,6 @@ title: Puppeteer crawler
  The results are stored to the default dataset. In local configuration, the results are stored as 
  JSON files in `./apify_storage/datasets/default`
 
- > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
- >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 {{#code}}puppeteer_crawler.js{{/code}}

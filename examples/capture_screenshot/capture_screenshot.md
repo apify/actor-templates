@@ -3,10 +3,9 @@ id: capture-screenshot
 title: Capture a screenshot
 ---
 
- > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
- >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
-This example captures of a screenshot of a web page using `Puppeteer`:
+This example captures a screenshot of a web page using `Puppeteer`. It would look almost exactly the same with `Playwright`.
 
 <!--DOCUSAURUS_CODE_TABS-->
 

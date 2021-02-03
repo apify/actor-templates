@@ -7,12 +7,6 @@ This example downloads and crawls the URLs from a sitemap.
 
 <!--DOCUSAURUS_CODE_TABS-->
 
-<!-- BasicCrawler -->
-\
-Using `BasicCrawler`:
-
-{{#code}}crawl_sitemap_basic.js{{/code}}
-
 <!-- CheerioCrawler -->
 \
 Using `CheerioCrawler`:
@@ -23,9 +17,16 @@ Using `CheerioCrawler`:
 \
 Using `PuppeteerCrawler`:
 
- > To run this example on the Apify Platform, select the `Node.js 12 + Chrome on Debian (apify/actor-node-chrome)` 
- >base image on the **Source** tab when configuring the actor.
+> To run this example on the Apify Platform, select the `apify/actor-node-puppeteer-chrome` image for your Dockerfile.
 
 {{#code}}crawl_sitemap_puppeteer.js{{/code}}
+
+<!-- PlaywrightCrawler -->
+\
+Using `PlaywrightCrawler`:
+
+> To run this example on the Apify Platform, select the `apify/actor-node-playwright-chrome` image for your Dockerfile.
+
+{{#code}}crawl_sitemap_playwright.js{{/code}}
 
 <!--END_DOCUSAURUS_CODE_TABS-->

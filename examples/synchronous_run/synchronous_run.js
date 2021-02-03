@@ -2,7 +2,7 @@ const Apify = require('apify');
 
 Apify.main(async () => {
     // Launch web browser.
-    const browser = await Apify.launchPuppeteer({ headless: true });
+    const browser = await Apify.launchPuppeteer({ launchOptions: { headless: true } });
     // Load https://en.wikipedia.org and get all "Did you know" texts.
     console.log('Opening web page...');
     const page = await browser.newPage();
@@ -10,8 +10,10 @@ Apify.main(async () => {
 
     // Get all "Did you know" items from the page.
     console.log('Getting "Did you know" items from the page.');
-    const results = await page.$$eval('div#mp-dyk > ul li',
-        nodes => nodes.map(node => node.innerText.replace('...', 'Did you know')));
+    const results = await page.$$eval(
+        'div#mp-dyk > ul li',
+        (nodes) => nodes.map((node) => node.innerText.replace('...', 'Did you know')),
+    );
     console.log(results);
 
     // Save all the items to the Apify dataSet.

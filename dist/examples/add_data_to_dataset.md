@@ -3,30 +3,34 @@ id: add-data-to-dataset
 title: Add data to dataset
 ---
 
-This example opens a dataset named `"my-cool-dataset"` and adds the URL of each request to it.
- If the dataset doesn't exist, it will be created.
+This example saves data to the default dataset. If the dataset doesn't exist, it will be created.
+You can save data to custom datasets by using [`Apify.openDataset()`](../api/apify#opendataset)
 
 ```javascript
 const Apify = require('apify');
 
 Apify.main(async () => {
-    const requestList = await Apify.openRequestList('my-list',
+    const requestList = await Apify.openRequestList('start-urls',
         [
             { url: 'http://www.example.com/page-1' },
             { url: 'http://www.example.com/page-2' },
             { url: 'http://www.example.com/page-3' },
         ]);
+
     // Function called for each URL
-    const handleRequestFunction = async ({ request }) => {
-        // Open a dataset
-        const dataset = await Apify.openDataset('my-cool-dataset');
-        // Add data to dataset
-        await dataset.pushData({ url: request.url });
+    const handlePageFunction = async ({ request, body }) => {
+        // Save data to default dataset
+        await Apify.pushData({
+            url: request.url,
+            html: body,
+        });
     };
-    const crawler = new Apify.BasicCrawler({
+
+    const crawler = new Apify.CheerioCrawler({
         requestList,
-        handleRequestFunction,
+        handlePageFunction,
     });
+
     // Run the crawler
     await crawler.run();
 });
@@ -35,5 +39,5 @@ Apify.main(async () => {
 Each item in this dataset will be saved to its own file in the following directory:
 
 ```bash
-{PROJECT_FOLDER}/apify_storage/datasets/my-cool-dataset/
+{PROJECT_FOLDER}/apify_storage/datasets/default/
 ```
