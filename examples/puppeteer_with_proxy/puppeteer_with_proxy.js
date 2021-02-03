@@ -1,7 +1,7 @@
 const Apify = require('apify');
 
 Apify.main(async () => {
-    const requestList = await Apify.openRequestList('my-list', [
+    const requestList = await Apify.openRequestList('start-urls', [
         'https://en.wikipedia.org/wiki/Main_Page',
     ]);
 

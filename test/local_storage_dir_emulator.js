@@ -2,7 +2,7 @@ const { cryptoRandomObjectId } = require('apify-shared/utilities');
 const { LOCAL_STORAGE_SUBDIRS, LOCAL_ENV_VARS, ENV_VARS } = require('apify-shared/consts');
 const fs = require('fs-extra');
 const path = require('path');
-const globalCache = require('apify/build/global_cache').default;
+const cacheContainer = require('apify/build/cache_container').default;
 
 const LOCAL_EMULATION_DIR = path.join(__dirname, '..', 'tmp', 'local-emulation-dir');
 
@@ -26,13 +26,14 @@ class LocalStorageDirEmulator {
     }
 
     async init(dirName = cryptoRandomObjectId(10)) {
-        globalCache.clearAll();
+        cacheContainer.clearAllCaches();
         const localStorageDir = path.resolve(LOCAL_EMULATION_DIR, dirName);
         await fs.ensureDir(localStorageDir);
         // prepare structure
         await this._ensureStructure(localStorageDir);
         process.env.APIFY_LOCAL_STORAGE_DIR = localStorageDir;
         this.localStorageDirs.push(localStorageDir);
+        // console.debug(`Created local storage emulation in folder ${localStorageDir}`);
         return localStorageDir;
     }
 

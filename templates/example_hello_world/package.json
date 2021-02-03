@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
-        "apify": "^1.0.0"
+        "apify": "^1.0.1"
     },
     "devDependencies": {},
     "scripts": {

@@ -1,9 +1,9 @@
 {
-    "name": "project-puppeteer-crawler",
+    "name": "project-playwright-crawler",
     "version": "0.0.1",
     "description": "This is a boilerplate of an Apify actor.",
     "dependencies": {
-        "apify": "^1.0.0",
+        "apify": "^1.0.1",
         "playwright": "*"
     },
     "devDependencies": {
