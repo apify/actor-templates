@@ -1,12 +1,11 @@
 /**
- * This template is a production ready boilerplate for developing with `PlaywrightCrawler`.
+ * This template is a production ready boilerplate for developing with `PuppeteerCrawler`.
  * Use this to bootstrap your projects using the most up-to-date code.
  * If you're looking for examples or want to learn more, see README.
  */
 
 const Apify = require('apify');
-// const playwright = require('playwright');
-const { handleStart, handleList, handleDetail } = require('./routes');
+const { handleStart, handleList, handleDetail } = require('./src/routes');
 
 const { utils: { log } } = Apify;
 
@@ -17,17 +16,15 @@ Apify.main(async () => {
     const requestQueue = await Apify.openRequestQueue();
     const proxyConfiguration = await Apify.createProxyConfiguration();
 
-    const crawler = new Apify.PlaywrightCrawler({
+    const crawler = new Apify.PuppeteerCrawler({
         requestList,
         requestQueue,
         proxyConfiguration,
         launchContext: {
-            // To use Firefox or WebKit on the Apify Platform,
-            // don't forget to change the image in Dockerfile
-            // launcher: playwright.firefox,
+            // Chrome with stealth should work for most websites.
+            // If it doesn't, feel free to remove this.
             useChrome: true,
-            // We don't have 'stealth' for Playwright yet.
-            // Try using Firefox, it is naturally stealthy.
+            stealth: true,
         },
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;

@@ -11,7 +11,7 @@
         "eslint": "^7.0.0"
     },
     "scripts": {
-        "start": "node src/main.js",
+        "start": "node main.js",
         "lint": "./node_modules/.bin/eslint ./src --ext .js,.jsx",
         "lint:fix": "./node_modules/.bin/eslint ./src --ext .js,.jsx --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
