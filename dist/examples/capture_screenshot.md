@@ -70,7 +70,7 @@ const Apify = require('apify');
 
 Apify.main(async () => {
     // Add URLs to a RequestList
-    const requestList = await Apify.openRequestList('my-list',
+    const requestList = await Apify.openRequestList('start-urls',
         [
             { url: 'http://www.example.com/page-1' },
             { url: 'http://www.example.com/page-2' },
@@ -104,7 +104,7 @@ const Apify = require('apify');
 
 Apify.main(async () => {
     // Add URLs to a RequestList
-    const requestList = await Apify.openRequestList('my-list',
+    const requestList = await Apify.openRequestList('start-urls',
         [
             { url: 'http://www.example.com/page-1' },
             { url: 'http://www.example.com/page-2' },

@@ -22,7 +22,7 @@ log.setLevel(log.LEVELS.DEBUG);
 Apify.main(async () => {
     // Create an instance of the RequestList class that contains a list of URLs to crawl.
     // Add URLs to a RequestList
-    const requestList = await Apify.openRequestList('my-list',
+    const requestList = await Apify.openRequestList('start-urls',
         [
             { url: 'http://www.example.com/page-1' },
             { url: 'http://www.example.com/page-2' },

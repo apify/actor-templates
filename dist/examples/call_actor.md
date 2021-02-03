@@ -28,8 +28,9 @@ Apify.main(async () => {
     // Launch the web browser.
     const browser = await Apify.launchPuppeteer();
 
-    console.log('Obtaining email address...');
-    const user = await Apify.client.users.getUser();
+    console.log('Obtaining own email address...');
+    const apifyClient = Apify.newClient();
+    const user = await apifyClient.user().get();
 
     // Load randomword.com and get a random word
     console.log('Fetching a random word.');

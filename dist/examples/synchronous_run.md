@@ -19,7 +19,7 @@ const Apify = require('apify');
 
 Apify.main(async () => {
     // Launch web browser.
-    const browser = await Apify.launchPuppeteer({ headless: true });
+    const browser = await Apify.launchPuppeteer({ launchOptions: { headless: true } });
     // Load https://en.wikipedia.org and get all "Did you know" texts.
     console.log('Opening web page...');
     const page = await browser.newPage();
