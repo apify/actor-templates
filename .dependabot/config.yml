@@ -6,7 +6,7 @@ update_configs:
     default_reviewers:
       - "mnmkng"
   - package_manager: "javascript"
-    directory: "/templates/example_playwright_crawler"
+    directory: "/templates/project_playwright_crawler"
     update_schedule: "live"
     default_reviewers:
       - "mnmkng"
