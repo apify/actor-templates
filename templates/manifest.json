@@ -61,6 +61,16 @@
         "timeoutSecs": 0,
         "memoryMbytes": 2048
       }
+    },
+    {
+      "name": "example_python",
+      "description": "Example: Hello world in Python - A simple Python actor from which you can start developing",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_python.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 0,
+        "memoryMbytes": 256
+      }
     }
   ]
 }
