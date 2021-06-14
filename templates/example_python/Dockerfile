@@ -18,7 +18,7 @@ RUN echo "Python version:" \
  && echo "Installing dependencies from requirements.txt:" \
  && pip install -r requirements.txt \
  && echo "All installed Python packages:" \
- && pip --version
+ && pip freeze
 
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after installing the dependencies, quick build will be really fast
