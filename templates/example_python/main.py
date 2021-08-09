@@ -7,7 +7,7 @@ from apify_client import ApifyClient
 # Run the main function of the script, if the script is executed directly
 if __name__ == '__main__':
     # Initialize the main ApifyClient instance
-    client = ApifyClient(os.environ['APIFY_TOKEN'])
+    client = ApifyClient(os.environ['APIFY_TOKEN'], api_url=os.environ['APIFY_API_BASE_URL'])
 
     # Get the resource subclient for working with the default key-value store of the actor
     default_kv_store_client = client.key_value_store(os.environ['APIFY_DEFAULT_KEY_VALUE_STORE_ID'])
