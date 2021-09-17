@@ -1,7 +1,12 @@
 /* eslint-disable global-require */
+jest.mock('apify', () => {
+    return {
+        ...jest.requireActual('apify'),
+        main: (func) => func,
+    };
+});
 
 const Apify = require('apify');
-const utils = require('apify/build/utils');
 const { ENV_VARS } = require('apify-shared/consts');
 const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
 
@@ -67,9 +72,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
     beforeEach(async () => {
         const storageDir = await localStorageEmulator.init();
-        utils.apifyStorageLocal = utils.newStorageLocal({ storageDir });
-        const queue = await Apify.openRequestQueue();
-        await queue.drop();
+        Apify.Configuration.getGlobalConfig().set('localStorageDir', storageDir);
+        await Apify.openRequestQueue();
     });
 
     afterEach(async () => {
@@ -77,6 +81,9 @@ describe('Examples - testing runnable codes behaviour ', () => {
         kvStoreData = [];
         logs = [];
         callData = null;
+
+        const queue = await Apify.openRequestQueue();
+        await queue.drop();
     });
 
     afterAll(async () => {
