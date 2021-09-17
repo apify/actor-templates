@@ -3,6 +3,8 @@ jest.mock('apify', () => {
     return {
         ...jest.requireActual('apify'),
         main: (func) => func,
+        pushData: (func) => func,
+        setValue: (func) => func,
     };
 });
 
@@ -53,7 +55,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         };
         Apify.pushData = (data) => {
             if (Array.isArray(data)) {
-                dataSetData = data;
+                dataSetData.push(...data);
             } else {
                 dataSetData.push(data);
             }
