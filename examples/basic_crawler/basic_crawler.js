@@ -20,10 +20,11 @@ Apify.main(async () => {
 
         // This function will be called for each URL to crawl.
         handleRequestFunction: async ({ request }) => {
-            console.log(`Processing ${request.url}...`);
+            const { url } = request;
+            console.log(`Processing ${url}...`);
 
             // Fetch the page HTML via Apify utils requestAsBrowser
-            const { body } = await Apify.utils.requestAsBrowser(request);
+            const { body } = await Apify.utils.requestAsBrowser({ url });
 
             // Store the HTML and URL to the default dataset.
             await Apify.pushData({
