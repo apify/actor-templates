@@ -19,12 +19,20 @@ const checkTemplateStructureAndRun = async (actorName) => {
     const apifyJsonPath = path.join(actorName, 'apify.json');
     // Check files structure
     expect(fs.existsSync(actorName)).toBe(true);
-    expect(fs.existsSync(path.join(actorName, 'package.json'))).toBe(true);
+    // Python templates do not have package.json, but have requirements.txt
+    if (!/python/i.test(actorName)) {
+        expect(fs.existsSync(path.join(actorName, 'package.json'))).toBe(true);
+    } else {
+        expect(fs.existsSync(path.join(actorName, 'requirements.txt'))).toBe(true);
+    }
     expect(fs.existsSync(apifyJsonPath)).toBe(true);
 
-    // Check if template has the latest apify package version
-    const apifyModulePackageJson = path.join(actorName, 'node_modules', 'apify', 'package.json');
-    expect(loadJson.sync(apifyModulePackageJson).version).toEqual(APIFY_LATEST_VERSION);
+    // python templates do not use apify package
+    if (!/python/i.test(actorName)) {
+        // Check if template has the latest apify package version
+        const apifyModulePackageJson = path.join(actorName, 'node_modules', 'apify', 'package.json');
+        expect(loadJson.sync(apifyModulePackageJson).version).toEqual(APIFY_LATEST_VERSION);
+    }
 
     // Check if actor was created without errors
     expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
