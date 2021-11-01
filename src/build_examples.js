@@ -10,14 +10,10 @@ exports.buildExamples = async function () {
     fs.mkdirSync(distDir);
 
     const examplesDir = path.resolve(__dirname, '..', EXAMPLES_DIR_NAME);
-    try {
-        return fs
-            .readdirSync(examplesDir).forEach((exampleDir) => {
-                buildExample(exampleDir);
-            });
-    } catch (err) {
-        throw err;
-    }
+    return fs
+        .readdirSync(examplesDir).forEach((exampleDir) => {
+            buildExample(exampleDir);
+        });
 };
 
 function loadExamples(dirname) {
@@ -55,7 +51,7 @@ function capitalize(string) {
 }
 
 function buildExample(exampleName) {
-    const filename = `${exampleName}.md`;
+    const filename = `${exampleName}.mdx`;
     const templatePath = path.join(__dirname, '../examples', exampleName, filename);
     const template = fs.readFileSync(templatePath, 'utf8');
     const view = getView(exampleName);

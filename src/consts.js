@@ -1,6 +1,6 @@
 const path = require('path');
 
-const TEMPLATE_NAMES = require('../templates/manifest').templates.map(t => t.name);
+const TEMPLATE_NAMES = require('../templates/manifest').templates.map((t) => t.name);
 
 const TEMPLATES_DIR_NAME = 'templates';
 const EXAMPLES_DIR_NAME = 'examples';

@@ -1,0 +1,15 @@
+---
+id: crawl-some-links
+title: Crawl some links on a website
+---
+
+import CodeBlock from '@theme/CodeBlock';
+
+import CrawlSource from '!!raw-loader!./crawl_some_links_cheerio.js';
+
+This [`CheerioCrawler`](/docs/api/cheerio-crawler) example uses the [`pseudoUrls`](/docs/api/pseudo-url) property
+in the `Apify.enqueueLinks()` method to only add links to the `RequestList` queue if they match the specified regular expression.
+
+<CodeBlock className="language-js">
+	{CrawlSource}
+</CodeBlock>

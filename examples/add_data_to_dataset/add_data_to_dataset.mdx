@@ -3,10 +3,15 @@ id: add-data-to-dataset
 title: Add data to dataset
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import AddDataToDatasetSource from '!!raw-loader!./add_data_to_dataset.js';
+
 This example saves data to the default dataset. If the dataset doesn't exist, it will be created.
 You can save data to custom datasets by using [`Apify.openDataset()`](../api/apify#opendataset)
 
-{{#code}}add_data_to_dataset.js{{/code}}
+<CodeBlock className="language-js">
+	{AddDataToDatasetSource}
+</CodeBlock>
 
 Each item in this dataset will be saved to its own file in the following directory:
 
