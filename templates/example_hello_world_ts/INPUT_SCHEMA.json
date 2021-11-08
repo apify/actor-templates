@@ -1,0 +1,14 @@
+{
+  "title": "Input schema for the hello_word actor.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "message": {
+      "title": "Message",
+      "type": "string",
+      "description": "Just enter your hello world message.",
+      "editor": "textfield"
+    }
+  },
+  "required": []
+}
