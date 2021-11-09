@@ -1,20 +1,3 @@
----
-id: playwright-crawler
-title: Playwright crawler
----
-
- This example demonstrates how to use [`PlaywrightCrawler`](../api/playwright-crawler)
- in combination with [`RequestQueue`](../api/request-queue) to recursively scrape the
- [Hacker News website](https://news.ycombinator.com) using headless Chrome / Playwright.
-
- The crawler starts with a single URL, finds links to next pages,
- enqueues them and continues until no more desired links are available.
- The results are stored to the default dataset. In local configuration, the results are stored as 
- JSON files in `./apify_storage/datasets/default`
-
- > To run this example on the Apify Platform, select the `apify/actor-node-playwright-chrome` image for your Dockerfile.
-
-```javascript
 const Apify = require('apify');
 
 Apify.main(async () => {
@@ -23,14 +6,16 @@ Apify.main(async () => {
     const requestQueue = await Apify.openRequestQueue();
     await requestQueue.addRequest({ url: 'https://news.ycombinator.com/' });
 
-    // Create an instance of the PlaywrightCrawler class - a crawler
-    // that automatically loads the URLs in headless Chrome / Playwright.
-    const crawler = new Apify.PlaywrightCrawler({
+    // Create an instance of the PuppeteerCrawler class - a crawler
+    // that automatically loads the URLs in headless Chrome / Puppeteer.
+    const crawler = new Apify.PuppeteerCrawler({
         requestQueue,
+
+        // Here you can set options that are passed to the Apify.launchPuppeteer() function.
         launchContext: {
-            // Here you can set options that are passed to the playwright .launch() function.
             launchOptions: {
                 headless: true,
+                // Other Puppeteer options
             },
         },
 
@@ -38,16 +23,15 @@ Apify.main(async () => {
         maxRequestsPerCrawl: 50,
 
         // This function will be called for each URL to crawl.
-        // Here you can write the Playwright scripts you are familiar with,
+        // Here you can write the Puppeteer scripts you are familiar with,
         // with the exception that browsers and pages are automatically managed by the Apify SDK.
-        // The function accepts a single parameter, which is an object with a lot of properties,
-        // the most important being:
+        // The function accepts a single parameter, which is an object with the following fields:
         // - request: an instance of the Request class with information such as URL and HTTP method
-        // - page: Playwright's Page object (see https://playwright.dev/docs/api/class-page)
+        // - page: Puppeteer's Page object (see https://pptr.dev/#show=api-class-page)
         handlePageFunction: async ({ request, page }) => {
             console.log(`Processing ${request.url}...`);
 
-            // A function to be evaluated by Playwright within the browser context.
+            // A function to be evaluated by Puppeteer within the browser context.
             const data = await page.$$eval('.athing', ($posts) => {
                 const scrapedData = [];
 
@@ -87,4 +71,3 @@ Apify.main(async () => {
 
     console.log('Crawler finished.');
 });
-```

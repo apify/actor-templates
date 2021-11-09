@@ -54,13 +54,21 @@ function buildExample(exampleName) {
     const filename = `${exampleName}.mdx`;
     const templatePath = path.join(__dirname, '../examples', exampleName, filename);
     const template = fs.readFileSync(templatePath, 'utf8');
+    const otherFiles = fs.readdirSync(path.join(__dirname, '../examples', exampleName)).filter((fileName) => fileName !== filename);
+
     const view = getView(exampleName);
     const partials = {
         ...loadExamples(exampleName),
     };
     const markdown = Mustache.render(template, view, partials);
-    const buildFilename = `${exampleName}.md`;
+    const buildFilename = `${exampleName}.mdx`;
     const buildPath = path.join(__dirname, '../dist/examples', buildFilename);
     console.log(`Creating markdown ${buildFilename}`);
     fs.writeFileSync(buildPath, markdown);
+    if (otherFiles.length) {
+        console.log(`Copying ${otherFiles.length} files over`);
+        for (const file of otherFiles) {
+            fs.writeFileSync(path.join(__dirname, '../dist/examples', file), fs.readFileSync(path.join(__dirname, '../examples', exampleName, file)));
+        }
+    }
 }
