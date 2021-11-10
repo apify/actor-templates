@@ -71,6 +71,16 @@
         "timeoutSecs": 0,
         "memoryMbytes": 256
       }
+    },
+    {
+      "name": "example_typescript",
+      "description": "Example: Hello world in TypeScript - A simple TypeScript actor from which you can start developing",
+      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_typescript.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "timeoutSecs": 0,
+        "memoryMbytes": 256
+      }
     }
   ]
 }

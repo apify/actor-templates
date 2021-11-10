@@ -1,0 +1,28 @@
+{
+    "name": "example-typescript",
+    "version": "0.0.1",
+    "description": "This is an example of an Apify actor.",
+    "dependencies": {
+        "apify": "^2.0.7"
+    },
+    "devDependencies": {
+        "@apify/eslint-config-ts": "^0.1.4",
+        "@apify/tsconfig": "^0.1.0",
+        "@typescript-eslint/eslint-plugin": "^4.29.1",
+        "@typescript-eslint/parser": "^4.29.1",
+        "eslint": "^7.0.0",
+        "ts-node": "^10.3.0",
+        "typescript": "^4.4.4"
+    },
+    "scripts": {
+        "start": "npm run start:dev",
+        "start:prod": "node dist/main.js",
+        "start:dev": "ts-node -T src/main.ts",
+        "build": "tsc",
+        "lint": "eslint ./src --ext .js,.ts",
+        "lint:fix": "eslint ./src --ext .js,.ts --fix",
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    },
+    "author": "It's not you it's me",
+    "license": "ISC"
+}
