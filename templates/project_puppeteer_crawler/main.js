@@ -26,6 +26,11 @@ Apify.main(async () => {
             useChrome: true,
             stealth: true,
         },
+        browserPoolOptions: {
+            // This allows browser to be more effective against antis-craping protections.
+            // If you are having performance issues try turning this off.
+            useFingerprints: true
+        },
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;
             log.info('Page opened.', { label, url });
