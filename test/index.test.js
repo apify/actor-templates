@@ -1,6 +1,7 @@
 const templates = require('../src/index');
 
 describe('index', () => {
+    console.log(AbortController)
     test('should fetch template manifest', async () => {
         const manifest = await templates.fetchManifest();
         expect(Array.isArray(manifest.templates)).toBe(true);
