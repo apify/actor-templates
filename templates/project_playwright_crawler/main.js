@@ -30,7 +30,7 @@ Apify.main(async () => {
             // Try using Firefox, it is naturally stealthy.
         },
         browserPoolOptions: {
-            // This allows browser to be more effective against antis-craping protections.
+            // This allows browser to be more effective against anti-scraping protections.
             // If you are having performance issues try turning this off.
             useFingerprints: true
         },

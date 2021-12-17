@@ -27,7 +27,7 @@ Apify.main(async () => {
             stealth: true,
         },
         browserPoolOptions: {
-            // This allows browser to be more effective against antis-craping protections.
+            // This allows browser to be more effective against anti-scraping protections.
             // If you are having performance issues try turning this off.
             useFingerprints: true
         },
