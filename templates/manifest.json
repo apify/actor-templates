@@ -6,7 +6,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 2048
+        "memoryMbytes": 2048,
+        "timeoutSecs": 3600
       }
     },
     {
@@ -15,7 +16,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_cheerio_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 512
+        "memoryMbytes": 512,
+        "timeoutSecs": 3600
       },
       "skipOptionalDeps": true
     },
@@ -25,7 +27,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_puppeteer_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 4096
+        "memoryMbytes": 4096,
+        "timeoutSecs": 3600
       }
     },
     {
@@ -34,7 +37,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_playwright_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 4096
+        "memoryMbytes": 4096,
+        "timeoutSecs": 3600
       }
     },
     {
@@ -43,7 +47,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_hello_world.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 256
+        "memoryMbytes": 256,
+        "timeoutSecs": 3600
       },
       "skipOptionalDeps": true
     },
@@ -53,7 +58,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_puppeteer_single_page.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 2048
+        "memoryMbytes": 2048,
+        "timeoutSecs": 3600
       }
     },
     {
@@ -62,7 +68,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_python.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 256
+        "memoryMbytes": 256,
+        "timeoutSecs": 3600
       }
     },
     {
@@ -71,7 +78,8 @@
       "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_typescript.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 256
+        "memoryMbytes": 256,
+        "timeoutSecs": 3600
       }
     }
   ]
