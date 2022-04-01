@@ -24,9 +24,6 @@
     "url": "https://github.com/apifytech/actor-templates/issues"
   },
   "homepage": "https://github.com/apifytech/actor-templates#readme",
-  "peerDependencies": {
-    "@apify/http-request": "^2.1.0"
-  },
   "devDependencies": {
     "@apify/eslint-config": "^0.1.0",
     "@types/fs-extra": "^9.0.1",
