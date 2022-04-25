@@ -91,6 +91,26 @@
         "memoryMbytes": 256,
         "timeoutSecs": 360
       }
+    },
+    {
+      "name": "getting_started_typescript",
+      "description": "A showcase of basic actor functionality on the Apify platform.",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_typescript.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "memoryMbytes": 256,
+        "timeoutSecs": 360
+      }
+    },
+    {
+      "name": "getting_started_python",
+      "description": "A showcase of basic actor functionality on the Apify platform.",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "memoryMbytes": 256,
+        "timeoutSecs": 360
+      }
     }
   ]
 }
