@@ -1,0 +1,43 @@
+{
+    "actorSpecification": 1,
+    "name": "getting-started-actor",
+    "title": "Getting Started Actor",
+    "description": "Adds two integers.",
+    "version": "0.0.1",
+    "storages": {
+        "dataset": {
+            "title": "Numbers and their sums",
+            "views": {
+                "sums": {
+                    "transformation": {
+                        "fields": [
+                            "first_number",
+                            "second_number",
+                            "sum"
+                        ]
+                    },
+                    "display": {
+                        "component": "table",
+                        "columns": [
+                            {
+                                "label": "First number",
+                                "format": "number",
+                                "field": "first_number"
+                            },
+                            {
+                                "label": "Second number",
+                                "format": "number",
+                                "field": "second_number"
+                            },
+                            {
+                                "label": "Sum",
+                                "format": "number",
+                                "field": "sum"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
