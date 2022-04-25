@@ -42,7 +42,7 @@ const checkTemplateRun = async (actorName) => {
     process.chdir('../');
     // Check if actor run without errors
     expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
-}
+};
 
 let prevEnvHeadless;
 
