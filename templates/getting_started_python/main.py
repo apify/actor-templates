@@ -1,4 +1,3 @@
-import json
 import os
 
 from apify_client import ApifyClient
