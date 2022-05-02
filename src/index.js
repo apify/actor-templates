@@ -28,5 +28,3 @@ exports.fetchManifest = async () => {
 };
 
 exports.manifestUrl = MANIFEST_URL;
-
-exports.fetchManifest().then(console.log)
