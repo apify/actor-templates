@@ -1,6 +1,6 @@
 {
   "name": "@apify/actor-templates",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A manifest of Apify actor templates.",
   "main": "src/index.js",
   "files": [
