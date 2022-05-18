@@ -6,9 +6,11 @@
     "version": "0.0.1",
     "storages": {
         "dataset": {
+            "actorSpecification": 1,
             "title": "Numbers and their sums",
             "views": {
                 "sums": {
+                    "title": "A sum of two numbers",
                     "transformation": {
                         "fields": [
                             "firstNumber",

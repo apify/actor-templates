@@ -32,8 +32,8 @@ if __name__ == '__main__':
     # Structure of output is defined in .actor/actor.json
     default_dataset_client.push_items([
         {
-            'first_number': first_number,
-            'second_number': second_number,
+            'first_number': actor_input["first_number"],
+            'second_number': actor_input["second_number"],
             'sum': result
         },
     ])
