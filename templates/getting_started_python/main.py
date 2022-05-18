@@ -15,13 +15,13 @@ if __name__ == '__main__':
     actor_input = default_kv_store_client.get_record(os.environ['APIFY_INPUT_KEY'])['value']
 
     # Structure of input is defined in INPUT_SCHEMA.json
-    print(f'First number: {actor_input.first_number}')
-    print(f'Second number: {actor_input.second_number}')
+    print(f'First number: {actor_input["first_number"]}')
+    print(f'Second number: {actor_input["second_number"]}')
 
     # 👉 Complete the code so that result is
     # the sum of first_number and second_number.
     # 👇👇👇👇👇👇👇👇👇👇
-    result = null
+    result = None
     # 👆👆👆👆👆👆👆👆👆👆
 
     print(f'The result is: {result}')
