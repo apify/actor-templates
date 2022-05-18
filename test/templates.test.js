@@ -11,12 +11,11 @@ const { TEMPLATE_NAMES } = require('../src/consts');
 const TEST_ACTORS_FOLDER = 'test-actors';
 const APIFY_LATEST_VERSION = spawnSync('npm', ['view', 'apify', 'version']).stdout.toString().trim();
 
-const checkTemplateStructureAndRun = async (actorName) => {
+const checkTemplateStructure = async (actorName) => {
     process.chdir(actorName);
     spawnSync('npm', ['install']);
     process.chdir('../');
 
-    const apifyJsonPath = path.join(actorName, 'apify.json');
     // Check files structure
     expect(fs.existsSync(actorName)).toBe(true);
     // Python templates do not have package.json, but have requirements.txt
@@ -25,7 +24,6 @@ const checkTemplateStructureAndRun = async (actorName) => {
     } else {
         expect(fs.existsSync(path.join(actorName, 'requirements.txt'))).toBe(true);
     }
-    expect(fs.existsSync(apifyJsonPath)).toBe(true);
 
     // python templates do not use apify package
     if (!/python/i.test(actorName)) {
@@ -36,11 +34,12 @@ const checkTemplateStructureAndRun = async (actorName) => {
 
     // Check if actor was created without errors
     expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
+};
 
+const checkTemplateRun = async (actorName) => {
     process.chdir(actorName);
     spawnSync('apify', ['run']);
     process.chdir('../');
-
     // Check if actor run without errors
     expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
 };
@@ -75,7 +74,8 @@ describe('templates', () => {
         test(`${templateName} works`, async () => {
             const actorName = `cli-test-${templateName.replace(/_/g, '-')}`;
             await copy(`../templates/${templateName}`, actorName, { dot: true });
-            await checkTemplateStructureAndRun(actorName, templateName);
+            await checkTemplateStructure(actorName);
+            await checkTemplateRun(actorName);
         });
     });
 });
