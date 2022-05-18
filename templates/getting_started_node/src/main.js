@@ -14,7 +14,7 @@ Apify.main(async () => {
     // 👉 Complete the code so that result is
     // the sum of firstNumber and secondNumber.
     // 👇👇👇👇👇👇👇👇👇👇
-    const result = ;
+    const result = null;
     // 👆👆👆👆👆👆👆👆👆👆
 
     console.log('The result is: ', result);

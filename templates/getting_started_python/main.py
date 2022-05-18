@@ -1,5 +1,4 @@
 import os
-
 from apify_client import ApifyClient
 
 
@@ -22,7 +21,7 @@ if __name__ == '__main__':
     # 👉 Complete the code so that result is
     # the sum of first_number and second_number.
     # 👇👇👇👇👇👇👇👇👇👇
-    result =
+    result = null
     # 👆👆👆👆👆👆👆👆👆👆
 
     print(f'The result is: {result}')
