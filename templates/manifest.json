@@ -84,7 +84,7 @@
     },
     {
       "name": "getting_started_node",
-      "description": "A showcase of basic actor functionality on the Apify platform.",
+      "description": "A Node.js demo of actors and their capabilities on the Apify platform.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_node.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -94,7 +94,7 @@
     },
     {
       "name": "getting_started_typescript",
-      "description": "A showcase of basic actor functionality on the Apify platform.",
+      "description": "A TypeScript demo of actors and their capabilities on the Apify platform.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_typescript.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -104,7 +104,7 @@
     },
     {
       "name": "getting_started_python",
-      "description": "A showcase of basic actor functionality on the Apify platform.",
+      "description": "A Python demo of actors and their capabilities on the Apify platform.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
