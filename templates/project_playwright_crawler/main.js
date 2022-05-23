@@ -29,6 +29,11 @@ Apify.main(async () => {
             // We don't have 'stealth' for Playwright yet.
             // Try using Firefox, it is naturally stealthy.
         },
+        browserPoolOptions: {
+            // This allows browser to be more effective against anti-scraping protections.
+            // If you are having performance issues try turning this off.
+            useFingerprints: true,
+        },
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;
             log.info('Page opened.', { label, url });
