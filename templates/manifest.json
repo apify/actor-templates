@@ -3,83 +3,113 @@
     {
       "name": "project_empty",
       "description": "Project: Empty - Standard and up to date project template with very little boilerplate code.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 2048
+        "memoryMbytes": 2048,
+        "timeoutSecs": 3600
       }
     },
     {
       "name": "project_cheerio_crawler",
       "description": "Project: CheerioCrawler - Standard and up to date template for developing with Cheerio.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_cheerio_crawler.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 512
+        "memoryMbytes": 512,
+        "timeoutSecs": 3600
       },
       "skipOptionalDeps": true
     },
     {
       "name": "project_puppeteer_crawler",
       "description": "Project: PuppeteerCrawler - Standard and up to date template for developing with Puppeteer.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_puppeteer_crawler.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 4096
+        "memoryMbytes": 4096,
+        "timeoutSecs": 3600
       }
     },
     {
       "name": "project_playwright_crawler",
       "description": "Project: PlaywrightCrawler - Standard and up to date template for developing with Playwright.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/project_playwright_crawler.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 4096
+        "memoryMbytes": 4096,
+        "timeoutSecs": 3600
       }
     },
     {
       "name": "example_hello_world",
       "description": "Example: Hello world - The smallest actor you will see today, it only takes input and generates output.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_hello_world.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/example_hello_world.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 256
+        "memoryMbytes": 256,
+        "timeoutSecs": 3600
       },
       "skipOptionalDeps": true
     },
     {
       "name": "example_puppeteer_single_page",
       "description": "Example: Puppeteer single page - Load a single web page using Chrome and Puppeteer and extract data from it.",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_puppeteer_single_page.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/example_puppeteer_single_page.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 2048
+        "memoryMbytes": 2048,
+        "timeoutSecs": 3600
       }
     },
     {
       "name": "example_python",
       "description": "Example: Hello world in Python - A simple Python actor from which you can start developing",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_python.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/example_python.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 256
+        "memoryMbytes": 256,
+        "timeoutSecs": 3600
       }
     },
     {
       "name": "example_typescript",
       "description": "Example: Hello world in TypeScript - A simple TypeScript actor from which you can start developing",
-      "archiveUrl": "https://github.com/apifytech/actor-templates/blob/master/dist/templates/example_typescript.zip?raw=true",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/example_typescript.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
-        "timeoutSecs": 0,
-        "memoryMbytes": 256
+        "memoryMbytes": 256,
+        "timeoutSecs": 3600
+      }
+    },
+    {
+      "name": "getting_started_node",
+      "description": "Getting Started: Node.js - A Node.js demo of actors and their capabilities on the Apify platform.",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_node.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "memoryMbytes": 256,
+        "timeoutSecs": 360
+      }
+    },
+    {
+      "name": "getting_started_typescript",
+      "description": "Getting Started: TypeScript - A TypeScript demo of actors and their capabilities on the Apify platform.",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_typescript.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "memoryMbytes": 256,
+        "timeoutSecs": 360
+      }
+    },
+    {
+      "name": "getting_started_python",
+      "description": "Getting Started: Python - A Python demo of actors and their capabilities on the Apify platform.",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "memoryMbytes": 256,
+        "timeoutSecs": 360
       }
     }
   ]

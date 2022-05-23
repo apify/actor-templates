@@ -6,12 +6,13 @@ COPY . ./
 RUN npm install --include=dev \
     && npm run build
 
-# create final image, copy only package.json, readme and compiled code
+# create final image
 FROM apify/actor-node:16
 # copy only necessary files
 COPY --from=builder /usr/src/app/package*.json ./
 COPY --from=builder /usr/src/app/README.md ./
 COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/.actor ./.actor
 COPY --from=builder /usr/src/app/INPUT_SCHEMA.json ./INPUT_SCHEMA.json
 
 # install only prod deps

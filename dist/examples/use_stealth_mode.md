@@ -3,6 +3,9 @@ id: use-stealth-mode
 title: Use stealth mode
 ---
 
+> **Deprecated**: This example is deprecated. Checkout the [Avoid getting blocked guide](../guides/avoid-blocking).
+
+
 Stealth mode allows you to bypass anti-scraping techniques that use [browser fingerprinting](https://pixelprivacy.com/resources/browser-fingerprinting/). It overrides the attributes specified for [headless](https://developers.google.com/web/updates/2017/04/headless-chrome) browser mode, making your headless browser harder to distinguish from the full Chrome browser.
 
 To activate stealth mode, you need to `useChrome`, run `headless` and turn `stealth` on in your [`launchContext`](https://sdk.apify.com/docs/typedefs/puppeteer-crawler-options#launchcontext).
