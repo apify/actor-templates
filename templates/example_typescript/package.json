@@ -6,13 +6,13 @@
         "apify": "^2.3.2"
     },
     "devDependencies": {
-        "@apify/eslint-config-ts": "^0.1.4",
+        "@apify/eslint-config-ts": "^0.2.3",
         "@apify/tsconfig": "^0.1.0",
-        "@typescript-eslint/eslint-plugin": "^4.29.1",
-        "@typescript-eslint/parser": "^4.29.1",
-        "eslint": "^7.0.0",
-        "ts-node": "^10.3.0",
-        "typescript": "^4.4.4"
+        "@typescript-eslint/eslint-plugin": "^5.25.0",
+        "@typescript-eslint/parser": "^5.25.0",
+        "eslint": "^8.16.0",
+        "ts-node": "^10.8.0",
+        "typescript": "^4.6.4"
     },
     "scripts": {
         "start": "npm run start:dev",
