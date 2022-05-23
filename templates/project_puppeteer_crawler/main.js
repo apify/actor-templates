@@ -24,12 +24,11 @@ Apify.main(async () => {
             // Chrome with stealth should work for most websites.
             // If it doesn't, feel free to remove this.
             useChrome: true,
-            stealth: true,
         },
         browserPoolOptions: {
             // This allows browser to be more effective against anti-scraping protections.
             // If you are having performance issues try turning this off.
-            useFingerprints: true
+            useFingerprints: true,
         },
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;

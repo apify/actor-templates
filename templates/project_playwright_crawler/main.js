@@ -32,7 +32,7 @@ Apify.main(async () => {
         browserPoolOptions: {
             // This allows browser to be more effective against anti-scraping protections.
             // If you are having performance issues try turning this off.
-            useFingerprints: true
+            useFingerprints: true,
         },
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;
