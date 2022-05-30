@@ -4,13 +4,13 @@
     "type": "module",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
-        "apify": "^3.0.0-alpha.40",
-        "@crawlee/cheerio": "^3.0.0-alpha.39"
+        "apify": "^3.0.0-alpha.50",
+        "@crawlee/cheerio": "^3.0.0-alpha.50"
     },
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",
         "ts-node": "^10.8.0",
-        "typescript": "^4.6.4"
+        "typescript": "^4.7.2"
     },
     "scripts": {
         "start": "npm run start:dev",
