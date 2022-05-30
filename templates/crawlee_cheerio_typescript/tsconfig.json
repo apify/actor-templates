@@ -3,8 +3,8 @@
     "compilerOptions": {
         "module": "ES2022",
         "target": "ES2022",
-        "skipLibCheck": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "lib": ["DOM"]
     },
     "include": [
         "./src/**/*"

@@ -3,9 +3,10 @@
     "compilerOptions": {
         "module": "ES2022",
         "target": "ES2022",
-        "skipLibCheck": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "lib": ["DOM"]
     },
+    "files": ["./src/types.d.ts"],
     "include": [
         "./src/**/*"
     ]

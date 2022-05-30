@@ -4,8 +4,8 @@
     "type": "module",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
-        "apify": "^3.0.0-alpha.50",
-        "@crawlee/playwright": "^3.0.0-alpha.50",
+        "apify": "^3.0.0-alpha.54",
+        "@crawlee/playwright": "^3.0.0-alpha.54",
         "playwright": "*"
     },
     "devDependencies": {
