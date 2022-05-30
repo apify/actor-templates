@@ -1,5 +1,5 @@
 {
-  "title": "CheerioCrawler Template",
+  "title": "@crawlee/cheerio typescript template",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
