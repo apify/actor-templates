@@ -1,6 +1,6 @@
 {
-    "name": "crawlee-cheerio-typescript",
-    "title": "Crawlee + Cheerio + Typescript",
+    "name": "crawlee-puppeteer-typescript",
+    "title": "Crawlee + Puppeteer + Typescript",
     "version": "0.0",
     "buildTag": "latest"
 }

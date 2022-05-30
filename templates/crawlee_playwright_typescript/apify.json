@@ -1,6 +1,6 @@
 {
-    "name": "crawlee-cheerio-typescript",
-    "title": "Crawlee + Cheerio + Typescript",
+    "name": "crawlee-playwright-typescript",
+    "title": "Crawlee + Playwright + Typescript",
     "version": "0.0",
     "buildTag": "latest"
 }
