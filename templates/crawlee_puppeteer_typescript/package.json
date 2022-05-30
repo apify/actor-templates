@@ -4,8 +4,8 @@
     "type": "module",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
-        "apify": "^3.0.0-beta.0",
-        "@crawlee/puppeteer": "^3.0.0-beta.0",
+        "apify": "^3.0.0-beta.1",
+        "@crawlee/puppeteer": "^3.0.0-beta.1",
         "puppeteer": "*"
     },
     "devDependencies": {
