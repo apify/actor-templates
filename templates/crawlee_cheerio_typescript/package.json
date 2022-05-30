@@ -4,8 +4,8 @@
     "type": "module",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
-        "apify": "^3.0.0-beta.1",
-        "@crawlee/cheerio": "^3.0.0-beta.1"
+        "apify": "^3.0.0-beta.3",
+        "@crawlee/cheerio": "^3.0.0-beta.3"
     },
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",

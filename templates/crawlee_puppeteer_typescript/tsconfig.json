@@ -6,7 +6,6 @@
         "outDir": "dist",
         "lib": ["DOM"]
     },
-    "files": ["./src/types.d.ts"],
     "include": [
         "./src/**/*"
     ]
