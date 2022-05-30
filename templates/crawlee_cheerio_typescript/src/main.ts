@@ -10,7 +10,7 @@ import { CheerioCrawler, log } from '@crawlee/cheerio';
 import { handleDetail, handleList, handleStart } from './routes.js';
 
 // If we want to use `@apify/storage-local` instead of the default `@crawlee/memory-storage`,
-// we need to first install it via `npm i -D @apify/storage-local@^2.1.0-beta.0` and provide it
+// we need to first install it via `npm i -D @apify/storage-local@^2.1.0` and provide it
 // via `Actor.init` explicitly:
 //
 // import { ApifyStorageLocal } from '@apify/storage-local';
