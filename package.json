@@ -1,6 +1,6 @@
 {
   "name": "@apify/actor-templates",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A manifest of Apify actor templates.",
   "main": "src/index.js",
   "files": [
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apifytech/actor-templates.git"
+    "url": "git+https://github.com/apify/actor-templates.git"
   },
   "author": "Jakub Drobnik <jakub.drobnik@apify.com>",
   "contributors": [
@@ -21,9 +21,9 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/apifytech/actor-templates/issues"
+    "url": "https://github.com/apify/actor-templates/issues"
   },
-  "homepage": "https://github.com/apifytech/actor-templates#readme",
+  "homepage": "https://github.com/apify/actor-templates#readme",
   "devDependencies": {
     "@apify/eslint-config": "^0.1.0",
     "@types/fs-extra": "^9.0.1",
