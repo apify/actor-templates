@@ -9,7 +9,7 @@ RUN npm install --include=dev \
 # create final image
 FROM apify/actor-node-puppeteer-chrome:16
 # copy only necessary files
-COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/package.json ./
 COPY --from=builder /usr/src/app/README.md ./
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/apify.json ./apify.json
