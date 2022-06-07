@@ -26,4 +26,4 @@ RUN npm --quiet set progress=false \
     && npm --version
 
 # run compiled code
-CMD npm run start:prod
+CMD ./start_xvfb_and_run_cmd.sh && npm run start:prod
