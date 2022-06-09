@@ -4,14 +4,14 @@
     "type": "module",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
-        "apify": "^3.0.0-beta.21",
-        "@crawlee/playwright": "^3.0.0-beta.21",
+        "apify": "^3.0.0-beta.31",
+        "@crawlee/playwright": "^3.0.0-beta.31",
         "playwright": "*"
     },
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",
         "ts-node": "^10.8.0",
-        "typescript": "^4.7.2"
+        "typescript": "^4.7.3"
     },
     "scripts": {
         "start": "npm run start:dev",

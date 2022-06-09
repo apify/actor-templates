@@ -1,22 +1,20 @@
-import { PuppeteerCrawlingContext } from '@crawlee/puppeteer';
+import { createPuppeteerRouter } from '@crawlee/puppeteer';
 
-export async function handleStart({ enqueueLinks, log }: PuppeteerCrawlingContext) {
+export const router = createPuppeteerRouter();
+
+router.addDefaultHandler(async ({ enqueueLinks, log }) => {
     log.info(`Handle Start URLs`);
     await enqueueLinks({
         globs: ['https://apify.com/*'],
-        transformRequestFunction(opts) {
-            opts.userData ??= {};
-            opts.userData.label = 'DETAIL';
-            return opts;
-        },
+        label: 'DETAIL',
     });
-}
+});
 
-export async function handleList({ log }: PuppeteerCrawlingContext) {
+router.addHandler('LIST', async ({ log }) => {
     log.info(`Handle pagination`);
-}
+});
 
-export async function handleDetail({ request, page, log }: PuppeteerCrawlingContext) {
+router.addHandler('DETAIL', async ({ request, page, log }) => {
     const title = await page.title();
     log.info(`Handle details: ${title} [${request.loadedUrl}]`);
-}
+});

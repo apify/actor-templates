@@ -1,6 +1,8 @@
-import { CheerioCrawlingContext } from '@crawlee/cheerio';
+import { createCheerioRouter } from '@crawlee/cheerio';
 
-export async function handleStart({ enqueueLinks, log }: CheerioCrawlingContext) {
+export const router = createCheerioRouter();
+
+router.addDefaultHandler(async ({ enqueueLinks, log }) => {
     log.info(`Handle Start URLs`);
     await enqueueLinks({
         globs: ['https://apify.com/*'],
@@ -10,13 +12,13 @@ export async function handleStart({ enqueueLinks, log }: CheerioCrawlingContext)
             return opts;
         },
     });
-}
+});
 
-export async function handleList({ log }: CheerioCrawlingContext) {
+router.addHandler('LIST', async ({ log }) => {
     log.info(`Handle pagination`);
-}
+});
 
-export async function handleDetail({ request, $, log }: CheerioCrawlingContext) {
+router.addHandler('DETAIL', async ({ request, $, log }) => {
     const title = $('title').text();
     log.info(`Handle details: ${title} [${request.loadedUrl}]`);
-}
+});
