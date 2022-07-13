@@ -6,11 +6,7 @@ router.addDefaultHandler(async ({ enqueueLinks, log }) => {
     log.info(`Handle Start URLs`);
     await enqueueLinks({
         globs: ['https://apify.com/*'],
-        transformRequestFunction(opts) {
-            opts.userData ??= {};
-            opts.userData.label = 'DETAIL';
-            return opts;
-        },
+        label: 'DETAIL',
     });
 });
 
