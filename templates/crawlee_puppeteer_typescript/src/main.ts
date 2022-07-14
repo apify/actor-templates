@@ -23,7 +23,7 @@ interface InputSchema {
     debug?: boolean;
 }
 
-const { startUrls = [], debug } = await Actor.getInput<InputSchema>() ?? {};
+const { startUrls = ['https://apify.com'], debug } = await Actor.getInput<InputSchema>() ?? {};
 
 if (debug) {
     log.setLevel(log.LEVELS.DEBUG)
