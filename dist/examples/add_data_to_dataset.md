@@ -7,32 +7,29 @@ This example saves data to the default dataset. If the dataset doesn't exist, it
 You can save data to custom datasets by using [`Apify.openDataset()`](../api/apify#opendataset)
 
 ```javascript
-const Apify = require('apify');
+const { Actor } = require('apify');
+const { CheerioCrawler } = require('crawlee');
 
-Apify.main(async () => {
-    const requestList = await Apify.openRequestList('start-urls',
-        [
-            { url: 'http://www.example.com/page-1' },
-            { url: 'http://www.example.com/page-2' },
-            { url: 'http://www.example.com/page-3' },
-        ]);
-
+Actor.main(async () => {
     // Function called for each URL
-    const handlePageFunction = async ({ request, body }) => {
+    const requestHandler = async ({ request, body }) => {
         // Save data to default dataset
-        await Apify.pushData({
+        await Actor.pushData({
             url: request.url,
             html: body,
         });
     };
 
-    const crawler = new Apify.CheerioCrawler({
-        requestList,
-        handlePageFunction,
+    const crawler = new CheerioCrawler({
+        requestHandler,
     });
 
     // Run the crawler
-    await crawler.run();
+    await crawler.run([
+        { url: 'http://www.example.com/page-1' },
+        { url: 'http://www.example.com/page-2' },
+        { url: 'http://www.example.com/page-3' },
+    ]);
 });
 ```
 

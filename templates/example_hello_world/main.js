@@ -3,14 +3,14 @@
 // so that it can be started by running "npm start".
 
 // Import Apify SDK. For more information, see https://sdk.apify.com/
-const Apify = require('apify');
+const { Actor } = require('apify');
 
-Apify.main(async () => {
+Actor.main(async () => {
     // Get input of the actor.
     // If you'd like to have your input checked and have Apify display
     // a user interface for it, add INPUT_SCHEMA.json file to your actor.
     // For more information, see https://docs.apify.com/actors/development/input-schema
-    const input = await Apify.getInput();
+    const input = await Actor.getInput();
     console.log('Input:');
     console.dir(input);
 
@@ -23,5 +23,5 @@ Apify.main(async () => {
     };
     console.log('Output:');
     console.dir(output);
-    await Apify.setValue('OUTPUT', output);
+    await Actor.setValue('OUTPUT', output);
 });

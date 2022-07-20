@@ -1,6 +1,4 @@
-const Apify = require('apify');
-
-const { utils: { log } } = Apify;
+const { log } = require('crawlee');
 
 exports.handleStart = async ({ request, page }) => {
     // Handle Start URLs

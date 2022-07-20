@@ -3,21 +3,22 @@
 // so that it can be started by running "npm start".
 
 // Import Apify SDK. For more information, see https://sdk.apify.com/
-const Apify = require('apify');
+const { Actor } = require('apify');
+const { launchPuppeteer } = require('crawlee');
 
-Apify.main(async () => {
+Actor.main(async () => {
     // Get input of the actor (here only for demonstration purposes).
     // If you'd like to have your input checked and have Apify display
     // a user interface for it, add INPUT_SCHEMA.json file to your actor.
     // For more information, see https://docs.apify.com/actors/development/input-schema
-    const input = await Apify.getInput();
+    const input = await Actor.getInput();
     console.log('Input:');
     console.dir(input);
 
     if (!input || !input.url) throw new Error('Input must be a JSON object with the "url" field!');
 
     console.log('Launching Puppeteer...');
-    const browser = await Apify.launchPuppeteer();
+    const browser = await launchPuppeteer();
 
     console.log(`Opening page ${input.url}...`);
     const page = await browser.newPage();
@@ -26,7 +27,7 @@ Apify.main(async () => {
     console.log(`Title of the page "${input.url}" is "${title}".`);
 
     console.log('Saving output...');
-    await Apify.setValue('OUTPUT', {
+    await Actor.setValue('OUTPUT', {
         title,
     });
 

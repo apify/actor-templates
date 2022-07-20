@@ -1,16 +1,12 @@
 /* eslint-disable global-require */
-jest.mock('apify', () => {
-    return {
-        ...jest.requireActual('apify'),
-        main: (func) => func,
-        pushData: (func) => func,
-        setValue: (func) => func,
-    };
-});
 
-const Apify = require('apify');
-const { ENV_VARS } = require('apify-shared/consts');
+const { Actor } = require('apify');
+const { ENV_VARS } = require('@apify/consts');
 const { LocalStorageDirEmulator } = require('./local_storage_dir_emulator');
+
+jest.spyOn(Actor, 'main').mockImplementation((func) => func);
+jest.spyOn(Actor, 'pushData').mockImplementation((func) => func);
+jest.spyOn(Actor, 'setValue').mockImplementation((func) => func);
 
 // eslint-disable-next-line no-useless-escape
 const urlRegex = '^https?:\/\/w{0,3}\.?.+';
@@ -33,7 +29,7 @@ let prevEnvHeadless;
 jest.retryTimes(3);
 
 describe('Examples - testing runnable codes behaviour ', () => {
-    let localStorageEmulator;
+    const localStorageEmulator = new LocalStorageDirEmulator();
     let exampleFunc;
     let callData;
     let dataSetData = [];
@@ -43,24 +39,24 @@ describe('Examples - testing runnable codes behaviour ', () => {
     beforeAll(async () => {
         prevEnvHeadless = process.env[ENV_VARS.HEADLESS];
         process.env[ENV_VARS.HEADLESS] = '1';
-        Apify.main = (func) => {
+        Actor.main = (func) => {
             exampleFunc = func;
         };
 
-        Apify.setValue = (key, storeValue) => {
+        Actor.setValue = (key, storeValue) => {
             kvStoreData.push({
                 key,
                 storeValue,
             });
         };
-        Apify.pushData = (data) => {
+        Actor.pushData = (data) => {
             if (Array.isArray(data)) {
                 dataSetData.push(...data);
             } else {
                 dataSetData.push(data);
             }
         };
-        Apify.call = (act, input) => {
+        Actor.call = (act, input) => {
             callData = { act, input };
         };
         console.log = (log) => {
@@ -68,14 +64,9 @@ describe('Examples - testing runnable codes behaviour ', () => {
         };
     });
 
-    beforeAll(() => {
-        localStorageEmulator = new LocalStorageDirEmulator();
-    });
-
     beforeEach(async () => {
-        const storageDir = await localStorageEmulator.init();
-        Apify.Configuration.getGlobalConfig().set('localStorageDir', storageDir);
-        await Apify.openRequestQueue();
+        await localStorageEmulator.init();
+        await Actor.openRequestQueue();
     });
 
     afterEach(async () => {
@@ -84,7 +75,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         logs = [];
         callData = null;
 
-        const queue = await Apify.openRequestQueue();
+        const queue = await Actor.openRequestQueue();
         await queue.drop();
     });
 
@@ -104,7 +95,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('accept user input example works', async () => {
-        const kvStore = await Apify.openKeyValueStore();
+        const kvStore = await Actor.openKeyValueStore();
         const input = { test: 'testing input' };
         await kvStore.setValue('INPUT', input);
 
@@ -150,8 +141,8 @@ describe('Examples - testing runnable codes behaviour ', () => {
 
     test('call actor example works', async () => {
         const email = 'jan.barta@apify.com';
-        const originalNewClient = Apify.newClient;
-        Apify.newClient = () => {
+        const originalNewClient = Actor.newClient;
+        Actor.newClient = () => {
             return {
                 user() {
                     return {
@@ -173,7 +164,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         expect(html).toContain('<div id="random_word">');
         expect(html).toContain('<div id="random_word_definition">');
 
-        Apify.newClient = originalNewClient;
+        Actor.newClient = originalNewClient;
     });
 
     test('capture screenshot - puppeteer page screenshot example works', async () => {
@@ -191,7 +182,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/capture_screenshot/puppeteer_apify_snapshot.js');
         await exampleFunc();
 
-        const store = await Apify.openKeyValueStore();
+        const store = await Actor.openKeyValueStore();
         await store.forEachKey(async (key) => {
             const storeValue = await store.getValue(key);
             expect(storeValue).toBeDefined();
@@ -218,7 +209,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
         require('../examples/capture_screenshot/puppeteer_crawler_apify_snapshot.js');
         await exampleFunc();
 
-        const store = await Apify.openKeyValueStore();
+        const store = await Actor.openKeyValueStore();
         let imageCount = 0;
         await store.forEachKey(async (key) => {
             if (/^http.*?www\.example\.com.*?\d/.test(key)) {
@@ -368,7 +359,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('map example works', async () => {
-        const dataset = await Apify.openDataset();
+        const dataset = await Actor.openDataset();
         await dataset.pushData(exampleData);
         require('../examples/map_and_reduce/map.js');
         await exampleFunc();
@@ -383,7 +374,7 @@ describe('Examples - testing runnable codes behaviour ', () => {
     });
 
     test('reduce example works', async () => {
-        const dataset = await Apify.openDataset();
+        const dataset = await Actor.openDataset();
         await dataset.pushData(exampleData);
         require('../examples/map_and_reduce/reduce.js');
         await exampleFunc();

@@ -10,14 +10,10 @@ exports.buildExamples = async function () {
     fs.mkdirSync(distDir);
 
     const examplesDir = path.resolve(__dirname, '..', EXAMPLES_DIR_NAME);
-    try {
-        return fs
-            .readdirSync(examplesDir).forEach((exampleDir) => {
-                buildExample(exampleDir);
-            });
-    } catch (err) {
-        throw err;
-    }
+    return fs
+        .readdirSync(examplesDir).forEach((exampleDir) => {
+            buildExample(exampleDir);
+        });
 };
 
 function loadExamples(dirname) {

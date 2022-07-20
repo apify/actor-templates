@@ -4,22 +4,17 @@
  * If you're looking for examples or want to learn more, see README.
  */
 
-const Apify = require('apify');
+const { Actor } = require('apify');
+const { log, PlaywrightCrawler } = require('crawlee');
 // const playwright = require('playwright');
 const { handleStart, handleList, handleDetail } = require('./src/routes');
 
-const { utils: { log } } = Apify;
+Actor.main(async () => {
+    const { startUrls } = await Actor.getInput();
 
-Apify.main(async () => {
-    const { startUrls } = await Apify.getInput();
+    const proxyConfiguration = await Actor.createProxyConfiguration();
 
-    const requestList = await Apify.openRequestList('start-urls', startUrls);
-    const requestQueue = await Apify.openRequestQueue();
-    const proxyConfiguration = await Apify.createProxyConfiguration();
-
-    const crawler = new Apify.PlaywrightCrawler({
-        requestList,
-        requestQueue,
+    const crawler = new PlaywrightCrawler({
         proxyConfiguration,
         launchContext: {
             // To use Firefox or WebKit on the Apify Platform,
@@ -32,9 +27,10 @@ Apify.main(async () => {
         browserPoolOptions: {
             // This allows browser to be more effective against anti-scraping protections.
             // If you are having performance issues try turning this off.
-            useFingerprints: true,
+            // By default, this is enabled
+            // useFingerprints: false,
         },
-        handlePageFunction: async (context) => {
+        async requestHandler(context) {
             const { url, userData: { label } } = context.request;
             log.info('Page opened.', { label, url });
             switch (label) {
@@ -49,6 +45,6 @@ Apify.main(async () => {
     });
 
     log.info('Starting the crawl.');
-    await crawler.run();
+    await crawler.run(startUrls);
     log.info('Crawl finished.');
 });

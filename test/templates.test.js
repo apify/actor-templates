@@ -1,7 +1,7 @@
 const fs = require('fs');
 const sinon = require('sinon');
 const path = require('path');
-const { ENV_VARS } = require('apify-shared/consts');
+const { ENV_VARS } = require('@apify/consts');
 const { spawnSync } = require('child_process');
 const loadJson = require('load-json-file');
 const rimraf = require('rimraf');

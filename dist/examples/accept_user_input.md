@@ -6,10 +6,10 @@ title: Accept user input
 This example accepts and logs user input:
 
 ```javascript
-const Apify = require('apify');
+const { Actor } = require('apify');
 
-Apify.main(async () => {
-    const input = await Apify.getInput();
+Actor.main(async () => {
+    const input = await Actor.getInput();
     console.log(input);
 });
 ```

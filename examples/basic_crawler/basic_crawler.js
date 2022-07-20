@@ -1,33 +1,21 @@
-const Apify = require('apify');
+const { Actor } = require('apify');
+const { BasicCrawler } = require('crawlee');
 
 // Apify.main() function wraps the crawler logic (it is optional).
-Apify.main(async () => {
-    // Create and initialize an instance of the RequestList class that contains
-    // a list of URLs to crawl. Here we use just a few hard-coded URLs.
-    const requestList = await Apify.openRequestList('start-urls',
-        [
-            { url: 'http://www.google.com/' },
-            { url: 'http://www.example.com/' },
-            { url: 'http://www.bing.com/' },
-            { url: 'http://www.wikipedia.com/' },
-        ]);
-
+Actor.main(async () => {
     // Create a BasicCrawler - the simplest crawler that enables
     // users to implement the crawling logic themselves.
-    const crawler = new Apify.BasicCrawler({
-        // Let the crawler fetch URLs from our list.
-        requestList,
-
+    const crawler = new BasicCrawler({
         // This function will be called for each URL to crawl.
-        handleRequestFunction: async ({ request }) => {
+        async requestHandler({ request, sendRequest }) {
             const { url } = request;
             console.log(`Processing ${url}...`);
 
             // Fetch the page HTML via Apify utils requestAsBrowser
-            const { body } = await Apify.utils.requestAsBrowser({ url });
+            const { body } = await sendRequest({ url });
 
             // Store the HTML and URL to the default dataset.
-            await Apify.pushData({
+            await Actor.pushData({
                 url: request.url,
                 html: body,
             });
@@ -35,7 +23,12 @@ Apify.main(async () => {
     });
 
     // Run the crawler and wait for it to finish.
-    await crawler.run();
+    await crawler.run([
+        { url: 'http://www.google.com/' },
+        { url: 'http://www.example.com/' },
+        { url: 'http://www.bing.com/' },
+        { url: 'http://www.wikipedia.com/' },
+    ]);
 
     console.log('Crawler finished.');
 });

@@ -26,7 +26,7 @@ interface InputSchema {
 const { startUrls = ['https://apify.com'], debug } = await Actor.getInput<InputSchema>() ?? {};
 
 if (debug) {
-    log.setLevel(log.LEVELS.DEBUG)
+    log.setLevel(log.LEVELS.DEBUG);
 }
 
 const proxyConfiguration = await Actor.createProxyConfiguration();

@@ -16,15 +16,15 @@ exports.fetchManifest = async () => {
                             const data = JSON.parse(json);
                             resolve(data);
                         } catch (e) {
-                            reject(e)
+                            reject(e);
                         }
                     } else {
                         reject(new Error(`Status: ${res.statusCode}\n${json}`));
                     }
                 })
-                .on('error', (err) => reject(err))
+                .on('error', (err) => reject(err));
         }).on('error', (err) => reject(err));
-    })
+    });
 };
 
 exports.manifestUrl = MANIFEST_URL;

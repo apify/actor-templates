@@ -1,11 +1,12 @@
-const Apify = require('apify');
+const { Actor } = require('apify');
+const { launchPuppeteer } = require('crawlee');
 
-Apify.main(async () => {
+Actor.main(async () => {
     // Launch the web browser.
-    const browser = await Apify.launchPuppeteer();
+    const browser = await launchPuppeteer();
 
     console.log('Obtaining own email address...');
-    const apifyClient = Apify.newClient();
+    const apifyClient = Actor.newClient();
     const user = await apifyClient.user().get();
 
     // Load randomword.com and get a random word
@@ -20,7 +21,7 @@ Apify.main(async () => {
     // desired input. You can find the required input parameters by checking
     // the actor's documentation page: https://apify.com/apify/send-mail
     console.log(`Sending email to ${user.email}...`);
-    await Apify.call('apify/send-mail', {
+    await Actor.call('apify/send-mail', {
         to: user.email,
         subject: 'Random Word',
         html: `<h1>Random Word</h1>${randomWord}`,
