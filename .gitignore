@@ -2,3 +2,4 @@
 .DS_Store
 node_modules
 tmp
+templates/**/package-lock.json
