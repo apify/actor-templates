@@ -21,7 +21,7 @@ exports.buildTemplates = async function () {
             const zipName = `${templateName}.zip`;
             const archivePath = path.join(distDir, zipName);
             const archive = archiver(archivePath);
-            const files = await globby([`${templateName}/*`, `${templateName}/**/**`], { dot: true });
+            const files = await globby([`${templateName}/*`, `${templateName}/**/**`, `!${templateName}/node_modules/**`], { dot: true });
 
             const promises = files.map((fileName) => {
                 fileName = fileName.replace(`${templateName}/`, '');

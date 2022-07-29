@@ -4,28 +4,23 @@
  * If you're looking for examples or want to learn more, see README.
  */
 
-const Apify = require('apify');
+const { Actor } = require('apify');
+const { CheerioCrawler, log } = require('crawlee');
 const { handleStart, handleList, handleDetail } = require('./src/routes');
 
-const { utils: { log } } = Apify;
+Actor.main(async () => {
+    const { startUrls } = await Actor.getInput();
 
-Apify.main(async () => {
-    const { startUrls } = await Apify.getInput();
+    const proxyConfiguration = await Actor.createProxyConfiguration();
 
-    const requestList = await Apify.openRequestList('start-urls', startUrls);
-    const requestQueue = await Apify.openRequestQueue();
-    const proxyConfiguration = await Apify.createProxyConfiguration();
-
-    const crawler = new Apify.CheerioCrawler({
-        requestList,
-        requestQueue,
+    const crawler = new CheerioCrawler({
         proxyConfiguration,
         // Be nice to the websites.
         // Remove to unleash full power.
         maxConcurrency: 50,
-        handlePageFunction: async (context) => {
+        async requestHandler(context) {
             const { url, userData: { label } } = context.request;
-            log.info('Page opened.', { label, url });
+            context.log.info('Page opened.', { label, url });
             switch (label) {
                 case 'LIST':
                     return handleList(context);
@@ -38,6 +33,6 @@ Apify.main(async () => {
     });
 
     log.info('Starting the crawl.');
-    await crawler.run();
+    await crawler.run(startUrls);
     log.info('Crawl finished.');
 });

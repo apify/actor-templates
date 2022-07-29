@@ -2,17 +2,17 @@
 // An actor is a program that takes an input and produces an output.
 
 // For more information, see https://sdk.apify.com/
-import Apify from 'apify';
+import { Actor } from 'apify';
 
 interface InputSchema {
     firstNumber: number;
     secondNumber: number;
 }
 
-Apify.main(async () => {
-    console.log('Loading input')
+Actor.main(async () => {
+    console.log('Loading input');
     // Structure of input is defined in INPUT_SCHEMA.json.
-    const input = await Apify.getInput() as InputSchema;
+    const input = await Actor.getInput<InputSchema>();
     console.log('First number: ', input.firstNumber);
     console.log('Second number: ', input.secondNumber);
 
@@ -25,9 +25,9 @@ Apify.main(async () => {
     console.log('The result is: ', result);
 
     // Structure of output is defined in .actor/actor.json
-    await Apify.pushData({
+    await Actor.pushData({
         firstNumber: input.firstNumber,
         secondNumber: input.secondNumber,
         sum: result,
-    })
+    });
 });

@@ -1,16 +1,10 @@
-const { cryptoRandomObjectId } = require('apify-shared/utilities');
-const { LOCAL_STORAGE_SUBDIRS, LOCAL_ENV_VARS, ENV_VARS } = require('apify-shared/consts');
+const { cryptoRandomObjectId } = require('@apify/utilities');
+const { StorageManager, Configuration } = require('crawlee');
+const { MemoryStorage } = require('@crawlee/memory-storage');
 const fs = require('fs-extra');
-const path = require('path');
-const cacheContainer = require('apify/build/cache_container').default;
+const path = require('node:path');
 
 const LOCAL_EMULATION_DIR = path.join(__dirname, '..', 'tmp', 'local-emulation-dir');
-
-const DEFAULT_FOLDERS = Object.values(LOCAL_STORAGE_SUBDIRS)
-    .concat([
-        `${LOCAL_STORAGE_SUBDIRS.keyValueStores}/${LOCAL_ENV_VARS[ENV_VARS.DEFAULT_KEY_VALUE_STORE_ID]}`,
-        'live_view',
-    ]);
 
 /**
  * Emulates storage for testing purposes.
@@ -26,15 +20,14 @@ class LocalStorageDirEmulator {
     }
 
     async init(dirName = cryptoRandomObjectId(10)) {
-        cacheContainer.clearAllCaches();
+        StorageManager.clearCache();
         const localStorageDir = path.resolve(LOCAL_EMULATION_DIR, dirName);
-        await fs.ensureDir(localStorageDir);
-        // prepare structure
-        await this._ensureStructure(localStorageDir);
-        process.env.APIFY_LOCAL_STORAGE_DIR = localStorageDir;
         this.localStorageDirs.push(localStorageDir);
+        await fs.ensureDir(localStorageDir);
+
+        const storage = new MemoryStorage({ localDataDirectory: localStorageDir });
+        Configuration.getGlobalConfig().useStorageClient(storage);
         // console.debug(`Created local storage emulation in folder ${localStorageDir}`);
-        return localStorageDir;
     }
 
     /**
@@ -45,14 +38,6 @@ class LocalStorageDirEmulator {
         delete process.env.APIFY_LOCAL_STORAGE_DIR;
         const promises = this.localStorageDirs.map((dir) => {
             return fs.remove(dir);
-        });
-        return Promise.all(promises);
-    }
-
-    async _ensureStructure(localStorageDir) {
-        // create first level
-        const promises = DEFAULT_FOLDERS.map((folder) => {
-            return fs.ensureDir(path.join(localStorageDir, folder));
         });
         return Promise.all(promises);
     }

@@ -4,21 +4,16 @@
  * If you're looking for examples or want to learn more, see README.
  */
 
-const Apify = require('apify');
+const { Actor } = require('apify');
+const { PuppeteerCrawler, log } = require('crawlee');
 const { handleStart, handleList, handleDetail } = require('./src/routes');
 
-const { utils: { log } } = Apify;
+Actor.main(async () => {
+    const { startUrls } = await Actor.getInput();
 
-Apify.main(async () => {
-    const { startUrls } = await Apify.getInput();
+    const proxyConfiguration = await Actor.createProxyConfiguration();
 
-    const requestList = await Apify.openRequestList('start-urls', startUrls);
-    const requestQueue = await Apify.openRequestQueue();
-    const proxyConfiguration = await Apify.createProxyConfiguration();
-
-    const crawler = new Apify.PuppeteerCrawler({
-        requestList,
-        requestQueue,
+    const crawler = new PuppeteerCrawler({
         proxyConfiguration,
         launchContext: {
             // Chrome with stealth should work for most websites.
@@ -45,6 +40,6 @@ Apify.main(async () => {
     });
 
     log.info('Starting the crawl.');
-    await crawler.run();
+    await crawler.run(startUrls);
     log.info('Crawl finished.');
 });
