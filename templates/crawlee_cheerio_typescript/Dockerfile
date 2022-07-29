@@ -3,7 +3,7 @@ FROM apify/actor-node:16 AS builder
 
 # copy all files, install all dependencies (including dev deps) and build the project
 COPY . ./
-RUN npm ci --include=dev \
+RUN npm install --include=dev \
     && npm run build
 
 # create final image
@@ -17,7 +17,7 @@ COPY --from=builder /usr/src/app/INPUT_SCHEMA.json ./INPUT_SCHEMA.json
 
 # install only prod deps
 RUN npm --quiet set progress=false \
-    && npm ci --only=prod --no-optional \
+    && npm install --only=prod --no-optional \
     && echo "Installed NPM packages:" \
     && (npm list --only=prod --no-optional --all || true) \
     && echo "Node.js version:" \
