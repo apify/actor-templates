@@ -13,8 +13,8 @@ Actor.main(async () => {
     console.log('Loading input');
     // Structure of input is defined in INPUT_SCHEMA.json.
     const input = await Actor.getInput<InputSchema>();
-    console.log('First number: ', input.firstNumber);
-    console.log('Second number: ', input.secondNumber);
+    console.log('First number: ', input?.firstNumber);
+    console.log('Second number: ', input?.secondNumber);
 
     // 👉 Complete the code so that result is
     // the sum of firstNumber and secondNumber.
@@ -26,8 +26,8 @@ Actor.main(async () => {
 
     // Structure of output is defined in .actor/actor.json
     await Actor.pushData({
-        firstNumber: input.firstNumber,
-        secondNumber: input.secondNumber,
+        firstNumber: input?.firstNumber,
+        secondNumber: input?.secondNumber,
         sum: result,
     });
 });
