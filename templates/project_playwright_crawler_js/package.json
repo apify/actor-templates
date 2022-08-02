@@ -1,15 +1,21 @@
 {
-    "name": "example-puppeteer-single-page",
+    "name": "crawlee-playwright-typescript",
     "version": "0.0.1",
     "type": "module",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
         "apify": "^3.0.0",
         "crawlee": "^3.0.0",
-        "puppeteer": "*"
+        "playwright": "*"
+    },
+    "devDependencies": {
+        "@apify/eslint-config": "^0.3.1",
+        "eslint": "^8.20.0"
     },
     "scripts": {
-        "start": "node main.js",
+        "start": "node src/main.js",
+        "lint": "eslint ./src --ext .js,.jsx",
+        "lint:fix": "eslint ./src --ext .js,.jsx --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",

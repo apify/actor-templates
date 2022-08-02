@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "This is an example of an Apify actor.",
     "dependencies": {
-        "apify": "^3.0.1"
+        "apify": "^3.0.0"
     },
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",

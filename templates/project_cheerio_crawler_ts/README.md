@@ -1,14 +1,14 @@
-# Empty project
+# CheerioCrawler project
 
-This template is useful when you're already familiar with the [Apify SDK](https://www.npmjs.com/package/apify) and [Crawlee](https://crawlee.dev) and want to start with a clean slate. It does not include `puppeteer` or `playwright` so install them manually and update the Dockerfile if you need them.
-
-> Crawlee is the successor to [Apify SDK v2](https://sdk.apify.com/). 🎉 Fully rewritten in TypeScript for a better developer experience, and with even more powerful anti-blocking features. The interface is almost the same as Apify SDK so upgrading is a breeze. Read the [upgrading guide](https://crawlee.dev/docs/upgrading/upgrading-to-v3) to learn about the changes.
+This template is a production ready boilerplate for developing with `CheerioCrawler`.
+Use this to bootstrap your projects using the most up-to-date code.
 
 If you're looking for examples or want to learn more visit:
 
 - [Crawlee + Apify Platform guide](https://crawlee.dev/docs/guides/apify-platform)
-- [Crawlee Tutorial](https://crawlee.dev/docs/introduction)
-- [Crawlee Examples](https://crawlee.dev/docs/examples)
+- [Cheerio Tutorial](https://crawlee.dev/docs/guides/cheerio-crawler-guide)
+- [Documentation](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler)
+- [Examples](https://crawlee.dev/docs/examples/cheerio-crawler)
 
 ## Documentation reference
 
