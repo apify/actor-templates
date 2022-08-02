@@ -26,7 +26,7 @@ const checkTemplateStructure = async (actorName) => {
     }
 
     // python templates do not use apify package and crawlee is using v3/next, so it wouldn't pass
-    if (!/python/i.test(actorName) && !/crawlee/i.test(actorName)) {
+    if (!/python/i.test(actorName) && !/_v2/i.test(actorName)) {
         // Check if template has the latest apify package version
         const apifyModulePackageJson = path.join(actorName, 'node_modules', 'apify', 'package.json');
         expect(loadJson.sync(apifyModulePackageJson).version).toEqual(APIFY_LATEST_VERSION);
