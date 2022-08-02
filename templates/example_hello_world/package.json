@@ -1,7 +1,11 @@
 {
     "name": "example-hello-world",
     "version": "0.0.1",
+    "type": "module",
     "description": "This is an example of an Apify actor.",
+    "engines": {
+        "node": ">=16.0.0"
+    },
     "dependencies": {
         "apify": "^3.0.0"
     },

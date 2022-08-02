@@ -2,26 +2,28 @@
 // It is referenced from the "scripts" section of the package.json file,
 // so that it can be started by running "npm start".
 
-// Import Apify SDK. For more information, see https://sdk.apify.com/
-const { Actor } = require('apify');
+// For more information, see https://crawlee.dev
+import { Actor } from 'apify';
 
-Actor.main(async () => {
-    // Get input of the actor.
-    // If you'd like to have your input checked and have Apify display
-    // a user interface for it, add INPUT_SCHEMA.json file to your actor.
-    // For more information, see https://docs.apify.com/actors/development/input-schema
-    const input = await Actor.getInput();
-    console.log('Input:');
-    console.dir(input);
+await Actor.init();
 
-    // Do something useful here...
+// Get input of the actor.
+// If you'd like to have your input checked and have Apify display
+// a user interface for it, add INPUT_SCHEMA.json file to your actor.
+// For more information, see https://docs.apify.com/actors/development/input-schema
+const input = await Actor.getInput();
+console.log('Input:');
+console.dir(input);
 
-    // Save output
-    const output = {
-        receivedInput: input,
-        message: 'Hello sir!',
-    };
-    console.log('Output:');
-    console.dir(output);
-    await Actor.setValue('OUTPUT', output);
-});
+// Do something useful here...
+
+// Save output
+const output = {
+    receivedInput: input,
+    message: 'Hello sir!',
+};
+console.log('Output:');
+console.dir(output);
+await Actor.setValue('OUTPUT', output);
+
+await Actor.exit();

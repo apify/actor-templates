@@ -1,7 +1,11 @@
 {
     "name": "example-typescript",
     "version": "0.0.1",
+    "type": "module",
     "description": "This is an example of an Apify actor.",
+    "engines": {
+        "node": ">=16.0.0"
+    },
     "dependencies": {
         "@apify/log": "^2.1.1",
         "apify": "^3.0.0"
@@ -18,10 +22,10 @@
     "scripts": {
         "start": "npm run start:dev",
         "start:prod": "node dist/main.js",
-        "start:dev": "ts-node -T src/main.ts",
+        "start:dev": "ts-node-esm -T src/main.ts",
         "build": "tsc",
-        "lint": "eslint ./src --ext .js,.ts",
-        "lint:fix": "eslint ./src --ext .js,.ts --fix",
+        "lint": "eslint ./src --ext .ts",
+        "lint:fix": "eslint ./src --ext .ts --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",

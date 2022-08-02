@@ -2,37 +2,38 @@
 // It is referenced from the "scripts" section of the package.json file,
 // so that it can be started by running "npm start".
 
-// Import Apify SDK. For more information, see https://sdk.apify.com/
-const { Actor } = require('apify');
-const { launchPuppeteer } = require('crawlee');
+// For more information, see https://crawlee.dev
+import { Actor } from 'apify';
+import { launchPuppeteer } from 'crawlee';
 
-Actor.main(async () => {
-    // Get input of the actor (here only for demonstration purposes).
-    // If you'd like to have your input checked and have Apify display
-    // a user interface for it, add INPUT_SCHEMA.json file to your actor.
-    // For more information, see https://docs.apify.com/actors/development/input-schema
-    const input = await Actor.getInput();
-    console.log('Input:');
-    console.dir(input);
+await Actor.init();
 
-    if (!input || !input.url) throw new Error('Input must be a JSON object with the "url" field!');
+// Get input of the actor (here only for demonstration purposes).
+// If you'd like to have your input checked and have Apify display
+// a user interface for it, add INPUT_SCHEMA.json file to your actor.
+// For more information, see https://docs.apify.com/actors/development/input-schema
+const input = await Actor.getInput();
+console.log('Input:');
+console.dir(input);
 
-    console.log('Launching Puppeteer...');
-    const browser = await launchPuppeteer();
+if (!input || !input.url) throw new Error('Input must be a JSON object with the "url" field!');
 
-    console.log(`Opening page ${input.url}...`);
-    const page = await browser.newPage();
-    await page.goto(input.url);
-    const title = await page.title();
-    console.log(`Title of the page "${input.url}" is "${title}".`);
+console.log('Launching Puppeteer...');
+const browser = await launchPuppeteer();
 
-    console.log('Saving output...');
-    await Actor.setValue('OUTPUT', {
-        title,
-    });
+console.log(`Opening page ${input.url}...`);
+const page = await browser.newPage();
+await page.goto(input.url);
+const title = await page.title();
+console.log(`Title of the page "${input.url}" is "${title}".`);
 
-    console.log('Closing Puppeteer...');
-    await browser.close();
-
-    console.log('Done.');
+console.log('Saving output...');
+await Actor.setValue('OUTPUT', {
+    title,
 });
+
+console.log('Closing Puppeteer...');
+await browser.close();
+
+console.log('Done.');
+await Actor.exit();

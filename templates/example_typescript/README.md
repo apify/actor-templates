@@ -10,7 +10,8 @@ language for rich formatting.
 
 ## Documentation reference
 
-- [Apify SDK](https://sdk.apify.com/)
+- [Crawlee](https://crawlee.dev)
+- [Apify SDK v3](https://www.npmjs.com/package/apify)
 - [Apify Actor documentation](https://docs.apify.com/actor)
 - [Apify CLI](https://docs.apify.com/cli)
 
