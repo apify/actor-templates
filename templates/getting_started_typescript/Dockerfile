@@ -1,29 +1,50 @@
-# using multistage build, as we need dev deps to build the TS source code
+# Specify the base Docker image. You can read more about
+# the available images at https://sdk.apify.com/docs/guides/docker-images
+# You can also use any other image from Docker Hub.
 FROM apify/actor-node:16 AS builder
 
-# copy all files, install all dependencies (including dev deps) and build the project
+# Copy just package.json and package-lock.json
+# to speed up the build using Docker layer cache.
+COPY package*.json ./
+
+# Install all dependencies. Don't audit to speed up the installation.
+RUN npm install --include=dev --audit=false
+
+# Next, copy the source files using the user set
+# in the base image.
 COPY . ./
-RUN npm install --include=dev \
-    && npm run build
 
-# create final image
+# Install all dependencies and build the project.
+# Don't audit to speed up the installation.
+RUN npm run build
+
+# Create final image
 FROM apify/actor-node:16
-# copy only necessary files
-COPY --from=builder /usr/src/app/package*.json ./
-COPY --from=builder /usr/src/app/README.md ./
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/.actor ./.actor
-COPY --from=builder /usr/src/app/INPUT_SCHEMA.json ./INPUT_SCHEMA.json
 
-# install only prod deps
+# Copy only built JS files from builder image
+COPY --from=builder /usr/src/app/dist ./dist
+
+# Copy just package.json and package-lock.json
+# to speed up the build using Docker layer cache.
+COPY package*.json ./
+
+# Install NPM packages, skip optional and development dependencies to
+# keep the image small. Avoid logging too much and print the dependency
+# tree for debugging
 RUN npm --quiet set progress=false \
-    && npm install --only=prod --no-optional \
+    && npm install --omit=dev --omit=optional \
     && echo "Installed NPM packages:" \
-    && (npm list --only=prod --no-optional --all || true) \
+    && (npm list --omit=dev --all || true) \
     && echo "Node.js version:" \
     && node --version \
     && echo "NPM version:" \
     && npm --version
 
-# run compiled code
-CMD npm run start:prod
+# Next, copy the remaining files and directories with the source code.
+# Since we do this after NPM install, quick build will be really fast
+# for most source file changes.
+COPY . ./
+
+
+# Run the image.
+CMD npm run start:prod --silent

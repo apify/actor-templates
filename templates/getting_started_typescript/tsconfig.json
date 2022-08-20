@@ -1,8 +1,11 @@
 {
     "extends": "@apify/tsconfig",
     "compilerOptions": {
-        "skipLibCheck": true,
-        "outDir": "dist"
+        "module": "ES2022",
+        "target": "ES2022",
+        "outDir": "dist",
+        "noUnusedLocals": false,
+        "lib": ["DOM"]
     },
     "include": [
         "./src/**/*"
