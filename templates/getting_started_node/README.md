@@ -11,6 +11,7 @@ language for rich formatting.
 ## Documentation reference
 
 - [Apify SDK](https://sdk.apify.com/)
+- [Crawlee](https://crawlee.dev)
 - [Apify Actor documentation](https://docs.apify.com/actor)
 - [Apify CLI](https://docs.apify.com/cli)
 

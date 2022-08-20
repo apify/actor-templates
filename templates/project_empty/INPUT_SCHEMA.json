@@ -1,12 +1,12 @@
 {
-    "title": "Input schema for the apify_project actor.",
+    "title": "Input schema for the empty project actor.",
     "type": "object",
     "schemaVersion": 1,
     "properties": {
         "test": {
             "title": "Test",
             "type": "string",
-            "description": "There is testing input field description.",
+            "description": "This is test input field description.",
             "editor": "textfield"
         }
     },

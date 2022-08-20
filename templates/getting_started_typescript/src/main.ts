@@ -9,25 +9,27 @@ interface InputSchema {
     secondNumber: number;
 }
 
-Actor.main(async () => {
-    console.log('Loading input');
-    // Structure of input is defined in INPUT_SCHEMA.json.
-    const input = await Actor.getInput<InputSchema>();
-    console.log('First number: ', input?.firstNumber);
-    console.log('Second number: ', input?.secondNumber);
+await Actor.init()
 
-    // 👉 Complete the code so that result is
-    // the sum of firstNumber and secondNumber.
-    // 👇👇👇👇👇👇👇👇👇👇
-    const result = null;
-    // 👆👆👆👆👆👆👆👆👆👆
+console.log('Loading input');
+// Structure of input is defined in INPUT_SCHEMA.json.
+const input = await Actor.getInput<InputSchema>();
+console.log('First number: ', input?.firstNumber);
+console.log('Second number: ', input?.secondNumber);
 
-    console.log('The result is: ', result);
+// 👉 Complete the code so that result is
+// the sum of firstNumber and secondNumber.
+// 👇👇👇👇👇👇👇👇👇👇
+const result = null;
+// 👆👆👆👆👆👆👆👆👆👆
 
-    // Structure of output is defined in .actor/actor.json
-    await Actor.pushData({
-        firstNumber: input?.firstNumber,
-        secondNumber: input?.secondNumber,
-        sum: result,
-    });
+console.log('The result is: ', result);
+
+// Structure of output is defined in .actor/actor.json
+await Actor.pushData({
+    firstNumber: input?.firstNumber,
+    secondNumber: input?.secondNumber,
+    sum: result,
 });
+
+await Actor.exit();
