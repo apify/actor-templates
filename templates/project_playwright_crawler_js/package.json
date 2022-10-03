@@ -1,5 +1,5 @@
 {
-    "name": "crawlee-playwright-typescript",
+    "name": "crawlee-playwright-javascript",
     "version": "0.0.1",
     "type": "module",
     "description": "This is an example of an Apify actor.",
