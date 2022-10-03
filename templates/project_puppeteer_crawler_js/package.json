@@ -1,5 +1,5 @@
 {
-    "name": "crawlee-puppeteer-typescript",
+    "name": "crawlee-puppeteer-javascript",
     "version": "0.0.1",
     "type": "module",
     "description": "This is an example of an Apify actor.",
@@ -9,9 +9,8 @@
         "puppeteer": "*"
     },
     "devDependencies": {
-        "@apify/tsconfig": "^0.1.0",
-        "ts-node": "^10.9.1",
-        "typescript": "4.7.4"
+        "@apify/eslint-config": "^0.3.1",
+        "eslint": "^8.20.0"
     },
     "scripts": {
         "start": "node src/main.js",
