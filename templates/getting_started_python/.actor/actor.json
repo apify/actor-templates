@@ -20,23 +20,20 @@
                     },
                     "display": {
                         "component": "table",
-                        "columns": [
-                            {
+                        "properties": {
+                            "sum": {
                                 "label": "Sum",
-                                "format": "number",
-                                "field": "sum"
+                                "format": "number"
                             },
-                            {
+                            "first_number": {
                                 "label": "First number",
-                                "format": "number",
-                                "field": "first_number"
+                                "format": "number"
                             },
-                            {
+                            "second_number": {
                                 "label": "Second number",
-                                "format": "number",
-                                "field": "second_number"
+                                "format": "number"
                             }
-                        ]
+                        }
                     }
                 }
             }
