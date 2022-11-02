@@ -1,5 +1,6 @@
 # This file tells Git which files shouldn't be added to source control
 
+.DS_Store
 .idea
 dist
 node_modules
