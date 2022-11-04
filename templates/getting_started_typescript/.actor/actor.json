@@ -19,22 +19,19 @@
                         ]
                     },
                     "display": {
-                        "component": "table",
-                        "display": {
-                            "component": "table",
-                            "properties": {
-                                "sum": {
-                                    "label": "Sum",
-                                    "format": "number"
-                                },
-                                "firstNumber": {
-                                    "label": "First number",
-                                    "format": "number"
-                                },
-                                "secondNumber": {
-                                    "label": "Second number",
-                                    "format": "number"
-                                }
+                        "component": "table",                        
+                        "properties": {
+                            "sum": {
+                                "label": "Sum",
+                                "format": "number"
+                            },
+                            "firstNumber": {
+                                "label": "First number",
+                                "format": "number"
+                            },
+                            "secondNumber": {
+                                "label": "Second number",
+                                "format": "number"
                             }
                         }
                     }
