@@ -3,7 +3,10 @@
     "name": "getting-started-actor",
     "title": "Getting Started Actor",
     "description": "Adds two integers.",
-    "version": "0.0.1",
+    "version": "0.0",
+    "input": "./INPUT_SCHEMA.json",
+    "readme": "./README.md",
+    "dockefile": "./Dockerfile",
     "storages": {
         "dataset": {
             "actorSpecification": 1,
