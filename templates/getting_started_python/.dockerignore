@@ -7,7 +7,7 @@ crawlee_storage
 storage
 
 # installed files
-node_modules
+.venv
 
 # git folder
 .git

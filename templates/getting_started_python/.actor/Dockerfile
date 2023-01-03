@@ -3,9 +3,10 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-python:3.9
 
-# Second, copy just requirements.txt into the actor image,
-# since it should be the only file that affects "pip install" in the next step,
+# Second, copy just requirements.txt and Makefile into the actor image,
+# since they should be the only files that affect "make install" in the next step,
 # in order to speed up the build
+COPY Makefile ./
 COPY requirements.txt ./
 
 # Install the packages specified in requirements.txt,
@@ -15,8 +16,8 @@ RUN echo "Python version:" \
  && python --version \
  && echo "Pip version:" \
  && pip --version \
- && echo "Installing dependencies from requirements.txt:" \
- && pip install -r requirements.txt \
+ && echo "Installing dependencies:" \
+ && make setup \
  && echo "All installed Python packages:" \
  && pip freeze
 
@@ -26,5 +27,5 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Specify how to launch the source code of your actor.
-# By default, the main.py file is run
-CMD python3 main.py
+# By default, the "make run" comand is run
+CMD make run
