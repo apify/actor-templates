@@ -27,5 +27,5 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Specify how to launch the source code of your actor.
-# By default, the "make run" comand is run
-CMD make run
+# By default, the "make actor-run" comand is run
+CMD make actor-run

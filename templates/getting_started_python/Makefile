@@ -1,4 +1,4 @@
-.PHONY: clean create-venv setup run
+.PHONY: clean create-venv setup run actor-post-create actor-run
 
 VENV_PATH = .venv
 PYTHON = $(or $(wildcard $(VENV_PATH)/bin/python), $(shell which python3))
@@ -14,3 +14,7 @@ setup:
 
 run:
 	$(PYTHON) -m src.main
+
+actor-post-create: create-venv setup
+
+actor-run: run
