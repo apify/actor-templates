@@ -6,10 +6,10 @@ PYTHON = $(or $(wildcard $(VENV_PATH)/bin/python), $(shell which python3))
 clean:
 	rm -rf $(VENV_PATH)
 
+# We need to reevaluate the PYTHON variable here after we create a virtual environment,
+# because we should use the Python executable from the virtual environment from now on
 create-venv:
 	$(PYTHON) -m venv $(VENV_PATH)
-	# We need to reevaluate the PYTHON variable after we create a virtual environment,
-	# because we should use the Python executable from the virtual environment from now on
 	$(eval PYTHON=$(VENV_PATH)/bin/python3)
 
 setup:
