@@ -26,6 +26,7 @@ exports.buildTemplates = async function () {
                 `${templateName}/**/**`,
                 `!${templateName}/node_modules/**`,
                 `!${templateName}/.venv/**`,
+                `!${templateName}/.DS_Store`,
             ], { dot: true });
 
             const promises = files.map((fileName) => {
