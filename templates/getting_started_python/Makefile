@@ -8,6 +8,9 @@ clean:
 
 create-venv:
 	$(PYTHON) -m venv $(VENV_PATH)
+	# We need to reevaluate the PYTHON variable after we create a virtual environment,
+	# because we should use the Python executable from the virtual environment from now on
+	$(eval PYTHON=$(VENV_PATH)/bin/python3)
 
 setup:
 	$(PYTHON) -m pip install --no-cache-dir -r requirements.txt
