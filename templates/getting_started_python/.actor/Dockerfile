@@ -17,7 +17,7 @@ RUN echo "Python version:" \
  && echo "Pip version:" \
  && pip --version \
  && echo "Installing dependencies:" \
- && make setup \
+ && pip install -r requirements.txt \
  && echo "All installed Python packages:" \
  && pip freeze
 
@@ -27,5 +27,5 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Specify how to launch the source code of your actor.
-# By default, the "make actor-run" comand is run
-CMD make actor-run
+# By default, the "python -m src" command is run
+CMD ["python3", "-m", "src"]
