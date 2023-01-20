@@ -3,11 +3,11 @@ from apify import Actor
 async def main():
     async with Actor() as actor:
         # Get the value of the actor input
-        actor_input = await actor.get_input()
+        actor_input = await actor.get_input() or {}
 
         # Structure of input is defined in INPUT_SCHEMA.json
-        first_number = getattr(actor_input, "first_number", None)
-        second_number = getattr(actor_input, "second_number", None)
+        first_number = actor_input.get("first_number")
+        second_number = actor_input.get("second_number")
 
         print(f'First number: {first_number}')
         print(f'Second number: {second_number}')
