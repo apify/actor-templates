@@ -1,7 +1,4 @@
-import asyncio
-
 from apify import Actor
-
 
 async def main():
     async with Actor() as actor:

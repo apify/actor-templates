@@ -3,10 +3,9 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-python:3.9
 
-# Second, copy just requirements.txt and Makefile into the actor image,
-# since they should be the only files that affect "make install" in the next step,
+# Second, copy just requirements.txt into the actor image,
+# since it should be the only file that affects the dependency install in the next step,
 # in order to speed up the build
-COPY Makefile ./
 COPY requirements.txt ./
 
 # Install the packages specified in requirements.txt,
@@ -27,5 +26,5 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Specify how to launch the source code of your actor.
-# By default, the "python -m src" command is run
+# By default, the "python3 -m src" command is run
 CMD ["python3", "-m", "src"]
