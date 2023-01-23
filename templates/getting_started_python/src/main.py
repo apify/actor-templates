@@ -1,9 +1,7 @@
 import os
 from apify_client import ApifyClient
 
-
-# Run the main function of the script, if the script is executed directly
-if __name__ == '__main__':
+def main():
     # Initialize the main ApifyClient instance
     client = ApifyClient(os.environ['APIFY_TOKEN'], api_url=os.environ['APIFY_API_BASE_URL'])
 

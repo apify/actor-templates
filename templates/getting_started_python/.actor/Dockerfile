@@ -4,7 +4,7 @@
 FROM apify/actor-python:3.9
 
 # Second, copy just requirements.txt into the actor image,
-# since it should be the only file that affects "pip install" in the next step,
+# since it should be the only file that affects the dependency install in the next step,
 # in order to speed up the build
 COPY requirements.txt ./
 
@@ -15,7 +15,7 @@ RUN echo "Python version:" \
  && python --version \
  && echo "Pip version:" \
  && pip --version \
- && echo "Installing dependencies from requirements.txt:" \
+ && echo "Installing dependencies:" \
  && pip install -r requirements.txt \
  && echo "All installed Python packages:" \
  && pip freeze
@@ -26,5 +26,5 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Specify how to launch the source code of your actor.
-# By default, the main.py file is run
-CMD python3 main.py
+# By default, the "python3 -m src" command is run
+CMD ["python3", "-m", "src"]
