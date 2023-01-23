@@ -1,5 +1,6 @@
 from apify import Actor
 
+
 async def main():
     async with Actor() as actor:
         # Get the value of the actor input
