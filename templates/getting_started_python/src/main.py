@@ -7,8 +7,8 @@ async def main():
         actor_input = await actor.get_input() or {}
 
         # Structure of input is defined in INPUT_SCHEMA.json
-        first_number = actor_input.get("first_number")
-        second_number = actor_input.get("second_number")
+        first_number = actor_input.get('first_number')
+        second_number = actor_input.get('second_number')
 
         print(f'First number: {first_number}')
         print(f'Second number: {second_number}')
@@ -26,6 +26,6 @@ async def main():
             {
                 'first_number': first_number,
                 'second_number': second_number,
-                'sum': result
+                'sum': result,
             },
         ])
