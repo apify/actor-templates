@@ -1,6 +1,6 @@
 .idea
 .DS_Store
-.vscore
+.vscode
 node_modules
 tmp
 templates/**/package-lock.json
