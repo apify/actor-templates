@@ -32,8 +32,13 @@ exports.buildTemplates = async function () {
             ], { dot: true });
             files.sort();
 
+            // Reset the timestamp on the template files to have a deterministic zip
+            for (const file of files) {
+                execSync(`touch -t "200001010000" ${file}`);
+            }
+
             console.log(`Creating zip ${zipName}`);
-            execSync(`zip ${archivePath} ${files.join(' ')}`);
+            execSync(`zip -X ${archivePath} ${files.join(' ')}`);
         }
     }
 };
