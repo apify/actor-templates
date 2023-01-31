@@ -33,7 +33,6 @@
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^28.1.6",
     "apify": "^3.0.1",
-    "archiver-promise": "^1.0.0",
     "crawlee": "^3.0.0",
     "eslint": "^8.20.0",
     "fs-extra": "^10.1.0",

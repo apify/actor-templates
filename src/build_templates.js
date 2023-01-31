@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const archiver = require('archiver-promise');
+const { execSync } = require('child_process');
 const rimraf = require('rimraf');
 const globby = require('globby');
 const { TEMPLATE_NAMES, DIST_DIR_NAME, TEMPLATES_DIR_NAME } = require('./consts');
@@ -12,31 +12,28 @@ exports.buildTemplates = async function () {
     const distDir = path.resolve(__dirname, '..', DIST_DIR_NAME, TEMPLATES_DIR_NAME);
     if (fs.existsSync(distDir)) rimraf.sync(distDir);
 
-    fs.mkdirSync(distDir);
+    fs.mkdirSync(distDir, { recursive: true });
     const templatesDir = path.resolve(__dirname, '..', TEMPLATES_DIR_NAME);
-    process.chdir(templatesDir);
 
     for (const templateName of TEMPLATE_NAMES) {
+        process.chdir(templatesDir);
         if (fs.lstatSync(templateName).isDirectory()) {
+            process.chdir(templateName);
+
             const zipName = `${templateName}.zip`;
             const archivePath = path.join(distDir, zipName);
-            const archive = archiver(archivePath);
-            const files = await globby([
-                `${templateName}/*`,
-                `${templateName}/**/**`,
-                `!${templateName}/node_modules/**`,
-                `!${templateName}/.venv/**`,
-                `!${templateName}/.DS_Store`,
-            ], { dot: true });
 
-            const promises = files.map((fileName) => {
-                fileName = fileName.replace(`${templateName}/`, '');
-                return archive.file(`./${templateName}/${fileName}`, { name: fileName });
-            });
+            const files = await globby([
+                `./*`,
+                `./**/**`,
+                `!./node_modules/**`,
+                `!./.venv/**`,
+                `!./.DS_Store`,
+            ], { dot: true });
+            files.sort();
 
             console.log(`Creating zip ${zipName}`);
-            await Promise.all(promises);
-            await archive.finalize();
+            execSync(`zip ${archivePath} ${files.join(' ')}`);
         }
     }
 };
