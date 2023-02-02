@@ -2,7 +2,7 @@
   "templates": [
     {
       "name": "getting_started_node",
-      "description": "Getting Started: Node.js - A Node.js demo of actors and their capabilities on the Apify platform.",
+      "description": "Getting Started: Node.js - A basic template for developing actors using JavaScript + Node.js on the Apify platform.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_node.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -12,7 +12,7 @@
     },
     {
       "name": "getting_started_typescript",
-      "description": "Getting Started: TypeScript - A TypeScript demo of actors and their capabilities on the Apify platform.",
+      "description": "Getting Started: TypeScript - A basic template for developing actors using TypeScript + Node.js on the Apify platform.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_typescript.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -22,7 +22,7 @@
     },
     {
       "name": "getting_started_python",
-      "description": "Getting Started: Python - A Python demo of actors and their capabilities on the Apify platform.",
+      "description": "Getting Started: Python - A basic template for developing actors using Python on the Apify platform.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -32,7 +32,7 @@
     },
     {
       "name": "project_cheerio_crawler_js",
-      "description": "Project: CheerioCrawler in JavaScript - Standard and up to date template for developing with Cheerio.",
+      "description": "Project: CheerioCrawler in JavaScript - Standard and up to date template for developing with Crawlee's CheerioCrawler.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_js.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -43,7 +43,7 @@
     },
     {
       "name": "project_puppeteer_crawler_js",
-      "description": "Project: PuppeteerCrawler in JavaScript - Standard and up to date template for developing with Puppeteer.",
+      "description": "Project: PuppeteerCrawler in JavaScript - Standard and up to date template for developing with Crawlee's PuppeteerCrawler.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_js.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -53,7 +53,7 @@
     },
     {
       "name": "project_playwright_crawler_js",
-      "description": "Project: PlaywrightCrawler in JavaScript - Standard and up to date template for developing with Playwright.",
+      "description": "Project: PlaywrightCrawler in JavaScript - Standard and up to date template for developing with Crawlee's PlaywrightCrawler.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_js.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -63,7 +63,7 @@
     },
     {
       "name": "project_cheerio_crawler_ts",
-      "description": "Project: CheerioCrawler in TypeScript - Standard and up to date template for developing with Cheerio.",
+      "description": "Project: CheerioCrawler in TypeScript - Standard and up to date template for developing with Crawlee's CheerioCrawler.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_ts.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -74,7 +74,7 @@
     },
     {
       "name": "project_puppeteer_crawler_ts",
-      "description": "Project: PuppeteerCrawler in TypeScript - Standard and up to date template for developing with Puppeteer.",
+      "description": "Project: PuppeteerCrawler in TypeScript - Standard and up to date template for developing with Crawlee's PuppeteerCrawler.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_ts.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -84,7 +84,7 @@
     },
     {
       "name": "project_playwright_crawler_ts",
-      "description": "Project: PlaywrightCrawler in TypeScript - Standard and up to date template for developing with Playwright.",
+      "description": "Project: PlaywrightCrawler in TypeScript - Standard and up to date template for developing with Crawlee's PlaywrightCrawler.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_ts.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
@@ -94,7 +94,7 @@
     },
     {
       "name": "project_empty",
-      "description": "Project: Empty - Standard and up to date project template with very little boilerplate code.",
+      "description": "Empty - Standard and up to date project template with little boilerplate code.",
       "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
       "defaultRunOptions": {
         "build": "latest",
