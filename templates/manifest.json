@@ -30,7 +30,7 @@
             "name": "getting_started_python",
             "label": "Start with Python",
             "category": "python",
-            "description": "Basic template for developing actors on the Apify platform. using Python.",
+            "description": "Basic Python template for developing actors on the Apify platform.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
