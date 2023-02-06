@@ -18,7 +18,7 @@
             "label": "Start with TypeScript",
             "category": "typescript",
             "technologies": ["nodejs"],
-            "description": "Basic template for developing actors on the Apify platform. using TypeScript and Node.js.",
+            "description": "Basic template for developing actors on the Apify platform. Using TypeScript and Node.js.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_typescript.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
