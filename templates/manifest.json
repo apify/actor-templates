@@ -28,7 +28,7 @@
         },
         {
             "name": "getting_started_python",
-            "label": "Start wit Python",
+            "label": "Start with Python",
             "category": "python",
             "description": "Basic template for developing actors on the Apify platform. using Python.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
