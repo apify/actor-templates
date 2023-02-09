@@ -1,0 +1,4 @@
+# Add your dependencies here.
+# See https://pip.pypa.io/en/latest/reference/requirements-file-format/
+# for how to format them
+apify >= 0.1.0, < 1

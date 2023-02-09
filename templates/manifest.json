@@ -101,6 +101,16 @@
         "memoryMbytes": 2048,
         "timeoutSecs": 3600
       }
+    },
+    {
+      "name": "python_sdk",
+      "description": "[BETA] Python SDK actor - Project template using the Apify SDK for Python beta",
+      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python_sdk.zip?raw=true",
+      "defaultRunOptions": {
+        "build": "latest",
+        "memoryMbytes": 1024,
+        "timeoutSecs": 3600
+      }
     }
   ]
 }
