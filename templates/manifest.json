@@ -39,6 +39,18 @@
             }
         },
         {
+          "name": "python_sdk",
+          "label": "[BETA] Python SDK actor",
+          "category": "python",
+          "description": "Project template using the Apify SDK for Python beta",
+          "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python_sdk.zip?raw=true",
+          "defaultRunOptions": {
+            "build": "latest",
+            "memoryMbytes": 1024,
+            "timeoutSecs": 3600
+          }
+        },
+        {
             "name": "project_cheerio_crawler_js",
             "label": "CheerioCrawler in JavaScript",
             "category": "javascript",
