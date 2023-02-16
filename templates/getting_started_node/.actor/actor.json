@@ -1,10 +1,11 @@
 {
     "actorSpecification": 1,
-    "name": "getting-started-actor",
-    "title": "Getting Started Actor",
+    "name": "getting-started-node",
+    "title": "Getting Started with Node.js",
     "description": "Adds two integers.",
     "version": "0.0",
-    "input": "./input-schema.json",
+    "templateName": "getting-started-node",
+    "input": "./INPUT_SCHEMA.json",
     "readme": "./README.md",
     "dockerfile": "./Dockerfile",
     "storages": {
