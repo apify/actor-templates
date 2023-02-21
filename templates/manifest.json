@@ -55,7 +55,7 @@
             "label": "CheerioCrawler in JavaScript",
             "category": "javascript",
             "technologies": ["crawlee", "cheerio"],
-            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler.",
+            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_js.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -69,7 +69,7 @@
             "label": "PuppeteerCrawler in JavaScript",
             "category": "javascript",
             "technologies": ["crawlee", "puppeteer"],
-            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler.",
+            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_js.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -82,7 +82,7 @@
             "label": "PlaywrightCrawler in JavaScript",
             "category": "javascript",
             "technologies": ["crawlee", "playwright"],
-            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler.",
+            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_js.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -95,7 +95,7 @@
             "label": "CheerioCrawler in TypeScript",
             "category": "typescript",
             "technologies": ["crawlee", "cheerio"],
-            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler.",
+            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using TypeScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_ts.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -109,7 +109,7 @@
             "label": "PuppeteerCrawler in TypeScript",
             "category": "typescript",
             "technologies": ["crawlee", "puppeteer"],
-            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler.",
+            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using TypeScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_ts.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -122,7 +122,7 @@
             "label": "PlaywrightCrawler in TypeScript",
             "category": "typescript",
             "technologies": ["crawlee", "playwright"],
-            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler.",
+            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using TypeScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_ts.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -134,7 +134,7 @@
             "name": "project_empty",
             "label": "Start from scratch",
             "category": "javascript",
-            "description": "Empty starter actor. A blank slate with minimal starting code for developing actors from scratch.",
+            "description": "Empty starter actor. A blank slate with minimal starting code for developing actors from scratch using JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
