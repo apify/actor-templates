@@ -4,8 +4,10 @@
     "title": "Project Puppeteer Crawler Typescript",
     "description": "Crawlee and Puppeteer project in typescript.",
     "version": "0.0",
-    "templateName": "crawlee-puppeteer-typescript",
-    "input": "./INPUT_SCHEMA.json",
+    "meta": {
+        "templateName": "crawlee-puppeteer-typescript"
+    },
+    "input": "./input_schema.json",
     "readme": "./README.md",
     "dockerfile": "./Dockerfile"
 }
