@@ -64,6 +64,7 @@
             "label": "CheerioCrawler in JavaScript",
             "category": "javascript",
             "technologies": [
+                "nodejs",
                 "crawlee",
                 "cheerio"
             ],
@@ -77,13 +78,15 @@
             "skipOptionalDeps": true
         },
         {
-            "id": "js-crawlee-puppeteer",
+            "id": "js-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_js",
             "label": "PuppeteerCrawler in JavaScript",
             "category": "javascript",
             "technologies": [
+                "nodejs",
                 "crawlee",
-                "puppeteer"
+                "puppeteer",
+                "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_js.zip?raw=true",
@@ -94,13 +97,15 @@
             }
         },
         {
-            "id": "js-crawlee-playwright",
+            "id": "js-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_js",
             "label": "PlaywrightCrawler in JavaScript",
             "category": "javascript",
             "technologies": [
+                "nodejs",
                 "crawlee",
-                "playwright"
+                "playwright",
+                "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_js.zip?raw=true",
@@ -116,6 +121,7 @@
             "label": "CheerioCrawler in TypeScript",
             "category": "typescript",
             "technologies": [
+                "nodejs",
                 "crawlee",
                 "cheerio"
             ],
@@ -129,13 +135,15 @@
             "skipOptionalDeps": true
         },
         {
-            "id": "ts-crawlee-puppeteer",
+            "id": "ts-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_ts",
             "label": "PuppeteerCrawler in TypeScript",
             "category": "typescript",
             "technologies": [
+                "nodejs",
                 "crawlee",
-                "puppeteer"
+                "puppeteer",
+                "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using TypeScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_ts.zip?raw=true",
@@ -146,13 +154,15 @@
             }
         },
         {
-            "id": "ts-crawlee-playwright",
+            "id": "ts-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_ts",
             "label": "PlaywrightCrawler in TypeScript",
             "category": "typescript",
             "technologies": [
+                "nodejs",
                 "crawlee",
-                "playwright"
+                "playwright",
+                "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using TypeScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_ts.zip?raw=true",
@@ -167,6 +177,9 @@
             "name": "project_empty",
             "label": "Start from scratch",
             "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
             "description": "Empty starter actor. A blank slate with minimal starting code for developing actors from scratch using JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
             "defaultRunOptions": {
