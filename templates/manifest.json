@@ -9,7 +9,7 @@
             "technologies": [
                 "nodejs"
             ],
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_node.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
@@ -25,7 +25,7 @@
                 "nodejs"
             ],
             "description": "Basic template for developing actors on the Apify platform using TypeScript and Node.js.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_typescript.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
@@ -38,7 +38,7 @@
             "label": "Start with Python",
             "category": "python",
             "description": "Basic Python template for developing actors on the Apify platform.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start-old.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
@@ -51,7 +51,7 @@
             "label": "[BETA] Python SDK actor",
             "category": "python",
             "description": "Project template using the Apify SDK for Python beta",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python_sdk.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 1024,
@@ -69,7 +69,7 @@
                 "cheerio"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using JavaScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_js.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
@@ -89,7 +89,7 @@
                 "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using JavaScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_js.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,
@@ -108,7 +108,7 @@
                 "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using JavaScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_js.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,
@@ -126,7 +126,7 @@
                 "cheerio"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using TypeScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_ts.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
@@ -146,7 +146,7 @@
                 "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using TypeScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_ts.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,
@@ -165,7 +165,7 @@
                 "chrome"
             ],
             "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using TypeScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_ts.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,
@@ -181,7 +181,7 @@
                 "nodejs"
             ],
             "description": "Empty starter actor. A blank slate with minimal starting code for developing actors from scratch using JavaScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 2048,

@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 const rimraf = require('rimraf');
 const globby = require('globby');
-const { TEMPLATE_NAMES, DIST_DIR_NAME, TEMPLATES_DIR_NAME } = require('./consts');
+const { TEMPLATE_IDS, DIST_DIR_NAME, TEMPLATES_DIR_NAME } = require('./consts');
 
 /**
  * Creates zips of all templates
@@ -15,12 +15,12 @@ exports.buildTemplates = async function () {
     fs.mkdirSync(distDir, { recursive: true });
     const templatesDir = path.resolve(__dirname, '..', TEMPLATES_DIR_NAME);
 
-    for (const templateName of TEMPLATE_NAMES) {
+    for (const templateId of TEMPLATE_IDS) {
         process.chdir(templatesDir);
-        if (fs.lstatSync(templateName).isDirectory()) {
-            process.chdir(templateName);
+        if (fs.lstatSync(templateId).isDirectory()) {
+            process.chdir(templateId);
 
-            const zipName = `${templateName}.zip`;
+            const zipName = `${templateId}.zip`;
             const archivePath = path.join(distDir, zipName);
 
             const files = await globby([
