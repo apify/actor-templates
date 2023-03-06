@@ -47,7 +47,7 @@
         },
         {
             "id": "python-start",
-            "name": "python_sdk",
+            "name": "python-start",
             "label": "[BETA] Python SDK actor",
             "category": "python",
             "description": "Project template using the Apify SDK for Python beta",

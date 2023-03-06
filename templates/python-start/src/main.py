@@ -2,9 +2,9 @@ from apify import Actor
 
 
 async def main():
-    async with Actor() as actor:
+    async with Actor:
         # Get the value of the actor input
-        actor_input = await actor.get_input() or {}
+        actor_input = await Actor.get_input() or {}
 
         # Structure of input is defined in .actor/input_schema.json
         first_number = actor_input.get('first_number')
@@ -22,7 +22,7 @@ async def main():
         print(f'The result is: {result}')
 
         # Structure of output is defined in .actor/actor.json
-        await actor.push_data([
+        await Actor.push_data([
             {
                 'first_number': first_number,
                 'second_number': second_number,
