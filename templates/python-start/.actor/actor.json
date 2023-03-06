@@ -1,0 +1,48 @@
+{
+    "actorSpecification": 1,
+    "name": "python-start",
+    "title": "Getting Started with Apify Python SDK",
+    "description": "Adds two integers.",
+    "version": "0.0",
+    "meta": {
+         "templateId": "python-start"
+    },
+    "input": "./input_schema.json",
+    "readme": "./README.md",
+    "dockerfile": "./Dockerfile",
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "Numbers and their sums",
+            "views": {
+                "sums": {
+                    "title": "A sum of two numbers",
+                    "transformation": {
+                        "fields": [
+                            "sum",
+                            "first_number",
+                            "second_number"
+                        ]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "sum": {
+                                "label": "Sum",
+                                "format": "number"
+                            },
+                            "first_number": {
+                                "label": "First number",
+                                "format": "number"
+                            },
+                            "second_number": {
+                                "label": "Second number",
+                                "format": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

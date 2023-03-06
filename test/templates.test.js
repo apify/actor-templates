@@ -6,7 +6,7 @@ const { spawnSync } = require('child_process');
 const loadJson = require('load-json-file');
 const rimraf = require('rimraf');
 const copy = require('recursive-copy');
-const { TEMPLATE_NAMES } = require('../src/consts');
+const { TEMPLATE_IDS } = require('../src/consts');
 
 const TEST_ACTORS_FOLDER = 'test-actors';
 const APIFY_LATEST_VERSION = spawnSync('npm', ['view', 'apify', 'version']).stdout.toString().trim();
@@ -70,10 +70,10 @@ describe('templates', () => {
         console.log.restore();
     });
 
-    TEMPLATE_NAMES.forEach((templateName) => {
-        test(`${templateName} works`, async () => {
-            const actorName = `cli-test-${templateName.replace(/_/g, '-')}`;
-            await copy(`../templates/${templateName}`, actorName, { dot: true });
+    TEMPLATE_IDS.forEach((templateId) => {
+        test(`${templateId} works`, async () => {
+            const actorName = `cli-test-${templateId.replace(/_/g, '-')}`;
+            await copy(`../templates/${templateId}`, actorName, { dot: true });
             await checkTemplateStructure(actorName);
             await checkTemplateRun(actorName);
         });
