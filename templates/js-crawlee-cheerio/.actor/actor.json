@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "project-cheerio-crawler-javascript",
+    "title": "Project Cheerio Crawler Javascript",
+    "description": "Crawlee and Cheerio project in javascript.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "js-crawlee-cheerio"
+    },
+    "input": "./input_schema.json",
+    "readme": "./README.md",
+    "dockerfile": "./Dockerfile"
+}

@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "project-puppeteer-crawler-javascript",
+    "title": "Project Puppeteer Crawler JavaScript",
+    "description": "Crawlee and Puppeteer project in JavaScript.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "js-crawlee-puppeteer-chrome"
+    },
+    "input": "./input_schema.json",
+    "readme": "./README.md",
+    "dockerfile": "./Dockerfile"
+}

@@ -4,3 +4,4 @@
 node_modules
 tmp
 templates/**/package-lock.json
+test-actors

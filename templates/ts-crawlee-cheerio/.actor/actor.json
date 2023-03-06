@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "project-cheerio-crawler-typescript",
+    "title": "Project Cheerio Crawler Typescript",
+    "description": "Crawlee and Cheerio project in typescript.",
+    "version": "0.0",
+    "meta": {
+         "templateId": "ts-crawlee-cheerio"
+    },
+    "input": "./input_schema.json",
+    "readme": "./README.md",
+    "dockerfile": "./Dockerfile"
+}

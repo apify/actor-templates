@@ -1,10 +1,13 @@
 {
     "actorSpecification": 1,
-    "name": "getting-started-actor",
-    "title": "Getting Started Actor",
+    "name": "getting-started-typescript",
+    "title": "Getting Started with TypeScript",
     "description": "Adds two integers.",
     "version": "0.0",
-    "input": "./input-schema.json",
+    "meta": {
+        "templateId": "ts-start"
+    },
+    "input": "./input_schema.json",
     "readme": "./README.md",
     "dockerfile": "./Dockerfile",
     "storages": {
@@ -22,7 +25,7 @@
                         ]
                     },
                     "display": {
-                        "component": "table",                        
+                        "component": "table",
                         "properties": {
                             "sum": {
                                 "label": "Sum",
