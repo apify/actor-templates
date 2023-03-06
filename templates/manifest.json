@@ -34,7 +34,7 @@
         },
         {
             "id": "python-start",
-            "name": "getting_started_python",
+            "name": "python-start",
             "label": "Start with Python",
             "category": "python",
             "description": "Project template using the Apify SDK for Python beta",
