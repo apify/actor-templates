@@ -11,7 +11,7 @@ const { TEMPLATE_IDS } = require('../src/consts');
 const TEST_ACTORS_FOLDER = 'test-actors';
 const APIFY_LATEST_VERSION = spawnSync('npm', ['view', 'apify', 'version']).stdout.toString().trim();
 
-const checkTemplateStructure = async (actorName) => {
+const checkTemplateStructure = async (actorName, templateId) => {
     process.chdir(actorName);
     spawnSync('npm', ['install']);
     process.chdir('../');
@@ -24,6 +24,11 @@ const checkTemplateStructure = async (actorName) => {
     } else {
         expect(fs.existsSync(path.join(actorName, 'requirements.txt'))).toBe(true);
     }
+
+    const actorJsonPath = path.join(actorName, '.actor/actor.json');
+    expect(fs.existsSync(actorJsonPath)).toBe(true);
+    const actorJson = JSON.parse(fs.readFileSync(actorJsonPath, 'utf8'));
+    expect(actorJson.meta?.templateId).toBe(templateId);
 
     // python templates do not use apify package
     if (!/python/i.test(actorName) && !/v2/i.test(actorName)) {
@@ -72,9 +77,9 @@ describe('templates', () => {
 
     TEMPLATE_IDS.forEach((templateId) => {
         test(`${templateId} works`, async () => {
-            const actorName = `cli-test-${templateId.replace(/_/g, '-')}`;
+            const actorName = `cli-test-${templateId}`;
             await copy(`../templates/${templateId}`, actorName, { dot: true });
-            await checkTemplateStructure(actorName);
+            await checkTemplateStructure(actorName, templateId);
             await checkTemplateRun(actorName);
         });
     });
