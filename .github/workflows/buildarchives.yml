@@ -26,7 +26,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add dist/*
-          git commit -m "Updated zips build from CI" -a
+          git commit -m "Updated zips build from CI" -a || echo "No changes to commit"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

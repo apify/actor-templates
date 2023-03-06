@@ -1,106 +1,179 @@
 {
-  "templates": [
-    {
-      "name": "getting_started_node",
-      "description": "Getting Started: Node.js - A Node.js demo of actors and their capabilities on the Apify platform.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_node.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 256,
-        "timeoutSecs": 360
-      }
-    },
-    {
-      "name": "getting_started_typescript",
-      "description": "Getting Started: TypeScript - A TypeScript demo of actors and their capabilities on the Apify platform.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_typescript.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 256,
-        "timeoutSecs": 360
-      }
-    },
-    {
-      "name": "getting_started_python",
-      "description": "Getting Started: Python - A Python demo of actors and their capabilities on the Apify platform.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/getting_started_python.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 256,
-        "timeoutSecs": 360
-      }
-    },
-    {
-      "name": "project_cheerio_crawler_js",
-      "description": "Project: CheerioCrawler in JavaScript - Standard and up to date template for developing with Cheerio.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_js.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 512,
-        "timeoutSecs": 3600
-      },
-      "skipOptionalDeps": true
-    },
-    {
-      "name": "project_puppeteer_crawler_js",
-      "description": "Project: PuppeteerCrawler in JavaScript - Standard and up to date template for developing with Puppeteer.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_js.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 4096,
-        "timeoutSecs": 3600
-      }
-    },
-    {
-      "name": "project_playwright_crawler_js",
-      "description": "Project: PlaywrightCrawler in JavaScript - Standard and up to date template for developing with Playwright.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_js.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 4096,
-        "timeoutSecs": 3600
-      }
-    },
-    {
-      "name": "project_cheerio_crawler_ts",
-      "description": "Project: CheerioCrawler in TypeScript - Standard and up to date template for developing with Cheerio.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_cheerio_crawler_ts.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 512,
-        "timeoutSecs": 3600
-      },
-      "skipOptionalDeps": true
-    },
-    {
-      "name": "project_puppeteer_crawler_ts",
-      "description": "Project: PuppeteerCrawler in TypeScript - Standard and up to date template for developing with Puppeteer.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_puppeteer_crawler_ts.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 4096,
-        "timeoutSecs": 3600
-      }
-    },
-    {
-      "name": "project_playwright_crawler_ts",
-      "description": "Project: PlaywrightCrawler in TypeScript - Standard and up to date template for developing with Playwright.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_playwright_crawler_ts.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 4096,
-        "timeoutSecs": 3600
-      }
-    },
-    {
-      "name": "project_empty",
-      "description": "Project: Empty - Standard and up to date project template with very little boilerplate code.",
-      "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/project_empty.zip?raw=true",
-      "defaultRunOptions": {
-        "build": "latest",
-        "memoryMbytes": 2048,
-        "timeoutSecs": 3600
-      }
-    }
-  ]
+    "templates": [
+        {
+            "id": "js-start",
+            "name": "getting_started_node",
+            "label": "Start with Node.js",
+            "description": "Basic template for developing actors on the Apify platform using JavaScript and Node.js.",
+            "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
+            }
+        },
+        {
+            "id": "ts-start",
+            "name": "getting_started_typescript",
+            "label": "Start with TypeScript",
+            "category": "typescript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Basic template for developing actors on the Apify platform using TypeScript and Node.js.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
+            }
+        },
+        {
+            "id": "python-start",
+            "name": "getting_started_python",
+            "label": "Start with Python",
+            "category": "python",
+            "description": "Project template using the Apify SDK for Python beta",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "js-crawlee-cheerio",
+            "name": "project_cheerio_crawler_js",
+            "label": "CheerioCrawler in JavaScript",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "cheerio"
+            ],
+            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using JavaScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 3600
+            },
+            "skipOptionalDeps": true
+        },
+        {
+            "id": "js-crawlee-puppeteer-chrome",
+            "name": "project_puppeteer_crawler_js",
+            "label": "PuppeteerCrawler in JavaScript",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "puppeteer",
+                "chrome"
+            ],
+            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using JavaScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "js-crawlee-playwright-chrome",
+            "name": "project_playwright_crawler_js",
+            "label": "PlaywrightCrawler in JavaScript",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "playwright",
+                "chrome"
+            ],
+            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using JavaScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "ts-crawlee-cheerio",
+            "name": "project_cheerio_crawler_ts",
+            "label": "CheerioCrawler in TypeScript",
+            "category": "typescript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "cheerio"
+            ],
+            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using TypeScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 3600
+            },
+            "skipOptionalDeps": true
+        },
+        {
+            "id": "ts-crawlee-puppeteer-chrome",
+            "name": "project_puppeteer_crawler_ts",
+            "label": "PuppeteerCrawler in TypeScript",
+            "category": "typescript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "puppeteer",
+                "chrome"
+            ],
+            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using TypeScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-puppeteer-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "ts-crawlee-playwright-chrome",
+            "name": "project_playwright_crawler_ts",
+            "label": "PlaywrightCrawler in TypeScript",
+            "category": "typescript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "playwright",
+                "chrome"
+            ],
+            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using TypeScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "js-empty",
+            "name": "project_empty",
+            "label": "Start from scratch",
+            "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Empty starter actor. A blank slate with minimal starting code for developing actors from scratch using JavaScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            }
+        }
+    ]
 }
