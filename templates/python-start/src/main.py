@@ -6,7 +6,7 @@ async def main():
         # Get the value of the actor input
         actor_input = await actor.get_input() or {}
 
-        # Structure of input is defined in INPUT_SCHEMA.json
+        # Structure of input is defined in .actor/input_schema.json
         first_number = actor_input.get('first_number')
         second_number = actor_input.get('second_number')
 

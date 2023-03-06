@@ -1,10 +1,13 @@
 {
     "actorSpecification": 1,
-    "name": "getting-started-actor",
-    "title": "Getting Started Actor",
+    "name": "python-start",
+    "title": "Getting Started with Apify Python SDK",
     "description": "Adds two integers.",
     "version": "0.0",
-    "input": "./input-schema.json",
+    "meta": {
+         "templateId": "python-start"
+    },
+    "input": "./input_schema.json",
     "readme": "./README.md",
     "dockerfile": "./Dockerfile",
     "storages": {

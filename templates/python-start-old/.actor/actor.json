@@ -1,10 +1,13 @@
 {
     "actorSpecification": 1,
-    "name": "getting-started-actor",
-    "title": "Getting Started Actor",
+    "name": "getting-started-python",
+    "title": "Getting Started with Python",
     "description": "Adds two integers.",
     "version": "0.0",
-    "input": "./input-schema.json",
+    "meta": {
+        "templateId": "python-start-old"
+    },
+    "input": "./input_schema.json",
     "readme": "./README.md",
     "dockerfile": "./Dockerfile",
     "storages": {

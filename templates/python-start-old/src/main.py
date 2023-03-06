@@ -12,7 +12,7 @@ def main():
     print('Loading input')
     actor_input = default_kv_store_client.get_record(os.environ['APIFY_INPUT_KEY'])['value']
 
-    # Structure of input is defined in INPUT_SCHEMA.json
+    # Structure of input is defined in .actor/input_schema.json
     print(f'First number: {actor_input["first_number"]}')
     print(f'Second number: {actor_input["second_number"]}')
 

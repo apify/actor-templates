@@ -7,7 +7,7 @@ import { Actor } from 'apify';
 await Actor.init()
 
 console.log('Loading input');
-// Structure of input is defined in INPUT_SCHEMA.json.
+// Structure of input is defined in input_schema.json.
 const input = await Actor.getInput();
 console.log('First number: ', input?.firstNumber);
 console.log('Second number: ', input?.secondNumber);

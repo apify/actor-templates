@@ -9,10 +9,10 @@ interface InputSchema {
     secondNumber: number;
 }
 
-await Actor.init()
+await Actor.init();
 
 console.log('Loading input');
-// Structure of input is defined in INPUT_SCHEMA.json.
+// Structure of input is defined in .actor/input_schema.json.
 const input = await Actor.getInput<InputSchema>();
 console.log('First number: ', input?.firstNumber);
 console.log('Second number: ', input?.secondNumber);
