@@ -59,6 +59,19 @@
             }
         },
         {
+            "id": "python-scrapy",
+            "name": "python-scrapy",
+            "label": "[BETA] Scrapy & Python",
+            "category": "python",
+            "description": "Project template using Scrapy and the Apify SDK for Python",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            }
+        },
+        {
             "id": "js-crawlee-cheerio",
             "name": "project_cheerio_crawler_js",
             "label": "CheerioCrawler in JavaScript",
