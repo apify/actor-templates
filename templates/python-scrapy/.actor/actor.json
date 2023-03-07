@@ -7,7 +7,7 @@
     "meta": {
          "templateId": "python-scrapy"
     },
-    "input": "./input-schema.json",
+    "input": "./input_schema.json",
     "readme": "./README.md",
     "dockerfile": "./Dockerfile",
     "storages": {
