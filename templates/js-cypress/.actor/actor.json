@@ -1,9 +1,15 @@
 {
 	"actorSpecification": 1,
-	"name": "cypress-test",
+	"name": "project-cypress-javascript",
+    "title": "Cypress Project Javascript",
+    "description": "Cypress project in JavaScript.",
 	"version": "0.0",
-	"buildTag": "latest",
-	"environmentVariables": {},
+    "meta": {
+        "templateId": "js-cypress"
+    },
+    "input": "./input_schema.json",
+    "readme": "./README.md",
+    "dockerfile": "./Dockerfile",
 	"storages": {
         "dataset": "./OUTPUT_SCHEMA.json"
     }
