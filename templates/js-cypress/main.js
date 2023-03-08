@@ -7,8 +7,7 @@ import { globby } from 'globby';
 
 await Actor.init();
 
-// to check: the default values might be set directly in the input schema
-const { video = true, defaultCommandTimeout = 40000, viewportHeight = 1200, viewportWidth = 1200 } = await Actor.getInput();
+const { video, defaultCommandTimeout, viewportHeight, viewportWidth } = await Actor.getInput();
 
 console.log(`Running tests with following input: ${ video, defaultCommandTimeout, viewportHeight, viewportWidth}`)
 
