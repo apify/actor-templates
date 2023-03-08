@@ -9,8 +9,6 @@ await Actor.init();
 
 const { video, defaultCommandTimeout, viewportHeight, viewportWidth } = await Actor.getInput();
 
-console.log(`Running tests with following input: ${ video, defaultCommandTimeout, viewportHeight, viewportWidth}`)
-
 const runOneSpec = (spec) => {
 return cypress.run({
     config: {
