@@ -29,12 +29,18 @@ const kvs = await Actor.openKeyValueStore();
 const dataset = await Actor.openDataset();
 for (const test of tests) {
     const result = await runOneSpec(test);
-    const baseName = test.split('/').pop();
-    // if no video, this should not happen
-    const file = `./cypress/videos/${baseName}.mp4`
-    await kvs.setValue(baseName.replaceAll('.', '-'), fs.readFileSync(file), { contentType: 'video/mp4' });
-    // todo: now pushing the whole result object, maybe pick-up some interesting stuff only
-    // dataset: fields co chci včetně kvs url -> struktura podle default cypress table, pak přidám objekt rawData: a tam vše co cypress vrací
+    let keyValueStoreLink = '';
+    if (result.config.video) {
+        const baseName = test.split('/').pop();
+        const file = `./cypress/videos/${baseName}.mp4`;
+        const kvsKeyName = baseName.replaceAll('.', '-');
+        await kvs.setValue(kvsKeyName, fs.readFileSync(file), { contentType: 'video/mp4' });
+
+        keyValueStoreLink = await kvs.getPublicUrl(kvsKeyName);
+        result.keyValueStoreLink = keyValueStoreLink;
+        // todo: now pushing the whole result object, maybe pick-up some interesting stuff only
+        // dataset: fields co chci včetně kvs url -> struktura podle default cypress table, pak přidám objekt rawData: a tam vše co cypress vrací
+    }
     await dataset.pushData(result);
 }
 

@@ -1,4 +1,7 @@
 {
-    "extends": "@apify",
-    "root": true
+    "root": true,
+    "extends": [
+        "@apify",
+        "plugin:cypress/recommended"
+      ]
 }
