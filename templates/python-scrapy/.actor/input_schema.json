@@ -1,0 +1,13 @@
+{
+    "title": "Scrape quotes",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "tag": {
+            "title": "Tag",
+            "type": "string",
+            "description": "Quotes with which tag to scrape. See https://quotes.toscrape.com/ for options.",
+            "editor": "textfield"
+        }
+    }
+}
