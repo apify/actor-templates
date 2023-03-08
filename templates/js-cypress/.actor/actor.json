@@ -11,6 +11,6 @@
     "readme": "./README.md",
     "dockerfile": "./Dockerfile",
 	"storages": {
-        "dataset": "./OUTPUT_SCHEMA.json"
+        "dataset": "./output_schema.json"
     }
 }
