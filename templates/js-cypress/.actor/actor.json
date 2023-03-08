@@ -1,0 +1,10 @@
+{
+	"actorSpecification": 1,
+	"name": "cypress-test",
+	"version": "0.0",
+	"buildTag": "latest",
+	"environmentVariables": {},
+	"storages": {
+        "dataset": "./OUTPUT_SCHEMA.json"
+    }
+}
