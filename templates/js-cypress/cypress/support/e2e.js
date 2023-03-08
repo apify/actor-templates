@@ -12,7 +12,3 @@
 // You can read more here:
 // https://on.cypress.io/guides/configuration#section-global
 // ***********************************************************
-
-// Import commands.js and defaults.js
-// using ES2015 syntax:
-import './commands'

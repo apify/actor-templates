@@ -30,6 +30,7 @@ const dataset = await Actor.openDataset();
 for (const test of tests) {
     const result = await runOneSpec(test);
     const baseName = test.split('/').pop();
+    // if no video, this should not happen
     const file = `./cypress/videos/${baseName}.mp4`
     await kvs.setValue(baseName.replaceAll('.', '-'), fs.readFileSync(file), { contentType: 'video/mp4' });
     // todo: now pushing the whole result object, maybe pick-up some interesting stuff only
