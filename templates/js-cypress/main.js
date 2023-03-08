@@ -1,7 +1,5 @@
 import { Actor } from 'apify';
-import log from '@apify/log';
 import fs from 'fs';
-import path from 'path';
 import cypress from 'cypress';
 import { globby } from 'globby';
 

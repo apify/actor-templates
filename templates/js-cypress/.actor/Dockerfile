@@ -1,4 +1,6 @@
-FROM cypress/included:9.4.1
+FROM cypress/included:12.7.0
+# cypress image entrypoint runs the tests right away
+# we want to run our own CMD
 ENTRYPOINT [""]
 
 COPY package*.json ./
