@@ -3,7 +3,7 @@
     "fields": {},
     "views": {
         "overview": {
-            "title": "Example Report",
+            "title": "Filtered Output",
             "transformation": {
                 "fields": [
                     "testSuiteTitle",
@@ -24,15 +24,15 @@
                         "label": "Total Passed"
                     },
                     "totalPending": {
-                        "label": "Result",
+                        "label": "Total Pending",
                         "format": "number"
                     },
                     "totalFailed": {
-                        "label": "Result",
+                        "label": "Total Failed",
                         "format": "number"
                     },
                     "totalSkipped": {
-                        "label": "Result",
+                        "label": "Total Skipped",
                         "format": "number"
                     },
                     "videoLink": {
