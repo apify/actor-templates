@@ -21,8 +21,8 @@
         "defaultCommandTimeout": {
             "title": "defaultCommandTimeout",
             "type": "integer",
-            "description": "Maximum time the for the command to be executed. Default is `60`.",
-            "default": 60,
+            "description": "Maximum time the for the command to be executed. Default is `30000`.",
+            "default": 30000,
             "sectionCaption": "Advanced settings",
             "sectionDescription": "These settings are not required for most use cases. Use them to customize or debug your test run."
         },
