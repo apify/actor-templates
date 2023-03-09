@@ -46,7 +46,7 @@ for (const test of tests) {
         totalFailed: result.totalFailed,
         totalSkipped: result.totalSkipped,
 		totalDuration: result.totalDuration,
-        videoLink: result.keyValueStoreLink || 'N/A',
+        videoLink: result.keyValueStoreLink,
         rawData: result,
     }
     await dataset.pushData(transformedResult);
