@@ -41,7 +41,16 @@ for (const test of tests) {
         // todo: now pushing the whole result object, maybe pick-up some interesting stuff only
         // dataset: fields co chci včetně kvs url -> struktura podle default cypress table, pak přidám objekt rawData: a tam vše co cypress vrací
     }
-    await dataset.pushData(result);
+    const transformedResult = {
+        testSuiteTitle: result.runs[0].tests[0].title[0],
+        totalPassed: result.totalPassed,
+        totalPending: result.totalPending,
+        totalFailed: result.totalFailed,
+        totalSkipped: result.totalSkipped,
+        videoLink: result.keyValueStoreLink || 'N/A',
+        rawData: result,
+    }
+    await dataset.pushData(transformedResult);
 }
 
 await Actor.exit();

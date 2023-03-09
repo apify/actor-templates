@@ -6,40 +6,36 @@
             "title": "Example Report",
             "transformation": {
                 "fields": [
-                    "suiteName",
-                    "testName",
-                    "runnerName",
-                    "result",
-                    "errors",
-                    "duration",
-                    "video"
+                    "testSuiteTitle",
+                    "totalPassed",
+                    "totalPending",
+                    "totalFailed",
+                    "totalSkipped",
+                    "videoLink"
                 ]
             },
             "display": {
                 "component": "table",
                 "properties": {
-                    "suiteName": {
-                        "label": "Test Suite"
+                    "testSuiteTitle": {
+                        "label": "Test Suite Title"
                     },
-                    "testName": {
-                        "label": "Name"
+                    "totalPassed": {
+                        "label": "Total Passed"
                     },
-                    "runnerName": {
-                        "label": "Runner"
-                    },
-                    "result": {
+                    "totalPending": {
                         "label": "Result",
-                        "format": "boolean"
-                    },
-                    "errors": {
-                        "label": "Error messages",
-                        "format": "array"
-                    },
-                    "duration": {
-                        "label": "Duration",
                         "format": "number"
                     },
-                    "video": {
+                    "totalFailed": {
+                        "label": "Result",
+                        "format": "number"
+                    },
+                    "totalSkipped": {
+                        "label": "Result",
+                        "format": "number"
+                    },
+                    "videoLink": {
                         "label": "Video recording",
                         "format": "link"
                     }
