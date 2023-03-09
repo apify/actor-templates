@@ -38,8 +38,6 @@ for (const test of tests) {
 
         keyValueStoreLink = await kvs.getPublicUrl(kvsKeyName);
         result.keyValueStoreLink = keyValueStoreLink;
-        // todo: now pushing the whole result object, maybe pick-up some interesting stuff only
-        // dataset: fields co chci včetně kvs url -> struktura podle default cypress table, pak přidám objekt rawData: a tam vše co cypress vrací
     }
     const transformedResult = {
         testSuiteTitle: result.runs[0].tests[0].title[0],
@@ -47,6 +45,7 @@ for (const test of tests) {
         totalPending: result.totalPending,
         totalFailed: result.totalFailed,
         totalSkipped: result.totalSkipped,
+		totalDuration: result.totalDuration,
         videoLink: result.keyValueStoreLink || 'N/A',
         rawData: result,
     }

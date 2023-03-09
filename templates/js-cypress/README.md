@@ -14,4 +14,6 @@ After running the tests, the Apify Platform stores the results in comprehensive 
 
 ## How to use
 
-XXX
+To run tests with the Cypress Test Actor, just copy-paste your test files into Cypress -> e2e folder. The test name needs to end with '-spec.cy.js'.
+
+You can also customize the test run by specifying other options in the settings, e.g. the screen size, video recording or the default command timeout.

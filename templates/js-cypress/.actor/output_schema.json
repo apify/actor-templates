@@ -11,6 +11,7 @@
                     "totalPending",
                     "totalFailed",
                     "totalSkipped",
+                    "totalDuration",
                     "videoLink"
                 ]
             },
@@ -33,6 +34,10 @@
                     },
                     "totalSkipped": {
                         "label": "Total Skipped",
+                        "format": "number"
+                    },
+                    "totalDuration": {
+                        "label": "Total Duration",
                         "format": "number"
                     },
                     "videoLink": {
