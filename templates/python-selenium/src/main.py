@@ -18,12 +18,16 @@ async def main():
         start_urls = actor_input.get('start_urls', [])
         max_depth = actor_input.get('max_depth', 2)
 
+        if not start_urls:
+            Actor.log.info('No start URLs specified in actor input, exiting...')
+            await Actor.exit()
+
         # Enqueue the starting URLs in the default request queue
         default_queue = await Actor.open_request_queue()
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url}...')
-            await default_queue.add_request({ 'url': url, 'depth': 0 })
+            await default_queue.add_request({ 'url': url, 'userData': { 'depth': 0 }})
 
         # Launch a new Selenium Firefox WebDriver
         Actor.log.info('Launching Firefox WebDriver...')
@@ -39,6 +43,7 @@ async def main():
         # Process the requests in the queue one by one
         while request := await default_queue.fetch_next_request():
             url = request['url']
+            depth = request['userData']['depth']
             Actor.log.info(f'Scraping {url}...')
 
             try:
@@ -47,7 +52,7 @@ async def main():
 
                 # If we haven't reached the max depth,
                 # look for nested links and enqueue their targets
-                if request['depth'] < max_depth:
+                if depth < max_depth:
                     for link in await driver.find_elements_by_tag_name('a'):
                         link_href = link.get_attribute('href')
                         link_url = urljoin(url, link_href)
@@ -55,7 +60,7 @@ async def main():
                             Actor.log.info(f'Enqueuing {link_url}...')
                             await default_queue.add_request({
                                 'url': link_url,
-                                'depth': request['depth'] + 1,
+                                'userData': {'depth': depth + 1 },
                             })
 
                 # Push the title of the page into the default dataset
