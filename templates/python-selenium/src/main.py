@@ -5,6 +5,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 
+# To run this Actor locally, you need to have the Selenium Chromedriver installed.
+# https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
+# When running on the Apify platform, it is already included in the Actor's Docker image.
+
 
 async def main():
     async with Actor:

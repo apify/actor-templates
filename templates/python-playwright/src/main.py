@@ -3,6 +3,10 @@ from urllib.parse import urljoin
 from apify import Actor
 from playwright.async_api import async_playwright
 
+# To run this Actor locally, you need to have the Playwright browsers installed.
+# Run `playwright install` in the Actor's virtual environment to install them.
+# When running on the Apify platform, they are already included in the Actor's Docker image.
+
 
 async def main():
     async with Actor:
