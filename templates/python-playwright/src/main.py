@@ -1,14 +1,7 @@
-import asyncio
 from urllib.parse import urljoin
 
 from apify import Actor
 from playwright.async_api import async_playwright
-
-
-async def page_function(page, request):
-    title = await page.title()
-    await asyncio.sleep(5) # Sleep to show opened page
-    return {'title': title, 'url': request['url']}
 
 
 async def main():
