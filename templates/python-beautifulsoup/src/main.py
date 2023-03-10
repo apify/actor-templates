@@ -19,14 +19,14 @@ async def main():
         default_queue = await Actor.open_request_queue()
         for start_url in start_urls:
             url = start_url.get('url')
-            Actor.log.info(f'Enqueuing {url}...')
+            Actor.log.info(f'Enqueuing {url} ...')
             await default_queue.add_request({ 'url': url, 'userData': { 'depth': 0 }})
 
         # Process the requests in the queue one by one
         while request := await default_queue.fetch_next_request():
             url = request['url']
             depth = request['userData']['depth']
-            Actor.log.info(f'Scraping {url}...')
+            Actor.log.info(f'Scraping {url} ...')
 
             try:
                 # Fetch the URL using `requests` and parse it using `BeautifulSoup`
@@ -40,7 +40,7 @@ async def main():
                         link_href = link.get('href')
                         link_url = urljoin(url, link_href)
                         if link_url.startswith(('http://', 'https://')):
-                            Actor.log.info(f'Enqueuing {link_url}...')
+                            Actor.log.info(f'Enqueuing {link_url} ...')
                             await default_queue.add_request({
                                 'url': link_url,
                                 'userData': {'depth': depth + 1 },

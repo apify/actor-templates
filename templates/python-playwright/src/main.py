@@ -26,7 +26,7 @@ async def main():
         default_queue = await Actor.open_request_queue()
         for start_url in start_urls:
             url = start_url.get('url')
-            Actor.log.info(f'Enqueuing {url}...')
+            Actor.log.info(f'Enqueuing {url} ...')
             await default_queue.add_request({ 'url': url, 'userData': { 'depth': 0 }})
 
         # Launch Playwright an open a new browser context
@@ -39,7 +39,7 @@ async def main():
             while request := await default_queue.fetch_next_request():
                 url = request['url']
                 depth = request['userData']['depth']
-                Actor.log.info(f'Scraping {url}...')
+                Actor.log.info(f'Scraping {url} ...')
 
                 try:
                     # Open the URL in a new Playwright page
@@ -53,7 +53,7 @@ async def main():
                             link_href = await link.get_attribute('href')
                             link_url = urljoin(url, link_href)
                             if link_url.startswith(('http://', 'https://')):
-                                Actor.log.info(f'Enqueuing {link_url}...')
+                                Actor.log.info(f'Enqueuing {link_url} ...')
                                 await default_queue.add_request({
                                     'url': link_url,
                                     'userData': {'depth': depth + 1 },
