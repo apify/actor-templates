@@ -32,7 +32,7 @@ async def main():
         # Launch Playwright an open a new browser context
         Actor.log.info('Launching Playwright...')
         async with async_playwright() as playwright:
-            browser = await playwright.chromium.launch(headless=False)
+            browser = await playwright.chromium.launch(headless=Actor.config.headless)
             context = await browser.new_context()
 
             # Process the requests in the queue one by one

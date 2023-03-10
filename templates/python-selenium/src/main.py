@@ -3,8 +3,8 @@ from urllib.parse import urljoin
 
 from apify import Actor
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 async def page_function(page, request):
     title = await page.title()
@@ -30,13 +30,14 @@ async def main():
             Actor.log.info(f'Enqueuing {url}...')
             await default_queue.add_request({ 'url': url, 'userData': { 'depth': 0 }})
 
-        # Launch a new Selenium Firefox WebDriver
-        Actor.log.info('Launching Firefox WebDriver...')
-        firefox_options = FirefoxOptions()
-        firefox_options.add_argument('--headless')
-        firefox_options.add_argument('--no-sandbox')
-        firefox_options.add_argument('--disable-dev-shm-usage')
-        driver = webdriver.Firefox(options=firefox_options)
+        # Launch a new Selenium Chrome WebDriver
+        Actor.log.info('Launching Chrome WebDriver...')
+        chrome_options = ChromeOptions()
+        if Actor.config.headless:
+            chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome(options=chrome_options)
 
         driver.get('http://www.example.com')
         assert driver.title == 'Example Domain'
