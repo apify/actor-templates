@@ -59,19 +59,6 @@
             }
         },
         {
-            "id": "python-scrapy",
-            "name": "python-scrapy",
-            "label": "[BETA] Scrapy & Python",
-            "category": "python",
-            "description": "Project template using Scrapy and the Apify SDK for Python",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 1024,
-                "timeoutSecs": 3600
-            }
-        },
-        {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
             "label": "[BETA] BeautifulSoup & Python",
@@ -104,6 +91,19 @@
             "category": "python",
             "description": "Project template using Selenium and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "python-scrapy",
+            "name": "python-scrapy",
+            "label": "[BETA] Scrapy & Python",
+            "category": "python",
+            "description": "Project template using Scrapy and the Apify SDK for Python",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 1024,

@@ -8,7 +8,7 @@ async def main():
     async with Actor:
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [])
+        start_urls = actor_input.get('start_urls', [{ 'url': 'https://apify.com' }])
         max_depth = actor_input.get('max_depth', 1)
 
         if not start_urls:
@@ -47,7 +47,8 @@ async def main():
                             })
 
                 # Push the title of the page into the default dataset
-                await Actor.push_data({ 'url': url, 'title': soup.title.string })
+                title = soup.title.string if soup.title else None
+                await Actor.push_data({ 'url': url, 'title': title })
             except:
                 Actor.log.exception(f'Cannot extract data from {url}.')
             finally:

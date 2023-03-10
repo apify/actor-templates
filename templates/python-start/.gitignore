@@ -19,8 +19,7 @@ __pycache__
 .mypy_cache
 .dmypy.json
 dmypy.json
-
 .pytest_cache
 
-
 .scrapy
+*.log

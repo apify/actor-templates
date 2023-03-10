@@ -15,7 +15,7 @@ async def main():
     async with Actor:
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [])
+        start_urls = actor_input.get('start_urls', [{ 'url': 'https://apify.com' }])
         max_depth = actor_input.get('max_depth', 1)
 
         if not start_urls:
@@ -50,7 +50,7 @@ async def main():
                     # look for nested links and enqueue their targets
                     if depth < max_depth:
                         for link in await page.locator('a').all():
-                            link_href = link.get_attribute('href')
+                            link_href = await link.get_attribute('href')
                             link_url = urljoin(url, link_href)
                             if link_url.startswith(('http://', 'https://')):
                                 Actor.log.info(f'Enqueuing {link_url}...')
@@ -60,7 +60,8 @@ async def main():
                                 })
 
                     # Push the title of the page into the default dataset
-                    await Actor.push_data({ 'url': url, 'title': await page.title() })
+                    title = await page.title()
+                    await Actor.push_data({ 'url': url, 'title': title })
                 except:
                     Actor.log.exception(f'Cannot extract data from {url}.')
                 finally:
