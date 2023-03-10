@@ -2,8 +2,9 @@ import asyncio
 from urllib.parse import urljoin
 
 from apify import Actor
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 async def page_function(page, request):
     title = await page.title()
@@ -16,7 +17,7 @@ async def main():
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [])
-        max_depth = actor_input.get('max_depth', 2)
+        max_depth = actor_input.get('max_depth', 1)
 
         if not start_urls:
             Actor.log.info('No start URLs specified in actor input, exiting...')
@@ -53,8 +54,8 @@ async def main():
                 # If we haven't reached the max depth,
                 # look for nested links and enqueue their targets
                 if depth < max_depth:
-                    for link in await driver.find_elements_by_tag_name('a'):
-                        link_href = link.get_attribute('href')
+                    for link in driver.find_elements(By.TAG_NAME, 'a'):
+                        link_href = await link.get_attribute('href')
                         link_url = urljoin(url, link_href)
                         if link_url.startswith(('http://', 'https://')):
                             Actor.log.info(f'Enqueuing {link_url}...')

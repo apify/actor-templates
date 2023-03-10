@@ -16,7 +16,7 @@
             "title": "Maximum depth",
             "type": "integer",
             "description": "Depth to which to scrape to",
-            "default": 2
+            "default": 1
         }
     },
     "required": ["start_urls"]

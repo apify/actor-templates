@@ -16,7 +16,7 @@ async def main():
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [])
-        max_depth = actor_input.get('max_depth', 2)
+        max_depth = actor_input.get('max_depth', 1)
 
         if not start_urls:
             Actor.log.info('No start URLs specified in actor input, exiting...')
