@@ -50,8 +50,8 @@ from scrapy.utils.reactor import install_reactor
 from .main import main
 
 # This is necessary so that twisted and asyncio work well together
-nest_asyncio.apply()
 install_reactor('twisted.internet.asyncioreactor.AsyncioSelectorReactor')
+nest_asyncio.apply()
 
 os.environ['SCRAPY_SETTINGS_MODULE'] = 'src.settings'
 
