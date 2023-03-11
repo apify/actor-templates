@@ -46,6 +46,45 @@
             }
         },
         {
+            "id": "python-beautifulsoup",
+            "name": "python-beautifulsoup",
+            "label": "[BETA] BeautifulSoup & Python",
+            "category": "python",
+            "description": "Project template using BeautifulSoup and the Apify SDK for Python",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-beautifulsoup.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "python-playwright",
+            "name": "python-playwright",
+            "label": "[BETA] PlayWright & Python",
+            "category": "python",
+            "description": "Project template using PlayWright and the Apify SDK for Python",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "python-selenium",
+            "name": "python-selenium",
+            "label": "[BETA] Selenium & Python",
+            "category": "python",
+            "description": "Project template using Selenium and the Apify SDK for Python",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            }
+        },
+        {
             "id": "python-scrapy",
             "name": "python-scrapy",
             "label": "[BETA] Scrapy & Python",
