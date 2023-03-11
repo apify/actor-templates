@@ -74,9 +74,9 @@
         {
             "id": "python-playwright",
             "name": "python-playwright",
-            "label": "[BETA] PlayWright & Python",
+            "label": "[BETA] Playwright & Python",
             "category": "python",
-            "description": "Project template using PlayWright and the Apify SDK for Python",
+            "description": "Project template using Playwright and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
