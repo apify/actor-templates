@@ -26,7 +26,7 @@ const dataset = await Actor.openDataset();
 for (const test of tests) {
     const result = await runOneSpec(test);
     let keyValueStoreLink;
-    if (result.config.video) {
+    if (result?.config?.video) {
         const baseName = test.split('/').pop();
         const file = `./cypress/videos/${baseName}.mp4`;
         const kvsKeyName = baseName.replaceAll('.', '-');
@@ -34,12 +34,12 @@ for (const test of tests) {
         keyValueStoreLink = kvs.getPublicUrl(kvsKeyName);
     }
     const transformedResult = {
-        testSuiteTitle: result.runs[0].tests[0].title[0],
-        totalPassed: result.totalPassed,
-        totalPending: result.totalPending,
-        totalFailed: result.totalFailed,
-        totalSkipped: result.totalSkipped,
-        totalDuration: result.totalDuration,
+        testSuiteTitle: result?.runs[0].tests[0].title[0],
+        totalPassed: result?.totalPassed,
+        totalPending: result?.totalPending,
+        totalFailed: result?.totalFailed,
+        totalSkipped: result?.totalSkipped,
+        totalDuration: result?.totalDuration,
         videoLink: keyValueStoreLink,
         rawData: result,
     };

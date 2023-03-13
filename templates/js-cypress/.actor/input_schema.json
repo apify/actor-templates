@@ -39,5 +39,6 @@
             "default": true,
             "description": "Record video of the test run which is then stored in KVS. Default is true."
         }
-    }
+    },
+    "required": ["baseUrl"]
 }
