@@ -1,5 +1,5 @@
 {
-	"actorSpecification": 1,
+    "actorSpecification": 1,
 	"name": "project-cypress-javascript",
     "title": "Cypress Project Javascript",
     "description": "Cypress project in JavaScript.",

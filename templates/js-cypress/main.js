@@ -2,23 +2,23 @@ import { Actor } from 'apify';
 import fs from 'fs';
 import cypress from 'cypress';
 import { globby } from 'globby';
-import log from '@apify/log';
 
 await Actor.init();
 
-// todo: be able to send everything in input
 const input = await Actor.getInput();
 
 const runOneSpec = (spec) => {
-return cypress.run({
-    config: { input },
-    spec,
-})
-}
+    return cypress.run({
+        config: input,
+        spec,
+    });
+};
+
+console.log(`Running tests with following input: ${input}`);
 
 const tests = await globby('./cypress/e2e/*-spec.cy.js');
 
-log.info(`Running tests from following files: ${tests}`)
+console.log(`Getting tests: ${tests}`);
 
 const kvs = await Actor.openKeyValueStore();
 const dataset = await Actor.openDataset();
@@ -38,10 +38,10 @@ for (const test of tests) {
         totalPending: result.totalPending,
         totalFailed: result.totalFailed,
         totalSkipped: result.totalSkipped,
-		totalDuration: result.totalDuration,
+        totalDuration: result.totalDuration,
         videoLink: keyValueStoreLink,
         rawData: result,
-    }
+    };
     await dataset.pushData(transformedResult);
 }
 
