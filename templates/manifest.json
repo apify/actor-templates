@@ -33,22 +33,9 @@
             }
         },
         {
-            "id": "python-start-old",
-            "name": "getting_started_python",
-            "label": "Start with Python",
-            "category": "python",
-            "description": "Basic Python template for developing actors on the Apify platform.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start-old.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 256,
-                "timeoutSecs": 360
-            }
-        },
-        {
             "id": "python-start",
             "name": "python-start",
-            "label": "Python SDK actor",
+            "label": "Start with Python",
             "category": "python",
             "description": "Project template using the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start.zip?raw=true",
