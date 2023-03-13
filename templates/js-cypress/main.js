@@ -2,6 +2,7 @@ import { Actor } from 'apify';
 import fs from 'fs';
 import cypress from 'cypress';
 import { globby } from 'globby';
+import log from '@apify/log';
 
 await Actor.init();
 
@@ -14,11 +15,11 @@ const runOneSpec = (spec) => {
     });
 };
 
-console.log(`Running tests with following input: ${input}`);
+log.info(`Running tests with following input: ${JSON.stringify(input)}`);
 
 const tests = await globby('./cypress/e2e/*-spec.cy.js');
 
-console.log(`Getting tests: ${tests}`);
+log.info(`Getting tests: ${tests}`);
 
 const kvs = await Actor.openKeyValueStore();
 const dataset = await Actor.openDataset();
@@ -30,7 +31,7 @@ for (const test of tests) {
         const file = `./cypress/videos/${baseName}.mp4`;
         const kvsKeyName = baseName.replaceAll('.', '-');
         await kvs.setValue(kvsKeyName, fs.readFileSync(file), { contentType: 'video/mp4' });
-        keyValueStoreLink = await kvs.getPublicUrl(kvsKeyName);
+        keyValueStoreLink = kvs.getPublicUrl(kvsKeyName);
     }
     const transformedResult = {
         testSuiteTitle: result.runs[0].tests[0].title[0],

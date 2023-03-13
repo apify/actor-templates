@@ -1,5 +1,7 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
-    e2e: { },
+    e2e: {
+        baseUrl: 'https://apify.com',
+    },
 });
