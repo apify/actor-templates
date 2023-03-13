@@ -3,9 +3,9 @@
         {
             "id": "python-start",
             "name": "python-start",
-            "label": "[BETA] Python SDK actor",
+            "label": "Start with Python",
             "category": "python",
-            "description": "Project template using the Apify SDK for Python beta",
+            "description": "Project template using the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -16,8 +16,11 @@
         {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
-            "label": "[BETA] BeautifulSoup & Python",
+            "label": "BeautifulSoup & Python",
             "category": "python",
+            "technologies": [
+                "beautifulsoup"
+            ],
             "description": "Project template using BeautifulSoup and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-beautifulsoup.zip?raw=true",
             "defaultRunOptions": {
@@ -42,8 +45,11 @@
         {
             "id": "python-playwright",
             "name": "python-playwright",
-            "label": "[BETA] Playwright & Python",
+            "label": "Playwright & Python",
             "category": "python",
+            "technologies": [
+                "playwright"
+            ],
             "description": "Project template using Playwright and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
             "defaultRunOptions": {
@@ -55,8 +61,11 @@
         {
             "id": "python-selenium",
             "name": "python-selenium",
-            "label": "[BETA] Selenium & Python",
+            "label": "Selenium & Python",
             "category": "python",
+            "technologies": [
+                "selenium"
+            ],
             "description": "Project template using Selenium and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
             "defaultRunOptions": {
@@ -66,12 +75,47 @@
             }
         },
         {
-            "id": "python-start-old",
-            "name": "getting_started_python",
-            "label": "Start with Python",
+            "id": "python-scrapy",
+            "name": "python-scrapy",
+            "label": "Scrapy & Python",
             "category": "python",
-            "description": "Basic Python template for developing actors on the Apify platform.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start-old.zip?raw=true",
+            "technologies": [
+                "scrapy"
+            ],
+            "description": "Project template using Scrapy and the Apify SDK for Python",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
+            }
+        },
+        {
+            "id": "js-start",
+            "name": "getting_started_node",
+            "label": "Start with Node.js",
+            "description": "Basic template for developing actors on the Apify platform using JavaScript and Node.js.",
+            "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
+            }
+        },
+        {
+            "id": "ts-start",
+            "name": "getting_started_typescript",
+            "label": "Start with TypeScript",
+            "category": "typescript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Basic template for developing actors on the Apify platform using TypeScript and Node.js.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
