@@ -1,38 +1,6 @@
 {
     "templates": [
         {
-            "id": "js-start",
-            "name": "getting_started_node",
-            "label": "Start with Node.js",
-            "description": "Basic template for developing actors on the Apify platform using JavaScript and Node.js.",
-            "category": "javascript",
-            "technologies": [
-                "nodejs"
-            ],
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 256,
-                "timeoutSecs": 360
-            }
-        },
-        {
-            "id": "ts-start",
-            "name": "getting_started_typescript",
-            "label": "Start with TypeScript",
-            "category": "typescript",
-            "technologies": [
-                "nodejs"
-            ],
-            "description": "Basic template for developing actors on the Apify platform using TypeScript and Node.js.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 256,
-                "timeoutSecs": 360
-            }
-        },
-        {
             "id": "python-start",
             "name": "python-start",
             "label": "Start with Python",
@@ -107,6 +75,38 @@
                 "build": "latest",
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
+            }
+        },
+        {
+            "id": "js-start",
+            "name": "getting_started_node",
+            "label": "Start with Node.js",
+            "description": "Basic template for developing actors on the Apify platform using JavaScript and Node.js.",
+            "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
+            }
+        },
+        {
+            "id": "ts-start",
+            "name": "getting_started_typescript",
+            "label": "Start with TypeScript",
+            "category": "typescript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Basic template for developing actors on the Apify platform using TypeScript and Node.js.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
             }
         },
         {
