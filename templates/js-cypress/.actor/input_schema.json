@@ -7,9 +7,9 @@
         "baseUrl": {
             "title": "Base url",
             "type": "string",
-            "description": "Base url for the tests. Default is `https://apify.com`.",
-            "default": "https://apify.com",
-            "editor": "textfield"
+            "description": "Base url for the tests.",
+            "editor": "textfield",
+            "prefill": "https://apify.com"
         },
         "viewportWidth": {
             "title": "Viewport width",
