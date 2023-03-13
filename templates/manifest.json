@@ -209,8 +209,8 @@
             "technologies": [
                 "nodejs"
             ],
-            "description": "Empty starter actor. A blank slate with minimal starting code for developing actors from scratch using JavaScript.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
+            "description": "Standard and up-to-date template for running Cypress tests using JavaScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-cypress.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,
