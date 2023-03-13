@@ -26,7 +26,7 @@
             "default": 720
         },
         "defaultCommandTimeout": {
-            "title": "defaultCommandTimeout",
+            "title": "Default Command Timeout",
             "type": "integer",
             "description": "Maximum time the for the command to be executed. Default is `30000`.",
             "default": 30000,
