@@ -2,7 +2,6 @@ import { Actor } from 'apify';
 import fs from 'fs';
 import cypress from 'cypress';
 import { globby } from 'globby';
-import log from '@apify/log';
 
 await Actor.init();
 
@@ -15,11 +14,11 @@ const runOneSpec = (spec) => {
     });
 };
 
-log.info(`Running tests with following input: ${JSON.stringify(input)}`);
+console.log(`Running tests with following input: ${JSON.stringify(input)}`);
 
 const tests = await globby('./cypress/e2e/*-spec.cy.js');
 
-log.info(`Getting tests: ${tests}`);
+console.log(`Getting tests: ${tests}`);
 
 const kvs = await Actor.openKeyValueStore();
 const dataset = await Actor.openDataset();
