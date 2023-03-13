@@ -7,6 +7,7 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
+    "@apify/log": "^2.2.7",
     "apify": "^3.0.0",
     "cypress": "^12.7.0",
     "globby": "^13.1.3"
