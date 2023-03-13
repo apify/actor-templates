@@ -9,8 +9,7 @@
             "type": "string",
             "description": "Base url for the tests. Default is `https://apify.com`.",
             "default": "https://apify.com",
-            "editor": "textfield",
-            "prefill": "https://apify.com"
+            "editor": "textfield"
         },
         "viewportWidth": {
             "title": "Viewport width",
