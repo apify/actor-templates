@@ -50,6 +50,9 @@
             "name": "python-beautifulsoup",
             "label": "BeautifulSoup & Python",
             "category": "python",
+            "technologies": [
+                "beautifulsoup"
+            ],
             "description": "Project template using BeautifulSoup and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-beautifulsoup.zip?raw=true",
             "defaultRunOptions": {
@@ -63,6 +66,9 @@
             "name": "python-playwright",
             "label": "Playwright & Python",
             "category": "python",
+            "technologies": [
+                "playwright"
+            ],
             "description": "Project template using Playwright and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
             "defaultRunOptions": {
@@ -76,6 +82,9 @@
             "name": "python-selenium",
             "label": "Selenium & Python",
             "category": "python",
+            "technologies": [
+                "selenium"
+            ],
             "description": "Project template using Selenium and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
             "defaultRunOptions": {
@@ -89,6 +98,9 @@
             "name": "python-scrapy",
             "label": "Scrapy & Python",
             "category": "python",
+            "technologies": [
+                "scrapy"
+            ],
             "description": "Project template using Scrapy and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
             "defaultRunOptions": {
