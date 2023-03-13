@@ -1,7 +1,7 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-FROM apify/actor-python-selenium:3.9
+FROM apify/actor-python-selenium:3.11
 
 # Second, copy just requirements.txt into the actor image,
 # since it should be the only file that affects the dependency install in the next step,
