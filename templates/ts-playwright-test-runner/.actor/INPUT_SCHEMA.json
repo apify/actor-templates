@@ -1,0 +1,68 @@
+{
+    "title": "Playwright Test",
+    "description": "Playwright Test is a Node.js library to automate end-to-end web tests across all modern browsers. This actor runs Playwright Test in the cloud and stores the results in the Apify platform. The results can be (programmatically or manually) retrieved using Apify's REST API.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "testCode": {
+            "title": "Test suite code",
+            "type": "string",
+            "description": "Contents of the test suite file.",
+            "editor": "javascript",
+            "prefill": "import { test, expect } from '@playwright/test';    \n    test('has title', async ({ page }) => {      \n      await page.goto('https://playwright.dev/');\n      // Expect a title \"to contain\" a substring.\n      await expect(page).toHaveTitle(/Playwright/);    \n    });\n    test('get started link', async ({ page }) => {\n        await page.goto('https://playwright.dev/');\n        // Click the get started link.\n        await page.getByRole('link', { name: 'Get started' }).click();\n        // Expects the URL to contain intro. \n        await expect(page).toHaveURL(/.*intro/);    \n    });" ,
+            "sectionCaption": "Basic settings"
+        },
+        "screenWidth": {
+            "title": "Screen width",
+            "type": "integer",
+            "description": "Screen width in pixels. Default is `1280`.",
+            "default": 1280,
+            "sectionCaption": "Browser settings",
+            "sectionDescription": "Configure the browser that will be used to run the tests."
+        },
+        "screenHeight": {
+            "title": "Screen height",
+            "type": "integer",
+            "description": "Screen height in pixels. Default is `720`.",
+            "default": 720
+        },
+        "headful": {
+            "title": "Run in headful mode",
+            "type": "boolean",
+            "description": "Runs tests in headful mode. Try turning this on if you are having problems e.g. with bot protection services. Default is `false`.",
+            "default": false
+        },
+        "darkMode": {
+            "title": "Dark mode?",
+            "type": "boolean",
+            "description": "Should the tests run in the dark mode? Default is `false`.",
+            "default": false
+        },
+        "locale": {
+            "type": "string",
+            "title": "Locale",
+            "description": "Locale to use for the test. Default is `en-US`.",
+            "editor": "select",
+            "default": "en-US",
+            "enum": ["af-NA","af-ZA","ak-GH","sq-AL","am-ET","ar-DZ","ar-BH","ar-EG","ar-IQ","ar-JO","ar-KW","ar-LB","ar-LY","ar-MA","ar-OM","ar-QA","ar-SA","ar-SD","ar-SY","ar-TN","ar-AE","ar-YE","hy-AM","as-IN","asa-TZ","az-Cyrl","az-Cyrl-AZ","az-Latn","az-Latn-AZ","bm-ML","eu-ES","be-BY","bem-ZM","bez-TZ","bn-BD","bn-IN","bs-BA","bg-BG","my-MM","yue-Hant-HK","ca-ES","tzm-Latn","tzm-Latn-MA","chr-US","cgg-UG","zh-Hans","zh-Hans-CN","zh-Hans-HK","zh-Hans-MO","zh-Hans-SG","zh-Hant","zh-Hant-HK","zh-Hant-MO","zh-Hant-TW","kw-GB","hr-HR","cs-CZ","da-DK","nl-BE","nl-NL","ebu-KE","en-AS","en-AU","en-BE","en-BZ","en-BW","en-CA","en-GU","en-HK","en-IN","en-IE","en-IL","en-JM","en-MT","en-MH","en-MU","en-NA","en-NZ","en-MP","en-PK","en-PH","en-SG","en-ZA","en-TT","en-UM","en-VI","en-GB","en-US","en-ZW","et-EE","ee-GH","ee-TG","fo-FO","fil-PH","fi-FI","fr-BE","fr-BJ","fr-BF","fr-BI","fr-CM","fr-CA","fr-CF","fr-TD","fr-KM","fr-CG","fr-CD","fr-CI","fr-DJ","fr-GQ","fr-FR","fr-GA","fr-GP","fr-GN","fr-LU","fr-MG","fr-ML","fr-MQ","fr-MC","fr-NE","fr-RW","fr-RE","fr-BL","fr-MF","fr-SN","fr-CH","fr-TG","ff-SN","gl-ES","lg-UG","ka-GE","de-AT","de-BE","de-DE","de-LI","de-LU","de-CH","el-CY","el-GR","gu-IN","guz-KE","ha-Latn","ha-Latn-GH","ha-Latn-NE","ha-Latn-NG","haw-US","he-IL","hi-IN","hu-HU","is-IS","ig-NG","id-ID","ga-IE","it-IT","it-CH","ja-JP","kea-CV","kab-DZ","kl-GL","kln-KE","kam-KE","kn-IN","kk-Cyrl","kk-Cyrl-KZ","km-KH","ki-KE","rw-RW","kok-IN","ko-KR","khq-ML","ses-ML","lag-TZ","lv-LV","lt-LT","luo-KE","luy-KE","mk-MK","jmc-TZ","kde-TZ","mg-MG","ms-BN","ms-MY","ml-IN","mt-MT","gv-GB","mr-IN","mas-KE","mas-TZ","mer-KE","mfe-MU","naq-NA","ne-IN","ne-NP","nd-ZW","nb-NO","nn-NO","nyn-UG","or-IN","om-ET","om-KE","ps-AF","fa-AF","fa-IR","pl-PL","pt-BR","pt-GW","pt-MZ","pt-PT","pa-Arab","pa-Arab-PK","pa-Guru","pa-Guru-IN","ro-MD","ro-RO","rm-CH","rof-TZ","ru-MD","ru-RU","ru-UA","rwk-TZ","saq-KE","sg-CF","seh-MZ","sr-Cyrl","sr-Cyrl-BA","sr-Cyrl-ME","sr-Cyrl-RS","sr-Latn","sr-Latn-BA","sr-Latn-ME","sr-Latn-RS","sn-ZW","ii-CN","si-LK","sk-SK","sl-SI","xog-UG","so-DJ","so-ET","so-KE","so-SO","es-AR","es-BO","es-CL","es-CO","es-CR","es-DO","es-EC","es-SV","es-GQ","es-GT","es-HN","es-419","es-MX","es-NI","es-PA","es-PY","es-PE","es-PR","es-ES","es-US","es-UY","es-VE","sw-KE","sw-TZ","sv-FI","sv-SE","gsw-CH","shi-Latn","shi-Latn-MA","shi-Tfng","shi-Tfng-MA","dav-KE","ta-IN","ta-LK","te-IN","teo-KE","teo-UG","th-TH","bo-CN","bo-IN","ti-ER","ti-ET","to-TO","tr-TR","uk-UA","ur-IN","ur-PK","uz-Arab","uz-Arab-AF","uz-Cyrl","uz-Cyrl-UZ","uz-Latn","uz-Latn-UZ","vi-VN","vun-TZ","cy-GB","yo-NG","zu-ZA"],
+            "enumTitles":["Afrikaans (Namibia)","Afrikaans (South Africa)","Akan (Ghana)","Albanian (Albania)","Amharic (Ethiopia)","Arabic (Algeria)","Arabic (Bahrain)","Arabic (Egypt)","Arabic (Iraq)","Arabic (Jordan)","Arabic (Kuwait)","Arabic (Lebanon)","Arabic (Libya)","Arabic (Morocco)","Arabic (Oman)","Arabic (Qatar)","Arabic (Saudi Arabia)","Arabic (Sudan)","Arabic (Syria)","Arabic (Tunisia)","Arabic (United Arab Emirates)","Arabic (Yemen)","Armenian (Armenia)","Assamese (India)","Asu (Tanzania)","Azerbaijani (Cyrillic)","Azerbaijani (Cyrillic, Azerbaijan)","Azerbaijani (Latin)","Azerbaijani (Latin, Azerbaijan)","Bambara (Mali)","Basque (Spain)","Belarusian (Belarus)","Bemba (Zambia)","Bena (Tanzania)","Bengali (Bangladesh)","Bengali (India)","Bosnian (Bosnia and Herzegovina)","Bulgarian (Bulgaria)","Burmese (Myanmar [Burma])","Cantonese (Traditional, Hong Kong SAR China)","Catalan (Spain)","Central Morocco Tamazight (Latin)","Central Morocco Tamazight (Latin, Morocco)","Cherokee (United States)","Chiga (Uganda)","Chinese (Simplified Han)","Chinese (Simplified Han, China)","Chinese (Simplified Han, Hong Kong SAR China)","Chinese (Simplified Han, Macau SAR China)","Chinese (Simplified Han, Singapore)","Chinese (Traditional Han)","Chinese (Traditional Han, Hong Kong SAR China)","Chinese (Traditional Han, Macau SAR China)","Chinese (Traditional Han, Taiwan)","Cornish (United Kingdom)","Croatian (Croatia)","Czech (Czech Republic)","Danish (Denmark)","Dutch (Belgium)","Dutch (Netherlands)","Embu (Kenya)","English (American Samoa)","English (Australia)","English (Belgium)","English (Belize)","English (Botswana)","English (Canada)","English (Guam)","English (Hong Kong SAR China)","English (India)","English (Ireland)","English (Israel)","English (Jamaica)","English (Malta)","English (Marshall Islands)","English (Mauritius)","English (Namibia)","English (New Zealand)","English (Northern Mariana Islands)","English (Pakistan)","English (Philippines)","English (Singapore)","English (South Africa)","English (Trinidad and Tobago)","English (U.S. Minor Outlying Islands)","English (U.S. Virgin Islands)","English (United Kingdom)","English (United States)","English (Zimbabwe)","Estonian (Estonia)","Ewe (Ghana)","Ewe (Togo)","Faroese (Faroe Islands)","Filipino (Philippines)","Finnish (Finland)","French (Belgium)","French (Benin)","French (Burkina Faso)","French (Burundi)","French (Cameroon)","French (Canada)","French (Central African Republic)","French (Chad)","French (Comoros)","French (Congo - Brazzaville)","French (Congo - Kinshasa)","French (Côte d’Ivoire)","French (Djibouti)","French (Equatorial Guinea)","French (France)","French (Gabon)","French (Guadeloupe)","French (Guinea)","French (Luxembourg)","French (Madagascar)","French (Mali)","French (Martinique)","French (Monaco)","French (Niger)","French (Rwanda)","French (Réunion)","French (Saint Barthélemy)","French (Saint Martin)","French (Senegal)","French (Switzerland)","French (Togo)","Fulah (Senegal)","Galician (Spain)","Ganda (Uganda)","Georgian (Georgia)","German (Austria)","German (Belgium)","German (Germany)","German (Liechtenstein)","German (Luxembourg)","German (Switzerland)","Greek (Cyprus)","Greek (Greece)","Gujarati (India)","Gusii (Kenya)","Hausa (Latin)","Hausa (Latin, Ghana)","Hausa (Latin, Niger)","Hausa (Latin, Nigeria)","Hawaiian (United States)","Hebrew (Israel)","Hindi (India)","Hungarian (Hungary)","Icelandic (Iceland)","Igbo (Nigeria)","Indonesian (Indonesia)","Irish (Ireland)","Italian (Italy)","Italian (Switzerland)","Japanese (Japan)","Kabuverdianu (Cape Verde)","Kabyle (Algeria)","Kalaallisut (Greenland)","Kalenjin (Kenya)","Kamba (Kenya)","Kannada (India)","Kazakh (Cyrillic)","Kazakh (Cyrillic, Kazakhstan)","Khmer (Cambodia)","Kikuyu (Kenya)","Kinyarwanda (Rwanda)","Konkani (India)","Korean (South Korea)","Koyra Chiini (Mali)","Koyraboro Senni (Mali)","Langi (Tanzania)","Latvian (Latvia)","Lithuanian (Lithuania)","Luo (Kenya)","Luyia (Kenya)","Macedonian (Macedonia)","Machame (Tanzania)","Makonde (Tanzania)","Malagasy (Madagascar)","Malay (Brunei)","Malay (Malaysia)","Malayalam (India)","Maltese (Malta)","Manx (United Kingdom)","Marathi (India)","Masai (Kenya)","Masai (Tanzania)","Meru (Kenya)","Morisyen (Mauritius)","Nama (Namibia)","Nepali (India)","Nepali (Nepal)","North Ndebele (Zimbabwe)","Norwegian Bokmål (Norway)","Norwegian Nynorsk (Norway)","Nyankole (Uganda)","Oriya (India)","Oromo (Ethiopia)","Oromo (Kenya)","Pashto (Afghanistan)","Persian (Afghanistan)","Persian (Iran)","Polish (Poland)","Portuguese (Brazil)","Portuguese (Guinea-Bissau)","Portuguese (Mozambique)","Portuguese (Portugal)","Punjabi (Arabic)","Punjabi (Arabic, Pakistan)","Punjabi (Gurmukhi)","Punjabi (Gurmukhi, India)","Romanian (Moldova)","Romanian (Romania)","Romansh (Switzerland)","Rombo (Tanzania)","Russian (Moldova)","Russian (Russia)","Russian (Ukraine)","Rwa (Tanzania)","Samburu (Kenya)","Sango (Central African Republic)","Sena (Mozambique)","Serbian (Cyrillic)","Serbian (Cyrillic, Bosnia and Herzegovina)","Serbian (Cyrillic, Montenegro)","Serbian (Cyrillic, Serbia)","Serbian (Latin)","Serbian (Latin, Bosnia and Herzegovina)","Serbian (Latin, Montenegro)","Serbian (Latin, Serbia)","Shona (Zimbabwe)","Sichuan Yi (China)","Sinhala (Sri Lanka)","Slovak (Slovakia)","Slovenian (Slovenia)","Soga (Uganda)","Somali (Djibouti)","Somali (Ethiopia)","Somali (Kenya)","Somali (Somalia)","Spanish (Argentina)","Spanish (Bolivia)","Spanish (Chile)","Spanish (Colombia)","Spanish (Costa Rica)","Spanish (Dominican Republic)","Spanish (Ecuador)","Spanish (El Salvador)","Spanish (Equatorial Guinea)","Spanish (Guatemala)","Spanish (Honduras)","Spanish (Latin America)","Spanish (Mexico)","Spanish (Nicaragua)","Spanish (Panama)","Spanish (Paraguay)","Spanish (Peru)","Spanish (Puerto Rico)","Spanish (Spain)","Spanish (United States)","Spanish (Uruguay)","Spanish (Venezuela)","Swahili (Kenya)","Swahili (Tanzania)","Swedish (Finland)","Swedish (Sweden)","Swiss German (Switzerland)","Tachelhit (Latin)","Tachelhit (Latin, Morocco)","Tachelhit (Tifinagh)","Tachelhit (Tifinagh, Morocco)","Taita (Kenya)","Tamil (India)","Tamil (Sri Lanka)","Telugu (India)","Teso (Kenya)","Teso (Uganda)","Thai (Thailand)","Tibetan (China)","Tibetan (India)","Tigrinya (Eritrea)","Tigrinya (Ethiopia)","Tonga (Tonga)","Turkish (Turkey)","Ukrainian (Ukraine)","Urdu (India)","Urdu (Pakistan)","Uzbek (Arabic)","Uzbek (Arabic, Afghanistan)","Uzbek (Cyrillic)","Uzbek (Cyrillic, Uzbekistan)","Uzbek (Latin)","Uzbek (Latin, Uzbekistan)","Vietnamese (Vietnam)","Vunjo (Tanzania)","Welsh (United Kingdom)","Yoruba (Nigeria)","Zulu (South Africa)"]
+        },
+        "timeout": {
+            "title": "Timeout",
+            "type": "integer",
+            "description": "Maximum run time for the entire test suite (in seconds). Default is `60`.",
+            "default": 60,
+            "sectionCaption": "Advanced settings",
+            "sectionDescription": "These settings are not required for most use cases. Use them to customize or debug your test run."
+        },
+        "video": {
+            "title": "Record video",
+            "type": "string",
+            "enum": ["on", "off", "retain-on-failure", "on-first-retry"],
+            "default": "off",
+            "enumTitles": ["Always", "Never", "Retain on failure", "On first retry"],
+            "description": "Record video of the test run. If set to 'retain-on-failure', video will be recorded only if the test fails. If set to 'on-first-retry', video will be recorded only on the first retry of the test."
+        }
+    },
+    "required": ["testCode"]
+}

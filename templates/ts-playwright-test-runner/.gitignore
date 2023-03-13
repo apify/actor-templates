@@ -1,0 +1,6 @@
+storage
+node_modules
+dist
+playwright-report
+src/tests
+test-results.json
