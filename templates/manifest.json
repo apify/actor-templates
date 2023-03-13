@@ -48,9 +48,9 @@
         {
             "id": "python-start",
             "name": "python-start",
-            "label": "[BETA] Python SDK actor",
+            "label": "Python SDK actor",
             "category": "python",
-            "description": "Project template using the Apify SDK for Python beta",
+            "description": "Project template using the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -61,7 +61,7 @@
         {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
-            "label": "[BETA] BeautifulSoup & Python",
+            "label": "BeautifulSoup & Python",
             "category": "python",
             "description": "Project template using BeautifulSoup and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-beautifulsoup.zip?raw=true",
@@ -74,7 +74,7 @@
         {
             "id": "python-playwright",
             "name": "python-playwright",
-            "label": "[BETA] Playwright & Python",
+            "label": "Playwright & Python",
             "category": "python",
             "description": "Project template using Playwright and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
@@ -87,7 +87,7 @@
         {
             "id": "python-selenium",
             "name": "python-selenium",
-            "label": "[BETA] Selenium & Python",
+            "label": "Selenium & Python",
             "category": "python",
             "description": "Project template using Selenium and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
@@ -100,7 +100,7 @@
         {
             "id": "python-scrapy",
             "name": "python-scrapy",
-            "label": "[BETA] Scrapy & Python",
+            "label": "Scrapy & Python",
             "category": "python",
             "description": "Project template using Scrapy and the Apify SDK for Python",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
