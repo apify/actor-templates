@@ -1,8 +1,13 @@
 {
 	"actorSpecification": 1,
-	"name": "playwright-test",
+	"name": "playwright-test-runner",
+	"title": "Playwright Test Runner",
+    "description": "Runs Playwright tests",
 	"version": "0.0",
 	"buildTag": "latest",
+	"meta": {
+        "templateId": "ts-playwright-test-runner"
+    },
 	"environmentVariables": {},
 	"storages": {
         "dataset": "./OUTPUT_SCHEMA.json"
