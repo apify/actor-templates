@@ -1,4 +1,4 @@
-FROM cypress/included:12.7.0
+FROM cypress/browsers:node18.12.0-chrome107
 # cypress image entrypoint runs the tests right away
 # we want to run our own CMD
 ENTRYPOINT [""]
