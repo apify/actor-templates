@@ -6,6 +6,9 @@
             "label": "Start with Python",
             "category": "python",
             "description": "Project template using the Apify SDK for Python",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -22,6 +25,9 @@
                 "beautifulsoup"
             ],
             "description": "Project template using BeautifulSoup and the Apify SDK for Python",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-beautifulsoup.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -38,6 +44,9 @@
                 "playwright"
             ],
             "description": "Project template using Playwright and the Apify SDK for Python",
+            "messages": {
+                "postCreate": "To run this actor, you need to have Playwright's browsers installed.\nTo do so, activate the virtual environment in the \".venv\" folder in the actor directory, and run \"playwright install --with-deps\".\nTo install additional Python packages, you need also need to activate the virtual environment in the \".venv\" folder in the actor directory.\n"
+            },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -54,6 +63,9 @@
                 "selenium"
             ],
             "description": "Project template using Selenium and the Apify SDK for Python",
+            "messages": {
+                "postCreate": "To run this actor, you need to have the Selenium ChromeDriver installed.\nTo install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -70,6 +82,9 @@
                 "scrapy"
             ],
             "description": "Project template using Scrapy and the Apify SDK for Python",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
