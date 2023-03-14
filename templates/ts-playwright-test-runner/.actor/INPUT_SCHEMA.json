@@ -4,14 +4,6 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "testCode": {
-            "title": "Test suite code",
-            "type": "string",
-            "description": "Contents of the test suite file.",
-            "editor": "javascript",
-            "prefill": "import { test, expect } from '@playwright/test';    \n    test('has title', async ({ page }) => {      \n      await page.goto('https://playwright.dev/');\n      // Expect a title \"to contain\" a substring.\n      await expect(page).toHaveTitle(/Playwright/);    \n    });\n    test('get started link', async ({ page }) => {\n        await page.goto('https://playwright.dev/');\n        // Click the get started link.\n        await page.getByRole('link', { name: 'Get started' }).click();\n        // Expects the URL to contain intro. \n        await expect(page).toHaveURL(/.*intro/);    \n    });" ,
-            "sectionCaption": "Basic settings"
-        },
         "screenWidth": {
             "title": "Screen width",
             "type": "integer",
@@ -64,5 +56,5 @@
             "description": "Record video of the test run. If set to 'retain-on-failure', video will be recorded only if the test fails. If set to 'on-first-retry', video will be recorded only on the first retry of the test."
         }
     },
-    "required": ["testCode"]
+    "required": []
 }

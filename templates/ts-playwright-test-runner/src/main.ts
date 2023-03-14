@@ -12,10 +12,23 @@ function ensureFolder(pathname: string) {
     }
 }
 
+function getConfigPath(){
+    return `${__dirname}/../playwright.config.ts`;
+}
+
+function getResultDir(){
+    return `${__dirname}/../playwright-report`;
+}
+
 const getConfig = (options: {screen: {width: number, height: number}, headful: boolean, timeout: number, locale: string, darkMode: boolean, ignoreHTTPSErrors: boolean, video: string}) => {
     const {screen, headful, timeout, ignoreHTTPSErrors, darkMode, locale, video} = options;
 
-    return `import { defineConfig } from '@playwright/test';
+    return `
+// Watch out! This file gets regenerated on every run of the actor.
+// Any changes you make will be lost.
+
+// Tweak your configuration through the Actor's input through the Apify console or directly in the \`input.json\` file.
+import { defineConfig } from '@playwright/test';
 export default defineConfig({
     timeout: ${timeout},
     use: {
@@ -27,15 +40,14 @@ export default defineConfig({
         video: '${video}',
     },
     reporter: [
-        ['html', { open: 'never' }],
-        ['json', { outputFile: 'test-results.json' }]
+        ['html', { outputFolder: '${getResultDir()}', open: 'never' }],
+        ['json', { outputFile: '${getResultDir()}/test-results.json' }]
     ],
 });`
 }
-
 function runTests() {
     try {
-        execSync(`npx playwright test --config=${__dirname}/playwright.config.ts`, {
+        execSync(`npx playwright test --config=${getConfigPath()}`, {
             cwd: __dirname,
             encoding: 'utf8',
             stdio: 'inherit',
@@ -43,10 +55,6 @@ function runTests() {
     } catch (e) {
         // suppress error, the report will be generated anyway
     }
-}
-
-function storeTestCode(args: { contents: string, path: string }) {
-    return fs.writeFileSync(args.path, args.contents as string, { encoding: 'utf-8' });
 }
 
 function updateConfig(args: {
@@ -71,49 +79,21 @@ function updateConfig(args: {
     } = args;
 
     const config = getConfig({screen: { width: screenWidth, height: screenHeight }, headful, timeout: timeout * 1000, locale, darkMode, ignoreHTTPSErrors, video});
-    fs.writeFileSync(path.join(__dirname, 'playwright.config.ts'), config, { encoding: 'utf-8' });
+    fs.writeFileSync(getConfigPath(), config, { encoding: 'utf-8' });
 }
 
 (async () => {
     await Actor.init();
     const input = (await Actor.getInput() ?? {}) as Dictionary;
 
-    if(!input.testCode) {
-        if (process.argv[2] && process.argv[2].startsWith('--test-path') && process.argv[3]) {
-            const filepath = process.argv[3];
-
-            console.log('Reading test code from file: ', filepath);
-            input.testCode = fs.readFileSync(filepath, { encoding: 'utf-8' });
-        } else {
-            throw new Error(`No test code provided!
-Pass the code either as Apify input ('testCode' field) or as a file path argument.
-
-Example:
-    npm start -- -- --test-path /path/to/test.ts
-                
-                --- OR ---
-
-    npm run start:prod -- --test-path /path/to/test.ts
-`);
-        }
-    }
-
-    ensureFolder(path.join(__dirname, 'tests'));
-
-    storeTestCode({
-        contents: input['testCode'] as string,
-        path: path.join(__dirname, 'tests', 'test.spec.ts')
-    });
-
+    ensureFolder(getResultDir());
     updateConfig(input);
+
     runTests();
 
     const kvs = await Actor.openKeyValueStore();
-
-    ensureFolder(path.join(__dirname, '..', 'playwright-report'));
-    await kvs.setValue('report', fs.readFileSync(path.join(__dirname, '..', 'playwright-report', 'index.html'), { encoding: 'utf-8' }), { contentType: 'text/html' });
-
-    const jsonReport = JSON.parse(fs.readFileSync(path.join(__dirname, 'test-results.json'), { encoding: 'utf-8' }));
+    await kvs.setValue('report', fs.readFileSync(path.join(getResultDir(), 'index.html'), { encoding: 'utf-8' }), { contentType: 'text/html' });
+    const jsonReport = JSON.parse(fs.readFileSync(path.join(getResultDir(), 'test-results.json'), { encoding: 'utf-8' }));
     const attachmentPaths = collectAttachmentPaths(jsonReport);
 
     const attachmentLinks = await Promise.all(attachmentPaths.map(async (x) => {
