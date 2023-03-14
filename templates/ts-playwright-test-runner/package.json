@@ -7,7 +7,7 @@
     "start": "npm run start:dev",
     "start:dev": "ts-node src/main.ts",
     "start:prod": "node dist/main.js",
-    "codegen": "npx playwright codegen -o tests/generated.spec.ts",
+    "codegen": "ts-node src/runCodegen.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
