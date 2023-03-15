@@ -8,6 +8,5 @@
         "templateId": "js-crawlee-playwright-chrome"
     },
     "input": "./input_schema.json",
-    "readme": "./README.md",
     "dockerfile": "./Dockerfile"
 }

@@ -4,7 +4,7 @@
  * If you're looking for examples or want to learn more, see README.
  */
 
-// For more information, see https://sdk.apify.com
+// For more information, see https://docs.apify.com/sdk/js
 import { Actor } from 'apify';
 // For more information, see https://crawlee.dev
 import { CheerioCrawler } from 'crawlee';

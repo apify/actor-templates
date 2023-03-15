@@ -8,6 +8,5 @@
         "templateId": "ts-crawlee-puppeteer-chrome"
     },
     "input": "./input_schema.json",
-    "readme": "./README.md",
     "dockerfile": "./Dockerfile"
 }

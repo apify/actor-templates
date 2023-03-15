@@ -8,7 +8,6 @@
          "templateId": "python-playwright"
     },
     "input": "./input_schema.json",
-    "readme": "./README.md",
     "dockerfile": "./Dockerfile",
     "storages": {
         "dataset": {
