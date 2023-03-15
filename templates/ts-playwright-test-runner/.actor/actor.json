@@ -8,8 +8,10 @@
 	"meta": {
         "templateId": "ts-playwright-test-runner"
     },
-	"environmentVariables": {},
 	"storages": {
-        "dataset": "./OUTPUT_SCHEMA.json"
-    }
+        "dataset": "./output_schema.json"
+    },
+	"input": "./input_schema.json",
+    "readme": "../README.md",
+    "dockerfile": "./Dockerfile"
 }

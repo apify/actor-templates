@@ -31,10 +31,10 @@ export function transformToTabular(testResults: Record<string, any>, attachmentL
 }
 
 interface Attachment {
-    key: string, 
-    path: string, 
-    type: string,
-    url?: string,
+    key: string;
+    path: string;
+    type: string;
+    url?: string;
 };
 
 function _collectAttachmentPaths(acc: Attachment[], testResults: Record<string, any>) {

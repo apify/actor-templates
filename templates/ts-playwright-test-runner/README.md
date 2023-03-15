@@ -2,9 +2,7 @@
 
 Run your Playwright tests on the Apify Platform effectively and easily. Just set up your test environment using a user-friendly UI and let the platform do the rest.
 
-> Note: This is a custom version of this actor. If you want to use the original simple version, please use the [official actor](https://apify.com/jindrich.bar/playwright-test).
-> 
-> Unlike the original actor, this version reads test suite files from the `tests` folder and does not allow you to pass the test codes via Apify input.
+> Note: This is a custom version of [`Playwright Test Runner`](https://apify.com/jindrich.bar/playwright-test) actor. Unlike the original actor, this version reads test suite files from the `tests` folder and does not allow you to pass the test files via Apify input.
 
 ## Features
 
