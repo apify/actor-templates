@@ -2,6 +2,7 @@
     "templates": [
         {
             "id": "python-start",
+            "name": "python-start",
             "label": "Start with Python",
             "category": "python",
             "description": "This example shows how to write a very simple Actor in Python using the Apify SDK. It reads and validates user input, performs a simple computation and saves the result to storage.",
@@ -17,6 +18,7 @@
         },
         {
             "id": "python-beautifulsoup",
+            "name": "python-beautifulsoup",
             "label": "BeautifulSoup & Requests",
             "category": "python",
             "technologies": [
@@ -36,6 +38,7 @@
         },
         {
             "id": "python-playwright",
+            "name": "python-playwright",
             "label": "Playwright & Chrome",
             "category": "python",
             "technologies": [
@@ -55,6 +58,7 @@
         },
         {
             "id": "python-selenium",
+            "name": "python-selenium",
             "label": "Selenium & Chrome",
             "category": "python",
             "technologies": [
@@ -74,6 +78,7 @@
         },
         {
             "id": "python-scrapy",
+            "name": "python-scrapy",
             "label": "Scrapy",
             "category": "python",
             "technologies": [
