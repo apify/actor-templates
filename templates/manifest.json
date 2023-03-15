@@ -14,7 +14,10 @@
                 "build": "latest",
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
-            }
+            },
+            "aliases": [
+                "getting_started_python"
+            ]
         },
         {
             "id": "python-beautifulsoup",
@@ -256,13 +259,6 @@
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
             }
-        }
-    ],
-    "replacements": [
-        {
-            "fromKey": "name",
-            "from": "getting_started_python",
-            "to": "python-start"
         }
     ]
 }
