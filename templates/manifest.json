@@ -2,10 +2,9 @@
     "templates": [
         {
             "id": "python-start",
-            "name": "python-start",
             "label": "Start with Python",
             "category": "python",
-            "description": "Project template using the Apify SDK for Python",
+            "description": "This example shows how to write a very simple Actor in Python using the Apify SDK. It reads and validates user input, performs a simple computation and saves the result to storage.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -18,13 +17,13 @@
         },
         {
             "id": "python-beautifulsoup",
-            "name": "python-beautifulsoup",
-            "label": "BeautifulSoup & Python",
+            "label": "BeautifulSoup & Requests",
             "category": "python",
             "technologies": [
+                "requests",
                 "beautifulsoup"
             ],
-            "description": "Project template using BeautifulSoup and the Apify SDK for Python",
+            "description": "This Actor example uses the popular Requests library to scrape URLs based on its input and then parses HTML using BeautifulSoup and saves results to storage. It also uses Apify SDK for URL queue management.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -37,13 +36,13 @@
         },
         {
             "id": "python-playwright",
-            "name": "python-playwright",
-            "label": "Playwright & Python",
+            "label": "Playwright & Chrome",
             "category": "python",
             "technologies": [
-                "playwright"
+                "playwright",
+                "chrome"
             ],
-            "description": "Project template using Playwright and the Apify SDK for Python",
+            "description": "This crawler uses a headless Chrome browser driven by Playwright to scrape and parse URLs provided on input. Using a headless browser enables JavaScript rendering and can help overcome anti-scraping protections, but it's slower than using Requests + BeautifulSoup.",
             "messages": {
                 "postCreate": "To run this actor, you need to have Playwright's browsers installed.\nTo do so, activate the virtual environment in the \".venv\" folder in the actor directory, and run \"playwright install --with-deps\".\nTo install additional Python packages, you need also need to activate the virtual environment in the \".venv\" folder in the actor directory.\n"
             },
@@ -56,13 +55,13 @@
         },
         {
             "id": "python-selenium",
-            "name": "python-selenium",
-            "label": "Selenium & Python",
+            "label": "Selenium & Chrome",
             "category": "python",
             "technologies": [
-                "selenium"
+                "selenium",
+                "chrome"
             ],
-            "description": "Project template using Selenium and the Apify SDK for Python",
+            "description": "This example uses Selenium and headless Chrome to scrape URLs provided on Actor input and save the results to storage using Apify SDK. Alternatively you can use the Playwright example for the same purpose.",
             "messages": {
                 "postCreate": "To run this actor, you need to have the Selenium ChromeDriver installed.\nTo install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -75,13 +74,12 @@
         },
         {
             "id": "python-scrapy",
-            "name": "python-scrapy",
-            "label": "Scrapy & Python",
+            "label": "Scrapy",
             "category": "python",
             "technologies": [
                 "scrapy"
             ],
-            "description": "Project template using Scrapy and the Apify SDK for Python",
+            "description": "This example Actor uses a simple Scrapy spider to scrape popular quotes. The quotes can be filtered based on Actor input and they will be saved to Apify storage using Apify SDK for Python and Scrapy pipelines.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -95,8 +93,8 @@
         {
             "id": "js-start",
             "name": "getting_started_node",
-            "label": "Start with Node.js",
-            "description": "Basic template for developing actors on the Apify platform using JavaScript and Node.js.",
+            "label": "Start with JavaScript",
+            "description": "This example shows how to write a very simple Actor in JavaScript using the Apify SDK. It reads and validates user input, performs a simple computation and saves the result to storage.",
             "category": "javascript",
             "technologies": [
                 "nodejs"
@@ -116,7 +114,7 @@
             "technologies": [
                 "nodejs"
             ],
-            "description": "Basic template for developing actors on the Apify platform using TypeScript and Node.js.",
+            "description": "This example shows how to write a very simple Actor in TypeScript using the Apify SDK. It reads and validates user input, performs a simple computation and saves the result to storage.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -127,14 +125,14 @@
         {
             "id": "js-crawlee-cheerio",
             "name": "project_cheerio_crawler_js",
-            "label": "CheerioCrawler in JavaScript",
+            "label": "Crawlee & Cheerio",
             "category": "javascript",
             "technologies": [
                 "nodejs",
                 "crawlee",
                 "cheerio"
             ],
-            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using JavaScript.",
+            "description": "A website crawler built with Crawlee that uses raw HTTP requests and Cheerio to parse HTML. It is fast, but it doesn't run on-page JavaScript and can't pass JavaScript based anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -146,7 +144,7 @@
         {
             "id": "js-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_js",
-            "label": "PuppeteerCrawler in JavaScript",
+            "label": "Crawlee & Puppeteer & Chrome",
             "category": "javascript",
             "technologies": [
                 "nodejs",
@@ -154,7 +152,7 @@
                 "puppeteer",
                 "chrome"
             ],
-            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using JavaScript.",
+            "description": "This Actor built with Crawlee uses Puppeteer and headless Chrome to scrape a website. Headless browsers are useful to render JavaScript and pass anti-scraping challenges, but they are slower than their pure HTTP counterparts. See also Playwright for a similar, but more modern experience.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -165,7 +163,7 @@
         {
             "id": "js-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_js",
-            "label": "PlaywrightCrawler in JavaScript",
+            "label": "Crawlee & Playwright & Chrome",
             "category": "javascript",
             "technologies": [
                 "nodejs",
@@ -173,7 +171,7 @@
                 "playwright",
                 "chrome"
             ],
-            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using JavaScript.",
+            "description": "This scraper uses Crawlee to orchestrate Playwright and headless Chrome. Playwright is a more modern version of Puppeteer that makes using headless browsers even more convenient and user-friendly.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -184,14 +182,14 @@
         {
             "id": "ts-crawlee-cheerio",
             "name": "project_cheerio_crawler_ts",
-            "label": "CheerioCrawler in TypeScript",
+            "label": "Crawlee & Cheerio",
             "category": "typescript",
             "technologies": [
                 "nodejs",
                 "crawlee",
                 "cheerio"
             ],
-            "description": "Standard and up-to-date template for developing with Crawlee's CheerioCrawler using TypeScript.",
+            "description": "A website crawler built with Crawlee that uses raw HTTP requests and Cheerio to parse HTML. It is fast, but it doesn't run on-page JavaScript and can't pass JavaScript based anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -203,7 +201,7 @@
         {
             "id": "ts-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_ts",
-            "label": "PuppeteerCrawler in TypeScript",
+            "label": "Crawlee & Puppeteer & Chrome",
             "category": "typescript",
             "technologies": [
                 "nodejs",
@@ -211,7 +209,7 @@
                 "puppeteer",
                 "chrome"
             ],
-            "description": "Standard and up-to-date template for developing with Crawlee's PuppeteerCrawler using TypeScript.",
+            "description": "This Actor built with Crawlee uses Puppeteer and headless Chrome to scrape a website. Headless browsers are useful to render JavaScript and pass anti-scraping challenges, but they are slower than their pure HTTP counterparts. See also Playwright for a similar, but more modern experience.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -222,7 +220,7 @@
         {
             "id": "ts-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_ts",
-            "label": "PlaywrightCrawler in TypeScript",
+            "label": "Crawlee & Playwright & Chrome",
             "category": "typescript",
             "technologies": [
                 "nodejs",
@@ -230,7 +228,7 @@
                 "playwright",
                 "chrome"
             ],
-            "description": "Standard and up-to-date template for developing with Crawlee's PlaywrightCrawler using TypeScript.",
+            "description": "This scraper uses Crawlee to orchestrate Playwright and headless Chrome. Playwright is a more modern version of Puppeteer that makes using headless browsers even more convenient and user-friendly.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -241,7 +239,7 @@
         {
             "id": "js-empty",
             "name": "project_empty",
-            "label": "Start from scratch",
+            "label": "Start from scratch with JavaScript",
             "category": "javascript",
             "technologies": [
                 "nodejs"
@@ -253,6 +251,13 @@
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
             }
+        }
+    ],
+    "replacements": [
+        {
+            "fromKey": "name",
+            "from": "getting_started_python",
+            "to": "python-start"
         }
     ]
 }
