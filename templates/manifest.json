@@ -244,7 +244,7 @@
         {
             "id": "js-empty",
             "name": "project_empty",
-            "label": "Start from scratch with JavaScript",
+            "label": "Start from scratch",
             "category": "javascript",
             "technologies": [
                 "nodejs"
