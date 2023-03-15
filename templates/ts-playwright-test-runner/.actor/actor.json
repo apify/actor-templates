@@ -12,6 +12,5 @@
         "dataset": "./output_schema.json"
     },
 	"input": "./input_schema.json",
-    "readme": "../README.md",
     "dockerfile": "./Dockerfile"
 }
