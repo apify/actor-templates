@@ -2,7 +2,7 @@
     "actorSpecification": 1,
     "name": "getting-started-python-scrapy",
     "title": "Getting started with Python and Scrapy",
-    "description": "Scrapes famous quotes using Scrapy.",
+    "description": "Scrapes titles of websites using Scrapy.",
     "version": "0.0",
     "meta": {
          "templateId": "python-scrapy"
@@ -13,31 +13,26 @@
     "storages": {
         "dataset": {
             "actorSpecification": 1,
-            "title": "Quotes and their authors",
+            "title": "URLs and their titles",
             "views": {
-                "quotes": {
-                    "title": "Quotes and their authors",
+                "titles": {
+                    "title": "URLs and their titles",
                     "transformation": {
                         "fields": [
-                            "author",
-                            "text",
-                            "tags"
+                            "url",
+                            "title"
                         ]
                     },
                     "display": {
                         "component": "table",
                         "properties": {
-                            "author": {
-                                "label": "Author",
+                            "url": {
+                                "label": "URL",
                                 "format": "text"
                             },
-                            "text": {
-                                "label": "Quote",
+                            "title": {
+                                "label": "Title",
                                 "format": "text"
-                            },
-                            "tags": {
-                                "label": "Tags",
-                                "format": "array"
                             }
                         }
                     }

@@ -6,7 +6,7 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 
 
-BOT_NAME = 'quotesbot'
+BOT_NAME = 'titlebot'
 
 SPIDER_MODULES = ['src.spiders']
 NEWSPIDER_MODULE = 'src.spiders'
