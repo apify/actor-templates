@@ -5,15 +5,15 @@ import { globby } from 'globby';
 import log from '@apify/log';
 import 'console.table';
 
+// run tests from specific test file with given configuration
+const runOneSpec = (spec) => cypress.run({ config: input, spec });
+
 await Actor.init();
 
 const input = await Actor.getInput();
-const runOneSpec = (spec) => cypress.run({ config: input, spec });
-
 log.info(`Running tests with following input: ${JSON.stringify(input)}`);
 
 const tests = await globby('./cypress/e2e/*-spec.cy.js');
-
 log.info(`Getting tests: ${tests}`);
 
 const testsResultsSummary = [];
