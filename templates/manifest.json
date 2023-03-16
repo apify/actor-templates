@@ -239,6 +239,24 @@
             }
         },
         {
+            "id": "ts-playwright-test-runner",
+            "name": "project_playwright_test_runner",
+            "label": "Playwright Test Runner in TypeScript",
+            "category": "typescript",
+            "technologies": [
+                "nodejs",
+                "playwright",
+                "chrome"
+            ],
+            "description": "Template for a Playwright Test project using TypeScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-playwright-test-runner.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            }
+        },
+        {
             "id": "js-empty",
             "name": "project_empty",
             "label": "Start from scratch",

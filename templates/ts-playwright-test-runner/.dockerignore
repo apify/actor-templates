@@ -1,0 +1,17 @@
+# configurations
+.idea
+
+# crawlee and apify storage folders
+apify_storage
+crawlee_storage
+storage
+
+# generated test results
+playwright-report
+test-results.json
+
+# installed files
+node_modules
+
+# git folder
+.git

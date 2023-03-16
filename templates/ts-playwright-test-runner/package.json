@@ -1,0 +1,28 @@
+{
+  "name": "playwright-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "npm run start:dev",
+    "start:dev": "ts-node src/main.ts",
+    "start:prod": "node dist/main.js",
+    "codegen": "ts-node src/runCodegen.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.30.0",
+    "@types/uuid": "^9.0.1",
+    "apify": "^3.1.2",
+    "ts-node": "^10.9.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@apify/eslint-config-ts": "^0.2.3",
+    "@apify/tsconfig": "^0.1.0"
+  }
+}
