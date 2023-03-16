@@ -271,6 +271,23 @@
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
             }
+        },
+        {
+            "id": "js-cypress",
+            "name": "project_cypress",
+            "label": "Cypress",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "cypress"
+            ],
+            "description": "Standard and up-to-date template for running Cypress tests using JavaScript.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-cypress.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            }
         }
     ]
 }

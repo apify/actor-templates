@@ -1,0 +1,10 @@
+{
+    "root": true,
+    "extends": [
+        "@apify",
+        "plugin:cypress/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2022
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "title": "Cypress Test",
+    "description": "Cypress is a tool to automate end-to-end web tests across all modern browsers. This actor runs Cypress tests from `Cypress -> e2e` folder in the cloud and stores the results in the Apify platform. The results can be (programmatically or manually) retrieved using Apify's REST API.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "baseUrl": {
+            "title": "Base url",
+            "type": "string",
+            "description": "Base url for the tests.",
+            "editor": "textfield",
+            "prefill": "https://apify.com"
+        },
+        "viewportWidth": {
+            "title": "Viewport width",
+            "type": "integer",
+            "description": "Viewport width in pixels. Default is `1280`.",
+            "default": 1280,
+            "sectionCaption": "Browser settings",
+            "sectionDescription": "Configure the browser that will be used to run the tests."
+        },
+        "viewportHeight": {
+            "title": "Viewport height",
+            "type": "integer",
+            "description": "Viewport height in pixels. Default is `720`.",
+            "default": 720
+        },
+        "defaultCommandTimeout": {
+            "title": "Default Command Timeout",
+            "type": "integer",
+            "description": "Maximum time the for the command to be executed. Default is `30000`.",
+            "default": 30000,
+            "sectionCaption": "Advanced settings",
+            "sectionDescription": "These settings are not required for most use cases. Use them to customize or debug your test run."
+        },
+        "video": {
+            "title": "Record video",
+            "type": "boolean",
+            "default": true,
+            "description": "Record video of the test run which is then stored in KVS. Default is true."
+        }
+    },
+    "required": ["baseUrl"]
+}
