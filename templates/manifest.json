@@ -5,7 +5,7 @@
             "name": "python-start",
             "label": "Start with Python",
             "category": "python",
-            "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input, computes a result and saves it to storage.",
+            "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -87,7 +87,7 @@
             "technologies": [
                 "scrapy"
             ],
-            "description": "This example Scrapy spider scrapes popular quotes filtered by input parameters. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
+            "description": "This example Scrapy spider scrapes quotes filtered by input parameters. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -102,7 +102,7 @@
             "id": "js-start",
             "name": "getting_started_node",
             "label": "Start with JavaScript",
-            "description": "A simple JavaScript example of core Actor and Apify SDK features. It reads and validates user input, computes a result and saves it to storage.",
+            "description": "A simple JavaScript example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
             "category": "javascript",
             "technologies": [
                 "nodejs"
@@ -122,7 +122,7 @@
             "technologies": [
                 "nodejs"
             ],
-            "description": "A simple TypeScript example of core Actor and Apify SDK features. It reads and validates user input, computes a result and saves it to storage.",
+            "description": "A simple TypeScript example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -179,7 +179,7 @@
                 "playwright",
                 "chrome"
             ],
-            "description": "This scraper uses Crawlee to orchestrate Playwright and headless Chrome. Playwright is a more modern version of Puppeteer that makes using headless browsers even more convenient and user-friendly.",
+            "description": "Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -197,7 +197,7 @@
                 "crawlee",
                 "cheerio"
             ],
-            "description": "A website crawler built with Crawlee that uses raw HTTP requests and Cheerio to parse HTML. It is fast, but it doesn't run on-page JavaScript and can't pass JavaScript based anti-scraping challenges.",
+            "description": "A scraper example that uses HTTP requests and Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -217,7 +217,7 @@
                 "puppeteer",
                 "chrome"
             ],
-            "description": "This Actor built with Crawlee uses Puppeteer and headless Chrome to scrape a website. Headless browsers are useful to render JavaScript and pass anti-scraping challenges, but they are slower than their pure HTTP counterparts. See also Playwright for a similar, but more modern experience.",
+            "description": "Example of a Puppeteer and headless Chrome web scraper. Headless browsers render JavaScript and are harder to block, but they're slower than plain HTTP.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -236,7 +236,7 @@
                 "playwright",
                 "chrome"
             ],
-            "description": "This scraper uses Crawlee to orchestrate Playwright and headless Chrome. Playwright is a more modern version of Puppeteer that makes using headless browsers even more convenient and user-friendly.",
+            "description": "Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -247,14 +247,14 @@
         {
             "id": "ts-playwright-test-runner",
             "name": "project_playwright_test_runner",
-            "label": "Playwright Test Runner in TypeScript",
+            "label": "Playwright & Chrome Test Runner",
             "category": "typescript",
             "technologies": [
                 "nodejs",
                 "playwright",
                 "chrome"
             ],
-            "description": "Template for a Playwright Test project using TypeScript.",
+            "description": "Example of using the Playwright Test project to run automated website tests in the cloud and display their results. Usable as an API.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-playwright-test-runner.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -265,12 +265,12 @@
         {
             "id": "js-empty",
             "name": "project_empty",
-            "label": "Start from scratch",
+            "label": "Empty JavaScript Actor",
             "category": "javascript",
             "technologies": [
                 "nodejs"
             ],
-            "description": "Empty starter actor. A blank slate with minimal starting code for developing actors from scratch using JavaScript.",
+            "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -287,7 +287,7 @@
                 "nodejs",
                 "cypress"
             ],
-            "description": "Standard and up-to-date template for running Cypress tests using JavaScript.",
+            "description": "Example of running Cypress tests and saving their results on the Apify platform. JSON results are saved to Dataset, videos to Key-value store.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-cypress.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
