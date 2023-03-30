@@ -114,11 +114,9 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
                 "src/__main__.py",
-                "src/items.py",
+                "src/main.py",
                 "src/pipelines.py",
-                "src/settings.py",
                 "src/spiders/title_spider.py"
             ]
         },
