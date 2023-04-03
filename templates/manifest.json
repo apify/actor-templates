@@ -17,6 +17,10 @@
             },
             "aliases": [
                 "getting_started_python"
+            ],
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
             ]
         },
         {
@@ -37,7 +41,11 @@
                 "build": "latest",
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ]
         },
         {
             "id": "python-playwright",
@@ -57,7 +65,11 @@
                 "build": "latest",
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ]
         },
         {
             "id": "python-selenium",
@@ -77,7 +89,11 @@
                 "build": "latest",
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ]
         },
         {
             "id": "python-scrapy",
@@ -96,7 +112,13 @@
                 "build": "latest",
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/__main__.py",
+                "src/main.py",
+                "src/pipelines.py",
+                "src/spiders/title_spider.py"
+            ]
         },
         {
             "id": "js-start",
@@ -112,7 +134,10 @@
                 "build": "latest",
                 "memoryMbytes": 256,
                 "timeoutSecs": 360
-            }
+            },
+            "showcaseFiles": [
+                "src/main.js"
+            ]
         },
         {
             "id": "ts-start",
@@ -128,7 +153,10 @@
                 "build": "latest",
                 "memoryMbytes": 256,
                 "timeoutSecs": 360
-            }
+            },
+            "showcaseFiles": [
+                "src/main.ts"
+            ]
         },
         {
             "id": "js-crawlee-cheerio",
@@ -147,7 +175,11 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 3600
             },
-            "skipOptionalDeps": true
+            "skipOptionalDeps": true,
+            "showcaseFiles": [
+                "src/main.js",
+                "src/routes.js"
+            ]
         },
         {
             "id": "js-crawlee-puppeteer-chrome",
@@ -166,7 +198,11 @@
                 "build": "latest",
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.js",
+                "src/routes.js"
+            ]
         },
         {
             "id": "js-crawlee-playwright-chrome",
@@ -185,7 +221,11 @@
                 "build": "latest",
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.js",
+                "src/routes.js"
+            ]
         },
         {
             "id": "ts-crawlee-cheerio",
@@ -204,7 +244,11 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 3600
             },
-            "skipOptionalDeps": true
+            "skipOptionalDeps": true,
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/routes.ts"
+            ]
         },
         {
             "id": "ts-crawlee-puppeteer-chrome",
@@ -223,7 +267,11 @@
                 "build": "latest",
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/routes.ts"
+            ]
         },
         {
             "id": "ts-crawlee-playwright-chrome",
@@ -242,7 +290,11 @@
                 "build": "latest",
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/routes.ts"
+            ]
         },
         {
             "id": "ts-playwright-test-runner",
@@ -260,7 +312,12 @@
                 "build": "latest",
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/runCodegen.ts",
+                "src/transform.ts"
+            ]
         },
         {
             "id": "js-empty",
@@ -276,7 +333,10 @@
                 "build": "latest",
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "main.js"
+            ]
         },
         {
             "id": "js-cypress",
@@ -293,7 +353,13 @@
                 "build": "latest",
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
-            }
+            },
+            "showcaseFiles": [
+                "main.js",
+                "cypress/e2e/first-spec.cy.js",
+                "cypress/e2e/second-spec.cy.js",
+                "cypress/support/e2e.js"
+            ]
         }
     ]
 }
