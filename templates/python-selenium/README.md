@@ -1,15 +1,58 @@
-# Getting started with Apify actors
+# Selenium & Chrome template
 
-The `README.md` file documents what your actor does and how to use it, which is then displayed in the Console or Apify Store. It's always a good idea to write a `README.md`. In a few months, not even you will remember all the details about the actor.
+Scraper example built with Selenium and headless Chrome browser to scrape a website and save the results to storage. A popular alternative to Playwright.
 
-You can use [Markdown](https://www.markdownguide.org/cheat-sheet) language for rich formatting.
+## Getting Started
+
+### Install Apify CLI
+
+#### Using Homebrew
+
+```Bash
+brew install apify/tap/apify-cli
+```
+
+#### Using NPM
+
+```Bash
+npm -g install apify-cli
+```
+
+### Create a new Actor using this template
+
+```Bash
+apify create my-python-actor -t python-selenium
+```
+
+### Run the Actor locally
+
+```Bash
+cd my-python-actor
+apify run
+```
+
+## Deploy on Apify
+
+### Log in to Apify
+
+You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
+
+```Bash
+apify login
+```
+
+### Deploy your Actor
+
+This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
+
+```Bash
+apify push
+```
 
 ## Documentation reference
 
-- [Apify SDK](https://docs.apify.com/sdk/python/)
-- [Apify Actor documentation](https://docs.apify.com/actor)
-- [Apify CLI](https://docs.apify.com/cli)
+To learn more about Apify and Actors, take a look at the following resources:
 
-## Writing a README
-
-See our tutorial on [writing READMEs for your actors](https://help.apify.com/en/articles/2912548-how-to-write-great-readme-for-your-actors) if you need more inspiration.
+- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python)
+- [Apify Platform documentation](https://docs.apify.com/platform)
+- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)

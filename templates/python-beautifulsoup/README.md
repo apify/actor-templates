@@ -1,10 +1,8 @@
-# Beautiful Soup & Requests template
+# BeautifulSoup & Requests template
 
-This Actor uses the popular Requests library to scrape URLs based on its input and then parses HTML using BeautifulSoup and saves results to storage. It also uses Apify SDK for URL queue management.
+Example of a web scraper that uses Python Requests to scrape HTML from URLs provided on input, parses it using BeautifulSoup and saves results to storage.
 
 ## Getting Started
-
----
 
 ### Install Apify CLI
 
@@ -35,8 +33,6 @@ apify run
 
 ## Deploy on Apify
 
----
-
 ### Log in to Apify
 
 You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
@@ -55,10 +51,8 @@ apify push
 
 ## Documentation reference
 
----
-
 To learn more about Apify and Actors, take a look at the following resources:
 
-- [Using BeautifulSoup in Actors](https://docs.apify.com/sdk/python/docs/guides/beautiful-soup)
-- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python/docs/overview/introduction)
+- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python)
 - [Apify Platform documentation](https://docs.apify.com/platform)
+- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
