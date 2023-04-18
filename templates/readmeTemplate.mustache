@@ -1,6 +1,7 @@
-# Crawlee & Puppeteer & Chrome template
+{{#template}}
+# {{{label}}} template
 
-Example of a Puppeteer and headless Chrome web scraper. Headless browsers render JavaScript and are harder to block, but they're slower than plain HTTP.
+{{{description}}}
 
 ## Getting Started
 
@@ -9,25 +10,25 @@ Example of a Puppeteer and headless Chrome web scraper. Headless browsers render
 #### Using Homebrew
 
 ```Bash
-brew install apify/tap/apify-cli
+{{{brew}}}
 ```
 
 #### Using NPM
 
 ```Bash
-npm -g install apify-cli
+{{npm}}
 ```
 
 ### Create a new Actor using this template
 
 ```Bash
-apify create my-typescript-actor -t project_puppeteer_crawler_ts
+apify create my-{{category}}-actor -t {{name}}
 ```
 
 ### Run the Actor locally
 
 ```Bash
-cd my-typescript-actor
+cd my-{{category}}-actor
 apify run
 ```
 
@@ -38,7 +39,7 @@ apify run
 You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
 
 ```Bash
-apify login
+{{login}}
 ```
 
 ### Deploy your Actor
@@ -46,13 +47,14 @@ apify login
 This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
 
 ```Bash
-apify push
+{{deploy}}
 ```
 
 ## Documentation reference
 
 To learn more about Apify and Actors, take a look at the following resources:
 
-- [Apify SDK for TypeScript documentation](https://docs.apify.com/sdk/js)
+- [Apify SDK for {{sdkLanguage}} documentation](https://docs.apify.com/sdk/{{sdkDocsPath}})
 - [Apify Platform documentation](https://docs.apify.com/platform)
 - [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+{{/template}}

@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "test": "jest --testTimeout=60000 --forceExit",
-    "build": "node ./src/build.js"
+    "build": "node ./src/build.js",
+    "postinstall": "cd templates && node ./readmeTemplate.mjs"
   },
   "repository": {
     "type": "git",
