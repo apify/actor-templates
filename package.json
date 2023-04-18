@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest --testTimeout=60000 --forceExit",
     "build": "node ./src/build.js",
-    "postinstall": "node ./templates/readmeTemplate.mjs"
+    "postinstall": "cd templates && node ./readmeTemplate.mjs"
   },
   "repository": {
     "type": "git",
