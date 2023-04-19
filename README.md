@@ -27,9 +27,9 @@ After running the command you will be prompted to select one of the templates fr
 Basic templates to start developing actors on the Apify platform using Node.js (JavaScript/Typescript), or Python.
 Just install the CLI and watch your actor run.
 
-- [Node.js + JavaScript](./templates/getting_started_node/)
-- [Node.js + TypeScript](./templates/getting_started_typescript/)
-- [Python](./templates/getting_started_python/)
+- [Node.js + JavaScript](./templates/js-start/)
+- [Node.js + TypeScript](./templates/ts-start/)
+- [Python](./templates/python-start/)
 
 You can find more code examples in the
 [Apify SDK documentation](https://sdk.apify.com/docs/examples/puppeteer-crawler/).
@@ -38,10 +38,10 @@ You can find more code examples in the
 
 If you're already familiar with actors, you can use the following templates to bootstrap new projects using an empty project template or Crawlee templates:
 
-- [Empty project](./templates/project_empty/) - Template with very little boilerplate code.
-- [CheerioCrawler](./templates/project_cheerio_crawler_js/) ([TypeScript version](./templates/project_cheerio_crawler_ts/)) - Standard and up to date template for developing with Crawlee's CheerioCrawler.
-- [PlaywrightCrawler](./templates/project_playwright_crawler_js/) ([TypeScript version](./templates/project_playwright_crawler_ts/)) - Standard and up to date template for developing with Crawlee's PlaywrightCrawler.
-- [PuppeteerCrawler](./templates/project_cheerio_crawler_js/) ([TypeScript version](./templates/project_puppeteer_crawler_ts/)) - Standard and up to date template for developing with Crawlee's PuppeteerCrawler.
+- [Empty project](./templates/js-empty/) - Template with very little boilerplate code.
+- [CheerioCrawler](./templates/js-crawlee-cheerio/) ([TypeScript version](./templates/ts-crawlee-cheerio/)) - Standard and up to date template for developing with Crawlee's CheerioCrawler.
+- [PlaywrightCrawler](./templates/js-crawlee-playwright-chrome/) ([TypeScript version](./templates/ts-crawlee-playwright-chrome/)) - Standard and up to date template for developing with Crawlee's PlaywrightCrawler.
+- [PuppeteerCrawler](./templates/js-crawlee-puppeteer-chrome/) ([TypeScript version](./templates/ts-crawlee-puppeteer-chrome/)) - Standard and up to date template for developing with Crawlee's PuppeteerCrawler.
 
 To run the template:
 
