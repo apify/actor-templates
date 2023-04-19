@@ -63,7 +63,7 @@
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
-                "memoryMbytes": 1024,
+                "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
@@ -87,7 +87,7 @@
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
-                "memoryMbytes": 1024,
+                "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
@@ -110,7 +110,7 @@
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
-                "memoryMbytes": 1024,
+                "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
