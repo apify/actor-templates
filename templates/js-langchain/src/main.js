@@ -14,12 +14,13 @@ await Actor.init();
 // 2. OpenAI API key you obtain at https://platform.openai.com/account/api-keys.
 const { OPENAI_API_KEY, APIFY_API_TOKEN } = process.env;
 
+const VECTOR_INDEX_PATH = './vector_index';
+
 if (!OPENAI_API_KEY || !OPENAI_API_KEY.length) throw new Error('Please configure the OPENAI_API_KEY environment variable!');
 if (!APIFY_API_TOKEN || !APIFY_API_TOKEN.length) throw new Error('Please configure the APIFY_API_TOKEN environment variable!');
 
 const model = new OpenAI({ openAIApiKey: OPENAI_API_KEY });
 const apify = new ApifyWrapper(APIFY_API_TOKEN);
-const client = Actor.newClient();
 
 // Then run the Actor, wait for it to finish, and fetch its results from the Apify dataset into a LangChain document loader.
 // Note that if you already have some results in an Apify dataset, you can load them directly using `ApifyDatasetLoader`, 
@@ -39,37 +40,36 @@ if (!wasFetched) {
     const loader = await apify.callActor(
         'apify/website-content-crawler',
         websiteContentCrawlerInput,
-        (item) =>
-          new Document({
+        (item) => new Document({
             pageContent: (item.text || ''),
             metadata: { source: item.url },
-          })
-      );
-      const docs = await loader.load();
-      
-      // Initialize the vector index from the crawled documents:
-      console.log('Feeding vector index with crawling results...');
-      const vectorStore = await HNSWLib.fromDocuments(
+        })
+    );
+    const docs = await loader.load();
+
+    // Initialize the vector index from the crawled documents:
+    console.log('Feeding vector index with crawling results...');
+    const vectorStore = await HNSWLib.fromDocuments(
         docs,
         new OpenAIEmbeddings({ openAIApiKey: OPENAI_API_KEY })
-      );
-      
-      // Save the vector index to the key-value store.
-      console.log('Saving vector index to the disk...')
-      await vectorStore.save('./vector_index');
-      await cacheVectorIndex(websiteContentCrawlerInput, './vector_index');
+    );
+
+    // Save the vector index to the key-value store.
+    console.log('Saving vector index to the disk...')
+    await vectorStore.save(VECTOR_INDEX_PATH);
+    await cacheVectorIndex(websiteContentCrawlerInput, VECTOR_INDEX_PATH);
 }
 
 console.log('Initializing vector store...');
 const vectorStore = await HNSWLib.load(
-    './vector_index',
+    VECTOR_INDEX_PATH,
     new OpenAIEmbeddings({ openAIApiKey: OPENAI_API_KEY })
 );
 
 // Next, create the retrieval chain and enter a query:
 console.log('Asking a question...');
 const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever(), {
-  returnSourceDocuments: true,
+    returnSourceDocuments: true,
 });
 const res = await chain.call({ query: 'What is LangChain?' });
 
