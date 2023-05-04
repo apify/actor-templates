@@ -9,7 +9,6 @@
     "#_TODO": "Replace the langchain from Git below with an official package once our PR is merged.",
     "dependencies": {
         "apify": "^3.0.0",
-        "axios": "^1.4.0",
         "hnswlib-node": "^1.4.2",
         "langchain": "file:./langchainjs/langchain/",
         "tar": "^6.1.14"
@@ -19,7 +18,7 @@
         "eslint": "^8.36.0"
     },
     "scripts": {
-        "start": "node main.js",
+        "start": "node src/main.js",
         "lint": "./node_modules/.bin/eslint ./src --ext .js,.jsx",
         "lint:fix": "./node_modules/.bin/eslint ./src --ext .js,.jsx --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
