@@ -20,7 +20,11 @@ async function getVectorIndexCacheStore() {
 export async function cacheVectorIndex(config, indexPath) {
     const vectorIndexCacheStore = await getVectorIndexCacheStore();
     const gzipedVectorIndexStream = tar.c({ gzip: true }, [indexPath]);
-    await vectorIndexCacheStore.setRecord(getIndexCacheKey(config), gzipedVectorIndexStream);
+    console.log(typeof gzipedVectorIndexStream);
+    await vectorIndexCacheStore.setRecord({ 
+        key: getIndexCacheKey(config), 
+        value: gzipedVectorIndexStream,
+    });
 }
 
 export async function retrieveVectorIndex(config) {
