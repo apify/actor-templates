@@ -1,6 +1,6 @@
 # Add your dependencies here.
 # See https://pip.pypa.io/en/latest/reference/requirements-file-format/
 # for how to format them
-apify ~= 1.1.0
+apify ~= 1.1.1
 nest-asyncio ~= 1.5.6
 scrapy ~= 2.9.0
