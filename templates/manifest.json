@@ -1,6 +1,23 @@
 {
     "templates": [
         {
+            "id": "python-empty",
+            "name": "python-empty",
+            "label": "Empty Python project",
+            "category": "python",     
+            "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ]
+        },
+        {
             "id": "python-start",
             "name": "python-start",
             "label": "Start with Python",
