@@ -10,8 +10,12 @@ const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS } = require('../src/consts');
 const TEST_ACTORS_FOLDER = 'test-actors';
 
 const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
+const PYTHON_COMMAND = /^win/.test(process.platform) ? 'python' : 'python3';
+const PYTHON_VENV_COMMAND = /^win/.test(process.platform) ? '.venv\\Scripts\\python.exe' : '.venv/bin/python3';
+const APIFY_COMMAND = /^win/.test(process.platform) ? 'apify.cmd' : 'apify';
+
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
-const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync('pip', ['index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
+const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
 const checkSpawnResult = ({ status, stdout, stderr }) => {
     try {
@@ -59,18 +63,18 @@ const checkNodeTemplate = () => {
 const checkPythonTemplate = () => {
     expect(fs.existsSync('requirements.txt')).toBe(true);
 
-    spawnSync('python', ['-m', 'venv', '.venv']);
+    spawnSync(PYTHON_COMMAND, ['-m', 'venv', '.venv']);
 
-    const pipInstallSpawnResult = spawnSync('.venv/bin/python3', ['-m', 'pip', 'install', '-r', 'requirements.txt']);
+    const pipInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'install', '-r', 'requirements.txt']);
     checkSpawnResult(pipInstallSpawnResult);
 
-    const pipShowApifySpawnResult = spawnSync('.venv/bin/python3', ['-m', 'pip', 'show', 'apify']);
+    const pipShowApifySpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'apify']);
     checkSpawnResult(pipShowApifySpawnResult);
 
     // If playwright is used in the template, we have to do a post-install step
-    const pipShowPlaywrightSpawnResult = spawnSync('.venv/bin/python3', ['-m', 'pip', 'show', 'playwright']);
+    const pipShowPlaywrightSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'playwright']);
     if (pipShowPlaywrightSpawnResult.status === 0) {
-        const playwrightInstallSpawnResult = spawnSync('.venv/bin/python3', ['-m', 'playwright', 'install']);
+        const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'playwright', 'install']);
         checkSpawnResult(playwrightInstallSpawnResult);
     }
 
@@ -79,7 +83,7 @@ const checkPythonTemplate = () => {
 };
 
 const checkTemplateRun = () => {
-    const apifyRunSpawnResult = spawnSync('apify', ['run'], { options: { env: { ...process.env, [ENV_VARS.HEADLESS]: '1' } } });
+    const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run'], { options: { env: { ...process.env, [ENV_VARS.HEADLESS]: '1' } } });
     checkSpawnResult(apifyRunSpawnResult);
 };
 
