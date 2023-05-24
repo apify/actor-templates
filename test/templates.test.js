@@ -8,7 +8,9 @@ const JSON5 = require('json5');
 const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS } = require('../src/consts');
 
 const TEST_ACTORS_FOLDER = 'test-actors';
-const APIFY_SDK_JS_LATEST_VERSION = spawnSync('npm', ['view', 'apify', 'version']).stdout.toString().trim();
+
+const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
+const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync('pip', ['index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
 const checkSpawnResult = ({ status, stdout, stderr }) => {
@@ -40,12 +42,12 @@ const checkNodeTemplate = () => {
     /* TODO: uncomment this and fix lint everywhere
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
     if (packageJson.scripts?.lint) {
-        const lintSpawnResult = spawnSync('npm', ['run', 'lint']);
+        const lintSpawnResult = spawnSync(NPM_COMMAND, ['run', 'lint']);
         checkSpawnResult(lintSpawnResult);
     }
     */
 
-    const npmInstallSpawnResult = spawnSync('npm', ['install']);
+    const npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
     checkSpawnResult(npmInstallSpawnResult);
 
     const apifyModulePackageJsonPath = path.join('node_modules', 'apify', 'package.json');

@@ -18,6 +18,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version-file: .nvmrc
+        cache: 'npm'
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
     - name: Install dependencies
       run: npm install
@@ -47,6 +56,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ matrix.node-version }}
 
     - name: Install dependencies
       run: |
@@ -75,6 +93,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version-file: .nvmrc
+        cache: 'npm'
 
     - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
