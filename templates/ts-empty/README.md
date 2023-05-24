@@ -1,6 +1,6 @@
-# Playwright & Chrome Test Runner template
+# Empty TypeScript Actor template
 
-Example of using the Playwright Test project to run automated website tests in the cloud and display their results. Usable as an API.
+Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ npm -g install apify-cli
 ### Create a new Actor using this template
 
 ```Bash
-apify create my-typescript-actor -t project_playwright_test_runner
+apify create my-typescript-actor -t ts_project_empty
 ```
 
 ### Run the Actor locally
@@ -53,6 +53,6 @@ apify push
 
 To learn more about Apify and Actors, take a look at the following resources:
 
-- [Apify SDK for TypeScript documentation](https://docs.apify.com/sdk/js)
+- [Apify SDK for JavaScript documentation](https://docs.apify.com/sdk/js)
 - [Apify Platform documentation](https://docs.apify.com/platform)
 - [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
