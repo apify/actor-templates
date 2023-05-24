@@ -320,6 +320,25 @@
             ]
         },
         {
+            "id": "ts-empty",
+            "name": "ts_project_empty",
+            "label": "Empty TypeScript Actor",
+            "category": "typescript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Empty starter Actor in TypeScript. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "main.ts"
+            ]
+        },
+        {
             "id": "js-empty",
             "name": "project_empty",
             "label": "Empty JavaScript Actor",

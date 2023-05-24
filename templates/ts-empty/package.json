@@ -20,7 +20,7 @@
         "start:prod": "node dist/main.js",
         "start:dev": "ts-node-esm -T main.ts",
         "build": "tsc",
-        "lint": "./node_modules/.bin/eslint --ext .js,.ts ",
+        "lint": "./node_modules/.bin/eslint --ext .js,.ts",
         "lint:fix": "./node_modules/.bin/eslint --ext .js,.ts --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
