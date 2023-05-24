@@ -1,86 +1,125 @@
-const fs = require('fs');
-const sinon = require('sinon');
-const path = require('path');
-const { ENV_VARS } = require('@apify/consts');
 const { spawnSync } = require('child_process');
-const loadJson = require('load-json-file');
-const rimraf = require('rimraf');
-const copy = require('recursive-copy');
-const { TEMPLATE_IDS } = require('../src/consts');
+const fs = require('fs');
+const path = require('path');
+
+const { ENV_VARS } = require('@apify/consts');
+const JSON5 = require('json5');
+
+const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS } = require('../src/consts');
 
 const TEST_ACTORS_FOLDER = 'test-actors';
-const APIFY_LATEST_VERSION = spawnSync('npm', ['view', 'apify', 'version']).stdout.toString().trim();
+const APIFY_SDK_JS_LATEST_VERSION = spawnSync('npm', ['view', 'apify', 'version']).stdout.toString().trim();
+const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync('pip', ['index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
-const checkTemplateStructure = async (actorName, templateId) => {
-    process.chdir(actorName);
-    spawnSync('npm', ['install']);
-    process.chdir('../');
+const checkSpawnResult = ({ status, stdout, stderr }) => {
+    try {
+        expect(status).toBe(0);
 
-    // Check files structure
-    expect(fs.existsSync(actorName)).toBe(true);
-    // Python templates do not have package.json, but have requirements.txt
-    if (!/python/i.test(actorName)) {
-        expect(fs.existsSync(path.join(actorName, 'package.json'))).toBe(true);
-    } else {
-        expect(fs.existsSync(path.join(actorName, 'requirements.txt'))).toBe(true);
+        // `apify run` prints error message to stdout, but exits with code 0
+        // TODO: after it is fixed in apify-cli, remove this
+        // and switch to `stdio: inherit` in `spawnSync`
+        expect(stdout.toString()).not.toMatch(/Error: .* exited with code .*/);
+    } catch (err) {
+        console.log(stderr.toString());
+        console.log(stdout.toString());
+        throw err;
     }
+};
 
-    const actorJsonPath = path.join(actorName, '.actor/actor.json');
+const checkCommonTemplateStructure = (templateId) => {
+    const actorJsonPath = path.join('.actor', 'actor.json');
     expect(fs.existsSync(actorJsonPath)).toBe(true);
-    const actorJson = JSON.parse(fs.readFileSync(actorJsonPath, 'utf8'));
-    expect(actorJson.meta?.templateId).toBe(templateId);
 
-    // python templates do not use apify package
-    if (!/python/i.test(actorName) && !/v2/i.test(actorName)) {
-        // Check if template has the latest apify package version
-        const apifyModulePackageJson = path.join(actorName, 'node_modules', 'apify', 'package.json');
-        expect(loadJson.sync(apifyModulePackageJson).version).toEqual(APIFY_LATEST_VERSION);
+    const actorJson = JSON5.parse(fs.readFileSync(actorJsonPath, 'utf8'));
+    expect(actorJson.meta?.templateId).toBe(templateId);
+};
+
+const checkNodeTemplate = () => {
+    expect(fs.existsSync('package.json')).toBe(true);
+
+    /* TODO: uncomment this and fix lint everywhere
+    const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+    if (packageJson.scripts?.lint) {
+        const lintSpawnResult = spawnSync('npm', ['run', 'lint']);
+        checkSpawnResult(lintSpawnResult);
+    }
+    */
+
+    const npmInstallSpawnResult = spawnSync('npm', ['install']);
+    checkSpawnResult(npmInstallSpawnResult);
+
+    const apifyModulePackageJsonPath = path.join('node_modules', 'apify', 'package.json');
+    const apifyModulePackageJson = JSON.parse(fs.readFileSync(apifyModulePackageJsonPath, 'utf8'));
+
+    expect(apifyModulePackageJson.version).toEqual(APIFY_SDK_JS_LATEST_VERSION);
+};
+
+const checkPythonTemplate = () => {
+    expect(fs.existsSync('requirements.txt')).toBe(true);
+
+    spawnSync('python', ['-m', 'venv', '.venv']);
+
+    const pipInstallSpawnResult = spawnSync('.venv/bin/python3', ['-m', 'pip', 'install', '-r', 'requirements.txt']);
+    checkSpawnResult(pipInstallSpawnResult);
+
+    const pipShowApifySpawnResult = spawnSync('.venv/bin/python3', ['-m', 'pip', 'show', 'apify']);
+    checkSpawnResult(pipShowApifySpawnResult);
+
+    // If playwright is used in the template, we have to do a post-install step
+    const pipShowPlaywrightSpawnResult = spawnSync('.venv/bin/python3', ['-m', 'pip', 'show', 'playwright']);
+    if (pipShowPlaywrightSpawnResult.status === 0) {
+        const playwrightInstallSpawnResult = spawnSync('.venv/bin/python3', ['-m', 'playwright', 'install']);
+        checkSpawnResult(playwrightInstallSpawnResult);
     }
 
-    // Check if actor was created without errors
-    expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
+    const installedApifySdkVersion = pipShowApifySpawnResult.stdout.toString().match(/Version: (.*)/)[1];
+    expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
 };
 
-const checkTemplateRun = async (actorName) => {
-    process.chdir(actorName);
-    spawnSync('apify', ['run']);
-    process.chdir('../');
-    // Check if actor run without errors
-    expect(console.log.args.map((arg) => arg[0])).not.toContain('Error:');
+const checkTemplateRun = () => {
+    const apifyRunSpawnResult = spawnSync('apify', ['run'], { options: { env: { ...process.env, [ENV_VARS.HEADLESS]: '1' } } });
+    checkSpawnResult(apifyRunSpawnResult);
 };
 
-let prevEnvHeadless;
+describe('Templates work', () => {
+    let currentDir;
 
-describe('templates', () => {
     beforeAll(async () => {
-        prevEnvHeadless = process.env[ENV_VARS.HEADLESS];
-        process.env[ENV_VARS.HEADLESS] = '1';
-
-        if (!fs.existsSync(TEST_ACTORS_FOLDER)) fs.mkdirSync(TEST_ACTORS_FOLDER);
-        process.chdir(TEST_ACTORS_FOLDER);
+        currentDir = process.cwd();
+        fs.rmSync(TEST_ACTORS_FOLDER, { recursive: true, force: true });
+        fs.mkdirSync(TEST_ACTORS_FOLDER);
     });
 
     afterAll(async () => {
-        process.env[ENV_VARS.HEADLESS] = prevEnvHeadless;
-
-        process.chdir('../');
-        if (fs.existsSync(TEST_ACTORS_FOLDER)) rimraf.sync(TEST_ACTORS_FOLDER);
+        process.chdir(currentDir);
+        fs.rmSync(TEST_ACTORS_FOLDER, { recursive: true, force: true });
     });
 
     beforeEach(() => {
-        sinon.spy(console, 'log');
+        process.chdir(path.join(currentDir, TEST_ACTORS_FOLDER));
     });
 
-    afterEach(() => {
-        console.log.restore();
+    describe('python templates', () => {
+        PYTHON_TEMPLATE_IDS.forEach((templateId) => {
+            test(templateId, () => {
+                fs.cpSync(`../templates/${templateId}`, templateId, { recursive: true });
+                process.chdir(templateId);
+                checkCommonTemplateStructure(templateId);
+                checkPythonTemplate(templateId);
+                checkTemplateRun();
+            });
+        });
     });
 
-    TEMPLATE_IDS.forEach((templateId) => {
-        test(`${templateId} works`, async () => {
-            const actorName = `cli-test-${templateId}`;
-            await copy(`../templates/${templateId}`, actorName, { dot: true });
-            await checkTemplateStructure(actorName, templateId);
-            await checkTemplateRun(actorName);
+    describe('node templates', () => {
+        NODE_TEMPLATE_IDS.forEach((templateId) => {
+            test(`${templateId} works`, () => {
+                fs.cpSync(`../templates/${templateId}`, templateId, { recursive: true });
+                process.chdir(templateId);
+                checkCommonTemplateStructure(templateId);
+                checkNodeTemplate(templateId);
+                checkTemplateRun();
+            });
         });
     });
 });

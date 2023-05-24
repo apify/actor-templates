@@ -1,0 +1,96 @@
+name: Test Templates
+
+on:
+  push:
+    paths-ignore:
+      - 'dist/**'
+
+jobs:
+  lint_and_test:
+    name: Lint and test (without templates)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Lint
+      run: npm run lint
+
+    - name: Test building templates
+      run: npm run build
+
+    - name: Test template manifest
+      run: npm run test-without-templates
+
+  test-node-templates:
+    name: Test Node.js templates
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [ 16, 18, 20 ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g apify-cli
+        ./node_modules/.bin/playwright install --with-deps
+
+    - name: Test Node.js templates
+      run: npm run test-node-templates
+      env:
+        APIFY_API_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+
+  test-python-templates:
+    name: Test Python templates
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: .nvmrc
+
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Setup Chromedriver
+      uses: nanasess/setup-chromedriver@v2
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g apify-cli
+        ./node_modules/.bin/playwright install --with-deps
+
+    - name: Test Python templates
+      run: npm run test-python-templates
+      env:
+        APIFY_API_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
