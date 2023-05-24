@@ -20,13 +20,17 @@ jobs:
         node-version-file: .nvmrc
         cache: 'npm'
 
+    - name: Get Node.js version
+      id: get-node-version
+      run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
+
     - name: Cache node_modules
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
 
     - name: Install dependencies
       run: npm install
@@ -75,7 +79,7 @@ jobs:
     - name: Test Node.js templates
       run: npm run test-node-templates
       env:
-        APIFY_API_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+        APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
 
   test-python-templates:
     name: Test Python templates
@@ -95,6 +99,24 @@ jobs:
         node-version-file: .nvmrc
         cache: 'npm'
 
+    - name: Get Node.js version
+      id: get-node-version
+      run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g apify-cli
+        ./node_modules/.bin/playwright install --with-deps
+
     - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -103,13 +125,7 @@ jobs:
     - name: Setup Chromedriver
       uses: nanasess/setup-chromedriver@v2
 
-    - name: Install dependencies
-      run: |
-        npm install
-        npm install -g apify-cli
-        ./node_modules/.bin/playwright install --with-deps
-
     - name: Test Python templates
       run: npm run test-python-templates
       env:
-        APIFY_API_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+        APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
