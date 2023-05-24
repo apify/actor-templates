@@ -1,13 +1,13 @@
 const { spawnSync } = require('child_process');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
-const { ENV_VARS } = require('@apify/consts');
 const JSON5 = require('json5');
 
 const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS } = require('../src/consts');
 
-const TEST_ACTORS_FOLDER = 'test-actors';
+const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
 
 const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
 const PYTHON_COMMAND = /^win/.test(process.platform) ? 'python' : 'python3';
@@ -83,47 +83,36 @@ const checkPythonTemplate = () => {
 };
 
 const checkTemplateRun = () => {
-    const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run'], { options: { env: { ...process.env, [ENV_VARS.HEADLESS]: '1' } } });
+    const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run'], { options: { env: { ...process.env, APIFY_HEADLESS: '1' } } });
     checkSpawnResult(apifyRunSpawnResult);
 };
 
+const prepareActor = (templateId) => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), templateId));
+    fs.cpSync(path.join(TEMPLATES_DIRECTORY, templateId), tmpDir, { recursive: true });
+    process.chdir(tmpDir);
+};
+
 describe('Templates work', () => {
-    let currentDir;
-
-    beforeAll(async () => {
-        currentDir = process.cwd();
-        fs.rmSync(TEST_ACTORS_FOLDER, { recursive: true, force: true });
-        fs.mkdirSync(TEST_ACTORS_FOLDER);
-    });
-
-    afterAll(async () => {
-        process.chdir(currentDir);
-        fs.rmSync(TEST_ACTORS_FOLDER, { recursive: true, force: true });
-    });
-
-    beforeEach(() => {
-        process.chdir(path.join(currentDir, TEST_ACTORS_FOLDER));
-    });
-
-    describe('python templates', () => {
+    describe('Python templates', () => {
         PYTHON_TEMPLATE_IDS.forEach((templateId) => {
             test(templateId, () => {
-                fs.cpSync(`../templates/${templateId}`, templateId, { recursive: true });
-                process.chdir(templateId);
+                prepareActor(templateId);
+
                 checkCommonTemplateStructure(templateId);
-                checkPythonTemplate(templateId);
+                checkPythonTemplate();
                 checkTemplateRun();
             });
         });
     });
 
-    describe('node templates', () => {
+    describe('Node.js templates', () => {
         NODE_TEMPLATE_IDS.forEach((templateId) => {
-            test(`${templateId} works`, () => {
-                fs.cpSync(`../templates/${templateId}`, templateId, { recursive: true });
-                process.chdir(templateId);
+            test(templateId, () => {
+                prepareActor(templateId);
+
                 checkCommonTemplateStructure(templateId);
-                checkNodeTemplate(templateId);
+                checkNodeTemplate();
                 checkTemplateRun();
             });
         });
