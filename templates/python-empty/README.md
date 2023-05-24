@@ -1,0 +1,11 @@
+# Empty Python Actor template
+
+The Empty Python Actor template is a starting point for creating a new Python actor on the Apify platform. It provides a basic structure for the actor and allows you to easily add your own functionality. 
+
+## Documentation reference
+
+To learn more about Apify and Actors, take a look at the following resources:
+
+- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python)
+- [Apify Platform documentation](https://docs.apify.com/platform)
+- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
