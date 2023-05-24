@@ -7,12 +7,10 @@ import { Actor } from 'apify';
 // Initialize the Apify SDK
 await Actor.init();
 
-
 console.log('Hello from the Actor!');
 /**
  * Actor code
  */
-
 
 // Exit successfully
 await Actor.exit();
