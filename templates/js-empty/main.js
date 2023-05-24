@@ -1,19 +1,14 @@
 // This is the main Node.js source code file of your actor.
 // An actor is a program that takes an input and produces an output.
 
-// For more information, see https://docs.apify.com/sdk/js
+// Import Apify SDK (Read more at https://docs.apify.com/sdk/js)
 import { Actor } from 'apify';
-// For more information, see https://crawlee.dev
-// import { CheerioCrawler } from 'crawlee';
 
 // Initialize the Apify SDK
 await Actor.init();
 
-// Get input of the actor (here only for demonstration purposes).
-const input = await Actor.getInput();
-console.log('Input:');
-console.dir(input);
 
+console.log('Hello from the Actor!');
 /**
  * Actor code
  */

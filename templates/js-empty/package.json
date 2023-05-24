@@ -2,13 +2,12 @@
     "name": "project-empty",
     "version": "0.0.1",
     "type": "module",
-    "description": "This is a boilerplate of an Apify actor.",
+    "description": "This is a boilerplate of an Apify Actor.",
     "engines": {
         "node": ">=16.0.0"
     },
     "dependencies": {
-        "apify": "^3.0.0",
-        "crawlee": "^3.0.0"
+        "apify": "^3.0.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^0.3.1",
