@@ -320,25 +320,6 @@
             ]
         },
         {
-            "id": "js-empty",
-            "name": "project_empty",
-            "label": "Empty JavaScript Actor",
-            "category": "javascript",
-            "technologies": [
-                "nodejs"
-            ],
-            "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 2048,
-                "timeoutSecs": 3600
-            },
-            "showcaseFiles": [
-                "main.js"
-            ]
-        },
-        {
             "id": "js-cypress",
             "name": "project_cypress",
             "label": "Cypress",
@@ -360,6 +341,25 @@
                 "cypress/e2e/second-spec.cy.js",
                 "cypress/support/e2e.js"
             ]
-        }
+        },
+        {
+            "id": "js-empty",
+            "name": "project_empty",
+            "label": "Empty JavaScript Actor",
+            "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "main.js"
+            ]
+        },
     ]
 }
