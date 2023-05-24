@@ -1,58 +1,12 @@
-# Cypress template
+# Cypress Test
 
-Example of running Cypress tests and saving their results on the Apify platform. JSON results are saved to Dataset, videos to Key-value store.
+Run your Cypress tests on the Apify Platform effectively and easily. Just set up your test environment using a user-friendly UI and let the platform do the rest.
 
-## Getting Started
+## How to use
 
-### Install Apify CLI
+You can easily run your tests on Apify Platform, just copy-paste your test files into `Cypress -> e2e` folder. The tests' names need to end with `-spec.cy.js`.
 
-#### Using Homebrew
+You can also customize the test run by specifying other options in the settings, e.g. the screen size, video recording or the default command timeout.
 
-```Bash
-brew install apify/tap/apify-cli
-```
+After running the tests, the Apify Platform stores the results in a comprehensive way - datasets for json results, key value store for videos. You can view the results directly on the platform or download them to your local machine using a REST API.
 
-#### Using NPM
-
-```Bash
-npm -g install apify-cli
-```
-
-### Create a new Actor using this template
-
-```Bash
-apify create my-javascript-actor -t project_cypress
-```
-
-### Run the Actor locally
-
-```Bash
-cd my-javascript-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
-
-## Documentation reference
-
-To learn more about Apify and Actors, take a look at the following resources:
-
-- [Apify SDK for JavaScript documentation](https://docs.apify.com/sdk/js)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
