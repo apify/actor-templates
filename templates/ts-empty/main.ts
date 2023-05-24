@@ -7,7 +7,7 @@ import { Actor } from 'apify';
 // Initialize the Apify SDK
 await Actor.init();
 
-console.log("Empty Apify actor template.")
+console.log('Empty Apify actor template.');
 
 // Exit successfully
 await Actor.exit();

@@ -4,3 +4,5 @@ dist
 playwright-report
 src/tests
 test-results.json
+apify_storage
+tsconfig.tsbuildinfo
