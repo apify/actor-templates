@@ -1,17 +1,14 @@
 {
-    "name": "project-empty",
+    "name": "js-empty-project",
     "version": "0.0.1",
     "type": "module",
     "description": "This is a boilerplate of an Apify Actor.",
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=18.0.0"
     },
     "dependencies": {
-        "apify": "^3.1.4"
-    },
-    "devDependencies": {
-        "@apify/eslint-config": "^0.3.1",
-        "eslint": "^8.41.0"
+        "apify": "^3.1.4",
+        "crawlee": "^3.3.2"
     },
     "scripts": {
         "start": "node main.js",
