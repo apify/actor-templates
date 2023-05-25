@@ -15,5 +15,5 @@ console.log('Hello from the Actor!');
  * Actor code
  */
 
-// Exit successfully
+// Gracefully exit the Actor process. It's recommended to quit all Actors with an exit()
 await Actor.exit();
