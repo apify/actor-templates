@@ -18,6 +18,23 @@
             ]
         },
         {
+            "id": "python-start-scrape-single-page",
+            "name": "python-start-scrape-single-page",
+            "label": "Scrape single page",
+            "category": "python",
+            "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start-scrape-single-page.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ]
+        },
+        {
             "id": "python-start",
             "name": "python-start",
             "label": "Start with Python",
