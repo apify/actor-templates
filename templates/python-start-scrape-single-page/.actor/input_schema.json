@@ -1,0 +1,14 @@
+{
+    "title": "Python BeautifulSoup Scraper",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "start_url": {
+            "title": "Start URL",
+            "type": "string",
+            "prefill": "https://apify.com",
+            "editor": "requestListSources"
+        }
+    },
+    "required": ["start_url"]
+}
