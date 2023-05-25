@@ -26,10 +26,12 @@ try {
 
     // Extracting all the headings from the page (tag name and text)
     $('h1, h2, h3, h4, h5, h6').each((i, element) => {
-        headings.push({
+        const headingObject = {
             level: $(element).prop("tagName").toLowerCase(),
             text: $(element).text(),
-        });
+        };
+        console.log('Extracted heading', headingObject);
+        headings.push(headingObject);
     });
 } catch (error) {
     console.error(error);
