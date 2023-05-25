@@ -21,7 +21,7 @@ npm -g install apify-cli
 ### Create a new Actor using this template
 
 ```Bash
-apify create my-python-actor -t python-beautifulsoup
+apify create my-python-actor -t python-start-scrape-single-page
 ```
 
 ### Run the Actor locally

@@ -1,11 +1,11 @@
 {
     "actorSpecification": 1,
-    "name": "getting-started-python-beautifulsoup",
+    "name": "python-start-scrape-single-page",
     "title": "Getting started with Python and BeautifulSoup",
     "description": "Scrapes titles of websites using BeautifulSoup.",
     "version": "0.0",
     "meta": {
-         "templateId": "python-beautifulsoup"
+         "templateId": "python-start-scrape-single-page"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",
