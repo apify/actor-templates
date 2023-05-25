@@ -1,5 +1,5 @@
-// This is the main Node.js source code file of your actor.
-// An actor is a program that takes an input and produces an output.
+// This is the main Node.js source code file of your Actor.
+// An Actor is a program that takes an input and produces an output.
 
 // Import Apify SDK (Read more at https://docs.apify.com/sdk/js)
 import { Actor } from 'apify';
