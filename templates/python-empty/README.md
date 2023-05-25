@@ -4,7 +4,7 @@ The Empty Python Actor template is a starting point for creating a new Python Ac
 
 ## Getting Started
 
-Start a new web scraping project quickly and easily in Python with our empty project template. It provides a basic structure for the Actor with [Apify SDK](https://docs.apify.com/sdk/python/) and allows you to easily add your own functionality.
+Start a new web scraping project quickly and easily in Python with our empty project template.
 
 ## Documentation reference
 
