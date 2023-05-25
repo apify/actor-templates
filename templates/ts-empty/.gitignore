@@ -1,8 +1,6 @@
 storage
+apify_storage
+crawlee_storage
 node_modules
 dist
-playwright-report
-src/tests
-test-results.json
-apify_storage
 tsconfig.tsbuildinfo
