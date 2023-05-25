@@ -1,0 +1,133 @@
+name: Test Templates
+
+on:
+  push:
+    paths-ignore:
+      - 'dist/**'
+
+jobs:
+  lint_and_test:
+    name: Lint and test (without templates)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: .nvmrc
+        cache: 'npm'
+
+    - name: Get Node.js version
+      id: get-node-version
+      run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Lint
+      run: npm run lint
+
+    - name: Test building templates
+      run: npm run build
+
+    - name: Test template manifest
+      run: npm run test-without-templates
+
+  test-node-templates:
+    name: Test Node.js templates
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [ 16, 18 ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g apify-cli
+        ./node_modules/.bin/playwright install chromium --with-deps
+
+    - name: Test Node.js templates
+      run: npm run test-node-templates
+      env:
+        APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+
+  test-python-templates:
+    name: Test Python templates
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: .nvmrc
+        cache: 'npm'
+
+    - name: Get Node.js version
+      id: get-node-version
+      run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g apify-cli
+        ./node_modules/.bin/playwright install chromium --with-deps
+
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Setup Chromedriver
+      uses: nanasess/setup-chromedriver@v2
+      with:
+        chromedriver-version: '113.0.5672.63'
+
+    - name: Test Python templates
+      run: npm run test-python-templates
+      env:
+        APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
