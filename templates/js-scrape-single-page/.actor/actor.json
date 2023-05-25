@@ -1,11 +1,11 @@
 {
     "actorSpecification": 1,
-    "name": "getting-started-scrape-single-page",
-    "title": "Getting Started with Scraping single page in Node.js",
+    "name": "js-scrape-single-page",
+    "title": "Scrape single page in JavaScript",
     "description": "Scrape data from single page with provided URL.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-start-scrape-single-page"
+        "templateId": "js-scrape-single-page"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile"
