@@ -9,4 +9,4 @@ storage
 vector_index
 
 # TODO: Remove this once our langchain PR is merged
-langchainjs
+# langchainjs

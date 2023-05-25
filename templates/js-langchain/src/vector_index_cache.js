@@ -21,7 +21,7 @@ function getIndexCacheKey(config) {
 
 /**
  * Returns an ID of a key-value store with a name VECTOR_INDEX_CACHE_STORE_NAME.
- * 
+ *
  * @returns {String}
  */
 async function getVectorIndexCacheStore() {

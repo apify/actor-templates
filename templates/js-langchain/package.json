@@ -10,7 +10,7 @@
     "dependencies": {
         "apify": "^3.0.0",
         "hnswlib-node": "^1.4.2",
-        "langchain": "file:./langchainjs/langchain/",
+        "langchain": "^0.0.82",
         "tar": "^6.1.14"
     },
     "devDependencies": {
