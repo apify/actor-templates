@@ -6,7 +6,6 @@ import { Actor } from "apify";
 //  Crawlee - web scraping and browser automation library (Read more at https://crawlee.dev)
 // import { CheerioCrawler } from 'crawlee';
 
-// Initialize the Apify SDK
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
 await Actor.init();
 
