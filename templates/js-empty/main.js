@@ -7,6 +7,7 @@ import { Actor } from "apify";
 // import { CheerioCrawler } from 'crawlee';
 
 // Initialize the Apify SDK
+// The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
 await Actor.init();
 
 console.log('Hello from the Actor!');
