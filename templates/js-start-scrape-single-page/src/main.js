@@ -18,8 +18,13 @@ const { url } = input;
 
 const headings = [];
 try {
+    // Fetching the HTML content of the page
     const response = await axios.get(url);
+
+    // Load the HTML to cheerio
     const $ = cheerio.load(response.data);
+
+    // Extracting all the headings from the page (tag name and text)
     $('h1, h2, h3, h4, h5, h6').each((i, element) => {
         headings.push({
             level: $(element).prop("tagName").toLowerCase(),
