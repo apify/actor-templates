@@ -122,7 +122,7 @@
         },
         {
             "id": "js-scrape-single-page",
-            "name": "js-scrape-single-page",
+            "name": "js_scrape_single_page",
             "label": "Scrape single page in JavaScript",
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
