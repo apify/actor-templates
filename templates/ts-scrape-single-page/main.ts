@@ -10,13 +10,24 @@ import { Actor } from "apify";
 // Initialize the Apify SDK
 await Actor.init();
 
+interface Input {
+    url: string;
+}
+
 // Structure of input is defined in input_schema.json.
-const input = await Actor.getInput();
+const input = await Actor.getInput<Input>();
+
+if(!input) throw new Error('Input is missing!');
 
 // Getting the URL from input defined in ./storage/key_value_stores/default/INPUT.json
 const { url } = input;
 
-const headings = [];
+interface Heading {
+    level: string,
+    text: string
+}
+const headings : Heading[] = [];
+
 try {
     // Fetching the HTML content of the page
     const response = await axios.get(url);
