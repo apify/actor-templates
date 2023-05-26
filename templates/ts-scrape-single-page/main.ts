@@ -13,7 +13,7 @@ interface Input {
 }
 // Structure of input is defined in input_schema.json
 const input = await Actor.getInput<Input>();
-if(!input) throw new Error("Input is missing!");
+if (!input) throw new Error("Input is missing!");
 
 const { url } = input
 // Fetch the HTML content of the page.
