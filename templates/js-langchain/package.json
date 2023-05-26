@@ -13,10 +13,6 @@
         "langchain": "^0.0.82",
         "tar": "^6.1.14"
     },
-    "devDependencies": {
-        "@apify/eslint-config": "^0.3.1",
-        "eslint": "^8.36.0"
-    },
     "scripts": {
         "start": "node src/main.js",
         "lint": "./node_modules/.bin/eslint ./src --ext .js,.jsx",
