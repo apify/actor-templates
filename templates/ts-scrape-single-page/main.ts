@@ -23,7 +23,7 @@ const response = await axios.get(url);
 const $ = cheerio.load(response.data);
 
 // Extract all headings from the page (tag name and text).
-const headings : { level: string, text: string }[] = [];
+const headings: { level: string, text: string }[] = [];
 $("h1, h2, h3, h4, h5, h6").each((i, element) => {
     const headingObject = {
         level: $(element).prop("tagName").toLowerCase(),
