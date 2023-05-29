@@ -228,6 +228,29 @@
             ]
         },
         {
+            "id": "js-bootstrap-cheerio-crawler",
+            "name": "js-bootstrap-cheerio-crawler",
+            "label": "Bootstrap CheerioCrawler",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "cheerio"
+            ],
+            "description": "Skeleton project that helps you quickly bootstrap `CheerioCrawler` in JavaScript. It's best for developers who already know Apify SDK and Crawlee.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            },
+            "skipOptionalDeps": true,
+            "showcaseFiles": [
+                "src/main.js",
+                "src/routes.js"
+            ]
+        },
+        {
             "id": "ts-crawlee-cheerio",
             "name": "project_cheerio_crawler_ts",
             "label": "Crawlee & Cheerio",
@@ -359,6 +382,29 @@
                 "cypress/e2e/first-spec.cy.js",
                 "cypress/e2e/second-spec.cy.js",
                 "cypress/support/e2e.js"
+            ]
+        },
+        {
+            "id": "ts-bootstrap-cheerio-crawler",
+            "name": "ts-bootstrap-cheerio-crawler",
+            "label": "Bootstrap CheerioCrawler",
+            "category": "typescript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "cheerio"
+            ],
+            "description": "Skeleton project that helps you quickly bootstrap `CheerioCrawler` in TypeScript. It's best for developers who already know Apify SDK and Crawlee.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            },
+            "skipOptionalDeps": true,
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/routes.ts"
             ]
         }
     ]
