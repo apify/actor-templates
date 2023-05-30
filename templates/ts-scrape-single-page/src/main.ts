@@ -12,7 +12,8 @@ interface Input {
     url: string;
 }
 // Structure of input is defined in input_schema.json
-const input = await Actor.getInput() as Input;
+const input = await Actor.getInput<Input>();
+if (!input) throw new Error("Input is missing!");
 
 const { url } = input;
 // Fetch the HTML content of the page.
@@ -23,7 +24,7 @@ const $ = cheerio.load(response.data);
 
 // Extract all headings from the page (tag name and text).
 const headings: { level: string, text: string }[] = [];
-$("h1, h2, h3, h4, h5, h6").each((i, element) => {
+$("h1, h2, h3, h4, h5, h6").each((_i, element) => {
     const headingObject = {
         level: $(element).prop("tagName").toLowerCase(),
         text: $(element).text(),
