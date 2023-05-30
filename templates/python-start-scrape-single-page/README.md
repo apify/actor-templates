@@ -1,6 +1,6 @@
 # BeautifulSoup & Requests template
 
-Example of a web scraper that uses Python Requests to scrape HTML from URLs provided on input, parses it using BeautifulSoup and saves results to storage.
+Example of a web scraper that uses Python Requests to scrape HTML from URLs provided on input, parses it using BeautifulSoup, gets all headings of the page and saves results to the storage.
 
 ## Getting Started
 
@@ -21,13 +21,13 @@ npm -g install apify-cli
 ### Create a new Actor using this template
 
 ```Bash
-apify create my-python-actor -t python-start-scrape-single-page
+apify create single-scrape-actor -t python-start-scrape-single-page
 ```
 
 ### Run the Actor locally
 
 ```Bash
-cd my-python-actor
+cd single-scrape-actor
 apify run
 ```
 
