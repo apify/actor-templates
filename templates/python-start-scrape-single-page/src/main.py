@@ -17,7 +17,7 @@ async def main():
         headings = []
 
         # Extract all headings from the page (tag name and text).
-        for heading in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        for heading in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
             heading_object = { 'level': heading.name, 'text': heading.text }
             print('Extracted heading', heading_object)
             headings.append(heading_object)
