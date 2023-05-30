@@ -10,16 +10,20 @@ async def main():
         actor_input = await Actor.get_input() or {}
         url = actor_input.get('url')
 
-        try:
-            # Fetch the URL using `requests` and parse it using `BeautifulSoup`
-            response = requests.get(url)
-            soup = BeautifulSoup(response.content, 'html.parser')
+        # Fetch the URL using `requests` and parse it using `BeautifulSoup`
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-            # Extract all headings from the page
-            headings = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        headings = []
 
-            # Push the data to default Dataset
-            for heading in headings:
-                await Actor.push_data({ 'level': heading.name, 'text': heading.text })
-        except:
-            Actor.log.exception(f'Cannot extract data from {url}.')
+        # Extract all headings from the page (tag name and text).
+        for heading in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+            heading_object = { 'level': heading.name, 'text': heading.text }
+            print('Extracted heading', heading_object)
+            headings.append(heading_object)
+
+        # Save headings to Dataset - a table-like storage.
+        await Actor.push_data(headings)
+
+        # Gracefully exit the Actor process. It's recommended to quit all Actors with an exit().
+        await Actor.exit()
