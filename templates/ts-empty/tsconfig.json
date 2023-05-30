@@ -8,6 +8,6 @@
         "lib": ["DOM"],
     },
     "include": [
-        "main.ts"
+        "./src/**/*"
     ]
 }
