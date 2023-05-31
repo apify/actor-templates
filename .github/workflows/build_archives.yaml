@@ -1,0 +1,36 @@
+name: Build template archives
+
+on:
+  push:
+    paths-ignore:
+      - 'dist/**'
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build template archives
+        run: npm run build
+
+      - name: Commit the updated template archives
+        run: |
+          git config user.name 'GitHub Actions'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add dist/*
+          git diff-index --quiet HEAD || git commit -m 'chore: Update template archives [skip ci]' || true
+          git push
