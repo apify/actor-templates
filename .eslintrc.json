@@ -1,3 +1,7 @@
 {
-    "extends": ["@apify"]
+    "extends": ["@apify"],
+    "plugins": ["jest"],
+    "rules": {
+        "no-console": "off"
+    }
 }
