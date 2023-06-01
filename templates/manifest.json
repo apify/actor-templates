@@ -117,7 +117,7 @@
             "name": "python-start-scrape-single-page",
             "label": "Scrape single page",
             "category": "python",
-            "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
+            "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input with schema, scrapes headings from given URL and saves it to storage.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-start-scrape-single-page.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",

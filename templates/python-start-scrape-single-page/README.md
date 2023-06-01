@@ -1,6 +1,6 @@
 # BeautifulSoup & Requests template
 
-Example of a web scraper that uses Python Requests to scrape HTML from URLs provided on input, parses it using BeautifulSoup, gets all headings of the page and saves results to the storage.
+Example of a web scraper that uses Python Requests to scrape HTML from a URL provided on input, parses it using BeautifulSoup, gets all headings of the page and saves results to the storage.
 
 ## Getting Started
 

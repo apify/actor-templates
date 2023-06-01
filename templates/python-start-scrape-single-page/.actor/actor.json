@@ -2,41 +2,11 @@
     "actorSpecification": 1,
     "name": "python-start-scrape-single-page",
     "title": "Getting started with Python and BeautifulSoup",
-    "description": "Scrapes titles of websites using BeautifulSoup.",
+    "description": "Scrapes all headings of given URL using BeautifulSoup.",
     "version": "0.0",
     "meta": {
          "templateId": "python-start-scrape-single-page"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile",
-    "storages": {
-        "dataset": {
-            "actorSpecification": 1,
-            "title": "URLs and their titles",
-            "views": {
-                "titles": {
-                    "title": "URLs and their titles",
-                    "transformation": {
-                        "fields": [
-                            "url",
-                            "title"
-                        ]
-                    },
-                    "display": {
-                        "component": "table",
-                        "properties": {
-                            "url": {
-                                "label": "URL",
-                                "format": "text"
-                            },
-                            "title": {
-                                "label": "Title",
-                                "format": "text"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    "dockerfile": "./Dockerfile"
 }
