@@ -1,11 +1,11 @@
 {
     "actorSpecification": 1,
-    "name": "js-scrape-single-page",
+    "name": "js-start",
     "title": "Scrape single page in JavaScript",
     "description": "Scrape data from single page with provided URL.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-scrape-single-page"
+        "templateId": "js-start"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile"

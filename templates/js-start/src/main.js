@@ -10,7 +10,6 @@ await Actor.init();
 
 // Structure of input is defined in input_schema.json
 const input = await Actor.getInput();
-if (!input) throw new Error("Input is missing!");
 const { url } = input;
 
 // Fetch the HTML content of the page.
