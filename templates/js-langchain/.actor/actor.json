@@ -2,7 +2,7 @@
     "actorSpecification": 1,
     "name": "project-langchain",
     "title": "Project LangChain",
-    "description": "Langchain project in javascript.",
+    "description": "LangChain project in JavaScript.",
     "version": "0.0",
     "meta": {
         "templateId": "js-langchain"
