@@ -7,7 +7,7 @@ For complete information [see this article](https://docs.apify.com/platform/acto
 
 ## Pull the Actor for local development
 
-In case you would like to move to development on your local machine for customizable developer experience, you can pull the existing Actor from Apify console using Apify CLI:
+If you would like to develop locally, you can pull the existing Actor from Apify console using Apify CLI:
 
 1. Install `apify-cli`
 
