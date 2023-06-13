@@ -1,27 +1,42 @@
-const { fetch } = require('undici');
+const https = require('https');
 
 const MANIFEST_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/manifest.json';
 const CONSOLE_README_SUFFIX_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/consoleReadmeSuffix.md';
 const LOCAL_README_SUFFIX_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/localReadmeSuffix.md';
 
+const fetchResource = async (url) => {
+    return new Promise((resolve, reject) => {
+        https.get(url, (res) => {
+            let json = '';
+            res
+                .on('data', (chunk) => {
+                    json += chunk;
+                })
+                .on('end', () => {
+                    if (res.statusCode === 200) {
+                        try {
+                            const data = JSON.parse(json);
+                            resolve(data);
+                        } catch (e) {
+                            reject(e);
+                        }
+                    } else {
+                        reject(new Error(`Url: ${url}\n${json}`));
+                    }
+                })
+                .on('error', (err) => reject(err));
+        }).on('error', (err) => reject(err));
+    });
+};
+
 exports.fetchManifest = async () => {
-    const manifestResponse = await fetch(MANIFEST_URL);
+    const consoleReadmeSuffix = await fetchResource(CONSOLE_README_SUFFIX_URL);
+    const localReadmeSuffix = await fetchResource(LOCAL_README_SUFFIX_URL);
+    const manifest = await fetchResource(MANIFEST_URL);
 
-    if (manifestResponse.status !== 200) throw new Error(`Could not fetch manifest from ${MANIFEST_URL}`);
-
-    const manifestData = await manifestResponse.json();
-    const consoleResponse = await fetch(CONSOLE_README_SUFFIX_URL);
-    const localResponse = await fetch(LOCAL_README_SUFFIX_URL);
-
-    if (consoleResponse.status === 200) {
-        manifestData.consoleReadmeSuffix = await consoleResponse.text();
-    }
-
-    if (localResponse.status === 200) {
-        manifestData.localReadmeSuffix = await localResponse.text();
-    }
-
-    return manifestData;
+    manifest.consoleReadmeSuffix = consoleReadmeSuffix;
+    manifest.localReadmeSuffix = localReadmeSuffix;
+    return manifest;
 };
 
 exports.manifestUrl = MANIFEST_URL;
