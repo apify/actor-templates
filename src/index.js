@@ -1,8 +1,8 @@
 const https = require('https');
 
 const MANIFEST_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/manifest.json';
-const CONSOLE_README_SUFFIX_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/consoleReadmeSuffix.md';
-const LOCAL_README_SUFFIX_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/localReadmeSuffix.md';
+const CONSOLE_README_SUFFIX_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/console_readme_suffix.md';
+const LOCAL_README_SUFFIX_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md';
 
 const fetchResource = async (url) => {
     return new Promise((resolve, reject) => {
