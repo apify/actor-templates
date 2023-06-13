@@ -30,12 +30,17 @@ const fetchResource = async (url) => {
 };
 
 exports.fetchManifest = async () => {
-    const consoleReadmeSuffix = await fetchResource(CONSOLE_README_SUFFIX_URL);
-    const localReadmeSuffix = await fetchResource(LOCAL_README_SUFFIX_URL);
     const manifest = await fetchResource(MANIFEST_URL);
 
-    manifest.consoleReadmeSuffix = consoleReadmeSuffix;
-    manifest.localReadmeSuffix = localReadmeSuffix;
+    try {
+        const consoleReadmeSuffix = await fetchResource(CONSOLE_README_SUFFIX_URL);
+        const localReadmeSuffix = await fetchResource(LOCAL_README_SUFFIX_URL);
+        manifest.consoleReadmeSuffix = consoleReadmeSuffix;
+        manifest.localReadmeSuffix = localReadmeSuffix;
+    } catch (e) {
+        // Could not fetch the suffixes
+    }
+
     return manifest;
 };
 
