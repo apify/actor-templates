@@ -7,21 +7,20 @@ const LOCAL_README_SUFFIX_URL = 'https://raw.githubusercontent.com/apify/actor-t
 const fetchResource = async (url) => {
     return new Promise((resolve, reject) => {
         https.get(url, (res) => {
-            let json = '';
+            let text = '';
             res
                 .on('data', (chunk) => {
-                    json += chunk;
+                    text += chunk;
                 })
                 .on('end', () => {
                     if (res.statusCode === 200) {
                         try {
-                            const data = JSON.parse(json);
-                            resolve(data);
+                            resolve(text);
                         } catch (e) {
                             reject(e);
                         }
                     } else {
-                        reject(new Error(`Url: ${url}\n${json}`));
+                        reject(new Error(`Url: ${url}\n${text}`));
                     }
                 })
                 .on('error', (err) => reject(err));
@@ -30,7 +29,8 @@ const fetchResource = async (url) => {
 };
 
 exports.fetchManifest = async () => {
-    const manifest = await fetchResource(MANIFEST_URL);
+    const manifestStr = await fetchResource(MANIFEST_URL);
+    const manifest = JSON.parse(manifestStr);
 
     try {
         const consoleReadmeSuffix = await fetchResource(CONSOLE_README_SUFFIX_URL);
