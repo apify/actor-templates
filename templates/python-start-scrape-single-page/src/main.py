@@ -1,5 +1,3 @@
-from urllib.parse import urljoin
-
 import requests
 from apify import Actor
 from bs4 import BeautifulSoup
