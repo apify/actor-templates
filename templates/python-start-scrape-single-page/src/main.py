@@ -22,6 +22,3 @@ async def main():
 
         # Save headings to Dataset - a table-like storage.
         await Actor.push_data(headings)
-
-        # Gracefully exit the Actor process. It's recommended to quit all Actors with an exit().
-        await Actor.exit()
