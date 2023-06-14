@@ -39,6 +39,7 @@ exports.fetchManifest = async () => {
         manifest.localReadmeSuffix = localReadmeSuffix;
     } catch (e) {
         // Could not fetch the suffixes
+        console.error('Could not fetch the suffixes.', e);
     }
 
     return manifest;
