@@ -23,14 +23,16 @@ If you would like to develop locally, you can pull the existing Actor from Apify
     npm -g install apify-cli
     ```
 
-2. Pull the Actor by its unique `<ACTID>`, which is:
-    - name of the Actor to pull (e.g. "apify/hello-world")
+2. Pull the Actor by its unique `<ActorId>`, which is one of the following:
+    - unique name of the Actor to pull (e.g. "apify/hello-world")
     - or ID of the Actor to pull (e.g. "E2jjCZBezvAZnX8Rb")
+
+    You can find both by clicking on the Actor title at the top of the page, which will open a modal containing both Actor unique name and Actor ID.
 
     This command will copy the Actor into the current directory on your local machine.
 
     ```
-    apify pull <ACTID>
+    apify pull <ActorId>
     ```
 
 ## Documentation reference
