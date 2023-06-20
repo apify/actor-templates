@@ -1,4 +1,6 @@
 {
+    "consoleReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/console_readme_suffix.md",
+    "localReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md",
     "templates": [
         {
             "id": "python-start",
