@@ -1,58 +1,27 @@
 # Crawlee & Cheerio template
 
-A scraper example that uses HTTP requests and Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.
+## Included features
+- [Apify SDK](https://docs.apify.com/sdk/js) - a toolkit for building actors
+- [Crawlee Cheerio Crawler](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler) - framework for the parallel crawling of web pages using plain HTTP requests and cheerio HTML parser
+- [Configurable Proxy](https://docs.apify.com/sdk/js/docs/guides/proxy-management) - use your own proxy servers, proxy servers acquired from third-party providers, or you can rely on Apify Proxy for your scraping needs.
+- [Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset) - store structured data where each object stored has the same attributes
 
-## Getting Started
 
-### Install Apify CLI
 
-#### Using Homebrew
+## How it works
 
-```Bash
-brew install apify/tap/apify-cli
-```
+1. `Actor.createProxyConfiguration();` creates a configuration for proxy servers to be used for the crawling
+2. `new CheerioCrawler();` Creates an instance of Crawlee's Cheerio Crawler
+    - `proxyConfiguration` - provides the created proxy configuration to the crawler
+    - `requestHandler` - 
+4. `crawler.run(startUrls);` starts the crawler
 
-#### Using NPM
-
-```Bash
-npm -g install apify-cli
-```
-
-### Create a new Actor using this template
-
-```Bash
-apify create my-javascript-actor -t project_cheerio_crawler_js
-```
-
-### Run the Actor locally
-
-```Bash
-cd my-javascript-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
 
 ## Documentation reference
 
 To learn more about Apify and Actors, take a look at the following resources:
 
 - [Apify SDK for JavaScript documentation](https://docs.apify.com/sdk/js)
+- [Crawlee documentation](https://crawlee.dev)
 - [Apify Platform documentation](https://docs.apify.com/platform)
 - [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
