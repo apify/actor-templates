@@ -1,0 +1,24 @@
+{
+    "name": "js-bootstrap-cheerio-crawler",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "A skeleton project to bootstrap development with CheerioCrawler.",
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.1.4",
+        "crawlee": "^3.3.2"
+    },
+    "devDependencies": {
+        "@apify/eslint-config": "^0.3.3",
+        "eslint": "^8.41.0"
+    },
+    "scripts": {
+        "start": "node src/main.js",
+        "lint": "eslint ./src --ext .js,.jsx",
+        "lint:fix": "eslint ./src --ext .js,.jsx --fix",
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    },
+    "author": "It's not you it's me"
+}

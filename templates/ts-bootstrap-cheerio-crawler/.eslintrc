@@ -1,0 +1,4 @@
+{
+    "root": true,
+    "extends": "@apify/eslint-config-ts"
+}

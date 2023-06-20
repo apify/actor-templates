@@ -1,25 +1,27 @@
-# Start with Scrape single page template
 
-Start web scraping easily by extracting data from a single web page. Simply provide the page URL and the template logic will extract any data from it.
-## Getting started
+# Scrape single-page in Javascript Actor template
+
+A template for scraping data from a single web page in JavaScript (Node.js). The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [Axios client](https://axios-http.com/docs/intro) to get the HTML of the page and the [Cheerio library](https://cheerio.js.org/) to parse the data from it. The data are then stored in a [dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset) ****where you can easily access them.
+
+The scraped data in this template are page headings but you can easily edit the code to scrape whatever you want from the page.
+
+
+## Included features
+
+- **[Apify SDK](https://docs.apify.com/sdk/js/)** - toolkit for building actors
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
+- **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
+
+## How it works
 
 Create a scraper for getting data from a single web page in JavaScript (Node.js) with [Apify SDK](https://docs.apify.com/sdk/js/) by using the [Axios client](https://axios-http.com/docs/intro) to get the HTML of the page and the [Cheerio library](https://cheerio.js.org/) to parse the data from it.
 
-## Template logic
-- Use the [Apify SDK](https://docs.apify.com/sdk/js/) to set up the crawler as an [Actor](https://docs.apify.com/academy/getting-started/actors) by wrapping the logic with `Actor.init()` and `Actor.exit()`
-- Load the provided page URL as input for the Actor with [`Actor.getInput()`](https://docs.apify.com/sdk/js/reference/class/Actor#getInput)
-- Fetch the page HTML by performing a HTTP GET request to the provided URL with [axios.get()](https://axios-http.com/docs/api_intro) 
-- Parse the downloaded HTML to enable data extraction with [cheerio.load()](https://cheerio.js.org/docs/api#load) 
-- Data extractions - extract all the headings (or any other data you need) from the parsed HTML of the page
-- Save the extracted data to the [Dataset](https://docs.apify.com/sdk/js/reference/class/Dataset) storage with [Actor.pushData()](https://docs.apify.com/sdk/js/reference/class/Actor#pushData)
+1. `Actor.getInput()` gets the input where the page URL is defined
+2. `axios.get(url)` fetches the page
+3. `cheerio.load(response.data)` loads the page data and enables parsing the headings
+4. This parses the headings from the page and here you can edit the code to parse whatever you need from the page
 
-
-
-<br/>
-<br/>
-<br/>
-<br/>
-
-## ... continue with generic instructions
-
-
+    ```js
+    $("h1, h2, h3, h4, h5, h6").each((_i, element) => {...});
+    ```
+5. `Actor.pushData(headings)` stores the headings in the dataset
