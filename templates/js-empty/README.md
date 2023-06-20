@@ -1,58 +1,22 @@
-# Empty JavaScript Actor template
+# Empty project
 
-Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.
+This template is useful when you're already familiar with the [Apify SDK](https://docs.apify.com/sdk/js) and [Crawlee](https://crawlee.dev) and want to start with a clean slate. It does not include `puppeteer` or `playwright` so install them manually and update the Dockerfile if you need them.
 
-## Getting Started
+> We decided to split Apify SDK into two libraries, [Crawlee](https://crawlee.dev) and [Apify SDK v3](https://docs.apify.com/sdk/js). Crawlee will retain all the crawling and scraping-related tools and will always strive to be the best web scraping library for its community. At the same time, Apify SDK will continue to exist, but keep only the Apify-specific features related to building actors on the Apify platform. Read the [upgrading guide](https://docs.apify.com/sdk/js/docs/upgrading/upgrading-to-v3) to learn about the changes.
 
-### Install Apify CLI
+If you're looking for examples or want to learn more visit:
 
-#### Using Homebrew
-
-```Bash
-brew install apify/tap/apify-cli
-```
-
-#### Using NPM
-
-```Bash
-npm -g install apify-cli
-```
-
-### Create a new Actor using this template
-
-```Bash
-apify create my-javascript-actor -t project_empty
-```
-
-### Run the Actor locally
-
-```Bash
-cd my-javascript-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
+- [Crawlee + Apify Platform guide](https://crawlee.dev/docs/guides/apify-platform)
+- [Crawlee Tutorial](https://crawlee.dev/docs/introduction)
+- [Crawlee Examples](https://crawlee.dev/docs/examples)
 
 ## Documentation reference
 
-To learn more about Apify and Actors, take a look at the following resources:
+- [Crawlee](https://crawlee.dev)
+- [Apify SDK](https://docs.apify.com/sdk/js)
+- [Apify Actor documentation](https://docs.apify.com/actor)
+- [Apify CLI](https://docs.apify.com/cli)
 
-- [Apify SDK for JavaScript documentation](https://docs.apify.com/sdk/js)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+## Writing a README
+
+See our tutorial on [writing READMEs for your actors](https://help.apify.com/en/articles/2912548-how-to-write-great-readme-for-your-actors) if you need more inspiration.

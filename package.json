@@ -13,8 +13,7 @@
     "test-templates": "npm run test -- --testPathPattern=templates.test.js",
     "test-python-templates": "npm run test-templates -- --testNamePattern=python",
     "test-node-templates": "npm run test-templates -- --testNamePattern=node",
-    "build": "node ./src/build.js",
-    "postinstall": "cd templates && node ./readmeTemplate.mjs"
+    "build": "node ./src/build.js"
   },
   "repository": {
     "type": "git",
