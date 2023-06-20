@@ -1,0 +1,11 @@
+{
+    "actorSpecification": 1,
+    "name": "ts-bootstrap-cheerio-crawler",
+    "title": "Bootstrap CheerioCrawler",
+    "description": "A skeleton project to bootstrap development with CheerioCrawler in TypeScript.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "ts-bootstrap-cheerio-crawler"
+    },
+    "dockerfile": "./Dockerfile"
+}
