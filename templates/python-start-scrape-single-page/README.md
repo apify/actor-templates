@@ -1,58 +1,24 @@
-# BeautifulSoup & Requests template
+# Scrape single-page in Python Actor template
 
-Example of a web scraper that uses Python Requests to scrape HTML from a URL provided on input, parses it using BeautifulSoup, gets all headings of the page and saves results to the storage.
+A template for scraping data from a single web page in Python. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [Requests](https://requests.readthedocs.io/) to get the HTML of the page and the [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to parse the data from it. The data are then stored in a [dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset) where you can easily access them.
 
-## Getting Started
+The scraped data in this template are page headings but you can easily edit the code to scrape whatever you want from the page.
 
-### Install Apify CLI
+## Included features
 
-#### Using Homebrew
+- **[Apify SDK](https://docs.apify.com/sdk/js/)** - a toolkit for building actors
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your actor's input
+- **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
 
-```Bash
-brew install apify/tap/apify-cli
-```
+## How it works
 
-#### Using NPM
+1. `Actor.get_input()` gets the input where the page URL is defined
+2. `requests.get(url)` fetches the page
+3. `BeautifulSoup(response.content, 'html.parser')` loads the page data and enables parsing the headings
+4. This parses the headings from the page and here you can edit the code to parse whatever you need from the page
 
-```Bash
-npm -g install apify-cli
-```
+    ```python
+    for heading in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6"]):
+    ```
 
-### Create a new Actor using this template
-
-```Bash
-apify create single-scrape-actor -t python-start-scrape-single-page
-```
-
-### Run the Actor locally
-
-```Bash
-cd single-scrape-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
-
-## Documentation reference
-
-To learn more about Apify and Actors, take a look at the following resources:
-
-- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+5. `Actor.push_data(headings)` stores the headings in the dataset
