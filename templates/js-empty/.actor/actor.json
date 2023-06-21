@@ -1,12 +1,11 @@
 {
     "actorSpecification": 1,
-    "name": "project-empty",
-    "title": "Project empty",
-    "description": "Empty project in javascript.",
+    "name": "js-empty-project",
+    "title": "Empty JavaScript project",
+    "description": "Empty project in JavaScript.",
     "version": "0.0",
     "meta": {
         "templateId": "js-empty"
     },
-    "input": "./input_schema.json",
     "dockerfile": "./Dockerfile"
 }
