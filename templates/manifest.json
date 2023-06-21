@@ -99,7 +99,7 @@
         },
         {
             "id": "python-empty",
-            "name": "python-empty",
+            "name": "python_empty",
             "label": "Empty Python project",
             "category": "python",     
             "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
@@ -115,8 +115,9 @@
             ]
         },
         {
-            "id": "python-start-scrape-single-page",
-            "name": "python-start-scrape-single-page",
+
+            "id": "python-scrape-single-page",
+            "name": "python_scrape_single_page",
             "label": "Scrape single page",
             "category": "python",
             "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input with schema, scrapes headings from given URL and saves it to storage.",
