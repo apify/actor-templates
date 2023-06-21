@@ -1,4 +1,4 @@
-# PlaywrightCrawler project
+# PlaywrightCrawler Actor template
 
 This template is a production ready boilerplate for developing with `PlaywrightCrawler`. Use this to bootstrap your projects using the most up-to-date code.
 

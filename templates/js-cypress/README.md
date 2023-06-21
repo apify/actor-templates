@@ -1,4 +1,4 @@
-# Cypress Test
+# Cypress test Actor template
 
 Run your Cypress tests on the Apify Platform effectively and easily. Just set up your test environment using a user-friendly UI and let the platform do the rest.
 

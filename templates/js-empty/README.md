@@ -1,4 +1,4 @@
-# Empty project
+# Empty Actor template
 
 This template is useful when you're already familiar with the [Apify SDK](https://docs.apify.com/sdk/js) and [Crawlee](https://crawlee.dev) and want to start with a clean slate. It does not include `puppeteer` or `playwright` so install them manually and update the Dockerfile if you need them.
 
