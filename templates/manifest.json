@@ -144,9 +144,9 @@
             ]
         },
         {
-            "id": "ts-scrape-single-page",
-            "name": "ts_scrape_single_page",
-            "label": "Scrape single page in TypeScript",
+            "id": "ts-start",
+            "name": "getting_started_typescript",
+            "label": "Start with TypeScript",
             "category": "typescript",
             "technologies": [
                 "nodejs",
