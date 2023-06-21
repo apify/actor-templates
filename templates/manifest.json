@@ -144,22 +144,24 @@
             ]
         },
         {
-            "id": "ts-start",
-            "name": "getting_started_typescript",
-            "label": "Start with TypeScript",
+            "id": "ts-scrape-single-page",
+            "name": "ts_scrape_single_page",
+            "label": "Scrape single page in TypeScript",
             "category": "typescript",
             "technologies": [
-                "nodejs"
+                "nodejs",
+                "cheerio",
+                "axios"
             ],
-            "description": "A simple TypeScript example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
+            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-scrape-single-page.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
                 "timeoutSecs": 360
             },
             "showcaseFiles": [
-                "src/main.ts"
+                "main.ts"
             ]
         },
         {
@@ -347,6 +349,25 @@
             ]
         },
         {
+            "id": "ts-empty",
+            "name": "ts_empty",
+            "label": "Empty TypeScript Actor",
+            "category": "typescript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Empty starter Actor in TypeScript. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "main.ts"
+            ]
+        },
+        {
             "id": "js-empty",
             "name": "project_empty",
             "label": "Empty JavaScript Actor",
@@ -389,26 +410,22 @@
             ]
         },
         {
-            "id": "ts-bootstrap-cheerio-crawler",
-            "name": "ts-bootstrap-cheerio-crawler",
-            "label": "Bootstrap CheerioCrawler",
-            "category": "typescript",
+            "id": "js-empty",
+            "name": "project_empty",
+            "label": "Empty JavaScript Actor",
+            "category": "javascript",
             "technologies": [
-                "nodejs",
-                "crawlee",
-                "cheerio"
+                "nodejs"
             ],
-            "description": "Skeleton project that helps you quickly bootstrap `CheerioCrawler` in TypeScript. It's best for developers who already know Apify SDK and Crawlee.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
+            "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
             },
-            "skipOptionalDeps": true,
             "showcaseFiles": [
-                "src/main.ts",
-                "src/routes.ts"
+                "main.js"
             ]
         }
     ]
