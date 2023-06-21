@@ -1,10 +1,14 @@
 {
-    "name": "getting-started-typescript",
+    "name": "ts-project-typescript",
     "version": "0.0.1",
     "type": "module",
     "description": "This is an example of an Apify actor.",
+    "engines": {
+        "node": ">=18.0.0"
+    },
     "dependencies": {
-        "apify": "^3.0.0"
+        "apify": "^3.1.4",
+        "crawlee": "^3.3.2"
     },
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",
