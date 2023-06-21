@@ -126,10 +126,12 @@
             "id": "js-start",
             "name": "getting_started_node",
             "label": "Start with JavaScript",
-            "description": "A simple JavaScript example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
+            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
             "technologies": [
-                "nodejs"
+                "nodejs",
+                "cheerio",
+                "axios"
             ],
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
             "defaultRunOptions": {

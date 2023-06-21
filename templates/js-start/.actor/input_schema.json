@@ -1,20 +1,15 @@
 {
-  "title": "Add two integers",
+  "title": "Scrape data from a web page",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "firstNumber": {
-      "title": "First integer",
-      "type": "integer",
-      "description": "The number you want to add to the second number.",
-      "editor": "number"
-    },
-    "secondNumber": {
-      "title": "Second integer",
-      "type": "integer",
-      "description": "The number you want to add to the first number.",
-      "editor": "number"
+    "url": {
+      "title": "URL of the page",
+      "type": "string",
+      "description": "The URL you want to get the data from.",
+      "editor": "textfield",
+      "prefill": "https://www.apify.com/"
     }
   },
-  "required": ["firstNumber", "secondNumber"]
+  "required": ["url"]
 }
