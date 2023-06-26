@@ -1,4 +1,4 @@
-# Playwright Test
+# Playwright test Actor template
 
 Run your Playwright tests on the Apify Platform effectively and easily. Just set up your test environment using a user-friendly UI and let the platform do the rest.
 
@@ -26,7 +26,7 @@ After running the tests, the Apify Platform stores the results in comprehensive 
 
 ### No more problems with incompatible browser versions
 
-Playwright Test toolkit automatically downloads the latest versions of Chromium, Firefox, and WebKit browsers and installs them in the Apify Platform. 
+Playwright Test toolkit automatically downloads the latest versions of Chromium, Firefox, and WebKit browsers and installs them in the Apify Platform.
 
 This way, you can test your websites using all the popular browsers without worrying about compatibility issues.
 
@@ -44,6 +44,6 @@ You can also customize the test run by specifying other options in the input, e.
 
 ### Test Generator
 
-You can also use the Playwright Codegen to compose your test suites even faster. Just run `npm run codegen` in your project folder and record your workflow. 
+You can also use the Playwright Codegen to compose your test suites even faster. Just run `npm run codegen` in your project folder and record your workflow.
 
 The code generator will automatically create a test suite file for you and save it in the `tests` folder.

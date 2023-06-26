@@ -1,4 +1,4 @@
-# Empty project Actor template
+# Empty JavaScript Actor template
 Start a new web scraping project quickly and easily in JavaScript (Node.js) with our empty project template. It provides a basic structure for the Actor with [Apify SDK](https://docs.apify.com/sdk/js/) and allows you to easily add your own functionality. 
 
 ## Included features
