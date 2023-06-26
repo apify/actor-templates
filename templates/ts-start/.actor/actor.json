@@ -1,11 +1,11 @@
 {
     "actorSpecification": 1,
-    "name": "ts-scrape-single-page",
+    "name": "ts-start",
     "title": "Scrape single page in TypeScript",
     "description": "Scrape data from single page with provided URL.",
     "version": "0.0",
     "meta": {
-        "templateId": "ts-scrape-single-page"
+        "templateId": "ts-start"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile"

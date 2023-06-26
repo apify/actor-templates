@@ -189,7 +189,7 @@
                 "axios"
             ],
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-scrape-single-page.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
