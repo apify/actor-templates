@@ -1,20 +1,13 @@
 {
-  "title": "Add two integers",
-  "type": "object",
-  "schemaVersion": 1,
-  "properties": {
-    "first_number": {
-      "title": "First integer",
-      "type": "integer",
-      "description": "The number you want to add to the second number.",
-      "editor": "number"
+    "title": "Getting started with Python and BeautifulSoup",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "url": {
+            "title": "URL",
+            "type": "string",
+            "prefill": "https://apify.com"
+        }
     },
-    "second_number": {
-      "title": "Second integer",
-      "type": "integer",
-      "description": "The number you want to add to the first number.",
-      "editor": "number"
-    }
-  },
-  "required": ["first_number", "second_number"]
+    "required": ["url"]
 }

@@ -5,6 +5,7 @@ from apify.log import ActorLogFormatter
 
 from .main import main
 
+# Set up logging of messages from the Apify SDK
 handler = logging.StreamHandler()
 handler.setFormatter(ActorLogFormatter())
 
