@@ -1,8 +1,8 @@
 {
     "actorSpecification": 1,
     "name": "python-start",
-    "title": "Getting started with Python and BeautifulSoup",
-    "description": "Scrapes all headings of given URL using BeautifulSoup.",
+    "title": "Scrape single page in Python",
+    "description": "Scrape data from single page with provided URL.",
     "version": "0.0",
     "meta": {
          "templateId": "python-start"
