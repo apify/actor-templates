@@ -7,7 +7,7 @@
             "name": "python-start",
             "label": "Start with Python",
             "category": "python",
-            "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input with schema, scrapes headings from given URL and saves it to storage.",
+            "description": "Scrape single page with provided URL with Requests and extract data from page's HTML with Beautiful Soup.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
