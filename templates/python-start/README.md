@@ -9,7 +9,7 @@ The scraped data in this template are page headings but you can easily edit the 
 - **[Apify SDK](https://docs.apify.com/sdk/js/)** - toolkit for building Actors
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
-- **[Requests](https://requests.readthedocs.io/)** - HTTP library for Python
+- **[Requests](https://requests.readthedocs.io/)** - library for making HTTP requests in Python
 - **[Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)** - library for pulling data out of HTML and XML files
 
 
