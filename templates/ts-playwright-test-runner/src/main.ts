@@ -67,8 +67,8 @@ function updateConfig(args: {
     ignoreHTTPSErrors?: boolean,
     video?: string,
 }) {
-    const { 
-        screenWidth = 1280, 
+    const {
+        screenWidth = 1280,
         screenHeight =  720,
         headful = false,
         timeout = 60,
@@ -103,10 +103,10 @@ function updateConfig(args: {
     }));
 
     await Actor.pushData(transformToTabular(jsonReport, attachmentLinks));
-    
+
     const reportURL = await kvs.getPublicUrl('report');
     log.info('The test run has finished! The report is available in the Output tab or at the link below:');
     console.log(reportURL);
-    
+
     await Actor.exit();
 })();

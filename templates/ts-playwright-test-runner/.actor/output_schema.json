@@ -15,10 +15,10 @@
                     "video"
                 ]
             },
-            "display": {                      
-                "component": "table",       
-                "properties": {           
-                    "suiteName": {      
+            "display": {
+                "component": "table",
+                "properties": {
+                    "suiteName": {
                         "label": "Test Suite"
                     },
                     "testName": {
