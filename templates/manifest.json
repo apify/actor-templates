@@ -358,7 +358,7 @@
             },
             "showcaseFiles": [
                 "src/main.ts",
-                "sr,c/routes.ts"
+                "src/routes.ts"
             ],
             "useCases": [
                 "WEB_SCRAPING"
