@@ -23,6 +23,10 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -47,6 +51,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -71,6 +78,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -95,6 +105,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -120,6 +133,9 @@
                 "src/main.py",
                 "src/pipelines.py",
                 "src/spiders/title_spider.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -139,6 +155,10 @@
             },
             "showcaseFiles": [
                 "src/main.js"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -158,6 +178,10 @@
             },
             "showcaseFiles": [
                 "src/main.ts"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -181,6 +205,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -204,6 +231,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -227,6 +257,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -250,6 +283,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -273,6 +309,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -295,7 +334,10 @@
             },
             "showcaseFiles": [
                 "src/main.ts",
-                "src/routes.ts"
+                "sr,c/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -319,6 +361,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -342,6 +387,9 @@
                 "src/main.ts",
                 "src/runCodegen.ts",
                 "src/transform.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -361,6 +409,9 @@
             },
             "showcaseFiles": [
                 "main.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -384,6 +435,9 @@
                 "cypress/e2e/first-spec.cy.js",
                 "cypress/e2e/second-spec.cy.js",
                 "cypress/support/e2e.js"
+            ],
+            "useCases": [
+                "AUTOMATION"
             ]
         },
         {
@@ -407,6 +461,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         }
     ]
