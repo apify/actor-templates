@@ -112,7 +112,7 @@
         },
         {
             "id": "python-empty",
-            "name": "python_empty",
+            "name": "python-empty",
             "label": "Empty Python project",
             "category": "python",
             "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
@@ -160,7 +160,7 @@
         },
         {
             "id": "js-start",
-            "name": "getting_started_node",
+            "name": "js-start",
             "label": "Start with JavaScript",
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
@@ -185,7 +185,7 @@
         },
         {
             "id": "ts-start",
-            "name": "getting_started_typescript",
+            "name": "ts-start",
             "label": "Start with TypeScript",
             "category": "typescript",
             "technologies": [
@@ -210,7 +210,7 @@
         },
         {
             "id": "js-crawlee-cheerio",
-            "name": "project_cheerio_crawler_js",
+            "name": "js-crawlee-cheerio",
             "label": "Crawlee & Cheerio",
             "category": "javascript",
             "technologies": [
@@ -236,7 +236,7 @@
         },
         {
             "id": "js-crawlee-puppeteer-chrome",
-            "name": "project_puppeteer_crawler_js",
+            "name": "js-crawlee-puppeteer-chrome",
             "label": "Crawlee & Puppeteer & Chrome",
             "category": "javascript",
             "technologies": [
@@ -262,7 +262,7 @@
         },
         {
             "id": "js-crawlee-playwright-chrome",
-            "name": "project_playwright_crawler_js",
+            "name": "js-crawlee-playwright-chrome",
             "label": "Crawlee & Playwright & Chrome",
             "category": "javascript",
             "technologies": [
@@ -314,7 +314,7 @@
         },
         {
             "id": "ts-crawlee-cheerio",
-            "name": "project_cheerio_crawler_ts",
+            "name": "ts-crawlee-cheerio",
             "label": "Crawlee & Cheerio",
             "category": "typescript",
             "technologies": [
@@ -340,7 +340,7 @@
         },
         {
             "id": "ts-crawlee-puppeteer-chrome",
-            "name": "project_puppeteer_crawler_ts",
+            "name": "ts-crawlee-puppeteer-chrome",
             "label": "Crawlee & Puppeteer & Chrome",
             "category": "typescript",
             "technologies": [
@@ -366,7 +366,7 @@
         },
         {
             "id": "ts-crawlee-playwright-chrome",
-            "name": "project_playwright_crawler_ts",
+            "name": "ts-crawlee-playwright-chrome",
             "label": "Crawlee & Playwright & Chrome",
             "category": "typescript",
             "technologies": [
@@ -392,7 +392,7 @@
         },
         {
             "id": "ts-playwright-test-runner",
-            "name": "project_playwright_test_runner",
+            "name": "ts-playwright-test-runner",
             "label": "Playwright & Chrome Test Runner",
             "category": "typescript",
             "technologies": [
@@ -418,7 +418,7 @@
         },
         {
             "id": "ts-empty",
-            "name": "ts_empty",
+            "name": "ts-empty",
             "label": "Empty TypeScript Actor",
             "category": "typescript",
             "technologies": [
@@ -440,7 +440,7 @@
         },
         {
             "id": "js-cypress",
-            "name": "project_cypress",
+            "name": "js-cypress",
             "label": "Cypress",
             "category": "javascript",
             "technologies": [
@@ -466,7 +466,7 @@
         },
         {
             "id": "js-empty",
-            "name": "project_empty",
+            "name": "js-empty",
             "label": "Empty JavaScript Actor",
             "category": "javascript",
             "technologies": [
