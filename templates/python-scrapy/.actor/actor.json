@@ -5,7 +5,7 @@
     "description": "Scrapes titles of websites using Scrapy.",
     "version": "0.0",
     "meta": {
-         "templateId": "python-scrapy"
+        "templateId": "python-scrapy"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",
