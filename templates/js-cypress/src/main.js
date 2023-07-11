@@ -1,16 +1,21 @@
 import { Actor } from 'apify';
 import fs from 'fs';
+
+// Component and E2E testing library (read more at https://docs.cypress.io/guides/overview/why-cypress)
 import cypress from 'cypress';
+// File system traversing library (read more at https://www.jsdocs.io/package/globby)
 import { globby } from 'globby';
+// Apify logging utility library
 import log from '@apify/log';
+// Library for console logging tables
 import 'console.table';
 
-// run tests from specific test file with given configuration
+// run tests from specific test file with given configuration from INPUT.json
 const runOneSpec = (spec) => cypress.run({ config: input, spec });
 
 await Actor.init();
 
-const input = await Actor.getInput();
+const input = await Actor.getInput() || { baseUrl: "https://apify.com", video: true };
 log.info(`Running tests with following input: ${JSON.stringify(input)}`);
 
 const tests = await globby('./cypress/e2e/*-spec.cy.js');
