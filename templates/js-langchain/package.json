@@ -6,7 +6,6 @@
     "engines": {
         "node": ">=18.0.0"
     },
-    "#_TODO": "Replace the langchain from Git below with an official package once our PR is merged.",
     "dependencies": {
         "apify": "^3.0.0",
         "hnswlib-node": "^1.4.2",
