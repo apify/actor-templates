@@ -20,13 +20,13 @@ const {
     maxCrawlPages = 3,
     forceRecrawl = false, // Enforce a re-crawl of website content and re-creation of the vector index.
     query = 'What is Wikipedia?',
-    openAiApiKey = OPENAI_API_KEY,
+    openAIApiKey = OPENAI_API_KEY,
 } = await Actor.getInput() || {};
 
 // Local directory where the vector index will be stored.
 const VECTOR_INDEX_PATH = './vector_index';
 
-if (!openAiApiKey || !openAiApiKey.length) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
+if (!openAIApiKey || !openAIApiKey.length) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
 if (!APIFY_TOKEN || !APIFY_TOKEN.length) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
 
 // Now we want to creare a vector index from the crawled documents.
