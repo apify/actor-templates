@@ -23,6 +23,13 @@
             "default": 9999999,
             "prefill": 3
         },
+        "openAiApiKey": {
+            "title": "OpenAI API key",
+            "type": "string",
+            "description": "Enter your [OpenAI](https://openai.com/) account and an API key. This is needed for vectorizing the data and also to be able to prompt the OpenAI model.",
+            "editor": "textfield",
+            "isSecret": true
+        },
         "query": {
             "title": "Query",
             "type": "string",

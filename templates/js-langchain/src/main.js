@@ -10,22 +10,23 @@ import { retrieveVectorIndex, cacheVectorIndex } from './vector_index_cache.js';
 
 await Actor.init();
 
-const {
-    startUrls = [{ url: 'https://wikipedia.com' }],
-    maxCrawlPages = 3,
-    forceRecrawl = false, // Enforce a re-crawl of website content and re-creation of the vector index.
-    query = 'What is Wikipedia?',
-} = await Actor.getInput() || {};
-
 // There are 2 steps you need to proceed first in order to be able to run this template:
 // 1. Authenticate to Apify platform by calling `apify login` in your terminal. Without this, you won't be able to run the required Website Content Crawler Actor.
 // 2. Configure the OPENAI_API_KEY environment variable (https://docs.apify.com/cli/docs/vars#set-up-environment-variables-in-apify-console) with your OpenAI API key you obtain at https://platform.openai.com/account/api-keys.
 const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 
+const {
+    startUrls = [{ url: 'https://wikipedia.com' }],
+    maxCrawlPages = 3,
+    forceRecrawl = false, // Enforce a re-crawl of website content and re-creation of the vector index.
+    query = 'What is Wikipedia?',
+    openAiApiKey = OPENAI_API_KEY,
+} = await Actor.getInput() || {};
+
 // Local directory where the vector index will be stored.
 const VECTOR_INDEX_PATH = './vector_index';
 
-if (!OPENAI_API_KEY || !OPENAI_API_KEY.length) throw new Error('Please configure the OPENAI_API_KEY environment variable!');
+if (!openAiApiKey || !openAiApiKey.length) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
 if (!APIFY_TOKEN || !APIFY_TOKEN.length) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
 
 // Now we want to creare a vector index from the crawled documents.
@@ -58,7 +59,7 @@ if (reinitializeIndex) {
     console.log('Feeding vector index with crawling results...');
     const vectorStore = await HNSWLib.fromDocuments(
         docs,
-        new OpenAIEmbeddings({ openAIApiKey: OPENAI_API_KEY })
+        new OpenAIEmbeddings({ openAIApiKey })
     );
 
     // Save the vector index to the key-value store so that we can skip this phase in the next run.
@@ -70,12 +71,12 @@ if (reinitializeIndex) {
 console.log('Initializing the vector store...');
 const vectorStore = await HNSWLib.load(
     VECTOR_INDEX_PATH,
-    new OpenAIEmbeddings({ openAIApiKey: OPENAI_API_KEY })
+    new OpenAIEmbeddings({ openAIApiKey })
 );
 
 // Next, create the retrieval chain and enter a query:
 console.log('Asking model a question...');
-const model = new OpenAI({ openAIApiKey: OPENAI_API_KEY });
+const model = new OpenAI({ openAIApiKey });
 const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever(), {
     returnSourceDocuments: true,
 });

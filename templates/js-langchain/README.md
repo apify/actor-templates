@@ -15,6 +15,8 @@ The code contains following steps:
 To be able to run this template both locally and at the Apify Platform, you need to:
 - Have an [Apify account](https://console.apify.com/) and sign into it using `apify login` command. This is needed for running the [Website Content Crawler](https://apify.com/mtrunkat/website-content-crawler) Actor to gather the data.
 - Have an [OpenAI](https://openai.com/) account and an API key. This is needed for vectorizing the data and also to be able to prompt the OpenAI model.
+    - When running locally store this as OPENAI_API_KEY environment variable (https://docs.apify.com/cli/docs/vars#set-up-environment-variables-in-apify-console).
+    - When running on Apify platform, you can simply paste this into the input field in the UI.
 
 ## Production use
 
