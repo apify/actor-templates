@@ -9,7 +9,6 @@
     },
     "dockerfile": "./Dockerfile",
     "environmentVariables": {
-        "APIFY_API_TOKEN": "@APIFY_API_TOKEN",
         "OPENAI_API_KEY": "@OPENAI_API_KEY"
     }
 }
