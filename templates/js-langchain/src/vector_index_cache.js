@@ -1,11 +1,10 @@
 import { Actor } from 'apify';
 import { createHash } from 'crypto';
-import { pipeline } from 'node:stream/promises';
+import { readFile } from 'node:fs/promises';
+import tempWrite from 'temp-write';
 import tar from 'tar';
 
 const VECTOR_INDEX_CACHE_STORE_NAME = 'vector-index-cache';
-
-const client = Actor.newClient();
 
 /**
  * Generates vector index cache key as a hash of provided configuration object.
@@ -16,18 +15,7 @@ const client = Actor.newClient();
 function getIndexCacheKey(config) {
     const hash = createHash('md5').update(JSON.stringify(config)).digest('hex');
 
-    return `${hash}.tar.gz`;
-}
-
-/**
- * Returns an ID of a key-value store with a name VECTOR_INDEX_CACHE_STORE_NAME.
- *
- * @returns {String}
- */
-async function getVectorIndexCacheStore() {
-    const { id: vectorIndexCacheStoreId } = await client.keyValueStores().getOrCreate(VECTOR_INDEX_CACHE_STORE_NAME);
-
-    return client.keyValueStore(vectorIndexCacheStoreId);
+    return `${hash}.tar`;
 }
 
 /**
@@ -37,12 +25,11 @@ async function getVectorIndexCacheStore() {
  * @param {String} indexPath
  */
 export async function cacheVectorIndex(config, indexPath) {
-    const vectorIndexCacheStore = await getVectorIndexCacheStore();
-    const gzipedVectorIndexStream = tar.c({ gzip: true }, [indexPath]);
-    await vectorIndexCacheStore.setRecord({
-        key: getIndexCacheKey(config),
-        value: gzipedVectorIndexStream,
-    });
+    const vectorIndexCacheStore = await Actor.openKeyValueStore(VECTOR_INDEX_CACHE_STORE_NAME);
+    const tempFilePath = await tempWrite(tar.c({}, [indexPath]));
+    const gzipedVectorIndex = await readFile(tempFilePath);
+
+    await vectorIndexCacheStore.setValue(getIndexCacheKey(config), gzipedVectorIndex, { contentType: 'application/tar' });
 }
 
 /**
@@ -52,20 +39,13 @@ export async function cacheVectorIndex(config, indexPath) {
  * @returns {Boolean} noting if the vector index was found in the cache
  */
 export async function retrieveVectorIndex(config) {
-    const vectorIndexCacheStore = await getVectorIndexCacheStore();
-    let vectorIndexRecord;
+    const vectorIndexCacheStore = await Actor.openKeyValueStore(VECTOR_INDEX_CACHE_STORE_NAME);
 
-    try {
-        vectorIndexRecord = await vectorIndexCacheStore.getRecord(getIndexCacheKey(config), { stream: true });
-    } catch (err) {
-        if (err.statusCode === 404) return false;
+    const vectorIndexRecord = await vectorIndexCacheStore.getValue(getIndexCacheKey(config));
+    if (!vectorIndexRecord) return false;
 
-        throw err;
-    }
+    const tempFilePath = await tempWrite(vectorIndexRecord);
+    await tar.x({ file: tempFilePath, strip: 1, C: '.' });
 
-    await pipeline([
-        vectorIndexRecord.value,
-        tar.x({ strip: 1, C: '.' }),
-    ]);
     return true;
 }

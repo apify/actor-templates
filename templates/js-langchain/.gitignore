@@ -7,6 +7,3 @@ storage
 
 # This location is used to locally cache
 vector_index
-
-# TODO: Remove this once our langchain PR is merged
-# langchainjs

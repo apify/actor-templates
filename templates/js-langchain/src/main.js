@@ -1,10 +1,10 @@
 import { Actor } from 'apify';
-import { ApifyDatasetLoader } from "langchain/document_loaders/web/apify_dataset";
-import { Document } from "langchain/document";
-import { HNSWLib } from "langchain/vectorstores/hnswlib";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { RetrievalQAChain } from "langchain/chains";
-import { OpenAI } from "langchain/llms/openai";
+import { ApifyDatasetLoader } from 'langchain/document_loaders/web/apify_dataset';
+import { Document } from 'langchain/document';
+import { HNSWLib } from 'langchain/vectorstores/hnswlib';
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
+import { RetrievalQAChain } from 'langchain/chains';
+import { OpenAI } from 'langchain/llms/openai';
 
 import { retrieveVectorIndex, cacheVectorIndex } from './vector_index_cache.js';
 
@@ -17,16 +17,16 @@ const {
     query = 'What is Wikipedia?',
 } = await Actor.getInput() || {};
 
-// There are 2 environment variables you need to configure (https://docs.apify.com/cli/docs/vars#set-up-environment-variables-in-apify-console):
-// 1. Apify API token you obtain at https://console.apify.com/account/integrations. This is not nessesary when running this Actor at Apify platform.
-// 2. OpenAI API key you obtain at https://platform.openai.com/account/api-keys.
-const { OPENAI_API_KEY, APIFY_API_TOKEN } = process.env;
+// There are 2 steps you need to proceed first in order to be able to run this template:
+// 1. Authenticate to Apify platform by calling `apify login` in your terminal. Without this, you won't be able to run the required Website Content Crawler Actor.
+// 2. Configure the OPENAI_API_KEY environment variable (https://docs.apify.com/cli/docs/vars#set-up-environment-variables-in-apify-console) with your OpenAI API key you obtain at https://platform.openai.com/account/api-keys.
+const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 
 // Local directory where the vector index will be stored.
 const VECTOR_INDEX_PATH = './vector_index';
 
 if (!OPENAI_API_KEY || !OPENAI_API_KEY.length) throw new Error('Please configure the OPENAI_API_KEY environment variable!');
-if (!APIFY_API_TOKEN || !APIFY_API_TOKEN.length) throw new Error('Please configure the APIFY_API_TOKEN environment variable!');
+if (!APIFY_TOKEN || !APIFY_TOKEN.length) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
 
 // Now we want to creare a vector index from the crawled documents.
 // Following object represents an input for the https://apify.com/apify/website-content-crawler actor that scrapes the website.
@@ -48,7 +48,7 @@ if (reinitializeIndex) {
                 pageContent: (item.text || ''),
                 metadata: { source: item.url },
             }),
-            clientOptions: { token: APIFY_API_TOKEN },
+            clientOptions: { token: APIFY_TOKEN },
         }
     );
 
@@ -82,5 +82,7 @@ const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever(), {
 const res = await chain.call({ query });
 
 console.log(`\n${res.text}\n`);
+
+await Actor.setValue('OUTPUT', res);
 
 await Actor.exit();
