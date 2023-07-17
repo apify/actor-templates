@@ -1,11 +1,17 @@
 {
+    "consoleReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/console_readme_suffix.md",
+    "localReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md",
     "templates": [
         {
             "id": "python-start",
             "name": "python-start",
             "label": "Start with Python",
             "category": "python",
-            "description": "A simple Python example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
+            "technologies": [
+                "requests",
+                "beautifulsoup"
+            ],
+            "description": "Scrape single page with provided URL with Requests and extract data from page's HTML with Beautiful Soup.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -21,6 +27,10 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -45,6 +55,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -69,6 +82,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -93,6 +109,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -118,16 +137,41 @@
                 "src/main.py",
                 "src/pipelines.py",
                 "src/spiders/title_spider.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
+            ]
+        },
+        {
+            "id": "python-empty",
+            "name": "python_empty",
+            "label": "Empty Python project",
+            "category": "python",
+            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
             "id": "js-start",
             "name": "getting_started_node",
             "label": "Start with JavaScript",
-            "description": "A simple JavaScript example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
+            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
             "technologies": [
-                "nodejs"
+                "nodejs",
+                "cheerio",
+                "axios"
             ],
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
             "defaultRunOptions": {
@@ -137,6 +181,10 @@
             },
             "showcaseFiles": [
                 "src/main.js"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -145,9 +193,11 @@
             "label": "Start with TypeScript",
             "category": "typescript",
             "technologies": [
-                "nodejs"
+                "nodejs",
+                "cheerio",
+                "axios"
             ],
-            "description": "A simple TypeScript example of core Actor and Apify SDK features. It reads and validates user input with schema, computes a result and saves it to storage.",
+            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -156,6 +206,10 @@
             },
             "showcaseFiles": [
                 "src/main.ts"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -179,6 +233,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -202,6 +259,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -225,6 +285,35 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
+            ]
+        },
+        {
+            "id": "js-bootstrap-cheerio-crawler",
+            "name": "js-bootstrap-cheerio-crawler",
+            "label": "Bootstrap CheerioCrawler",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "cheerio"
+            ],
+            "description": "Skeleton project that helps you quickly bootstrap `CheerioCrawler` in JavaScript. It's best for developers who already know Apify SDK and Crawlee.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            },
+            "skipOptionalDeps": true,
+            "showcaseFiles": [
+                "src/main.js",
+                "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -248,6 +337,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -271,6 +363,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -294,6 +389,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -317,25 +415,31 @@
                 "src/main.ts",
                 "src/runCodegen.ts",
                 "src/transform.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
-            "id": "js-empty",
-            "name": "project_empty",
-            "label": "Empty JavaScript Actor",
-            "category": "javascript",
+            "id": "ts-empty",
+            "name": "ts_empty",
+            "label": "Empty TypeScript project",
+            "category": "typescript",
             "technologies": [
                 "nodejs"
             ],
-            "description": "Empty starter Actor. A blank slate with minimal starting code. Useful for quick scripting without having to delete bunch of stuff from other templates.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
+            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "main.js"
+                "src/main.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         },
         {
@@ -355,10 +459,35 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "main.js",
+                "src/main.js",
                 "cypress/e2e/first-spec.cy.js",
                 "cypress/e2e/second-spec.cy.js",
                 "cypress/support/e2e.js"
+            ],
+            "useCases": [
+                "AUTOMATION"
+            ]
+        },
+        {
+            "id": "js-empty",
+            "name": "project_empty",
+            "label": "Empty JavaScript Project",
+            "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 2048,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
             ]
         }
     ]

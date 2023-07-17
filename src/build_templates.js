@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
-const rimraf = require('rimraf');
 const globby = require('globby');
 const { TEMPLATE_IDS, DIST_DIR_NAME, TEMPLATES_DIR_NAME } = require('./consts');
 
@@ -10,7 +9,7 @@ const { TEMPLATE_IDS, DIST_DIR_NAME, TEMPLATES_DIR_NAME } = require('./consts');
  */
 exports.buildTemplates = async function () {
     const distDir = path.resolve(__dirname, '..', DIST_DIR_NAME, TEMPLATES_DIR_NAME);
-    if (fs.existsSync(distDir)) rimraf.sync(distDir);
+    fs.rmSync(distDir, { force: true, recursive: true });
 
     fs.mkdirSync(distDir, { recursive: true });
     const templatesDir = path.resolve(__dirname, '..', TEMPLATES_DIR_NAME);

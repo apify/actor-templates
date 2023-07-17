@@ -19,3 +19,4 @@ This code is a Python script that uses the Apify platform to scrape web pages an
 - The script extracts the desired data from the page (in this case, titles of each page) and pushes it to the default dataset using the push_data method of the Actor instance.
 - The script catches any exceptions that occur during the scraping process and logs an error message using the Actor.log.exception method.
 - This code demonstrates how to use Python and the Apify SDK to scrape web pages and extract specific data from them.
+

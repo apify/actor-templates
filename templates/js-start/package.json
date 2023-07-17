@@ -1,14 +1,18 @@
 {
-    "name": "getting-started-node",
+    "name": "js-scrape-single-page",
     "version": "0.0.1",
     "type": "module",
     "description": "This is an example of an Apify actor.",
-    "dependencies": {
-        "apify": "^3.0.0"
+    "engines": {
+        "node": ">=18.0.0"
     },
-    "devDependencies": {},
+    "dependencies": {
+        "apify": "^3.0.0",
+        "axios": "^1.4.0",
+        "cheerio": "^1.0.0-rc.12"
+    },
     "scripts": {
-        "start": "node src/main.js",
+        "start": "node ./src/main.js",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
