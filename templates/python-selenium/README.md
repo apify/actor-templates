@@ -1,58 +1,21 @@
-# Selenium & Chrome template
+# Python - Selenium & Chrome Actor template
 
-Scraper example built with Selenium and headless Chrome browser to scrape a website and save the results to storage. A popular alternative to Playwright.
+A template example built with Selenium and headless Chrome browser to scrape a website and save the results to storage. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/) to get the HTML of the page. Enqueued URLs are available in [request queue](https://docs.apify.com/sdk/python/reference/class/RequestQueue). The data are then stored in a [dataset](https://docs.apify.com/platform/storage/dataset) where you can easily access them.
 
-## Getting Started
+## Included features
 
-### Install Apify CLI
+- **[Apify SDK](https://docs.apify.com/sdk/python/)** - a toolkit for building actors
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your actor's input
+- **[Request queue](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-request-queues)** - queues into which you can put the URLs you want to scrape
+- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
 
-#### Using Homebrew
+## How it works
+This code is a Python script that uses the Apify platform to scrape web pages and extract data from them. Here's a brief overview of how it works:
 
-```Bash
-brew install apify/tap/apify-cli
-```
-
-#### Using NPM
-
-```Bash
-npm -g install apify-cli
-```
-
-### Create a new Actor using this template
-
-```Bash
-apify create my-python-actor -t python-selenium
-```
-
-### Run the Actor locally
-
-```Bash
-cd my-python-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
-
-## Documentation reference
-
-To learn more about Apify and Actors, take a look at the following resources:
-
-- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+- The script reads the input data from the Actor instance, which is expected to contain a start_urls key with a list of URLs to scrape and a max_depth key with the maximum depth of nested links to follow.
+- The script enqueues the starting URLs in the default request queue and sets their depth to 1.
+- The script processes the requests in the queue one by one, fetching the URL using requests and parsing it using Selenium.
+- If the depth of the current request is less than the maximum depth, the script looks for nested links in the page and enqueues their targets in the request queue with an incremented depth.
+- The script extracts the desired data from the page (in this case, titles of each page) and pushes it to the default dataset using the push_data method of the Actor instance.
+- The script catches any exceptions that occur during the scraping process and logs an error message using the Actor.log.exception method.
+- This code demonstrates how to use Python and the Apify SDK to scrape web pages and extract specific data from them.
