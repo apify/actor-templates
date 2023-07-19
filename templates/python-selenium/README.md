@@ -1,4 +1,4 @@
-# Python - Selenium & Chrome Actor template
+# Selenium & Chrome Actor template
 
 A template example built with Selenium and headless Chrome browser to scrape a website and save the results to storage. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/) to load and process the page. Enqueued URLs are stored in the default [request queue](https://docs.apify.com/sdk/python/reference/class/RequestQueue). The data are then stored in the default [dataset](https://docs.apify.com/platform/storage/dataset) where you can easily access them.
 
@@ -10,7 +10,7 @@ A template example built with Selenium and headless Chrome browser to scrape a w
 - **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
 
 ## How it works
-This code is a Python script that uses the Apify platform to scrape web pages and extract data from them. Here's a brief overview of how it works:
+This code is a Python script that uses the Selenium to scrape web pages and extract data from them. Here's a brief overview of how it works:
 
 - The script reads the input data from the Actor instance, which is expected to contain a `start_urls` key with a list of URLs to scrape and a `max_depth` key with the maximum depth of nested links to follow.
 - The script enqueues the starting URLs in the default request queue and sets their depth to 1.
