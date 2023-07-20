@@ -1,58 +1,19 @@
-# Scrapy template
+# Scrapy Actor template
 
-This example Scrapy spider scrapes quotes filtered by input parameters. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.
+A template example built with Scrapy to scrape quotes filtered by input parameters. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.
 
-## Getting Started
+## Included features
 
-### Install Apify CLI
+- **[Apify SDK](https://docs.apify.com/sdk/python/)** - toolkit for building Apify Actors
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
+- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
 
-#### Using Homebrew
+## How it works
 
-```Bash
-brew install apify/tap/apify-cli
-```
+This code is a Python script that uses Scrape to scrape web pages and extract data from them. Here's a brief overview of how it works:
 
-#### Using NPM
-
-```Bash
-npm -g install apify-cli
-```
-
-### Create a new Actor using this template
-
-```Bash
-apify create my-python-actor -t python-scrapy
-```
-
-### Run the Actor locally
-
-```Bash
-cd my-python-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
-
-## Documentation reference
-
-To learn more about Apify and Actors, take a look at the following resources:
-
-- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+- The script reads the input data from the Actor instance, which is expected to contain a `start_urls` key with a list of URLs to scrape and a `max_depth` key with the maximum depth of nested links to follow.
+- If the depth of the current request is less than the maximum depth, the script looks for nested links in the page and enqueues their targets in the request queue with an incremented depth.
+- The script then creates a Scrapy spider that will scrape the URLs and follow links up to the specified `max_depth`. This Spider (class `TitleSpider`) is storing URLs and titles.
+- Scrapy pipeline is used to save the results to the default dataset associated with the actor run using the `push_data` method of the Actor instance.
+- The script catches any exceptions that occur during the scraping process and logs an error message using the `Actor.log.exception` method.
