@@ -1,0 +1,12 @@
+# This file tells Git which files shouldn't be added to source control
+.DS_Store
+.idea
+dist
+node_modules
+apify_storage
+storage/*
+!storage/key_value_stores
+storage/key_value_stores/*
+!storage/key_value_stores/default
+storage/key_value_stores/default/*
+!storage/key_value_stores/default/INPUT.json

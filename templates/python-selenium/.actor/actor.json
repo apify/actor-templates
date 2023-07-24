@@ -5,7 +5,7 @@
     "description": "Scrapes titles of websites using Selenium.",
     "version": "0.0",
     "meta": {
-         "templateId": "python-selenium"
+        "templateId": "python-selenium"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",

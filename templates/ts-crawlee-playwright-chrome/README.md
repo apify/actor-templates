@@ -1,58 +1,11 @@
-# Crawlee & Playwright & Chrome template
+# PlaywrightCrawler Actor template
 
-Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.
+This template is a production ready boilerplate for developing with `PlaywrightCrawler`. Use this to bootstrap your projects using the most up-to-date code.
 
-## Getting Started
+> We decided to split Apify SDK into two libraries, [Crawlee](https://crawlee.dev) and [Apify SDK v3](https://docs.apify.com/sdk/js). Crawlee will retain all the crawling and scraping-related tools and will always strive to be the best web scraping library for its community. At the same time, Apify SDK will continue to exist, but keep only the Apify-specific features related to building actors on the Apify platform. Read the [upgrading guide](https://docs.apify.com/sdk/js/docs/upgrading/upgrading-to-v3) to learn about the changes.
 
-### Install Apify CLI
+If you're looking for examples or want to learn more visit:
 
-#### Using Homebrew
-
-```Bash
-brew install apify/tap/apify-cli
-```
-
-#### Using NPM
-
-```Bash
-npm -g install apify-cli
-```
-
-### Create a new Actor using this template
-
-```Bash
-apify create my-typescript-actor -t project_playwright_crawler_ts
-```
-
-### Run the Actor locally
-
-```Bash
-cd my-typescript-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
-
-## Documentation reference
-
-To learn more about Apify and Actors, take a look at the following resources:
-
-- [Apify SDK for TypeScript documentation](https://docs.apify.com/sdk/js)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+- [Crawlee + Apify Platform guide](https://crawlee.dev/docs/guides/apify-platform)
+- [Documentation](https://crawlee.dev/api/playwright-crawler/class/PlaywrightCrawler)
+- [Examples](https://crawlee.dev/docs/examples/playwright-crawler)

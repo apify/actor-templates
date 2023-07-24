@@ -1,58 +1,49 @@
-# Playwright & Chrome Test Runner template
+# Playwright test Actor template
 
-Example of using the Playwright Test project to run automated website tests in the cloud and display their results. Usable as an API.
+Run your Playwright tests on the Apify Platform effectively and easily. Just set up your test environment using a user-friendly UI and let the platform do the rest.
 
-## Getting Started
+> Note: This is a custom version of [`Playwright Test Runner`](https://apify.com/jindrich.bar/playwright-test) actor. Unlike the original actor, this version reads test suite files from the `tests` folder and does not allow you to pass the test files via Apify input.
 
-### Install Apify CLI
+## Features
 
-#### Using Homebrew
+### Run your Playwright tests on the Apify Platform
 
-```Bash
-brew install apify/tap/apify-cli
-```
+No more pre-commit hooks or CI/CD pipelines. Integrate your tests with the Apify Platform using a user-friendly UI and forget about the hassle of setting up your test environment.
 
-#### Using NPM
+<center>
+<img src="https://raw.githubusercontent.com/apify/playwright-test-actor/main/docs/static/actorInput.gif" alt="Test configuration with comprehensive UI">
+</center>
 
-```Bash
-npm -g install apify-cli
-```
+### Collect and analyze your test results online
 
-### Create a new Actor using this template
+After running the tests, the Apify Platform stores the results in comprehensive datasets. You can view the results directly on the platform or download them to your local machine using a REST API.
 
-```Bash
-apify create my-typescript-actor -t project_playwright_test_runner
-```
+<center>
+<img src="https://raw.githubusercontent.com/apify/playwright-test-actor/main/docs/static/testReport.gif" alt="Analyzing understandable test reports">
+</center>
 
-### Run the Actor locally
 
-```Bash
-cd my-typescript-actor
-apify run
-```
 
-## Deploy on Apify
+### No more problems with incompatible browser versions
 
-### Log in to Apify
+Playwright Test toolkit automatically downloads the latest versions of Chromium, Firefox, and WebKit browsers and installs them in the Apify Platform.
 
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
+This way, you can test your websites using all the popular browsers without worrying about compatibility issues.
 
-```Bash
-apify login
-```
+<center>
+<img src="https://raw.githubusercontent.com/apify/playwright-test-actor/main/docs/static/devices.gif" alt="Testing with multiple browser versions at once">
+</center>
 
-### Deploy your Actor
 
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
 
-```Bash
-apify push
-```
+## How to use
 
-## Documentation reference
+Just provide your test suite files in the `tests` folder and run the actor. The actor will automatically run all the tests in the `tests` folder and store the results in the KVS/dataset fields.
 
-To learn more about Apify and Actors, take a look at the following resources:
+You can also customize the test run by specifying other options in the input, e.g. the screen size, headful/headless execution or the maximum run time.
 
-- [Apify SDK for TypeScript documentation](https://docs.apify.com/sdk/js)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+### Test Generator
+
+You can also use the Playwright Codegen to compose your test suites even faster. Just run `npm run codegen` in your project folder and record your workflow.
+
+The code generator will automatically create a test suite file for you and save it in the `tests` folder.

@@ -1,58 +1,18 @@
-# Cypress template
+# Cypress test Actor template
 
-Example of running Cypress tests and saving their results on the Apify platform. JSON results are saved to Dataset, videos to Key-value store.
+Run your [Cypress tests](https://www.cypress.io) on the Apify Platform effectively and easily. The template provides the necessary setup for running the Cypress tests. You can change the the Cypress configuration in the input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses [globby library](https://www.jsdocs.io/package/globby) to fetch the Cypress test files and run them within the Actor. The video recordings are stored in [Key-value store](https://docs.apify.com/platform/storage/key-value-store) and the comprehensive test results are stored in the [Dataset](https://docs.apify.com/platform/storage/dataset).
 
-## Getting Started
+## Included features
 
-### Install Apify CLI
+- **[Apify SDK](https://docs.apify.com/api/client/js/)** - toolkit for building Actors
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
+- **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
+- **[Cypress](https://www.cypress.io/)** - JavaScript Component and E2E testing library
 
-#### Using Homebrew
+## How it works
 
-```Bash
-brew install apify/tap/apify-cli
-```
+You can easily run your tests on the Apify Platform, just copy-paste your test files into `cypress/e2e` folder. The tests' names need to end with `-spec.cy.js`.
 
-#### Using NPM
+You can also customize the test run by specifying other options in the input, e.g. the screen size, video recording, or the default command timeout.
 
-```Bash
-npm -g install apify-cli
-```
-
-### Create a new Actor using this template
-
-```Bash
-apify create my-javascript-actor -t project_cypress
-```
-
-### Run the Actor locally
-
-```Bash
-cd my-javascript-actor
-apify run
-```
-
-## Deploy on Apify
-
-### Log in to Apify
-
-You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-```Bash
-apify login
-```
-
-### Deploy your Actor
-
-This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-```Bash
-apify push
-```
-
-## Documentation reference
-
-To learn more about Apify and Actors, take a look at the following resources:
-
-- [Apify SDK for JavaScript documentation](https://docs.apify.com/sdk/js)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+After running the tests, the Apify Platform stores the results in a comprehensive way - datasets for JSON results, and key-value store for videos. You can view the results directly on the platform or download them to your local machine using a REST API.

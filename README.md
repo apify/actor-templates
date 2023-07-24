@@ -36,9 +36,13 @@ You can find more code examples in the
 
 ### Project boilerplate
 
-If you're already familiar with actors, you can use the following templates to bootstrap new projects using an empty project template or Crawlee templates:
+If you're already familiar with Actors, you can use the following templates to bootstrap new projects using an empty project templates or Crawlee templates:
 
-- [Empty project](./templates/project_empty/) - Template with very little boilerplate code.
+#### Empty projects
+- [Empty JavaScript project](./templates/js-empty/) - Start a new web scraping project quickly and easily in JavaScript (Node.js) with our empty project template. It provides a basic structure for the Actor with [Apify SDK](https://docs.apify.com/sdk/js/) and allows you to easily add your own functionality.
+
+
+#### Crawlee projects
 - [CheerioCrawler](./templates/project_cheerio_crawler_js/) ([TypeScript version](./templates/project_cheerio_crawler_ts/)) - Standard and up to date template for developing with Crawlee's CheerioCrawler.
 - [PlaywrightCrawler](./templates/project_playwright_crawler_js/) ([TypeScript version](./templates/project_playwright_crawler_ts/)) - Standard and up to date template for developing with Crawlee's PlaywrightCrawler.
 - [PuppeteerCrawler](./templates/project_cheerio_crawler_js/) ([TypeScript version](./templates/project_puppeteer_crawler_ts/)) - Standard and up to date template for developing with Crawlee's PuppeteerCrawler.
