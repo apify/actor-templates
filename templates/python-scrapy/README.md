@@ -1,6 +1,6 @@
 # Scrapy Actor template
 
-A template example built with Scrapy to scrape quotes filtered by input parameters. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.
+A template example built with Scrapy to scrape page titles started from url from input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.
 
 ## Included features
 
