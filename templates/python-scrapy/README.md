@@ -7,6 +7,7 @@ A template example built with Scrapy to scrape page titles from URLs defined in 
 - **[Apify SDK](https://docs.apify.com/sdk/python/)** - toolkit for building Apify Actors
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
+- **[Scrapy](https://scrapy.org/)** - a fast high-level web scraping framework
 
 ## How it works
 
