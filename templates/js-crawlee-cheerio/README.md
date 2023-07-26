@@ -1,4 +1,4 @@
-# Cheerio Actor template
+# JavaScript Cheerio Actor template
 
 A template example built with [Crawlee](https://crawlee.dev) to scrape data from a website using [Cheerio](https://cheerio.js.org/).
 

@@ -12,7 +12,7 @@ import { CheerioCrawler, Dataset } from 'crawlee';
 // Initialize the Apify SDK
 await Actor.init();
 
-const { startUrls, maxRequestsPerCrawl } = await Actor.getInput() || { startUrls: ["https://crawlee.com"], maxRequestsPerCrawl: 100 };
+const { startUrls =  ["https://crawlee.com"], maxRequestsPerCrawl = 100 } = await Actor.getInput();
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 

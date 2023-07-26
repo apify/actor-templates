@@ -1,12 +1,19 @@
-# CheerioCrawler Actor template
+# TypeScript Cheerio Actor template
 
-This template is a production ready boilerplate for developing with `CheerioCrawler`. Use this to bootstrap your projects using the most up-to-date code.
+A template example built with [Crawlee](https://crawlee.dev) to scrape data from a website using [Cheerio](https://cheerio.js.org/).
 
-> We decided to split Apify SDK into two libraries, [Crawlee](https://crawlee.dev) and [Apify SDK v3](https://docs.apify.com/sdk/js). Crawlee will retain all the crawling and scraping-related tools and will always strive to be the best web scraping library for its community. At the same time, Apify SDK will continue to exist, but keep only the Apify-specific features related to building actors on the Apify platform. Read the [upgrading guide](https://docs.apify.com/sdk/js/docs/upgrading/upgrading-to-v3) to learn about the changes.
+## Included features
 
-If you're looking for examples or want to learn more visit:
+- **[Crawlee](https://docs.apify.com/sdk/python/)** - toolkit for building Apify Actors
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
+- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
+- **[Cheerio](https://cheerio.js.org/)** - a fast, flexible & elegant library for parsing and manipulating HTML and XML
 
-- [Crawlee + Apify Platform guide](https://crawlee.dev/docs/guides/apify-platform)
-- [Cheerio Tutorial](https://crawlee.dev/docs/guides/cheerio-crawler-guide)
-- [Documentation](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler)
-- [Examples](https://crawlee.dev/docs/examples/cheerio-crawler)
+## How it works
+
+This code is a TypeScript script that uses Cheerio to scrape data from a website. It then stores the website titles in a dataset.
+
+- The script loads the HTML of the provided URLs from `startUrls` field in input schema.
+- Uses Cheerio `requestHandler` function to scrape the website titles.
+- Number of crawls is limited by `maxPagesPerCrawl` field from input schema.
+- Then the results are saved to a dataset.
