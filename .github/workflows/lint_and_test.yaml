@@ -122,13 +122,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install Chrome
-      run: npx @puppeteer/browsers install chrome@113.0.5672.63
-
-    - name: Setup Chromedriver
-      uses: nanasess/setup-chromedriver@v2
-      with:
-        chromedriver-version: '113.0.5672.63'
+    - name: Install Chrome and Chromedriver
+      run:
+        npx @puppeteer/browsers install chrome@113.0.5672.63
+        npx @puppeteer/browsers install chromedriver@113.0.5672.63
 
     - name: Test Python templates
       run: npm run test-python-templates
