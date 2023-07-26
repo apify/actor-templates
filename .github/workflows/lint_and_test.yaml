@@ -123,7 +123,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install Chrome and Chromedriver
-      run:
+      run: |
         npx @puppeteer/browsers install chrome@113.0.5672.63
         npx @puppeteer/browsers install chromedriver@113.0.5672.63
 
