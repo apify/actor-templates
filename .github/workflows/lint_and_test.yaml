@@ -124,8 +124,8 @@ jobs:
 
     - name: Setup Chromedriver
       run: |
-        npx @puppeteer/browsers install chrome@stable
-        npx @puppeteer/browsers install chromedriver@stable
+        npx @puppeteer/browsers install chrome@115.0.5790.102
+        npx @puppeteer/browsers install chromedriver@115.0.5790.102
 
     - name: Test Python templates
       run: npm run test-python-templates
