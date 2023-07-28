@@ -27,9 +27,9 @@ function getIndexCacheKey(config) {
 export async function cacheVectorIndex(config, indexPath) {
     const vectorIndexCacheStore = await Actor.openKeyValueStore(VECTOR_INDEX_CACHE_STORE_NAME);
     const tempFilePath = await tempWrite(tar.c({}, [indexPath]));
-    const gzipedVectorIndex = await readFile(tempFilePath);
+    const packedVectorIndex = await readFile(tempFilePath);
 
-    await vectorIndexCacheStore.setValue(getIndexCacheKey(config), gzipedVectorIndex, { contentType: 'application/tar' });
+    await vectorIndexCacheStore.setValue(getIndexCacheKey(config), packedVectorIndex, { contentType: 'application/tar' });
 }
 
 /**

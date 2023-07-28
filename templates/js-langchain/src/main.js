@@ -33,6 +33,9 @@ if (!APIFY_TOKEN || !APIFY_TOKEN.length) throw new Error('Please configure the A
 // Following object represents an input for the https://apify.com/apify/website-content-crawler actor that scrapes the website.
 const websiteContentCrawlerInput = { startUrls, maxCrawlPages };
 
+// Here starts the most important part, the vector index creation from the crawled data.
+let vectorStore;
+
 // First, we check if the vector index is already cached. If not, we run the website content crawler to get the documents.
 // By setting up forceRecrawl=true you can enforce a re-scrape of the website content and re-creation of the vector index.
 console.log('Fetching cached vector index from key-value store...');
@@ -57,7 +60,7 @@ if (reinitializeIndex) {
 
     // Initialize the vector index from the crawled documents.
     console.log('Feeding vector index with crawling results...');
-    const vectorStore = await HNSWLib.fromDocuments(
+    vectorStore = await HNSWLib.fromDocuments(
         docs,
         new OpenAIEmbeddings({ openAIApiKey })
     );
@@ -68,11 +71,14 @@ if (reinitializeIndex) {
     await cacheVectorIndex(websiteContentCrawlerInput, VECTOR_INDEX_PATH);
 }
 
-console.log('Initializing the vector store...');
-const vectorStore = await HNSWLib.load(
-    VECTOR_INDEX_PATH,
-    new OpenAIEmbeddings({ openAIApiKey })
-);
+// Load the vector index from the disk if not already initialized above.
+if (!vectorStore) {
+    console.log('Initializing the vector store...');
+    vectorStore = await HNSWLib.load(
+        VECTOR_INDEX_PATH,
+        new OpenAIEmbeddings({ openAIApiKey })
+    );
+}
 
 // Next, create the retrieval chain and enter a query:
 console.log('Asking model a question...');
