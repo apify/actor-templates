@@ -122,7 +122,7 @@
             "technologies": [
                 "scrapy"
             ],
-            "description": "This example Scrapy spider scrapes quotes filtered by input parameters. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
+            "description": "This example Scrapy spider scrapes page titles from URLs defined in input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
