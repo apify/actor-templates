@@ -1,7 +1,7 @@
 import { Actor } from 'apify';
 import { createHash } from 'crypto';
-import { readFile } from 'node:fs/promises';
-import tempWrite from 'temp-write';
+import { finished } from 'node:stream/promises';
+import { Readable } from 'node:stream';
 import tar from 'tar';
 
 const VECTOR_INDEX_CACHE_STORE_NAME = 'vector-index-cache';
@@ -26,10 +26,9 @@ function getIndexCacheKey(config) {
  */
 export async function cacheVectorIndex(config, indexPath) {
     const vectorIndexCacheStore = await Actor.openKeyValueStore(VECTOR_INDEX_CACHE_STORE_NAME);
-    const tempFilePath = await tempWrite(tar.c({}, [indexPath]));
-    const packedVectorIndex = await readFile(tempFilePath);
+    const packedVectorIndexStream = tar.c({}, [indexPath]);
 
-    await vectorIndexCacheStore.setValue(getIndexCacheKey(config), packedVectorIndex, { contentType: 'application/tar' });
+    await vectorIndexCacheStore.setValue(getIndexCacheKey(config), packedVectorIndexStream, { contentType: 'application/tar' });
 }
 
 /**
@@ -44,8 +43,7 @@ export async function retrieveVectorIndex(config) {
     const vectorIndexRecord = await vectorIndexCacheStore.getValue(getIndexCacheKey(config));
     if (!vectorIndexRecord) return false;
 
-    const tempFilePath = await tempWrite(vectorIndexRecord);
-    await tar.x({ file: tempFilePath, strip: 1, C: '.' });
+    await finished(Readable.from(vectorIndexRecord).pipe(tar.x({ strip: 1, C: '.' })));
 
     return true;
 }
