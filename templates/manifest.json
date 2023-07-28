@@ -360,6 +360,27 @@
                 "cypress/e2e/second-spec.cy.js",
                 "cypress/support/e2e.js"
             ]
+        },
+        {
+            "id": "js-langchain",
+            "name": "project_langchain_js",
+            "label": "Langchain",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "langchain"
+            ],
+            "description": "Example of how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.js",
+                "src/vector_index_cache.js"
+            ]
         }
     ]
 }

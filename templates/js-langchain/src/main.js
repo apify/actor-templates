@@ -5,7 +5,7 @@ import { HNSWLib } from 'langchain/vectorstores/hnswlib';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { RetrievalQAChain } from 'langchain/chains';
 import { OpenAI } from 'langchain/llms/openai';
-import { rmdir } from 'node:fs/promises';
+import { rm } from 'node:fs/promises';
 
 import { retrieveVectorIndex, cacheVectorIndex } from './vector_index_cache.js';
 
@@ -58,10 +58,9 @@ if (reinitializeIndex) {
         }
     );
 
-    const docs = await loader.load();
-
     // Initialize the vector index from the crawled documents.
     console.log('Feeding vector index with crawling results...');
+    const docs = await loader.load();
     vectorStore = await HNSWLib.fromDocuments(
         docs,
         new OpenAIEmbeddings({ openAIApiKey })
@@ -93,7 +92,7 @@ const res = await chain.call({ query });
 console.log(`\n${res.text}\n`);
 
 // Remove the vector index directory as we have it cached in the key-value store for the next time.
-await rmdir(VECTOR_INDEX_PATH, { recursive: true });
+await rm(VECTOR_INDEX_PATH, { recursive: true });
 
 await Actor.setValue('OUTPUT', res);
 await Actor.exit();
