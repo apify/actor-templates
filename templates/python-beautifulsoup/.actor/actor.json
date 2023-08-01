@@ -5,7 +5,7 @@
     "description": "Scrapes titles of websites using BeautifulSoup.",
     "version": "0.0",
     "meta": {
-         "templateId": "python-beautifulsoup"
+        "templateId": "python-beautifulsoup"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",

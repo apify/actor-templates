@@ -6,7 +6,7 @@
     "version": "0.0",
     "buildTag": "latest",
     "meta": {
-         "templateId": "python-empty"
+        "templateId": "python-empty"
     },
     "dockerfile": "./Dockerfile"
 }

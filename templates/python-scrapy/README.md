@@ -1,5 +1,19 @@
 # Scrapy Actor template
 
-The `README.md` file documents what your actor does and how to use it, which is then displayed in the Console or Apify Store. It's always a good idea to write a `README.md`. In a few months, not even you will remember all the details about the actor.
+A template example built with Scrapy to scrape page titles from URLs defined in input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.
 
-You can use [Markdown](https://www.markdownguide.org/cheat-sheet) language for rich formatting.
+## Included features
+
+- **[Apify SDK](https://docs.apify.com/sdk/python/)** - toolkit for building Apify Actors
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
+- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
+- **[Scrapy](https://scrapy.org/)** - a fast high-level web scraping framework
+
+## How it works
+
+This code is a Python script that uses Scrapy to scrape web pages and extract data from them. Here's a brief overview of how it works:
+
+- The script reads the input data from the Actor instance, which is expected to contain a `start_urls` key with a list of URLs to scrape and a `max_depth` key with the maximum depth of nested links to follow.
+- The script then creates a Scrapy spider that will scrape the URLs and follow links up to the specified `max_depth`. This Spider (class `TitleSpider`) is storing URLs and titles.
+- Scrapy pipeline is used to save the results to the default dataset associated with the Actor run using the `push_data` method of the Actor instance.
+- The script catches any exceptions that occur during the scraping process and logs an error message using the `Actor.log.exception` method.
