@@ -13,6 +13,5 @@ A template example built with [Crawlee](https://crawlee.dev) to scrape data from
 
 This code is a TypeScript script that uses [Crawlee CheerioCralwer](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler) framework to crawl a website and extract the data from the crawled URLs with Cheerio. It then stores the website titles in a dataset.
 
-- The crawler starts with URLs provided from the input `startUrls` field defined by the input schema.
-- Uses Cheerio `requestHandler` function to scrape the website titles.
-- Number of crawls is limited by `maxPagesPerCrawl` field from input schema.
+- The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of crawls is limited by `maxPagesPerCrawl` field from input schema.
+- The crawler uses `requestHandler` for each URL to extract the data from the page with the Cheerio library and to save the title and URL of each page to the dataset. It also logs out each result that is being saved.
