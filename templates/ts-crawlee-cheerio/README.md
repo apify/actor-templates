@@ -16,4 +16,3 @@ This code is a TypeScript script that uses [Crawlee CheerioCralwer](https://craw
 - The crawler starts with URLs provided from the input `startUrls` field defined by the input schema.
 - Uses Cheerio `requestHandler` function to scrape the website titles.
 - Number of crawls is limited by `maxPagesPerCrawl` field from input schema.
-- Then the results are saved to a dataset.
