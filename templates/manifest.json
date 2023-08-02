@@ -489,6 +489,27 @@
             "useCases": [
                 "WEB_SCRAPING"
             ]
+        },
+        {
+            "id": "js-langchain",
+            "name": "project_langchain_js",
+            "label": "Langchain",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "langchain"
+            ],
+            "description": "Example of how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langchain.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.js",
+                "src/vector_index_cache.js"
+            ]
         }
     ]
 }

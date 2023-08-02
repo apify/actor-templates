@@ -1,0 +1,9 @@
+# This file tells Git which files shouldn't be added to source control
+
+.DS_Store
+.idea
+node_modules
+storage
+
+# This location is used to locally cache
+vector_index
