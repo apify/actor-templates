@@ -371,7 +371,7 @@
                 "langchain"
             ],
             "description": "Example of how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langchain.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,
