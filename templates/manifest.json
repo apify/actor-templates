@@ -493,7 +493,7 @@
         {
             "id": "js-langchain",
             "name": "project_langchain_js",
-            "label": "Langchain",
+            "label": "🦜️🔗 LangChain",
             "category": "javascript",
             "technologies": [
                 "nodejs",
