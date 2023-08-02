@@ -28,8 +28,8 @@ const {
 // Local directory where the vector index will be stored.
 const VECTOR_INDEX_PATH = './vector_index';
 
-if (!openAIApiKey || !openAIApiKey.length) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
-if (!APIFY_TOKEN || !APIFY_TOKEN.length) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
+if (!openAIApiKey) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
+if (!APIFY_TOKEN) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
 
 // Now we want to creare a vector index from the crawled documents.
 // Following object represents an input for the https://apify.com/apify/website-content-crawler actor that crawls the website to gather the data.
