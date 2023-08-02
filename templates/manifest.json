@@ -36,7 +36,7 @@
         {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
-            "label": "BeautifulSoup & Requests",
+            "label": "BeautifulSoup + Requests",
             "category": "python",
             "technologies": [
                 "requests",
@@ -63,7 +63,7 @@
         {
             "id": "python-playwright",
             "name": "python-playwright",
-            "label": "Playwright & Chrome",
+            "label": "Playwright + Chrome",
             "category": "python",
             "technologies": [
                 "playwright",
@@ -90,7 +90,7 @@
         {
             "id": "python-selenium",
             "name": "python-selenium",
-            "label": "Selenium & Chrome",
+            "label": "Selenium + Chrome",
             "category": "python",
             "technologies": [
                 "selenium",
@@ -215,7 +215,7 @@
         {
             "id": "js-crawlee-cheerio",
             "name": "project_cheerio_crawler_js",
-            "label": "Crawlee & Cheerio",
+            "label": "Crawlee + Cheerio",
             "category": "javascript",
             "technologies": [
                 "nodejs",
@@ -241,7 +241,7 @@
         {
             "id": "js-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_js",
-            "label": "Crawlee & Puppeteer & Chrome",
+            "label": "Crawlee + Puppeteer + Chrome",
             "category": "javascript",
             "technologies": [
                 "nodejs",
@@ -267,7 +267,7 @@
         {
             "id": "js-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_js",
-            "label": "Crawlee & Playwright & Chrome",
+            "label": "Crawlee + Playwright + Chrome",
             "category": "javascript",
             "technologies": [
                 "nodejs",
@@ -319,7 +319,7 @@
         {
             "id": "ts-crawlee-cheerio",
             "name": "project_cheerio_crawler_ts",
-            "label": "Crawlee & Cheerio",
+            "label": "Crawlee + Cheerio",
             "category": "typescript",
             "technologies": [
                 "nodejs",
@@ -345,7 +345,7 @@
         {
             "id": "ts-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_ts",
-            "label": "Crawlee & Puppeteer & Chrome",
+            "label": "Crawlee + Puppeteer + Chrome",
             "category": "typescript",
             "technologies": [
                 "nodejs",
@@ -371,7 +371,7 @@
         {
             "id": "ts-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_ts",
-            "label": "Crawlee & Playwright & Chrome",
+            "label": "Crawlee + Playwright + Chrome",
             "category": "typescript",
             "technologies": [
                 "nodejs",
@@ -397,7 +397,7 @@
         {
             "id": "ts-playwright-test-runner",
             "name": "project_playwright_test_runner",
-            "label": "Playwright & Chrome Test Runner",
+            "label": "Playwright + Chrome Test Runner",
             "category": "typescript",
             "technologies": [
                 "nodejs",
