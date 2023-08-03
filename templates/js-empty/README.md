@@ -4,7 +4,7 @@ Start a new web scraping project quickly and easily in JavaScript (Node.js) with
 
 ## Included features
 
-- **[Apify SDK](https://docs.apify.com/api/client/js/)** - toolkit for building Actors
+- **[Apify SDK](https://docs.apify.com/sdk/js/)** - toolkit for building Actors
 - **[Crawlee](https://crawlee.dev)** - web scraping and browser automation library
 
 ## How it works
