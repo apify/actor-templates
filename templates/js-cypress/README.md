@@ -4,7 +4,7 @@ Run your [Cypress tests](https://www.cypress.io) on the Apify Platform effective
 
 ## Included features
 
-- **[Apify SDK](https://docs.apify.com/api/client/js/)** - toolkit for building Actors
+- **[Apify SDK](https://docs.apify.com/sdk/js/)** - toolkit for building Actors
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
 - **[Cypress](https://www.cypress.io/)** - JavaScript Component and E2E testing library
