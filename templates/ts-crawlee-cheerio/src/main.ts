@@ -7,12 +7,17 @@
 // For more information, see https://docs.apify.com/sdk/js
 import { Actor } from 'apify';
 // For more information, see https://crawlee.dev
-import { CheerioCrawler, Dataset, Dictionary } from 'crawlee';
+import { CheerioCrawler, Dataset } from 'crawlee';
+
+interface Input {
+    startUrls: string[];
+    maxRequestsPerCrawl: number;
+}
 
 // Initialize the Apify SDK
 await Actor.init();
 
-const { startUrls, maxRequestsPerCrawl } = (await Actor.getInput() as Dictionary) || {};
+const { startUrls, maxRequestsPerCrawl } = await Actor.getInputOrThrow<Input>();
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 

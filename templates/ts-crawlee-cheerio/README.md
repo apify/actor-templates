@@ -4,7 +4,8 @@ A template example built with [Crawlee](https://crawlee.dev) to scrape data from
 
 ## Included features
 
-- **[Crawlee](https://docs.apify.com/sdk/python/)** - toolkit for building Apify Actors
+- **[Apify SDK](https://docs.apify.com/sdk/js)** - toolkit for building Actors
+- **[Crawlee](https://crawlee.dev)** - web scraping and browser automation library
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
 - **[Cheerio](https://cheerio.js.org/)** - a fast, flexible & elegant library for parsing and manipulating HTML and XML
@@ -13,5 +14,5 @@ A template example built with [Crawlee](https://crawlee.dev) to scrape data from
 
 This code is a TypeScript script that uses [Crawlee CheerioCralwer](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler) framework to crawl a website and extract the data from the crawled URLs with Cheerio. It then stores the website titles in a dataset.
 
-- The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of crawls is limited by `maxPagesPerCrawl` field from input schema.
+- The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of crawler pages is limited by `maxPagesPerCrawl` field from input schema.
 - The crawler uses `requestHandler` for each URL to extract the data from the page with the Cheerio library and to save the title and URL of each page to the dataset. It also logs out each result that is being saved.
