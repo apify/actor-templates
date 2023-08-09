@@ -1,0 +1,14 @@
+{
+    "actorSpecification": 1,
+    "name": "project-langchain",
+    "title": "Project LangChain",
+    "description": "LangChain project in JavaScript.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "js-langchain"
+    },
+    "dockerfile": "./Dockerfile",
+    "environmentVariables": {
+        "OPENAI_API_KEY": "@OPENAI_API_KEY"
+    }
+}
