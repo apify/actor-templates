@@ -14,5 +14,5 @@ A template example built with [Crawlee](https://crawlee.dev) to scrape data from
 
 This code is a JavaScript script that uses Cheerio to scrape data from a website. It then stores the website titles in a dataset.
 
-- The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of crawler pages is limited by `maxPagesPerCrawl` field from input schema.
+- The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of scraped pages is limited by `maxPagesPerCrawl` field from input schema.
 - The crawler uses `requestHandler` for each URL to extract the data from the page with the Cheerio library and to save the title and URL of each page to the dataset. It also logs out each result that is being saved.
