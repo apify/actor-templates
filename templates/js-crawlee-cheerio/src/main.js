@@ -12,14 +12,17 @@ import { CheerioCrawler, Dataset } from 'crawlee';
 // Initialize the Apify SDK
 await Actor.init();
 
-const { startUrls, maxRequestsPerCrawl } = await Actor.getInput() || {};
+const {
+    startUrls = ['https://crawlee.dev'],
+    maxRequestsPerCrawl = 100,
+} = await Actor.getInput() ?? {};
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
 const crawler = new CheerioCrawler({
     proxyConfiguration,
     maxRequestsPerCrawl,
-    requestHandler: async ({ enqueueLinks, request, $, log }) => {
+    async requestHandler({ enqueueLinks, request, $, log }) {
         log.info('enqueueing new URLs');
         await enqueueLinks();
 
