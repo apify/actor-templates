@@ -17,7 +17,10 @@ interface Input {
 // Initialize the Apify SDK
 await Actor.init();
 
-const { startUrls, maxRequestsPerCrawl } = await Actor.getInputOrThrow<Input>();
+const {
+    startUrls = ['https://crawlee.dev'],
+    maxRequestsPerCrawl = 100,
+} = await Actor.getInput<Input>() ?? {} as Input;
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
