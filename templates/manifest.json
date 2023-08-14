@@ -222,7 +222,7 @@
                 "crawlee",
                 "cheerio"
             ],
-            "description": "A scraper example that uses HTTP requests and Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
+            "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -301,7 +301,7 @@
                 "cheerio"
             ],
             "description": "Skeleton project that helps you quickly bootstrap `CheerioCrawler` in JavaScript. It's best for developers who already know Apify SDK and Crawlee.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-bootstrap-cheerio-crawler.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 2048,
@@ -326,7 +326,7 @@
                 "crawlee",
                 "cheerio"
             ],
-            "description": "A scraper example that uses HTTP requests and Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
+            "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",

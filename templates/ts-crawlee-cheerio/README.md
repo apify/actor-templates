@@ -1,12 +1,18 @@
-# CheerioCrawler Actor template
+# TypeScript Crawlee & CheerioCrawler Actor template
 
-This template is a production ready boilerplate for developing with `CheerioCrawler`. Use this to bootstrap your projects using the most up-to-date code.
+A template example built with [Crawlee](https://crawlee.dev) to scrape data from a website using [Cheerio](https://cheerio.js.org/) wrapped into [CheerioCrawler](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler).
 
-> We decided to split Apify SDK into two libraries, [Crawlee](https://crawlee.dev) and [Apify SDK v3](https://docs.apify.com/sdk/js). Crawlee will retain all the crawling and scraping-related tools and will always strive to be the best web scraping library for its community. At the same time, Apify SDK will continue to exist, but keep only the Apify-specific features related to building actors on the Apify platform. Read the [upgrading guide](https://docs.apify.com/sdk/js/docs/upgrading/upgrading-to-v3) to learn about the changes.
+## Included features
 
-If you're looking for examples or want to learn more visit:
+- **[Apify SDK](https://docs.apify.com/sdk/js)** - toolkit for building Actors
+- **[Crawlee](https://crawlee.dev)** - web scraping and browser automation library
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
+- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
+- **[Cheerio](https://cheerio.js.org/)** - a fast, flexible & elegant library for parsing and manipulating HTML and XML
 
-- [Crawlee + Apify Platform guide](https://crawlee.dev/docs/guides/apify-platform)
-- [Cheerio Tutorial](https://crawlee.dev/docs/guides/cheerio-crawler-guide)
-- [Documentation](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler)
-- [Examples](https://crawlee.dev/docs/examples/cheerio-crawler)
+## How it works
+
+This code is a TypeScript script that uses [Crawlee CheerioCralwer](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler) framework to crawl a website and extract the data from the crawled URLs with Cheerio. It then stores the website titles in a dataset.
+
+- The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of scraped pages is limited by `maxPagesPerCrawl` field from input schema.
+- The crawler uses `requestHandler` for each URL to extract the data from the page with the Cheerio library and to save the title and URL of each page to the dataset. It also logs out each result that is being saved.
