@@ -231,8 +231,7 @@
             },
             "skipOptionalDeps": true,
             "showcaseFiles": [
-                "src/main.js",
-                "src/routes.js"
+                "src/main.js"
             ],
             "useCases": [
                 "WEB_SCRAPING"
@@ -335,8 +334,7 @@
             },
             "skipOptionalDeps": true,
             "showcaseFiles": [
-                "src/main.ts",
-                "src/routes.ts"
+                "src/main.ts"
             ],
             "useCases": [
                 "WEB_SCRAPING"
