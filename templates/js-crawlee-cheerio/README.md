@@ -1,4 +1,4 @@
-# JavaScript Crawlee & CheerioCrawler template
+## JavaScript Crawlee & CheerioCrawler template
 
 This template example was built with [Crawlee](https://crawlee.dev/) to scrape data from a website using [Cheerio](https://cheerio.js.org/) wrapped into [CheerioCrawler](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler).
 
