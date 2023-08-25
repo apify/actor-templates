@@ -1,4 +1,4 @@
-# PuppeteerCrawler template
+## PuppeteerCrawler template
 
 This template is a production-ready boilerplate for developing an [Actor](https://apify.com/actors) with `PuppeteerCrawler`. Use this to bootstrap your projects using the most up-to-date code.
 
