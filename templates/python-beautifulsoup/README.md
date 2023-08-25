@@ -1,10 +1,10 @@
-# BeautifulSoup and Requests Actor template
+## BeautifulSoup and Requests template
 
-A template for scraping data from websites enqueued from starting URL using Python. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [Requests](https://requests.readthedocs.io/) to get the HTML of the page and the [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to parse the data from it. Enqueued URLs are available in [request queue](https://docs.apify.com/sdk/python/reference/class/RequestQueue). The data are then stored in a [dataset](https://docs.apify.com/platform/storage/dataset) where you can easily access them.
+A template for [web scraping](https://apify.com/web-scraping) data from websites enqueued from starting URL using Python. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [Requests](https://requests.readthedocs.io/) to get the HTML of the page and the [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to parse the data from it. Enqueued URLs are available in [request queue](https://docs.apify.com/sdk/python/reference/class/RequestQueue). The data are then stored in a [dataset](https://docs.apify.com/platform/storage/dataset) where you can easily access them.
 
 ## Included features
 
-- **[Apify SDK](https://docs.apify.com/sdk/python/)** - a toolkit for building actors
+- **[Apify SDK](https://docs.apify.com/sdk/python/)** for Python - a toolkit for building [Actors](https://apify.com/actors) and scrapers in Python
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your actor's input
 - **[Request queue](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-request-queues)** - queues into which you can put the URLs you want to scrape
 - **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
@@ -22,3 +22,13 @@ This code is a Python script that uses Requests and Beautiful Soup to scrape web
 - The script extracts the desired data from the page (in this case, all the links) and pushes it to the default dataset using the `push_data` method of the Actor instance.
 - The script catches any exceptions that occur during the scraping process and logs an error message using the `Actor.log.exception` method.
 - This code demonstrates how to use Python and the Apify SDK to scrape web pages and extract specific data from them.
+
+## Resources
+
+- [BeautifulSoup Scraper](https://apify.com/apify/beautifulsoup-scraper)
+- [Python tutorials in Academy](https://docs.apify.com/academy/python)
+- [Web scraping with Beautiful Soup and Requests](https://blog.apify.com/web-scraping-with-beautiful-soup/)
+- [Beautiful Soup vs. Scrapy for web scraping](https://blog.apify.com/beautiful-soup-vs-scrapy-web-scraping/)
+- [Integration with Zapier](https://apify.com/integrations), Make, Google Drive, and others
+- [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+- [Video introduction to Python SDK](https://www.youtube.com/watch?v=C8DmvJQS3jk)
