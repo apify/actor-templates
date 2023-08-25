@@ -1,4 +1,4 @@
-# Cypress test template
+## Cypress test template
 
 Run your [Cypress tests](https://www.cypress.io/) on the Apify Platform effectively and easily. The template provides the necessary setup for running the Cypress tests. You can change the Cypress configuration in the input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses [globby library](https://www.jsdocs.io/package/globby) to fetch the Cypress test files and run them within the Actor. The video recordings are stored in [Key-value store](https://docs.apify.com/platform/storage/key-value-store) and the comprehensive test results are stored in the [Dataset](https://docs.apify.com/platform/storage/dataset).
 
