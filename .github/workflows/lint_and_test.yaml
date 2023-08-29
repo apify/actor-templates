@@ -4,6 +4,8 @@ on:
   push:
     paths-ignore:
       - 'dist/**'
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   lint_and_test:
@@ -80,6 +82,7 @@ jobs:
       run: npm run test-node-templates
       env:
         APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
 
   test-python-templates:
     name: Test Python templates
