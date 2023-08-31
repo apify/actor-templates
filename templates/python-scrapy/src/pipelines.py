@@ -2,8 +2,9 @@
 #
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from apify import Actor
 from itemadapter import ItemAdapter
+
+from apify import Actor
 
 
 # Used to output the items into the actor's default dataset
