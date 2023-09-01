@@ -14,7 +14,7 @@ If you would like to develop locally, you can pull the existing Actor from Apify
     **Using Homebrew**
 
     ```
-    brew install apify/tap/apify-cli
+    brew install apify-cli
     ```
 
     **Using NPM**
