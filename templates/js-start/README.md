@@ -33,4 +33,5 @@ The scraped data in this template are page headings but you can easily edit the 
 - [Video tutorial](https://www.youtube.com/watch?v=yTRHomGg9uQ) on building a scraper using CheerioCrawler
 - [Written tutorial](https://docs.apify.com/academy/web-scraping-for-beginners/challenge) on building a scraper using CheerioCrawler
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive, and others
+  
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
