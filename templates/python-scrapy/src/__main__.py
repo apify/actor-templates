@@ -4,10 +4,8 @@
 # We need to configure the logging first before we import anything else,
 # so that nothing else imports `scrapy.utils.log` before we patch it.
 import logging
-
-import scrapy.utils.log
-
 from apify.log import ActorLogFormatter
+import scrapy.utils.log
 
 handler = logging.StreamHandler()
 handler.setFormatter(ActorLogFormatter())
@@ -47,8 +45,8 @@ import asyncio
 import os
 
 import nest_asyncio
-from scrapy.utils.reactor import install_reactor
 
+from scrapy.utils.reactor import install_reactor
 from .main import main
 
 # This is necessary so that twisted and asyncio work well together
