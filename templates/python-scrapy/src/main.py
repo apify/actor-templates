@@ -3,8 +3,7 @@ from scrapy.utils.project import get_project_settings
 
 from apify import Actor
 
-from .event_loop_manager import get_running_event_loop_id
-from .pipelines import ActorDatasetPushPipeline
+from .event_loop_management import get_running_event_loop_id
 from .spiders.title_spider import TitleSpider
 
 
@@ -17,9 +16,12 @@ async def main():
         start_urls = [start_url.get('url') for start_url in actor_input.get('start_urls', [{'url': 'https://apify.com'}])]
 
         settings = get_project_settings()
-        settings['ITEM_PIPELINES'] = {ActorDatasetPushPipeline: 1}
+        settings['ITEM_PIPELINES'] = {'src.pipelines.ActorDatasetPushPipeline': 1}
         settings['SCHEDULER'] = 'src.scheduler.ApifyScheduler'
-        settings['DOWNLOADER_MIDDLEWARES'] = {'src.middlewares.ApifyRetryMiddleware': 543}
+        settings['DOWNLOADER_MIDDLEWARES'] = {
+            'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
+            'src.middlewares.ApifyRetryMiddleware': 543,
+        }
         settings['DEPTH_LIMIT'] = max_depth
 
         # Add start URLs to the request queue
