@@ -1,6 +1,5 @@
 import asyncio
-from asyncio import AbstractEventLoop
-from types import TracebackType
+
 from apify import Actor
 from apify.storages import RequestQueue, StorageClientManager
 
