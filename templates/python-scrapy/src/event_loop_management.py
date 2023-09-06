@@ -4,6 +4,9 @@ from apify import Actor
 from apify.storages import RequestQueue, StorageClientManager
 
 
+nested_event_loop: asyncio.AbstractEventLoop = asyncio.new_event_loop()
+
+
 def get_running_event_loop_id() -> int:
     """
     Get the ID of the currently running event loop.

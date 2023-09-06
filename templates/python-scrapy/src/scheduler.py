@@ -1,4 +1,3 @@
-import asyncio
 import traceback
 
 from scrapy import Spider
@@ -9,7 +8,7 @@ from scrapy.utils.reactor import is_asyncio_reactor_installed
 from apify import Actor
 from apify.storages import RequestQueue
 
-from .event_loop_management import get_running_event_loop_id, open_queue_with_custom_client
+from .event_loop_management import nested_event_loop, get_running_event_loop_id, open_queue_with_custom_client
 
 
 class ApifyScheduler(BaseScheduler):
@@ -27,7 +26,6 @@ class ApifyScheduler(BaseScheduler):
                 'documentation of Scrapy for more information.'
             )
         Actor.log.debug(f'[{get_running_event_loop_id()}] ApifyScheduler is initializing...')
-        self._event_loop: asyncio.AbstractEventLoop = asyncio.new_event_loop()
         self._rq: RequestQueue | None = None
         self.spider: Spider | None = None
 
@@ -42,7 +40,7 @@ class ApifyScheduler(BaseScheduler):
         self.spider = spider
 
         try:
-            self._rq = self._event_loop.run_until_complete(open_queue_with_custom_client())
+            self._rq = nested_event_loop.run_until_complete(open_queue_with_custom_client())
         except BaseException:
             traceback.print_exc()
 
@@ -54,8 +52,8 @@ class ApifyScheduler(BaseScheduler):
             reason: The reason for closing the scheduler.
         """
         Actor.log.debug(f'Apify Scheduler is closing, reason: {reason}...')
-        self._event_loop.stop()
-        self._event_loop.close()
+        nested_event_loop.stop()
+        nested_event_loop.close()
 
     def has_pending_requests(self) -> bool:
         """
@@ -67,7 +65,7 @@ class ApifyScheduler(BaseScheduler):
         Actor.log.debug('ApifyScheduler has_pending_requests is called...')
 
         try:
-            result = self._event_loop.run_until_complete(self._rq.is_finished())
+            result = nested_event_loop.run_until_complete(self._rq.is_finished())
         except BaseException:
             traceback.print_exc()
 
@@ -87,7 +85,7 @@ class ApifyScheduler(BaseScheduler):
 
         try:
             # TODO: Add support for other Scrapy Request properties
-            result = self._event_loop.run_until_complete(
+            result = nested_event_loop.run_until_complete(
                 self._rq.add_request(request={'url': request.url, 'userData': {'meta': request.meta}}),
             )
         except BaseException:
@@ -105,7 +103,7 @@ class ApifyScheduler(BaseScheduler):
         Actor.log.debug('ApifyScheduler is returning a next request...')
 
         try:
-            apify_request = self._event_loop.run_until_complete(self._rq.fetch_next_request())
+            apify_request = nested_event_loop.run_until_complete(self._rq.fetch_next_request())
         except BaseException:
             traceback.print_exc()
 

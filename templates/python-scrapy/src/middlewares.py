@@ -1,4 +1,3 @@
-import asyncio
 import traceback
 
 from scrapy import Spider
@@ -9,7 +8,7 @@ from scrapy.utils.response import response_status_message
 from apify import Actor
 from apify.storages import RequestQueue
 
-from .event_loop_management import get_running_event_loop_id, open_queue_with_custom_client
+from .event_loop_management import nested_event_loop, get_running_event_loop_id, open_queue_with_custom_client
 
 
 class ApifyRetryMiddleware(RetryMiddleware):
@@ -20,16 +19,15 @@ class ApifyRetryMiddleware(RetryMiddleware):
     def __init__(self, *args: list, **kwargs: dict) -> None:
         Actor.log.debug(f'[{get_running_event_loop_id()}] ApifyRetryMiddleware initializing...')
         super().__init__(*args, **kwargs)
-        self._event_loop: asyncio.AbstractEventLoop = asyncio.new_event_loop()
         try:
-            self._rq: RequestQueue = self._event_loop.run_until_complete(open_queue_with_custom_client())
+            self._rq: RequestQueue = nested_event_loop.run_until_complete(open_queue_with_custom_client())
         except BaseException:
             traceback.print_exc()
 
     def __del__(self):
         Actor.log.debug('ApifyRetryMiddleware is being deleted...')
-        self._event_loop.stop()
-        self._event_loop.close()
+        nested_event_loop.stop()
+        nested_event_loop.close()
 
     def process_response(self, request: Request, response: Response, spider: Spider) -> Request | Response:
         """
@@ -44,6 +42,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
             The response, or a new request if the request should be retried.
         """
         Actor.log.debug(f'[{get_running_event_loop_id()}] ApifyRetryMiddleware is processing: {request}, {response}...')
+        assert isinstance(request.url, str)
 
         # Robots requests are bypassed directly, they don't go through a Scrapy Scheduler, and also through our
         # Request Queue. Check the scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware for details.
@@ -51,7 +50,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
             return response
 
         try:
-            returned = self._event_loop.run_until_complete(self._handle_retry_logic(request, response, spider))
+            returned = nested_event_loop.run_until_complete(self._handle_retry_logic(request, response, spider))
         except BaseException:
             traceback.print_exc()
 
@@ -72,7 +71,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
             'method': request.method,
             'id': req_id.decode('utf-8') if isinstance(req_id, bytes) else req_id,
             'uniqueKey': req_unique_key.decode('utf-8') if isinstance(req_unique_key, bytes) else req_unique_key,
-            # 'retryCount': ..., # todo: where to get this from?
+            # 'retryCount': ..., # TODO: where to get this from?
         }
 
         if request.meta.get("dont_retry", False):
