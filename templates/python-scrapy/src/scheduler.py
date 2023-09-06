@@ -1,4 +1,5 @@
 import traceback
+import apify_shared
 
 from scrapy import Spider
 from scrapy.core.scheduler import BaseScheduler
@@ -8,7 +9,13 @@ from scrapy.utils.reactor import is_asyncio_reactor_installed
 from apify import Actor
 from apify.storages import RequestQueue
 
-from .event_loop_management import nested_event_loop, get_running_event_loop_id, open_queue_with_custom_client
+from .utils import (
+    get_running_event_loop_id,
+    nested_event_loop,
+    open_queue_with_custom_client,
+    to_apify_request,
+    to_scrapy_request,
+)
 
 
 class ApifyScheduler(BaseScheduler):
@@ -82,12 +89,10 @@ class ApifyScheduler(BaseScheduler):
             True if the request was successfully enqueued, False otherwise.
         """
         Actor.log.debug(f'ApifyScheduler is enqueing a {request}...')
+        apify_request = to_apify_request(request)
 
         try:
-            # TODO: Add support for other Scrapy Request properties
-            result = nested_event_loop.run_until_complete(
-                self._rq.add_request(request={'url': request.url, 'userData': {'meta': request.meta}}),
-            )
+            result = nested_event_loop.run_until_complete(self._rq.add_request(apify_request))
         except BaseException:
             traceback.print_exc()
 
@@ -112,19 +117,4 @@ class ApifyScheduler(BaseScheduler):
         if apify_request is None:
             return None
 
-        # TODO: Add support for other Scrapy Request properties
-        request_url = apify_request['url']
-        request_user_data = apify_request.get('userData')
-        request_meta = request_user_data.get('meta') if isinstance(request_user_data, dict) else {}
-
-        # Add Apify related metadata for Request Queue to the meta field
-        request_meta = {
-            **request_meta,
-            **{
-                'apify_request_id': apify_request['id'],
-                'apify_request_unique_key': apify_request['uniqueKey'],
-            },
-        }
-
-        # Create and return Scrapy request
-        return Request(request_url, meta=request_meta)
+        return to_scrapy_request(apify_request)

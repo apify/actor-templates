@@ -3,8 +3,8 @@ from scrapy.utils.project import get_project_settings
 
 from apify import Actor
 
-from .event_loop_management import get_running_event_loop_id
 from .spiders.title_spider import TitleSpider
+from .utils import get_running_event_loop_id
 
 
 async def main():

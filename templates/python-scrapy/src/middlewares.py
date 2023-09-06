@@ -8,7 +8,7 @@ from scrapy.utils.response import response_status_message
 from apify import Actor
 from apify.storages import RequestQueue
 
-from .event_loop_management import nested_event_loop, get_running_event_loop_id, open_queue_with_custom_client
+from .utils import get_running_event_loop_id, nested_event_loop, open_queue_with_custom_client, to_apify_request
 
 
 class ApifyRetryMiddleware(RetryMiddleware):
@@ -63,16 +63,8 @@ class ApifyRetryMiddleware(RetryMiddleware):
         spider: Spider
     ) -> Request | Response:
         Actor.log.debug(f'[{get_running_event_loop_id()}] handle_retry_logic is called...')
-        req_id = request.meta.get('apify_request_id')
-        req_unique_key = request.meta.get('apify_request_unique_key')
-
-        apify_request = {
-            'url': request.url,
-            'method': request.method,
-            'id': req_id.decode('utf-8') if isinstance(req_id, bytes) else req_id,
-            'uniqueKey': req_unique_key.decode('utf-8') if isinstance(req_unique_key, bytes) else req_unique_key,
-            # 'retryCount': ..., # TODO: where to get this from?
-        }
+        apify_request = to_apify_request(request)
+        Actor.log.debug(f'handle_retry_logic: apify_request={apify_request}')
 
         if request.meta.get("dont_retry", False):
             await self._rq.mark_request_as_handled(apify_request)
