@@ -4,12 +4,11 @@ from scrapy.utils.project import get_project_settings
 from apify import Actor
 
 from .spiders.title_spider import TitleSpider
-from .utils import get_running_event_loop_id
 
 
 async def main():
     async with Actor:
-        Actor.log.debug(f'[{get_running_event_loop_id()}] Actor main is being executed...')
+        Actor.log.info('Actor is being executed...')
 
         actor_input = await Actor.get_input() or {}
         max_depth = actor_input.get('max_depth', 1)

@@ -18,8 +18,6 @@ def to_apify_request(scrapy_request: Request) -> dict:
     Returns:
         The converted Apify request.
     """
-    Actor.log.debug(f'[origin] scrapy_request = {vars(scrapy_request)}')
-
     apify_request_id = None
     if scrapy_request.meta.get('apify_request_id'):
         apify_request_id = scrapy_request.meta.pop('apify_request_id')
@@ -42,8 +40,6 @@ def to_apify_request(scrapy_request: Request) -> dict:
     if apify_request_unique_key:
         apify_request['uniqueKey'] = apify_request_unique_key
 
-    Actor.log.debug(f'[returned] apify_request = {apify_request}')
-
     return apify_request
 
 
@@ -57,12 +53,6 @@ def to_scrapy_request(apify_request: dict) -> Request:
     Returns:
         The converted Scrapy request.
     """
-    Actor.log.debug(f'[origin] apify_request = {apify_request}')
-
-    assert isinstance(apify_request['url'], str)
-    assert isinstance(apify_request['id'], str)
-    assert isinstance(apify_request['uniqueKey'], str)
-
     scrapy_request = {
         'url': apify_request['url'],
         'meta': {
@@ -72,12 +62,10 @@ def to_scrapy_request(apify_request: dict) -> Request:
     }
 
     if apify_request.get('method'):
-        assert isinstance(apify_request['method'], str)
         scrapy_request['method'] = apify_request['method']
 
     if apify_request.get('userData'):
         assert isinstance(apify_request['userData'], dict)
-
         if apify_request['userData'].get('meta'):
             assert isinstance(apify_request['userData']['meta'], dict)
             scrapy_request['meta'] = {
@@ -85,9 +73,7 @@ def to_scrapy_request(apify_request: dict) -> Request:
                 **apify_request['userData']['meta'],
             }
 
-    scrapy_request = Request(**scrapy_request)
-    Actor.log.debug(f'[returned] scrapy_request = {vars(scrapy_request)}')
-    return scrapy_request
+    return Request(**scrapy_request)
 
 
 def get_running_event_loop_id() -> int:
@@ -109,7 +95,6 @@ async def open_queue_with_custom_client() -> RequestQueue:
     TODO: add support for custom client to Actor.open_request_queue(), so that
     we don't have to do this hacky workaround
     """
-    Actor.log.debug(f'[{get_running_event_loop_id()}] open_queue_with_custom_client is called...')
     # Create a new Apify Client with its httpx client in the custom event loop
     custom_loop_apify_client = Actor.new_client()
 

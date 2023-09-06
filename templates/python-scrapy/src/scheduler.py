@@ -1,21 +1,13 @@
 import traceback
-import apify_shared
 
 from scrapy import Spider
 from scrapy.core.scheduler import BaseScheduler
 from scrapy.http.request import Request
 from scrapy.utils.reactor import is_asyncio_reactor_installed
 
-from apify import Actor
 from apify.storages import RequestQueue
 
-from .utils import (
-    get_running_event_loop_id,
-    nested_event_loop,
-    open_queue_with_custom_client,
-    to_apify_request,
-    to_scrapy_request,
-)
+from .utils import nested_event_loop, open_queue_with_custom_client, to_apify_request, to_scrapy_request
 
 
 class ApifyScheduler(BaseScheduler):
@@ -32,7 +24,6 @@ class ApifyScheduler(BaseScheduler):
                 'Make sure you have it configured in the TWISTED_REACTOR setting. See the asyncio '
                 'documentation of Scrapy for more information.'
             )
-        Actor.log.debug(f'[{get_running_event_loop_id()}] ApifyScheduler is initializing...')
         self._rq: RequestQueue | None = None
         self.spider: Spider | None = None
 
@@ -43,7 +34,6 @@ class ApifyScheduler(BaseScheduler):
         Args:
             spider: The spider that the scheduler is associated with.
         """
-        Actor.log.debug(f'[{get_running_event_loop_id()}] ApifyScheduler is opening...')
         self.spider = spider
 
         try:
@@ -58,7 +48,6 @@ class ApifyScheduler(BaseScheduler):
         Args:
             reason: The reason for closing the scheduler.
         """
-        Actor.log.debug(f'Apify Scheduler is closing, reason: {reason}...')
         nested_event_loop.stop()
         nested_event_loop.close()
 
@@ -69,8 +58,6 @@ class ApifyScheduler(BaseScheduler):
         Returns:
             True if the scheduler has any pending requests, False otherwise.
         """
-        Actor.log.debug('ApifyScheduler has_pending_requests is called...')
-
         try:
             result = nested_event_loop.run_until_complete(self._rq.is_finished())
         except BaseException:
@@ -88,7 +75,6 @@ class ApifyScheduler(BaseScheduler):
         Returns:
             True if the request was successfully enqueued, False otherwise.
         """
-        Actor.log.debug(f'ApifyScheduler is enqueing a {request}...')
         apify_request = to_apify_request(request)
 
         try:
@@ -105,14 +91,10 @@ class ApifyScheduler(BaseScheduler):
         Returns:
             The next request, or None if there are no more requests.
         """
-        Actor.log.debug('ApifyScheduler is returning a next request...')
-
         try:
             apify_request = nested_event_loop.run_until_complete(self._rq.fetch_next_request())
         except BaseException:
             traceback.print_exc()
-
-        Actor.log.debug(f'ApifyScheduler: apify_request={apify_request}')
 
         if apify_request is None:
             return None
