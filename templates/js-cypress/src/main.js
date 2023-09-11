@@ -11,6 +11,10 @@ import log from '@apify/log';
 // Library for console logging tables
 import 'console.table';
 
+// this is ESM project, and as such, it requires you to specify extensions in your relative imports
+// read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
+// import { router } from './routes.js';
+
 // Helper function to run tests from specific test file with given configuration from INPUT.json
 const runOneSpec = (spec) => cypress.run({ config: input, spec });
 
