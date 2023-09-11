@@ -7,6 +7,8 @@ import { RetrievalQAChain } from 'langchain/chains';
 import { OpenAI } from 'langchain/llms/openai';
 import { rm } from 'node:fs/promises';
 
+// this is ESM project, and as such, it requires you to specify extensions in your relative imports
+// read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 import { retrieveVectorIndex, cacheVectorIndex } from './vector_index_cache.js';
 
 await Actor.init();
