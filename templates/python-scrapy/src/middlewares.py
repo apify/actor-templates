@@ -4,6 +4,7 @@ from scrapy import Spider
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 from scrapy.http import Request, Response
 from scrapy.utils.response import response_status_message
+from scrapy.exceptions import IgnoreRequest
 
 from apify.storages import RequestQueue
 
@@ -40,6 +41,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
         """
         # Robots requests are bypassed directly, they don't go through a Scrapy Scheduler, and also through our
         # Request Queue. Check the scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware for details.
+        assert isinstance(request.url, str)
         if request.url.endswith('robots.txt'):
             return response
 
@@ -49,6 +51,24 @@ class ApifyRetryMiddleware(RetryMiddleware):
             traceback.print_exc()
 
         return returned
+
+    def process_exception(
+        self,
+        request: Request,
+        exception: BaseException,
+        spider: Spider,
+    ) -> None | Response | Request:
+        apify_request = to_apify_request(request)
+
+        if isinstance(exception, IgnoreRequest):
+            try:
+                nested_event_loop.run_until_complete(self._rq.mark_request_as_handled(apify_request))
+            except BaseException:
+                traceback.print_exc()
+        else:
+            nested_event_loop.run_until_complete(self._rq.reclaim_request(apify_request))
+
+        return super().process_exception(request, exception, spider)
 
     async def _handle_retry_logic(
         self,

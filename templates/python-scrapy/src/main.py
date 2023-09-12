@@ -18,7 +18,7 @@ def get_settings(max_depth: int) -> Settings:
     settings['SCHEDULER'] = 'src.scheduler.ApifyScheduler'
     settings['DOWNLOADER_MIDDLEWARES'] = {
         'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
-        'src.middlewares.ApifyRetryMiddleware': 543,
+        'src.middlewares.ApifyRetryMiddleware': 300,  # 300 is a default value for Scrapy's RetryMiddleware
     }
     settings['DEPTH_LIMIT'] = max_depth
     return settings
