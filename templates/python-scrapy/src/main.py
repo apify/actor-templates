@@ -7,7 +7,7 @@ from apify import Actor
 from .spiders.title_spider import TitleSpider
 
 
-def get_settings(max_depth: int) -> Settings:
+def get_scrapy_settings(max_depth: int) -> Settings:
     """
     Get Scrapy project settings.
     """
@@ -32,7 +32,7 @@ async def main():
         actor_input = await Actor.get_input() or {}
         max_depth = actor_input.get('max_depth', 1)
         start_urls = [start_url.get('url') for start_url in actor_input.get('start_urls', [{'url': 'https://apify.com'}])]
-        settings = get_settings(max_depth)
+        settings = get_scrapy_settings(max_depth)
 
         # Add start URLs to the request queue
         rq = await Actor.open_request_queue()
