@@ -39,7 +39,7 @@ async def main():
         for url in start_urls:
             await rq.add_request({'url': url})
 
-        # If you want to run multiple spiders, call `process.crawl` for each of them here
+        # Currently, execution of only one Spider is supported
         process = CrawlerProcess(settings, install_root_handler=False)
         process.crawl(TitleSpider)
         process.start()
