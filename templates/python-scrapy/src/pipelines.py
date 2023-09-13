@@ -2,14 +2,17 @@
 #
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from apify import Actor
 from itemadapter import ItemAdapter
+
+from scrapy import Item, Spider
+
+from apify import Actor
 
 
 # Used to output the items into the actor's default dataset
 # Enabled only when the project is run as an actor
 class ActorDatasetPushPipeline:
-    async def process_item(self, item, spider):
+    async def process_item(self, item: Item, spider: Spider) -> dict:
         item_dict = ItemAdapter(item).asdict()
         await Actor.push_data(item_dict)
         return item

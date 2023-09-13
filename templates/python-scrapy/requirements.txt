@@ -1,10 +1,6 @@
 # Add your dependencies here.
 # See https://pip.pypa.io/en/latest/reference/requirements-file-format/
 # for how to format them
-apify ~= 1.1.3
+apify ~= 1.1.4
 nest-asyncio ~= 1.5.7
-scrapy ~= 2.10.0
-
-# Version >= 23 causes the throwing of the following exception:
-# AttributeError: 'AsyncioSelectorReactor' object has no attribute '_handleSignals'
-Twisted < 23.0.0
+scrapy ~= 2.10.1

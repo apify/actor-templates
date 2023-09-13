@@ -1,16 +1,22 @@
+from typing import Generator
 from urllib.parse import urljoin
 
 import scrapy
+from scrapy.responsetypes import Response
 
-# Scrapes titles pages and enqueues all links it finds on the page
+from apify import Actor
+
+
 class TitleSpider(scrapy.Spider):
+    """
+    Scrapes titles pages and enqueues all links it finds on the page.
+    """
+
     name = 'title_spider'
 
-    def __init__(self, start_urls, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.start_urls = start_urls
+    def parse(self, response: Response) -> Generator[dict, None, None]:
+        Actor.log.info(f'TitleSpider is parsing {response}...')
 
-    def parse(self, response):
         yield {
             'url': response.url,
             'title': response.css('title::text').extract_first(),
