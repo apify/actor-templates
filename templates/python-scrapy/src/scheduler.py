@@ -59,11 +59,11 @@ class ApifyScheduler(BaseScheduler):
             True if the scheduler has any pending requests, False otherwise.
         """
         try:
-            result = nested_event_loop.run_until_complete(self._rq.is_finished())
+            is_finished = nested_event_loop.run_until_complete(self._rq.is_finished())
         except BaseException:
             traceback.print_exc()
 
-        return result
+        return not is_finished
 
     def enqueue_request(self, request: Request) -> bool:
         """
