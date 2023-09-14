@@ -47,6 +47,13 @@ const canNodeTemplateRun = (templateId) => {
 
     const currentNodeVersion = process.version;
     const requiredNodeVersion = packageJson.engines?.node;
+    const requiredBunVersion = packageJson.engines?.bun;
+
+    if (requiredBunVersion && !requiredNodeVersion) {
+        console.log(`Skipping ${templateId} because it can only be run unsing bun.`);
+        return false;
+    }
+
     if (requiredNodeVersion && !semver.satisfies(currentNodeVersion, requiredNodeVersion)) {
         console.log(`Skipping ${templateId} because it requires Node.js ${requiredNodeVersion} and you have ${currentNodeVersion}`);
         return false;
