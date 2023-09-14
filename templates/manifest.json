@@ -515,7 +515,6 @@
             "label": "Start with TypeScript on Bun",
             "category": "typescript",
             "technologies": [
-                "typescript",
                 "bun",
                 "cheerio",
                 "axios"
