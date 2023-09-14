@@ -24,6 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # TODO: Also replace links in manifest.json
       - name: Build template archives
         run: npm run build
 
