@@ -510,17 +510,18 @@
             ]
         },
         {
-            "id": "bun-start",
-            "name": "getting_started_bun",
-            "label": "Start with Bun",
-            "category": "bun",
+            "id": "ts-start-bun",
+            "name": "getting_started_typescript_bun",
+            "label": "Start with TypeScript on Bun",
+            "category": "typescript",
             "technologies": [
+                "typescript",
                 "bun",
                 "cheerio",
                 "axios"
             ],
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/feature/bun-templates/dist/templates/bun-start.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/feature/bun-templates/dist/templates/ts-start-bun.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
