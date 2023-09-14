@@ -1,0 +1,12 @@
+{
+    "actorSpecification": 1,
+    "name": "ts-start-bun",
+    "title": "Scrape single page in TypeScript on Bun",
+    "description": "Scrapes data using TypeScript from a given single page. In comparison to the original TypeScript template, it uses a highly performing Bun runtime.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "ts-start-bun"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}
