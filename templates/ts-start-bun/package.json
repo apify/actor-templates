@@ -12,9 +12,7 @@
         "cheerio": "^1.0.0-rc.12"
     },
     "devDependencies": {
-        "@apify/tsconfig": "^0.1.0",
-        "ts-node": "^10.9.1",
-        "typescript": "^5.0.4"
+        "@apify/tsconfig": "^0.1.0"
     },
     "scripts": {
         "start": "bun src/main.ts",
