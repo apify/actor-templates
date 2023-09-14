@@ -1,0 +1,12 @@
+{
+    "actorSpecification": 1,
+    "name": "bun-start",
+    "title": "Scrape single page in Bun",
+    "description": "Scrape data from single page with provided URL.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "bun-start"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}

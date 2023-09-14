@@ -1,0 +1,15 @@
+{
+    "title": "Scrape data from a web page",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "url": {
+        "title": "URL of the page",
+        "type": "string",
+        "description": "The URL of website you want to get the data from.",
+        "editor": "textfield",
+        "prefill": "https://www.apify.com"
+        }
+    },
+    "required": ["url"]
+}
