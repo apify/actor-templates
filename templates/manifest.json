@@ -508,6 +508,31 @@
                 "src/main.js",
                 "src/vector_index_cache.js"
             ]
+        },
+        {
+            "id": "bun-start",
+            "name": "getting_started_bun",
+            "label": "Start with Bun",
+            "category": "bun",
+            "technologies": [
+                "bun",
+                "cheerio",
+                "axios"
+            ],
+            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/bun-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
+            },
+            "showcaseFiles": [
+                "src/main.ts"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
+            ]
         }
     ]
 }
