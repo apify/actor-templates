@@ -13,3 +13,4 @@ SPIDER_MODULES = ['src.spiders']
 NEWSPIDER_MODULE = 'src.spiders'
 REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
 ROBOTSTXT_OBEY = True  # obey robots.txt rules
+ITEM_PIPELINES = {'src.pipelines.TitleItemPipeline': 123}

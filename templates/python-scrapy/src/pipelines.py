@@ -11,4 +11,4 @@ class TitleItemPipeline:
 
     def process_item(self, item: TitleItem, spider: scrapy.Spider) -> TitleItem:
         # Do something with the item here, such as cleaning it or persisting it to a database
-        pass
+        return item

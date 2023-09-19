@@ -12,14 +12,14 @@ def _get_scrapy_settings(max_depth: int) -> Settings:
     Get Scrapy project settings.
     """
     settings = get_project_settings()
-    settings['ITEM_PIPELINES'] = {
-        'src.apify.pipelines.ActorDatasetPushPipeline': 1,  # we need the lowest priority here
-    }
+    # Add our Actor Push Pipeline with the lowest priority
+    settings['ITEM_PIPELINES']['src.apify.pipelines.ActorDatasetPushPipeline'] = 1
+    # Disable default Retry Middleware
+    settings['DOWNLOADER_MIDDLEWARES']['scrapy.downloadermiddlewares.retry.RetryMiddleware'] = None
+    # Add our custom Retry Middleware with the top priority
+    settings['DOWNLOADER_MIDDLEWARES']['src.apify.middlewares.ApifyRetryMiddleware'] = 999
+    # Add our custom Scheduler
     settings['SCHEDULER'] = 'src.apify.scheduler.ApifyScheduler'
-    settings['DOWNLOADER_MIDDLEWARES'] = {
-        'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
-        'src.apify.middlewares.ApifyRetryMiddleware': 999,  # we need the top priority here
-    }
     settings['DEPTH_LIMIT'] = max_depth
     return settings
 
