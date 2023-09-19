@@ -133,10 +133,12 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
+                "src/apify/main.py",
+                "src/spiders/title_spider.py",
                 "src/__main__.py",
-                "src/main.py",
+                "src/items.py",
                 "src/pipelines.py",
-                "src/spiders/title_spider.py"
+                "src/settings.py"
             ],
             "useCases": [
                 "WEB_SCRAPING"

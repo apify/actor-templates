@@ -1,18 +1,14 @@
 # Define your item pipelines here
 #
-# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+# See the Scrapy documentation: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from itemadapter import ItemAdapter
+import scrapy
 
-from scrapy import Item, Spider
-
-from apify import Actor
+from .items import TitleItem
 
 
-# Used to output the items into the actor's default dataset
-# Enabled only when the project is run as an actor
-class ActorDatasetPushPipeline:
-    async def process_item(self, item: Item, spider: Spider) -> dict:
-        item_dict = ItemAdapter(item).asdict()
-        await Actor.push_data(item_dict)
+class TitleItemPipeline:
+
+    def process_item(self, item: TitleItem, spider: scrapy.Spider) -> TitleItem:
+        # Do something with the item here, such as cleaning it or persisting it to a database
         return item
