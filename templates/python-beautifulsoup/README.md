@@ -26,9 +26,13 @@ This code is a Python script that uses Requests and Beautiful Soup to scrape web
 ## Resources
 
 - [BeautifulSoup Scraper](https://apify.com/apify/beautifulsoup-scraper)
+- [Beautifulsoup Scraper tutorial](https://www.youtube.com/watch?v=1KqLLuIW6MA) 
 - [Python tutorials in Academy](https://docs.apify.com/academy/python)
 - [Web scraping with Beautiful Soup and Requests](https://blog.apify.com/web-scraping-with-beautiful-soup/)
 - [Beautiful Soup vs. Scrapy for web scraping](https://blog.apify.com/beautiful-soup-vs-scrapy-web-scraping/)
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive, and others
 - [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - [Video introduction to Python SDK](https://www.youtube.com/watch?v=C8DmvJQS3jk)
+
+**A short guide on how to build web scrapers using code templates:**
+[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
