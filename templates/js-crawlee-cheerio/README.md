@@ -25,3 +25,7 @@ This code is a JavaScript script that uses Cheerio to scrape data from a website
 - How to [scrape a dynamic page](https://blog.apify.com/what-is-a-dynamic-page/) using Cheerio
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive and others
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+
+**A short guide on how to create Actors using code templates:**
+[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
+
