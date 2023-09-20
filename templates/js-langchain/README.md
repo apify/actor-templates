@@ -47,6 +47,8 @@ For production use, we recommend you to:
 - [How to use LangChain with OpenAI, Pinecone, and Apify](https://blog.apify.com/how-to-use-langchain/)
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive and others
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+- A short guide on [how to create web scrapers using code templates](https://www.youtube.com/watch?v=u-i-Korzf8w)
+
 <br>
 [langchain content crawler](https://www.youtube.com/watch?v=8uvHH-ocSes)
 
