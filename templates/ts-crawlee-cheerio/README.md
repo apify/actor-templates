@@ -26,3 +26,6 @@ This code is a TypeScript script that uses [Crawlee CheerioCralwer](https://craw
 - [TypeScript vs. JavaScript: which to use for web scraping?](https://blog.apify.com/typescript-vs-javascript-crawler/)
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive and others
 - [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+
+**A short guide on how to build web scrapers using code templates:**
+[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)

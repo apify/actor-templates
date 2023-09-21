@@ -34,3 +34,7 @@ The scraped data in this template are page headings but you can easily edit the 
 - [Written tutorial](https://docs.apify.com/academy/web-scraping-for-beginners/challenge) on building a scraper using CheerioCrawler
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive, and others
 - [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+
+**A short guide on how to build web scrapers using code templates:**
+[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
+

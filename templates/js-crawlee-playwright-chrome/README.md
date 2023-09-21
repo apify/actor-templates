@@ -16,3 +16,6 @@ If you're looking for examples or want to learn more visit:
 - [How to scale Puppeteer and Playwright](https://blog.apify.com/how-to-scale-puppeteer-and-playwright/)
 - [Integration with Zapier](https://apify.com/integrations), Make, GitHub, Google Drive and other apps
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+
+**A short guide on how to create Actors using code templates:**
+[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)

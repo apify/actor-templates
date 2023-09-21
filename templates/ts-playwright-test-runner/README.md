@@ -52,5 +52,6 @@ The code generator will automatically create a test suite file for you and save 
 - [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - [Integration with Make](https://apify.com/integrations), GitHub, Zapier, Google Drive, and other apps
 - Video tutorial on how to run end-to-end Playwright tests
+- A short guide on [how to build web scrapers using code templates](https://www.youtube.com/watch?v=u-i-Korzf8w)
 
 [Video tutorial on how to run end-to-end Playwright tests](https://www.youtube.com/watch?v=V5DEx5x7I0w)

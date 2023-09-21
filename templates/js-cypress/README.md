@@ -24,3 +24,6 @@ After running the tests, the Apify platform stores the results in a comprehensiv
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive and others
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+
+**A short guide on how to create Actors using code templates:**
+[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
