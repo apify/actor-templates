@@ -4,20 +4,20 @@
     "type": "module",
     "description": "This is a boilerplate of an Apify actor.",
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=18.0.0"
     },
     "dependencies": {
-        "apify": "^3.1.8",
-        "crawlee": "^3.5.0"
+        "apify": "^3.1.10",
+        "crawlee": "^3.5.4"
     },
     "devDependencies": {
-        "@apify/eslint-config-ts": "^0.2.3",
+        "@apify/eslint-config-ts": "^0.3.0",
         "@apify/tsconfig": "^0.1.0",
-        "@typescript-eslint/eslint-plugin": "^5.55.0",
-        "@typescript-eslint/parser": "^5.55.0",
-        "eslint": "^8.36.0",
+        "@typescript-eslint/eslint-plugin": "^6.7.2",
+        "@typescript-eslint/parser": "^6.7.2",
+        "eslint": "^8.50.0",
         "ts-node": "^10.9.1",
-        "typescript": "^5.0.4"
+        "typescript": "^5.2.2"
     },
     "scripts": {
         "start": "npm run start:dev",

@@ -7,8 +7,8 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "apify": "^3.1.4",
-        "crawlee": "^3.3.2"
+        "apify": "^3.1.10",
+        "crawlee": "^3.5.4"
     },
     "scripts": {
         "start": "node ./src/main.js",
