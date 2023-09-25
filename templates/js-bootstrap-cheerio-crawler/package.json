@@ -4,15 +4,15 @@
     "type": "module",
     "description": "A skeleton project to bootstrap development with CheerioCrawler.",
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=18.0.0"
     },
     "dependencies": {
-        "apify": "^3.1.4",
-        "crawlee": "^3.3.2"
+        "apify": "^3.1.10",
+        "crawlee": "^3.5.4"
     },
     "devDependencies": {
-        "@apify/eslint-config": "^0.3.3",
-        "eslint": "^8.41.0"
+        "@apify/eslint-config": "^0.4.0",
+        "eslint": "^8.50.0"
     },
     "scripts": {
         "start": "node src/main.js",
