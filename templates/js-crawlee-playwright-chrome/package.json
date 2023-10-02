@@ -16,7 +16,8 @@
         "start": "node src/main.js",
         "lint": "eslint ./src --ext .js,.jsx",
         "lint:fix": "eslint ./src --ext .js,.jsx --fix",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
+        "postinstall": "npx crawlee install-playwright-browsers"
     },
     "author": "It's not you it's me",
     "license": "ISC"
