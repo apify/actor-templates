@@ -4,18 +4,21 @@
 # We need to configure the logging first before we import anything else,
 # so that nothing else imports `scrapy.utils.log` before we patch it.
 import logging
-from apify.log import ActorLogFormatter
 import scrapy.utils.log
+from apify.log import ActorLogFormatter
+
+# If you want to change the logging level, change it here
+LOGGING_LEVEL = logging.INFO
 
 handler = logging.StreamHandler()
-handler.setFormatter(ActorLogFormatter())
+handler.setFormatter(ActorLogFormatter(include_logger_name=True))
 
 apify_logger = logging.getLogger('apify')
-apify_logger.setLevel(logging.DEBUG)
+apify_logger.setLevel(LOGGING_LEVEL)
 apify_logger.addHandler(handler)
 
 apify_client_logger = logging.getLogger('apify_client')
-apify_client_logger.setLevel(logging.DEBUG)
+apify_client_logger.setLevel(LOGGING_LEVEL)
 apify_client_logger.addHandler(handler)
 
 
@@ -31,11 +34,24 @@ old_configure_logging = scrapy.utils.log.configure_logging
 def new_configure_logging(*args, **kwargs):
     old_configure_logging(*args, **kwargs)
 
-    # Scrapy uses these four main loggers: https://github.com/scrapy/scrapy/blob/a5c1ef82762c6c0910abea00c0a6249c40005e44/scrapy/utils/log.py#L44-L61
-    logging.getLogger('scrapy').addHandler(handler)
-    logging.getLogger('twisted').addHandler(handler)
-    logging.getLogger('filelock').addHandler(handler)
-    logging.getLogger('hpack').addHandler(handler)
+    # Scrapy uses these four main loggers:
+    # https://github.com/scrapy/scrapy/blob/a5c1ef82762c6c0910abea00c0a6249c40005e44/scrapy/utils/log.py#L44-L61
+    scrapy_logger = logging.getLogger('scrapy')
+    twisted_logger = logging.getLogger('twisted')
+    filelock_logger = logging.getLogger('filelock')
+    hpack_logger = logging.getLogger('hpack')
+
+    # Set handlers
+    scrapy_logger.addHandler(handler)
+    twisted_logger.addHandler(handler)
+    filelock_logger.addHandler(handler)
+    hpack_logger.addHandler(handler)
+
+    # Set levels
+    scrapy_logger.setLevel(LOGGING_LEVEL)
+    twisted_logger.setLevel(LOGGING_LEVEL)
+    filelock_logger.setLevel(LOGGING_LEVEL)
+    hpack_logger.setLevel(LOGGING_LEVEL)
 
 scrapy.utils.log.configure_logging = new_configure_logging
 
@@ -43,9 +59,7 @@ scrapy.utils.log.configure_logging = new_configure_logging
 # Now we can do the rest of the setup
 import asyncio
 import os
-
 import nest_asyncio
-
 from scrapy.utils.reactor import install_reactor
 from .apify.main import main
 
