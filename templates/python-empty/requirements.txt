@@ -1,2 +1,2 @@
-apify ~= 1.1.4
+apify ~= 1.1.5
 beautifulsoup4 ~= 4.12.0
