@@ -2,9 +2,9 @@ import traceback
 
 from scrapy import Spider
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
+from scrapy.exceptions import IgnoreRequest
 from scrapy.http import Request, Response
 from scrapy.utils.response import response_status_message
-from scrapy.exceptions import IgnoreRequest
 
 from apify.storages import RequestQueue
 
@@ -74,7 +74,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
         self,
         request: Request,
         response: Response,
-        spider: Spider
+        spider: Spider,
     ) -> Request | Response:
         apify_request = to_apify_request(request)
 
