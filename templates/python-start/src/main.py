@@ -1,9 +1,11 @@
-# Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/python).
-from apify import Actor
 # Requests - library for making HTTP requests in Python (Read more at https://requests.readthedocs.io)
 import requests
 # Beautiful Soup - library for pulling data out of HTML and XML files (Read more at https://www.crummy.com/software/BeautifulSoup/bs4/doc)
 from bs4 import BeautifulSoup
+
+# Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/python).
+from apify import Actor
+
 
 async def main():
     async with Actor:
@@ -20,7 +22,7 @@ async def main():
         # Extract all headings from the page (tag name and text).
         headings = []
         for heading in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
-            heading_object = { 'level': heading.name, 'text': heading.text }
+            heading_object = {'level': heading.name, 'text': heading.text}
             print('Extracted heading', heading_object)
             headings.append(heading_object)
 
