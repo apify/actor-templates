@@ -22,7 +22,7 @@ class ApifyScheduler(BaseScheduler):
             raise ValueError(
                 f'{ApifyScheduler.__qualname__} requires the asyncio Twisted reactor. '
                 'Make sure you have it configured in the TWISTED_REACTOR setting. See the asyncio '
-                'documentation of Scrapy for more information.'
+                'documentation of Scrapy for more information.',
             )
         self._rq: RequestQueue | None = None
         self.spider: Spider | None = None

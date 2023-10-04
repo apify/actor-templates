@@ -1,5 +1,4 @@
 from itemadapter import ItemAdapter
-
 from scrapy import Item, Spider
 
 from apify import Actor

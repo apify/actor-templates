@@ -1,7 +1,8 @@
 from urllib.parse import urljoin
 
-from apify import Actor
 from playwright.async_api import async_playwright
+
+from apify import Actor
 
 # To run this Actor locally, you need to have the Playwright browsers installed.
 # Run `playwright install --with-deps` in the Actor's virtual environment to install them.
@@ -12,7 +13,7 @@ async def main():
     async with Actor:
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [{ 'url': 'https://apify.com' }])
+        start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
         if not start_urls:
@@ -24,7 +25,7 @@ async def main():
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            await default_queue.add_request({ 'url': url, 'userData': { 'depth': 0 }})
+            await default_queue.add_request({'url': url, 'userData': {'depth': 0}})
 
         # Launch Playwright an open a new browser context
         Actor.log.info('Launching Playwright...')
@@ -53,13 +54,13 @@ async def main():
                                 Actor.log.info(f'Enqueuing {link_url} ...')
                                 await default_queue.add_request({
                                     'url': link_url,
-                                    'userData': {'depth': depth + 1 },
+                                    'userData': {'depth': depth + 1},
                                 })
 
                     # Push the title of the page into the default dataset
                     title = await page.title()
-                    await Actor.push_data({ 'url': url, 'title': title })
-                except:
+                    await Actor.push_data({'url': url, 'title': title})
+                except Exception:
                     Actor.log.exception(f'Cannot extract data from {url}.')
                 finally:
                     await page.close()
