@@ -1,14 +1,16 @@
 from urllib.parse import urljoin
 
 import requests
-from apify import Actor
 from bs4 import BeautifulSoup
+
+from apify import Actor
+
 
 async def main():
     async with Actor:
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [{ 'url': 'https://apify.com' }])
+        start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
         if not start_urls:
@@ -20,7 +22,7 @@ async def main():
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            await default_queue.add_request({ 'url': url, 'userData': { 'depth': 0 }})
+            await default_queue.add_request({'url': url, 'userData': {'depth': 0}})
 
         # Process the requests in the queue one by one
         while request := await default_queue.fetch_next_request():
@@ -43,13 +45,13 @@ async def main():
                             Actor.log.info(f'Enqueuing {link_url} ...')
                             await default_queue.add_request({
                                 'url': link_url,
-                                'userData': {'depth': depth + 1 },
+                                'userData': {'depth': depth + 1},
                             })
 
                 # Push the title of the page into the default dataset
                 title = soup.title.string if soup.title else None
-                await Actor.push_data({ 'url': url, 'title': title })
-            except:
+                await Actor.push_data({'url': url, 'title': title})
+            except Exception:
                 Actor.log.exception(f'Cannot extract data from {url}.')
             finally:
                 # Mark the request as handled so it's not processed again
