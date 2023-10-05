@@ -18,14 +18,14 @@ async def main():
             await Actor.exit()
 
         # Enqueue the starting URLs in the default request queue
-        rq = await Actor.open_request_queue()
+        default_queue = await Actor.open_request_queue()
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            await rq.add_request({'url': url, 'userData': {'depth': 0}})
+            await default_queue.add_request({'url': url, 'userData': {'depth': 0}})
 
         # Process the requests in the queue one by one
-        while request := await rq.fetch_next_request():
+        while request := await default_queue.fetch_next_request():
             url = request['url']
             depth = request['userData']['depth']
             Actor.log.info(f'Scraping {url} ...')
@@ -38,14 +38,15 @@ async def main():
                 # Parse the response using `BeautifulSoup`
                 soup = BeautifulSoup(response.content, 'html.parser')
 
-                # If we haven't reached the max depth, look for nested links and enqueue their targets
+                # If we haven't reached the max depth,
+                # look for nested links and enqueue their targets
                 if depth < max_depth:
                     for link in soup.find_all('a'):
                         link_href = link.get('href')
                         link_url = urljoin(url, link_href)
                         if link_url.startswith(('http://', 'https://')):
                             Actor.log.info(f'Enqueuing {link_url} ...')
-                            await rq.add_request({
+                            await default_queue.add_request({
                                 'url': link_url,
                                 'userData': {'depth': depth + 1},
                             })
@@ -53,10 +54,8 @@ async def main():
                 # Push the title of the page into the default dataset
                 title = soup.title.string if soup.title else None
                 await Actor.push_data({'url': url, 'title': title})
-
             except Exception:
                 Actor.log.exception(f'Cannot extract data from {url}.')
-
             finally:
                 # Mark the request as handled so it's not processed again
-                await rq.mark_request_as_handled(request)
+                await default_queue.mark_request_as_handled(request)
