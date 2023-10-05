@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 
-import requests
 from bs4 import BeautifulSoup
+from httpx import AsyncClient
 
 from apify import Actor
 
@@ -31,8 +31,11 @@ async def main():
             Actor.log.info(f'Scraping {url} ...')
 
             try:
-                # Fetch the URL using `requests` and parse it using `BeautifulSoup`
-                response = requests.get(url)
+                # Fetch the URL using `httpx`
+                async with AsyncClient() as client:
+                    response = await client.get(url)
+
+                # Parse the response using `BeautifulSoup`
                 soup = BeautifulSoup(response.content, 'html.parser')
 
                 # If we haven't reached the max depth,
