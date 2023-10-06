@@ -16,7 +16,7 @@ This template is useful when you're already familiar with the [Apify SDK](https:
 - [Node.js tutorials](https://docs.apify.com/academy/node-js) in Academy
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - [Integration with Make](https://apify.com/integrations), GitHub, Zapier, Google Drive, and other apps
+- A short guide on how to create Actors using code templates:
 
-**A short guide on how to create Actors using code templates:**
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
 
