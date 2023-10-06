@@ -15,6 +15,6 @@
 - [How to scale Puppeteer and Playwright](https://blog.apify.com/how-to-scale-puppeteer-and-playwright/)
 - [Integration with Zapier](https://apify.com/integrations), Make, GitHub, Google Drive and other apps
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+- A short guide on how to build web scrapers using code templates:
 
-**A short guide on how to build web scrapers using code templates:**
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
