@@ -29,6 +29,6 @@ This code is a Python script that uses Selenium to scrape web pages and extract 
 - [Cypress vs. Selenium for web testing](https://blog.apify.com/cypress-vs-selenium/)
 - [Python tutorials in Academy](https://docs.apify.com/academy/python)
 - [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+- A short guide on how to build web scrapers using code templates:
 
-**A short guide on how to build web scrapers using code templates:**
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
