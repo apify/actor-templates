@@ -17,6 +17,6 @@ Insert your own code between `await Actor.init()` and `await Actor.exit()`. If y
 - [Node.js tutorials](https://docs.apify.com/academy/node-js) in Academy
 - [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - [Integration with Airbyte](https://apify.com/integrations), Make, Zapier, Google Drive, and other apps
+- A short guide on how to build web scrapers using code templates:
 
-**A short guide on how to build web scrapers using code templates:**
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
