@@ -33,6 +33,6 @@ This code is a Python script that uses HTTPX and Beautiful Soup to scrape web pa
 - [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)
 - [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - [Video introduction to Python SDK](https://www.youtube.com/watch?v=C8DmvJQS3jk)
+- A short guide on how to build web scrapers using code templates:
 
-**A short guide on how to build web scrapers using code templates:**
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
