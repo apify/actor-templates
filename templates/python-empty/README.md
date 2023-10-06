@@ -18,6 +18,6 @@ Insert your own code to `async with Actor:` block. You can use the [Apify SDK](h
 - [Python tutorials in Academy](https://docs.apify.com/academy/python)
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)
+- A short guide on how to build web scrapers using code templates:
 
-**A short guide on how to build web scrapers using code templates:**
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
