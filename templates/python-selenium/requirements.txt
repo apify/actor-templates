@@ -1,5 +1,5 @@
 # Add your dependencies here.
 # See https://pip.pypa.io/en/latest/reference/requirements-file-format/
 # for how to format them
-apify ~= 1.1.5
-selenium ~= 4.9.1
+apify ~= 1.2.0
+selenium ~= 4.14.0
