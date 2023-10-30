@@ -2,10 +2,13 @@
 #
 # See the Scrapy documentation: http://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from scrapy import Field, Item
 
 
-class TitleItem(scrapy.Item):
-    # Define the fields for your item here
-    url = scrapy.Field()
-    title = scrapy.Field()
+class TitleItem(Item):
+    """
+    Represents a title item scraped from a web page.
+    """
+
+    url = Field()
+    title = Field()

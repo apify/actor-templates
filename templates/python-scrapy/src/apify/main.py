@@ -4,7 +4,7 @@ from scrapy.utils.project import get_project_settings
 
 from apify import Actor
 
-from ..spiders.title_spider import TitleSpider
+from ..spiders.title import TitleSpider as Spider
 
 
 def _get_scrapy_settings(max_depth: int) -> Settings:
@@ -24,7 +24,7 @@ def _get_scrapy_settings(max_depth: int) -> Settings:
     return settings
 
 
-async def main():
+async def main() -> None:
     async with Actor:
         Actor.log.info('Actor is being executed...')
 
@@ -41,5 +41,5 @@ async def main():
 
         # Currently, execution of only one Spider is supported
         process = CrawlerProcess(settings, install_root_handler=False)
-        process.crawl(TitleSpider)
+        process.crawl(Spider)
         process.start()
