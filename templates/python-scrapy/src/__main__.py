@@ -14,11 +14,11 @@ handler = logging.StreamHandler()
 handler.setFormatter(ActorLogFormatter(include_logger_name=True))
 
 apify_logger = logging.getLogger('apify')
-apify_logger.setLevel(LOGGING_LEVEL)
+apify_logger.setLevel(logging.DEBUG)
 apify_logger.addHandler(handler)
 
 apify_client_logger = logging.getLogger('apify_client')
-apify_client_logger.setLevel(LOGGING_LEVEL)
+apify_client_logger.setLevel(logging.DEBUG)
 apify_client_logger.addHandler(handler)
 
 

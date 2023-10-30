@@ -1,3 +1,4 @@
+from operator import call
 from typing import Generator, Union
 from urllib.parse import urljoin
 
@@ -16,7 +17,6 @@ class TitleSpider(Spider):
 
     name = 'title_spider'
 
-
     def parse(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
         """
         Parse the web page response.
@@ -34,8 +34,17 @@ class TitleSpider(Spider):
         title = response.css('title::text').extract_first()
         yield TitleItem(url=url, title=title)
 
-        # Extract all links from the page, create Requests out of them, and yield them
-        for link_href in response.css('a::attr("href")'):
-            link_url = urljoin(response.url, link_href.get())
-            if link_url.startswith(('http://', 'https://')):
-                yield Request(link_url)
+        # Yield a single request for testing purposes
+        yield Request('https://www.example.com', callback=self.foo)
+
+        # # Extract all links from the page, create Requests out of them, and yield them
+        # for link_href in response.css('a::attr("href")'):
+        #     link_url = urljoin(response.url, link_href.get())
+        #     if link_url.startswith(('http://', 'https://')):
+        #         yield Request(link_url, callback=self.foo)
+
+    def foo(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
+        Actor.log.info(f'foo is parsing {response}...')
+        url = response.url
+        title = response.css('title::text').extract_first()
+        yield TitleItem(url=url, title=f'foo: {title}')

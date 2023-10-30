@@ -6,6 +6,7 @@ from scrapy.exceptions import IgnoreRequest
 from scrapy.http import Request, Response
 from scrapy.utils.response import response_status_message
 
+from apify import Actor
 from apify.storages import RequestQueue
 
 from .utils import nested_event_loop, open_queue_with_custom_client, to_apify_request
@@ -23,7 +24,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
         except BaseException:
             traceback.print_exc()
 
-    def __del__(self):
+    def __del__(self) -> None:
         nested_event_loop.stop()
         nested_event_loop.close()
 
@@ -58,6 +59,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
         exception: BaseException,
         spider: Spider,
     ) -> None | Response | Request:
+        Actor.log.debug(f'ApifyRetryMiddleware.process_exception was called (scrapy_request={request})...')
         apify_request = to_apify_request(request)
 
         if isinstance(exception, IgnoreRequest):
@@ -76,6 +78,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
         response: Response,
         spider: Spider,
     ) -> Request | Response:
+        Actor.log.debug(f'ApifyRetryMiddleware.handle_retry_logic was called (scrapy_request={request})...')
         apify_request = to_apify_request(request)
 
         if request.meta.get('dont_retry', False):

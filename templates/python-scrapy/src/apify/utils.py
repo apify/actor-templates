@@ -1,4 +1,7 @@
 import asyncio
+from typing import Dict
+import string
+import random
 
 from scrapy import Request
 
@@ -6,6 +9,14 @@ from apify import Actor
 from apify.storages import RequestQueue, StorageClientManager
 
 nested_event_loop: asyncio.AbstractEventLoop = asyncio.new_event_loop()
+
+scrapy_requests_cache: Dict[str, Request] = {}
+
+
+def get_random_id(length=6):
+    characters = string.ascii_letters + string.digits
+    random_id = ''.join(random.choice(characters) for _ in range(length))
+    return random_id
 
 
 def to_apify_request(scrapy_request: Request) -> dict:
@@ -18,6 +29,21 @@ def to_apify_request(scrapy_request: Request) -> dict:
     Returns:
         The converted Apify request.
     """
+    call_id = get_random_id()
+    Actor.log.debug(f'[{call_id}]: to_apify_request was called (scrapy_request={scrapy_request})...')
+    Actor.log.debug(f'[{call_id}]: scrapy_requests_cache={scrapy_requests_cache}')
+
+    # Store the scrapy_request to the cache
+    Actor.log.debug(f'[{call_id}]: adding scrapy_request to the cache')
+    scrapy_requests_cache[scrapy_request.url] = scrapy_request
+
+    # if scrapy_request.url in scrapy_requests_cache:
+    #     Actor.log.debug(f'[{call_id}]: scrapy request should be already present in the cache')
+    # else:
+    #     Actor.log.debug(f'[{call_id}]: scrapy request is not present in the cache, adding it to it')
+    #     scrapy_requests_cache[scrapy_request.url] = scrapy_request
+
+    # Transform Scrapy Request into Apify request
     apify_request_id = None
     if scrapy_request.meta.get('apify_request_id'):
         apify_request_id = scrapy_request.meta.pop('apify_request_id')
@@ -40,6 +66,8 @@ def to_apify_request(scrapy_request: Request) -> dict:
     if apify_request_unique_key:
         apify_request['uniqueKey'] = apify_request_unique_key
 
+    Actor.log.debug(f'[{call_id}]: scrapy_request was converted to the apify_request={apify_request}')
+    Actor.log.debug(f'[{call_id}]: scrapy_requests_cache={scrapy_requests_cache}')
     return apify_request
 
 
@@ -53,27 +81,64 @@ def to_scrapy_request(apify_request: dict) -> Request:
     Returns:
         The converted Scrapy request.
     """
-    scrapy_request = {
-        'url': apify_request['url'],
-        'meta': {
-            'apify_request_id': apify_request['id'],
-            'apify_request_unique_key': apify_request['uniqueKey'],
-        },
-    }
+    call_id = get_random_id()
+    Actor.log.debug(f'[{call_id}]: to_scrapy_request was called (apify_request={apify_request})...')
+    Actor.log.debug(f'[{call_id}]: scrapy_requests_cache={scrapy_requests_cache}')
 
-    if apify_request.get('method'):
-        scrapy_request['method'] = apify_request['method']
+    url = apify_request['url']
 
-    if apify_request.get('userData'):
-        assert isinstance(apify_request['userData'], dict)
-        if apify_request['userData'].get('meta'):
-            assert isinstance(apify_request['userData']['meta'], dict)
-            scrapy_request['meta'] = {
-                **scrapy_request['meta'],
-                **apify_request['userData']['meta'],
+    if url in scrapy_requests_cache:
+        scrapy_request = scrapy_requests_cache[url]
+        if scrapy_request.meta is None:
+            scrapy_request.meta = {
+                'apify_request_id': apify_request['id'],
+                'apify_request_unique_key': apify_request['uniqueKey'],
             }
+        else:
+            scrapy_request.meta['apify_request_id'] = apify_request['id']
+            scrapy_request.meta['apify_request_unique_key'] = apify_request['uniqueKey']
 
-    return Request(**scrapy_request)
+        scrapy_requests_cache[url] = scrapy_request
+
+        Actor.log.debug(
+            f'[{call_id}]: apify request url was found in the scrapy_requests_cache, taking scrapy request from it'
+        )
+
+    else:
+        Actor.log.debug(
+            f'[{call_id}]: apify request url was NOT found in the scrapy_requests_cache, creating a new scrapy request'
+        )
+        scrapy_request_dict = {
+            'url': apify_request['url'],
+            'meta': {
+                'apify_request_id': apify_request['id'],
+                'apify_request_unique_key': apify_request['uniqueKey'],
+            },
+        }
+
+        if apify_request.get('method'):
+            scrapy_request_dict['method'] = apify_request['method']
+
+        if apify_request.get('userData'):
+            assert isinstance(apify_request['userData'], dict)
+            if apify_request['userData'].get('meta'):
+                assert isinstance(apify_request['userData']['meta'], dict)
+                scrapy_request_dict['meta'] = {
+                    **scrapy_request_dict['meta'],
+                    **apify_request['userData']['meta'],
+                }
+        scrapy_request = Request(**scrapy_request_dict)
+
+        # Store the scrapy_request to the cache
+        # if scrapy_request.url in scrapy_requests_cache:
+        #     Actor.log.debug(f'[{call_id}]: scrapy request should be already present in the cache')
+        # else:
+        Actor.log.debug(f'[{call_id}]: adding scrapy_request to the cache')
+        scrapy_requests_cache[scrapy_request.url] = scrapy_request
+
+    Actor.log.debug(f'[{call_id}]: an apify_request was converted to the scrapy_request={scrapy_request}')
+    Actor.log.debug(f'[{call_id}]: scrapy_requests_cache={scrapy_requests_cache}')
+    return scrapy_request
 
 
 def get_running_event_loop_id() -> int:
@@ -108,7 +173,8 @@ async def open_queue_with_custom_client() -> RequestQueue:
 
     if Actor.config.is_at_home:
         rq._request_queue_client = custom_loop_apify_client.request_queue(
-            rq._id, client_key=rq._client_key,
+            rq._id,
+            client_key=rq._client_key,
         )
 
     # Restore the old Apify Client as the default client
