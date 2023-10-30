@@ -13,5 +13,6 @@ class ActorDatasetPushPipeline:
 
     async def process_item(self, item: Item, spider: Spider) -> Item:
         item_dict = ItemAdapter(item).asdict()
+        Actor.log.debug(f'Pushing item to the dataset: {item_dict}')
         await Actor.push_data(item_dict)
         return item
