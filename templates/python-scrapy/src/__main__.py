@@ -8,7 +8,7 @@ import scrapy.utils.log
 from apify.log import ActorLogFormatter
 
 # If you want to change the logging level, change it here
-LOGGING_LEVEL = logging.DEBUG
+LOGGING_LEVEL = logging.INFO
 
 handler = logging.StreamHandler()
 handler.setFormatter(ActorLogFormatter(include_logger_name=True))

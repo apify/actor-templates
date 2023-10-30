@@ -1,7 +1,7 @@
 import asyncio
-from typing import Dict
-import string
 import random
+import string
+from typing import Dict
 
 from scrapy import Request
 
@@ -10,13 +10,37 @@ from apify.storages import RequestQueue, StorageClientManager
 
 nested_event_loop: asyncio.AbstractEventLoop = asyncio.new_event_loop()
 
+# Cache for storing Scrapy requests
 scrapy_requests_cache: Dict[str, Request] = {}
 
 
-def get_random_id(length=6):
+def get_random_id(length: int = 6) -> str:
+    """
+    Generate a random ID from alphanumeric characters.
+
+    It could be useful mainly for debugging purposes.
+
+    Args:
+        length: The lenght of the ID. Defaults to 6.
+
+    Returns:
+        generated random ID
+    """
     characters = string.ascii_letters + string.digits
     random_id = ''.join(random.choice(characters) for _ in range(length))
     return random_id
+
+
+def get_running_event_loop_id() -> int:
+    """
+    Get the ID of the currently running event loop.
+
+    It could be useful mainly for debugging purposes.
+
+    Returns:
+        The ID of the event loop.
+    """
+    return id(asyncio.get_running_loop())
 
 
 def to_apify_request(scrapy_request: Request) -> dict:
@@ -41,9 +65,7 @@ def to_apify_request(scrapy_request: Request) -> dict:
     apify_request = {
         'url': scrapy_request.url,
         'method': scrapy_request.method,
-        'userData': {
-            'meta': scrapy_request.meta,
-        },
+        'userData': {'meta': scrapy_request.meta},
     }
 
     if scrapy_request.meta.get('apify_request_id'):
@@ -81,17 +103,12 @@ def to_scrapy_request(apify_request: dict) -> Request:
         meta.update({'apify_request_id': apify_request['id'], 'apify_request_unique_key': apify_request['uniqueKey']})
         scrapy_request._meta = meta  # scrapy_request.meta is a property, so we have to set it like this
 
-        # Store the scrapy.Request to the cache
+        # Store the updated scrapy.Request back to the cache
         scrapy_requests_cache[url] = scrapy_request
-
-        Actor.log.debug(
-            f'[{call_id}]: apify request url was found in the scrapy_requests_cache, taking scrapy request from it'
-        )
+        Actor.log.debug(f'[{call_id}]: apify request url was found in the scrapy_requests_cache, taking scrapy request from it')
 
     else:
-        Actor.log.debug(
-            f'[{call_id}]: apify request url was NOT found in the scrapy_requests_cache, creating a new scrapy request'
-        )
+        Actor.log.debug(f'[{call_id}]: apify request url was NOT found in the scrapy_requests_cache, creating a new scrapy request')
         scrapy_request_dict = {
             'url': apify_request['url'],
             'meta': {
@@ -121,18 +138,6 @@ def to_scrapy_request(apify_request: dict) -> Request:
     return scrapy_request
 
 
-def get_running_event_loop_id() -> int:
-    """
-    Get the ID of the currently running event loop.
-
-    It could be useful mainly for debugging purposes.
-
-    Returns:
-        The ID of the event loop.
-    """
-    return id(asyncio.get_running_loop())
-
-
 async def open_queue_with_custom_client() -> RequestQueue:
     """
     Open a Request Queue with custom Apify Client.
@@ -153,8 +158,7 @@ async def open_queue_with_custom_client() -> RequestQueue:
 
     if Actor.config.is_at_home:
         rq._request_queue_client = custom_loop_apify_client.request_queue(
-            rq._id,
-            client_key=rq._client_key,
+            rq._id, client_key=rq._client_key,
         )
 
     # Restore the old Apify Client as the default client

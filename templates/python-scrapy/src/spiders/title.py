@@ -1,4 +1,3 @@
-from operator import call
 from typing import Generator, Union
 from urllib.parse import urljoin
 
@@ -16,7 +15,7 @@ class TitleSpider(Spider):
     """
 
     name = 'title_spider'
-    start_urls = ['https://apify.com']
+
 
     def parse(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
         """
@@ -39,10 +38,4 @@ class TitleSpider(Spider):
         for link_href in response.css('a::attr("href")'):
             link_url = urljoin(response.url, link_href.get())
             if link_url.startswith(('http://', 'https://')):
-                yield Request(link_url, callback=self.foo)
-
-    def foo(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
-        Actor.log.info(f'foo is parsing {response}...')
-        url = response.url
-        title = response.css('title::text').extract_first()
-        yield TitleItem(url=url, title=f'foo: {title}')
+                yield Request(link_url)

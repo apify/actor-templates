@@ -5,10 +5,10 @@ from scrapy.core.scheduler import BaseScheduler
 from scrapy.http.request import Request
 from scrapy.utils.reactor import is_asyncio_reactor_installed
 
-from apify.storages import RequestQueue
 from apify import Actor
+from apify.storages import RequestQueue
 
-from .utils import nested_event_loop, open_queue_with_custom_client, to_apify_request, to_scrapy_request, get_random_id
+from .utils import get_random_id, nested_event_loop, open_queue_with_custom_client, to_apify_request, to_scrapy_request
 
 
 class ApifyScheduler(BaseScheduler):

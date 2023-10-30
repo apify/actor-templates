@@ -12,12 +12,3 @@ class TitleItem(Item):
 
     url = Field()
     title = Field()
-
-
-class ProductItem(Item):
-    """
-    Represents a product item scraped from a web page.
-    """
-
-    url = Field()
-    product_name = Field()
