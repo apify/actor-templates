@@ -37,21 +37,7 @@ def to_apify_request(scrapy_request: Request) -> dict:
     Actor.log.debug(f'[{call_id}]: adding scrapy_request to the cache')
     scrapy_requests_cache[scrapy_request.url] = scrapy_request
 
-    # if scrapy_request.url in scrapy_requests_cache:
-    #     Actor.log.debug(f'[{call_id}]: scrapy request should be already present in the cache')
-    # else:
-    #     Actor.log.debug(f'[{call_id}]: scrapy request is not present in the cache, adding it to it')
-    #     scrapy_requests_cache[scrapy_request.url] = scrapy_request
-
     # Transform Scrapy Request into Apify request
-    apify_request_id = None
-    if scrapy_request.meta.get('apify_request_id'):
-        apify_request_id = scrapy_request.meta.pop('apify_request_id')
-
-    apify_request_unique_key = None
-    if scrapy_request.meta.get('apify_request_unique_key'):
-        apify_request_unique_key = scrapy_request.meta.pop('apify_request_unique_key')
-
     apify_request = {
         'url': scrapy_request.url,
         'method': scrapy_request.method,
@@ -60,11 +46,11 @@ def to_apify_request(scrapy_request: Request) -> dict:
         },
     }
 
-    if apify_request_id:
-        apify_request['id'] = apify_request_id
+    if scrapy_request.meta.get('apify_request_id'):
+        apify_request['id'] = scrapy_request.meta['apify_request_id']
 
-    if apify_request_unique_key:
-        apify_request['uniqueKey'] = apify_request_unique_key
+    if scrapy_request.meta.get('apify_request_unique_key'):
+        apify_request['uniqueKey'] = scrapy_request.meta['apify_request_unique_key']
 
     Actor.log.debug(f'[{call_id}]: scrapy_request was converted to the apify_request={apify_request}')
     Actor.log.debug(f'[{call_id}]: scrapy_requests_cache={scrapy_requests_cache}')
@@ -89,15 +75,13 @@ def to_scrapy_request(apify_request: dict) -> Request:
 
     if url in scrapy_requests_cache:
         scrapy_request = scrapy_requests_cache[url]
-        if scrapy_request.meta is None:
-            scrapy_request.meta = {
-                'apify_request_id': apify_request['id'],
-                'apify_request_unique_key': apify_request['uniqueKey'],
-            }
-        else:
-            scrapy_request.meta['apify_request_id'] = apify_request['id']
-            scrapy_request.meta['apify_request_unique_key'] = apify_request['uniqueKey']
 
+        # Update the meta field with the meta field from the apify_request
+        meta = scrapy_request.meta or {}
+        meta.update({'apify_request_id': apify_request['id'], 'apify_request_unique_key': apify_request['uniqueKey']})
+        scrapy_request._meta = meta  # scrapy_request.meta is a property, so we have to set it like this
+
+        # Store the scrapy.Request to the cache
         scrapy_requests_cache[url] = scrapy_request
 
         Actor.log.debug(
@@ -116,23 +100,19 @@ def to_scrapy_request(apify_request: dict) -> Request:
             },
         }
 
+        # Add the method field to the scrapy_request if it is present in the apify_request
         if apify_request.get('method'):
             scrapy_request_dict['method'] = apify_request['method']
 
-        if apify_request.get('userData'):
-            assert isinstance(apify_request['userData'], dict)
-            if apify_request['userData'].get('meta'):
-                assert isinstance(apify_request['userData']['meta'], dict)
-                scrapy_request_dict['meta'] = {
-                    **scrapy_request_dict['meta'],
-                    **apify_request['userData']['meta'],
-                }
+        # Update the meta field with the meta field from the apify_request
+        apify_request_user_data = apify_request.get('userData', {})
+        apify_request_meta = apify_request_user_data.get('meta', {})
+        scrapy_request_dict['meta'].update(apify_request_meta)
+
+        # Create the scrapy.Request object
         scrapy_request = Request(**scrapy_request_dict)
 
-        # Store the scrapy_request to the cache
-        # if scrapy_request.url in scrapy_requests_cache:
-        #     Actor.log.debug(f'[{call_id}]: scrapy request should be already present in the cache')
-        # else:
+        # Store the scrapy.Request to the cache
         Actor.log.debug(f'[{call_id}]: adding scrapy_request to the cache')
         scrapy_requests_cache[scrapy_request.url] = scrapy_request
 
