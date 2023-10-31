@@ -37,7 +37,7 @@ async def main() -> None:
         # Add start URLs to the request queue
         rq = await Actor.open_request_queue()
         for url in start_urls:
-            await rq.add_request({'url': url})
+            await rq.add_request({'url': url, 'method': 'GET'})
 
         # Currently, execution of only one Spider is supported
         process = CrawlerProcess(settings, install_root_handler=False)
