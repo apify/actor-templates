@@ -60,7 +60,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
         spider: Spider,
     ) -> None | Response | Request:
         Actor.log.debug(f'ApifyRetryMiddleware.process_exception was called (scrapy_request={request})...')
-        apify_request = to_apify_request(request)
+        apify_request = to_apify_request(request, spider=spider)
 
         if isinstance(exception, IgnoreRequest):
             try:
@@ -79,7 +79,7 @@ class ApifyRetryMiddleware(RetryMiddleware):
         spider: Spider,
     ) -> Request | Response:
         Actor.log.debug(f'ApifyRetryMiddleware.handle_retry_logic was called (scrapy_request={request})...')
-        apify_request = to_apify_request(request)
+        apify_request = to_apify_request(request, spider=spider)
 
         if request.meta.get('dont_retry', False):
             await self._rq.mark_request_as_handled(apify_request)

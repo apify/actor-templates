@@ -79,7 +79,7 @@ class ApifyScheduler(BaseScheduler):
         call_id = get_random_id()
         Actor.log.debug(f'[{call_id}]: ApifyScheduler.enqueue_request was called (scrapy_request={request})...')
 
-        apify_request = to_apify_request(request)
+        apify_request = to_apify_request(request, spider=self.spider)
         Actor.log.debug(f'[{call_id}]: scrapy_request was transformed to apify_request (apify_request={apify_request})')
 
         try:
@@ -110,6 +110,6 @@ class ApifyScheduler(BaseScheduler):
         if apify_request is None:
             return None
 
-        scrapy_request = to_scrapy_request(apify_request)
+        scrapy_request = to_scrapy_request(apify_request, spider=self.spider)
         Actor.log.debug(f'[{call_id}]: apify_request was transformed to the scrapy_request which is gonna be returned (scrapy_request={scrapy_request})')
         return scrapy_request

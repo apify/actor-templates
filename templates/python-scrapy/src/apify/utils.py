@@ -4,7 +4,8 @@ import pickle
 import random
 import string
 
-from scrapy import Request
+from scrapy import Request, Spider
+from scrapy.utils.request import request_from_dict
 
 from apify import Actor
 from apify.storages import RequestQueue, StorageClientManager
@@ -41,7 +42,7 @@ def get_running_event_loop_id() -> int:
     return id(asyncio.get_running_loop())
 
 
-def to_apify_request(scrapy_request: Request) -> dict:
+def to_apify_request(scrapy_request: Request, spider: Spider) -> dict:
     """
     Convert a Scrapy request to an Apify request.
 
@@ -70,14 +71,15 @@ def to_apify_request(scrapy_request: Request) -> dict:
         apify_request['uniqueKey'] = scrapy_request.meta['apify_request_unique_key']
 
     # Add encoded Scrapy Request object to the apify_request
-    scrapy_request_encoded = codecs.encode(pickle.dumps(scrapy_request), 'base64').decode()
-    apify_request['userData'] = {'scrapy_request': scrapy_request_encoded}
+    scrapy_request_dict = scrapy_request.to_dict(spider=spider)
+    scrapy_request_dict_encoded = codecs.encode(pickle.dumps(scrapy_request_dict), 'base64').decode()
+    apify_request['userData'] = {'scrapy_request': scrapy_request_dict_encoded}
 
     Actor.log.debug(f'[{call_id}]: scrapy_request was converted to the apify_request={apify_request}')
     return apify_request
 
 
-def to_scrapy_request(apify_request: dict) -> Request:
+def to_scrapy_request(apify_request: dict, spider: Spider) -> Request:
     """
     Convert an Apify request to a Scrapy request.
 
@@ -100,12 +102,15 @@ def to_scrapy_request(apify_request: dict) -> Request:
     if 'userData' in apify_request and 'scrapy_request' in apify_request['userData']:
         Actor.log.debug(f'[{call_id}]: gonna restore the Scrapy Request from the apify_request')
 
-        scrapy_request_encoded = apify_request['userData']['scrapy_request']
-        assert isinstance(scrapy_request_encoded, str)
+        scrapy_request_dict_encoded = apify_request['userData']['scrapy_request']
+        assert isinstance(scrapy_request_dict_encoded, str)
 
-        scrapy_request = pickle.loads(codecs.decode(scrapy_request_encoded.encode(), 'base64'))
+        scrapy_request_dict = pickle.loads(codecs.decode(scrapy_request_dict_encoded.encode(), 'base64'))
+        assert isinstance(scrapy_request_dict, dict)
+
+        scrapy_request = request_from_dict(scrapy_request_dict, spider=spider)
         assert isinstance(scrapy_request, Request)
-        Actor.log.debug(f'[{call_id}]: scrapy_request was successfully decoded (scrapy_request={scrapy_request})...')
+        Actor.log.debug(f'[{call_id}]: scrapy_request was successfully reconstructed (scrapy_request={scrapy_request})...')
 
         # Update the meta field with the meta field from the apify_request
         meta = scrapy_request.meta or {}

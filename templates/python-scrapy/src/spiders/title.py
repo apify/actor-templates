@@ -32,18 +32,17 @@ class TitleSpider(Spider):
         # Extract and yield the TitleItem
         url = response.url
         title = response.css('title::text').extract_first()
-        yield TitleItem(url=url, title=title)
+        yield TitleItem(url=url, title=title, parsed_by='parse')
 
         # Extract all links from the page, create Requests out of them, and yield them
         for link_href in response.css('a::attr("href")'):
             link_url = urljoin(response.url, link_href.get())
             if link_url.startswith(('http://', 'https://')):
-                yield Request(link_url)
-                # yield Request(link_url, callback=self.foo)
+                yield Request(link_url, callback=self.second_parse)
 
-    # def foo(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
-    #     Actor.log.info(f'Foo is parsing {response}...')
-    #     # Extract and yield the TitleItem
-    #     url = response.url
-    #     title = response.css('title::text').extract_first()
-    #     yield TitleItem(url=url, title=f'foo: {title}')
+    def second_parse(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
+        Actor.log.info(f"TitleSpider's second_parse is parsing {response}...")
+        # Extract and yield the TitleItem
+        url = response.url
+        title = response.css('title::text').extract_first()
+        yield TitleItem(url=url, title=f'{title}', parsed_by='second_parse')
