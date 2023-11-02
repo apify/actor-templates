@@ -31,7 +31,7 @@ class TitleSpider(Spider):
         # Extract and yield the TitleItem
         url = response.url
         title = response.css('title::text').extract_first()
-        yield TitleItem(url=url, title=title, parsed_by='parse')
+        yield TitleItem(url=url, title=title)
 
         # Extract all links from the page, create Requests out of them, and yield them
         for link_href in response.css('a::attr("href")'):
