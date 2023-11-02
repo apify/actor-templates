@@ -15,7 +15,6 @@ class TitleSpider(Spider):
     """
 
     name = 'title_spider'
-    start_urls = ['https://apify.com']
 
     def parse(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
         """
@@ -38,11 +37,4 @@ class TitleSpider(Spider):
         for link_href in response.css('a::attr("href")'):
             link_url = urljoin(response.url, link_href.get())
             if link_url.startswith(('http://', 'https://')):
-                yield Request(link_url, callback=self.second_parse)
-
-    def second_parse(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
-        Actor.log.info(f"TitleSpider's second_parse is parsing {response}...")
-        # Extract and yield the TitleItem
-        url = response.url
-        title = response.css('title::text').extract_first()
-        yield TitleItem(url=url, title=f'{title}', parsed_by='second_parse')
+                yield Request(link_url)

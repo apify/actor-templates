@@ -31,7 +31,7 @@ apify_client_logger.addHandler(handler)
 # because otherwise we would lose some log messages.
 old_configure_logging = scrapy.utils.log.configure_logging
 
-def new_configure_logging(*args, **kwargs):
+def new_configure_logging(*args: tuple, **kwargs: dict) -> None:
     old_configure_logging(*args, **kwargs)
 
     # Scrapy uses these four main loggers:
