@@ -16,7 +16,6 @@ class TitleSpider(Spider):
 
     name = 'title_spider'
 
-
     def parse(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
         """
         Parse the web page response.

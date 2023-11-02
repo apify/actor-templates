@@ -5,9 +5,10 @@ from scrapy.core.scheduler import BaseScheduler
 from scrapy.http.request import Request
 from scrapy.utils.reactor import is_asyncio_reactor_installed
 
+from apify import Actor
 from apify.storages import RequestQueue
 
-from .utils import nested_event_loop, open_queue_with_custom_client, to_apify_request, to_scrapy_request
+from .utils import get_random_id, nested_event_loop, open_queue_with_custom_client, to_apify_request, to_scrapy_request
 
 
 class ApifyScheduler(BaseScheduler):
@@ -75,13 +76,18 @@ class ApifyScheduler(BaseScheduler):
         Returns:
             True if the request was successfully enqueued, False otherwise.
         """
-        apify_request = to_apify_request(request)
+        call_id = get_random_id()
+        Actor.log.debug(f'[{call_id}]: ApifyScheduler.enqueue_request was called (scrapy_request={request})...')
+
+        apify_request = to_apify_request(request, spider=self.spider)
+        Actor.log.debug(f'[{call_id}]: scrapy_request was transformed to apify_request (apify_request={apify_request})')
 
         try:
             result = nested_event_loop.run_until_complete(self._rq.add_request(apify_request))
         except BaseException:
             traceback.print_exc()
 
+        Actor.log.debug(f'[{call_id}]: apify_request was added to the RQ (apify_request={apify_request})')
         return bool(result['wasAlreadyPresent'])
 
     def next_request(self) -> Request | None:
@@ -91,12 +97,19 @@ class ApifyScheduler(BaseScheduler):
         Returns:
             The next request, or None if there are no more requests.
         """
+        call_id = get_random_id()
+        Actor.log.debug(f'[{call_id}]: ApifyScheduler.next_request was called...')
+
         try:
             apify_request = nested_event_loop.run_until_complete(self._rq.fetch_next_request())
         except BaseException:
             traceback.print_exc()
 
+        Actor.log.debug(f'[{call_id}]: a new apify_request from the scheduler was fetched (apify_request={apify_request})')
+
         if apify_request is None:
             return None
 
-        return to_scrapy_request(apify_request)
+        scrapy_request = to_scrapy_request(apify_request, spider=self.spider)
+        Actor.log.debug(f'[{call_id}]: apify_request was transformed to the scrapy_request which is gonna be returned (scrapy_request={scrapy_request})')
+        return scrapy_request

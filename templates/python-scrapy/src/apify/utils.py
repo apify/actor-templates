@@ -1,6 +1,11 @@
 import asyncio
+import codecs
+import pickle
+import random
+import string
 
-from scrapy import Request
+from scrapy import Request, Spider
+from scrapy.utils.request import request_from_dict
 
 from apify import Actor
 from apify.storages import RequestQueue, StorageClientManager
@@ -8,72 +13,21 @@ from apify.storages import RequestQueue, StorageClientManager
 nested_event_loop: asyncio.AbstractEventLoop = asyncio.new_event_loop()
 
 
-def to_apify_request(scrapy_request: Request) -> dict:
+def get_random_id(length: int = 6) -> str:
     """
-    Convert a Scrapy request to an Apify request.
+    Generate a random ID from alphanumeric characters.
+
+    It could be useful mainly for debugging purposes.
 
     Args:
-        scrapy_request: The Scrapy request to be converted.
+        length: The lenght of the ID. Defaults to 6.
 
     Returns:
-        The converted Apify request.
+        generated random ID
     """
-    apify_request_id = None
-    if scrapy_request.meta.get('apify_request_id'):
-        apify_request_id = scrapy_request.meta.pop('apify_request_id')
-
-    apify_request_unique_key = None
-    if scrapy_request.meta.get('apify_request_unique_key'):
-        apify_request_unique_key = scrapy_request.meta.pop('apify_request_unique_key')
-
-    apify_request = {
-        'url': scrapy_request.url,
-        'method': scrapy_request.method,
-        'userData': {
-            'meta': scrapy_request.meta,
-        },
-    }
-
-    if apify_request_id:
-        apify_request['id'] = apify_request_id
-
-    if apify_request_unique_key:
-        apify_request['uniqueKey'] = apify_request_unique_key
-
-    return apify_request
-
-
-def to_scrapy_request(apify_request: dict) -> Request:
-    """
-    Convert an Apify request to a Scrapy request.
-
-    Args:
-        apify_request: The Apify request to be converted.
-
-    Returns:
-        The converted Scrapy request.
-    """
-    scrapy_request = {
-        'url': apify_request['url'],
-        'meta': {
-            'apify_request_id': apify_request['id'],
-            'apify_request_unique_key': apify_request['uniqueKey'],
-        },
-    }
-
-    if apify_request.get('method'):
-        scrapy_request['method'] = apify_request['method']
-
-    if apify_request.get('userData'):
-        assert isinstance(apify_request['userData'], dict)
-        if apify_request['userData'].get('meta'):
-            assert isinstance(apify_request['userData']['meta'], dict)
-            scrapy_request['meta'] = {
-                **scrapy_request['meta'],
-                **apify_request['userData']['meta'],
-            }
-
-    return Request(**scrapy_request)
+    characters = string.ascii_letters + string.digits
+    random_id = ''.join(random.choice(characters) for _ in range(length))
+    return random_id
 
 
 def get_running_event_loop_id() -> int:
@@ -86,6 +40,103 @@ def get_running_event_loop_id() -> int:
         The ID of the event loop.
     """
     return id(asyncio.get_running_loop())
+
+
+def to_apify_request(scrapy_request: Request, spider: Spider) -> dict:
+    """
+    Convert a Scrapy request to an Apify request.
+
+    Args:
+        scrapy_request: The Scrapy request to be converted.
+
+    Returns:
+        The converted Apify request.
+    """
+    assert isinstance(scrapy_request, Request)
+
+    call_id = get_random_id()
+    Actor.log.debug(f'[{call_id}]: to_apify_request was called (scrapy_request={scrapy_request})...')
+
+    apify_request = {
+        'url': scrapy_request.url,
+        'method': scrapy_request.method,
+    }
+
+    # Add 'id' to the apify_request
+    if scrapy_request.meta.get('apify_request_id'):
+        apify_request['id'] = scrapy_request.meta['apify_request_id']
+
+    # Add 'uniqueKey' to the apify_request
+    if scrapy_request.meta.get('apify_request_unique_key'):
+        apify_request['uniqueKey'] = scrapy_request.meta['apify_request_unique_key']
+
+    # Serialize the Scrapy Request and store it in the apify_request.
+    #   - This process involves converting the Scrapy Request object into a dictionary, encoding it to base64,
+    #     and storing it as 'scrapy_request' within the 'userData' dictionary of the apify_request.
+    #   - The serialization process can be referenced at: https://stackoverflow.com/questions/30469575/.
+    scrapy_request_dict = scrapy_request.to_dict(spider=spider)
+    scrapy_request_dict_encoded = codecs.encode(pickle.dumps(scrapy_request_dict), 'base64').decode()
+    apify_request['userData'] = {'scrapy_request': scrapy_request_dict_encoded}
+
+    Actor.log.debug(f'[{call_id}]: scrapy_request was converted to the apify_request={apify_request}')
+    return apify_request
+
+
+def to_scrapy_request(apify_request: dict, spider: Spider) -> Request:
+    """
+    Convert an Apify request to a Scrapy request.
+
+    Args:
+        apify_request: The Apify request to be converted.
+
+    Returns:
+        The converted Scrapy request.
+    """
+    assert isinstance(apify_request, dict)
+    assert 'url' in apify_request
+    assert 'method' in apify_request
+    assert 'id' in apify_request
+    assert 'uniqueKey' in apify_request
+
+    call_id = get_random_id()
+    Actor.log.debug(f'[{call_id}]: to_scrapy_request was called (apify_request={apify_request})...')
+
+    # If the apify_request comes from the Scrapy
+    if 'userData' in apify_request and 'scrapy_request' in apify_request['userData']:
+        # Deserialize the Scrapy Request from the apify_request.
+        #   - This process involves decoding the base64-encoded request data and reconstructing
+        #     the Scrapy Request object from its dictionary representation.
+        Actor.log.debug(f'[{call_id}]: Restoring the Scrapy Request from the apify_request...')
+        scrapy_request_dict_encoded = apify_request['userData']['scrapy_request']
+        assert isinstance(scrapy_request_dict_encoded, str)
+
+        scrapy_request_dict = pickle.loads(codecs.decode(scrapy_request_dict_encoded.encode(), 'base64'))
+        assert isinstance(scrapy_request_dict, dict)
+
+        scrapy_request = request_from_dict(scrapy_request_dict, spider=spider)
+        assert isinstance(scrapy_request, Request)
+        Actor.log.debug(f'[{call_id}]: Scrapy Request successfully reconstructed (scrapy_request={scrapy_request})...')
+
+        # Update the meta field with the meta field from the apify_request
+        meta = scrapy_request.meta or {}
+        meta.update({'apify_request_id': apify_request['id'], 'apify_request_unique_key': apify_request['uniqueKey']})
+        scrapy_request._meta = meta  # scrapy_request.meta is a property, so we have to set it like this
+
+    # If the apify_request comes directly from the Request Queue, typically start URLs
+    else:
+        Actor.log.debug(f'[{call_id}]: gonna create a new Scrapy Request (cannot be restored)')
+
+        scrapy_request = Request(
+            url=apify_request['url'],
+            method=apify_request['method'],
+            meta={
+                'apify_request_id': apify_request['id'],
+                'apify_request_unique_key': apify_request['uniqueKey'],
+            },
+        )
+
+    Actor.log.debug(f'[{call_id}]: an apify_request was converted to the scrapy_request={scrapy_request}')
+    return scrapy_request
 
 
 async def open_queue_with_custom_client() -> RequestQueue:
@@ -108,7 +159,8 @@ async def open_queue_with_custom_client() -> RequestQueue:
 
     if Actor.config.is_at_home:
         rq._request_queue_client = custom_loop_apify_client.request_queue(
-            rq._id, client_key=rq._client_key,
+            rq._id,
+            client_key=rq._client_key,
         )
 
     # Restore the old Apify Client as the default client
