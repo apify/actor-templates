@@ -12,4 +12,3 @@ class TitleItem(Item):
 
     url = Field()
     title = Field()
-    parsed_by = Field()
