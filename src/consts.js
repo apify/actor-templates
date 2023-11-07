@@ -7,6 +7,7 @@ const NODE_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category ==
 const PYTHON_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category === 'python').map((t) => t.id);
 
 const TEMPLATES_DIR_NAME = 'templates';
+const WRAPPERS_DIR_NAME = 'wrappers';
 const EXAMPLES_DIR_NAME = 'examples';
 const DIST_DIR_NAME = 'dist';
 const LOCAL_STORAGE_DIR = path.join(__dirname, '..', 'tmp', 'local-emulation-dir');
@@ -19,4 +20,5 @@ module.exports = {
     EXAMPLES_DIR_NAME,
     LOCAL_STORAGE_DIR,
     DIST_DIR_NAME,
+    WRAPPERS_DIR_NAME,
 };
