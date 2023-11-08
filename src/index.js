@@ -1,10 +1,11 @@
 const https = require('https');
 
-const MANIFEST_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/manifest.json';
+const TEMPLATE_MANIFEST_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/manifest.json';
+const WRAPPER_MANIFEST_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/wrappers/manifest.json';
 
-exports.fetchManifest = async () => {
+exports.fetchManifest = async (url = TEMPLATE_MANIFEST_URL) => {
     return new Promise((resolve, reject) => {
-        https.get(MANIFEST_URL, (res) => {
+        https.get(url, (res) => {
             let json = '';
             res
                 .on('data', (chunk) => {
@@ -27,4 +28,5 @@ exports.fetchManifest = async () => {
     });
 };
 
-exports.manifestUrl = MANIFEST_URL;
+exports.manifestUrl = TEMPLATE_MANIFEST_URL;
+exports.wrapperManifestUrl = WRAPPER_MANIFEST_URL;
