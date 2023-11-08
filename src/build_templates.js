@@ -40,7 +40,7 @@ async function buildTemplatedFolder({ dirName, templateIds }) {
             execSync(`zip -X ${archivePath} ${files.join(' ')}`);
         }
     }
-};
+}
 
 exports.buildTemplates = async function () {
     for (const config of [
@@ -49,4 +49,4 @@ exports.buildTemplates = async function () {
     ]) {
         await buildTemplatedFolder(config);
     }
-}
+};
