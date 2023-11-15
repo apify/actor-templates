@@ -1,5 +1,5 @@
 # Add your dependencies here.
 # See https://pip.pypa.io/en/latest/reference/requirements-file-format/
 # for how to format them
-apify ~= 1.2.0
+apify ~= 1.3.0
 playwright ~= 1.39.0
