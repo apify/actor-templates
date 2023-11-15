@@ -78,7 +78,7 @@ const manifest = await templates.fetchManifest();
 
 All templates are stores in `./templates` directory.
 For each template needs to create an archive of whole source code into the `./dist/templates` directory.
-The archive is used to to create a boilerplate template in `apify CLI` or other places in the Apify system.
+The archive is used to create a boilerplate template in `apify CLI` or other places in the Apify system.
 
 ### Update and add templates
 
