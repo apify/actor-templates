@@ -61,7 +61,7 @@ import asyncio
 import os
 import nest_asyncio
 from scrapy.utils.reactor import install_reactor
-from .apify.main import main
+from .main import main
 
 # This is necessary so that twisted and asyncio work well together
 install_reactor('twisted.internet.asyncioreactor.AsyncioSelectorReactor')

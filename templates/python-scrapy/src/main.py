@@ -4,7 +4,7 @@ from scrapy.utils.project import get_project_settings
 
 from apify import Actor
 
-from ..spiders.title import TitleSpider as Spider
+from .spiders.title import TitleSpider as Spider
 
 
 def _get_scrapy_settings(max_depth: int) -> Settings:
@@ -13,13 +13,13 @@ def _get_scrapy_settings(max_depth: int) -> Settings:
     """
     settings = get_project_settings()
     # Add our Actor Push Pipeline with the lowest priority
-    settings['ITEM_PIPELINES']['src.apify.pipelines.ActorDatasetPushPipeline'] = 1
+    settings['ITEM_PIPELINES']['apify.scrapy.pipelines.ActorDatasetPushPipeline'] = 1
     # Disable default Retry Middleware
     settings['DOWNLOADER_MIDDLEWARES']['scrapy.downloadermiddlewares.retry.RetryMiddleware'] = None
     # Add our custom Retry Middleware with the top priority
-    settings['DOWNLOADER_MIDDLEWARES']['src.apify.middlewares.ApifyRetryMiddleware'] = 999
+    settings['DOWNLOADER_MIDDLEWARES']['apify.scrapy.middlewares.ApifyRetryMiddleware'] = 999
     # Add our custom Scheduler
-    settings['SCHEDULER'] = 'src.apify.scheduler.ApifyScheduler'
+    settings['SCHEDULER'] = 'apify.scrapy.scheduler.ApifyScheduler'
     settings['DEPTH_LIMIT'] = max_depth
     return settings
 
