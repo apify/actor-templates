@@ -6,7 +6,7 @@ FROM apify/actor-python:3.11
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency install in the next step,
 # in order to speed up the build
-COPY requirements.txt ./
+COPY requirements_apify.txt ./
 
 # Install the packages specified in requirements.txt,
 # Print the installed Python version, pip version
@@ -16,7 +16,7 @@ RUN echo "Python version:" \
  && echo "Pip version:" \
  && pip --version \
  && echo "Installing dependencies:" \
- && pip install -r requirements.txt \
+ && pip install -r requirements_apify.txt \
  && echo "All installed Python packages:" \
  && pip freeze
 
