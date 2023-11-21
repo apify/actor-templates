@@ -6,7 +6,7 @@ This file is specifically designed to be executed when the project is run as an 
 or being run on the Apify platform. It is not being executed when running the project as a Scrapy project using
 `scrapy crawl`.
 
-We recommend do not modify this file unless you really know what you are doing.
+We recommend you do not modify this file unless you really know what you are doing.
 """
 
 # We need to configure the logging first before we import anything else, so that nothing else imports
