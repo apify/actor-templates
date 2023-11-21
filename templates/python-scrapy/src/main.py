@@ -15,7 +15,7 @@ between Scrapy and Apify.
 Known limitations to be aware of:
 ---------------------------------
 
-1. Asynchronous spiders and Twisted & Asyncio integration
+1. Asynchronous spiders and Twisted & AsyncIO integration
 
    Asynchronous spiders (and possibly other components) may encounter challenges due to the Twisted & Asyncio
    integration. If you need to execute a coroutine within the Spider, it's recommended to use Apify's custom
