@@ -17,7 +17,7 @@ Known limitations to be aware of:
 
 1. Asynchronous spiders and Twisted & AsyncIO integration
 
-   Asynchronous spiders (and possibly other components) may encounter challenges due to the Twisted & Asyncio
+   Asynchronous spiders (and possibly other components) may encounter challenges due to the Twisted & AsyncIO
    integration. If you need to execute a coroutine within the Spider, it's recommended to use Apify's custom
    nested event loop. See the code example below or find inspiration from Apify's Scrapy components, such as
    [ApifyScheduler](https://github.com/apify/apify-sdk-python/blob/v1.3.0/src/apify/scrapy/scheduler.py#L109).
