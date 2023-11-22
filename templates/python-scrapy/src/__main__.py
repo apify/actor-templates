@@ -15,7 +15,6 @@ import logging
 from typing import Any
 import scrapy.utils.log
 from apify.log import ActorLogFormatter
-from .spiders.title import TitleSpider as Spider
 
 # If you want to change the logging level, change it here
 LOGGING_LEVEL = logging.INFO
@@ -39,28 +38,31 @@ apify_client_logger.addHandler(handler)
 old_configure_logging = scrapy.utils.log.configure_logging
 
 def new_configure_logging(*args: Any, **kwargs: Any) -> None:
+    """
+    We need to manually configure both the root logger and all Scrapy-associated loggers. Configuring only the root
+    logger is not sufficient, as Scrapy will override it with its own settings. Scrapy uses these four primary
+    loggers - https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/utils/log.py#L60:L77. Therefore, we configure here
+    these four loggers and the root logger.
+    """
     old_configure_logging(*args, **kwargs)
 
-    # Scrapy uses these four main loggers: https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/utils/log.py#L60:L77
+    root_logger = logging.getLogger()
     scrapy_logger = logging.getLogger('scrapy')
     twisted_logger = logging.getLogger('twisted')
     filelock_logger = logging.getLogger('filelock')
     hpack_logger = logging.getLogger('hpack')
-    spider_logger = logging.getLogger(Spider.name)
 
-    # Set handlers
+    root_logger.addHandler(handler)
     scrapy_logger.addHandler(handler)
     twisted_logger.addHandler(handler)
     filelock_logger.addHandler(handler)
     hpack_logger.addHandler(handler)
-    spider_logger.addHandler(handler)
 
-    # Set logging level
+    root_logger.setLevel(LOGGING_LEVEL)
     scrapy_logger.setLevel(LOGGING_LEVEL)
     twisted_logger.setLevel(LOGGING_LEVEL)
     filelock_logger.setLevel(LOGGING_LEVEL)
     hpack_logger.setLevel(LOGGING_LEVEL)
-    spider_logger.setLevel(LOGGING_LEVEL)
 
 scrapy.utils.log.configure_logging = new_configure_logging
 
