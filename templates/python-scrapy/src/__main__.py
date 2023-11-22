@@ -15,6 +15,7 @@ import logging
 from typing import Any
 import scrapy.utils.log
 from apify.log import ActorLogFormatter
+from .spiders.title import TitleSpider as Spider
 
 # If you want to change the logging level, change it here
 LOGGING_LEVEL = logging.INFO
@@ -45,18 +46,21 @@ def new_configure_logging(*args: Any, **kwargs: Any) -> None:
     twisted_logger = logging.getLogger('twisted')
     filelock_logger = logging.getLogger('filelock')
     hpack_logger = logging.getLogger('hpack')
+    spider_logger = logging.getLogger(Spider.name)
 
     # Set handlers
     scrapy_logger.addHandler(handler)
     twisted_logger.addHandler(handler)
     filelock_logger.addHandler(handler)
     hpack_logger.addHandler(handler)
+    spider_logger.addHandler(handler)
 
     # Set logging level
     scrapy_logger.setLevel(LOGGING_LEVEL)
     twisted_logger.setLevel(LOGGING_LEVEL)
     filelock_logger.setLevel(LOGGING_LEVEL)
     hpack_logger.setLevel(LOGGING_LEVEL)
+    spider_logger.setLevel(LOGGING_LEVEL)
 
 scrapy.utils.log.configure_logging = new_configure_logging
 
