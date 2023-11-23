@@ -86,7 +86,9 @@ async def main() -> None:
     async with Actor:
         Actor.log.info('Actor is being executed...')
 
-        # Process Actor input - here you can add your own logic for handling Actor input
+        # Process Actor input - you can customize logic for handling Actor input here
+        # The `max_depth` option from Actor input overrides Scrapy's `DEPTH_LIMIT` setting
+        # The `start_urls` option from Actor input is combined with Scrapy's `start_urls` from your spiders
         actor_input = await Actor.get_input() or {}
         max_depth = actor_input.get('max_depth', LOCAL_DEFAULT_MAX_DEPTH)
         start_urls = [start_url.get('url') for start_url in actor_input.get('start_urls', LOCAL_DEFAULT_START_URLS)]

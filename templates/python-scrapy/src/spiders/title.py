@@ -1,10 +1,10 @@
-from typing import Generator, Union
+from __future__ import annotations
+
+from typing import Generator
 from urllib.parse import urljoin
 
 from scrapy import Request, Spider
 from scrapy.responsetypes import Response
-
-from apify import Actor
 
 from ..items import TitleItem
 
@@ -16,7 +16,11 @@ class TitleSpider(Spider):
 
     name = 'title_spider'
 
-    def parse(self, response: Response) -> Generator[Union[TitleItem, Request], None, None]:
+    # The `start_urls` specified in this class will be merged with the `start_urls` value from your Actor input
+    # when the project is executed using Apify.
+    start_urls = ['https://apify.com/']
+
+    def parse(self, response: Response) -> Generator[TitleItem | Request, None, None]:
         """
         Parse the web page response.
 
@@ -26,7 +30,7 @@ class TitleSpider(Spider):
         Yields:
             Yields scraped TitleItem and Requests for links.
         """
-        Actor.log.info(f'TitleSpider is parsing {response}...')
+        self.logger.info('TitleSpider is parsing %s...', response)
 
         # Extract and yield the TitleItem
         url = response.url
