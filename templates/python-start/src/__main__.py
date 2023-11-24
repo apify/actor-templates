@@ -1,3 +1,10 @@
+"""
+This module serves as the entry point for executing the Apify Actor. It handles the configuration of logging
+settings. The `main()` coroutine is then executed using `asyncio.run()`.
+
+Feel free to modify this file to suit your specific needs.
+"""
+
 import asyncio
 import logging
 
@@ -5,7 +12,7 @@ from apify.log import ActorLogFormatter
 
 from .main import main
 
-# Set up logging of messages from the Apify SDK
+# Configure loggers
 handler = logging.StreamHandler()
 handler.setFormatter(ActorLogFormatter())
 
@@ -17,4 +24,5 @@ apify_logger = logging.getLogger('apify')
 apify_logger.setLevel(logging.DEBUG)
 apify_logger.addHandler(handler)
 
+# Execute the Actor main coroutine
 asyncio.run(main())

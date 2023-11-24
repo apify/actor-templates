@@ -1,13 +1,29 @@
-# Beautiful Soup - library for pulling data out of HTML and XML files (Read more at https://www.crummy.com/software/BeautifulSoup/bs4/doc)
+"""
+This module defines the `main()` coroutine for the Apify Actor, executed from the `__main__.py` file.
+
+Feel free to modify this file to suit your specific needs.
+
+To build Apify Actors, utilize the Apify SDK toolkit, read more at the official documentation:
+https://docs.apify.com/sdk/python
+"""
+
+# Beautiful Soup - library for pulling data out of HTML and XML files, read more at
+# https://www.crummy.com/software/BeautifulSoup/bs4/doc
 from bs4 import BeautifulSoup
-# HTTPX - library for making asynchronous HTTP requests in Python (Read more at https://www.python-httpx.org/)
+
+# HTTPX - library for making asynchronous HTTP requests in Python, read more at https://www.python-httpx.org/
 from httpx import AsyncClient
 
-# Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/python)
+# Apify SDK - toolkit for building Apify Actors, read more at https://docs.apify.com/sdk/python
 from apify import Actor
 
 
-async def main():
+async def main() -> None:
+    """
+    The main coroutine is being executed using `asyncio.run()`, so do not attempt to make a normal function
+    out of it, it will not work. Asynchronous execution is required for communication with Apify platform,
+    and it also enhances performance in the field of web scraping significantly.
+    """
     async with Actor:
         # Structure of input is defined in input_schema.json
         actor_input = await Actor.get_input() or {}
