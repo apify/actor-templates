@@ -66,16 +66,21 @@ def _get_scrapy_settings(max_depth: int) -> Settings:
         Scrapy project settings with custom configurations.
     """
     settings = get_project_settings()
-    # Add Apify Actor dataset push pipeline with the lowest priority
-    settings['ITEM_PIPELINES']['apify.scrapy.pipelines.ActorDatasetPushPipeline'] = 1
-    # Disable default retry middleware
+
+    # Add the ActorDatasetPushPipeline into the item pipelines, assigning it the highest integer (1000),
+    # ensuring it is executed as the final step in the pipeline sequence
+    settings['ITEM_PIPELINES']['apify.scrapy.pipelines.ActorDatasetPushPipeline'] = 1000
+
+    # Disable the default RetryMiddleware and add ApifyRetryMiddleware with the highest integer (1000)
     settings['DOWNLOADER_MIDDLEWARES']['scrapy.downloadermiddlewares.retry.RetryMiddleware'] = None
-    # Add Apify custom retry middleware with the top priority
-    settings['DOWNLOADER_MIDDLEWARES']['apify.scrapy.middlewares.ApifyRetryMiddleware'] = 999
-    # Add Apify custom scheduler
+    settings['DOWNLOADER_MIDDLEWARES']['apify.scrapy.middlewares.ApifyRetryMiddleware'] = 1000
+
+    # Use ApifyScheduler as the scheduler
     settings['SCHEDULER'] = 'apify.scrapy.scheduler.ApifyScheduler'
-    # Set the maximum depth for spider crawling
+
+    # Specify the maximum depth for spider crawling
     settings['DEPTH_LIMIT'] = max_depth
+
     return settings
 
 
