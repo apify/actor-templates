@@ -26,10 +26,7 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python3 -m compileall . \
-    # Remove compiled Python files (.pyc) and other cache files
-    && find . -name '__pycache__' -exec rm -r {} + \
-    && find . -name '*.pyc' -exec rm {} +
+RUN python3 -m compileall .
 
 # Specify how to launch the source code of your Actor.
 # By default, the "python3 -m ." command is run
