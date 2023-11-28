@@ -32,11 +32,6 @@ Known limitations to be aware of:
 
    The current implementation supports the execution of only one Spider per project.
    Issue: https://github.com/apify/actor-templates/issues/202
-
-3. 2nd level spider parse function
-
-   Requests yielded from the 2nd level Spider parse function are currently not being processed.
-   Issue: https://github.com/apify/actor-templates/issues/224
 """
 
 from scrapy.crawler import CrawlerProcess
@@ -49,18 +44,14 @@ from apify import Actor
 from .spiders.title import TitleSpider as Spider
 
 # Default input values for local execution using `apify run`
-LOCAL_DEFAULT_MAX_DEPTH = 1
 LOCAL_DEFAULT_START_URLS = [{'url': 'https://apify.com'}]
 
 
-def _get_scrapy_settings(max_depth: int) -> Settings:
+def _get_scrapy_settings() -> Settings:
     """
     Get Scrapy project settings with custom configurations.
 
     You can add your own Scrapy components either in this function or in your `settings.py`.
-
-    Args:
-        max_depth: Maximum depth for spider crawling.
 
     Returns:
         Scrapy project settings with custom configurations.
@@ -78,9 +69,6 @@ def _get_scrapy_settings(max_depth: int) -> Settings:
     # Use ApifyScheduler as the scheduler
     settings['SCHEDULER'] = 'apify.scrapy.scheduler.ApifyScheduler'
 
-    # Specify the maximum depth for spider crawling
-    settings['DEPTH_LIMIT'] = max_depth
-
     return settings
 
 
@@ -92,14 +80,12 @@ async def main() -> None:
         Actor.log.info('Actor is being executed...')
 
         # Process Actor input - you can customize logic for handling Actor input here
-        # The `max_depth` option from Actor input overrides Scrapy's `DEPTH_LIMIT` setting
         # The `start_urls` option from Actor input is combined with Scrapy's `start_urls` from your spiders
         actor_input = await Actor.get_input() or {}
-        max_depth = actor_input.get('max_depth', LOCAL_DEFAULT_MAX_DEPTH)
         start_urls = [start_url.get('url') for start_url in actor_input.get('start_urls', LOCAL_DEFAULT_START_URLS)]
 
         # Get Scrapy project settings with custom configurations
-        settings = _get_scrapy_settings(max_depth)
+        settings = _get_scrapy_settings()
 
         # Add start URLs to the request queue
         rq = await Actor.open_request_queue()

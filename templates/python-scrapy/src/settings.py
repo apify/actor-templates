@@ -9,7 +9,7 @@ http://doc.scrapy.org/en/latest/topics/settings.html
 
 # You can update these options and add new ones
 BOT_NAME = 'titlebot'
-DEPTH_LIMIT = 1  # This will be overridden by the `max_depth` option from Actor input if running using Apify
+DEPTH_LIMIT = 1
 ITEM_PIPELINES = {'src.pipelines.TitleItemPipeline': 123}
 LOG_LEVEL = 'INFO'
 NEWSPIDER_MODULE = 'src.spiders'

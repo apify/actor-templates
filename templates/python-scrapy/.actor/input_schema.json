@@ -11,12 +11,6 @@
                 { "url": "https://apify.com" }
             ],
             "editor": "requestListSources"
-        },
-        "max_depth": {
-            "title": "Maximum depth",
-            "type": "integer",
-            "description": "Depth to which to scrape to",
-            "default": 1
         }
     },
     "required": ["start_urls"]
