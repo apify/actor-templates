@@ -6,10 +6,11 @@ import { router } from './routes.js';
 
 await Actor.init();
 
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// Apify Proxy works only when you have access to it, and you're authenticated
+// const proxyConfiguration = await Actor.createProxyConfiguration();
 
 const crawler = new CheerioCrawler({
-    proxyConfiguration,
+    // proxyConfiguration,
     requestHandler: router,
 });
 
