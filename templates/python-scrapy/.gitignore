@@ -7,8 +7,8 @@
 storage/
 
 # Python virtual environment
-.venv
-.env
+.venv/
+.env/
 
 # Python (and python tools) cache files
 __pycache__/
