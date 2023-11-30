@@ -1,6 +1,6 @@
 {
     "actorSpecification": 1,
-    "name": "{{ botName }}",
+    "name": "{{ actorName }}",
     "title": "Getting started with Python Scrapy",
     "description": "Python Scrapy spider wrapped using the Apify CLI.",
     "version": "0.0",
