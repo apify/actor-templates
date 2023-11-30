@@ -27,9 +27,9 @@ After running the command you will be prompted to select one of the templates fr
 Basic templates to start developing actors on the Apify platform using Node.js (JavaScript/Typescript), or Python.
 Just install the CLI and watch your actor run.
 
-- [Node.js + JavaScript](./templates/getting_started_node/)
-- [Node.js + TypeScript](./templates/getting_started_typescript/)
-- [Python](./templates/getting_started_python/)
+- [Node.js + JavaScript](./templates/js-start/)
+- [Node.js + TypeScript](./templates/ts-start/)
+- [Python](./templates/python-start/)
 
 You can find more code examples in the
 [Apify SDK documentation](https://sdk.apify.com/docs/examples/puppeteer-crawler/).
@@ -39,13 +39,18 @@ You can find more code examples in the
 If you're already familiar with Actors, you can use the following templates to bootstrap new projects using an empty project templates or Crawlee templates:
 
 #### Empty projects
-- [Empty JavaScript project](./templates/js-empty/) - Start a new web scraping project quickly and easily in JavaScript (Node.js) with our empty project template. It provides a basic structure for the Actor with [Apify SDK](https://docs.apify.com/sdk/js/) and allows you to easily add your own functionality.
 
+Start a new web scraping project quickly and easily in JavaScript/TypeScript (Node.js) or Python with our empty project template. It provides a basic structure for the Actor with [Apify JavaScript SDK](https://docs.apify.com/sdk/js/) or [Apify Python SDK](https://docs.apify.com/sdk/python/) and allows you to easily add your own functionality.
+
+- [Empty JavaScript project](./templates/js-empty/)
+- [Empty TypeScript project](./templates/ts-empty/)
+- [Empty Python project](./templates/python-empty/)
 
 #### Crawlee projects
-- [CheerioCrawler](./templates/project_cheerio_crawler_js/) ([TypeScript version](./templates/project_cheerio_crawler_ts/)) - Standard and up to date template for developing with Crawlee's CheerioCrawler.
-- [PlaywrightCrawler](./templates/project_playwright_crawler_js/) ([TypeScript version](./templates/project_playwright_crawler_ts/)) - Standard and up to date template for developing with Crawlee's PlaywrightCrawler.
-- [PuppeteerCrawler](./templates/project_cheerio_crawler_js/) ([TypeScript version](./templates/project_puppeteer_crawler_ts/)) - Standard and up to date template for developing with Crawlee's PuppeteerCrawler.
+
+- [CheerioCrawler](./templates/js-crawlee-cheerio/) ([TypeScript version](./templates/ts-crawlee-cheerio/)) - Standard and up to date template for developing with Crawlee's CheerioCrawler.
+- [PlaywrightCrawler](./templates/js-crawlee-playwright-chrome/) ([TypeScript version](./templates/ts-crawlee-playwright-chrome/)) - Standard and up to date template for developing with Crawlee's PlaywrightCrawler.
+- [PuppeteerCrawler](./templates/js-crawlee-puppeteer-chrome/) ([TypeScript version](./templates/ts-crawlee-puppeteer-chrome/)) - Standard and up to date template for developing with Crawlee's PuppeteerCrawler.
 
 To run the template:
 
@@ -73,7 +78,7 @@ const manifest = await templates.fetchManifest();
 
 All templates are stores in `./templates` directory.
 For each template needs to create an archive of whole source code into the `./dist/templates` directory.
-The archive is used to to create a boilerplate template in `apify CLI` or other places in the Apify system.
+The archive is used to create a boilerplate template in `apify CLI` or other places in the Apify system.
 
 ### Update and add templates
 

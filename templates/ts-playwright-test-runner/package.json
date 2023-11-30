@@ -9,18 +9,20 @@
         "start:prod": "node dist/main.js",
         "codegen": "ts-node src/runCodegen.ts",
         "build": "tsc",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "postinstall": "npx crawlee install-playwright-browsers"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@apify/eslint-config-ts": "^0.2.3",
+        "@apify/eslint-config-ts": "^0.3.0",
         "@apify/tsconfig": "^0.1.0",
-        "@playwright/test": "^1.30.0",
-        "@types/uuid": "^9.0.1",
-        "apify": "^3.1.2",
+        "@playwright/test": "1.37.1",
+        "@types/uuid": "^9.0.4",
+        "apify": "^3.1.10",
         "ts-node": "^10.9.1",
-        "uuid": "^9.0.0"
+        "typescript": "~5.2.2",
+        "uuid": "^9.0.1"
     }
 }

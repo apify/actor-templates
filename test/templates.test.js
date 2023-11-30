@@ -4,6 +4,7 @@ const os = require('os');
 const path = require('path');
 
 const JSON5 = require('json5');
+const semver = require('semver');
 
 const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS } = require('../src/consts');
 
@@ -38,6 +39,27 @@ const checkCommonTemplateStructure = (templateId) => {
 
     const actorJson = JSON5.parse(fs.readFileSync(actorJsonPath, 'utf8'));
     expect(actorJson.meta?.templateId).toBe(templateId);
+};
+
+const canNodeTemplateRun = (templateId) => {
+    expect(fs.existsSync('package.json')).toBe(true);
+    const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+    const currentNodeVersion = process.version;
+    const requiredNodeVersion = packageJson.engines?.node;
+    const requiredBunVersion = packageJson.engines?.bun;
+
+    if (requiredBunVersion && !requiredNodeVersion) {
+        console.log(`Skipping ${templateId} because it can only be run unsing bun.`);
+        return false;
+    }
+
+    if (requiredNodeVersion && !semver.satisfies(currentNodeVersion, requiredNodeVersion)) {
+        console.log(`Skipping ${templateId} because it requires Node.js ${requiredNodeVersion} and you have ${currentNodeVersion}`);
+        return false;
+    }
+
+    return true;
 };
 
 const checkNodeTemplate = () => {
@@ -112,6 +134,8 @@ describe('Templates work', () => {
                 prepareActor(templateId);
 
                 checkCommonTemplateStructure(templateId);
+                if (!canNodeTemplateRun(templateId)) return;
+
                 checkNodeTemplate();
                 checkTemplateRun();
             });

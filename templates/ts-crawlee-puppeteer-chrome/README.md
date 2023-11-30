@@ -38,3 +38,17 @@ If you're looking for examples or want to learn more visit:
         });
         ```
 5. `crawler.run(startUrls);` start the crawler and wait for its finish
+
+## Resources
+
+If you're looking for examples or want to learn more visit:
+
+- [Crawlee + Apify Platform guide](https://crawlee.dev/docs/guides/apify-platform)
+- [Documentation](https://crawlee.dev/api/playwright-crawler/class/PlaywrightCrawler) and [examples](https://crawlee.dev/docs/examples/playwright-crawler)
+- [Node.js tutorials](https://docs.apify.com/academy/node-js) in Academy
+- [How to scale Puppeteer and Playwright](https://blog.apify.com/how-to-scale-puppeteer-and-playwright/)
+- [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+- [Integration with Make](https://apify.com/integrations), GitHub, Zapier, Google Drive, and other apps
+- A short guide on how to build web scrapers using code templates:
+
+[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)

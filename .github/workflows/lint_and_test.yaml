@@ -4,6 +4,8 @@ on:
   push:
     paths-ignore:
       - 'dist/**'
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   lint_and_test:
@@ -49,7 +51,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: [ 16, 18 ]
+        node-version: [ 16, 18, 20 ]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -80,13 +82,14 @@ jobs:
       run: npm run test-node-templates
       env:
         APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
 
   test-python-templates:
     name: Test Python templates
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -122,10 +125,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Setup Chromedriver
-      uses: nanasess/setup-chromedriver@v2
-      with:
-        chromedriver-version: '113.0.5672.63'
+    - name: Install Chrome and Chromedriver
+      run: |
+        npx @puppeteer/browsers install chrome@113.0.5672.63
+        npx @puppeteer/browsers install chromedriver@113.0.5672.63
 
     - name: Test Python templates
       run: npm run test-python-templates

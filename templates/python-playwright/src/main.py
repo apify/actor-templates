@@ -1,18 +1,33 @@
+"""
+This module defines the `main()` coroutine for the Apify Actor, executed from the `__main__.py` file.
+
+Feel free to modify this file to suit your specific needs.
+
+To build Apify Actors, utilize the Apify SDK toolkit, read more at the official documentation:
+https://docs.apify.com/sdk/python
+"""
+
 from urllib.parse import urljoin
 
-from apify import Actor
 from playwright.async_api import async_playwright
+
+from apify import Actor
 
 # To run this Actor locally, you need to have the Playwright browsers installed.
 # Run `playwright install --with-deps` in the Actor's virtual environment to install them.
 # When running on the Apify platform, they are already included in the Actor's Docker image.
 
 
-async def main():
+async def main() -> None:
+    """
+    The main coroutine is being executed using `asyncio.run()`, so do not attempt to make a normal function
+    out of it, it will not work. Asynchronous execution is required for communication with Apify platform,
+    and it also enhances performance in the field of web scraping significantly.
+    """
     async with Actor:
         # Read the Actor input
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [{ 'url': 'https://apify.com' }])
+        start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
         if not start_urls:
@@ -24,7 +39,7 @@ async def main():
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            await default_queue.add_request({ 'url': url, 'userData': { 'depth': 0 }})
+            await default_queue.add_request({'url': url, 'userData': {'depth': 0}})
 
         # Launch Playwright an open a new browser context
         Actor.log.info('Launching Playwright...')
@@ -53,13 +68,13 @@ async def main():
                                 Actor.log.info(f'Enqueuing {link_url} ...')
                                 await default_queue.add_request({
                                     'url': link_url,
-                                    'userData': {'depth': depth + 1 },
+                                    'userData': {'depth': depth + 1},
                                 })
 
                     # Push the title of the page into the default dataset
                     title = await page.title()
-                    await Actor.push_data({ 'url': url, 'title': title })
-                except:
+                    await Actor.push_data({'url': url, 'title': title})
+                except Exception:
                     Actor.log.exception(f'Cannot extract data from {url}.')
                 finally:
                     await page.close()

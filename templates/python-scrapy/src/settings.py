@@ -1,18 +1,26 @@
-# Scrapy settings for this project
-#
-# For simplicity, this file contains only settings considered important or
-# commonly used. You can find more settings consulting the documentation:
-#
-#     http://doc.scrapy.org/en/latest/topics/settings.html
+"""
+Scrapy settings module
 
+This module contains Scrapy settings for the project, defining various configurations and options.
 
+For more comprehensive details on Scrapy settings, refer to the official documentation:
+http://doc.scrapy.org/en/latest/topics/settings.html
+"""
+
+# You can update these options and add new ones
 BOT_NAME = 'titlebot'
-
-SPIDER_MODULES = ['src.spiders']
+DEPTH_LIMIT = 1
+LOG_LEVEL = 'INFO'
 NEWSPIDER_MODULE = 'src.spiders'
-
 REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
-TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
-
-# Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+SPIDER_MODULES = ['src.spiders']
+ITEM_PIPELINES = {
+    'src.pipelines.TitleItemPipeline': 123,
+}
+SPIDER_MIDDLEWARES = {
+    'src.middlewares.TitleSpiderMiddleware': 543,
+}
+DOWNLOADER_MIDDLEWARES = {
+    'src.middlewares.TitleDownloaderMiddleware': 543,
+}

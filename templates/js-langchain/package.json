@@ -1,0 +1,21 @@
+{
+    "name": "project-langchain",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "This is a boilerplate of an Apify actor.",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.1.10",
+        "hnswlib-node": "^1.4.2",
+        "langchain": "^0.0.145",
+        "tar": "^6.1.14"
+    },
+    "scripts": {
+        "start": "node src/main.js",
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    },
+    "author": "It's not you it's me",
+    "license": "ISC"
+}
