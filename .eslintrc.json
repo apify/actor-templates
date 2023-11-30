@@ -1,6 +1,9 @@
 {
     "extends": ["@apify"],
     "plugins": ["jest"],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
     "rules": {
         "no-console": "off"
     }
