@@ -17,10 +17,11 @@ await Actor.init();
 
 const startUrls = ['https://apify.com'];
 
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// Apify Proxy works only when you have access to it, and you're logged in (apify login CLI command)
+// const proxyConfiguration = await Actor.createProxyConfiguration();
 
 const crawler = new PuppeteerCrawler({
-    proxyConfiguration,
+    // proxyConfiguration,
     requestHandler: router,
 });
 

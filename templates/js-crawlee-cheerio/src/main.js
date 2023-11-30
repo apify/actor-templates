@@ -16,10 +16,11 @@ const {
     maxRequestsPerCrawl = 100,
 } = await Actor.getInput() ?? {};
 
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// Apify Proxy works only when you have access to it, and you're logged in (apify login CLI command)
+// const proxyConfiguration = await Actor.createProxyConfiguration();
 
 const crawler = new CheerioCrawler({
-    proxyConfiguration,
+    // proxyConfiguration,
     maxRequestsPerCrawl,
     async requestHandler({ enqueueLinks, request, $, log }) {
         log.info('enqueueing new URLs');
