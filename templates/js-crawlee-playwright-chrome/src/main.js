@@ -13,9 +13,9 @@ import { PlaywrightCrawler } from 'crawlee';
 import { router } from './routes.js';
 
 // Initialize the Apify SDK
-await Actor.init();
-
-const startUrls = ['https://apify.com']
+const {
+    startUrls = ['https://crawlee.dev'],
+} = await Actor.getInput() ?? {};
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
