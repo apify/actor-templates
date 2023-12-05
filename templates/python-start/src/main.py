@@ -32,7 +32,7 @@ async def main() -> None:
         # Create an asynchronous HTTPX client
         async with AsyncClient() as client:
             # Fetch the HTML content of the page.
-            response = await client.get(url)
+            response = await client.get(url, follow_redirects=True)
 
         # Parse the HTML content using Beautiful Soup
         soup = BeautifulSoup(response.content, 'html.parser')

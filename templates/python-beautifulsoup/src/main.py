@@ -47,7 +47,7 @@ async def main() -> None:
             try:
                 # Fetch the URL using `httpx`
                 async with AsyncClient() as client:
-                    response = await client.get(url)
+                    response = await client.get(url, follow_redirects=True)
 
                 # Parse the response using `BeautifulSoup`
                 soup = BeautifulSoup(response.content, 'html.parser')
