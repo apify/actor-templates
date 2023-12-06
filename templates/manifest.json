@@ -134,7 +134,7 @@
             },
             "showcaseFiles": [
                 "src/main.py",
-                "src/spiders/title_spider.py",
+                "src/spiders/title.py",
                 "src/__main__.py",
                 "src/items.py",
                 "src/pipelines.py",
