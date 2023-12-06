@@ -133,7 +133,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/apify/main.py",
+                "src/main.py",
                 "src/spiders/title_spider.py",
                 "src/__main__.py",
                 "src/items.py",
