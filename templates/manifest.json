@@ -3,6 +3,36 @@
     "localReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md",
     "templates": [
         {
+            "id": "python-scrapy",
+            "name": "python-scrapy",
+            "label": "Scrapy",
+            "category": "python",
+            "technologies": [
+                "scrapy"
+            ],
+            "description": "This example Scrapy spider scrapes page titles from URLs defined in input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/spiders/title.py",
+                "src/__main__.py",
+                "src/items.py",
+                "src/pipelines.py",
+                "src/settings.py"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
+            ]
+        },
+        {
             "id": "python-start",
             "name": "python-start",
             "label": "Start with Python",
@@ -109,36 +139,6 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/__main__.py"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
-        },
-        {
-            "id": "python-scrapy",
-            "name": "python-scrapy",
-            "label": "Scrapy",
-            "category": "python",
-            "technologies": [
-                "scrapy"
-            ],
-            "description": "This example Scrapy spider scrapes page titles from URLs defined in input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
-            "messages": {
-                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
-            },
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-scrapy.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 4096,
-                "timeoutSecs": 3600
-            },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/spiders/title.py",
-                "src/__main__.py",
-                "src/items.py",
-                "src/pipelines.py",
-                "src/settings.py"
             ],
             "useCases": [
                 "WEB_SCRAPING"
