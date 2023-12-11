@@ -5,9 +5,9 @@
     "main": "src/index.ts",
     "scripts": {
         "start": "npm run start:dev",
-        "start:dev": "ts-node src/main.ts",
+        "start:dev": "tsx src/main.ts",
         "start:prod": "node dist/main.js",
-        "codegen": "ts-node src/runCodegen.ts",
+        "codegen": "tsx src/runCodegen.ts",
         "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1",
         "postinstall": "npx crawlee install-playwright-browsers"
@@ -21,8 +21,8 @@
         "@playwright/test": "1.37.1",
         "@types/uuid": "^9.0.4",
         "apify": "^3.1.10",
-        "ts-node": "^10.9.1",
-        "typescript": "~5.2.2",
+        "tsx": "^4.6.2",
+        "typescript": "^5.3.3",
         "uuid": "^9.0.1"
     }
 }
