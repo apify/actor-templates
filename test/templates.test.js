@@ -50,7 +50,7 @@ const canNodeTemplateRun = (templateId) => {
     const requiredBunVersion = packageJson.engines?.bun;
 
     if (requiredBunVersion && !requiredNodeVersion) {
-        console.log(`Skipping ${templateId} because it can only be run unsing bun.`);
+        console.log(`Skipping ${templateId} because it can only be run using bun.`);
         return false;
     }
 
