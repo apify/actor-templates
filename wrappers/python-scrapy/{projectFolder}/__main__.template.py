@@ -51,22 +51,30 @@ def new_configure_logging(*args: Any, **kwargs: Any) -> None:
     old_configure_logging(*args, **kwargs)
 
     root_logger = logging.getLogger()
-    scrapy_logger = logging.getLogger('scrapy')
-    twisted_logger = logging.getLogger('twisted')
-    filelock_logger = logging.getLogger('filelock')
-    hpack_logger = logging.getLogger('hpack')
-
     root_logger.addHandler(handler)
-    scrapy_logger.addHandler(handler)
-    twisted_logger.addHandler(handler)
-    filelock_logger.addHandler(handler)
-    hpack_logger.addHandler(handler)
-
     root_logger.setLevel(LOGGING_LEVEL)
+
+    scrapy_logger = logging.getLogger('scrapy')
+    scrapy_logger.addHandler(handler)
     scrapy_logger.setLevel(LOGGING_LEVEL)
+
+    twisted_logger = logging.getLogger('twisted')
+    twisted_logger.addHandler(handler)
     twisted_logger.setLevel(LOGGING_LEVEL)
+
+    filelock_logger = logging.getLogger('filelock')
+    filelock_logger.addHandler(handler)
     filelock_logger.setLevel(LOGGING_LEVEL)
+
+    hpack_logger = logging.getLogger('hpack')
+    hpack_logger.addHandler(handler)
     hpack_logger.setLevel(LOGGING_LEVEL)
+
+    # Set the HTTPX logger explicitly to the WARNING level, because it is too verbose and spams the logs with useless
+    # messages, especially when running on the platform
+    httpx_logger = logging.getLogger('httpx')
+    httpx_logger.addHandler(handler)
+    httpx_logger.setLevel(logging.WARNING)
 
 scrapy_logging.configure_logging = new_configure_logging
 
