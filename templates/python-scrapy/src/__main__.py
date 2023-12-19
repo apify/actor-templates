@@ -11,11 +11,17 @@ We recommend you do not modify this file unless you really know what you are doi
 
 # We need to configure the logging first before we import anything else, so that nothing else imports
 # `scrapy.utils.log` before we patch it.
-import logging
+from __future__ import annotations
+from logging import StreamHandler, getLogger
 from typing import Any
 from scrapy.utils import log as scrapy_logging
 from scrapy.utils.project import get_project_settings
 from apify.log import ActorLogFormatter
+
+# Define names of the loggers.
+APIFY_LOGGER_NAMES = ['apify', 'apify_client']
+SCRAPY_LOGGER_NAMES = ['filelock', 'hpack', 'httpx', 'scrapy', 'twisted']
+ALL_LOGGER_NAMES = APIFY_LOGGER_NAMES + SCRAPY_LOGGER_NAMES
 
 # To change the logging level, modify the `LOG_LEVEL` field in `settings.py`. If the field is not present in the file,
 # Scrapy will default to `DEBUG`. This setting applies to all loggers. If you wish to change the logging level for
@@ -23,16 +29,41 @@ from apify.log import ActorLogFormatter
 settings = get_project_settings()
 LOGGING_LEVEL = settings['LOG_LEVEL']
 
-handler = logging.StreamHandler()
-handler.setFormatter(ActorLogFormatter(include_logger_name=True))
+# Define a logging handler which will be used for the loggers.
+apify_handler = StreamHandler()
+apify_handler.setFormatter(ActorLogFormatter(include_logger_name=True))
 
-apify_logger = logging.getLogger('apify')
-apify_logger.setLevel(LOGGING_LEVEL)
-apify_logger.addHandler(handler)
 
-apify_client_logger = logging.getLogger('apify_client')
-apify_client_logger.setLevel(LOGGING_LEVEL)
-apify_client_logger.addHandler(handler)
+def configure_logger(
+    logger_name: str | None,
+    log_level: str,
+    *,
+    reset_handlers: bool = True,
+    add_apify_handler: bool = False,
+) -> None:
+    """
+    Configure a logger with the specified settings.
+
+    Args:
+        logger_name: The name of the logger to be configured.
+        log_level: The desired logging level ('DEBUG', 'INFO', 'WARNING', 'ERROR', ...).
+        reset_handlers: Reset handlers. Defaults to True.
+        handlers: Optional list of logging handlers.
+    """
+    logger = getLogger(logger_name)
+    logger.setLevel(log_level)
+
+    if reset_handlers:
+        logger.handlers = []
+
+    if add_apify_handler:
+        logger.addHandler(apify_handler)
+
+
+# Apify loggers have to be set up here and in the `new_configure_logging` as well to be able to use them both from
+# the `main.py` and Scrapy components.
+for logger_name in APIFY_LOGGER_NAMES:
+    configure_logger(logger_name, LOGGING_LEVEL, add_apify_handler=True)
 
 # We can't attach our log handler to the loggers normally, because Scrapy would remove them in the `configure_logging`
 # call here: https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/utils/log.py#L113 (even though
@@ -40,6 +71,7 @@ apify_client_logger.addHandler(handler)
 # like this, so that our handler is attached right after Scrapy calls the `configure_logging` method, because
 # otherwise we would lose some log messages.
 old_configure_logging = scrapy_logging.configure_logging
+
 
 def new_configure_logging(*args: Any, **kwargs: Any) -> None:
     """
@@ -50,31 +82,20 @@ def new_configure_logging(*args: Any, **kwargs: Any) -> None:
     """
     old_configure_logging(*args, **kwargs)
 
-    # We modify the root logger to ensure proper display of logs from spiders when using the `self.logger`
+    # We modify the root (None) logger to ensure proper display of logs from spiders when using the `self.logger`
     # property within spiders. See details in the Spider logger property:
     # https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/spiders/__init__.py#L43:L46.
-    root_logger = logging.getLogger()
-    root_logger.addHandler(handler)
-    root_logger.setLevel(LOGGING_LEVEL)
+    configure_logger(None, LOGGING_LEVEL, add_apify_handler=True)
 
     # We modify other loggers only by setting up their log level. A custom log handler is added
     # only to the root logger to avoid duplicate log messages.
-    scrapy_logger = logging.getLogger('scrapy')
-    scrapy_logger.setLevel(LOGGING_LEVEL)
-
-    twisted_logger = logging.getLogger('twisted')
-    twisted_logger.setLevel(LOGGING_LEVEL)
-
-    filelock_logger = logging.getLogger('filelock')
-    filelock_logger.setLevel(LOGGING_LEVEL)
-
-    hpack_logger = logging.getLogger('hpack')
-    hpack_logger.setLevel(LOGGING_LEVEL)
+    for logger_name in ALL_LOGGER_NAMES:
+        configure_logger(logger_name, LOGGING_LEVEL)
 
     # Set the HTTPX logger explicitly to the WARNING level, because it is too verbose and spams the logs with useless
-    # messages, especially when running on the platform
-    httpx_logger = logging.getLogger('httpx')
-    httpx_logger.setLevel(logging.WARNING)
+    # messages, especially when running on the platform.
+    configure_logger('httpx', 'WARNING')
+
 
 scrapy_logging.configure_logging = new_configure_logging
 
