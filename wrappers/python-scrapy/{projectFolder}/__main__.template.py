@@ -50,30 +50,30 @@ def new_configure_logging(*args: Any, **kwargs: Any) -> None:
     """
     old_configure_logging(*args, **kwargs)
 
+    # We modify the root logger to ensure proper display of logs from spiders when using the `self.logger`
+    # property within spiders. See details in the Spider logger property:
+    # https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/spiders/__init__.py#L43:L46.
     root_logger = logging.getLogger()
     root_logger.addHandler(handler)
     root_logger.setLevel(LOGGING_LEVEL)
 
+    # We modify other loggers only by setting up their log level. A custom log handler is added
+    # only to the root logger to avoid duplicate log messages.
     scrapy_logger = logging.getLogger('scrapy')
-    scrapy_logger.addHandler(handler)
     scrapy_logger.setLevel(LOGGING_LEVEL)
 
     twisted_logger = logging.getLogger('twisted')
-    twisted_logger.addHandler(handler)
     twisted_logger.setLevel(LOGGING_LEVEL)
 
     filelock_logger = logging.getLogger('filelock')
-    filelock_logger.addHandler(handler)
     filelock_logger.setLevel(LOGGING_LEVEL)
 
     hpack_logger = logging.getLogger('hpack')
-    hpack_logger.addHandler(handler)
     hpack_logger.setLevel(LOGGING_LEVEL)
 
     # Set the HTTPX logger explicitly to the WARNING level, because it is too verbose and spams the logs with useless
     # messages, especially when running on the platform
     httpx_logger = logging.getLogger('httpx')
-    httpx_logger.addHandler(handler)
     httpx_logger.setLevel(logging.WARNING)
 
 scrapy_logging.configure_logging = new_configure_logging
