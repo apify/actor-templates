@@ -34,36 +34,27 @@ apify_handler = StreamHandler()
 apify_handler.setFormatter(ActorLogFormatter(include_logger_name=True))
 
 
-def configure_logger(
-    logger_name: str | None,
-    log_level: str,
-    *,
-    reset_handlers: bool = True,
-    add_apify_handler: bool = False,
-) -> None:
+def configure_logger(logger_name: str | None, log_level: str, *handlers: StreamHandler) -> None:
     """
     Configure a logger with the specified settings.
 
     Args:
         logger_name: The name of the logger to be configured.
         log_level: The desired logging level ('DEBUG', 'INFO', 'WARNING', 'ERROR', ...).
-        reset_handlers: Reset handlers. Defaults to True.
         handlers: Optional list of logging handlers.
     """
     logger = getLogger(logger_name)
     logger.setLevel(log_level)
+    logger.handlers = []
 
-    if reset_handlers:
-        logger.handlers = []
-
-    if add_apify_handler:
-        logger.addHandler(apify_handler)
+    for handler in handlers:
+        logger.addHandler(handler)
 
 
 # Apify loggers have to be set up here and in the `new_configure_logging` as well to be able to use them both from
 # the `main.py` and Scrapy components.
 for logger_name in APIFY_LOGGER_NAMES:
-    configure_logger(logger_name, LOGGING_LEVEL, add_apify_handler=True)
+    configure_logger(logger_name, LOGGING_LEVEL, apify_handler)
 
 # We can't attach our log handler to the loggers normally, because Scrapy would remove them in the `configure_logging`
 # call here: https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/utils/log.py#L113 (even though
@@ -85,7 +76,7 @@ def new_configure_logging(*args: Any, **kwargs: Any) -> None:
     # We modify the root (None) logger to ensure proper display of logs from spiders when using the `self.logger`
     # property within spiders. See details in the Spider logger property:
     # https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/spiders/__init__.py#L43:L46.
-    configure_logger(None, LOGGING_LEVEL, add_apify_handler=True)
+    configure_logger(None, LOGGING_LEVEL, apify_handler)
 
     # We modify other loggers only by setting up their log level. A custom log handler is added
     # only to the root logger to avoid duplicate log messages.
