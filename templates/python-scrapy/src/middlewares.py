@@ -17,6 +17,8 @@ from scrapy import Request, Spider, signals
 from scrapy.crawler import Crawler
 from scrapy.http import Response
 
+from apify import Actor
+
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
@@ -76,7 +78,8 @@ class TitleSpiderMiddleware:
             yield r
 
     def spider_opened(self, spider: Spider) -> None:
-        spider.logger.info('TitleSpiderMiddleware: Spider opened: %s', spider.name)
+        # spider.logger.info('TitleSpiderMiddleware: Spider opened: %s', spider.name)
+        pass
 
 
 class TitleDownloaderMiddleware:
@@ -101,6 +104,7 @@ class TitleDownloaderMiddleware:
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
+        # Actor.log.info(f'TitleDownloaderMiddleware.process_request was called (scrapy_request={request}, scrapy_request.meta={request.meta})...')
         return None
 
     def process_response(self, request: Request, response: Response, spider: Spider) -> Request | Response:
@@ -123,4 +127,5 @@ class TitleDownloaderMiddleware:
         pass
 
     def spider_opened(self, spider: Spider) -> None:
-        spider.logger.info('TitleDownloaderMiddleware: Spider opened: %s', spider.name)
+        # spider.logger.info('TitleDownloaderMiddleware: Spider opened: %s', spider.name)
+        pass
