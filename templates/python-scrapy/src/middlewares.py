@@ -76,7 +76,7 @@ class TitleSpiderMiddleware:
             yield r
 
     def spider_opened(self, spider: Spider) -> None:
-        spider.logger.info('TitleSpiderMiddleware: Spider opened: %s', spider.name)
+        pass
 
 
 class TitleDownloaderMiddleware:
@@ -123,4 +123,4 @@ class TitleDownloaderMiddleware:
         pass
 
     def spider_opened(self, spider: Spider) -> None:
-        spider.logger.info('TitleDownloaderMiddleware: Spider opened: %s', spider.name)
+        pass

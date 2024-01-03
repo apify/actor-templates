@@ -1,8 +1,8 @@
 {
     "actorSpecification": 1,
     "name": "{{ botName }}",
-    "title": "Getting started with Python Scrapy",
-    "description": "Python Scrapy spider wrapped using the Apify CLI.",
+    "title": "Getting started with Python and Scrapy",
+    "description": "Python Scrapy project wrapped using the Apify CLI.",
     "version": "0.0",
     "meta": {
         "templateId": "python-scrapy"
