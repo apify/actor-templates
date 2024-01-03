@@ -22,5 +22,5 @@
             "default": { "useApifyProxy": true }
         }
     },
-    "required": ["startUrls", "proxyConfiguration"]
+    "required": ["startUrls"]
 }
