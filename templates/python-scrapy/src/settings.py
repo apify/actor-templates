@@ -19,8 +19,8 @@ ITEM_PIPELINES = {
     'src.pipelines.TitleItemPipeline': 123,
 }
 SPIDER_MIDDLEWARES = {
-    'src.middlewares.TitleSpiderMiddleware': 999,
+    'src.middlewares.TitleSpiderMiddleware': 543,
 }
 DOWNLOADER_MIDDLEWARES = {
-    'src.middlewares.TitleDownloaderMiddleware': 999,
+    'src.middlewares.TitleDownloaderMiddleware': 543,
 }
