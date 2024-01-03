@@ -3,7 +3,7 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "start_urls": {
+        "startUrls": {
             "title": "Start URLs",
             "type": "array",
             "description": "URLs to start with",
@@ -11,7 +11,16 @@
                 { "url": "https://apify.com" }
             ],
             "editor": "requestListSources"
+        },
+        "proxyConfiguration": {
+            "sectionCaption": "Proxy and HTTP configuration",
+            "title": "Proxy configuration",
+            "type": "object",
+            "description": "Specifies proxy servers that will be used by the scraper in order to hide its origin.",
+            "editor": "proxy",
+            "prefill": { "useApifyProxy": true },
+            "default": { "useApifyProxy": true }
         }
     },
-    "required": ["start_urls"]
+    "required": ["startUrls"]
 }
