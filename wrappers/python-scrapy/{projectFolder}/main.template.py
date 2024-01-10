@@ -12,26 +12,11 @@ components like spiders and handling Actor input. However, make sure you have a 
 modifications. For instance, removing Apify-Scrapy components from the settings will break the integration
 between Scrapy and Apify.
 
-Known limitations to be aware of:
----------------------------------
+Documentation:
+--------------
 
-1. Asynchronous spiders and Twisted & AsyncIO integration
-
-   Asynchronous spiders (and possibly other components) may encounter challenges due to the Twisted & AsyncIO
-   integration. If you need to execute a coroutine within the Spider, it's recommended to use Apify's custom
-   nested event loop. See the code example below or find inspiration from Apify's Scrapy components, such as
-   [ApifyScheduler](https://github.com/apify/apify-sdk-python/blob/v1.3.0/src/apify/scrapy/scheduler.py#L109).
-
-   ```
-   from apify.scrapy.utils import nested_event_loop
-
-   nested_event_loop.run_until_complete(my_coroutine())
-   ```
-
-2. Single spider limitation
-
-   The current implementation supports the execution of only one Spider per project.
-   Issue: https://github.com/apify/actor-templates/issues/202
+For an in-depth description of the Apify-Scrapy integration process, our Scrapy components, known limitations and
+other stuff, please refer to the following documentation page: https://docs.apify.com/cli/docs/integrating-scrapy.
 """
 
 from __future__ import annotations
