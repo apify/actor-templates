@@ -13,15 +13,25 @@ import { PlaywrightCrawler } from 'crawlee';
 // note that we need to use `.js` even when inside TS files
 import { router } from './routes.js';
 
+interface Input {
+    startUrls: string[];
+    maxRequestsPerCrawl: number;
+}
+
 // Initialize the Apify SDK
 await Actor.init();
 
-const startUrls = ['https://apify.com'];
+// Structure of input is defined in input_schema.json
+const {
+    startUrls = ['https://crawlee.dev'],
+    maxRequestsPerCrawl = 100,
+} = await Actor.getInput<Input>() ?? {} as Input;
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
 const crawler = new PlaywrightCrawler({
     proxyConfiguration,
+    maxRequestsPerCrawl,
     requestHandler: router,
 });
 
