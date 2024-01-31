@@ -19,9 +19,8 @@ The scraped data in this template are page headings but you can easily edit the 
 3. `cheerio.load(response.data)` loads the page data and enables parsing the headings
 4. This parses the headings from the page and here you can edit the code to parse whatever you need from the page
     
-    ```
+    ```javascript
     $("h1, h2, h3, h4, h5, h6").each((_i, element) => {...});
-    
     ```
     
 5. `Actor.pushData(headings)` stores the headings in the dataset

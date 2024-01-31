@@ -26,7 +26,7 @@ If you're looking for examples or want to learn more visit:
     - Create a new router instance with `new createPuppeteerRouter()`
     - Define default handler that will be called for all URLs that are not handled by other handlers by adding `router.addDefaultHandler(() => { ... })`
     - Define additional handlers - here you can add your own handling of the page
-        ```
+        ```javascript
         router.addHandler('detail', async ({ request, page, log }) => {
             const title = await page.title();
             // You can add your own page handling here

@@ -2,7 +2,7 @@
 
 For complete information [see this article](https://docs.apify.com/platform/actors/development#build-actor-locally). To run the actor use the following command:
 
-```
+```bash
 apify run
 ```
 
@@ -21,13 +21,13 @@ You can also deploy the project on your local machine to Apify without the need 
 
 1. Log in to Apify. You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
 
-    ```
+    ```bash
     apify login
     ```
 
 2. Deploy your Actor. This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
 
-    ```
+    ```bash
     apify push
     ```
 
