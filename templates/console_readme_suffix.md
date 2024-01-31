@@ -13,13 +13,13 @@ If you would like to develop locally, you can pull the existing Actor from Apify
 
     **Using Homebrew**
 
-    ```
+    ```bash
     brew install apify-cli
     ```
 
     **Using NPM**
 
-    ```
+    ```bash
     npm -g install apify-cli
     ```
 
@@ -31,7 +31,7 @@ If you would like to develop locally, you can pull the existing Actor from Apify
 
     This command will copy the Actor into the current directory on your local machine.
 
-    ```
+    ```bash
     apify pull <ActorId>
     ```
 
