@@ -5,11 +5,38 @@
 Tests are implemented using the [Mocha](https://mochajs.org/) framework.
 You can run tests with commands in the repository root directory:
 
-1. Install all dependencies:
-`npm install`
+Install dependencies:
 
-2. Run tests using:
-`npm run test`
+```
+npm install
+```
+
+Run tests for all templates:
+
+```
+npm run test
+```
+
+Run tests only for Python templates:
+
+```
+npm run test-python-templates
+```
+
+Run tests only for Node templates:
+
+```
+npm run test-node-templates
+```
+
+To enable verbose output, add `verbose: true` to the `jest.config.js` file:
+
+```diff
+ module.exports = {
+     // ...
++    verbose: true,
+ };
+```
 
 ## Publish new/updated templates
 
