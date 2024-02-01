@@ -17,11 +17,7 @@ const APIFY_COMMAND = /^win/.test(process.platform) ? 'apify.cmd' : 'apify';
 
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 
-// TODO:
-//   - Return the following code to its original state once tests for Python templates with SDK 1.5.3+ are fixed.
-//   - Issue: https://github.com/apify/actor-templates/issues/270
-// const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
-const APIFY_SDK_PYTHON_LATEST_VERSION = '1.5.3';
+const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
 const checkSpawnResult = ({ status, stdout, stderr }) => {
     try {
