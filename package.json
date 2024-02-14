@@ -3,8 +3,20 @@
     "version": "0.1.4",
     "description": "A manifest of Apify actor templates.",
     "main": "src/index.js",
+    "types": "src/index.d.cts",
+    "exports": {
+        "import": {
+            "types": "./src/index.d.mts",
+            "default": "./src/index.js"
+        },
+        "require": {
+            "types": "./src/index.d.cts",
+            "default": "./src/index.js"
+        }
+    },
     "files": [
-        "src/index.js"
+        "src/index.js",
+        "src/index.d.*"
     ],
     "scripts": {
         "lint": "eslint . --ext .js,.ts",
