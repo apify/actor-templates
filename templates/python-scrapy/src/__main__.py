@@ -19,9 +19,9 @@ from scrapy.utils.project import get_project_settings
 from apify.log import ActorLogFormatter
 
 # Define names of the loggers.
-APIFY_LOGGER_NAMES = ['apify', 'apify_client']
-SCRAPY_LOGGER_NAMES = ['filelock', 'hpack', 'httpx', 'scrapy', 'twisted']
-ALL_LOGGER_NAMES = APIFY_LOGGER_NAMES + SCRAPY_LOGGER_NAMES
+MAIN_LOGGER_NAMES = ['apify', 'apify_client', 'scrapy']
+OTHER_LOGGER_NAMES = ['filelock', 'hpack', 'httpcore', 'httpx', 'protego', 'twisted']
+ALL_LOGGER_NAMES = MAIN_LOGGER_NAMES + OTHER_LOGGER_NAMES
 
 # To change the logging level, modify the `LOG_LEVEL` field in `settings.py`. If the field is not present in the file,
 # Scrapy will default to `DEBUG`. This setting applies to all loggers. If you wish to change the logging level for
@@ -53,7 +53,7 @@ def configure_logger(logger_name: str | None, log_level: str, *handlers: StreamH
 
 # Apify loggers have to be set up here and in the `new_configure_logging` as well to be able to use them both from
 # the `main.py` and Scrapy components.
-for logger_name in APIFY_LOGGER_NAMES:
+for logger_name in MAIN_LOGGER_NAMES:
     configure_logger(logger_name, LOGGING_LEVEL, apify_handler)
 
 # We can't attach our log handler to the loggers normally, because Scrapy would remove them in the `configure_logging`

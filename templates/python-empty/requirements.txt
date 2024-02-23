@@ -1,4 +1,4 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
-apify ~= 1.5.5
+apify ~= 1.6.0
