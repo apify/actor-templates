@@ -99,6 +99,8 @@ from .main import main
 
 # To ensure seamless compatibility between asynchronous libraries Twisted (used by Scrapy) and AsyncIO (used by Apify),
 # it is highly recommended to use AsyncioSelectorReactor as the Twisted reactor
+# The reactor installation must be done manually before calling `nest_asyncio.apply()`,
+# otherwise, it will not work correctly on Windows.
 install_reactor('twisted.internet.asyncioreactor.AsyncioSelectorReactor')
 nest_asyncio.apply()
 
