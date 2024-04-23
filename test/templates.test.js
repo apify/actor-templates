@@ -31,7 +31,12 @@ const checkSpawnResult = ({ status, stdout, stderr }) => {
         // and switch to `stdio: inherit` in `spawnSync`
         expect(stdout.toString()).not.toMatch(/Error: .* exited with code .*/);
     } catch (err) {
-        console.log(stderr.toString());
+        if (stderr) {
+            console.log(stderr.toString());
+        } else {
+            console.log('no stderr');
+        }
+
         console.log(stdout.toString());
         throw err;
     }
