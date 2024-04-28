@@ -1,4 +1,4 @@
-const { spawnSync } = require('child_process');
+const { spawnSync: _spawnSync } = require('child_process');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -14,6 +14,12 @@ const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
 const PYTHON_COMMAND = /^win/.test(process.platform) ? 'python' : 'python3';
 const PYTHON_VENV_COMMAND = /^win/.test(process.platform) ? '.venv\\Scripts\\python.exe' : '.venv/bin/python3';
 const APIFY_COMMAND = /^win/.test(process.platform) ? 'apify.cmd' : 'apify';
+
+const windowsOptions = /^win/.test(process.platform) ? { shell: true, windowsHide: true } : {};
+
+function spawnSync(command, args, options = {}) {
+    return _spawnSync(command, args, { ...options, ...windowsOptions });
+}
 
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 
@@ -106,7 +112,9 @@ const checkPythonTemplate = () => {
 };
 
 const checkTemplateRun = () => {
-    const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run'], { options: { env: { ...process.env, APIFY_HEADLESS: '1' } } });
+    const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run'], {
+        env: { ...process.env, APIFY_HEADLESS: '1' },
+    });
     checkSpawnResult(apifyRunSpawnResult);
 };
 
