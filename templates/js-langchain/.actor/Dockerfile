@@ -1,7 +1,7 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://docs.apify.com/sdk/js/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node:18
+FROM apify/actor-node:20
 
 RUN apk add g++ make py3-pip
 
