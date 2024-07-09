@@ -1,0 +1,20 @@
+{
+    "name": "js-standby-project",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "This is a boilerplate of an Apify Actor.",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.1.10"
+    },
+    "scripts": {
+        "start": "node ./src/main.js",
+        "lint": "./node_modules/.bin/eslint ./src --ext .js,.jsx",
+        "lint:fix": "./node_modules/.bin/eslint ./src --ext .js,.jsx --fix",
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    },
+    "author": "It's not you it's me",
+    "license": "ISC"
+}
