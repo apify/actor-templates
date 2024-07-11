@@ -5,6 +5,7 @@
     "description": "Actor Standby project in Python.",
     "version": "0.0",
     "buildTag": "latest",
+    "usesStandbyMode": true,
     "meta": {
         "templateId": "python-standby"
     },
