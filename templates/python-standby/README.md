@@ -5,3 +5,7 @@ Start a new [web scraping](https://apify.com/web-scraping) project quickly and e
 ## Included features
 
 - **[Apify SDK](https://docs.apify.com/sdk/python/)** for Python - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in Python
+
+## Resources
+
+- [Actor Standby documentation](https://docs.apify.com/platform/actors/development/programming-interface/standby)
