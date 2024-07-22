@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "js-standby",
+    "title": "Standby Actor in JavaScript",
+    "description": "Standby Actor in JavaScript.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "usesStandbyMode": true,
+    "meta": {
+        "templateId": "js-standby"
+    },
+    "dockerfile": "./Dockerfile"
+}

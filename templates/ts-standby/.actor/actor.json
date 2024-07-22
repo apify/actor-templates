@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "ts-standby",
+    "title": "Standby Actor in TypeScript",
+    "description": "Standby Actor in TypeScript.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "usesStandbyMode": true,
+    "meta": {
+        "templateId": "ts-standby"
+    },
+    "dockerfile": "./Dockerfile"
+}
