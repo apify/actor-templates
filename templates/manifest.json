@@ -173,7 +173,8 @@
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-standby.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
-                "memoryMbytes": 1024
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
             },
             "showcaseFiles": [
                 "src/main.py",
@@ -473,7 +474,8 @@
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-standby.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
-                "memoryMbytes": 1024
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
             },
             "showcaseFiles": [
                 "src/main.ts"
@@ -542,7 +544,8 @@
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-standby.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
-                "memoryMbytes": 1024
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
             },
             "showcaseFiles": [
                 "src/main.js"
