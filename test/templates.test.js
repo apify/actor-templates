@@ -25,19 +25,8 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
-const checkSpawnResult = ({ status, stdout, stderr }) => {
-    try {
-        expect(status).toBe(0);
-
-        // `apify run` prints error message to stdout, but exits with code 0
-        // TODO: after it is fixed in apify-cli, remove this
-        // and switch to `stdio: inherit` in `spawnSync`
-        expect(stdout.toString()).not.toMatch(/Error: .* exited with code .*/);
-    } catch (err) {
-        console.log(stderr.toString());
-        console.log(stdout.toString());
-        throw err;
-    }
+const checkSpawnResult = ({ status }) => {
+    expect(status).toBe(0);
 };
 
 const checkCommonTemplateStructure = (templateId) => {
