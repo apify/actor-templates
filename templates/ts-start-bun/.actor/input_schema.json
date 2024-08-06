@@ -8,7 +8,7 @@
         "type": "string",
         "description": "The URL of website you want to get the data from.",
         "editor": "textfield",
-        "prefill": "https://www.crawlee.dev"
+        "prefill": "https://crawlee.dev"
         }
     },
     "required": ["url"]
