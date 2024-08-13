@@ -18,7 +18,7 @@ const {
 // Create a proxy configuration that will rotate proxies from Apify Proxy.
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
-// Create a PuppeteerCrawler that will use the proxy configuration and and handle requests with the router from routes.js file.
+// Create a PuppeteerCrawler that will use the proxy configuration and and handle requests with the router from routes.ts file.
 const crawler = new PuppeteerCrawler({
     proxyConfiguration,
     requestHandler: router,

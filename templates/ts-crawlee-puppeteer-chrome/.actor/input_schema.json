@@ -1,5 +1,5 @@
 {
-    "title": "PlaywrightCrawler Template",
+    "title": "PuppeteerCrawler Template",
     "type": "object",
     "schemaVersion": 1,
     "properties": {
