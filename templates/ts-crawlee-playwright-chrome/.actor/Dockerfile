@@ -3,6 +3,9 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-node-playwright-chrome:20 AS builder
 
+# Check preinstalled packages
+RUN npm ls crawlee apify puppeteer playwright
+
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
 COPY --chown=myuser package*.json ./
@@ -20,6 +23,9 @@ RUN npm run build
 
 # Create final image
 FROM apify/actor-node-playwright-chrome:20
+
+# Check preinstalled packages
+RUN npm ls crawlee apify puppeteer playwright
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
