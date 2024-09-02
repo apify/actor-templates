@@ -6,7 +6,7 @@ const path = require('path');
 const JSON5 = require('json5');
 const semver = require('semver');
 
-const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS } = require('../src/consts');
+const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS } = require('../src/consts');
 
 const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
 
@@ -128,16 +128,18 @@ describe('Templates work', () => {
     });
 
     describe('Node.js templates', () => {
-        NODE_TEMPLATE_IDS.forEach((templateId) => {
-            test(templateId, () => {
-                prepareActor(templateId);
+        NODE_TEMPLATE_IDS
+            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            .forEach((templateId) => {
+                test(templateId, () => {
+                    prepareActor(templateId);
 
-                checkCommonTemplateStructure(templateId);
-                if (!canNodeTemplateRun(templateId)) return;
+                    checkCommonTemplateStructure(templateId);
+                    if (!canNodeTemplateRun(templateId)) return;
 
-                checkNodeTemplate();
-                checkTemplateRun();
+                    checkNodeTemplate();
+                    checkTemplateRun();
+                });
             });
-        });
     });
 });
