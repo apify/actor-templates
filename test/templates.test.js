@@ -103,6 +103,7 @@ const checkPythonTemplate = () => {
 const checkTemplateRun = () => {
     const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run'], {
         env: { ...process.env, APIFY_HEADLESS: '1' },
+        stdio: ['pipe', 'inherit', 'inherit'],
     });
     checkSpawnResult(apifyRunSpawnResult);
 };
