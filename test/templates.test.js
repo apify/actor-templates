@@ -126,7 +126,7 @@ describe('Templates work', () => {
                     checkPythonTemplate();
                     checkTemplateRun();
                 });
-        });
+            });
     });
 
     describe('Node.js templates', () => {
