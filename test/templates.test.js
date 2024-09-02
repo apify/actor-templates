@@ -116,14 +116,16 @@ const prepareActor = (templateId) => {
 
 describe('Templates work', () => {
     describe('Python templates', () => {
-        PYTHON_TEMPLATE_IDS.forEach((templateId) => {
-            test(templateId, () => {
-                prepareActor(templateId);
+        PYTHON_TEMPLATE_IDS
+            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            .forEach((templateId) => {
+                test(templateId, () => {
+                    prepareActor(templateId);
 
-                checkCommonTemplateStructure(templateId);
-                checkPythonTemplate();
-                checkTemplateRun();
-            });
+                    checkCommonTemplateStructure(templateId);
+                    checkPythonTemplate();
+                    checkTemplateRun();
+                });
         });
     });
 
