@@ -1,0 +1,26 @@
+{
+    "name": "ts-standby-project",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "This is an example of an Apify Actor that uses Standby mode.",
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.1.10"
+    },
+    "devDependencies": {
+        "@apify/tsconfig": "^0.1.0",
+        "tsx": "^4.6.2",
+        "typescript": "^5.3.3"
+    },
+    "scripts": {
+        "start": "npm run start:dev",
+        "start:prod": "node dist/main.js",
+        "start:dev": "tsx src/main.ts",
+        "build": "tsc",
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    },
+    "author": "It's not you it's me",
+    "license": "ISC"
+}

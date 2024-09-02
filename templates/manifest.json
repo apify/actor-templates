@@ -165,6 +165,26 @@
             ]
         },
         {
+            "id": "python-standby",
+            "name": "python_standby",
+            "label": "Standby Python project",
+            "category": "python",
+            "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-standby.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ],
+            "useCases": [
+                "STARTER"
+            ]
+        },
+        {
             "id": "js-start",
             "name": "getting_started_node",
             "label": "Start with JavaScript",
@@ -443,6 +463,28 @@
             ]
         },
         {
+            "id": "ts-standby",
+            "name": "ts_standby",
+            "label": "Standby TypeScript project",
+            "category": "typescript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-standby.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.ts"
+            ],
+            "useCases": [
+                "STARTER"
+            ]
+        },
+        {
             "id": "js-cypress",
             "name": "project_cypress",
             "label": "Cypress",
@@ -488,6 +530,28 @@
             ],
             "useCases": [
                 "WEB_SCRAPING"
+            ]
+        },
+        {
+            "id": "js-standby",
+            "name": "js_standby",
+            "label": "Standby JavaScript Project",
+            "category": "javascript",
+            "technologies": [
+                "nodejs"
+            ],
+            "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-standby.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.js"
+            ],
+            "useCases": [
+                "STARTER"
             ]
         },
         {
