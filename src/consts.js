@@ -5,7 +5,10 @@ const wrapperManifest = require('../wrappers/manifest.json');
 
 const WRAPPER_IDS = wrapperManifest.templates.map((t) => t.id);
 const TEMPLATE_IDS = templateManifest.templates.map((t) => t.id);
-const NODE_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category === 'javascript' || t.category === 'typescript').map((t) => t.id);
+const NODE_TEMPLATE_IDS = templateManifest.templates
+    .filter((t) => t.category === 'javascript' || t.category === 'typescript')
+    .filter((t) => !t.skipTests)
+    .map((t) => t.id);
 const PYTHON_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category === 'python').map((t) => t.id);
 
 const TEMPLATES_DIR_NAME = 'templates';
