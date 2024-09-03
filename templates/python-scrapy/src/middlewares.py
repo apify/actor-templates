@@ -1,5 +1,4 @@
-"""
-Scrapy middlewares module
+"""Scrapy middlewares module.
 
 This module defines Scrapy middlewares. Middlewares are processing components that handle requests and
 responses, typically used for adding custom headers, retrying requests, and handling exceptions.

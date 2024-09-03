@@ -1,4 +1,5 @@
-"""
+"""Apify Actor integration for Scrapy projects.
+
 This module transforms a Scrapy project into an Apify Actor, handling the configuration of logging, patching Scrapy's
 logging system, and establishing the required environment to run the Scrapy spider within the Apify platform.
 

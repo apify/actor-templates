@@ -1,5 +1,4 @@
-"""
-This module defines the `main()` coroutine for the Apify Actor, executed from the `__main__.py` file.
+"""This module defines the main entry point for the Apify Actor.
 
 Feel free to modify this file to suit your specific needs.
 
@@ -12,64 +11,74 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from httpx import AsyncClient
 
-from apify import Actor
+from apify import Actor, Request
 
 
 async def main() -> None:
-    """
-    The main coroutine is being executed using `asyncio.run()`, so do not attempt to make a normal function
-    out of it, it will not work. Asynchronous execution is required for communication with Apify platform,
-    and it also enhances performance in the field of web scraping significantly.
+    """Main entry point for the Apify Actor.
+
+    This coroutine is executed using `asyncio.run()`, so it must remain an asynchronous function for proper execution.
+    Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
+    the field of web scraping significantly.
     """
     async with Actor:
-        # Read the Actor input
+        # Read the Actor input, specifying default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
+        # Exit if no start URLs are provided in the input.
         if not start_urls:
-            Actor.log.info('No start URLs specified in actor input, exiting...')
+            Actor.log.info('No start URLs specified in Actor input, exiting...')
             await Actor.exit()
 
-        # Enqueue the starting URLs in the default request queue
-        default_queue = await Actor.open_request_queue()
+        # Open the default request queue for handling URLs to be processed.
+        request_queue = await Actor.open_request_queue()
+
+        # Enqueue each start URL with an initial crawl depth of 0.
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            await default_queue.add_request({'url': url, 'userData': {'depth': 0}})
+            request = Request.from_url(url, user_data={'depth': 0})
+            await request_queue.add_request(request)
 
-        # Process the requests in the queue one by one
-        while request := await default_queue.fetch_next_request():
-            url = request['url']
-            depth = request['userData']['depth']
+        # Process each request from the queue one by one.
+        while request := await request_queue.fetch_next_request():
+            url = request.url
+            depth = request.user_data['depth']
             Actor.log.info(f'Scraping {url} ...')
 
             try:
-                # Fetch the URL using `httpx`
+                # Fetch the URL content using HTTPX.
                 async with AsyncClient() as client:
                     response = await client.get(url, follow_redirects=True)
 
-                # Parse the response using `BeautifulSoup`
+                # Parse the HTML content using Beautiful Soup.
                 soup = BeautifulSoup(response.content, 'html.parser')
 
-                # If we haven't reached the max depth,
-                # look for nested links and enqueue their targets
+                # If the current depth is less than the maximum allowed, find and enqueue nested links.
                 if depth < max_depth:
                     for link in soup.find_all('a'):
                         link_href = link.get('href')
                         link_url = urljoin(url, link_href)
+
                         if link_url.startswith(('http://', 'https://')):
                             Actor.log.info(f'Enqueuing {link_url} ...')
-                            await default_queue.add_request({
-                                'url': link_url,
-                                'userData': {'depth': depth + 1},
-                            })
+                            request = Request.from_url(link_url, user_data={'depth': depth + 1})
+                            await request_queue.add_request(request)
 
-                # Push the title of the page into the default dataset
-                title = soup.title.string if soup.title else None
-                await Actor.push_data({'url': url, 'title': title})
+                # Extract the desired data.
+                data = {
+                    'url': url,
+                    'title': soup.title.string if soup.title else None,
+                }
+
+                # Push the extracted data to the dataset.
+                await Actor.push_data(data)
+
             except Exception:
                 Actor.log.exception(f'Cannot extract data from {url}.')
+
             finally:
-                # Mark the request as handled so it's not processed again
-                await default_queue.mark_request_as_handled(request)
+                # Mark the request as handled to ensure it is not processed again.
+                await request_queue.mark_request_as_handled(request)

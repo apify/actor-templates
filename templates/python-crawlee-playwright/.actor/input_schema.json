@@ -1,0 +1,17 @@
+{
+    "title": "Python Cralee BeautifulSoup Scraper",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "start_urls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "URLs to start with",
+            "prefill": [
+                { "url": "https://apify.com" }
+            ],
+            "editor": "requestListSources"
+        }
+    },
+    "required": ["start_urls"]
+}

@@ -1,4 +1,5 @@
-"""
+"""This module defines the main entry point for the Apify Actor.
+
 This module defines the main coroutine for the Apify Scrapy Actor, executed from the __main__.py file. The coroutine
 processes the Actor's input and executes the Scrapy spider. Additionally, it updates Scrapy project settings by
 applying Apify-related settings. Which includes adding a custom scheduler, retry middleware, and an item pipeline
@@ -48,7 +49,7 @@ async def main() -> None:
         rq = await Actor.open_request_queue()
         for start_url in start_urls:
             url = start_url.get('url')
-            await rq.add_request(request={'url': url, 'method': 'GET'})
+            await rq.add_request(url)
 
         # Apply Apify settings, it will override the Scrapy project settings
         settings = apply_apify_settings(proxy_config=proxy_config)

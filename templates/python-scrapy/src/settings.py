@@ -1,5 +1,4 @@
-"""
-Scrapy settings module
+"""Scrapy settings module.
 
 This module contains Scrapy settings for the project, defining various configurations and options.
 

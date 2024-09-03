@@ -1,5 +1,4 @@
-"""
-Scrapy item models module
+"""Scrapy item models module.
 
 This module defines Scrapy item models for scraped data. Items represent structured data
 extracted by spiders.
