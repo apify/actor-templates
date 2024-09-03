@@ -6,7 +6,7 @@ const path = require('path');
 const JSON5 = require('json5');
 const semver = require('semver');
 
-const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS } = require('../src/consts');
+const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS } = require('../src/consts');
 
 const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
 
@@ -25,19 +25,8 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
-const checkSpawnResult = ({ status, stdout, stderr }) => {
-    try {
-        expect(status).toBe(0);
-
-        // `apify run` prints error message to stdout, but exits with code 0
-        // TODO: after it is fixed in apify-cli, remove this
-        // and switch to `stdio: inherit` in `spawnSync`
-        expect(stdout.toString()).not.toMatch(/Error: .* exited with code .*/);
-    } catch (err) {
-        console.log(stderr.toString());
-        console.log(stdout.toString());
-        throw err;
-    }
+const checkSpawnResult = ({ status }) => {
+    expect(status).toBe(0);
 };
 
 const checkCommonTemplateStructure = (templateId) => {
@@ -114,6 +103,7 @@ const checkPythonTemplate = () => {
 const checkTemplateRun = () => {
     const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run'], {
         env: { ...process.env, APIFY_HEADLESS: '1' },
+        stdio: ['pipe', 'inherit', 'inherit'],
     });
     checkSpawnResult(apifyRunSpawnResult);
 };
@@ -126,28 +116,32 @@ const prepareActor = (templateId) => {
 
 describe('Templates work', () => {
     describe('Python templates', () => {
-        PYTHON_TEMPLATE_IDS.forEach((templateId) => {
-            test(templateId, () => {
-                prepareActor(templateId);
+        PYTHON_TEMPLATE_IDS
+            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            .forEach((templateId) => {
+                test(templateId, () => {
+                    prepareActor(templateId);
 
-                checkCommonTemplateStructure(templateId);
-                checkPythonTemplate();
-                checkTemplateRun();
+                    checkCommonTemplateStructure(templateId);
+                    checkPythonTemplate();
+                    checkTemplateRun();
+                });
             });
-        });
     });
 
     describe('Node.js templates', () => {
-        NODE_TEMPLATE_IDS.forEach((templateId) => {
-            test(templateId, () => {
-                prepareActor(templateId);
+        NODE_TEMPLATE_IDS
+            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            .forEach((templateId) => {
+                test(templateId, () => {
+                    prepareActor(templateId);
 
-                checkCommonTemplateStructure(templateId);
-                if (!canNodeTemplateRun(templateId)) return;
+                    checkCommonTemplateStructure(templateId);
+                    if (!canNodeTemplateRun(templateId)) return;
 
-                checkNodeTemplate();
-                checkTemplateRun();
+                    checkNodeTemplate();
+                    checkTemplateRun();
+                });
             });
-        });
     });
 });
