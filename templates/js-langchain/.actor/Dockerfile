@@ -3,6 +3,9 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-node:20
 
+# Check preinstalled packages
+RUN npm ls crawlee apify puppeteer playwright
+
 RUN apk add g++ make py3-pip
 
 # Copy just package.json and package-lock.json

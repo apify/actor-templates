@@ -3,6 +3,9 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-node-playwright-chrome:20
 
+# Check preinstalled packages
+RUN npm ls crawlee apify puppeteer playwright
+
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
 COPY --chown=myuser package*.json ./
@@ -24,7 +27,6 @@ RUN npm --quiet set progress=false \
 # Since we do this after NPM install, quick build will be really fast
 # for most source file changes.
 COPY --chown=myuser . ./
-
 
 # Run the image. If you know you won't need headful browsers,
 # you can remove the XVFB start script for a micro perf gain.
