@@ -3,7 +3,7 @@
 # Apify Actor templates
 
 > This repository stores boilerplate templates and code examples for [Apify Actor](https://apify.com/actors).
-> The purpose of these templates is to help devlopers get started with actor development on the Apify platform.
+> The purpose of these templates is to help developers get started with actor development on the Apify platform.
 
 ## How to use the templates
 

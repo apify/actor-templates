@@ -1,21 +1,30 @@
 {
     "name": "project-langchain",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "type": "module",
     "description": "This is a boilerplate of an Apify actor.",
     "engines": {
         "node": ">=18.0.0"
     },
     "dependencies": {
+        "@langchain/community": "^0.2.32",
+        "@langchain/core": "^0.2.31",
+        "@langchain/openai": "^0.2.10",
         "apify": "^3.1.10",
-        "hnswlib-node": "^1.4.2",
-        "langchain": "^0.1.11",
+        "hnswlib-node": "^3.0.0",
+        "langchain": "^0.2.18",
         "tar": "^6.1.14"
     },
     "scripts": {
         "start": "node src/main.js",
+        "lint": "eslint ./src --ext .js,.jsx",
+        "lint:fix": "eslint ./src --ext .js,.jsx --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "@apify/eslint-config": "^0.4.0",
+        "eslint": "^8.57.0"
+    }
 }

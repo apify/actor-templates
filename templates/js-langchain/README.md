@@ -1,7 +1,7 @@
 ## LangChain.js template
 
 > LangChain is a framework for developing applications powered by language models.
-> 
+>
 
 This example template illustrates how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model. All of this is within a single Apify Actor and slightly over a hundred lines of code.
 
@@ -33,7 +33,7 @@ To be able to run this template both locally and on the Apify platform, you need
 ## Production use
 
 > This serves purely as an example of the whole pipeline.
-> 
+>
 
 For production use, we recommend you to:
 
@@ -49,6 +49,5 @@ For production use, we recommend you to:
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - A short guide on [how to create web scrapers using code templates](https://www.youtube.com/watch?v=u-i-Korzf8w)
 
-<br>
-[langchain content crawler](https://www.youtube.com/watch?v=8uvHH-ocSes)
+[Web Scraping Data for Generative AI](https://www.youtube.com/watch?v=8uvHH-ocSes)
 
