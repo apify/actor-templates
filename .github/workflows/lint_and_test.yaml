@@ -54,6 +54,7 @@ jobs:
         node-version: [ 18, 20, 22 ]
       fail-fast: false
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
     - name: Checkout repo
@@ -92,6 +93,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         python-version: [ '3.9', '3.10', '3.11', '3.12' ]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
 
     steps:
     - name: Checkout repo
