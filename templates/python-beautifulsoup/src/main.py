@@ -22,7 +22,7 @@ async def main() -> None:
     the field of web scraping significantly.
     """
     async with Actor:
-        # Read the Actor input, specifying default values if not provided.
+        # Retrieve the Actor input. Use default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
