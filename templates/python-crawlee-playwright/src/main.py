@@ -21,20 +21,12 @@ async def main() -> None:
         # Read the Actor input.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
+        start_urls_list = [url.get('url') for url in start_urls]
 
         # Exit if no start URLs are provided.
         if not start_urls:
             Actor.log.info('No start URLs specified in Actor input, exiting...')
             await Actor.exit()
-
-        # Prepare a list of starting requests.
-        start_requests = [
-            Request.from_url(
-                url=url.get('url'),
-                user_data={'depth': 0},  # Set initial crawl depth to 0.
-            )
-            for url in start_urls
-        ]
 
         # Create a crawler.
         crawler = PlaywrightCrawler(
@@ -53,9 +45,9 @@ async def main() -> None:
             data = {
                 'url': context.request.url,
                 'title': await context.page.title(),
-                # 'h1s': [h1.text for h1 in context.soup.find_all('h1')],
-                # 'h2s': [h2.text for h2 in context.soup.find_all('h2')],
-                # 'h3s': [h3.text for h3 in context.soup.find_all('h3')],
+                'h1s': [await h1.text_content() for h1 in await context.page.locator('h1').all()],
+                'h2s': [await h2.text_content() for h2 in await context.page.locator('h2').all()],
+                'h3s': [await h3.text_content() for h3 in await context.page.locator('h3').all()],
             }
 
             # Save the extracted data to the default dataset.
@@ -65,4 +57,4 @@ async def main() -> None:
             await context.enqueue_links()
 
         # Run the crawler with the starting requests.
-        await crawler.run(start_requests)
+        await crawler.run(start_urls_list)

@@ -21,20 +21,12 @@ async def main() -> None:
         # Read the Actor input.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
+        start_urls_list = [url.get('url') for url in start_urls]
 
         # Exit if no start URLs are provided.
         if not start_urls:
             Actor.log.info('No start URLs specified in Actor input, exiting...')
             await Actor.exit()
-
-        # Prepare a list of starting requests.
-        start_requests = [
-            Request.from_url(
-                url=url.get('url'),
-                user_data={'depth': 0},  # Set initial crawl depth to 0.
-            )
-            for url in start_urls
-        ]
 
         # Create a crawler.
         crawler = BeautifulSoupCrawler(
@@ -64,4 +56,4 @@ async def main() -> None:
             await context.enqueue_links()
 
         # Run the crawler with the starting requests.
-        await crawler.run(start_requests)
+        await crawler.run(start_urls_list)
