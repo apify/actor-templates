@@ -45,11 +45,13 @@ async def main() -> None:
         start_urls = actor_input.get('startUrls', LOCAL_DEFAULT_START_URLS)
         proxy_config = actor_input.get('proxyConfiguration')
 
-        # Add start URLs to the request queue
-        rq = await Actor.open_request_queue()
+        # Open the default request queue for handling URLs to be processed.
+        request_queue = await Actor.open_request_queue()
+
+        # Enqueue the start URLs.
         for start_url in start_urls:
             url = start_url.get('url')
-            await rq.add_request(url)
+            await request_queue.add_request(url)
 
         # Apply Apify settings, it will override the Scrapy project settings
         settings = apply_apify_settings(proxy_config=proxy_config)

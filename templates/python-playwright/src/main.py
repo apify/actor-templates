@@ -25,12 +25,12 @@ async def main() -> None:
     the field of web scraping significantly.
     """
     async with Actor:
-        # Retrieve the Actor input. Use default values if not provided.
+        # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
-        # Exit if no start URLs are provided in the input.
+        # Exit if no start URLs are provided.
         if not start_urls:
             Actor.log.info('No start URLs specified in actor input, exiting...')
             await Actor.exit()
@@ -38,7 +38,7 @@ async def main() -> None:
         # Open the default request queue for handling URLs to be processed.
         request_queue = await Actor.open_request_queue()
 
-        # Enqueue each start URL with an initial crawl depth of 0.
+        # Enqueue the start URLs with an initial crawl depth of 0.
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
@@ -53,7 +53,7 @@ async def main() -> None:
             browser = await playwright.chromium.launch(headless=Actor.config.headless)
             context = await browser.new_context()
 
-            # Process each request from the queue one by one.
+            # Process the URLs from the request queue.
             while request := await request_queue.fetch_next_request():
                 url = request.url
                 depth = request.user_data['depth']
@@ -64,7 +64,7 @@ async def main() -> None:
                     page = await context.new_page()
                     await page.goto(url)
 
-                    # If the current depth is less than the maximum, find and enqueue nested links.
+                    # If the current depth is less than max_depth, find nested links and enqueue them.
                     if depth < max_depth:
                         for link in await page.locator('a').all():
                             link_href = await link.get_attribute('href')
@@ -81,7 +81,7 @@ async def main() -> None:
                         'title': await page.title(),
                     }
 
-                    # Save the extracted data to the Apify dataset.
+                    # Store the extracted data to the default dataset.
                     await Actor.push_data(data)
 
                 except Exception:

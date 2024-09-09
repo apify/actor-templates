@@ -27,20 +27,20 @@ async def main() -> None:
     the field of web scraping significantly.
     """
     async with Actor:
-        # Retrieve the input object for the Actor. The input structure is defined by input_schema.json.
+        # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
-        # Exit if no start URLs are specified in the Actor input.
+        # Exit if no start URLs are provided.
         if not start_urls:
             Actor.log.info('No start URLs specified in actor input, exiting...')
             await Actor.exit()
 
-        # Open a request queue for handling URLs to be processed.
+        # Open the default request queue for handling URLs to be processed.
         request_queue = await Actor.open_request_queue()
 
-        # Enqueue each starting URL into the request queue.
+        # Enqueue the start URLs with an initial crawl depth of 0.
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
@@ -62,7 +62,7 @@ async def main() -> None:
         driver.get('http://www.example.com')
         assert driver.title == 'Example Domain'
 
-        # Process all requests from the request queue.
+        # Process the URLs from the request queue.
         while request := await request_queue.fetch_next_request():
             url = request.url
             depth = request.user_data['depth']
@@ -84,13 +84,19 @@ async def main() -> None:
                             await request_queue.add_request(request)
 
                 # Extract the desired data.
-                title = driver.title
+                data = {
+                    'url': url,
+                    'title': driver.title,
+                }
 
-                # Save the extracted data to the default dataset.
-                await Actor.push_data({'url': url, 'title': title})
+                # Store the extracted data to the default dataset.
+                await Actor.push_data(data)
+
             except Exception:
                 Actor.log.exception(f'Cannot extract data from {url}.')
+
             finally:
+                # Mark the request as handled to ensure it is not processed again.
                 await request_queue.mark_request_as_handled(request)
 
         driver.quit()

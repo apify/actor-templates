@@ -18,13 +18,13 @@ async def main() -> None:
     the field of web scraping significantly.
     """
     async with Actor:
-        # Read the Actor input.
+        # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         start_urls_list = [url.get('url') for url in start_urls]
 
         # Exit if no start URLs are provided.
-        if not start_urls:
+        if not start_urls_list:
             Actor.log.info('No start URLs specified in Actor input, exiting...')
             await Actor.exit()
 
@@ -41,7 +41,7 @@ async def main() -> None:
             url = context.request.url
             Actor.log.info(f'Scraping {url}...')
 
-            # Extract data from the page.
+            # Extract the desired data.
             data = {
                 'url': context.request.url,
                 'title': await context.page.title(),
@@ -50,7 +50,7 @@ async def main() -> None:
                 'h3s': [await h3.text_content() for h3 in await context.page.locator('h3').all()],
             }
 
-            # Save the extracted data to the default dataset.
+            # Store the extracted data to the default dataset.
             await context.push_data(data)
 
             # Enqueue additional links found on the current page.

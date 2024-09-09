@@ -22,12 +22,12 @@ async def main() -> None:
     the field of web scraping significantly.
     """
     async with Actor:
-        # Retrieve the Actor input. Use default values if not provided.
+        # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
-        # Exit if no start URLs are provided in the input.
+        # Exit if no start URLs are provided.
         if not start_urls:
             Actor.log.info('No start URLs specified in Actor input, exiting...')
             await Actor.exit()
@@ -35,28 +35,28 @@ async def main() -> None:
         # Open the default request queue for handling URLs to be processed.
         request_queue = await Actor.open_request_queue()
 
-        # Enqueue each start URL with an initial crawl depth of 0.
+        # Enqueue the start URLs with an initial crawl depth of 0.
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
             request = Request.from_url(url, user_data={'depth': 0})
             await request_queue.add_request(request)
 
-        # Process each request from the queue one by one.
+        # Process the URLs from the request queue.
         while request := await request_queue.fetch_next_request():
             url = request.url
             depth = request.user_data['depth']
             Actor.log.info(f'Scraping {url} ...')
 
             try:
-                # Fetch the URL content using HTTPX.
+                # Fetch the HTTP response from the specified URL using HTTPX.
                 async with AsyncClient() as client:
                     response = await client.get(url, follow_redirects=True)
 
                 # Parse the HTML content using Beautiful Soup.
                 soup = BeautifulSoup(response.content, 'html.parser')
 
-                # If the current depth is less than the maximum allowed, find and enqueue nested links.
+                # If the current depth is less than max_depth, find nested links and enqueue them.
                 if depth < max_depth:
                     for link in soup.find_all('a'):
                         link_href = link.get('href')
@@ -73,7 +73,7 @@ async def main() -> None:
                     'title': soup.title.string if soup.title else None,
                 }
 
-                # Push the extracted data to the dataset.
+                # Store the extracted data to the default dataset.
                 await Actor.push_data(data)
 
             except Exception:

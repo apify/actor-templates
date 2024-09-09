@@ -81,11 +81,13 @@ async def main() -> None:
         start_urls = actor_input.get('startUrls', LOCAL_DEFAULT_START_URLS)
         proxy_configuration = actor_input.get('proxyConfiguration')
 
-        # Add start URLs to the request queue
-        rq = await Actor.open_request_queue()
+        # Open the default request queue for handling URLs to be processed.
+        request_queue = await Actor.open_request_queue()
+
+        # Enqueue the start URLs.
         for start_url in start_urls:
             url = start_url.get('url')
-            await rq.add_request(url)
+            await request_queue.add_request(url)
 
         # Get Scrapy project settings with custom configurations
         settings = _get_scrapy_settings(proxy_configuration)
