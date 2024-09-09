@@ -20,11 +20,10 @@ async def main() -> None:
     async with Actor:
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
-        start_urls_list = [url.get('url') for url in start_urls]
+        start_urls = [url.get('url') for url in actor_input.get('start_urls', [{'url': 'https://apify.com'}])]
 
         # Exit if no start URLs are provided.
-        if not start_urls_list:
+        if not start_urls:
             Actor.log.info('No start URLs specified in Actor input, exiting...')
             await Actor.exit()
 
@@ -57,4 +56,4 @@ async def main() -> None:
             await context.enqueue_links()
 
         # Run the crawler with the starting requests.
-        await crawler.run(start_urls_list)
+        await crawler.run(start_urls)
