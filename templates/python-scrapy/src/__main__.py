@@ -10,8 +10,6 @@ or being run on the Apify platform. It is not being executed when running the pr
 We recommend you do not modify this file unless you really know what you are doing.
 """
 
-# TODO: explicitne vypneme apify logging configuration v actorovi, zde to udelame manualne
-
 # We need to configure the logging first before we import anything else, so that nothing else imports
 # `scrapy.utils.log` before we patch it.
 from __future__ import annotations

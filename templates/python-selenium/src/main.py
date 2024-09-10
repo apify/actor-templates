@@ -6,6 +6,7 @@ To build Apify Actors, utilize the Apify SDK toolkit, read more at the official 
 https://docs.apify.com/sdk/python
 """
 
+import asyncio
 from urllib.parse import urljoin
 
 from selenium import webdriver
@@ -69,8 +70,8 @@ async def main() -> None:
             Actor.log.info(f'Scraping {url} ...')
 
             try:
-                # Navigate to the URL using Selenium WebDriver.
-                driver.get(url)
+                # Navigate to the URL using Selenium WebDriver. Use asyncio.to_thread for non-blocking execution.
+                await asyncio.to_thread(driver.get, url)
 
                 # If the current depth is less than max_depth, find nested links and enqueue them.
                 if depth < max_depth:
