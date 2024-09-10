@@ -19,7 +19,6 @@ from httpx import AsyncClient
 from apify import Actor
 
 
-
 async def main() -> None:
     """Main entry point for the Apify Actor.
 
@@ -29,7 +28,7 @@ async def main() -> None:
     """
     async with Actor:
         # Retrieve the input object for the Actor. The structure of input is defined in input_schema.json.
-        actor_input = await Actor.get_input() or {}
+        actor_input = await Actor.get_input() or {'url': 'https://apify.com/'}
         url = actor_input.get('url')
 
         # Create an asynchronous HTTPX client for making HTTP requests.
