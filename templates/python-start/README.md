@@ -17,7 +17,7 @@ The scraped data in this template are page headings but you can easily edit the 
 
 1. `Actor.get_input()` gets the input where the page URL is defined
 2. `httpx.AsyncClient().get(url)` fetches the page
-3. `BeautifulSoup(response.content, 'html.parser')` loads the page data and enables parsing the headings
+3. `BeautifulSoup(response.content, 'lxml')` loads the page data and enables parsing the headings
 4. This parses the headings from the page and here you can edit the code to parse whatever you need from the page
     ```python
     for heading in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6"]):

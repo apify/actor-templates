@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "getting-started-python-crawlee-playwright",
+    "title": "Getting started with Python Crawlee and Playwright",
+    "description": "Scrapes titles of websites using Crawlee and Playwright.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "python-crawlee-playwright"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}

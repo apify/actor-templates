@@ -1,5 +1,4 @@
-"""
-This module defines the `main()` coroutine for the Apify Actor, executed from the `__main__.py` file.
+"""This module defines the main entry point for the Apify Actor.
 
 Feel free to modify this file to suit your specific needs.
 
@@ -8,23 +7,27 @@ https://docs.apify.com/sdk/python
 """
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+
 from apify import Actor
+
 
 class GetHandler(SimpleHTTPRequestHandler):
     """A simple GET HTTP handler that will respond with a message."""
-    def do_GET(self):
+
+    def do_GET(self) -> None:
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b'Hello from Actor Standby!')
 
 
 async def main() -> None:
-    """
-    The main coroutine is being executed using `asyncio.run()`, so do not attempt to make a normal function
-    out of it, it will not work. Asynchronous execution is required for communication with Apify platform,
-    and it also enhances performance in the field of web scraping significantly.
+    """Main entry point for the Apify Actor.
+
+    This coroutine is executed using `asyncio.run()`, so it must remain an asynchronous function for proper execution.
+    Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
+    the field of web scraping significantly.
     """
     async with Actor:
-        # A simple HTTP server listening on Actor Standby port
+        # A simple HTTP server listening on Actor standby port.
         with HTTPServer(('', Actor.config.standby_port), GetHandler) as http_server:
             http_server.serve_forever()

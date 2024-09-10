@@ -4,6 +4,7 @@
     "title": "Getting started with Python and Scrapy",
     "description": "Scrapes titles of websites using Scrapy.",
     "version": "0.0",
+    "buildTag": "latest",
     "meta": {
         "templateId": "python-scrapy"
     },

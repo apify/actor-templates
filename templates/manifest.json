@@ -10,7 +10,6 @@
             "technologies": [
                 "scrapy"
             ],
-            "skipTests": true,
             "description": "This example Scrapy spider scrapes page titles from URLs defined in input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -147,7 +146,7 @@
         },
         {
             "id": "python-empty",
-            "name": "python_empty",
+            "name": "python-empty",
             "label": "Empty Python project",
             "category": "python",
             "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
@@ -167,7 +166,7 @@
         },
         {
             "id": "python-standby",
-            "name": "python_standby",
+            "name": "python-standby",
             "label": "Standby Python project",
             "category": "python",
             "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
@@ -184,6 +183,68 @@
             ],
             "useCases": [
                 "STARTER"
+            ]
+        },
+        {
+            "id": "python-crawlee-beautifulsoup",
+            "name": "python-crawlee-beautifulsoup",
+            "label": "Start with Python Crawlee and BeautifulSoup",
+            "category": "python",
+            "technologies": [
+                "crawlee",
+                "beautifulsoup"
+            ],
+            "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a given start URLs, and store results to Apify dataset.",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-beautifulsoup.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "aliases": [
+                "getting_started_crawlee_beautifulsoup"
+            ],
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
+            ]
+        },
+        {
+            "id": "python-crawlee-playwright",
+            "name": "python-crawlee-playwright",
+            "label": "Start with Python Crawlee and Playwright",
+            "category": "python",
+            "technologies": [
+                "crawlee",
+                "playwright"
+            ],
+            "description": "Crawl and scrape websites using Crawlee and Playwright. Start from a given start URLs, and store results to Apify dataset.",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-playwright.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "aliases": [
+                "getting_started_crawlee_playwright"
+            ],
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
+            ],
+            "useCases": [
+                "STARTER",
+                "WEB_SCRAPING"
             ]
         },
         {

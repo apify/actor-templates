@@ -2,3 +2,4 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify == 2.0.0
+crawlee[beautifulsoup]

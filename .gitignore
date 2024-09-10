@@ -1,7 +1,22 @@
+# IDE
 .idea
 .DS_Store
 .vscode
-node_modules
+
+# General
+templates/**/storage
 tmp
-templates/**/package-lock.json
 test-actors
+
+# JS
+node_modules
+templates/**/package-lock.json
+
+# Python
+__pycache__
+.mypy_cache
+.pytest_cache
+.ruff_cache
+pyproject.toml
+.venv
+venv

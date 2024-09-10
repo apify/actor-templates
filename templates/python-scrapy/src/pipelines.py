@@ -1,5 +1,4 @@
-"""
-Scrapy item pipelines module
+"""Scrapy item pipelines module.
 
 This module defines Scrapy item pipelines for scraped data. Item pipelines are processing components
 that handle the scraped items, typically used for cleaning, validating, and persisting data.

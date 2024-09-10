@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "getting-started-python-crawlee-beautifulsoup",
+    "title": "Getting started with Python Crawlee and BeautifulSoup",
+    "description": "Scrapes titles of websites using Crawlee and BeautifulSoup.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "python-crawlee-beautifulsoup"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}
