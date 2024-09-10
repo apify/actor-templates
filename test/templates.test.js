@@ -23,6 +23,8 @@ function spawnSync(command, args, options = {}) {
 
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 
+const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
+
 const checkSpawnResult = ({ status }) => {
     expect(status).toBe(0);
 };
@@ -93,6 +95,9 @@ const checkPythonTemplate = () => {
         const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'playwright', 'install']);
         checkSpawnResult(playwrightInstallSpawnResult);
     }
+
+    const installedApifySdkVersion = pipShowApifySpawnResult.stdout.toString().match(/Version: (.*)/)[1];
+    expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
 };
 
 const checkTemplateRun = () => {
