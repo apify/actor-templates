@@ -1,4 +1,4 @@
-## BeautifulSoup and HTTPX template
+## Python BeautifulSoup template
 
 A template for [web scraping](https://apify.com/web-scraping) data from websites enqueued from starting URL using Python. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [HTTPX](https://www.python-httpx.org) to get the HTML of the page and the [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to parse the data from it. Enqueued URLs are available in [request queue](https://docs.apify.com/sdk/python/reference/class/RequestQueue). The data are then stored in a [dataset](https://docs.apify.com/platform/storage/dataset) where you can easily access them.
 

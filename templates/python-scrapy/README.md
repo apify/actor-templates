@@ -1,4 +1,4 @@
-## Scrapy template
+## Python Scrapy template
 
 A template example built with Scrapy to scrape page titles from URLs defined in the input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.
 

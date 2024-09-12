@@ -1,4 +1,4 @@
-## Playwright template
+## Python Playwright template
 
 ## Included features
 
