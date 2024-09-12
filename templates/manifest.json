@@ -66,7 +66,7 @@
         {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
-            "label": "BeautifulSoup + HTTPX",
+            "label": "BeautifulSoup",
             "category": "python",
             "technologies": [
                 "beautifulsoup",
@@ -188,7 +188,7 @@
         {
             "id": "python-crawlee-beautifulsoup",
             "name": "python-crawlee-beautifulsoup",
-            "label": "Start with Python Crawlee and BeautifulSoup",
+            "label": "Crawlee + BeautifulSoup",
             "category": "python",
             "technologies": [
                 "crawlee",
@@ -219,7 +219,7 @@
         {
             "id": "python-crawlee-playwright",
             "name": "python-crawlee-playwright",
-            "label": "Start with Python Crawlee and Playwright",
+            "label": "Crawlee + Playwright + Chrome",
             "category": "python",
             "technologies": [
                 "crawlee",
