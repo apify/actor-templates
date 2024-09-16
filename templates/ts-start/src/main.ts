@@ -31,7 +31,7 @@ const $ = cheerio.load(response.data);
 const headings: { level: string, text: string }[] = [];
 $("h1, h2, h3, h4, h5, h6").each((_i, element) => {
     const headingObject = {
-        level: $(element).prop("tagName").toLowerCase(),
+        level: $(element).prop("tagName")!.toLowerCase(),
         text: $(element).text(),
     };
     console.log("Extracted heading", headingObject);
