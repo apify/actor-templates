@@ -1,7 +1,6 @@
 {
     "extends": "@apify/tsconfig",
     "compilerOptions": {
-        "moduleResolution": "Node",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "target": "ES2022",
