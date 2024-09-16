@@ -1,5 +1,6 @@
 # configurations
 .idea
+.vscode
 
 # crawlee and apify storage folders
 apify_storage
