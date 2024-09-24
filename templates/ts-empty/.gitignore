@@ -1,3 +1,7 @@
+# This file tells Git which files shouldn't be added to source control
+
+.idea
+.vscode
 storage
 apify_storage
 crawlee_storage
