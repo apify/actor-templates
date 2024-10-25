@@ -1,6 +1,6 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
-apify[scrapy] == 2.0.0
+apify[scrapy] ~= 2.0.0
 nest-asyncio
 scrapy
