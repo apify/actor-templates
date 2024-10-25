@@ -22,64 +22,26 @@ other stuff, please refer to the following documentation page: https://docs.apif
 from __future__ import annotations
 
 from scrapy.crawler import CrawlerProcess
-from scrapy.settings import Settings
-from scrapy.utils.project import get_project_settings
 
 from apify import Actor
+from apify.scrapy.utils import apply_apify_settings
 
-# Import your Scrapy spider here
+# Import your Scrapy spider here.
 from {{spider_module_name}} import {{spider_class_name}} as Spider
 
-# Default input values for local execution using `apify run`
+# Default input values for local execution using `apify run`.
 LOCAL_DEFAULT_START_URLS = [{'url': 'https://apify.com'}]
 
 
-def _get_scrapy_settings(proxy_cfg: dict | None = None) -> Settings:
-    """
-    Get Scrapy project settings with custom configurations.
-
-    You can add your own Scrapy components either in this function or in your `settings.py`.
-
-    Returns:
-        Scrapy project settings with custom configurations.
-    """
-    settings = get_project_settings()
-
-    # Use ApifyScheduler as the scheduler
-    settings['SCHEDULER'] = 'apify.scrapy.scheduler.ApifyScheduler'
-
-    # Add the ActorDatasetPushPipeline into the item pipelines, assigning it the highest integer (1000),
-    # ensuring it is executed as the final step in the pipeline sequence
-    settings['ITEM_PIPELINES']['apify.scrapy.pipelines.ActorDatasetPushPipeline'] = 1000
-
-    # Disable the default RobotsTxtMiddleware, Apify's custom scheduler already handles robots.txt
-    settings['DOWNLOADER_MIDDLEWARES']['scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware'] = None
-
-    # Disable the default HttpProxyMiddleware and add ApifyHttpProxyMiddleware
-    settings['DOWNLOADER_MIDDLEWARES']['scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware'] = None
-    settings['DOWNLOADER_MIDDLEWARES']['apify.scrapy.middlewares.ApifyHttpProxyMiddleware'] = 950
-
-    # Disable the default RetryMiddleware and add ApifyRetryMiddleware with the highest integer (1000)
-    settings['DOWNLOADER_MIDDLEWARES']['scrapy.downloadermiddlewares.retry.RetryMiddleware'] = None
-    settings['DOWNLOADER_MIDDLEWARES']['apify.scrapy.middlewares.ApifyRetryMiddleware'] = 1000
-
-    # Store the proxy configuration
-    settings['APIFY_PROXY_SETTINGS'] = proxy_cfg
-
-    return settings
-
-
 async def main() -> None:
-    """
-    Apify Actor main coroutine for executing the Scrapy spider.
-    """
+    """Apify Actor main coroutine for executing the Scrapy spider."""
     async with Actor:
         Actor.log.info('Actor is being executed...')
 
-        # Process Actor input
+        # Retrieve and process Actor input.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('startUrls', LOCAL_DEFAULT_START_URLS)
-        proxy_configuration = actor_input.get('proxyConfiguration')
+        proxy_config = actor_input.get('proxyConfiguration')
 
         # Open the default request queue for handling URLs to be processed.
         request_queue = await Actor.open_request_queue()
@@ -89,10 +51,10 @@ async def main() -> None:
             url = start_url.get('url')
             await request_queue.add_request(url)
 
-        # Get Scrapy project settings with custom configurations
-        settings = _get_scrapy_settings(proxy_configuration)
+        # Apply Apify settings, it will override the Scrapy project settings.
+        settings = apply_apify_settings(proxy_config=proxy_config)
 
-        # Execute the spider using Scrapy CrawlerProcess
+        # Execute the spider using Scrapy `CrawlerProcess`.
         process = CrawlerProcess(settings, install_root_handler=False)
         process.crawl(Spider)
         process.start()

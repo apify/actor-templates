@@ -20,9 +20,9 @@ from scrapy.utils.project import get_project_settings
 from apify.log import ActorLogFormatter
 
 # Define names of the loggers.
-APIFY_LOGGER_NAMES = ['apify', 'apify_client']
-SCRAPY_LOGGER_NAMES = ['filelock', 'hpack', 'httpx', 'scrapy', 'twisted']
-ALL_LOGGER_NAMES = APIFY_LOGGER_NAMES + SCRAPY_LOGGER_NAMES
+MAIN_LOGGER_NAMES = ['apify', 'apify_client', 'scrapy']
+OTHER_LOGGER_NAMES = ['filelock', 'hpack', 'httpcore', 'httpx', 'protego', 'twisted']
+ALL_LOGGER_NAMES = MAIN_LOGGER_NAMES + OTHER_LOGGER_NAMES
 
 # To change the logging level, modify the `LOG_LEVEL` field in `settings.py`. If the field is not present in the file,
 # Scrapy will default to `DEBUG`. This setting applies to all loggers. If you wish to change the logging level for
@@ -36,8 +36,7 @@ apify_handler.setFormatter(ActorLogFormatter(include_logger_name=True))
 
 
 def configure_logger(logger_name: str | None, log_level: str, *handlers: StreamHandler) -> None:
-    """
-    Configure a logger with the specified settings.
+    """Configure a logger with the specified settings.
 
     Args:
         logger_name: The name of the logger to be configured.
@@ -54,7 +53,7 @@ def configure_logger(logger_name: str | None, log_level: str, *handlers: StreamH
 
 # Apify loggers have to be set up here and in the `new_configure_logging` as well to be able to use them both from
 # the `main.py` and Scrapy components.
-for logger_name in APIFY_LOGGER_NAMES:
+for logger_name in MAIN_LOGGER_NAMES:
     configure_logger(logger_name, LOGGING_LEVEL, apify_handler)
 
 # We can't attach our log handler to the loggers normally, because Scrapy would remove them in the `configure_logging`
@@ -66,7 +65,8 @@ old_configure_logging = scrapy_logging.configure_logging
 
 
 def new_configure_logging(*args: Any, **kwargs: Any) -> None:
-    """
+    """Configure logging for Scrapy and root loggers to ensure consistent logging behavior.
+
     We need to manually configure both the root logger and all Scrapy-associated loggers. Configuring only the root
     logger is not sufficient, as Scrapy will override it with its own settings. Scrapy uses these four primary
     loggers - https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/utils/log.py#L60:L77. Therefore, we configure here
@@ -91,20 +91,24 @@ def new_configure_logging(*args: Any, **kwargs: Any) -> None:
 
 scrapy_logging.configure_logging = new_configure_logging
 
-# Now we can do the rest of the setup
+# Now we can do the rest of the setup.
 import asyncio
 import os
 import nest_asyncio
 from scrapy.utils.reactor import install_reactor
 from .main import main
 
-# To ensure seamless compatibility between asynchronous libraries Twisted (used by Scrapy) and AsyncIO (used by Apify),
-# it is highly recommended to use AsyncioSelectorReactor as the Twisted reactor
+# For compatibility between Twisted (used by Scrapy) and AsyncIO (used by Apify) asynchronous libraries, it is
+# necessary to set the Twisted reactor to `AsyncioSelectorReactor`. This setup allows the two asynchronous libraries
+# to work together.
+#
+# Note: The reactor must be installed before applying `nest_asyncio.apply()`, otherwise, it will not work correctly
+# on Windows.
 install_reactor('twisted.internet.asyncioreactor.AsyncioSelectorReactor')
 nest_asyncio.apply()
 
-# Specify the path to the Scrapy project settings module
+# Specify the path to the Scrapy project settings module.
 os.environ['SCRAPY_SETTINGS_MODULE'] = '{{scrapy_settings_module}}'
 
-# Run the Apify main coroutine
+# Run the Apify main coroutine in the event loop.
 asyncio.run(main())

@@ -36,8 +36,7 @@ apify_handler.setFormatter(ActorLogFormatter(include_logger_name=True))
 
 
 def configure_logger(logger_name: str | None, log_level: str, *handlers: StreamHandler) -> None:
-    """
-    Configure a logger with the specified settings.
+    """Configure a logger with the specified settings.
 
     Args:
         logger_name: The name of the logger to be configured.
@@ -66,7 +65,8 @@ old_configure_logging = scrapy_logging.configure_logging
 
 
 def new_configure_logging(*args: Any, **kwargs: Any) -> None:
-    """
+    """Configure logging for Scrapy and root loggers to ensure consistent logging behavior.
+
     We need to manually configure both the root logger and all Scrapy-associated loggers. Configuring only the root
     logger is not sufficient, as Scrapy will override it with its own settings. Scrapy uses these four primary
     loggers - https://github.com/scrapy/scrapy/blob/2.11.0/scrapy/utils/log.py#L60:L77. Therefore, we configure here
@@ -91,22 +91,24 @@ def new_configure_logging(*args: Any, **kwargs: Any) -> None:
 
 scrapy_logging.configure_logging = new_configure_logging
 
-# Now we can do the rest of the setup
+# Now we can do the rest of the setup.
 import asyncio
 import os
 import nest_asyncio
 from scrapy.utils.reactor import install_reactor
 from .main import main
 
-# To ensure seamless compatibility between asynchronous libraries Twisted (used by Scrapy) and AsyncIO (used by Apify),
-# it is highly recommended to use AsyncioSelectorReactor as the Twisted reactor
-# The reactor installation must be done manually before calling `nest_asyncio.apply()`,
-# otherwise, it will not work correctly on Windows.
+# For compatibility between Twisted (used by Scrapy) and AsyncIO (used by Apify) asynchronous libraries, it is
+# necessary to set the Twisted reactor to `AsyncioSelectorReactor`. This setup allows the two asynchronous libraries
+# to work together.
+#
+# Note: The reactor must be installed before applying `nest_asyncio.apply()`, otherwise, it will not work correctly
+# on Windows.
 install_reactor('twisted.internet.asyncioreactor.AsyncioSelectorReactor')
 nest_asyncio.apply()
 
-# Specify the path to the Scrapy project settings module
+# Specify the path to the Scrapy project settings module.
 os.environ['SCRAPY_SETTINGS_MODULE'] = 'src.settings'
 
-# Run the Apify main coroutine
+# Run the Apify main coroutine in the event loop.
 asyncio.run(main())
