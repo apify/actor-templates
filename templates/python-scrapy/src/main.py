@@ -26,21 +26,19 @@ from scrapy.crawler import CrawlerProcess
 from apify import Actor
 from apify.scrapy.utils import apply_apify_settings
 
-# Import your Scrapy spider here
+# Import your Scrapy spider here.
 from .spiders.title import TitleSpider as Spider
 
-# Default input values for local execution using `apify run`
+# Default input values for local execution using `apify run`.
 LOCAL_DEFAULT_START_URLS = [{'url': 'https://apify.com'}]
 
 
 async def main() -> None:
-    """
-    Apify Actor main coroutine for executing the Scrapy spider.
-    """
+    """Apify Actor main coroutine for executing the Scrapy spider."""
     async with Actor:
         Actor.log.info('Actor is being executed...')
 
-        # Process Actor input
+        # Retrieve and process Actor input.
         actor_input = await Actor.get_input() or {}
         start_urls = actor_input.get('startUrls', LOCAL_DEFAULT_START_URLS)
         proxy_config = actor_input.get('proxyConfiguration')
@@ -53,10 +51,10 @@ async def main() -> None:
             url = start_url.get('url')
             await request_queue.add_request(url)
 
-        # Apply Apify settings, it will override the Scrapy project settings
+        # Apply Apify settings, it will override the Scrapy project settings.
         settings = apply_apify_settings(proxy_config=proxy_config)
 
-        # Execute the spider using Scrapy CrawlerProcess
+        # Execute the spider using Scrapy `CrawlerProcess`.
         process = CrawlerProcess(settings, install_root_handler=False)
         process.crawl(Spider)
         process.start()
