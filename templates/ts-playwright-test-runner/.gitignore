@@ -8,3 +8,4 @@ dist
 playwright-report
 src/tests
 test-results.json
+test-results/

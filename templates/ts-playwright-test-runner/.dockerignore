@@ -10,6 +10,7 @@ storage
 # generated test results
 playwright-report
 test-results.json
+test-results
 
 # installed files
 node_modules

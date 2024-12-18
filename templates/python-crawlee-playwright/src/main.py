@@ -32,6 +32,9 @@ async def main() -> None:
             # Limit the crawl to max requests. Remove or increase it for crawling all links.
             max_requests_per_crawl=50,
             headless=True,
+            browser_options={
+                'args': ['--disable-gpu'],
+            }
         )
 
         # Define a request handler, which will be called for every request.

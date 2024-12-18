@@ -3,8 +3,12 @@ import { test, expect } from '@playwright/test';
 test('has appropriate size', async ({ page }) => {
     let totalDownloaded = 0;
 
-    await page.on('response', async (r) => {
-        totalDownloaded += await (await r.body()).byteLength;
+    await page.on('response', (r) => {
+        r.body().then((b) => {
+            totalDownloaded += b.byteLength;
+        }).catch(() => {
+            // Ignore errors.
+        });
     });
 
     await page.goto('https://apify.com/about', { waitUntil: 'networkidle' });
