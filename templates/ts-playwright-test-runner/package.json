@@ -18,7 +18,7 @@
     "dependencies": {
         "@apify/eslint-config-ts": "^0.3.0",
         "@apify/tsconfig": "^0.1.0",
-        "@playwright/test": "1.37.1",
+        "@playwright/test": "1.49.1",
         "@types/uuid": "^9.0.4",
         "apify": "^3.2.6",
         "tsx": "^4.6.2",

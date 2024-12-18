@@ -38,6 +38,11 @@ export default defineConfig({
         colorScheme: '${darkMode ? 'dark' : 'light'}',
         locale: '${locale}',
         video: '${video}',
+        launchOptions: {
+            args: [
+                '--disable-gpu',
+            ]
+        },
     },
     reporter: [
         ['html', { outputFolder: '${getResultDir()}', open: 'never' }],
