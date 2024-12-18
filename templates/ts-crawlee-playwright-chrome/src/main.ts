@@ -33,6 +33,13 @@ const crawler = new PlaywrightCrawler({
     proxyConfiguration,
     maxRequestsPerCrawl,
     requestHandler: router,
+    launchContext: {
+        launchOptions: {
+            args: [
+                '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
+            ]
+        }
+    }
 });
 
 await crawler.run(startUrls);

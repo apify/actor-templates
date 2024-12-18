@@ -20,6 +20,13 @@ const proxyConfiguration = await Actor.createProxyConfiguration();
 const crawler = new PuppeteerCrawler({
     proxyConfiguration,
     requestHandler: router,
+    launchContext: {
+        launchOptions: {
+            args: [
+                '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
+            ]
+        }
+    }
 });
 
 // Run the crawler with the start URLs and wait for it to finish.

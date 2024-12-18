@@ -24,6 +24,13 @@ const proxyConfiguration = await Actor.createProxyConfiguration();
 const crawler = new PlaywrightCrawler({
     proxyConfiguration,
     requestHandler: router,
+    launchContext: {
+        launchOptions: {
+            args: [
+                '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
+            ]
+        }
+    }
 });
 
 await crawler.run(startUrls);
