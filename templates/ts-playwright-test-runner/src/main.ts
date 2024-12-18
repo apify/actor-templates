@@ -40,7 +40,7 @@ export default defineConfig({
         video: '${video}',
         launchOptions: {
             args: [
-                '--disable-gpu',
+                '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
             ]
         },
     },
