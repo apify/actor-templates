@@ -7,7 +7,7 @@ https://docs.apify.com/sdk/python
 """
 
 from apify import Actor, Request
-from crawlee.playwright_crawler import PlaywrightCrawler, PlaywrightCrawlingContext
+from crawlee.crawlers import PlaywrightCrawler, PlaywrightCrawlingContext
 
 
 async def main() -> None:

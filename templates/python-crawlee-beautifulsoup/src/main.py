@@ -7,7 +7,7 @@ https://docs.apify.com/sdk/python
 """
 
 from apify import Actor, Request
-from crawlee.beautifulsoup_crawler import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
+from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
 
 async def main() -> None:
