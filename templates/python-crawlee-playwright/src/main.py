@@ -7,7 +7,7 @@ https://docs.apify.com/sdk/python
 """
 
 from apify import Actor, Request
-from crawlee.playwright_crawler import PlaywrightCrawler, PlaywrightCrawlingContext
+from crawlee.crawlers import PlaywrightCrawler, PlaywrightCrawlingContext
 
 
 async def main() -> None:
@@ -32,7 +32,7 @@ async def main() -> None:
             # Limit the crawl to max requests. Remove or increase it for crawling all links.
             max_requests_per_crawl=50,
             headless=True,
-            browser_options={
+            browser_launch_options={
                 'args': ['--disable-gpu'],
             }
         )

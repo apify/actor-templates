@@ -1,5 +1,4 @@
-"""
-Scrapy spiders package
+"""Scrapy spiders package.
 
 This package contains the spiders for your Scrapy project. Spiders are the classes that define how to scrape
 and process data from websites.

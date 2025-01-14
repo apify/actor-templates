@@ -10,14 +10,17 @@ https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 """
 
 from __future__ import annotations
-from typing import Generator, Iterable
 
+from typing import TYPE_CHECKING
+
+# Useful for handling different item types with a single interface
 from scrapy import Request, Spider, signals
-from scrapy.crawler import Crawler
-from scrapy.http import Response
 
-# useful for handling different item types with a single interface
-from itemadapter import is_item, ItemAdapter
+if TYPE_CHECKING:
+    from collections.abc import Generator, Iterable
+
+    from scrapy.crawler import Crawler
+    from scrapy.http import Response
 
 
 class TitleSpiderMiddleware:

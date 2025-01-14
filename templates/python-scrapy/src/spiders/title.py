@@ -1,18 +1,20 @@
 from __future__ import annotations
 
-from typing import Generator
+from typing import TYPE_CHECKING
 from urllib.parse import urljoin
 
 from scrapy import Request, Spider
-from scrapy.responsetypes import Response
 
 from ..items import TitleItem
 
+if TYPE_CHECKING:
+    from collections.abc import Generator
+
+    from scrapy.responsetypes import Response
+
 
 class TitleSpider(Spider):
-    """
-    Scrapes title pages and enqueues all links found on the page.
-    """
+    """Scrapes title pages and enqueues all links found on the page."""
 
     name = 'title_spider'
 
@@ -20,9 +22,14 @@ class TitleSpider(Spider):
     # when the project is executed using Apify.
     start_urls = ['https://apify.com/']
 
+    # Scrape only the pages within the Apify domain.
+    allowed_domains = ['apify.com']
+
+    # Limit the number of pages to scrape.
+    custom_settings = {'CLOSESPIDER_PAGECOUNT': 10}
+
     def parse(self, response: Response) -> Generator[TitleItem | Request, None, None]:
-        """
-        Parse the web page response.
+        """Parse the web page response.
 
         Args:
             response: The web page response.

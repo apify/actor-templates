@@ -13,10 +13,13 @@ We recommend you do not modify this file unless you really know what you are doi
 # We need to configure the logging first before we import anything else, so that nothing else imports
 # `scrapy.utils.log` before we patch it.
 from __future__ import annotations
+
 from logging import StreamHandler, getLogger
 from typing import Any
+
 from scrapy.utils import log as scrapy_logging
 from scrapy.utils.project import get_project_settings
+
 from apify.log import ActorLogFormatter
 
 # Define names of the loggers.
@@ -94,8 +97,10 @@ scrapy_logging.configure_logging = new_configure_logging
 # Now we can do the rest of the setup.
 import asyncio
 import os
+
 import nest_asyncio
 from scrapy.utils.reactor import install_reactor
+
 from .main import main
 
 # For compatibility between Twisted (used by Scrapy) and AsyncIO (used by Apify) asynchronous libraries, it is
