@@ -21,6 +21,7 @@ async def main() -> None:
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
     the field of web scraping significantly.
     """
+    # Enter the context of the Actor.
     async with Actor:
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
@@ -39,49 +40,58 @@ async def main() -> None:
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            request = Request.from_url(url, user_data={'depth': 0})
-            await request_queue.add_request(request)
+            new_request = Request.from_url(url, user_data={'depth': 0})
+            await request_queue.add_request(new_request)
 
-        # Process the URLs from the request queue.
-        while request := await request_queue.fetch_next_request():
-            url = request.url
-            depth = request.user_data['depth']
-            Actor.log.info(f'Scraping {url} ...')
+        # Create an HTTPX client to fetch the HTML content of the URLs.
+        async with AsyncClient() as client:
+            # Process the URLs from the request queue.
+            while request := await request_queue.fetch_next_request():
+                url = request.url
 
-            try:
-                # Fetch the HTTP response from the specified URL using HTTPX.
-                async with AsyncClient() as client:
+                if not isinstance(request.user_data['depth'], (str, int)):
+                    raise TypeError('Request.depth is an enexpected type.')
+
+                depth = int(request.user_data['depth'])
+                Actor.log.info(f'Scraping {url} (depth={depth}) ...')
+
+                try:
+                    # Fetch the HTTP response from the specified URL using HTTPX.
                     response = await client.get(url, follow_redirects=True)
 
-                # Parse the HTML content using Beautiful Soup.
-                soup = BeautifulSoup(response.content, 'html.parser')
+                    # Parse the HTML content using Beautiful Soup.
+                    soup = BeautifulSoup(response.content, 'html.parser')
 
-                # If the current depth is less than max_depth, find nested links and enqueue them.
-                if depth < max_depth:
-                    for link in soup.find_all('a'):
-                        link_href = link.get('href')
-                        link_url = urljoin(url, link_href)
+                    # If the current depth is less than max_depth, find nested links
+                    # and enqueue them.
+                    if depth < max_depth:
+                        for link in soup.find_all('a'):
+                            link_href = link.get('href')
+                            link_url = urljoin(url, link_href)
 
-                        if link_url.startswith(('http://', 'https://')):
-                            Actor.log.info(f'Enqueuing {link_url} ...')
-                            request = Request.from_url(link_url, user_data={'depth': depth + 1})
-                            await request_queue.add_request(request)
+                            if link_url.startswith(('http://', 'https://')):
+                                Actor.log.info(f'Enqueuing {link_url} ...')
+                                new_request = Request.from_url(
+                                    link_url,
+                                    user_data={'depth': depth + 1},
+                                )
+                                await request_queue.add_request(new_request)
 
-                # Extract the desired data.
-                data = {
-                    'url': url,
-                    'title': soup.title.string if soup.title else None,
-                    'h1s': [h1.text for h1 in soup.find_all('h1')],
-                    'h2s': [h2.text for h2 in soup.find_all('h2')],
-                    'h3s': [h3.text for h3 in soup.find_all('h3')],
-                }
+                    # Extract the desired data.
+                    data = {
+                        'url': url,
+                        'title': soup.title.string if soup.title else None,
+                        'h1s': [h1.text for h1 in soup.find_all('h1')],
+                        'h2s': [h2.text for h2 in soup.find_all('h2')],
+                        'h3s': [h3.text for h3 in soup.find_all('h3')],
+                    }
 
-                # Store the extracted data to the default dataset.
-                await Actor.push_data(data)
+                    # Store the extracted data to the default dataset.
+                    await Actor.push_data(data)
 
-            except Exception:
-                Actor.log.exception(f'Cannot extract data from {url}.')
+                except Exception:
+                    Actor.log.exception(f'Cannot extract data from {url}.')
 
-            finally:
-                # Mark the request as handled to ensure it is not processed again.
-                await request_queue.mark_request_as_handled(request)
+                finally:
+                    # Mark the request as handled to ensure it is not processed again.
+                    await request_queue.mark_request_as_handled(new_request)
