@@ -16,9 +16,10 @@ from selenium.webdriver.common.by import By
 from apify import Actor, Request
 
 # To run this Actor locally, you need to have the Selenium Chromedriver installed.
-# Follow the installation guide at: https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
-# When running on the Apify platform, the Chromedriver is already included in the Actor's Docker image.
-
+# Follow the installation guide at:
+# https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
+# When running on the Apify platform, the Chromedriver is already included
+# in the Actor's Docker image.
 
 async def main() -> None:
     """Main entry point for the Apify Actor.
@@ -27,6 +28,7 @@ async def main() -> None:
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
     the field of web scraping significantly.
     """
+    # Enter the context of the Actor.
     async with Actor:
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
@@ -45,8 +47,8 @@ async def main() -> None:
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            request = Request.from_url(url, user_data={'depth': 0})
-            await request_queue.add_request(request)
+            new_request = Request.from_url(url, user_data={'depth': 0})
+            await request_queue.add_request(new_request)
 
         # Launch a new Selenium Chrome WebDriver and configure it.
         Actor.log.info('Launching Chrome WebDriver...')
@@ -61,19 +63,26 @@ async def main() -> None:
 
         # Test WebDriver setup by navigating to an example page.
         driver.get('http://www.example.com')
-        assert driver.title == 'Example Domain'
+        if driver.title != 'Example Domain':
+            raise ValueError('Failed to open example page.')
 
         # Process the URLs from the request queue.
         while request := await request_queue.fetch_next_request():
             url = request.url
-            depth = request.user_data['depth']
-            Actor.log.info(f'Scraping {url} ...')
+
+            if not isinstance(request.user_data['depth'], (str, int)):
+                raise TypeError('Request.depth is an enexpected type.')
+
+            depth = int(request.user_data['depth'])
+            Actor.log.info(f'Scraping {url} (depth={depth}) ...')
 
             try:
-                # Navigate to the URL using Selenium WebDriver. Use asyncio.to_thread for non-blocking execution.
+                # Navigate to the URL using Selenium WebDriver. Use asyncio.to_thread
+                # for non-blocking execution.
                 await asyncio.to_thread(driver.get, url)
 
-                # If the current depth is less than max_depth, find nested links and enqueue them.
+                # If the current depth is less than max_depth, find nested links
+                # and enqueue them.
                 if depth < max_depth:
                     for link in driver.find_elements(By.TAG_NAME, 'a'):
                         link_href = link.get_attribute('href')
@@ -81,8 +90,11 @@ async def main() -> None:
 
                         if link_url.startswith(('http://', 'https://')):
                             Actor.log.info(f'Enqueuing {link_url} ...')
-                            request = Request.from_url(link_url, user_data={'depth': depth + 1})
-                            await request_queue.add_request(request)
+                            new_request = Request.from_url(
+                                link_url,
+                                user_data={'depth': depth + 1},
+                            )
+                            await request_queue.add_request(new_request)
 
                 # Extract the desired data.
                 data = {

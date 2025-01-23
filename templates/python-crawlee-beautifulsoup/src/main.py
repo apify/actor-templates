@@ -17,10 +17,17 @@ async def main() -> None:
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
     the field of web scraping significantly.
     """
+    # Enter the context of the Actor.
     async with Actor:
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
-        start_urls = [url.get('url') for url in actor_input.get('start_urls', [{'url': 'https://apify.com'}])]
+        start_urls = [
+            url.get('url')
+            for url in actor_input.get(
+                'start_urls',
+                [{'url': 'https://apify.com'}],
+            )
+        ]
 
         # Exit if no start URLs are provided.
         if not start_urls:

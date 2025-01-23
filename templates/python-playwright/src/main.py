@@ -14,7 +14,8 @@ from apify import Actor, Request
 
 # Note: To run this Actor locally, ensure that Playwright browsers are installed.
 # Run `playwright install --with-deps` in the Actor's virtual environment to install them.
-# When running on the Apify platform, these dependencies are already included in the Actor's Docker image.
+# When running on the Apify platform, these dependencies are already included
+# in the Actor's Docker image.
 
 
 async def main() -> None:
@@ -24,6 +25,7 @@ async def main() -> None:
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
     the field of web scraping significantly.
     """
+    # Enter the context of the Actor.
     async with Actor:
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
@@ -42,29 +44,37 @@ async def main() -> None:
         for start_url in start_urls:
             url = start_url.get('url')
             Actor.log.info(f'Enqueuing {url} ...')
-            request = Request.from_url(url, user_data={'depth': 0})
-            await request_queue.add_request(request)
+            new_request = Request.from_url(url, user_data={'depth': 0})
+            await request_queue.add_request(new_request)
 
         Actor.log.info('Launching Playwright...')
 
         # Launch Playwright and open a new browser context.
         async with async_playwright() as playwright:
             # Configure the browser to launch in headless mode as per Actor configuration.
-            browser = await playwright.chromium.launch(headless=Actor.config.headless, args=['--disable-gpu'])
+            browser = await playwright.chromium.launch(
+                headless=Actor.config.headless,
+                args=['--disable-gpu'],
+            )
             context = await browser.new_context()
 
             # Process the URLs from the request queue.
             while request := await request_queue.fetch_next_request():
                 url = request.url
-                depth = request.user_data['depth']
-                Actor.log.info(f'Scraping {url} ...')
+
+                if not isinstance(request.user_data['depth'], (str, int)):
+                    raise TypeError('Request.depth is an enexpected type.')
+
+                depth = int(request.user_data['depth'])
+                Actor.log.info(f'Scraping {url} (depth={depth}) ...')
 
                 try:
                     # Open a new page in the browser context and navigate to the URL.
                     page = await context.new_page()
                     await page.goto(url)
 
-                    # If the current depth is less than max_depth, find nested links and enqueue them.
+                    # If the current depth is less than max_depth, find nested links
+                    # and enqueue them.
                     if depth < max_depth:
                         for link in await page.locator('a').all():
                             link_href = await link.get_attribute('href')
@@ -72,8 +82,11 @@ async def main() -> None:
 
                             if link_url.startswith(('http://', 'https://')):
                                 Actor.log.info(f'Enqueuing {link_url} ...')
-                                request = Request.from_url(link_url, user_data={'depth': depth + 1})
-                                await request_queue.add_request(request)
+                                new_request = Request.from_url(
+                                    link_url,
+                                    user_data={'depth': depth + 1},
+                                )
+                                await request_queue.add_request(new_request)
 
                     # Extract the desired data.
                     data = {
