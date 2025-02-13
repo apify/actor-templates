@@ -2,6 +2,10 @@
 
 A template for [LangChain](https://www.langchain.com/langgraph) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [LangGraph](https://www.langchain.com/langgraph) ReAct agent that calls [Actors](https://apify.com/actors) as tools in a workflow.
 
+## How it works
+
+[ReAct agent](https://react-lm.github.io/) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts and a calculator tool to sum a list of numbers to calculate the total number of likes and comments. The agent is configured to also output structured data, which is pushed to the dataset, while textual output is stored in the key-value store as a `response.txt` file.
+
 ## How to use
 
 Add or modify the agent tools in the `src/tools.py` file. Additionally, you can update the agent system prompt in `src/main.py`. For more information, refer to the [LangGraph ReAct agent documentation](https://langchain-ai.github.io/langgraph/how-tos/create-react-agent-system-prompt/) and the [LangChain tools documentation](https://python.langchain.com/docs/concepts/tools/).
@@ -14,6 +18,7 @@ For more advanced multi-agent example see the [Finance Monitoring Agent actor](h
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
 - **[Key-value store](https://docs.apify.com/platform/storage/key-value-store)** - store any kind of data, such as JSON documents, images, or text files
+- **[OpenAI](https://openai.com/)** - a powerful language model
 - **[LangChain](https://apify.com/docs/actor/langchain)** - tools to connect language models with external data sources
 - **[LangGraph](https://www.langchain.com/langgraph)** - a framework for added control in agent workflows
 
