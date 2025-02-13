@@ -1,8 +1,8 @@
 {
   "actorSpecification": 1,
   "name": "python-langchain",
-  "title": "Python LangChain project",
-  "description": "Python LangChain project.",
+  "title": "Python LangChain Project",
+  "description": "Python LangChain Project.",
   "version": "0.0",
   "buildTag": "latest",
   "input": "./input_schema.json",

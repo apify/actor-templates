@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 
 class InstagramPost(BaseModel):
-    """Instagram post model."""
+    """Instagram Post model."""
 
     url: str
     likes: int

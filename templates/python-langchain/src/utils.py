@@ -3,7 +3,7 @@ from langchain_core.messages import ToolMessage
 
 
 def log_state(state: dict) -> None:
-    """Log the state of the graph.
+    """Logs the state of the graph.
 
     Args:
         state (dict): The state of the graph.
