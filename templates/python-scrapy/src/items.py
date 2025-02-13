@@ -7,6 +7,8 @@ For detailed information on creating and utilizing items, refer to the official 
 https://docs.scrapy.org/en/latest/topics/items.html
 """
 
+from __future__ import annotations
+
 from scrapy import Field, Item
 
 

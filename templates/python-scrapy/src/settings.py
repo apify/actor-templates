@@ -6,14 +6,15 @@ For more comprehensive details on Scrapy settings, refer to the official documen
 http://doc.scrapy.org/en/latest/topics/settings.html
 """
 
-# You can update these options and add new ones
+# You can update these options and add new ones.
 BOT_NAME = 'titlebot'
 DEPTH_LIMIT = 1
 LOG_LEVEL = 'INFO'
 NEWSPIDER_MODULE = 'src.spiders'
-REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
 ROBOTSTXT_OBEY = True
 SPIDER_MODULES = ['src.spiders']
+TELNETCONSOLE_ENABLED = False
+
 ITEM_PIPELINES = {
     'src.pipelines.TitleItemPipeline': 123,
 }
@@ -23,3 +24,6 @@ SPIDER_MIDDLEWARES = {
 DOWNLOADER_MIDDLEWARES = {
     'src.middlewares.TitleDownloaderMiddleware': 543,
 }
+
+# Twisted reactor should be set to AsyncioSelectorReactor.
+TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
