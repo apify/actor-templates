@@ -16,8 +16,9 @@ Install dependencies:
 uv sync
 ```
 
+Add or modify the agent tools in the `src/tools.py` file. Additionally, you can update the agent system prompt in `src/main.py`. For more information, refer to the [LangGraph ReAct agent documentation](https://langchain-ai.github.io/langgraph/how-tos/create-react-agent-system-prompt/) and the [LangChain tools documentation](https://python.langchain.com/docs/concepts/tools/).
 
-
+For more advanced multi-agent example see the [Finance Monitoring Agent actor](https://github.com/apify/actor-finance-monitoring-agent) or visit the [LangGraph documentation](https://langchain-ai.github.io/langgraph/concepts/multi_agent/).
 
 ## Included features
 
