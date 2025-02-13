@@ -1,0 +1,16 @@
+{
+  "actorSpecification": 1,
+  "name": "python-langchain",
+  "title": "Python LangChain project",
+  "description": "Python LangChain project.",
+  "version": "0.0",
+  "buildTag": "latest",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "meta": {
+    "templateId": "python-langchain"
+  },
+  "dockerfile": "./Dockerfile"
+}
