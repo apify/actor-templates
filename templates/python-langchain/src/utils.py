@@ -5,6 +5,8 @@ from langchain_core.messages import ToolMessage
 def log_state(state: dict) -> None:
     """Logs the state of the graph.
 
+    Uses the `Actor.log.debug` method to log the state of the graph.
+
     Args:
         state (dict): The state of the graph.
         debug (bool, optional): Whether to log debug messages. Defaults to True.
