@@ -1,0 +1,16 @@
+{
+    "actorSpecification": 1,
+    "name": "ts-bee-agent",
+    "title": "TypeScript Bee Agent Project",
+    "description": "TypeScript Bee Agent Project",
+    "version": "0.0",
+    "buildTag": "latest",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+      },
+    "meta": {
+        "templateId": "ts-bee-agent"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}
