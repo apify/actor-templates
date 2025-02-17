@@ -8,7 +8,7 @@
       "type": "string",
       "description": "Query for the agent.",
       "editor": "textfield",
-      "prefill": "What is the total number of likes and comments for the latest 10 posts on the @openai Instagram account?"
+      "prefill": "What is the total number of likes and comments for the latest 10 posts on the @openai Instagram account? What are their two most popular posts?"
     },
     "model": {
       "title": "OpenAI model",
