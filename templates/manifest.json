@@ -250,7 +250,7 @@
         {
             "id": "python-langchain",
             "name": "python-langchain",
-            "label": "🦜️🔗 LangChain and LangGraph",
+            "label": "🦜️🔗 LangChain and LangGraph agent",
             "category": "python",
             "technologies": [
                 "langchain",
