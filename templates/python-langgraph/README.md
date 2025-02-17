@@ -1,6 +1,6 @@
-## Python LangChain template
+## Python LangGraph template
 
-A template for [LangChain](https://www.langchain.com/langgraph) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [LangGraph](https://www.langchain.com/langgraph) ReAct agent that calls [Actors](https://apify.com/actors) as tools in a workflow.
+A template for [LangGraph](https://www.langchain.com/langgraph) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [LangGraph](https://www.langchain.com/langgraph) [ReAct agent](https://react-lm.github.io/) that calls [Actors](https://apify.com/actors) as tools in a workflow.
 
 ## How it works
 

@@ -248,16 +248,16 @@
             ]
         },
         {
-            "id": "python-langchain",
-            "name": "python-langchain",
-            "label": "🦜️🔗 LangChain and LangGraph agent",
+            "id": "python-langgraph",
+            "name": "python-langgraph",
+            "label": "🦜️🔗 LangGraph AI agent",
             "category": "python",
             "technologies": [
                 "langchain",
                 "langgraph"
             ],
-            "description": "Example of how to use LangChain and LangGraph with Apify Actors to create a social media analysis tool-calling agent.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langchain.zip?raw=true",
+            "description": "Example of how to use LangGraph with Apify Actors to create a social media analysis tool-calling agent.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langgraph.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
