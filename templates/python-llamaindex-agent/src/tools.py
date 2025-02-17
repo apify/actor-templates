@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Any
+from typing import Any, Optional
 
 import polars as pl
 from apify_client import ApifyClientAsync
@@ -25,7 +25,7 @@ logger = logging.getLogger("apify")
 
 
 class LLMRegistry:
-    _llm: OpenAI | None = None
+    _llm: Optional[OpenAI] = None
 
     @classmethod
     def get(cls) -> OpenAI:

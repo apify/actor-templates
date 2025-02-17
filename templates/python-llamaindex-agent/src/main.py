@@ -16,7 +16,7 @@ from llama_index.llms.openai import OpenAI
 
 from .agent import run_agent
 
-fallbackInput = {
+fallback_input = {
     'query': 'This is fallback test query, do not nothing and ignore it.',
     'modelName': 'gpt-4o-mini',
     'llmProviderApiKey': os.getenv('OPENAI_API_KEY'),
@@ -38,8 +38,7 @@ async def main() -> None:
                 await Actor.fail(status_message="Actor input was not provided")
                 return
 
-            actor_input |= fallbackInput  # fallback input is provided only for testing, you need to delete this line
-
+            actor_input = {**fallback_input, **actor_input} # fallback input is provided only for testing, you need to delete this line
             await check_inputs(actor_input)
             answer = await run_query(actor_input["query"], actor_input["modelName"], actor_input["llmProviderApiKey"])
             await Actor.push_data({"query": actor_input["query"], "answer": answer})
