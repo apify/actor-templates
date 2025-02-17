@@ -14,7 +14,7 @@ Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` 
 
 - **[Apify SDK](https://docs.apify.com/sdk/js/)** for JavaScript - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in JavaScript
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
-- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
+- **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
 - **[Key-value store](https://docs.apify.com/platform/storage/key-value-store)** - store any kind of data, such as JSON documents, images, or text files
 - **[OpenAI](https://openai.com/)** - a powerful language model
 - **[Bee Agent Framework](https://i-am-bee.github.io/bee-agent-framework/#/)** - framework for creating advanced AI agents with control over workflows
