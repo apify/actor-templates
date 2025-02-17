@@ -9,7 +9,7 @@ interface ToolMemoryMessage {
     output?: string | object;
 }
 /**
- * Class representing a generator for structured output based on tool messages and user query.
+ * Class representing a generator for structured output based on tool messages and user queries.
  */
 export class StructuredOutputGenerator {
     private toolMemory: ToolMemoryMessage[] = [];
@@ -33,10 +33,10 @@ export class StructuredOutputGenerator {
     }
 
     /**
-     * Appends a new tool message to the memory
-     * @param toolName Name of the tool
-     * @param input Optional input to the tool
-     * @param output Optional output from the tool
+     * Appends a new tool message to the memory.
+     * @param toolName Name of the tool.
+     * @param input Optional input to the tool.
+     * @param output Optional output from the tool.
      */
     appendToolMessage(toolName: string, input?: string | object, output?: string | object): void {
         this.toolMemory.push({
@@ -47,9 +47,9 @@ export class StructuredOutputGenerator {
     }
 
     /**
-     * Updates the last tool message with input or output
-     * @param key Either 'input' or 'output'
-     * @param value The value to update
+     * Updates the last tool message with input or output.
+     * @param key Either 'input' or 'output'.
+     * @param value The value to update.
      */
     updateLastToolMessage(key: 'input' | 'output', value: string | object): void {
         if (this.toolMemory.length > 0) {
@@ -58,10 +58,10 @@ export class StructuredOutputGenerator {
     }
 
     /**
-     * Generates structured output based on the stored tool messages and user query
-     * @param query The user's query
-     * @param schema The Zod schema for the structured output
-     * @returns Promise containing the structured output
+     * Generates structured output based on the stored tool messages and user queries.
+     * @param query The user's query.
+     * @param schema The Zod schema for the structured output.
+     * @returns Promise containing the structured output.
      */
     async generateStructuredOutput<T extends ZodSchema>(
         query: string,
@@ -85,14 +85,14 @@ export class StructuredOutputGenerator {
     }
 
     /**
-     * Clears the tool memory
+     * Clears the tool memory.
      */
     clearMemory(): void {
         this.toolMemory = [];
     }
 
     /**
-     * Gets the current tool memory
+     * Gets the current tool memory.
      */
     getToolMemory(): ToolMemoryMessage[] {
         return [...this.toolMemory];

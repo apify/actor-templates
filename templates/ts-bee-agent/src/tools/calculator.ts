@@ -6,7 +6,15 @@ import { z } from 'zod';
 interface CalculatorSumToolOutput {
     sum: number;
 }
-
+/**
+ * @class CalculatorSumTool
+ * @extends Tool
+ *
+ * @description
+ * This class represents a tool for calculating the sum of a list of numbers.
+ * It extends the base Tool class and provides specific implementation for
+ * summing numbers.
+ */
 export class CalculatorSumTool extends Tool<JSONToolOutput<CalculatorSumToolOutput>> {
     override name: string = 'calculator-sum';
 
@@ -26,7 +34,7 @@ export class CalculatorSumTool extends Tool<JSONToolOutput<CalculatorSumToolOutp
     protected async _run(input: ToolInput<this>): Promise<JSONToolOutput<CalculatorSumToolOutput>> {
         const { numbers } = input;
         if (!Array.isArray(numbers) || numbers.some((num) => typeof num !== 'number')) {
-            throw new ToolInputValidationError('Input must be an array of numbers');
+            throw new ToolInputValidationError('The input must be an array of numbers');
         }
         const sum = numbers.reduce((acc, num) => acc + num, 0);
         return new JSONToolOutput({ sum });

@@ -17,6 +17,15 @@ interface InstagramScrapeToolOutput {
     posts: InstagramPost[];
 }
 
+/**
+ * @class InstagramScrapeTool
+ * @extends Tool
+ *
+ * @description
+ * This class represents a tool for scraping Instagram profile posts.
+ * It extends the base Tool class and provides specific implementation for
+ * scraping posts from a given Instagram profile.
+ */
 export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeToolOutput>> {
     override name: string = 'instagram-scrape-profile-posts';
 
