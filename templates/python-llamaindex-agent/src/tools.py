@@ -23,6 +23,7 @@ PROMPT_SUMMARIZE = PromptTemplate(
 
 logger = logging.getLogger("apify")
 
+
 class LLMRegistry:
     _llm: OpenAI | None = None
 

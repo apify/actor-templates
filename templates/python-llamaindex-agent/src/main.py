@@ -1,7 +1,7 @@
 """This module defines the main entry point for the Apify LlamaIndex Agent.
 
 This Agent template is intended to give example on how to use LlamaIndex Agent with Apify Actors.
-It extracts contact details from a plain text query or from a specified URL.
+It extracts contact details from a plain text query with a URL.
 
 Feel free to modify this file to suit your specific needs.
 
@@ -31,7 +31,8 @@ async def main() -> None:
                 return
 
             await check_inputs(actor_input)
-            await process_query(actor_input["query"], actor_input["modelName"], actor_input["llmProviderApiKey"])
+            answer = await run_query(actor_input["query"], actor_input["modelName"], actor_input["llmProviderApiKey"])
+            Actor.push_data({"query": actor_input["query"], "answer": answer})
         except Exception as e:
             await Actor.fail(status_message="Failed to process query", exception=e)
 
@@ -50,7 +51,7 @@ async def check_inputs(actor_input: dict):
         await Actor.fail(status_message=msg)
 
 
-async def process_query(query: str, model_name: str, llm_provider_api_key: str):
+async def run_query(query: str, model_name: str, llm_provider_api_key: str):
     """Process query with LlamaIndex Agent"""
 
     llm = OpenAI(model=str(model_name), api_key=llm_provider_api_key, temperature=0)

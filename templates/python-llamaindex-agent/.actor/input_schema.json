@@ -4,16 +4,16 @@
     "schemaVersion": 1,
     "properties": {
         "query": {
-            "title": "Query to retrieve contact details information from an URL",
+            "title": "Query to retrieve contact details from a URL",
             "type": "string",
             "description": "Text query to search for contact details and potentially deduplicate them.",
             "editor": "textfield",
             "prefill": "I would like to get contact details from apify.com"
         },
         "modelName": {
-            "title": "OpenAI model (OpenAI is the only supported provider now)",
+            "title": "OpenAI model (currently the only supported provider)",
             "type": "string",
-            "description": "Specify the LLM for SQL generation and query synthesis. Currently supports OpenAI models with varying capabilities and performance characteristics.",
+            "description": "Specify the LLM for orchestration and summarization. Currently supports OpenAI models with varying capabilities and performance.",
             "editor": "select",
             "enum": [
                 "gpt-4o-mini",
