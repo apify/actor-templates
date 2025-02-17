@@ -7,8 +7,6 @@ import { Message } from 'bee-agent-framework/backend/message';
 import { z } from 'zod';
 import { CalculatorSumTool } from './tool_calculator.js';
 import { InstagramScrapeTool } from './tool_instagram.js';
-// Crawlee - web scraping and browser automation library (Read more at https://crawlee.dev)
-// import { CheerioCrawler } from 'crawlee';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
