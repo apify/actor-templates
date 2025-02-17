@@ -4,3 +4,4 @@
 apify < 3.0
 apify-client>=1.8.1
 llama-index>=0.12.15
+polars>=1.22.0

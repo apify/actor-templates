@@ -9,10 +9,18 @@ To build Apify Actors, utilize the Apify SDK toolkit, read more at the official 
 https://docs.apify.com/sdk/python
 """
 
+import os
+
 from apify import Actor
 from llama_index.llms.openai import OpenAI
 
 from .agent import run_agent
+
+fallbackInput = {
+    'query': 'This is fallback test query, do not nothing and ignore it.',
+    'modelName': 'gpt-4o-mini',
+    'llmProviderApiKey': os.getenv('OPENAI_API_KEY'),
+}  # fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
 
 
 async def main() -> None:
@@ -30,9 +38,11 @@ async def main() -> None:
                 await Actor.fail(status_message="Actor input was not provided")
                 return
 
+            actor_input |= fallbackInput  # fallback input is provided only for testing, you need to delete this line
+
             await check_inputs(actor_input)
             answer = await run_query(actor_input["query"], actor_input["modelName"], actor_input["llmProviderApiKey"])
-            Actor.push_data({"query": actor_input["query"], "answer": answer})
+            await Actor.push_data({"query": actor_input["query"], "answer": answer})
         except Exception as e:
             await Actor.fail(status_message="Failed to process query", exception=e)
 
