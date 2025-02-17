@@ -24,6 +24,7 @@ For a more advanced multi-agent example, see the [Finance Monitoring Agent actor
 
 ## Resources
 
+- [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
 - [Python tutorials in Academy](https://docs.apify.com/academy/python)
 - [Apify Python SDK documentation](https://docs.apify.com/sdk/python/)
 - [LangChain documentation](https://python.langchain.com/docs/introduction/)
