@@ -30,7 +30,7 @@ RUN python3 -m compileall -q .
 
 # Create and run as a non-root user.
 RUN useradd -m apify && \
-    chown -R apify:apify /usr/src/app
+    chown -R apify:apify ./
 USER apify
 
 # Specify how to launch the source code of your Actor.
