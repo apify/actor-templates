@@ -14,7 +14,7 @@ It provides a basic structure for the Agent with the Apify SDK and allows you to
 
 The Agent has two main tools:
 
-1. `call_contact_details_scraper` - Calls the [Contact Details Scraper](https://apify.com/apify/contact-details-scraper) to scrape contact details from websites.
+1. `call_contact_details_scraper` - Calls the [Contact Details Scraper](https://apify.com/vdrmota/contact-info-scraper) to scrape contact details from websites.
 2. `summarize_contact_information` - Summarizes the collected contact details.
 
 Given a user query with a URL, the Agent uses the Contact Details Scraper to retrieve the contact information and optionally summarizes the data.

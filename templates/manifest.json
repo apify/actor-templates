@@ -5,13 +5,12 @@
         {
             "id": "python-llamaindex-agent",
             "name": "python-llamaindex-agent",
-            "label": "Start with LlamaIndex Agent",
+            "label": "Start with LlamaIndex agent",
             "category": "python",
             "technologies": [
-                "llamaindex",
                 "python"
             ],
-            "description": "LlamaIndex Agent to scrape, deduplicate and summarize contact details from a website",
+            "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",

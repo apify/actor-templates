@@ -7,15 +7,11 @@ from llama_index.llms.openai import OpenAI
 
 from .tools import LLMRegistry, call_contact_details_scraper, summarize_contact_information
 
-tool_call_contact_details_scraper = FunctionTool.from_defaults(fn=call_contact_details_scraper)
-tool_summarize_results = FunctionTool.from_defaults(fn=summarize_contact_information)
-
-logger = logging.getLogger("apify")
+logger = logging.getLogger('apify')
 
 
-async def run_agent(query: str, llm: OpenAI, verbose: bool = False) -> AgentChatResponse:
-    """
-    Runs an agent to scrape contact details and process it using LLM and tools.
+async def run_agent(query: str, llm: OpenAI, verbose: bool = False) -> AgentChatResponse:  # noqa:FBT001,FBT002
+    """Runs an agent to scrape contact details and process it using LLM and tools.
 
     The function initializes a ReAct agent with specific tools to process a user-provided query.
 
@@ -32,13 +28,13 @@ async def run_agent(query: str, llm: OpenAI, verbose: bool = False) -> AgentChat
     # Initialize the ReAct Agent with the Tools (LLM not pre-instantiated)
     agent = ReActAgent.from_tools(
         [
-            tool_call_contact_details_scraper,
-            tool_summarize_results,
+            FunctionTool.from_defaults(fn=call_contact_details_scraper),
+            FunctionTool.from_defaults(fn=summarize_contact_information),
         ],
         llm=llm,
         verbose=verbose,
     )
 
     response: AgentChatResponse = await agent.achat(query)
-    logger.info(f"Agent answer: {response.response}")
+    logger.info(f'Agent answer: {response.response}')
     return response

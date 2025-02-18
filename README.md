@@ -92,6 +92,11 @@ builds `archives` of each template and pushes these `archives` into the reposito
 to bootstrap your project folder. We did it this way because we can update template structure/code without publishing
 any package to npm. It makes templates changes agile.
 
+## Template icons
+
+Icons are derived from the [`manifest.json`](./templates/manifest.json) file by specifying them in the technologies array.
+If there is a new icon, it has to be added to the [apify-web/public/img/template-icons](https://github.com/apify/apify-web/tree/develop/public/img/template-icons) directory first.
+
 ## Reference
 
 - [Apify Actor documentation](https://docs.apify.com/actor)
