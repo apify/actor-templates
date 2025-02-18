@@ -1,6 +1,6 @@
 ## TypeScript Bee Agent Framework Template
 
-A template for [Bee Agent Framework](https://i-am-bee.github.io/bee-agent-framework/#/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). This template offers a structured setup and an example ReAct agent utilizing [Instagram Scraper](https://apify.com/apify/instagram-scraper) and a calculator tool in a workflow context.
+A template for [Bee Agent Framework](https://i-am-bee.github.io/bee-agent-framework/#/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). This template offers a structured setup and an example [ReAct agent](https://react-lm.github.io/) utilizing [Instagram Scraper](https://apify.com/apify/instagram-scraper) and a calculator tool in a workflow context.
 
 ### How it Works
 
@@ -21,6 +21,7 @@ Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` 
 
 ### Resources
 
+- [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
 - [Bee Agent Framework documentation](https://i-am-bee.github.io/bee-agent-framework/#/)
