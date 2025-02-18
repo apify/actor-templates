@@ -20,13 +20,12 @@ const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 // storage/key_value_stores/default/INPUT.json when running locally.
 const {
     query = 'How to build LangGraph agent at Apify platform?',
-    openAIApiKey = OPENAI_API_KEY, // This is a fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
+    llmProviderApiKey = OPENAI_API_KEY, // This is a fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
 } = await Actor.getInput() || {};
 
-if (!openAIApiKey) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
+if (!llmProviderApiKey) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
 if (!APIFY_TOKEN) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
 
-// Initialize memory to persist state between graph runs
 const agent = createReactAgent({
     llm: new ChatOpenAI({ temperature: 0 }),
     tools: [webSearchTool],
