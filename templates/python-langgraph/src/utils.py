@@ -9,7 +9,6 @@ def log_state(state: dict) -> None:
 
     Args:
         state (dict): The state of the graph.
-        debug (bool, optional): Whether to log debug messages. Defaults to True.
     """
     message = state['messages'][-1]
     # Traverse all tool messages and print them
