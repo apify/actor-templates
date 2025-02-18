@@ -1,7 +1,7 @@
 {
     "actorSpecification": 1,
     "name": "python-llamaindex-agent",
-    "title": "Pyton LlamaIndex Agent",
+    "title": "Python LlamaIndex Agent",
     "description": "LlamaIndex Agent to scrape, deduplicate, and summarize contact details from a website",
     "version": "0.0",
     "buildTag": "latest",
