@@ -6,7 +6,7 @@ To build Apify Actors, utilize the Apify SDK toolkit, read more at the official 
 https://docs.apify.com/sdk/python
 """
 
-from apify import Actor, Request
+from apify import Actor
 from crawlee.crawlers import PlaywrightCrawler, PlaywrightCrawlingContext
 
 
@@ -41,7 +41,7 @@ async def main() -> None:
             headless=True,
             browser_launch_options={
                 'args': ['--disable-gpu'],
-            }
+            },
         )
 
         # Define a request handler, which will be called for every request.

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Apify Actor integration for Scrapy projects.
 
 This module transforms a Scrapy project into an Apify Actor, handling the configuration of logging, patching Scrapy's
@@ -17,10 +18,9 @@ from __future__ import annotations
 from logging import StreamHandler, getLogger
 from typing import Any
 
+from apify.log import ActorLogFormatter
 from scrapy.utils import log as scrapy_logging
 from scrapy.utils.project import get_project_settings
-
-from apify.log import ActorLogFormatter
 
 # Define names of the loggers.
 MAIN_LOGGER_NAMES = ['apify', 'apify_client', 'scrapy']

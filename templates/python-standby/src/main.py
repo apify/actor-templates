@@ -14,7 +14,8 @@ from apify import Actor
 class GetHandler(SimpleHTTPRequestHandler):
     """A simple GET HTTP handler that will respond with a message."""
 
-    def do_GET(self) -> None:
+    def do_get(self) -> None:
+        """Handle GET request and respond with a message."""
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b'Hello from Actor Standby!')
