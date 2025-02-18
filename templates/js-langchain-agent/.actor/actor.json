@@ -1,0 +1,14 @@
+{
+    "actorSpecification": 1,
+    "name": "js-langchain-agent",
+    "title": "LangChain agent in JavaScript",
+    "description": "LangChain agent in JavaScript.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "js-langchain-agent"
+    },
+    "dockerfile": "./Dockerfile",
+    "environmentVariables": {
+        "OPENAI_API_KEY": "@OPENAI_API_KEY"
+    }
+}
