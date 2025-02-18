@@ -8,10 +8,9 @@ https://docs.apify.com/sdk/python
 
 from urllib.parse import urljoin
 
+from apify import Actor, Request
 from bs4 import BeautifulSoup
 from httpx import AsyncClient
-
-from apify import Actor, Request
 
 
 async def main() -> None:

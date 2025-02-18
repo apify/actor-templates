@@ -9,17 +9,17 @@ https://docs.apify.com/sdk/python
 import asyncio
 from urllib.parse import urljoin
 
+from apify import Actor, Request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
-
-from apify import Actor, Request
 
 # To run this Actor locally, you need to have the Selenium Chromedriver installed.
 # Follow the installation guide at:
 # https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
 # When running on the Apify platform, the Chromedriver is already included
 # in the Actor's Docker image.
+
 
 async def main() -> None:
     """Main entry point for the Apify Actor.
