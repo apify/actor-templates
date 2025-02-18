@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "python-llamaindex-agent",
+    "title": "Python LlamaIndex agent",
+    "description": "LlamaIndex agent to scrape, deduplicate, and summarize contact details from a website",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "python-llamaindex-agent"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}

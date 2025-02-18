@@ -8,9 +8,8 @@ https://docs.apify.com/sdk/python
 
 from urllib.parse import urljoin
 
-from playwright.async_api import async_playwright
-
 from apify import Actor, Request
+from playwright.async_api import async_playwright
 
 # Note: To run this Actor locally, ensure that Playwright browsers are installed.
 # Run `playwright install --with-deps` in the Actor's virtual environment to install them.

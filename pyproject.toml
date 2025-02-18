@@ -1,0 +1,95 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.9"
+apify = { extras = ["scrapy"], version = "<3.0.0" }
+beautifulsoup4 = "<5.0.0"
+crawlee = { extras = ["beautifulsoup", "playwright"], version = "<0.6.0" }
+nest-asyncio = "<2.0.0"
+playwright = "<2.0.0"
+scrapy = "<3.0.0"
+selenium = "<5.0.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "~1.15.0"
+ruff = "~0.9.0"
+types-beautifulsoup4 = "~4.12.0.20250204"
+
+[tool.ruff]
+line-length = 120
+include = ["templates/**/*.py"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN401",   # Dynamically typed expressions (typing.Any) are disallowed in {filename}
+    "BLE001",   # Do not catch blind exception
+    "C901",     # `{name}` is too complex
+    "COM812",   # This rule may cause conflicts when used with the formatter
+    "D100",     # Missing docstring in public module
+    "D104",     # Missing docstring in public package
+    "D107",     # Missing docstring in `__init__`
+    "EM",       # flake8-errmsg
+    "G004",     # Logging statement uses f-string
+    "ISC001",   # This rule may cause conflicts when used with the formatter
+    "FIX",      # flake8-fixme
+    "TRY003",   # Avoid specifying long messages outside the exception class
+]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = [
+    "F401", # Unused imports
+]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+inline-quotes = "single"
+
+[tool.ruff.lint.flake8-type-checking]
+runtime-evaluated-base-classes = [
+    "pydantic.BaseModel",
+    "pydantic_settings.BaseSettings",
+]
+
+[tool.ruff.lint.flake8-builtins]
+builtins-ignorelist = ["id"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.pylint]
+max-branches = 18
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
+timeout = 1200
+
+[tool.mypy]
+python_version = "3.9"
+plugins = ["pydantic.mypy"]
+files = ["templates"]
+check_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ['nest_asyncio']
+ignore_missing_imports = true
