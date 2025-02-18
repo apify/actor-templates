@@ -4,6 +4,7 @@ These models are used mainly for the structured tool and LLM outputs.
 Resources:
 - https://docs.pydantic.dev/latest/concepts/models/
 """
+from __future__ import annotations
 
 from pydantic import BaseModel
 

@@ -6,6 +6,7 @@ To learn how to create a new tool, see:
 - https://python.langchain.com/docs/concepts/tools/
 - https://python.langchain.com/docs/how_to/#tools
 """
+from __future__ import annotations
 
 from apify import Actor
 from langchain_core.tools import tool

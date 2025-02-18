@@ -5,6 +5,7 @@ Feel free to modify this file to suit your specific needs.
 To build Apify Actors, utilize the Apify SDK toolkit, read more at the official documentation:
 https://docs.apify.com/sdk/python
 """
+from __future__ import annotations
 
 import logging
 import os
@@ -48,7 +49,7 @@ async def main() -> None:
             msg = 'Missing "query" attribute in input!'
             raise ValueError(msg)
         if not openai_api_key:
-            msg = 'Missing "openai_api_key" attribute in input!'
+            msg = 'Missing "openaiApiKey" attribute in input!'
             raise ValueError(msg)
 
         # Initialize the OpenAI Chat model
