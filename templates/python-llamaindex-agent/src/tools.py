@@ -51,8 +51,9 @@ async def call_contact_details_scraper(
     start_urls: list[dict[str, Any]],
     max_requests_per_start_url: int = 20,
     max_depth: int = 2,
-    same_domain: bool = True,  # noqa:FBT001,FBT002
-    deduplicate: bool = True,  # noqa:FBT001,FBT002
+    *,
+    same_domain: bool = True,
+    deduplicate: bool = True,
 ) -> list[dict]:
     """Extract contact details from websites using the Apify Actor.
 

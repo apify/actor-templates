@@ -22,7 +22,7 @@
                 "o1-mini",
                 "o3-mini"
             ],
-            "default": "gpt-4o-mini"
+            "default": "gpt-4o"
         },
         "llmProviderApiKey": {
             "title": "LLM Provider API key (OpenAI is the only supported provider now)",

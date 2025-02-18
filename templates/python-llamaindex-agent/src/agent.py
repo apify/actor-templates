@@ -10,7 +10,7 @@ from .tools import LLMRegistry, call_contact_details_scraper, summarize_contact_
 logger = logging.getLogger('apify')
 
 
-async def run_agent(query: str, llm: OpenAI, verbose: bool = False) -> AgentChatResponse:  # noqa:FBT001,FBT002
+async def run_agent(query: str, llm: OpenAI, *, verbose: bool = False) -> AgentChatResponse:
     """Runs an agent to scrape contact details and process it using LLM and tools.
 
     The function initializes a ReAct agent with specific tools to process a user-provided query.
