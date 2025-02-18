@@ -5,6 +5,7 @@ Feel free to modify this file to suit your specific needs.
 To build Apify Actors, utilize the Apify SDK toolkit, read more at the official documentation:
 https://docs.apify.com/sdk/python
 """
+
 from __future__ import annotations
 
 import logging
@@ -23,6 +24,7 @@ fallback_input = {
     'modelName': 'gpt-4o-mini',
     'openaiApiKey': os.getenv('OPENAI_API_KEY'),
 }  # fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
+
 
 async def main() -> None:
     """Main entry point for the Apify Actor.
