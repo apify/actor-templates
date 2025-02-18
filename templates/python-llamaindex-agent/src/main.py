@@ -12,12 +12,15 @@ https://docs.apify.com/sdk/python
 from __future__ import annotations
 
 import os
+from typing import TYPE_CHECKING
 
 from apify import Actor
-from llama_index.core.chat_engine.types import AgentChatResponse
 from llama_index.llms.openai import OpenAI
 
 from .agent import run_agent
+
+if TYPE_CHECKING:
+    from llama_index.core.chat_engine.types import AgentChatResponse
 
 fallback_input = {
     'query': 'This is fallback test query, do not nothing and ignore it.',
