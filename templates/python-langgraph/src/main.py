@@ -17,6 +17,11 @@ from src.models import AgentStructuredOutput
 from src.tools import tool_calculator_sum, tool_scrape_instagram_profile_posts
 from src.utils import log_state
 
+fallback_input = {
+    'query': 'This is fallback test query, do not nothing and ignore it.',
+    'modelName': 'gpt-4o-mini',
+    'openaiApiKey': os.getenv('OPENAI_API_KEY'),
+}  # fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
 
 async def main() -> None:
     """Main entry point for the Apify Actor.
@@ -31,9 +36,12 @@ async def main() -> None:
     async with Actor:
         # Handle input
         actor_input = await Actor.get_input()
+        # fallback input is provided only for testing, you need to delete this line
+        actor_input = {**fallback_input, **actor_input}
+
         query = actor_input.get('query')
         openai_api_key = actor_input.get('openaiApiKey')
-        model_name = actor_input.get('modelName')
+        model_name = actor_input.get('modelName', 'gpt-4o-mini')
         if actor_input.get('debug', False):
             Actor.log.setLevel(logging.DEBUG)
         if not query:

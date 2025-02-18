@@ -20,7 +20,7 @@
         "o1",
         "o3-mini"
       ],
-      "default": "gpt-4o",
+      "default": "gpt-4o-mini",
       "prefill": "gpt-4o-mini"
     },
     "openaiApiKey": {
@@ -38,5 +38,5 @@
       "default": false
     }
   },
-  "required": ["query", "modelName", "openaiApiKey"]
+  "required": ["query", "openaiApiKey"]
 }
