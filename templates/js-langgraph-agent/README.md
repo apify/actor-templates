@@ -1,8 +1,8 @@
-## LangChain.js template
+## Langgraph.js agent template
 
-> LangChain is a framework for developing applications powered by language models.
+> [LangGraph](https://langchain-ai.github.io/langgraphjs/) is a library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 
-This example template illustrates how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model. All of this is within a single Apify Actor and slightly over a hundred lines of code.
+This example template illustrates how to create LangGraph agents with Apify to answer questions using web search.
 
 ## Included features
 
@@ -48,4 +48,3 @@ For production use, we recommend you to:
 - A short guide on [how to create web scrapers using code templates](https://www.youtube.com/watch?v=u-i-Korzf8w)
 
 [Web Scraping Data for Generative AI](https://www.youtube.com/watch?v=8uvHH-ocSes)
-

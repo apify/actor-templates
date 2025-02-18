@@ -1,11 +1,11 @@
 {
     "actorSpecification": 1,
-    "name": "js-langchain-agent",
-    "title": "LangChain agent in JavaScript",
-    "description": "LangChain agent in JavaScript.",
+    "name": "js-langgraph-agent",
+    "title": "LangGraph agent in JavaScript",
+    "description": "LangGraph agent in JavaScript.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-langchain-agent"
+        "templateId": "js-langgraph-agent"
     },
     "dockerfile": "./Dockerfile",
     "environmentVariables": {
