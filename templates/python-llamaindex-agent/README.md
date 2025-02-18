@@ -18,7 +18,7 @@ The Agent has two main tools:
 2. `summarize_contact_information` - Summarizes the collected contact details.
 
 Given a user query with a URL, the Agent uses the Contact Details Scraper to retrieve the contact information and optionally summarizes the data.
-The Agent can decide how to handle the data—whether to process it further or skip summarization if it’s not necessary.
+The Agent can decide how to handle the data—whether to process it further or skip summarization if it's not necessary.
 
 ### Sample queries:
 - Find contact details for `apify.com` and provide raw results.
@@ -28,7 +28,7 @@ The Agent can decide how to handle the data—whether to process it further or s
 
 To run this template locally or on the Apify platform, you need:
 
-- An [Apify account](https://console.apify.com/) and an [Apify API Token](https://docs.apify.com/platform/integrations/api#api-token).
+- An [Apify account](https://console.apify.com/) and an [Apify API token](https://docs.apify.com/platform/integrations/api#api-token).
 - An [OpenAI](https://openai.com/) account and API key.
 
 ## Resources
