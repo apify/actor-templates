@@ -25,9 +25,12 @@ await Actor.init();
 
 // Handle input
 const {
-    query,
+    // The query default value is provided only for template testing purposes.
+    // You can remove it.
+    query = 'This is fallback test query, do not nothing and ignore it.',
     model = 'gpt-4o-mini',
-    openaiApiKey,
+    // Default OpenAI API key value from the environment variable
+    openaiApiKey = process.env.OPENAI_API_KEY,
     debug,
 } = await Actor.getInput() as Input;
 if (debug) {
