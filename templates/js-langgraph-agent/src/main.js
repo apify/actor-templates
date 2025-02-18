@@ -27,7 +27,7 @@ if (!llmProviderApiKey) throw new Error('Please configure the OPENAI_API_KEY as 
 if (!APIFY_TOKEN) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
 
 const agent = createReactAgent({
-    llm: new ChatOpenAI({ temperature: 0 }),
+    llm: new ChatOpenAI({ temperature: 0, apiKey: llmProviderApiKey }),
     tools: [webSearchTool],
 });
 

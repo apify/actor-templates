@@ -1,8 +1,8 @@
 {
     "actorSpecification": 1,
-    "name": "js-langgraph-agent",
-    "title": "LangGraph agent in JavaScript",
-    "description": "LangGraph agent in JavaScript.",
+    "name": "project-langgraph-agent-javascript",
+    "title": "Project LangGraph Agent JavaScript",
+    "description": "LangGraph agent in JavaScript for answering questions via web search.",
     "version": "0.0",
     "meta": {
         "templateId": "js-langgraph-agent"

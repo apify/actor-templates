@@ -12,10 +12,11 @@ The LangGraph agent does the following:
 2. If web search is needed, it uses the [RAG Web Browser](https://apify.com/apify/rag-web-browser) to gather relevant data from websites.
 3. Utilizes the gathered data to answer the question using the OpenAI model.
 
-The agent has one tool `webSearchTool`, defined in `src/tools.js`, which it uses to search the web for relevant data.
+In LangGraph.js, agents utilize tools functions that perform specific tasks.
+This agent has one tool, `webSearchTool`, defined in `src/tools.js`, which it uses to search the web for relevant data.
 
-### Sample query:
-- How to build LangGraph agent at Apify platform?
+### Sample query
+- How to build a LangGraph agent at the Apify platform?
 
 ## Before you start
 
