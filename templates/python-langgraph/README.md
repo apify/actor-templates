@@ -18,9 +18,6 @@ For a more advanced multi-agent example, see the [Finance Monitoring Agent actor
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
 - **[Key-value store](https://docs.apify.com/platform/storage/key-value-store)** - store any kind of data, such as JSON documents, images, or text files
-- **[OpenAI](https://openai.com/)** - a powerful language model
-- **[LangChain](https://apify.com/docs/actor/langchain)** - tools to connect language models with external data sources
-- **[LangGraph](https://www.langchain.com/langgraph)** - a framework for added control in agent workflows
 
 ## Resources
 

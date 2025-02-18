@@ -32,8 +32,8 @@ async def main() -> None:
         # Handle input
         actor_input = await Actor.get_input()
         query = actor_input.get('query')
-        openai_api_key = actor_input.get('openai_api_key')
-        model = actor_input.get('model')
+        openai_api_key = actor_input.get('openaiApiKey')
+        model_name = actor_input.get('modelName')
         if actor_input.get('debug', False):
             Actor.log.setLevel(logging.DEBUG)
         if not query:
@@ -45,7 +45,7 @@ async def main() -> None:
 
         # Initialize the OpenAI Chat model
         os.environ['OPENAI_API_KEY'] = openai_api_key
-        llm = ChatOpenAI(model=model)
+        llm = ChatOpenAI(model=model_name)
 
         # Create the ReAct agent graph
         # see https://langchain-ai.github.io/langgraph/reference/prebuilt/?h=react#langgraph.prebuilt.chat_agent_executor.create_react_agent
