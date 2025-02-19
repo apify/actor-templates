@@ -9,7 +9,7 @@
     "dependencies": {
         "@ai-sdk/openai": "^1.1.12",
         "@langchain/openai": "^0.4.4",
-        "apify": "^3.3.0",
+        "apify": "^3.3.1",
         "bee-agent-framework": "^0.1.2",
         "zod": "^3.24.2"
     },

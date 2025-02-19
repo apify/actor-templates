@@ -91,7 +91,6 @@ const response = await agent
 
 const tokensTotal = beeOutputTotalTokens(response);
 await chargeForModelTokens(modelName, tokensTotal);
-log.debug(`Charging for ${tokensTotal} tokens used by the agent.`);
 
 log.info(`Agent 🤖 : ${response.result.text}`);
 
@@ -115,7 +114,6 @@ log.debug(`Structured response: ${JSON.stringify(structuredResponse)}`);
 // just charge the same amount of tokens as the total tokens used by the agent for the
 // structured output generation - which is mostly the tool calls passed to the structured output generator.
 await chargeForModelTokens(modelName, tokensTotal);
-log.debug(`Charging for ${tokensTotal} tokens used by the agent.`);
 // End of structured output generation.
 
 // Push results to the dataset.
