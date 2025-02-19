@@ -11,7 +11,7 @@ https://docs.apify.com/sdk/python
 
 from __future__ import annotations
 
-import os
+import math
 from typing import TYPE_CHECKING
 
 from apify import Actor
@@ -21,12 +21,6 @@ from .agent import run_agent
 
 if TYPE_CHECKING:
     from llama_index.core.chat_engine.types import AgentChatResponse
-
-fallback_input = {
-    'query': 'This is fallback test query, do not nothing and ignore it.',
-    'modelName': 'gpt-4o-mini',
-    'llmProviderApiKey': os.getenv('OPENAI_API_KEY'),
-}  # fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
 
 
 async def main() -> None:
@@ -38,20 +32,17 @@ async def main() -> None:
     """
     async with Actor:
         Actor.log.info('Starting LlamaIndex Agent')
+        count = math.ceil(Actor.get_env().get('memory_mbytes', 1024) or 1024 // 1024)
+        await Actor.charge(event_name='actor-start-gb', count=count)
+        Actor.log.info('Charged for Actor start %d', count)
         try:
             if not (actor_input := await Actor.get_input()):
                 await Actor.fail(status_message='Actor input was not provided')
                 return
-
-            if not Actor.is_at_home():
-                actor_input = {
-                    **fallback_input,
-                    **actor_input,
-                }  # fallback input is provided only for testing, you need to delete this line
-
             await check_inputs(actor_input)
             answer = await run_query(actor_input['query'], actor_input['modelName'], actor_input['llmProviderApiKey'])
             await Actor.push_data({'query': actor_input['query'], 'answer': answer})
+            await Actor.charge(event_name='task-completed', count=1)
         except Exception as e:
             await Actor.fail(status_message='Failed to process query', exception=e)
 

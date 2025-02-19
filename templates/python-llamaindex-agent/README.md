@@ -31,6 +31,32 @@ To run this template locally or on the Apify platform, you need:
 - An [Apify account](https://console.apify.com/) and an [Apify API token](https://docs.apify.com/platform/integrations/api#api-token).
 - An [OpenAI](https://openai.com/) account and API key.
 
+## Monetization
+
+This template uses the [Pay Per Event](https://docs.apify.com/sdk/js/docs/next/guides/pay-per-event) (PPE) monetization model, which provides flexible pricing based on defined events.
+
+To charge users, define events in JSON format and save them on the Apify platform. Here is an example of [pay_per_event.json](.actor/pay_per_event.json) with the `task-completed` event:
+
+```json
+[
+    {
+        "task-completed": {
+            "eventTitle": "Task completed",
+            "eventDescription": "Cost per query answered.",
+            "eventPriceUsd": 0.1
+        }
+    }
+]
+```
+
+In the Actor, trigger the event with:
+
+```javascript
+await Actor.charge({ eventName: 'task-completed' });
+```
+
+This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services, such as LLM input/output tokens.
+
 ## Resources
 
 Useful resources to help you get started:

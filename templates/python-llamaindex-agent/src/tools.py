@@ -49,7 +49,7 @@ class LLMRegistry:
 
 async def call_contact_details_scraper(
     start_urls: list[dict[str, Any]],
-    max_requests_per_start_url: int = 20,
+    max_requests_per_start_url: int = 5,
     max_depth: int = 2,
     *,
     same_domain: bool = True,
