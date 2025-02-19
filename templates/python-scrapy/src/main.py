@@ -21,10 +21,9 @@ other stuff, please refer to the following documentation page: https://docs.apif
 
 from __future__ import annotations
 
-from scrapy.crawler import CrawlerProcess
-
 from apify import Actor
 from apify.scrapy.utils import apply_apify_settings
+from scrapy.crawler import CrawlerProcess
 
 # Import your Scrapy spider here.
 from .spiders.title import TitleSpider as Spider

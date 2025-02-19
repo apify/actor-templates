@@ -1,3 +1,4 @@
+# ruff: noqa: D101, D102, ARG002, UP028
 """Scrapy middlewares module.
 
 This module defines Scrapy middlewares. Middlewares are processing components that handle requests and
@@ -20,7 +21,7 @@ if TYPE_CHECKING:
     from collections.abc import Generator, Iterable
 
     from scrapy.crawler import Crawler
-    from scrapy.http import Response
+    from scrapy.http.response import Response
 
 
 class TitleSpiderMiddleware:
@@ -68,10 +69,12 @@ class TitleSpiderMiddleware:
         pass
 
     def process_start_requests(
-        self, start_requests: Iterable[Request], spider: Spider
+        self,
+        start_requests: Iterable[Request],
+        spider: Spider,
     ) -> Iterable[Request]:  # Called with the start requests of the spider, and works
         # similarly to the process_spider_output() method, except
-        # that it doesn’t have a response associated.
+        # that it doesn't have a response associated.
 
         # Must return only requests (not items).
         for r in start_requests:

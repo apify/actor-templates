@@ -6,7 +6,7 @@ To build Apify Actors, utilize the Apify SDK toolkit, read more at the official 
 https://docs.apify.com/sdk/python
 """
 
-from apify import Actor, Request
+from apify import Actor
 from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
 

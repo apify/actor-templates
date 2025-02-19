@@ -1,3 +1,4 @@
+# ruff: noqa: ARG002, D102
 """Scrapy item pipelines module.
 
 This module defines Scrapy item pipelines for scraped data. Item pipelines are processing components

@@ -17,6 +17,6 @@ __pycache__
 .mypy_cache
 .pytest_cache
 .ruff_cache
-pyproject.toml
 .venv
 venv
+poetry.toml

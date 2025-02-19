@@ -8,15 +8,14 @@ https://docs.apify.com/sdk/python
 
 # Beautiful Soup - A library for pulling data out of HTML and XML files. Read more at:
 # https://www.crummy.com/software/BeautifulSoup/bs4/doc
+# Apify SDK - A toolkit for building Apify Actors. Read more at:
+# https://docs.apify.com/sdk/python
+from apify import Actor
 from bs4 import BeautifulSoup
 
 # HTTPX - A library for making asynchronous HTTP requests in Python. Read more at:
 # https://www.python-httpx.org/
 from httpx import AsyncClient
-
-# Apify SDK - A toolkit for building Apify Actors. Read more at:
-# https://docs.apify.com/sdk/python
-from apify import Actor
 
 
 async def main() -> None:
@@ -30,6 +29,8 @@ async def main() -> None:
         # Retrieve the input object for the Actor. The structure of input is defined in input_schema.json.
         actor_input = await Actor.get_input() or {'url': 'https://apify.com/'}
         url = actor_input.get('url')
+        if not url:
+            raise ValueError('Missing "url" attribute in input!')
 
         # Create an asynchronous HTTPX client for making HTTP requests.
         async with AsyncClient() as client:
