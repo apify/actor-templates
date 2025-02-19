@@ -1,4 +1,4 @@
-# ruff: noqa: TID252
+# ruff: noqa: RUF012, TID252
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
@@ -22,6 +22,9 @@ class TitleSpider(Spider):
     """
 
     name = 'title_spider'
+
+    # Limit the number of pages to scrape.
+    custom_settings = {'CLOSESPIDER_PAGECOUNT': 10}
 
     def __init__(
         self,
