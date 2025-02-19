@@ -1,5 +1,5 @@
 from apify import Actor
-from decimal import Decimal
+from decimal import ROUND_CEILING, Decimal
 
 async def charge_for_model_tokens(model_name: str, tokens: int):
     """
@@ -12,16 +12,17 @@ async def charge_for_model_tokens(model_name: str, tokens: int):
     Raises:
         ValueError: If the model name is unknown.
     """
-    tokens_millions = Decimal(tokens) / Decimal('1e6')
+    tokens_hundreds = int((Decimal(tokens) / Decimal('1e2')).to_integral_value(rounding=ROUND_CEILING))
+    Actor.log.debug(f"Charging for {tokens_hundreds} hundred tokens for model {model_name}")
 
     if model_name == 'gpt-4o':
-        await Actor.charge(event_name='openai-1m-tokens-gpt-4o', count=tokens_millions) # type: ignore
+        await Actor.charge(event_name='openai-100-tokens-gpt-4o', count=tokens_hundreds)
     elif model_name == 'gpt-4o-mini':
-        await Actor.charge(event_name='openai-1m-tokens-gpt-4o-mini', count=tokens_millions) # type: ignore
+        await Actor.charge(event_name='openai-100-tokens-gpt-4o-mini', count=tokens_hundreds)
     elif model_name == 'o1':
-        await Actor.charge(event_name='openai-1m-tokens-o1', count=tokens_millions) # type: ignore
+        await Actor.charge(event_name='openai-100-tokens-o1', count=tokens_hundreds)
     elif model_name == 'o3-mini':
-        await Actor.charge(event_name='openai-1m-tokens-o3-mini', count=tokens_millions) # type: ignore
+        await Actor.charge(event_name='openai-100-tokens-o3-mini', count=tokens_hundreds)
     else:
         raise ValueError(f"Unknown model name: {model_name}")
 

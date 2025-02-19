@@ -5,23 +5,23 @@
         "eventPriceUsd": 0.005
     },
     "openai-1m-tokens-gpt-4o": {
-        "eventTitle": "Price per 1M OpenAI tokens for gpt-4o",
-        "eventDescription": "Flat fee for each 1M gpt-4o tokens used.",
-        "eventPriceUsd": 10.0
+        "eventTitle": "Price per 100 OpenAI tokens for gpt-4o",
+        "eventDescription": "Flat fee for each 100 gpt-4o tokens used.",
+        "eventPriceUsd": 0.001
     },
-    "openai-1m-tokens-gpt-4o-mini": {
-        "eventTitle": "Price per 1M OpenAI tokens for gpt-4o-mini",
-        "eventDescription": "Flat fee for each 1M gpt-4o-mini tokens used.",
-        "eventPriceUsd": 0.6
+    "openai-100-tokens-gpt-4o-mini": {
+        "eventTitle": "Price per 100 OpenAI tokens for gpt-4o-mini",
+        "eventDescription": "Flat fee for each 100 gpt-4o-mini tokens used.",
+        "eventPriceUsd": 0.00006
     },
     "openai-1m-tokens-gpt-o1": {
-        "eventTitle": "Price per 1M OpenAI tokens for o1",
-        "eventDescription": "Flat fee for each 1M o1tokens used.",
-        "eventPriceUsd": 60.0
+        "eventTitle": "Price per 100 OpenAI tokens for o1",
+        "eventDescription": "Flat fee for each 100 o1tokens used.",
+        "eventPriceUsd": 0.006
     },
     "openai-1m-tokens-gpt-o3-mini": {
-        "eventTitle": "Price per 1M OpenAI tokens for o3-mini",
-        "eventDescription": "Flat fee for each 1M o3-mini tokens used.",
-        "eventPriceUsd": 4.4
+        "eventTitle": "Price per 100 OpenAI tokens for o3-mini",
+        "eventDescription": "Flat fee for each 100 o3-mini tokens used.",
+        "eventPriceUsd": 0.00044
     }
 }
