@@ -9,6 +9,7 @@
             "type": "string",
             "description": "Text query to search for answers.",
             "editor": "textfield",
+            "default": "How to build a LangGraph agent at the Apify platform?",
             "prefill": "How to build a LangGraph agent at the Apify platform?"
         },
         "modelName": {

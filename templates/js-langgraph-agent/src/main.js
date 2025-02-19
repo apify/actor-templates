@@ -7,8 +7,8 @@ import { webSearchTool } from './tools.js';
 
 const Event = {
     ACTOR_STARTED: 'actor-start-gb',
-    INPUT_TOKENS_COUNT_GPT4O: 'input-tokens-count-gpt-4o',
-    OUTPUT_TOKENS_COUNT_GPT4O: 'output-tokens-count-gpt-4o',
+    INPUT_100_TOKENS: 'openai-100-tokens-input',
+    OUTPUT_100_TOKENS: 'openai-100-tokens-output',
     TASK_COMPLETED: 'task-completed',
 };
 
@@ -35,11 +35,7 @@ const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 
 // You can configure the input for the Actor in the Apify UI when running on the Apify platform or editing
 // storage/key_value_stores/default/INPUT.json when running locally.
-const {
-    // query = 'How to build LangGraph agent at Apify platform?',
-    query = 'This is fallback test query, do nothing and ignore it.',
-    modelName = 'gpt-4o',
-} = await Actor.getInput() || {};
+const { query, modelName } = await Actor.getInput() || {};
 
 if (!OPENAI_API_KEY) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
 if (!APIFY_TOKEN) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
@@ -81,8 +77,8 @@ const usageTokens = agentFinalState.messages.reduce((acc, msg) => {
 log.info(`Charging token usage. Input: ${usageTokens.input}, Output: ${usageTokens.output}`);
 
 try {
-    await Actor.charge({ eventName: Event.INPUT_TOKENS_COUNT_GPT4O, count: usageTokens.input / 1e6 });
-    await Actor.charge({ eventName: Event.OUTPUT_TOKENS_COUNT_GPT4O, count: usageTokens.output / 1e6 });
+    await Actor.charge({ eventName: Event.INPUT_100_TOKENS, count: Math.ceil(usageTokens.input / 100) });
+    await Actor.charge({ eventName: Event.OUTPUT_100_TOKENS, count: Math.ceil(usageTokens.output / 100) });
 } catch (error) {
     log.error('Failed to charge for tokens usage', { error });
     await Actor.exit(1);
