@@ -10,14 +10,19 @@ A [ReAct agent](https://react-lm.github.io/) is employed, equipped with tools to
 
 Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` files, and ensure they are included in the agent's tool list in `src/main.ts`. Additionally, you can update the agent's system prompt or other configurations within `src/main.ts`. For more information, refer to the [Bee Agent documentation](https://i-am-bee.github.io/bee-agent-framework/#/agents?id=bee-agent).
 
+#### Pay Per Event
+
+This Actor is set up to use Pay Per Event pricing, eliminating the need for users to provide their own OpenAI API key. Users are billed for tokens used directly on Apify, while the developer's OpenAI API key is employed.
+To use this Actor, you need to:
+- **Set up the OpenAI API key environment variable**: assign your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
+- **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Admin settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in `.actor/ppe_schema.json`.
+
 ### Included Features
 
 - **[Apify SDK](https://docs.apify.com/sdk/js/)** for JavaScript - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in JavaScript
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
 - **[Key-value store](https://docs.apify.com/platform/storage/key-value-store)** - store any kind of data, such as JSON documents, images, or text files
-- **[OpenAI](https://openai.com/)** - a powerful language model
-- **[Bee Agent Framework](https://i-am-bee.github.io/bee-agent-framework/#/)** - framework for creating advanced AI agents with control over workflows
 
 ### Resources
 

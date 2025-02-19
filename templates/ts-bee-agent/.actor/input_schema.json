@@ -10,25 +10,16 @@
       "editor": "textfield",
       "prefill": "What is the total number of likes and the total number of comments for the latest 10 posts on the @openai Instagram account? From the 10 latest posts, show me the most popular one."
     },
-    "model": {
+    "modelName": {
       "title": "OpenAI model",
       "type": "string",
-      "description": "The OpenAI model to use. Currently supported models are gpt-4o and gpt-4o-mini, and the reasoning models o1 and o3-mini.",
+      "description": "The OpenAI model to use. Currently supported models are gpt-4o and gpt-4o-mini.",
       "enum": [
         "gpt-4o",
-        "gpt-4o-mini",
-        "o1",
-        "o3-mini"
+        "gpt-4o-mini"
       ],
-      "default": "gpt-4o",
+      "default": "gpt-4o-mini",
       "prefill": "gpt-4o-mini"
-    },
-    "openaiApiKey": {
-      "title": "OpenAI API Key",
-      "type": "string",
-      "description": "The API key for the OpenAI API.",
-      "editor": "textfield",
-      "isSecret": true
     },
     "debug": {
       "title": "Debug",
@@ -38,5 +29,5 @@
       "default": false
     }
   },
-  "required": ["query", "model", "openaiApiKey"]
+  "required": ["query", "modelName"]
 }
