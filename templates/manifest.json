@@ -5,11 +5,8 @@
         {
             "id": "python-llamaindex-agent",
             "name": "python-llamaindex-agent",
-            "label": "Start with LlamaIndex agent",
+            "label": "LlamaIndex agent",
             "category": "python",
-            "technologies": [
-                "python"
-            ],
             "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -679,6 +676,27 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/vector_index_cache.js"
+            ]
+        },
+        {
+            "id": "js-langgraph-agent",
+            "name": "project-langgraph-agent-javascript",
+            "label": "LangGraph agent",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "langchain"
+            ],
+            "description": "LangGraph agent in JavaScript for answering questions via web search.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langgraph-agent.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 300
+            },
+            "showcaseFiles": [
+                "src/main.js",
+                "src/tools.js"
             ]
         },
         {

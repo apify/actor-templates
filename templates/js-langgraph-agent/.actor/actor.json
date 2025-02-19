@@ -1,0 +1,14 @@
+{
+    "actorSpecification": 1,
+    "name": "project-langgraph-agent-javascript",
+    "title": "Project LangGraph Agent JavaScript",
+    "description": "LangGraph agent in JavaScript for answering questions via web search.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "js-langgraph-agent"
+    },
+    "dockerfile": "./Dockerfile",
+    "environmentVariables": {
+        "OPENAI_API_KEY": "@OPENAI_API_KEY"
+    }
+}
