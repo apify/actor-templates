@@ -43,7 +43,7 @@ if (!query) {
 /**
  * Actor code
 */
-// Charge for actor start
+// Charge for Actor start
 await chargeForActorStart();
 
 // Create a ReAct agent that can use tools.
