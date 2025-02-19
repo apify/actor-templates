@@ -274,8 +274,7 @@
             "label": "🦜️🔗 LangGraph AI agent",
             "category": "python",
             "technologies": [
-                "langchain",
-                "langgraph"
+                "langchain"
             ],
             "description": "Example of how to use LangGraph with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langgraph.zip?raw=true",
