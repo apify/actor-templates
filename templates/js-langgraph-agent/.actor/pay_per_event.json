@@ -1,0 +1,22 @@
+{
+    "actor-start-gb": {
+        "eventTitle": "Actor start per 1 GB",
+        "eventDescription": "Flat fee for starting an Actor run for each 1 GB of memory.",
+        "eventPriceUsd": 0.005
+    },
+    "openai-100-tokens-input": {
+        "eventTitle": "Input 100 tokens count",
+        "eventDescription": "Cost per 100 input tokens.",
+        "eventPriceUsd": 0.00025
+    },
+    "openai-100-tokens-output": {
+        "eventTitle": "Output tokens count",
+        "eventDescription": "Cost per 100 output tokens.",
+        "eventPriceUsd": 0.001
+    },
+    "task-completed": {
+        "eventTitle": "Task completed",
+        "eventDescription": "Cost per query answered.",
+        "eventPriceUsd": 0.1
+    }
+}
