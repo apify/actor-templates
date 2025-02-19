@@ -689,11 +689,8 @@
         {
             "id": "ts-bee-agent",
             "name": "ts-bee-agent",
-            "label": "🐝 Bee AI Agent Framework",
+            "label": "🐝 Bee Framework Agent",
             "category": "typescript",
-            "technologies": [
-                "bee-agent-framework"
-            ],
             "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-bee-agent.zip?raw=true",
             "defaultRunOptions": {

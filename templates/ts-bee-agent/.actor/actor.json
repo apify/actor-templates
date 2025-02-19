@@ -1,8 +1,8 @@
 {
     "actorSpecification": 1,
     "name": "ts-bee-agent",
-    "title": "TypeScript Bee Agent Project",
-    "description": "TypeScript Bee Agent Project",
+    "title": "TypeScript Bee Framework Agent",
+    "description": "Bee Framework Agent in TypeScript",
     "version": "0.0",
     "buildTag": "latest",
     "storages": {
