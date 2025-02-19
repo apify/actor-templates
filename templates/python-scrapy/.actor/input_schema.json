@@ -25,8 +25,8 @@
             "type": "object",
             "description": "Specifies proxy servers that will be used by the scraper in order to hide its origin.",
             "editor": "proxy",
-            "prefill": { "useApifyProxy": false },
-            "default": { "useApifyProxy": false }
+            "prefill": { "useApifyProxy": true },
+            "default": { "useApifyProxy": true }
         }
     },
     "required": ["startUrls"]
