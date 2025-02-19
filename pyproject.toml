@@ -1,24 +1,23 @@
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project]
+name = "actor-templates"
+version = "0.0.1"
+requires-python = ">=3.9"
+dependencies = [
+    "apify[scrapy]<3.0.0",
+    "beautifulsoup4[lxml]<5.0.0",
+    "crawlee[all]<0.6.0" ,
+    "nest-asyncio<2.0.0",
+    "playwright<2.0.0",
+    "scrapy<3.0.0",
+    "selenium<5.0.0",
+]
 
-[tool.poetry]
-package-mode = false
-
-[tool.poetry.dependencies]
-python = "^3.9"
-apify = { extras = ["scrapy"], version = "<3.0.0" }
-beautifulsoup4 = "<5.0.0"
-crawlee = { extras = ["beautifulsoup", "playwright"], version = "<0.6.0" }
-nest-asyncio = "<2.0.0"
-playwright = "<2.0.0"
-scrapy = "<3.0.0"
-selenium = "<5.0.0"
-
-[tool.poetry.group.dev.dependencies]
-mypy = "~1.15.0"
-ruff = "~0.9.0"
-types-beautifulsoup4 = "~4.12.0.20250204"
+[dependency-groups]
+dev = [
+    "mypy~=1.15.0",
+    "ruff~=0.9.0",
+    "types-beautifulsoup4~=4.12.0.20250204",
+]
 
 [tool.ruff]
 line-length = 120
