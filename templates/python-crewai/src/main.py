@@ -9,11 +9,9 @@ https://docs.apify.com/sdk/python
 from __future__ import annotations
 
 import logging
-import os
 
 from apify import Actor
 from crewai import Agent, Crew, Task
-from pydantic.json_schema import DefsRef
 
 from src.models import AgentStructuredOutput
 from src.ppe_utils import charge_for_actor_start, charge_for_model_tokens
@@ -23,6 +21,7 @@ fallback_input = {
     'query': 'This is a fallback test query, do nothing and ignore it.',
     'modelName': 'gpt-4o-mini',
 }
+
 
 async def main() -> None:
     """Main entry point for the Apify Actor.
@@ -41,9 +40,8 @@ async def main() -> None:
         actor_input = {**fallback_input, **actor_input}
 
         query = actor_input.get('query')
-        openai_api_key = actor_input.get('openaiApiKey')
         model_name = actor_input.get('modelName', 'gpt-4o-mini')
-        if (debug := actor_input.get('debug', False)):
+        if debug := actor_input.get('debug', False):
             Actor.log.setLevel(logging.DEBUG)
         if not query:
             msg = 'Missing "query" attribute in input!'
@@ -75,10 +73,7 @@ async def main() -> None:
 
         # Create a one-man crew
         # For more information, see https://docs.crewai.com/concepts/crews
-        crew = Crew(
-            agents=[agent],
-            tasks=[task]
-        )
+        crew = Crew(agents=[agent], tasks=[task])
 
         # Kick off the crew and get the response
         crew_output = crew.kickoff()
