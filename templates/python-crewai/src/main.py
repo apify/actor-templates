@@ -16,20 +16,19 @@ from crewai import Agent, Crew, Task
 from pydantic.json_schema import DefsRef
 
 from src.models import AgentStructuredOutput
+from src.ppe_utils import charge_for_actor_start, charge_for_model_tokens
 from src.tools import tool_calculator_sum, tool_scrape_instagram_profile_posts
 
 fallback_input = {
-    'query': 'This is fallback test query, do not nothing and ignore it.',
+    'query': 'This is a fallback test query, do nothing and ignore it.',
     'modelName': 'gpt-4o-mini',
-    'openaiApiKey': os.getenv('OPENAI_API_KEY'),
-}  # fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
-
+}
 
 async def main() -> None:
     """Main entry point for the Apify Actor.
 
     This coroutine is executed using `asyncio.run()`, so it must remain an asynchronous function for proper execution.
-    Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
+    Asynchronous execution is required for communication with the Apify platform, and it also enhances performance in
     the field of web scraping significantly.
 
     Raises:
@@ -49,12 +48,8 @@ async def main() -> None:
         if not query:
             msg = 'Missing "query" attribute in input!'
             raise ValueError(msg)
-        if not openai_api_key:
-            msg = 'Missing "openaiApiKey" attribute in input!'
-            raise ValueError(msg)
 
-        # Initialize the OpenAI Chat model
-        os.environ['OPENAI_API_KEY'] = openai_api_key
+        await charge_for_actor_start()
 
         # Create a toolkit for the agent
         tools = [tool_calculator_sum, tool_scrape_instagram_profile_posts]
@@ -89,6 +84,11 @@ async def main() -> None:
         crew_output = crew.kickoff()
         raw_response = crew_output.raw
         response = crew_output.pydantic
+
+        # Charge the user for the tokens used by the model
+        total_tokens = crew_output.token_usage.total_tokens
+        await charge_for_model_tokens(model_name, total_tokens)
+        Actor.log.debug(f'Charging for {total_tokens} tokens used by the agent.')
 
         if not response or not raw_response:
             Actor.log.error('Failed to get a response from the agent!')

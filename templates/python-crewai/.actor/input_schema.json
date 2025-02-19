@@ -23,13 +23,6 @@
       "default": "gpt-4o-mini",
       "prefill": "gpt-4o-mini"
     },
-    "openaiApiKey": {
-      "title": "OpenAI API Key",
-      "type": "string",
-      "description": "The API key for the OpenAI API.",
-      "editor": "textfield",
-      "isSecret": true
-    },
     "debug": {
       "title": "Debug",
       "type": "boolean",
@@ -38,5 +31,5 @@
       "default": false
     }
   },
-  "required": ["query", "openaiApiKey"]
+  "required": ["query"]
 }

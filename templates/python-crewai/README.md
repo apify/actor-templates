@@ -10,6 +10,36 @@ An [agent](https://docs.crewai.com/concepts/agents) is created and given a set o
 
 Add or modify the agent tools in the `src/tools.py` file, and make sure to include new tools in the agent tools list in `src/main.py`. Additionally, you can update the agent prompts in `src/main.py`. For more information, refer to the [CrewAI agent documentation](https://docs.crewai.com/concepts/agents) and the [CrewAI tools documentation](https://docs.crewai.com/concepts/tools).
 
+#### Pay Per Event
+
+This template uses the Pay Per Event (PPE) monetization model, which provides flexible pricing based on defined events.
+
+To charge users, define events in JSON format and save them on the Apify platform. Here is an example schema with the `task-completed` event:
+
+```json
+[
+    {
+        "task-completed": {
+            "eventTitle": "Task completed",
+            "eventDescription": "Cost per query answered.",
+            "eventPriceUsd": 0.1
+        }
+    }
+]
+```
+
+In the Actor, trigger the event with:
+
+```python
+await Actor.charge(event_name='task-completed')
+```
+
+This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services, such as LLM input/output tokens.
+
+To set up the PPE model for this Actor:
+- **Configure the OpenAI API key environment variable**: provide your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
+- **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Admin settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
+
 ## Included features
 
 - **[Apify SDK](https://docs.apify.com/sdk/python/)** for Python - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in Python
