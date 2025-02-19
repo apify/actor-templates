@@ -6,17 +6,17 @@ clean:
 	rm -rf .mypy_cache .pytest_cache .ruff_cache build dist htmlcov .coverage
 
 install-dev:
-	poetry install --all-extras
+	uv sync --all-extras
 
 lint:
-	poetry run ruff format --check
-	poetry run ruff check
+	uv run ruff format --check
+	uv run ruff check
 
 type-check:
-	poetry run mypy
+	uv run mypy
 
 format:
-	poetry run ruff check --fix
-	poetry run ruff format
+	uv run ruff check --fix
+	uv run ruff format
 
 check-code: lint type-check
