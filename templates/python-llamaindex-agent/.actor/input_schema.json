@@ -8,6 +8,7 @@
             "type": "string",
             "description": "Text query to search for contact details and potentially deduplicate them.",
             "editor": "textfield",
+            "default": "I would like to get contact details from apify.com",
             "prefill": "I would like to get contact details from apify.com"
         },
         "modelName": {
@@ -17,23 +18,10 @@
             "editor": "select",
             "enum": [
                 "gpt-4o-mini",
-                "gpt-4o",
-                "o1",
-                "o1-mini",
-                "o3-mini"
+                "gpt-4o"
             ],
             "default": "gpt-4o"
-        },
-        "llmProviderApiKey": {
-            "title": "LLM Provider API key (OpenAI is the only supported provider now)",
-            "type": "string",
-            "description": "API key for accessing a Large Language Model.",
-            "editor": "textfield",
-            "isSecret": true
         }
     },
-    "required": [
-        "query",
-        "llmProviderApiKey"
-    ]
+    "required": [ "query" ]
 }
