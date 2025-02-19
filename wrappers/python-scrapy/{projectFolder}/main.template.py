@@ -21,10 +21,10 @@ other stuff, please refer to the following documentation page: https://docs.apif
 
 from __future__ import annotations
 
-from scrapy.crawler import CrawlerProcess
-
 from apify import Actor
-from apify.scrapy.utils import apply_apify_settings
+from apify.scrapy import apply_apify_settings
+from scrapy.crawler import CrawlerRunner
+from scrapy.utils.defer import deferred_to_future
 
 # Import your Scrapy spider here.
 from {{spider_module_name}} import {{spider_class_name}} as Spider
@@ -36,25 +36,20 @@ LOCAL_DEFAULT_START_URLS = [{'url': 'https://apify.com'}]
 async def main() -> None:
     """Apify Actor main coroutine for executing the Scrapy spider."""
     async with Actor:
-        Actor.log.info('Actor is being executed...')
-
         # Retrieve and process Actor input.
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('startUrls', LOCAL_DEFAULT_START_URLS)
+        start_urls = [url['url'] for url in actor_input.get('startUrls', [])]
+        allowed_domains = actor_input.get('allowedDomains')
         proxy_config = actor_input.get('proxyConfiguration')
 
-        # Open the default request queue for handling URLs to be processed.
-        request_queue = await Actor.open_request_queue()
-
-        # Enqueue the start URLs.
-        for start_url in start_urls:
-            url = start_url.get('url')
-            await request_queue.add_request(url)
-
-        # Apply Apify settings, it will override the Scrapy project settings.
+        # Apply Apify settings, which will override the Scrapy project settings.
         settings = apply_apify_settings(proxy_config=proxy_config)
 
-        # Execute the spider using Scrapy `CrawlerProcess`.
-        process = CrawlerProcess(settings, install_root_handler=False)
-        process.crawl(Spider)
-        process.start()
+        # Create CrawlerRunner and execute the Scrapy spider.
+        crawler_runner = CrawlerRunner(settings)
+        crawl_deferred = crawler_runner.crawl(
+            Spider,
+            start_urls=start_urls,
+            allowed_domains=allowed_domains,
+        )
+        await deferred_to_future(crawl_deferred)

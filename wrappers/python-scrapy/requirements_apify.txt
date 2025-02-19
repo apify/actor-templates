@@ -2,5 +2,4 @@
 # See https://pip.pypa.io/en/latest/reference/requirements-file-format/
 # for how to format them
 apify[scrapy] < 3.0
-nest-asyncio
-scrapy
+scrapy < 3.0
