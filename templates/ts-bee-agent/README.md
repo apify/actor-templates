@@ -30,7 +30,7 @@ To charge users, define events in JSON format and save them on the Apify platfor
 
 In the Actor, trigger the event with:
 
-```javascript
+```typescript
 await Actor.charge({ eventName: 'task-completed' });
 ```
 
