@@ -1,4 +1,3 @@
-# ruff: noqa: D101, D102, ARG002, UP028
 """Scrapy middlewares module.
 
 This module defines Scrapy middlewares. Middlewares are processing components that handle requests and
@@ -10,6 +9,7 @@ https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 """
 
+# ruff: noqa: D101, D102, ARG002, UP028
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

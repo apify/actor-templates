@@ -1,4 +1,3 @@
-# ruff: noqa: ARG002, D102
 """Scrapy item pipelines module.
 
 This module defines Scrapy item pipelines for scraped data. Item pipelines are processing components
@@ -8,6 +7,7 @@ For detailed information on creating and utilizing item pipelines, refer to the 
 http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 """
 
+# ruff: noqa: ARG002, D102
 from scrapy import Spider
 
 from .items import TitleItem
