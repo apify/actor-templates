@@ -4,7 +4,7 @@ A template for [Bee Agent Framework](https://i-am-bee.github.io/bee-agent-framew
 
 ### How it Works
 
-A [ReAct agent](https://react-lm.github.io/) is employed, equipped with tools to respond to user queries. The agent processes a user query, decides on the tools to use, and in what sequence, to achieve the desired outcome. Here, the agent leverages an Instagram Scraper to fetch posts from a profile and a calculator tool to compute sums, like totaling likes or comments. The agent produces structured data which is saved to a dataset, and textual responses are stored in the key-value store as `response.txt`.
+A [ReAct agent](https://react-lm.github.io/) is employed, equipped with tools to respond to user queries. The agent processes a user query, decides on the tools to use, and in what sequence, to achieve the desired outcome. Here, the agent leverages an Instagram Scraper to fetch posts from a profile and a calculator tool to compute sums, such as totaling likes or comments. The agent produces textual and structured output, which is saved to a dataset.
 
 ### How to Use
 

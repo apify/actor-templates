@@ -118,11 +118,7 @@ await chargeForModelTokens(modelName, tokensTotal);
 log.debug(`Charging for ${tokensTotal} tokens used by the agent.`);
 // End of structured output generation.
 
-// Push results to the key-value store and dataset.
-const store = await Actor.openKeyValueStore();
-await store.setValue('response.txt', response.result.text);
-log.info('Saved the "response.txt" file into the key-value store!');
-
+// Push results to the dataset.
 await Actor.pushData({
     query,
     response: response.result.text,
