@@ -12,8 +12,7 @@ Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` 
 
 #### Pay Per Event
 
-This Actor is set up to use Pay Per Event pricing, eliminating the need for users to provide their own OpenAI API key. Users are billed for tokens used directly on Apify, while the developer's OpenAI API key is employed.
-To use this Actor, you need to:
+This Actor is set up to use Pay Per Event pricing, eliminating the need for users to provide their own OpenAI API key. Users are billed for tokens used directly on Apify, while the developer's OpenAI API key is employed. To use this Actor, you need to:
 - **Set up the OpenAI API key environment variable**: assign your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
 - **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Admin settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in `.actor/ppe_schema.json`.
 
