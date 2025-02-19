@@ -37,7 +37,7 @@ const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 // storage/key_value_stores/default/INPUT.json when running locally.
 const {
     // query = 'How to build LangGraph agent at Apify platform?',
-    query = 'This is fallback test query, do not nothing and ignore it.',
+    query = 'This is fallback test query, do nothing and ignore it.',
     modelName = 'gpt-4o',
 } = await Actor.getInput() || {};
 
