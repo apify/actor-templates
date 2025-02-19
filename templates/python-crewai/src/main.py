@@ -83,7 +83,6 @@ async def main() -> None:
         # Charge the user for the tokens used by the model
         total_tokens = crew_output.token_usage.total_tokens
         await charge_for_model_tokens(model_name, total_tokens)
-        Actor.log.debug(f'Charging for {total_tokens} tokens used by the agent.')
 
         if not response or not raw_response:
             Actor.log.error('Failed to get a response from the agent!')
