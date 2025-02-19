@@ -1,0 +1,16 @@
+{
+  "actorSpecification": 1,
+  "name": "python-langgraph",
+  "title": "Python LangGraph Agent",
+  "description": "LangGraph agent in python",
+  "version": "0.0",
+  "buildTag": "latest",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "meta": {
+    "templateId": "python-langgraph"
+  },
+  "dockerfile": "./Dockerfile"
+}
