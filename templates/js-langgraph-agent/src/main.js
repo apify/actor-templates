@@ -36,7 +36,8 @@ const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 // You can configure the input for the Actor in the Apify UI when running on the Apify platform or editing
 // storage/key_value_stores/default/INPUT.json when running locally.
 const {
-    query = 'How to build LangGraph agent at Apify platform?',
+    // query = 'How to build LangGraph agent at Apify platform?',
+    query = 'This is fallback test query, do not nothing and ignore it.',
     modelName = 'gpt-4o',
 } = await Actor.getInput() || {};
 
@@ -52,7 +53,7 @@ let agentFinalState;
 try {
     log.info('Starting agent ...');
     agentFinalState = await agent.invoke(
-        { messages: [new HumanMessage('How to build LangGraph agent at Apify platform?')] },
+        { messages: [new HumanMessage(query)] },
         { configurable: { thread_id: '1' } },
     );
 } catch (error) {
