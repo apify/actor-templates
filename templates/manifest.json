@@ -696,7 +696,7 @@
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
-                "timeoutSecs": 360
+                "timeoutSecs": 600
             },
             "showcaseFiles": [
                 "src/main.ts"

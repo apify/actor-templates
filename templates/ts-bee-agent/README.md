@@ -12,9 +12,33 @@ Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` 
 
 #### Pay Per Event
 
-This Actor is set up to use Pay Per Event pricing, eliminating the need for users to provide their own OpenAI API key. Users are billed for tokens used directly on Apify, while the developer's OpenAI API key is employed. To use this Actor, you need to:
-- **Set up the OpenAI API key environment variable**: assign your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
-- **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Admin settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in `.actor/ppe_schema.json`.
+This template uses the [Pay Per Event](https://docs.apify.com/sdk/js/docs/next/guides/pay-per-event) (PPE) monetization model, which provides flexible pricing based on defined events.
+
+To charge users, define events in JSON format and save them on the Apify platform. Here is an example schema with the `task-completed` event:
+
+```json
+[
+    {
+        "task-completed": {
+            "eventTitle": "Task completed",
+            "eventDescription": "Cost per query answered.",
+            "eventPriceUsd": 0.1
+        }
+    }
+]
+```
+
+In the Actor, trigger the event with:
+
+```javascript
+await Actor.charge({ eventName: 'task-completed' });
+```
+
+This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services, such as LLM input/output tokens.
+
+To set up the PPE model for this Actor:
+- **Configure the OpenAI API key environment variable**: provide your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
+- **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Admin settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
 
 ### Included Features
 

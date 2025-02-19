@@ -124,6 +124,7 @@ await store.setValue('response.txt', response.result.text);
 log.info('Saved the "response.txt" file into the key-value store!');
 
 await Actor.pushData({
+    query,
     response: response.result.text,
     // This can be removed if you don't need structured output.
     structuredResponse: structuredResponse.object,
