@@ -1,22 +1,22 @@
-## Langgraph.js agent template
+## LangGraph.js agent template
 
 > [LangGraph](https://langchain-ai.github.io/langgraphjs/) is a library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.
 
-The template provides a basic structure and an example of [LangGraph](https://www.langchain.com/langgraph) [ReAct agent](https://react-lm.github.io/) that answers questions using web search.
+This template provides a basic structure and an example of a [LangGraph](https://www.langchain.com/langgraph) [ReAct agent](https://react-lm.github.io/) that answers questions using web search.
 
 ## How it works
 
-The LangGraph agent does the following:
+The LangGraph agent follows these steps:
 
 1. Determines whether to answer questions using internal knowledge or by searching the web.
-2. If web search is needed, it uses the [RAG Web Browser](https://apify.com/apify/rag-web-browser) to gather relevant data from websites.
-3. Utilizes the gathered data to answer the question using the OpenAI model.
+2. If a web search is needed, it uses the [RAG Web Browser](https://apify.com/apify/rag-web-browser) to gather relevant data from websites.
+3. Utilizes the gathered data to generate an answer using the OpenAI model.
 
-In LangGraph.js, agents utilize tools functions that perform specific tasks.
-This agent has one tool, `webSearchTool`, defined in `src/tools.js`, which it uses to search the web for relevant data.
+In LangGraph.js, agents use **tools**, which are functions designed to perform specific tasks.
+This agent has one tool, `webSearchTool`, defined in `src/tools.js`, which allows it to search the web for relevant data.
 
 ### Sample query
-- How to build a LangGraph agent at the Apify platform?
+- How to build a LangGraph agent on the Apify platform?
 
 ## Before you start
 
@@ -25,20 +25,20 @@ To run this template locally or on the Apify platform, you need:
 - An [Apify account](https://console.apify.com/) and an [Apify API token](https://docs.apify.com/platform/integrations/api#api-token).
 - An [OpenAI](https://openai.com/) account and API key.
 
-When running the agent locally you need export OpenAI API key as an environment variable:
+When running the agent locally, set the OpenAI API key as an environment variable:
 
 ```bash
 export OPENAI_API_KEY=your-openai-api-key
 ```
 
-When running the agent on the Apify platform, you need to set the OpenAI API key in the environment variables of the actor.
-At the Actor settings, go to `Source` -> `Code` -> and at the bottom you will find `Environment variables` tab and add a new variable called `OPENAI_API_KEY` with your OpenAI API key.
+When running the agent on the Apify platform, set the OpenAI API key in the environment variables of the Actor.
+To do this, go to **Actor settings** → **Source** → **Code**, then scroll down to the **Environment variables** tab and add a new variable named `OPENAI_API_KEY` with your OpenAI API key.
 
 ## Monetization
 
-This template is using a modern monetization and versatile pricing model called [Pay Per Event](https://docs.apify.com/sdk/js/docs/next/guides/pay-per-event).
-You first need to define events that you want to charge for in your Actor in a from of JSON and save it at the Apify platform.
-Here is an example of [pay_per_event.json](.actor/pay_per_event.json) and `task-completed` event:
+This template uses the [Pay Per Event](https://docs.apify.com/sdk/js/docs/next/guides/pay-per-event) (PPE) monetization model, which provides flexible pricing based on defined events.
+
+To charge users, define events in JSON format and save them on the Apify platform. Here is an example of [pay_per_event.json](.actor/pay_per_event.json) with the `task-completed` event:
 
 ```json
 [
@@ -52,12 +52,13 @@ Here is an example of [pay_per_event.json](.actor/pay_per_event.json) and `task-
 ]
 ```
 
-In the Actor, you can then call the event like this:
+In the Actor, trigger the event with:
+
 ```javascript
 await Actor.charge({ eventName: 'task-completed' });
 ```
 
-In this way, you can charge your users programmatically directly from your Actor and cover the costs of running the Actor and related services such as LLMs input/output tokens costs.
+This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services, such as LLM input/output tokens.
 
 ## Resources
 
@@ -69,6 +70,5 @@ Useful resources to help you get started:
 - [LangGraph with Apify (Python)](https://docs.apify.com/platform/integrations/langgraph)
 - [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
 - [11 AI agent use cases on Apify](https://blog.apify.com/ai-agent-use-cases/)
-
-Additional material:
-[Web Scraping Data for Generative AI](https://www.youtube.com/watch?v=8uvHH-ocSes)
+- [Pay-per-event Monetization](https://docs.apify.com/sdk/js/docs/next/guides/pay-per-event)
+- [Web Scraping Data for Generative AI](https://www.youtube.com/watch?v=8uvHH-ocSes)
