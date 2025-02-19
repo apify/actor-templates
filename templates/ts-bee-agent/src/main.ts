@@ -8,7 +8,7 @@ import { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/cha
 import { CalculatorSumTool } from './tools/calculator.js';
 import { InstagramScrapeTool } from './tools/instagram.js';
 import { StructuredOutputGenerator } from './structured_response_generator.js';
-import { beeOutputTotalTokens, chargeForActorStart, chargetForModelTokens } from './ppe_utils.js';
+import { beeOutputTotalTokens, chargeForActorStart, chargeForModelTokens } from './ppe_utils.js';
 
 // This is an ESM project, and as such, it requires you to specify extensions in your relative imports.
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
@@ -90,8 +90,8 @@ const response = await agent
     });
 
 const tokensTotal = beeOutputTotalTokens(response);
-await chargetForModelTokens(modelName, tokensTotal);
-log.info(`Total tokens used: ${tokensTotal}`);
+await chargeForModelTokens(modelName, tokensTotal);
+log.debug(`Charging for ${tokensTotal} tokens used by the agent.`);
 
 log.info(`Agent 🤖 : ${response.result.text}`);
 
@@ -114,7 +114,8 @@ log.debug(`Structured response: ${JSON.stringify(structuredResponse)}`);
 // Since the token usage tracking does not work with the Bee LLM, we will
 // just charge the same amount of tokens as the total tokens used by the agent for the
 // structured output generation - which is mostly the tool calls passed to the structured output generator.
-await chargetForModelTokens(modelName, tokensTotal);
+await chargeForModelTokens(modelName, tokensTotal);
+log.debug(`Charging for ${tokensTotal} tokens used by the agent.`);
 // End of structured output generation.
 
 // Push results to the key-value store and dataset.

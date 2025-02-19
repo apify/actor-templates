@@ -12,7 +12,7 @@ interface CalculatorSumToolOutput {
  *
  * @description
  * This class represents a tool for calculating the sum of a list of numbers.
- * It extends the base Tool class and provides specific implementation for
+ * It extends the base Tool class and provides a specific implementation for
  * summing numbers.
  */
 export class CalculatorSumTool extends Tool<JSONToolOutput<CalculatorSumToolOutput>> {

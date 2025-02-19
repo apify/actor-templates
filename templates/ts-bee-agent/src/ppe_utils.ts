@@ -21,7 +21,7 @@ export function beeOutputTotalTokens(response: BeeRunOutput): number {
  * @param {number} tokens - The number of tokens to charge for.
  * @throws Will throw an error if the model name is unknown.
  */
-export async function chargetForModelTokens(modelName: string, tokens: number) {
+export async function chargeForModelTokens(modelName: string, tokens: number) {
     const tokensMillions = tokens / 1e6;
     if (modelName === 'gpt-4o') {
         await Actor.charge({ eventName: PpeEvent.OPENAI_1M_TOKENS_GPT_4O, count: tokensMillions });

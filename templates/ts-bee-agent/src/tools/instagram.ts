@@ -23,7 +23,7 @@ interface InstagramScrapeToolOutput {
  *
  * @description
  * This class represents a tool for scraping Instagram profile posts.
- * It extends the base Tool class and provides specific implementation for
+ * It extends the base Tool class and provides a specific implementation for
  * scraping posts from a given Instagram profile.
  */
 export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeToolOutput>> {
