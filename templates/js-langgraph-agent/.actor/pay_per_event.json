@@ -1,0 +1,22 @@
+{
+    "actor-start-gb": {
+        "eventTitle": "Actor start per 1 GB",
+        "eventDescription": "Flat fee for starting an Actor run for each 1 GB of memory.",
+        "eventPriceUsd": 0.005
+    },
+    "input-tokens-count-gpt-4o": {
+        "eventTitle": "Input tokens count",
+        "eventDescription": "Cost per 1 million input tokens.",
+        "eventPriceUsd": 2.5
+    },
+    "output-tokens-count-gpt-4o": {
+        "eventTitle": "Output tokens count",
+        "eventDescription": "Cost per 1 million output tokens.",
+        "eventPriceUsd": 10
+    },
+    "task-completed": {
+        "eventTitle": "Task completed",
+        "eventDescription": "Cost per query answered.",
+        "eventPriceUsd": 0.1
+    }
+}

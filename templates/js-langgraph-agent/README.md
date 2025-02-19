@@ -25,6 +25,40 @@ To run this template locally or on the Apify platform, you need:
 - An [Apify account](https://console.apify.com/) and an [Apify API token](https://docs.apify.com/platform/integrations/api#api-token).
 - An [OpenAI](https://openai.com/) account and API key.
 
+When running the agent locally you need export OpenAI API key as an environment variable:
+
+```bash
+export OPENAI_API_KEY=your-openai-api-key
+```
+
+When running the agent on the Apify platform, you need to set the OpenAI API key in the environment variables of the actor.
+At the Actor settings, go to `Source` -> `Code` -> and at the bottom you will find `Environment variables` tab and add a new variable called `OPENAI_API_KEY` with your OpenAI API key.
+
+## Monetization
+
+This template is using a modern monetization and versatile pricing model called [Pay Per Event](https://docs.apify.com/sdk/js/docs/next/guides/pay-per-event).
+You first need to define events that you want to charge for in your Actor in a from of JSON and save it at the Apify platform.
+Here is an example of [pay_per_event.json](.actor/pay_per_event.json) and `task-completed` event:
+
+```json
+[
+    {
+        "task-completed": {
+            "eventTitle": "Task completed",
+            "eventDescription": "Cost per query answered.",
+            "eventPriceUsd": 0.1
+        }
+    }
+]
+```
+
+In the Actor, you can then call the event like this:
+```javascript
+await Actor.charge({ eventName: 'task-completed' });
+```
+
+In this way, you can charge your users programmatically directly from your Actor and cover the costs of running the Actor and related services such as LLMs input/output tokens costs.
+
 ## Resources
 
 Useful resources to help you get started:
