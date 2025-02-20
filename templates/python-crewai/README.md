@@ -4,7 +4,7 @@ A template for [CrewAI](https://www.crewai.com/) projects in Python for building
 
 ## How it works
 
-An [agent](https://docs.crewai.com/concepts/agents) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts and a calculator tool to sum a list of numbers to calculate the total number of likes and comments. The agent is configured to also output structured data, which is pushed to the dataset, while textual output is stored in the key-value store as a `response.txt` file.
+An [agent](https://docs.crewai.com/concepts/agents) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts and a calculator tool to sum a list of numbers to calculate the total number of likes and comments. The agent produces textual and structured output, which is saved to a dataset.
 
 ## How to use
 
