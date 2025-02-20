@@ -8,6 +8,8 @@ To learn how to create a new tool, see:
 
 from __future__ import annotations
 
+import os
+
 from apify import Actor
 from apify_client import ApifyClient
 from crewai.tools import tool
@@ -41,6 +43,7 @@ def tool_scrape_instagram_profile_posts(handle: str, max_posts: int = 30) -> lis
 
     Raises:
         RuntimeError: If the Actor fails to start.
+        ValueError: If the APIFY_TOKEN environment variable is missing.
     """
     run_input = {
         'directUrls': [f'https://www.instagram.com/{handle}/'],
@@ -48,7 +51,10 @@ def tool_scrape_instagram_profile_posts(handle: str, max_posts: int = 30) -> lis
         'resultsType': 'posts',
         'searchLimit': 1,
     }
-    apify_client = ApifyClient(token=Actor.config.token)
+    if not (token := os.getenv('APIFY_TOKEN')):
+        raise ValueError('APIFY_TOKEN environment variable is missing!')
+
+    apify_client = ApifyClient(token=token)
     if not (run := apify_client.actor('apify/instagram-scraper').call(run_input=run_input)):
         msg = 'Failed to start the Actor apify/instagram-scraper'
         raise RuntimeError(msg)
