@@ -20,7 +20,7 @@ jobs:
 
   lint_and_test:
     name: Lint and test (without templates)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout repo
@@ -60,7 +60,7 @@ jobs:
     name: Test Node.js templates
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-22.04, windows-latest]
         node-version: [ 18, 20, 22 ]
       fail-fast: false
     runs-on: ${{ matrix.os }}
@@ -100,7 +100,7 @@ jobs:
     name: Test Python templates
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-22.04, windows-latest]
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
