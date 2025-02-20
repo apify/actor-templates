@@ -29,8 +29,8 @@ await Actor.init();
 const {
     // The query default value is provided only for template testing purposes.
     // You can remove it.
-    query = 'This is fallback test query, do not nothing and ignore it.',
-    modelName = 'gpt-4o-mini',
+    query,
+    modelName,
     debug,
 } = await Actor.getInput() as Input;
 if (debug) {
