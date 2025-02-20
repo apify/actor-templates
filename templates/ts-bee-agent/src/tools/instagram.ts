@@ -1,4 +1,4 @@
-import { Actor, log } from 'apify';
+import { ApifyClient, log } from 'apify';
 import { Emitter } from 'bee-agent-framework/emitter/emitter';
 import { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
 import { JSONToolOutput, Tool, ToolEmitter, ToolInput } from 'bee-agent-framework/tools/base';
@@ -46,6 +46,12 @@ export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeTool
     protected async _run(input: ToolInput<this>): Promise<JSONToolOutput<InstagramScrapeToolOutput>> {
         const { handle, maxPosts = 30 } = input;
 
+        const token = process.env.APIFY_TOKEN;
+        if (!token) {
+            throw new Error('APIFY_TOKEN environment variable is required');
+        }
+        const apifyClient = new ApifyClient({ token });
+
         const runInput = {
             directUrls: [`https://www.instagram.com/${handle}/`],
             resultsLimit: maxPosts,
@@ -53,13 +59,13 @@ export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeTool
             searchLimit: 1,
         };
 
-        const run = await Actor.apifyClient.actor('apify/instagram-scraper').call(runInput);
+        const run = await apifyClient.actor('apify/instagram-scraper').call(runInput);
         if (!run) {
             throw new Error('Failed to start the Actor apify/instagram-scraper');
         }
 
         const datasetId = run.defaultDatasetId;
-        const datasetItems = await Actor.apifyClient.dataset(datasetId).listItems();
+        const datasetItems = await apifyClient.dataset(datasetId).listItems();
         const posts: InstagramPost[] = [];
 
         for (const item of datasetItems.items) {
