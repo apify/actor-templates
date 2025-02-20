@@ -1,0 +1,4 @@
+apify<3.0.0
+apify_client<2.0.0
+crewai>=0.102.0
+crewai-tools>=0.36.0

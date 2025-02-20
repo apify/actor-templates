@@ -1,0 +1,28 @@
+{
+  "actorSpecification": 1,
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": ["query", "response", "structured_response"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "query": {
+            "label": "Query",
+            "format": "text"
+          },
+          "response": {
+            "label": "Response",
+            "format": "text"
+          },
+          "structured_response": {
+            "label": "Structured Response",
+            "format": "object"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+    "actor-start-gb": {
+        "eventTitle": "Actor start per 1 GB",
+        "eventDescription": "Flat fee for starting an Actor run for each 1 GB of memory.",
+        "eventPriceUsd": 0.005
+    },
+    "openai-100-tokens-gpt-4o": {
+        "eventTitle": "Price per 100 OpenAI tokens for gpt-4o",
+        "eventDescription": "Flat fee for each 100 gpt-4o tokens used.",
+        "eventPriceUsd": 0.001
+    },
+    "openai-100-tokens-gpt-4o-mini": {
+        "eventTitle": "Price per 100 OpenAI tokens for gpt-4o-mini",
+        "eventDescription": "Flat fee for each 100 gpt-4o-mini tokens used.",
+        "eventPriceUsd": 0.00006
+    },
+    "openai-100-tokens-gpt-o1": {
+        "eventTitle": "Price per 100 OpenAI tokens for o1",
+        "eventDescription": "Flat fee for each 100 o1tokens used.",
+        "eventPriceUsd": 0.006
+    },
+    "openai-100-tokens-gpt-o3-mini": {
+        "eventTitle": "Price per 100 OpenAI tokens for o3-mini",
+        "eventDescription": "Flat fee for each 100 o3-mini tokens used.",
+        "eventPriceUsd": 0.00044
+    }
+}
