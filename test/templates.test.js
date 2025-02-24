@@ -127,6 +127,7 @@ describe('Templates work', () => {
                     return false;
                 }
                 return true;
+            })
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
