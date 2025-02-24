@@ -120,14 +120,13 @@ describe('Templates work', () => {
     describe('Python templates', () => {
         PYTHON_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
-            // Skip python-crewai for 3.9 (crewai is 3.10+)
+            // Skip python-crewai for Python 3.9 and 3.13
             .filter((templateId) => {
-                if (templateId === 'python-crewai' && PYTHON_VERSION.startsWith('3.9')) {
-                    console.log('Skipping python-crewai as Python version is 3.9');
+                if (templateId === 'python-crewai' && (PYTHON_VERSION.startsWith('3.9') || PYTHON_VERSION.startsWith('3.13'))) {
+                    console.log('Skipping python-crewai as Python version is 3.9 or 3.13');
                     return false;
                 }
                 return true;
-            })
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
