@@ -26,6 +26,7 @@ const crawler = new PuppeteerCrawler({
         launchOptions: {
             args: [
                 '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
+                '--no-sandbox', // Mitigates the "sandboxed" process issue in Docker containers
             ]
         }
     }
