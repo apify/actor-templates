@@ -25,6 +25,8 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
+const PYTHON_VERSION = spawnSync(PYTHON_COMMAND, ['-V']).stdout.toString().match(/Python (.*)/)[1];
+
 const checkSpawnResult = ({ status }) => {
     expect(status).toBe(0);
 };
@@ -118,6 +120,14 @@ describe('Templates work', () => {
     describe('Python templates', () => {
         PYTHON_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            // Skip python-crewai for Python 3.9 and 3.13
+            .filter((templateId) => {
+                if (templateId === 'python-crewai' && (PYTHON_VERSION.startsWith('3.9') || PYTHON_VERSION.startsWith('3.13'))) {
+                    console.log('Skipping python-crewai as Python version is 3.9 or 3.13');
+                    return false;
+                }
+                return true;
+            })
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
