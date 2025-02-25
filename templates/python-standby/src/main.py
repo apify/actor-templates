@@ -14,7 +14,7 @@ from apify import Actor
 class GetHandler(SimpleHTTPRequestHandler):
     """A simple GET HTTP handler that will respond with a message."""
 
-    def do_GET(self) -> None:
+    def do_GET(self) -> None:  # noqa: N802
         """Handle GET request and respond with a message."""
         if 'x-apify-container-server-readiness-probe' in self.headers:
             self.send_response(200)
