@@ -1,38 +1,76 @@
-name: Test Dockerfile Builds
+name: Test Docker Builds
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  discover-templates:
+  find-and-test-dockerfiles:
     runs-on: ubuntu-latest
-    outputs:
-      templates: ${{ steps.set-templates.outputs.templates }}
+    
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Find templates with Dockerfiles
-        id: set-templates
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Docker Buildx for better build capabilities
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Find all Dockerfiles and test their builds
+      - name: Test Dockerfile builds
         run: |
-          TEMPLATES=$(find templates -type f -path "*/templates/*/.actor/Dockerfile" | sed 's/templates\///' | sed 's/\/.actor\/Dockerfile//' | jq -R . | jq -s .)
-          echo "templates=$TEMPLATES" >> "$GITHUB_OUTPUT"
+          # Find all Dockerfiles in templates directory
+          mapfile -t dockerfiles < <(find templates -name "Dockerfile" -type f)
+          
+          # Check if any Dockerfiles were found
+          if [ ${#dockerfiles[@]} -eq 0 ]; then
+            echo "No Dockerfiles found in templates directory"
+            exit 1
+          fi
+          
+          # Counter for tracking builds
+          successful_builds=0
+          failed_builds=0
+          
+          # Test each Dockerfile
+          for dockerfile in "${dockerfiles[@]}"; do
+            echo "Testing Dockerfile: $dockerfile"
+            echo "--------------------------------"
+            
+            # Get the directory containing the Dockerfile
+            build_dir=$(dirname "$dockerfile")
+            
+            # Build the Docker image
+            if docker build -f "$dockerfile" "$build_dir" --tag "test-$(basename "$build_dir")" --progress=plain; then
+              echo "✓ Successfully built $dockerfile"
+              ((successful_builds++))
+            else
+              echo "✗ Failed to build $dockerfile"
+              ((failed_builds++))
+            fi
+            echo "--------------------------------"
+          done
+          
+          # Print summary
+          echo "Build Summary:"
+          echo "Successful builds: $successful_builds"
+          echo "Failed builds: $failed_builds"
+          
+          # Fail the job if any builds failed
+          if [ $failed_builds -gt 0 ]; then
+            echo "Some Dockerfile builds failed"
+            exit 1
+          else
+            echo "All Dockerfiles built successfully!"
+            exit 0
+          fi
 
-  test-builds:
-    needs: discover-templates
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        template: ${{ fromJson(needs.discover-templates.outputs.templates) }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Test Dockerfile build for ${{ matrix.template }}
-        working-directory: templates/${{ matrix.template }}
+      # Cleanup Docker images (optional)
+      - name: Cleanup
+        if: always()
         run: |
-          echo "Building Dockerfile for ${{ matrix.template }}"
-          docker build -t actor-template-test -f .actor/Dockerfile .
+          docker image prune -f
