@@ -52,6 +52,10 @@ COPY --from=builder /usr/src/app/dist ./dist
 # for most source file changes.
 COPY . ./
 
+# Create and run as a non-root user.
+RUN adduser -D -H apify && \
+    chown -R apify:apify ./
+USER apify
 
 # Run the image.
 CMD npm run start:prod --silent

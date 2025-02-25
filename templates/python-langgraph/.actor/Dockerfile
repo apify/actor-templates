@@ -29,7 +29,7 @@ COPY . ./
 RUN python3 -m compileall -q .
 
 # Create and run as a non-root user.
-RUN useradd -m apify && \
+RUN useradd --no-create-home apify && \
     chown -R apify:apify ./
 USER apify
 
