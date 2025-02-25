@@ -19,6 +19,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Test Dockerfile builds
+        shell: bash
         run: |
           # Enable debugging
           set -x
@@ -48,27 +49,28 @@ jobs:
               exit 1
             }
 
-            # Verify we're in the right place
-            pwd
+            echo "Building in: $(pwd)"
             ls -la .actor/
 
-            # Build the Docker image from the .actor subdirectory
+            # Build the Docker image
             if docker build -f ".actor/Dockerfile" . --progress=plain; then
               echo "✓ Successfully built $dockerfile"
-              ((successful_builds++))
+              echo "Incrementing successful_builds from $successful_builds"
+              (( successful_builds = successful_builds + 1 ))
+              echo "New value: $successful_builds"
             else
               echo "✗ Failed to build $dockerfile"
-              ((failed_builds++))
+              (( failed_builds = failed_builds + 1 ))
+              echo "New failed_builds value: $failed_builds"
             fi
 
-            # Return to the root directory
+            # Return to root and verify
             echo "Returning to root directory"
             cd - >/dev/null || {
               echo "Failed to return to root directory"
               exit 1
             }
-
-            echo "Current directory after build: $(pwd)"
+            echo "Now in: $(pwd)"
             echo "--------------------------------"
           done
 
