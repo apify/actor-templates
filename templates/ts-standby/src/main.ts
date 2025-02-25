@@ -11,7 +11,12 @@ import { Actor } from 'apify';
 await Actor.init();
 
 // Create a simple HTTP server that will respond with a message
-const server = http.createServer((_req, res) => {
+const server = http.createServer((req, res) => {
+    if (req.headers['x-apify-container-server-readiness-probe']) {
+        res.writeHead(200);
+        res.end('ok');
+        return;
+    }
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Hello from Actor Standby!\n');
 });
