@@ -35,11 +35,6 @@ jobs:
             echo "Testing Dockerfile: $dockerfile"
             echo "--------------------------------"
 
-            # Get the parent directory name (template name) and sanitize it
-            template_dir=$(basename "$(dirname "$(dirname "$dockerfile")")")
-            # Replace any invalid characters with hyphen and convert to lowercase
-            tag_name="test-$(echo "$template_dir" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]-')"
-
             # Get the directory containing the Dockerfile
             build_dir=$(dirname "$dockerfile")
 
@@ -47,7 +42,7 @@ jobs:
             cd "$(dirname "$build_dir")"
 
             # Build the Docker image from the .actor subdirectory
-            if docker build -f ".actor/Dockerfile" . --tag "$tag_name" --progress=plain; then
+            if docker build -f ".actor/Dockerfile" . --progress=plain; then
               echo "✓ Successfully built $dockerfile"
               ((successful_builds++))
             else
