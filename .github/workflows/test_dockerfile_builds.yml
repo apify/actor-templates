@@ -20,6 +20,9 @@ jobs:
 
       - name: Test Dockerfile builds
         run: |
+          # Enable debugging
+          set -x
+
           # Find all Dockerfiles in templates directory
           mapfile -t dockerfiles < <(find templates -name "Dockerfile" -type f)
 
@@ -37,9 +40,17 @@ jobs:
 
             # Get the directory containing the Dockerfile
             build_dir=$(dirname "$dockerfile")
+            template_dir=$(dirname "$build_dir")
 
-            # Change to the template directory (parent of .actor)
-            cd "$(dirname "$build_dir")"
+            echo "Changing to directory: $template_dir"
+            cd "$template_dir" || {
+              echo "Failed to cd to $template_dir"
+              exit 1
+            }
+
+            # Verify we're in the right place
+            pwd
+            ls -la .actor/
 
             # Build the Docker image from the .actor subdirectory
             if docker build -f ".actor/Dockerfile" . --progress=plain; then
@@ -51,8 +62,13 @@ jobs:
             fi
 
             # Return to the root directory
-            cd - >/dev/null
+            echo "Returning to root directory"
+            cd - >/dev/null || {
+              echo "Failed to return to root directory"
+              exit 1
+            }
 
+            echo "Current directory after build: $(pwd)"
             echo "--------------------------------"
           done
 
@@ -72,3 +88,4 @@ jobs:
         if: always()
         run: |
           docker image prune -f
+          echo "Docker images cleaned up"
