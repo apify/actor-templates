@@ -43,14 +43,21 @@ jobs:
             # Get the directory containing the Dockerfile
             build_dir=$(dirname "$dockerfile")
 
-            # Build the Docker image
-            if docker build -f "$dockerfile" "$build_dir" --tag "$tag_name" --progress=plain; then
+            # Change to the template directory (parent of .actor)
+            cd "$(dirname "$build_dir")"
+
+            # Build the Docker image from the .actor subdirectory
+            if docker build -f ".actor/Dockerfile" . --tag "$tag_name" --progress=plain; then
               echo "✓ Successfully built $dockerfile"
               ((successful_builds++))
             else
               echo "✗ Failed to build $dockerfile"
               ((failed_builds++))
             fi
+
+            # Return to the root directory
+            cd - >/dev/null
+
             echo "--------------------------------"
           done
 
