@@ -3,6 +3,7 @@
 .DS_Store
 .idea
 .vscode
+.zed
 dist
 node_modules
 apify_storage
