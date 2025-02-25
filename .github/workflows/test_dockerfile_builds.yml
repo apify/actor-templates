@@ -1,0 +1,38 @@
+name: Test Dockerfile Builds
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  discover-templates:
+    runs-on: ubuntu-latest
+    outputs:
+      templates: ${{ steps.set-templates.outputs.templates }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Find templates with Dockerfiles
+        id: set-templates
+        run: |
+          TEMPLATES=$(find templates -type f -path "*/templates/*/.actor/Dockerfile" | sed 's/templates\///' | sed 's/\/.actor\/Dockerfile//' | jq -R . | jq -s .)
+          echo "templates=$TEMPLATES" >> "$GITHUB_OUTPUT"
+
+  test-builds:
+    needs: discover-templates
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        template: ${{ fromJson(needs.discover-templates.outputs.templates) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test Dockerfile build for ${{ matrix.template }}
+        working-directory: templates/${{ matrix.template }}
+        run: |
+          echo "Building Dockerfile for ${{ matrix.template }}"
+          docker build -t actor-template-test -f .actor/Dockerfile .
