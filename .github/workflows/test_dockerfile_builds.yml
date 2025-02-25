@@ -21,10 +21,6 @@ jobs:
       - name: Test Dockerfile builds
         shell: bash
         run: |
-          # Enable debugging
-          set -x
-
-          # Find all Dockerfiles in templates directory
           mapfile -t dockerfiles < <(find templates -name "Dockerfile" -type f)
 
           if [ ${#dockerfiles[@]} -eq 0 ]; then
@@ -39,38 +35,27 @@ jobs:
             echo "Testing Dockerfile: $dockerfile"
             echo "--------------------------------"
 
-            # Get the directory containing the Dockerfile
             build_dir=$(dirname "$dockerfile")
             template_dir=$(dirname "$build_dir")
 
-            echo "Changing to directory: $template_dir"
             cd "$template_dir" || {
               echo "Failed to cd to $template_dir"
               exit 1
             }
 
-            echo "Building in: $(pwd)"
-            ls -la .actor/
-
-            # Build the Docker image
             if docker build -f ".actor/Dockerfile" . --progress=plain; then
               echo "✓ Successfully built $dockerfile"
-              echo "Incrementing successful_builds from $successful_builds"
               (( successful_builds = successful_builds + 1 ))
-              echo "New value: $successful_builds"
             else
               echo "✗ Failed to build $dockerfile"
               (( failed_builds = failed_builds + 1 ))
-              echo "New failed_builds value: $failed_builds"
             fi
 
-            # Return to root and verify
-            echo "Returning to root directory"
             cd - >/dev/null || {
               echo "Failed to return to root directory"
               exit 1
             }
-            echo "Now in: $(pwd)"
+
             echo "--------------------------------"
           done
 
@@ -90,4 +75,3 @@ jobs:
         if: always()
         run: |
           docker image prune -f
-          echo "Docker images cleaned up"
