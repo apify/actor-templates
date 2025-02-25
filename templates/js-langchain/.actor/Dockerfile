@@ -30,6 +30,10 @@ RUN npm --quiet set progress=false \
 # for most source file changes.
 COPY . ./
 
+# Create and run as a non-root user.
+RUN adduser --no-create-home -D apify && \
+    chown -R apify:apify ./
+USER apify
 
 # Run the image.
 CMD npm start --silent

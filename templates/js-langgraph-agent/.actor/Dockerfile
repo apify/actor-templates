@@ -31,7 +31,7 @@ RUN npm --quiet set progress=false \
 COPY . ./
 
 # Create and run as a non-root user.
-RUN adduser -D -h /home/apify apify && \
+RUN adduser --no-create-home -D apify && \
     chown -R apify:apify ./
 USER apify
 

@@ -3,7 +3,14 @@ FROM cypress/browsers:node18.12.0-chrome107
 # we want to run our own CMD
 ENTRYPOINT [""]
 
-COPY package*.json ./
+WORKDIR /home/apify
+
+# Create and run as a non-root user.
+RUN useradd --no-create-home -M -U apify && \
+    chown -R apify:apify ./
+USER apify
+
+COPY --chown=apify:apify package*.json ./
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
@@ -21,8 +28,7 @@ RUN npm --quiet set progress=false \
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after NPM install, quick build will be really fast
 # for most source file changes.
-COPY . ./
-
+COPY --chown=apify:apify . ./
 
 # Run the image.
 CMD npm start --silent
