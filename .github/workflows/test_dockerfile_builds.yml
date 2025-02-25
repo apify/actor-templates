@@ -5,47 +5,46 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   find-and-test-dockerfiles:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set up Docker Buildx for better build capabilities
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Find all Dockerfiles and test their builds
       - name: Test Dockerfile builds
         run: |
           # Find all Dockerfiles in templates directory
           mapfile -t dockerfiles < <(find templates -name "Dockerfile" -type f)
-          
-          # Check if any Dockerfiles were found
+
           if [ ${#dockerfiles[@]} -eq 0 ]; then
             echo "No Dockerfiles found in templates directory"
             exit 1
           fi
-          
-          # Counter for tracking builds
+
           successful_builds=0
           failed_builds=0
-          
-          # Test each Dockerfile
+
           for dockerfile in "${dockerfiles[@]}"; do
             echo "Testing Dockerfile: $dockerfile"
             echo "--------------------------------"
-            
+
+            # Get the parent directory name (template name) and sanitize it
+            template_dir=$(basename "$(dirname "$(dirname "$dockerfile")")")
+            # Replace any invalid characters with hyphen and convert to lowercase
+            tag_name="test-$(echo "$template_dir" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]-')"
+
             # Get the directory containing the Dockerfile
             build_dir=$(dirname "$dockerfile")
-            
+
             # Build the Docker image
-            if docker build -f "$dockerfile" "$build_dir" --tag "test-$(basename "$build_dir")" --progress=plain; then
+            if docker build -f "$dockerfile" "$build_dir" --tag "$tag_name" --progress=plain; then
               echo "✓ Successfully built $dockerfile"
               ((successful_builds++))
             else
@@ -54,13 +53,11 @@ jobs:
             fi
             echo "--------------------------------"
           done
-          
-          # Print summary
+
           echo "Build Summary:"
           echo "Successful builds: $successful_builds"
           echo "Failed builds: $failed_builds"
-          
-          # Fail the job if any builds failed
+
           if [ $failed_builds -gt 0 ]; then
             echo "Some Dockerfile builds failed"
             exit 1
@@ -69,7 +66,6 @@ jobs:
             exit 0
           fi
 
-      # Cleanup Docker images (optional)
       - name: Cleanup
         if: always()
         run: |
