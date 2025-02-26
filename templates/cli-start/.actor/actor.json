@@ -8,5 +8,21 @@
     "meta": {
         "templateId": "cli-start"
     },
+    "input": {
+        "title": "Actor input",
+        "description": "Actor input object",
+        "type": "object",
+        "schemaVersion": 1,
+        "properties": {
+            "name": {
+                "title": "Name",
+                "type": "string",
+                "description": "Who to greet?",
+                "prefill": "Dolly",
+                "default": "Dolly",
+                "editor": "textfield"
+            }
+        }
+    },
     "dockerfile": "./Dockerfile"
 }
