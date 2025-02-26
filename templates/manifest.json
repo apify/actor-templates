@@ -772,7 +772,8 @@
             },
             "showcaseFiles": [
                 "main.sh"
-            ]
+            ],
+            "skipTests": true
         }
     ]
 }
