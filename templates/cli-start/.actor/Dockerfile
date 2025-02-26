@@ -8,14 +8,14 @@ RUN apk add --no-cache jq wget bash
 
 # Install the Apify CLI
 RUN npm --quiet set progress=false \
-    && npm install -g apify-cli \
-    && echo "Installed NPM packages:" \
-    && (npm list --omit=dev --all || true) \
+    && npm install --global apify-cli \
+    && echo "Globally installed NPM packages:" \
+    && (npm list --global --all || true) \
     && echo "Node.js version:" \
     && node --version \
     && echo "NPM version:" \
     && npm --version \
-    && rm -r ~/.npm
+    && npm cache clean -- force
 
 # TODO Install any other dependencies here
 
