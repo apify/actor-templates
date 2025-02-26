@@ -19,10 +19,10 @@
                 "type": "string",
                 "description": "Who to greet?",
                 "prefill": "Dolly",
-                "default": "Dolly",
                 "editor": "textfield"
             }
-        }
+        },
+        "required": ["name"]
     },
     "dockerfile": "./Dockerfile"
 }
