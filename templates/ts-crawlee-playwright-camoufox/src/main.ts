@@ -38,6 +38,7 @@ const crawler = new PlaywrightCrawler({
     launchContext: {
         launcher: firefox,
         launchOptions: await camoufoxLaunchOptions({
+            headless: true,
             // fonts: ['Times New Roman'] // <- custom Camoufox options
             args: ['--disable-gpu'], // Mitigates the "crashing GPU process" issue in Docker containers
         }),
