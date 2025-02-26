@@ -1,0 +1,12 @@
+{
+    "actorSpecification": 1,
+    "name": "cli-empty-project",
+    "title": "Empty CLI project",
+    "description": "Empty project in bash.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "cli-start"
+    },
+    "dockerfile": "./Dockerfile"
+}
