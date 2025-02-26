@@ -1,0 +1,12 @@
+{
+    "actorSpecification": 1,
+    "name": "project-playwright-camoufox-crawler-typescript",
+    "title": "Camoufox Playwright Crawler TypeScript",
+    "description": "Crawlee and Playwright project with Camoufox in TypeScript.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "ts-crawlee-playwright-chrome"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}
