@@ -6,7 +6,7 @@ ENTRYPOINT [""]
 WORKDIR /home/apify
 
 # Create and run as a non-root user.
-RUN useradd --no-create-home -M -U apify && \
+RUN useradd --create-home apify && \
     chown -R apify:apify ./
 USER apify
 
