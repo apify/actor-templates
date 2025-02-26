@@ -1,0 +1,28 @@
+{
+    "actorSpecification": 1,
+    "name": "cli-empty-project",
+    "title": "Empty CLI project",
+    "description": "Empty project in bash.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "cli-start"
+    },
+    "input": {
+        "title": "Actor input",
+        "description": "Actor input object",
+        "type": "object",
+        "schemaVersion": 1,
+        "properties": {
+            "name": {
+                "title": "Name",
+                "type": "string",
+                "description": "Who to greet?",
+                "prefill": "Dolly",
+                "editor": "textfield"
+            }
+        },
+        "required": ["name"]
+    },
+    "dockerfile": "./Dockerfile"
+}

@@ -756,6 +756,24 @@
             "showcaseFiles": [
                 "src/main.ts"
             ]
+        },
+        {
+            "id": "cli-start",
+            "name": "cli-start",
+            "label": "CLI-based Actor starter",
+            "category": "javascript",
+            "technologies": ["jq"],
+            "description": "Actorize a CLI utility with the Apify Actor CLI",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/cli-start.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 600
+            },
+            "showcaseFiles": [
+                "main.sh"
+            ],
+            "skipTests": true
         }
     ]
 }
