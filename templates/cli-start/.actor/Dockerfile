@@ -15,7 +15,7 @@ RUN npm --quiet set progress=false \
     && node --version \
     && echo "NPM version:" \
     && npm --version \
-    && npm cache clean -- force
+    && npm cache clean --force
 
 # TODO Install any other dependencies here
 
