@@ -29,7 +29,7 @@
       "type": "boolean",
       "description": "If enabled, the Actor will run in debug mode and produce more output.",
       "editor": "checkbox",
-      "default": false
+      "default": true
     }
   },
   "required": ["query"]
