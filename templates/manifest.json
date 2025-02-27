@@ -3,24 +3,6 @@
     "localReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md",
     "templates": [
         {
-            "id": "python-llamaindex-agent",
-            "name": "python-llamaindex-agent",
-            "label": "LlamaIndex agent",
-            "category": "python",
-            "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 512,
-                "timeoutSecs": 600
-            },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/agent.py",
-                "src/tools.py"
-            ]
-        },
-        {
             "id": "python-start",
             "name": "python-start",
             "label": "Start with Python",
@@ -299,6 +281,24 @@
             },
             "showcaseFiles": [
                 "src/main.py",
+                "src/tools.py"
+            ]
+        },
+        {
+            "id": "python-llamaindex-agent",
+            "name": "python-llamaindex-agent",
+            "label": "LlamaIndex agent",
+            "category": "python",
+            "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 600
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/agent.py",
                 "src/tools.py"
             ]
         },

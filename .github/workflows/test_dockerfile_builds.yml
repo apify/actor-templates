@@ -1,0 +1,28 @@
+name: Test Docker Builds
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  find-and-test-dockerfiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Dockerfile builds
+        shell: bash
+        run: ./scripts/test_docker_builds.sh
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker image prune -f

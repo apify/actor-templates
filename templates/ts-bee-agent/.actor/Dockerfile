@@ -53,7 +53,7 @@ COPY --from=builder /usr/src/app/dist ./dist
 COPY . ./
 
 # Create and run as a non-root user.
-RUN adduser -D -h /home/apify apify && \
+RUN adduser -h /home/apify -D apify && \
     chown -R apify:apify ./
 USER apify
 
