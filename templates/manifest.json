@@ -430,6 +430,32 @@
             ]
         },
         {
+            "id": "js-crawlee-playwright-camoufox",
+            "name": "project_playwright_crawler_js",
+            "label": "Crawlee + Playwright + Camoufox",
+            "category": "javascript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "playwright",
+                "camoufox"
+            ],
+            "description": "Web scraper example with Crawlee, Playwright and Camoufox. Camoufox is a custom stealthy fork of Firefox. Try this template if you're facing anti-scraping challenges.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-camoufox.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.js",
+                "src/routes.js"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
+            ]
+        },
+        {
             "id": "js-bootstrap-cheerio-crawler",
             "name": "js-bootstrap-cheerio-crawler",
             "label": "Bootstrap CheerioCrawler",
@@ -519,6 +545,32 @@
             ],
             "description": "Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/routes.ts"
+            ],
+            "useCases": [
+                "WEB_SCRAPING"
+            ]
+        },
+        {
+            "id": "ts-crawlee-playwright-camoufox",
+            "name": "project_playwright_crawler_ts",
+            "label": "Crawlee + Playwright + Camoufox",
+            "category": "typescript",
+            "technologies": [
+                "nodejs",
+                "crawlee",
+                "playwright",
+                "camoufox"
+            ],
+            "description": "Web scraper example with Crawlee, Playwright and headless Camoufox. Camoufox is a custom stealthy fork of Firefox. Try this template if you're facing anti-scraping challenges.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,
