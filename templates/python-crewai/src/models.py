@@ -43,6 +43,4 @@ class AgentStructuredOutput(BaseModel):
 
     total_likes: int
     total_comments: int
-    most_popular_posts: list[InstagramPost] = Field(
-        description='An optional list of the most popular posts.'
-    )
+    most_popular_posts: list[InstagramPost] = Field(description='An optional list of the most popular posts.')
