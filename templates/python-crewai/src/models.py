@@ -38,9 +38,9 @@ class AgentStructuredOutput(BaseModel):
 
     total_likes: The total number of likes on the most popular posts.
     total_comments: The total number of comments on the most popular posts.
-    most_popular_posts: An optional list of the most popular posts.
+    most_popular_posts: A list of the most popular posts.
     """
 
     total_likes: int
     total_comments: int
-    most_popular_posts: list[InstagramPost] = Field(description='An optional list of the most popular posts.')
+    most_popular_posts: list[InstagramPost] = Field(description='A list of the most popular posts.')
