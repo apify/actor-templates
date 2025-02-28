@@ -9,7 +9,7 @@
       "description": "Query for the agent.",
       "editor": "textfield",
       "prefill": "What is the total number of likes and the total number of comments for the latest 10 posts on the @openai Instagram account? From the 10 latest posts, show me the most popular one.",
-      "default": "This is a fallback test query, do nothing and ignore it. If asked to generate structured response, create a dummy one without optional fields."
+      "default": "This is a fallback test query, do nothing and !!do not call any tools!!. If asked to generate structured response, create a dummy one without optional fields - minimal as possible."
     },
     "modelName": {
       "title": "OpenAI model",
