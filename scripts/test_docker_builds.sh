@@ -25,7 +25,11 @@ for dockerfile in "${dockerfiles[@]}"; do
 
     # Clean up before building to ensure maximum space
     echo "Cleaning up Docker images before build..."
+    echo "Disk usage before cleanup:"
+    df -h
     docker image prune -f >/dev/null 2>&1
+    echo "Disk usage after cleanup:"
+    df -h
 
     # Build the image with a unique tag
     image_tag="test-$(basename "$template_dir")-$(date +%s)"
@@ -42,7 +46,11 @@ for dockerfile in "${dockerfiles[@]}"; do
 
     # Clean up dangling images and unused layers after build
     echo "Cleaning up Docker images after build..."
+    echo "Disk usage before cleanup:"
+    df -h
     docker image prune -f >/dev/null 2>&1
+    echo "Disk usage after cleanup:"
+    df -h
 
     cd - >/dev/null || {
         echo "Failed to return to root directory"
