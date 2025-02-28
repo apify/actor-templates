@@ -27,7 +27,7 @@ for dockerfile in "${dockerfiles[@]}"; do
     echo "Cleaning up Docker images before build..."
     echo "Disk usage before cleanup:"
     df -h
-    docker image prune -f >/dev/null 2>&1
+    docker system prune -f >/dev/null 2>&1
     echo "Disk usage after cleanup:"
     df -h
 
@@ -48,7 +48,7 @@ for dockerfile in "${dockerfiles[@]}"; do
     echo "Cleaning up Docker images after build..."
     echo "Disk usage before cleanup:"
     df -h
-    docker image prune -f >/dev/null 2>&1
+    docker system prune -f >/dev/null 2>&1
     echo "Disk usage after cleanup:"
     df -h
 
