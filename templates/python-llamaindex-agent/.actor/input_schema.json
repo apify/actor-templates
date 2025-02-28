@@ -8,8 +8,8 @@
             "type": "string",
             "description": "Text query to search for contact details and potentially deduplicate them.",
             "editor": "textfield",
-            "default": "I would like to get contact details from apify.com",
-            "prefill": "I would like to get contact details from apify.com"
+            "prefill": "I would like to get contact details from apify.com",
+            "default": "This is a fallback test query, do nothing and !!do not call any tools!!. If asked to generate structured response, create a dummy one without optional fields - minimal as possible."
         },
         "modelName": {
             "title": "OpenAI model (currently the only supported provider)",

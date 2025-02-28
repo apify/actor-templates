@@ -9,8 +9,8 @@
             "type": "string",
             "description": "Text query to search for answers.",
             "editor": "textfield",
-            "default": "How to build a LangGraph agent at the Apify platform?",
-            "prefill": "How to build a LangGraph agent at the Apify platform?"
+            "prefill": "How to build a LangGraph agent at the Apify platform?",
+            "default": "This is a fallback test query, do nothing and !!do not call any tools!!. If asked to generate structured response, create a dummy one without optional fields - minimal as possible."
         },
         "modelName": {
             "title": "OpenAI model (currently the only supported provider)",
