@@ -23,13 +23,26 @@ for dockerfile in "${dockerfiles[@]}"; do
         exit 1
     }
 
-    if docker build -f ".actor/Dockerfile" . --progress=plain; then
+    # Clean up before building to ensure maximum space
+    echo "Cleaning up Docker images before build..."
+    docker image prune -f >/dev/null 2>&1
+
+    # Build the image with a unique tag
+    image_tag="test-$(basename "$template_dir")-$(date +%s)"
+    if docker build -f ".actor/Dockerfile" -t "$image_tag" . --progress=plain; then
         echo "✓ Successfully built $dockerfile"
         (( successful_builds = successful_builds + 1 ))
+
+        # Clean up the specific image immediately after building
+        docker rmi "$image_tag" >/dev/null 2>&1
     else
         echo "✗ Failed to build $dockerfile"
         (( failed_builds = failed_builds + 1 ))
     fi
+
+    # Clean up dangling images and unused layers after build
+    echo "Cleaning up Docker images after build..."
+    docker image prune -f >/dev/null 2>&1
 
     cd - >/dev/null || {
         echo "Failed to return to root directory"
