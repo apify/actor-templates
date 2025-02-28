@@ -7,7 +7,7 @@ Resources:
 
 from __future__ import annotations
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class InstagramPost(BaseModel):
@@ -43,4 +43,4 @@ class AgentStructuredOutput(BaseModel):
 
     total_likes: int
     total_comments: int
-    most_popular_posts: list[InstagramPost]
+    most_popular_posts: list[InstagramPost] = Field(description='A list of the most popular posts.')

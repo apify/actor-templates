@@ -19,12 +19,6 @@ from src.ppe_utils import charge_for_actor_start, charge_for_model_tokens, get_a
 from src.tools import tool_calculator_sum, tool_scrape_instagram_profile_posts
 from src.utils import log_state
 
-# fallback input is provided only for testing, you need to delete this line
-fallback_input = {
-    'query': 'This is fallback test query, do not nothing and ignore it.',
-    'modelName': 'gpt-4o-mini',
-}
-
 
 async def main() -> None:
     """Main entry point for the Apify Actor.
@@ -39,8 +33,6 @@ async def main() -> None:
     async with Actor:
         # Handle input
         actor_input = await Actor.get_input()
-        # fallback input is provided only for testing, you need to delete this line
-        actor_input = {**fallback_input, **actor_input}
 
         query = actor_input.get('query')
         model_name = actor_input.get('modelName', 'gpt-4o-mini')
