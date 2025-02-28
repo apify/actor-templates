@@ -23,14 +23,6 @@ for dockerfile in "${dockerfiles[@]}"; do
         exit 1
     }
 
-    # Clean up before building to ensure maximum space
-    echo "Cleaning up Docker images before build..."
-    echo "Disk usage before cleanup:"
-    df -h
-    docker system prune -f >/dev/null 2>&1
-    echo "Disk usage after cleanup:"
-    df -h
-
     # Build the image with a unique tag
     image_tag="test-$(basename "$template_dir")-$(date +%s)"
     if docker build -f ".actor/Dockerfile" -t "$image_tag" . --progress=plain; then
