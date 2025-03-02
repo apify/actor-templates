@@ -253,7 +253,7 @@
             "label": "🦜️🔗 LangGraph AI agent",
             "category": "python",
             "technologies": [
-                "langchain"
+                "langgraph"
             ],
             "description": "Example of how to use LangGraph with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langgraph.zip?raw=true",
@@ -272,6 +272,9 @@
             "name": "python-crewai",
             "label": "CrewAI agent",
             "category": "python",
+            "technologies": [
+                "crewai"
+            ],
             "description": "Example of how to use CrewAI with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crewai.zip?raw=true",
             "defaultRunOptions": {
@@ -289,6 +292,9 @@
             "name": "python-llamaindex-agent",
             "label": "LlamaIndex agent",
             "category": "python",
+            "technologies": [
+                "llamaindex"
+            ],
             "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -754,7 +760,7 @@
             "category": "javascript",
             "technologies": [
                 "nodejs",
-                "langchain"
+                "langgraph"
             ],
             "description": "LangGraph agent in JavaScript for answering questions via web search.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langgraph-agent.zip?raw=true",
@@ -798,6 +804,9 @@
             "name": "ts-bee-agent",
             "label": "🐝 Bee Framework Agent",
             "category": "typescript",
+            "technologies": [
+                "beeai"
+            ],
             "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-bee-agent.zip?raw=true",
             "defaultRunOptions": {

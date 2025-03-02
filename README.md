@@ -84,13 +84,18 @@ The archive is used to create a boilerplate template in `apify CLI` or other pla
 
 If you want to change a template, you will have to update the template files and the [`manifest.json`](./templates/manifest.json) file before pushing the changes to the `master` branch. After pushing to `master`, the archive will be automatically built using Github actions.
 
-## How to propagate templates into Apify CLI
+## How to propagate templates into Apify CLI?
 
 Templates are propagated to Apify CLI templates. You can then find your newly added template when using the `apify create` command.
 The propagation happens after committing a new version of the template into the `master` branch. After tests succeeded the Github action
 builds `archives` of each template and pushes these `archives` into the repository. The CLI command then uses those archives
 to bootstrap your project folder. We did it this way because we can update template structure/code without publishing
 any package to npm. It makes templates changes agile.
+
+## How to propagate templates into Apify web?
+
+Templates on the Apify Web are statically generated with each `apify-web` deployment.
+The web is typically deployed multiple times per week.
 
 ## Template icons
 
