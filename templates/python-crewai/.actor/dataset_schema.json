@@ -4,7 +4,7 @@
     "overview": {
       "title": "Overview",
       "transformation": {
-        "fields": ["query", "response", "structured_response"]
+        "fields": ["query", "response"]
       },
       "display": {
         "component": "table",
@@ -16,10 +16,6 @@
           "response": {
             "label": "Response",
             "format": "text"
-          },
-          "structured_response": {
-            "label": "Structured Response",
-            "format": "object"
           }
         }
       }

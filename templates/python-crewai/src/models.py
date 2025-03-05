@@ -7,40 +7,21 @@ Resources:
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 
 class InstagramPost(BaseModel):
-    """Instagram Post Pydantic model.
+    """Instagram Post Pydantic model."""
 
-    Returned as a structured output by the `tool_scrape_instagram_profile_posts` tool.
-
-    url: The URL of the post.
-    likes: The number of likes on the post.
-    comments: The number of comments on the post.
-    timestamp: The timestamp when the post was published.
-    caption: The post caption.
-    alt: The post alt text.
-    """
-
-    url: str
-    likes: int
-    comments: int
-    timestamp: str
-    caption: str | None = None
-    alt: str | None = None
+    url: str = Field(..., description='The URL of the post')
+    likes_count: int = Field(..., description='The number of likes on the post', alias='likesCount')
+    comments_count: int = Field(..., description='The number of comments on the post', alias='commentsCount')
+    timestamp: str = Field(..., description='The timestamp when the post was published')
+    caption: str | None = Field(None, description='The post caption')
+    alt: str | None = Field(None, description='The post alt text')
 
 
-class AgentStructuredOutput(BaseModel):
-    """Structured output for the ReAct agent.
+class InstagramPosts(RootModel):
+    """Root model for list of InstagramPosts."""
 
-    Returned as a structured output by the ReAct agent.
-
-    total_likes: The total number of likes on the most popular posts.
-    total_comments: The total number of comments on the most popular posts.
-    most_popular_posts: A list of the most popular posts.
-    """
-
-    total_likes: int
-    total_comments: int
-    most_popular_posts: list[InstagramPost] = Field(description='A list of the most popular posts.')
+    root: list[InstagramPost]
