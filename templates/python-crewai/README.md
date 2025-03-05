@@ -4,7 +4,7 @@ A template for [CrewAI](https://www.crewai.com/) projects in Python for building
 
 ## How it works
 
-An [agent](https://docs.crewai.com/concepts/agents) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts and a calculator tool to sum a list of numbers to calculate the total number of likes and comments. The agent produces textual and structured output, which is saved to a dataset.
+An [agent](https://docs.crewai.com/concepts/agents) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts. The agent produces textual output, which is saved to a dataset.
 
 ## How to use
 
@@ -12,7 +12,7 @@ Add or modify the agent tools in the `src/tools.py` file, and make sure to inclu
 
 #### Pay Per Event
 
-This template uses the Pay Per Event (PPE) monetization model, which provides flexible pricing based on defined events.
+This template uses the [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) monetization model, which provides flexible pricing based on defined events.
 
 To charge users, define events in JSON format and save them on the Apify platform. Here is an example schema with the `task-completed` event:
 

@@ -8,14 +8,11 @@ https://docs.apify.com/sdk/python
 
 from __future__ import annotations
 
-import logging
-
 from apify import Actor
 from crewai import Agent, Crew, Task
 
-from src.models import AgentStructuredOutput
-from src.ppe_utils import charge_for_actor_start, charge_for_model_tokens
-from src.tools import tool_calculator_sum, tool_scrape_instagram_profile_posts
+from src.ppe_utils import charge_for_actor_start
+from src.tools import InstagramScraperTool
 
 
 async def main() -> None:
@@ -29,30 +26,33 @@ async def main() -> None:
         ValueError: If the input is missing required attributes.
     """
     async with Actor:
+        await charge_for_actor_start()
+
         # Handle input
         actor_input = await Actor.get_input()
 
         query = actor_input.get('query')
         model_name = actor_input.get('modelName', 'gpt-4o-mini')
-        if debug := actor_input.get('debug', False):
-            Actor.log.setLevel(logging.DEBUG)
         if not query:
             msg = 'Missing "query" attribute in input!'
             raise ValueError(msg)
 
-        await charge_for_actor_start()
-
         # Create a toolkit for the agent
-        tools = [tool_calculator_sum, tool_scrape_instagram_profile_posts]
+        tools = [InstagramScraperTool()]
 
         # Create an agent
         # For more information, see https://docs.crewai.com/concepts/agents
         agent = Agent(
-            role='Helpful agent',
-            goal='Assist users with various tasks.',
-            backstory='I am a helpful agent that can assist you with various tasks.',
+            role='Social Media Analytics Expert',
+            goal='Analyze and provide insights about social media profiles and content.',
+            backstory=(
+                'I am an expert social media analyst specializing in Instagram analysis. '
+                'I help users understand social media data and extract meaningful insights '
+                'from profiles and posts.'
+            ),
             tools=tools,
-            verbose=debug,
+            verbose=True,
+            llm=model_name,
         )
 
         # Create a task assigned to the agent
@@ -61,7 +61,6 @@ async def main() -> None:
             description=query,
             expected_output='A helpful response to the user query.',
             agent=agent,
-            output_pydantic=AgentStructuredOutput,
         )
 
         # Create a one-man crew
@@ -71,22 +70,18 @@ async def main() -> None:
         # Kick off the crew and get the response
         crew_output = crew.kickoff()
         raw_response = crew_output.raw
-        response = crew_output.pydantic
 
-        # Charge the user for the tokens used by the model
-        total_tokens = crew_output.token_usage.total_tokens
-        await charge_for_model_tokens(model_name, total_tokens)
+        # Log total token usage
+        Actor.log.info('Total tokens used by the model: %s', crew_output.token_usage.total_tokens)
 
-        if not response or not raw_response:
-            Actor.log.error('Failed to get a response from the agent!')
-            await Actor.fail(status_message='Failed to get a response from the agent!')
+        # Charge for task completion
+        await Actor.charge('task-completed')
 
         # Push results to the dataset
         await Actor.push_data(
             {
                 'query': query,
                 'response': raw_response,
-                'structured_response': response.dict() if response else {},
             }
         )
         Actor.log.info('Pushed the data into the dataset!')
