@@ -11,7 +11,6 @@ from __future__ import annotations
 from apify import Actor
 from crewai import Agent, Crew, Task
 
-from src.ppe_utils import charge_for_actor_start
 from src.tools import InstagramScraperTool
 
 
@@ -26,7 +25,8 @@ async def main() -> None:
         ValueError: If the input is missing required attributes.
     """
     async with Actor:
-        await charge_for_actor_start()
+        # Charge for Actor start
+        await Actor.charge('actor-start')
 
         # Handle input
         actor_input = await Actor.get_input()

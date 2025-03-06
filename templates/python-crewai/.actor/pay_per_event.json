@@ -1,12 +1,12 @@
 {
-    "actor-start-gb": {
-        "eventTitle": "Actor start per 1 GB",
-        "eventDescription": "Flat fee for starting an Actor run for each 1 GB of memory.",
-        "eventPriceUsd": 0.005
+    "actor-start": {
+        "eventTitle": "Actor start",
+        "eventDescription": "Flat fee for starting an Actor run.",
+        "eventPriceUsd": 0.1
     },
     "task-completed": {
         "eventTitle": "Price for completing the task",
         "eventDescription": "Flat fee for completing the task.",
-        "eventPriceUsd": 1.0
+        "eventPriceUsd": 0.9
     }
 }
