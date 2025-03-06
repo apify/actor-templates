@@ -2,6 +2,8 @@
 
 A template for [CrewAI](https://www.crewai.com/) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [agent](https://docs.crewai.com/concepts/agents) that calls [Actors](https://apify.com/actors) as tools in a workflow.
 
+For a detailed guide, visit the [How to build an AI agent](https://blog.apify.com/how-to-build-an-ai-agent/) article.
+
 ## How it works
 
 An [agent](https://docs.crewai.com/concepts/agents) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts. The agent produces textual output, which is saved to a dataset.
