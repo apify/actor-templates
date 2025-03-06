@@ -12,78 +12,49 @@ import os
 
 from apify import Actor
 from apify_client import ApifyClient
-from crewai.tools import tool
+from crewai.tools import BaseTool
+from crewai.utilities.converter import ValidationError
+from pydantic import BaseModel, Field
 
-from src.models import InstagramPost
-
-
-@tool
-def tool_calculator_sum(numbers: list[int]) -> int:
-    """Tool to calculate the sum of a list of numbers.
-
-    Args:
-        numbers (list[int]): List of numbers to sum.
-
-    Returns:
-        int: Sum of the numbers.
-    """
-    return sum(numbers)
+from src.models import InstagramPost, InstagramPosts
 
 
-@tool
-def tool_scrape_instagram_profile_posts(handle: str, max_posts: int = 30) -> list[InstagramPost]:
-    """Tool to scrape Instagram profile posts.
+class InstagramScraperInput(BaseModel):
+    """Input schema for InstagramScraper tool."""
 
-    Args:
-        handle (str): Instagram handle of the profile to scrape (without the '@' symbol).
-        max_posts (int, optional): Maximum number of posts to scrape. Defaults to 30.
+    handle: str = Field(..., description="Instagram handle of the profile to scrape (without the '@' symbol).")
+    max_posts: int = Field(default=30, description='Maximum number of posts to scrape.')
 
-    Returns:
-        list[InstagramPost]: List of Instagram posts scraped from the profile.
 
-    Raises:
-        RuntimeError: If the Actor fails to start.
-        ValueError: If the APIFY_TOKEN environment variable is missing.
-    """
-    run_input = {
-        'directUrls': [f'https://www.instagram.com/{handle}/'],
-        'resultsLimit': max_posts,
-        'resultsType': 'posts',
-        'searchLimit': 1,
-    }
-    if not (token := os.getenv('APIFY_TOKEN')):
-        raise ValueError('APIFY_TOKEN environment variable is missing!')
+class InstagramScraperTool(BaseTool):
+    """Tool for scraping Instagram profile posts."""
 
-    apify_client = ApifyClient(token=token)
-    if not (run := apify_client.actor('apify/instagram-scraper').call(run_input=run_input)):
-        msg = 'Failed to start the Actor apify/instagram-scraper'
-        raise RuntimeError(msg)
+    name: str = 'Instagram Profile Posts Scraper'
+    description: str = 'Tool to scrape Instagram profile posts.'
+    args_schema: type[BaseModel] = InstagramScraperInput
 
-    dataset_id = run['defaultDatasetId']
-    dataset_items: list[dict] = (apify_client.dataset(dataset_id).list_items()).items
-    posts: list[InstagramPost] = []
-    for item in dataset_items:
-        url: str | None = item.get('url')
-        caption: str | None = item.get('caption')
-        alt: str | None = item.get('alt')
-        likes: int | None = item.get('likesCount')
-        comments: int | None = item.get('commentsCount')
-        timestamp: str | None = item.get('timestamp')
+    def _run(self, handle: str, max_posts: int = 30) -> list[InstagramPost]:
+        run_input = {
+            'directUrls': [f'https://www.instagram.com/{handle}/'],
+            'resultsLimit': max_posts,
+            'resultsType': 'posts',
+            'searchLimit': 1,
+        }
+        if not (token := os.getenv('APIFY_TOKEN')):
+            raise ValueError('APIFY_TOKEN environment variable is missing!')
 
-        # only include posts with all required fields
-        if not url or not likes or not comments or not timestamp:
-            Actor.log.warning('Skipping post with missing fields: %s', item)
-            continue
+        apify_client = ApifyClient(token=token)
+        if not (run := apify_client.actor('apify/instagram-scraper').call(run_input=run_input)):
+            msg = 'Failed to start the Actor apify/instagram-scraper'
+            raise RuntimeError(msg)
 
-        posts.append(
-            InstagramPost(
-                url=url,
-                likes=likes,
-                comments=comments,
-                timestamp=timestamp,
-                caption=caption,
-                alt=alt,
-            )
-        )
+        dataset_id = run['defaultDatasetId']
+        dataset_items: list[dict] = (apify_client.dataset(dataset_id).list_items()).items
 
-    return posts
+        try:
+            posts: InstagramPosts = InstagramPosts.model_validate(dataset_items)
+        except ValidationError as e:
+            Actor.log.warning('Received invalid dataset items: %s. Error: %s', dataset_items, e)
+            raise RuntimeError('Received invalid dataset items.') from e
+        else:
+            return posts.root
