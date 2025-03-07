@@ -11,7 +11,6 @@ https://docs.apify.com/sdk/python
 
 from __future__ import annotations
 
-import math
 from typing import TYPE_CHECKING
 
 from apify import Actor
