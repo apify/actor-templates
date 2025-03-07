@@ -5,20 +5,11 @@ import { Actor, log } from 'apify';
 
 import { webSearchTool } from './tools.js';
 
-const Event = {
-    ACTOR_STARTED: 'actor-start-gb',
-    INPUT_100_TOKENS: 'openai-100-tokens-input',
-    OUTPUT_100_TOKENS: 'openai-100-tokens-output',
-    TASK_COMPLETED: 'task-completed',
-};
-
 await Actor.init();
 
 try {
-    const memoryMbytes = Actor.getEnv().memoryMbytes || 1024;
-    const memoryGB = Math.ceil(memoryMbytes / 1024);
-    log.info(`Required memory: ${memoryGB} GB. Charging Actor start event.`);
-    await Actor.charge({ eventName: Event.ACTOR_STARTED, count: memoryGB });
+    log.info(`Charging Actor start event.`);
+    await Actor.charge({ eventName: 'actor-start' });
 } catch (error) {
     log.error('Failed to charge for actor start event', { error });
     await Actor.exit(1);
@@ -68,19 +59,12 @@ log.info(`Question: ${query}`);
 log.info(`Agent response: ${answer}`);
 
 log.info(`Number of messages: ${agentFinalState.messages.length}`);
-const usageTokens = agentFinalState.messages.reduce((acc, msg) => {
-    acc.input += msg?.usage_metadata?.input_tokens || 0;
-    acc.output += msg?.usage_metadata?.output_tokens || 0;
-    return acc;
-}, { input: 0, output: 0 });
-
-log.info(`Charging token usage. Input: ${usageTokens.input}, Output: ${usageTokens.output}`);
+log.info('Charging for task completion');
 
 try {
-    await Actor.charge({ eventName: Event.INPUT_100_TOKENS, count: Math.ceil(usageTokens.input / 100) });
-    await Actor.charge({ eventName: Event.OUTPUT_100_TOKENS, count: Math.ceil(usageTokens.output / 100) });
+    await Actor.charge({ eventName: 'task-completed' });
 } catch (error) {
-    log.error('Failed to charge for tokens usage', { error });
+    log.error('Failed to charge for task completion', { error });
     await Actor.exit(1);
 }
 
