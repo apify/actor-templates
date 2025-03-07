@@ -8,7 +8,6 @@ import { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/cha
 import { CalculatorSumTool } from './tools/calculator.js';
 import { InstagramScrapeTool } from './tools/instagram.js';
 import { StructuredOutputGenerator } from './structured_response_generator.js';
-import { beeOutputTotalTokens, chargeForActorStart, chargeForModelTokens } from './ppe_utils.js';
 
 // This is an ESM project, and as such, it requires you to specify extensions in your relative imports.
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
@@ -24,6 +23,9 @@ interface Input {
 
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init().
 await Actor.init();
+
+// Charge for Actor start
+await Actor.charge({ eventName: 'actor-start' });
 
 // Handle input
 const {
@@ -43,9 +45,6 @@ if (!query) {
 /**
  * Actor code
 */
-// Charge for Actor start
-await chargeForActorStart();
-
 // Create a ReAct agent that can use tools.
 // See https://i-am-bee.github.io/bee-agent-framework/#/agents?id=bee-agent
 // In order to use PPE, the LangChain adapter must be used
@@ -89,9 +88,6 @@ const response = await agent
         });
     });
 
-const tokensTotal = beeOutputTotalTokens(response);
-await chargeForModelTokens(modelName, tokensTotal);
-
 log.info(`Agent 🤖 : ${response.result.text}`);
 
 // Hacky way to get the structured output.
@@ -110,11 +106,9 @@ const structuredResponse = await structuredOutputGenerator.generateStructuredOut
         })),
     }));
 log.debug(`Structured response: ${JSON.stringify(structuredResponse)}`);
-// Since the token usage tracking does not work with the Bee LLM, we will
-// just charge the same amount of tokens as the total tokens used by the agent for the
-// structured output generation - which is mostly the tool calls passed to the structured output generator.
-await chargeForModelTokens(modelName, tokensTotal);
-// End of structured output generation.
+
+// Charge for task completion
+await Actor.charge({ eventName: 'task-completed' });
 
 // Push results to the dataset.
 await Actor.pushData({

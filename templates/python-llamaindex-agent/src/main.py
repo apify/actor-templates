@@ -11,7 +11,6 @@ https://docs.apify.com/sdk/python
 
 from __future__ import annotations
 
-import math
 from typing import TYPE_CHECKING
 
 from apify import Actor
@@ -32,9 +31,9 @@ async def main() -> None:
     """
     async with Actor:
         Actor.log.info('Starting LlamaIndex Agent')
-        count = math.ceil((Actor.get_env().get('memory_mbytes', 1024) or 1024) // 1024)
-        await Actor.charge(event_name='actor-start-gb', count=count)
-        Actor.log.info('Charged for Actor start %d GB', count)
+        # Charge for Actor start
+        await Actor.charge('actor-start')
+        Actor.log.info('Charged for Actor start')
         try:
             if not (actor_input := await Actor.get_input()):
                 await Actor.fail(status_message='Actor input was not provided')
