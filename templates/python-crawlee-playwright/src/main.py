@@ -40,7 +40,7 @@ async def main() -> None:
             max_requests_per_crawl=50,
             headless=True,
             browser_launch_options={
-                'args': ['--disable-gpu'],
+                'args': ['--disable-gpu', '--no-sandbox'],
             },
         )
 
