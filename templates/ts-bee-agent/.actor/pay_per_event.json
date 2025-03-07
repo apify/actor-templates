@@ -1,6 +1,6 @@
 {
     "actor-start": {
-        "eventTitle": "Actor start",
+        "eventTitle": "Price for Actor start",
         "eventDescription": "Flat fee for starting an Actor run.",
         "eventPriceUsd": 0.1
     },
