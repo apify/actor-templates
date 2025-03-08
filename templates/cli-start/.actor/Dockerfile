@@ -4,7 +4,9 @@
 FROM apify/actor-node:22
 
 # Install system dependencies
-RUN apk add --no-cache jq wget bash
+RUN apk add --no-cache jq wget bash curl && \
+    curl --silent --location \
+        https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh | sh
 
 # Install the Apify CLI
 RUN npm --quiet set progress=false \
@@ -17,7 +19,11 @@ RUN npm --quiet set progress=false \
     && npm --version \
     && npm cache clean --force
 
-# TODO Install any other dependencies here
+# TODO Install any other dependencies here - you may use `ubi` for that (see https://github.com/houseabsolute/ubi):
+# RUN ubi \
+#     --verbose \
+#     --project https://github.com/someuser/repository \
+#     --in /usr/local/bin
 
 # Copy main.sh script and any other files
 COPY . ./
