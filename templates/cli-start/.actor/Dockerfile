@@ -19,7 +19,7 @@ RUN npm --quiet set progress=false \
     && npm --version \
     && npm cache clean --force
 
-# TODO Install any other dependencies here - you may use `ubi` for that:
+# TODO Install any other dependencies here - you may use `ubi` for that (see https://github.com/houseabsolute/ubi):
 # RUN ubi \
 #     --verbose \
 #     --project https://github.com/someuser/repository \
