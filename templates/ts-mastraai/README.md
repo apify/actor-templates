@@ -52,5 +52,5 @@ To set up the PPE model for this Actor:
 - [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
-- [CrewAI documentation](https://docs.crewai.com/introduction)
+- [Mastra documentation](https://mastra.ai/docs)
 - [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)

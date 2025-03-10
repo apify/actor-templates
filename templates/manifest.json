@@ -802,12 +802,12 @@
         {
             "id": "ts-bee-agent",
             "name": "ts-bee-agent",
-            "label": "🐝 Bee Framework Agent",
+            "label": "🐝 Bee Framework agent",
             "category": "typescript",
             "technologies": [
                 "beeai"
             ],
-            "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis tool-calling agent.",
+            "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-bee-agent.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -821,12 +821,12 @@
         {
             "id": "ts-mastraai",
             "name": "ts-mastraai",
-            "label": "Mastra Agent",
+            "label": "Mastra agent",
             "category": "typescript",
             "technologies": [
                 "mastraai"
             ],
-            "description": "Example of how to use Mastra Agent Framework with Apify Actors to create a social media analysis agent.",
+            "description": "Example of how to use Mastra with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mastraai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
