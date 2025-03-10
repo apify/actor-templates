@@ -819,6 +819,26 @@
             ]
         },
         {
+            "id": "ts-mastraai",
+            "name": "ts-mastraai",
+            "label": "Mastra Agent",
+            "category": "typescript",
+            "technologies": [
+                "mastraai"
+            ],
+            "description": "Example of how to use Mastra Agent Framework with Apify Actors to create a social media analysis agent.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mastraai.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 600
+            },
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/tools.ts"
+            ]
+        },
+        {
             "id": "cli-start",
             "name": "cli-start",
             "label": "CLI-based Actor starter",
