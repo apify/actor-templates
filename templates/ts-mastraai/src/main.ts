@@ -11,7 +11,6 @@ import { createSocialMediaAgent } from './agents.js';
 interface Input {
     query: string;
     modelName: string;
-    debug?: boolean;
 }
 
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
@@ -30,11 +29,7 @@ const {
     // You can remove it.
     query,
     modelName,
-    debug,
 } = await Actor.getInput() as Input;
-if (debug) {
-    log.setLevel(log.LEVELS.DEBUG);
-}
 if (!query) {
     throw new Error('An agent query is required.');
 }
