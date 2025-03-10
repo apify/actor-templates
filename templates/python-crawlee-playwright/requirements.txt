@@ -2,4 +2,4 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify < 3.0
-crawlee[playwright] < 0.7
+crawlee[playwright]
