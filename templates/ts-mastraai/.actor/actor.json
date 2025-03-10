@@ -1,0 +1,16 @@
+{
+    "actorSpecification": 1,
+    "name": "ts-mastraai",
+    "title": "Mastra Agent TypeScript",
+    "description": "Mastra Agent in TypeScript",
+    "version": "0.0",
+    "buildTag": "latest",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+      },
+    "meta": {
+        "templateId": "ts-mastraai"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}

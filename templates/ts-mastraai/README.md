@@ -1,18 +1,18 @@
-## TypeScript Bee Agent Framework Template
+## TypeScript Mastra agent template
 
-A template for [Bee Agent Framework](https://i-am-bee.github.io/bee-agent-framework/#/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). This template offers a structured setup and an example [ReAct agent](https://react-lm.github.io/) utilizing [Instagram Scraper](https://apify.com/apify/instagram-scraper) and a calculator tool in a workflow context.
+A template for [Mastra](https://mastra.ai/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [agent](https://mastra.ai/docs/agents/00-overview) that calls [Actors](https://apify.com/actors) as tools in a workflow.
 
-### How it Works
+## How it works
 
-A [ReAct agent](https://react-lm.github.io/) is employed, equipped with tools to respond to user queries. The agent processes a user query, decides on the tools to use, and in what sequence, to achieve the desired outcome. Here, the agent leverages an Instagram Scraper to fetch posts from a profile and a calculator tool to compute sums, such as totaling likes or comments. The agent produces textual and structured output, which is saved to a dataset.
+An [agent](https://blog.apify.com/what-are-ai-agents/) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts. The agent produces textual output, which is saved to a dataset.
 
-### How to Use
+## How to use
 
-Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` files, and ensure they are included in the agent's tool list in `src/main.ts`. Additionally, you can update the agent's system prompt or other configurations within `src/main.ts`. For more information, refer to the [Bee Agent documentation](https://i-am-bee.github.io/bee-agent-framework/#/agents?id=bee-agent).
+Add or modify the agent tools in the `src/tools.ts` file, and make sure to include new tools in the agent tools list in `src/agents.ts`. Additionally, you can update the agent prompts in `src/agents.ts`. For more information, refer to the [Mastra agent documentation](https://mastra.ai/docs/agents/00-overview) and the [Mastra tools documentation](https://mastra.ai/docs/agents/02-adding-tools).
 
 #### Pay Per Event
 
-This template uses the [Pay Per Event](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) (PPE) monetization model, which provides flexible pricing based on defined events.
+This template uses the [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) monetization model, which provides flexible pricing based on defined events.
 
 To charge users, define events in JSON format and save them on the Apify platform. Here is an example schema with the `task-completed` event:
 
@@ -40,17 +40,17 @@ To set up the PPE model for this Actor:
 - **Configure the OpenAI API key environment variable**: provide your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
 - **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Monetization settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
 
-### Included Features
+## Included features
 
 - **[Apify SDK](https://docs.apify.com/sdk/js/)** for JavaScript - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in JavaScript
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/js/docs/guides/result-storage#dataset)** - store structured data where each object stored has the same attributes
 - **[Key-value store](https://docs.apify.com/platform/storage/key-value-store)** - store any kind of data, such as JSON documents, images, or text files
 
-### Resources
+## Resources
 
 - [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
-- [Bee Agent Framework documentation](https://i-am-bee.github.io/bee-agent-framework/#/)
+- [Mastra documentation](https://mastra.ai/docs)
 - [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)
