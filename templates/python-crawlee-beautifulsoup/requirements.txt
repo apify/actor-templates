@@ -2,4 +2,4 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify < 3.0
-crawlee[beautifulsoup] < 0.6
+crawlee[beautifulsoup]
