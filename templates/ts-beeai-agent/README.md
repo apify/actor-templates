@@ -1,6 +1,6 @@
-## TypeScript Bee Agent Framework Template
+## TypeScript BeeAI agent Template
 
-A template for [Bee Agent Framework](https://i-am-bee.github.io/bee-agent-framework/#/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). This template offers a structured setup and an example [ReAct agent](https://react-lm.github.io/) utilizing [Instagram Scraper](https://apify.com/apify/instagram-scraper) and a calculator tool in a workflow context.
+A template for [BeeAI agent](https://beeai.dev/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). This template offers a structured setup and an example [ReAct agent](https://react-lm.github.io/) utilizing [Instagram Scraper](https://apify.com/apify/instagram-scraper) and a calculator tool in a workflow context.
 
 ### How it Works
 
@@ -8,7 +8,7 @@ A [ReAct agent](https://react-lm.github.io/) is employed, equipped with tools to
 
 ### How to Use
 
-Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` files, and ensure they are included in the agent's tool list in `src/main.ts`. Additionally, you can update the agent's system prompt or other configurations within `src/main.ts`. For more information, refer to the [Bee Agent documentation](https://i-am-bee.github.io/bee-agent-framework/#/agents?id=bee-agent).
+Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` files, and ensure they are included in the agent's tool list in `src/main.ts`. Additionally, you can update the agent's system prompt or other configurations within `src/main.ts`. For more information, refer to the [BeeAI documentation](https://docs.beeai.dev/concepts/agents).
 
 #### Pay Per Event
 
@@ -52,5 +52,5 @@ To set up the PPE model for this Actor:
 - [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
-- [Bee Agent Framework documentation](https://i-am-bee.github.io/bee-agent-framework/#/)
+- [BeeAI documentation](https://docs.beeai.dev/introduction/welcome)
 - [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)
