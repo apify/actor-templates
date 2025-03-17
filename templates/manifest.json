@@ -800,15 +800,15 @@
             ]
         },
         {
-            "id": "ts-bee-agent",
-            "name": "ts-bee-agent",
-            "label": "🐝 Bee Framework agent",
+            "id": "ts-beeai-agent",
+            "name": "ts-beeai-agent",
+            "label": "🐝 BeeAI agent",
             "category": "typescript",
             "technologies": [
                 "beeai"
             ],
             "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis agent.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-bee-agent.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-beeai-agent.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,

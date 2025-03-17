@@ -1,15 +1,15 @@
 {
     "actorSpecification": 1,
-    "name": "ts-bee-agent",
-    "title": "Bee Framework Agent TypeScript",
-    "description": "Bee Framework Agent in TypeScript",
+    "name": "ts-beeai-agent",
+    "title": "BeeAI agent TypeScript",
+    "description": "BeeAI agent in TypeScript",
     "version": "0.0",
     "buildTag": "latest",
     "storages": {
         "dataset": "./dataset_schema.json"
       },
     "meta": {
-        "templateId": "ts-bee-agent"
+        "templateId": "ts-beeai-agent"
     },
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile"
