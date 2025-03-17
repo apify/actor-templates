@@ -30,7 +30,7 @@ dev = [
 requires-dist = [
     { name = "apify", extras = ["scrapy"], specifier = "<3.0.0" },
     { name = "beautifulsoup4", extras = ["lxml"], specifier = "<5.0.0" },
-    { name = "crawlee", extras = ["all"], specifier = "<0.6.0" },
+    { name = "crawlee", extras = ["all"], specifier = "<1.0.0" },
     { name = "playwright", specifier = "<2.0.0" },
     { name = "scrapy", specifier = "<3.0.0" },
     { name = "selenium", specifier = "<5.0.0" },
@@ -38,9 +38,9 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "mypy", specifier = "~=1.15.0" },
-    { name = "ruff", specifier = "~=0.9.0" },
-    { name = "types-beautifulsoup4", specifier = "~=4.12.0.20250204" },
+    { name = "mypy" },
+    { name = "ruff" },
+    { name = "types-beautifulsoup4" },
 ]
 
 [[package]]
