@@ -437,7 +437,7 @@
         },
         {
             "id": "js-crawlee-playwright-camoufox",
-            "name": "project_playwright_crawler_js",
+            "name": "project_playwright_camoufox_crawler_js",
             "label": "Crawlee + Playwright + Camoufox",
             "category": "javascript",
             "technologies": [
@@ -566,7 +566,7 @@
         },
         {
             "id": "ts-crawlee-playwright-camoufox",
-            "name": "project_playwright_crawler_ts",
+            "name": "project_playwright_camoufox_crawler_ts",
             "label": "Crawlee + Playwright + Camoufox",
             "category": "typescript",
             "technologies": [
