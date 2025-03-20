@@ -1,4 +1,5 @@
 # ruff: noqa: RUF012, TID252
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
@@ -33,7 +34,7 @@ class TitleSpider(Spider):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        """A default costructor.
+        """Initialize a new instance.
 
         Args:
             start_urls: URLs to start the scraping from.

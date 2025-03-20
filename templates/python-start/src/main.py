@@ -1,10 +1,12 @@
-"""This module defines the main entry point for the Apify Actor.
+"""Module defines the main entry point for the Apify Actor.
 
 Feel free to modify this file to suit your specific needs.
 
 To build Apify Actors, utilize the Apify SDK toolkit, read more at the official documentation:
 https://docs.apify.com/sdk/python
 """
+
+from __future__ import annotations
 
 # Beautiful Soup - A library for pulling data out of HTML and XML files. Read more at:
 # https://www.crummy.com/software/BeautifulSoup/bs4/doc
@@ -19,7 +21,7 @@ from httpx import AsyncClient
 
 
 async def main() -> None:
-    """Main entry point for the Apify Actor.
+    """Define a main entry point for the Apify Actor.
 
     This coroutine is executed using `asyncio.run()`, so it must remain an asynchronous function for proper execution.
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in

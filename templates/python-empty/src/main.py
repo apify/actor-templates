@@ -1,4 +1,4 @@
-"""This module defines the main entry point for the Apify Actor.
+"""Module defines the main entry point for the Apify Actor.
 
 Feel free to modify this file to suit your specific needs.
 
@@ -6,11 +6,13 @@ To build Apify Actors, utilize the Apify SDK toolkit, read more at the official 
 https://docs.apify.com/sdk/python
 """
 
+from __future__ import annotations
+
 from apify import Actor
 
 
 async def main() -> None:
-    """Main entry point for the Apify Actor.
+    """Define a main entry point for the Apify Actor.
 
     This coroutine is executed using `asyncio.run()`, so it must remain an asynchronous function for proper execution.
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in

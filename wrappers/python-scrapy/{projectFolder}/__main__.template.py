@@ -9,8 +9,8 @@ or being run on the Apify platform. It is not being executed when running the pr
 
 We recommend you do not modify this file unless you really know what you are doing.
 """
-
 # ruff: noqa: E402
+
 from __future__ import annotations
 
 from scrapy.utils.reactor import install_reactor

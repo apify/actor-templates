@@ -12,11 +12,9 @@ jobs:
     name: Python lint check
     uses: apify/workflows/.github/workflows/python_lint_check.yaml@main
 
-  # TODO: make Mypy work
-  # https://github.com/apify/actor-templates/issues/317
-  # python_type_check:
-  #   name: Python type check
-  #   uses: apify/workflows/.github/workflows/python_type_check.yaml@main
+  python_type_check:
+    name: Python type check
+    uses: apify/workflows/.github/workflows/python_type_check.yaml@main
 
   lint_and_test:
     name: Lint and test (without templates)
