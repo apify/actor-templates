@@ -1,4 +1,4 @@
-"""This module defines Pydantic models for this project.
+"""Module defines Pydantic models for this project.
 
 These models are used mainly for the structured tool and LLM outputs.
 Resources:

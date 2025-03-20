@@ -1,14 +1,16 @@
+from __future__ import annotations
+
 from apify import Actor
 from langchain_core.messages import ToolMessage
 
 
 def log_state(state: dict) -> None:
-    """Logs the state of the graph.
+    """Log the state of the graph.
 
     Uses the `Actor.log.debug` method to log the state of the graph.
 
     Args:
-        state (dict): The state of the graph.
+        state: The state of the graph.
     """
     message = state['messages'][-1]
     # Traverse all tool messages and print them

@@ -1,4 +1,4 @@
-"""This module defines the tools used by the agent.
+"""Module defines the tools used by the agent.
 
 Feel free to modify or add new tools to suit your specific needs.
 

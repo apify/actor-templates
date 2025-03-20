@@ -1,6 +1,6 @@
-"""This module defines the main entry point for the Apify Actor.
+"""Module defines the main entry point for the Apify Actor.
 
-This module defines the main coroutine for the Apify Scrapy Actor, executed from the __main__.py file. The coroutine
+Module defines the main coroutine for the Apify Scrapy Actor, executed from the __main__.py file. The coroutine
 processes the Actor's input and executes the Scrapy spider. Additionally, it updates Scrapy project settings by
 applying Apify-related settings. Which includes adding a custom scheduler, retry middleware, and an item pipeline
 for pushing data to the Apify dataset.

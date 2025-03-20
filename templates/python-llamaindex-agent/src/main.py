@@ -1,4 +1,4 @@
-"""This module defines the main entry point for the Apify LlamaIndex Agent.
+"""Module defines the main entry point for the Apify LlamaIndex Agent.
 
 This Agent template is intended to give example on how to use LlamaIndex Agent with Apify Actors.
 It extracts contact details from a plain text query with a URL.
@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 
 async def main() -> None:
-    """Main entry point for the Apify LlamaIndex Agent.
+    """Define a main entry point for the Apify LlamaIndex Agent.
 
     This coroutine is executed using `asyncio.run()`, so it must remain an asynchronous function for proper execution.
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
