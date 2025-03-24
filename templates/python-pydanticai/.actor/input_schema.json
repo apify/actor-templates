@@ -8,7 +8,8 @@
             "type": "string",
             "description": "The topic about which the AI agent will tell the joke about.",
             "editor": "textfield",
-            "prefill": "Bad weather."
+            "prefill": "Bad weather.",
+            "default": "Bad weather."
         },
         "openAIApiKey": {
             "title": "OpenAI token",
