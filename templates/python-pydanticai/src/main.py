@@ -24,7 +24,10 @@ async def main() -> None:
 
         # Process inputs
         actor_input = await Actor.get_input()
-        os.environ['OPENAI_API_KEY'] = actor_input.get('openAIApiKey', '') or os.environ['OPENAI_API_KEY']
+        if openai_api_key := (actor_input.get('openAIApiKey') or os.environ.get('OPENAI_API_KEY')):
+            os.environ['OPENAI_API_KEY'] = openai_api_key
+        else:
+            await Actor.fail('OpenAI API key is missing. Create issues at the Apify platform to inform the developer')
         if not (joke_topic := actor_input.get('jokeTopic')):
             await Actor.fail('Missing "jokeTopic" attribute in input!')
 
