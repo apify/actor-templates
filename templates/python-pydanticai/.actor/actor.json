@@ -6,7 +6,7 @@
 	"version": "0.0",
 	"buildTag": "latest",
 	"meta": {
-		"templateId": "pydanticai"
+		"templateId": "python-pydanticai"
 	},
 	"dockerfile": "./Dockerfile",
 	"input": "./input_schema.json"
