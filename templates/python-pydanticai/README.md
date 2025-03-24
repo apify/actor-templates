@@ -1,16 +1,16 @@
 ## PydanticAI template
 
-Start a new [ai agent](https://blog.apify.com/what-are-ai-agents/) based project quickly and easily in Python with our PydanticAI project template. It provides a basic structure for the [Actor](https://apify.com/actors) with [Apify SDK](https://docs.apify.com/sdk/python/) and [PydanticAI](https://ai.pydantic.dev/) and allows you to easily add your own functionality.
+Start a new [AI agent](https://blog.apify.com/what-are-ai-agents/) based project in Python with our PydanticAI project template. It provides a basic structure for the [Actor](https://apify.com/actors) using the [Apify SDK](https://docs.apify.com/sdk/python/) and [PydanticAI](https://ai.pydantic.dev/), and allows you to add your own functionality with minimal setup.
 
 
 ## How it works
 
-Insert your own code to `async with Actor:` block. You can use the [Apify SDK](https://docs.apify.com/sdk/python/) with any other Python library. Add or modify the agent and tools in the [agents.py](.src/agents.py) file.
+Insert your own code to `async with Actor:` block. You can use the [Apify SDK](https://docs.apify.com/sdk/python/) with any other Python library. Add or modify the agent and tools in the [agents.py](src/agents.py) file.
 
 
 ## Getting started
 
-For complete information [see this article](https://docs.apify.com/platform/actors/development#build-actor-locally). To run the actor use the following command:
+For complete information [see this article](https://docs.apify.com/platform/actors/development#build-actor-locally). To run the Actor use the following command:
 
 ```bash
 apify run
@@ -20,14 +20,14 @@ apify run
 
 ### Connect Git repository to Apify
 
-If you've created a Git repository for the project, you can easily connect to Apify:
+If you've created a Git repository for the project, you can connect to Apify:
 
 1. Go to [Actor creation page](https://console.apify.com/actors/new)
 2. Click on **Link Git Repository** button
 
 ### Push project on your local machine to Apify
 
-You can also deploy the project on your local machine to Apify without the need for the Git repository.
+You can also deploy the project from your local machine to the Apify platform without the need for the Git repository.
 
 1. Log in to Apify. You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
 
@@ -83,4 +83,4 @@ To learn more about Apify, Actors and PydanticAI take a look at the following re
 - [What are AI agents](https://blog.apify.com/what-are-ai-agents/)
 - [How to build and monetize an AI agent on Apify](https://blog.apify.com/how-to-build-an-ai-agent/)
 - [PydanticAI documentation](https://ai.pydantic.dev/) 
-- [PydanticAI on github](https://github.com/pydantic/pydantic-ai)
+- [PydanticAI on GitHub](https://github.com/pydantic/pydantic-ai)

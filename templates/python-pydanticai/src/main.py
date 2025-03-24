@@ -25,7 +25,8 @@ async def main() -> None:
         # Process inputs
         actor_input = await Actor.get_input()
         os.environ['OPENAI_API_KEY'] = actor_input.get('openAIApiKey', '') or os.environ['OPENAI_API_KEY']
-        joke_topic = actor_input.get('jokeTopic', 'Random topic.')
+        if not (joke_topic := actor_input.get('jokeTopic')):
+            await Actor.fail('Missing "jokeTopic" attribute in input!')
 
         # Generate joke
         joke = (await get_joker_agent().run(user_prompt='Tell me a joke.', deps=Deps(joke_topic=joke_topic))).data
