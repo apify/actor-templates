@@ -309,6 +309,26 @@
             ]
         },
         {
+            "id": "python-pydanticai",
+            "name": "python-pydanticai",
+            "label": "PydanticAI agent",
+            "category": "python",
+            "technologies": [
+                "pydanticai"
+            ],
+            "description": "PydanticAI agent to generate a joke",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 128,
+                "timeoutSecs": 60
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/agents.py"
+            ]
+        },
+        {
             "id": "js-start",
             "name": "getting_started_node",
             "label": "Start with JavaScript",

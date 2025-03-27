@@ -1,0 +1,23 @@
+{
+    "title": "PydanticAI template",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "jokeTopic": {
+            "title": "Topic of the joke",
+            "type": "string",
+            "description": "The topic about which the AI agent will tell the joke about.",
+            "editor": "textfield",
+            "prefill": "Bad weather.",
+            "default": "Bad weather."
+        },
+        "openAIApiKey": {
+            "title": "OpenAI token",
+            "type": "string",
+            "isSecret": true,
+            "description": "Your own OpenAI token. Optional, but you will be charged more if you want to use Apify's token.",
+            "editor": "textfield"
+        }
+    },
+    "required": ["jokeTopic"]
+}
