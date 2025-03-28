@@ -5,7 +5,7 @@ export const router = createPlaywrightRouter();
 router.addDefaultHandler(async ({ enqueueLinks, log }) => {
     log.info(`enqueueing new URLs`);
     await enqueueLinks({
-        globs: ['https://apify.com/*'],
+        globs: ['https://crawlee.dev/*'],
         label: 'detail',
     });
 });

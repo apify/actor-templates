@@ -12,7 +12,7 @@ interface Input {
 }
 // Define the URLs to start the crawler with - get them from the input of the Actor or use a default list.
 const {
-    startUrls = ['https://crawlee.dev'],
+    startUrls = ['https://apify.com'],
 } = await Actor.getInput<Input>() ?? {};
 
 // Create a proxy configuration that will rotate proxies from Apify Proxy.
