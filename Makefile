@@ -24,6 +24,9 @@ type-check:
 	uv run mypy templates/python-selenium
 	uv run mypy templates/python-standby
 	uv run mypy templates/python-start
+	uv run mypy templates/python-crewai
+	uv run mypy templates/python-langgraph
+	uv run mypy templates/python-llamaindex-agent
 
 format:
 	uv run ruff check --fix

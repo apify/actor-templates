@@ -65,3 +65,4 @@ async def run_query(query: str, model_name: str) -> AgentChatResponse | None:
     except Exception as e:
         msg = f'Error running LlamaIndex Agent, error: {e}'
         await Actor.fail(status_message=msg, exception=e)
+    return None
