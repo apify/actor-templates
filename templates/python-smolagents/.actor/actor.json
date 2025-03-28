@@ -1,0 +1,13 @@
+{
+  "actorSpecification": 1,
+  "name": "python-smolagents",
+  "title": "Python AI agent in Smolagents",
+  "description": "Python AI agent in Smolagents by Huggingface",
+  "version": "0.0",
+  "buildTag": "latest",
+  "meta": {
+    "templateId": "python-smolagents"
+  },
+  "input": "./input_schema.json",
+  "dockerfile": "./Dockerfile"
+}
