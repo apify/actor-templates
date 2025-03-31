@@ -22,13 +22,6 @@ interface Input {
 }
 
 
-// Skip the Actor execution if running in test mode
-// You can remove this block. It is only used for Apify template testing.
-if (process.env.NODE_ENV === 'test') {
-    console.log('Running in test mode. Skipping the Actor execution.');
-    process.exit(0);
-}
-
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init().
 await Actor.init();
 

@@ -17,12 +17,6 @@ from src.agents import Deps, get_joker_agent
 
 async def main() -> None:
     """Define a main entry point for the Apify Actor."""
-    # Skip the Actor execution if running in test mode
-    # You can remove this block. It is only used for Apify template testing.
-    if os.environ.get('NODE_ENV') == 'test':
-        print('Running in test mode. Skipping the Actor execution.')  # noqa: T201
-        return
-
     async with Actor:
         # Charge for Actor start
         await Actor.charge('actor-start')

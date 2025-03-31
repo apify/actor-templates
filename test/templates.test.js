@@ -6,7 +6,7 @@ const path = require('path');
 const JSON5 = require('json5');
 const semver = require('semver');
 
-const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS } = require('../src/consts');
+const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS, LLM_AI_TEMPLATE_IDS } = require('../src/consts');
 
 const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
 
@@ -120,14 +120,8 @@ describe('Templates work', () => {
     describe('Python templates', () => {
         PYTHON_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
-            // Skip python-crewai for Python 3.9 and 3.13
-            .filter((templateId) => {
-                if (templateId === 'python-crewai' && (PYTHON_VERSION.startsWith('3.9') || PYTHON_VERSION.startsWith('3.13'))) {
-                    console.log('Skipping python-crewai as Python version is 3.9 or 3.13');
-                    return false;
-                }
-                return true;
-            })
+            // Skip AI templates
+            .filter((templateId) =>  !LLM_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -142,6 +136,8 @@ describe('Templates work', () => {
     describe('Node.js templates', () => {
         NODE_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            // Skip AI templates
+            .filter((templateId) =>  !LLM_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -154,4 +150,21 @@ describe('Templates work', () => {
                 });
             });
     });
+
+    describe('LLM AI templates', () => {
+        LLM_AI_TEMPLATE_IDS
+            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            .forEach((templateId) => {
+                test(templateId.replace('python', '').replace('node', ''), () => {
+                    prepareActor(templateId);
+
+                    checkCommonTemplateStructure(templateId);
+                    if (!canNodeTemplateRun(templateId)) return;
+
+                    checkNodeTemplate();
+                    checkTemplateRun();
+                });
+            });
+    });
+
 });
