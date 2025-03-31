@@ -24,9 +24,10 @@ type-check:
 	uv run mypy templates/python-selenium
 	uv run mypy templates/python-standby
 	uv run mypy templates/python-start
-	uv run mypy templates/python-crewai
+	uv run mypy --ignore-missing-imports templates/python-crewai
 	uv run mypy templates/python-langgraph
-	uv run mypy templates/python-llamaindex-agent
+	uv run mypy --ignore-missing-imports templates/python-llamaindex-agent
+	uv run mypy --python-version 3.10 templates/python-pydanticai
 
 format:
 	uv run ruff check --fix

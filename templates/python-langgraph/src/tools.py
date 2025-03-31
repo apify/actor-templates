@@ -15,7 +15,7 @@ from langchain_core.tools import tool
 from src.models import InstagramPost
 
 
-@tool  # type: ignore[misc]
+@tool
 def tool_calculator_sum(numbers: list[int]) -> int:
     """Tool to calculate the sum of a list of numbers.
 
@@ -28,7 +28,7 @@ def tool_calculator_sum(numbers: list[int]) -> int:
     return sum(numbers)
 
 
-@tool  # type: ignore[misc]
+@tool
 async def tool_scrape_instagram_profile_posts(handle: str, max_posts: int = 30) -> list[InstagramPost]:
     """Tool to scrape Instagram profile posts.
 

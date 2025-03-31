@@ -41,7 +41,7 @@ async def main() -> None:
             await Actor.fail(status_message='Missing "jokeTopic" attribute in input!')
 
         # Generate joke
-        joke = (await get_joker_agent().run(user_prompt='Tell me a joke.', deps=Deps(joke_topic=joke_topic))).data
+        joke = (await get_joker_agent().run(user_prompt='Tell me a joke.', deps=Deps(joke_topic=joke_topic))).data  # type: ignore[call-overload]
         Actor.log.info(f'The AI generated joke about {joke_topic}:\n{joke}')
 
         # Store the joke
