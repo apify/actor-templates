@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from pydantic_ai import Agent, RunContext, Tool
+from pydantic_ai.agent import AgentRunResult
 
 
 @dataclass
@@ -10,17 +11,17 @@ class Deps:
     joke_topic: str
 
 
-async def create_joke(ctx: RunContext[Deps]) -> str:
+async def create_joke(ctx: RunContext[Deps]) -> AgentRunResult[str]:
     """Create a joke using AI agent."""
     joker = Agent(
         'openai:gpt-4o',
         result_type=str,
         system_prompt='You are a joke creation agent.',
     )
-    return (await joker.run(user_prompt=ctx.deps.joke_topic)).data
+    return await joker.run(user_prompt=ctx.deps.joke_topic)
 
 
-def get_joker_agent() -> Agent:
+def get_joker_agent() -> Agent[Deps, str]:
     """Get a joke creation agent."""
     return Agent(
         'openai:gpt-4o',
@@ -28,6 +29,6 @@ def get_joker_agent() -> Agent:
         system_prompt=(
             'Use `create_joke` tool to create four jokes, select the best one and return it without any other comments.'
         ),
-        deps_type=Deps,  # type: ignore[arg-type]
+        deps_type=Deps,
         tools=[Tool(create_joke, takes_ctx=True)],
     )
