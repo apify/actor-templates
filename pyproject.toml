@@ -9,6 +9,7 @@ dependencies = [
     "playwright<2.0.0",
     "scrapy<3.0.0",
     "selenium<5.0.0",
+    "pydantic_ai >= 0.0.29",
 ]
 
 [dependency-groups]
