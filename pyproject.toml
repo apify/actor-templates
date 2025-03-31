@@ -75,7 +75,7 @@ asyncio_mode = "auto"
 timeout = 1200
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 plugins = ["pydantic.mypy"]
 files = ["templates"]
 check_untyped_defs = true
