@@ -29,6 +29,14 @@ async def main() -> None:
     Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
     the field of web scraping significantly.
     """
+
+    # Skip the Actor execution if running in test mode
+    # You can remove this block. It is only used for Apify template testing.
+    import os
+    if os.environ.get('NODE_ENV') == 'test':
+        print('Running in test mode. Skipping the Actor execution.')
+        return
+
     async with Actor:
         Actor.log.info('Starting LlamaIndex Agent')
         # Charge for Actor start

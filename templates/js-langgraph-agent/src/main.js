@@ -5,6 +5,13 @@ import { Actor, log } from 'apify';
 
 import { webSearchTool } from './tools.js';
 
+// Skip the Actor execution if running in test mode
+// You can remove this block. It is only used for Apify template testing.
+if (process.env.NODE_ENV === 'test') {
+    console.log('Running in test mode. Skipping the Actor execution.');
+    process.exit(0);
+}
+
 await Actor.init();
 
 try {
