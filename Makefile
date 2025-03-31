@@ -20,6 +20,7 @@ type-check:
 	uv run mypy templates/python-crawlee-playwright
 	uv run mypy templates/python-empty
 	uv run mypy templates/python-playwright
+	uv run mypy templates/python-pydanticai
 	uv run mypy templates/python-scrapy
 	uv run mypy templates/python-selenium
 	uv run mypy templates/python-standby
