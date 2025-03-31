@@ -25,8 +25,6 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
-const PYTHON_VERSION = spawnSync(PYTHON_COMMAND, ['-V']).stdout.toString().match(/Python (.*)/)[1];
-
 const checkSpawnResult = ({ status }) => {
     expect(status).toBe(0);
 };
@@ -121,7 +119,7 @@ describe('Templates work', () => {
         PYTHON_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
-            .filter((templateId) =>  !LLM_AI_TEMPLATE_IDS.includes(templateId))
+            .filter((templateId) => !LLM_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -137,7 +135,7 @@ describe('Templates work', () => {
         NODE_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
-            .filter((templateId) =>  !LLM_AI_TEMPLATE_IDS.includes(templateId))
+            .filter((templateId) => !LLM_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -166,5 +164,4 @@ describe('Templates work', () => {
                 });
             });
     });
-
 });
