@@ -24,12 +24,12 @@ async def main() -> None:
     Raises:
         ValueError: If the input is missing required attributes.
     """
-
     # Skip the Actor execution if running in test mode
     # You can remove this block. It is only used for Apify template testing.
     import os
+
     if os.environ.get('NODE_ENV') == 'test':
-        print('Running in test mode. Skipping the Actor execution.')
+        print('Running in test mode. Skipping the Actor execution.')  # noqa: T201
         return
 
     async with Actor:
