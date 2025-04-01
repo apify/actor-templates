@@ -122,7 +122,6 @@ describe('templates-work', () => {
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
-                    return;
                     prepareActor(templateId);
 
                     checkCommonTemplateStructure(templateId);
@@ -139,7 +138,6 @@ describe('templates-work', () => {
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
-                    return;
                     prepareActor(templateId);
 
                     checkCommonTemplateStructure(templateId);
@@ -157,7 +155,6 @@ describe('templates-work', () => {
 
             if (templateId.startsWith('python')) {
                 test(templateId, () => {
-                    return;
                     prepareActor(templateId);
 
                     checkCommonTemplateStructure(templateId);
@@ -166,7 +163,6 @@ describe('templates-work', () => {
                 });
             } else {
                 test(templateId, () => {
-                    return;
                     prepareActor(templateId);
 
                     checkCommonTemplateStructure(templateId);
