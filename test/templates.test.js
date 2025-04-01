@@ -149,7 +149,7 @@ describe('templates-work', () => {
             });
     });
 
-    describe('llm-ai-python-templates', () => {
+    describe('python-llm-ai-templates', () => {
         for (const templateId of AGENT_AI_TEMPLATE_IDS) {
             if (SKIP_TESTS.includes(templateId)) continue;
 
@@ -165,7 +165,7 @@ describe('templates-work', () => {
         }
     });
 
-    describe('llm-ai-node-templates', () => {
+    describe('node-js-llm-ai-templates', () => {
         for (const templateId of AGENT_AI_TEMPLATE_IDS) {
             if (SKIP_TESTS.includes(templateId)) continue;
 

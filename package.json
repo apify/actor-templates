@@ -25,8 +25,8 @@
         "test-templates": "npm run test -- --testPathPattern=templates.test.js",
         "test-python-templates": "npm run test-templates -- --testNamePattern=python-templates",
         "test-node-templates": "npm run test-templates -- --testNamePattern=node-js-templates",
-        "test-llm-ai-python-templates": "npm run test-templates -- --testNamePattern=llm-ai-python-templates",
-        "test-llm-ai-node-templates": "npm run test-templates -- --testNamePattern=llm-ai-node-templates",
+        "test-llm-ai-python-templates": "npm run test-templates -- --testNamePattern=python-llm-ai-templates",
+        "test-llm-ai-node-templates": "npm run test-templates -- --testNamePattern=node-js-llm-ai-templates",
         "build": "node ./src/build.js"
     },
     "repository": {
