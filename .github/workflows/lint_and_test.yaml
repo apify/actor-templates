@@ -56,19 +56,24 @@ jobs:
 
   test-node-templates:
     name: Test Node.js templates
-    uses: apify/actor-templates/.github/workflows/test_node_templates.yml@fix/py-templates-types
+    uses: ./.github/workflows/test_node_templates.yml
     secrets: inherit
 
   test-python-templates:
     name: Test Python templates
-    uses: apify/actor-templates/.github/workflows/test_python_templates.yml@fix/py-templates-types
+    uses: ./.github/workflows/test_python_templates.yml
     secrets: inherit
 
-  test-llm-ai-templates:
-    name: Test LLM AI templates
-    uses: apify/actor-templates/.github/workflows/test_llm_ai_templates.yml@fix/py-templates-types
+  test-llm-ai-python-templates:
+    name: Test LLM AI Python templates
+    uses: ./.github/workflows/test_llm_ai_python_templates.yml
+    secrets: inherit
+
+  test-llm-ai-node-templates:
+    name: Test LLM AI Node.js templates
+    uses: ./.github/workflows/test_llm_ai_node_templates.yml
     secrets: inherit
 
   test-docker-builds:
     name: Test Docker builds
-    uses: apify/actor-templates/.github/workflows/test_dockerfile_builds.yml@fix/py-templates-types
+    uses: ./.github/workflows/test_dockerfile_builds.yml

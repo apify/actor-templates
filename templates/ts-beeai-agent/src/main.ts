@@ -21,7 +21,6 @@ interface Input {
     debug?: boolean;
 }
 
-
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init().
 await Actor.init();
 

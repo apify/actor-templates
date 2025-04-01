@@ -1,16 +1,15 @@
-name: Test LLM AI templates
+name: Test LLM AI Node.js templates
 
 on:
   workflow_call:
 
 jobs:
-  test-llm-ai-templates:
-    name: Test LLM AI templates
+  test-llm-ai-node-templates:
+    name: Test LLM AI Node.js templates
     strategy:
       matrix:
         os: [ubuntu-22.04, windows-latest]
-        node-version: [ 22 ]
-        python-version: ['3.10', '3.11', '3.12', '3.13']
+        node-version: [22]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
@@ -37,20 +36,9 @@ jobs:
       run: |
         npm install
         npm install -g apify-cli
-        ./node_modules/.bin/playwright install chromium --with-deps
 
-    - name: Setup Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-
-    - name: Install Chrome and Chromedriver
-      run: |
-        npx @puppeteer/browsers install chrome
-        npx @puppeteer/browsers install chromedriver
-
-    - name: Test LLM AI templates
-      run: npm run test-llm-ai-templates
+    - name: Test LLM AI Node.js templates
+      run: npm run test-llm-ai-node-templates
       env:
         APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
         OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}

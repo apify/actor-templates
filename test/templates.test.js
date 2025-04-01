@@ -149,11 +149,11 @@ describe('templates-work', () => {
             });
     });
 
-    describe('llm-ai-templates', () => {
+    describe('llm-ai-python-templates', () => {
         for (const templateId of AGENT_AI_TEMPLATE_IDS) {
             if (SKIP_TESTS.includes(templateId)) continue;
 
-            if (templateId.startsWith('python')) {
+            if (PYTHON_TEMPLATE_IDS.includes(templateId)) {
                 test(templateId, () => {
                     prepareActor(templateId);
 
@@ -161,7 +161,15 @@ describe('templates-work', () => {
                     checkPythonTemplate();
                     checkTemplateRun();
                 });
-            } else {
+            }
+        }
+    });
+
+    describe('llm-ai-node-templates', () => {
+        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
+            if (SKIP_TESTS.includes(templateId)) continue;
+
+            if (NODE_TEMPLATE_IDS.includes(templateId)) {
                 test(templateId, () => {
                     prepareActor(templateId);
 
