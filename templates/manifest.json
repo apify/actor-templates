@@ -277,6 +277,7 @@
                 "crewai"
             ],
             "agent": true,
+            "skipTests": true,
             "description": "Example of how to use CrewAI with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crewai.zip?raw=true",
             "defaultRunOptions": {

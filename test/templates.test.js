@@ -168,7 +168,7 @@ describe('Templates work', () => {
                     checkPythonTemplate();
                     checkTemplateRun();
                 });
-            } else if (templateId.startsWith('node')) {
+            } else {
                 test(templateId, () => {
                     prepareActor(templateId);
 
