@@ -155,7 +155,7 @@ describe('Templates work', () => {
         for (const templateId of LLM_AI_TEMPLATE_IDS) {
             if (SKIP_TESTS.includes(templateId)) continue;
 
-            if (templateId === 'python-crewai' && !['3.10', '3.11', '3.12'].includes(PYTHON_VERSION.trim())) {
+            if (templateId === 'python-crewai' && !['3.10', '3.11', '3.12'].some((version) => PYTHON_VERSION.trim().startsWith(version))) {
                 console.log(`Skipping '${templateId}' because it requires Python 3.10, 3.11 or 3.12 (current version: '${PYTHON_VERSION}')`);
                 continue;
             }
