@@ -25,6 +25,8 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
+const PYTHON_VERSION = spawnSync(PYTHON_COMMAND, ['-V']).stdout.toString().match(/Python (.*)/)[1];
+
 const checkSpawnResult = ({ status }) => {
     expect(status).toBe(0);
 };
@@ -152,6 +154,11 @@ describe('Templates work', () => {
     describe('LLM AI templates', () => {
         for (const templateId of LLM_AI_TEMPLATE_IDS) {
             if (SKIP_TESTS.includes(templateId)) continue;
+
+            if (templateId === 'python-crewai' && !['3.10', '3.11', '3.12'].includes(PYTHON_VERSION)) {
+                console.log('Skipping python-crewai because it requires Python 3.10, 3.11 or 3.12');
+                continue;
+            }
 
             if (templateId.startsWith('python')) {
                 test(templateId.replace('python', ''), () => {
