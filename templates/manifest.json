@@ -335,6 +335,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/agents.py"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -874,6 +877,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/tools.ts"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
