@@ -147,8 +147,8 @@ jobs:
         APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
         OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
 
-  test-llm-ai-templates:
-    name: Test LLM AI templates
+  test-agent-ai-templates:
+    name: Test Agent AI templates
     strategy:
       matrix:
         os: [ubuntu-22.04, windows-latest]
