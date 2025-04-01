@@ -23,9 +23,9 @@
         "test": "jest",
         "test-without-templates": "npm run test -- --testPathIgnorePatterns=templates.test.js",
         "test-templates": "npm run test -- --testPathPattern=templates.test.js",
-        "test-python-templates": "npm run test-templates -- --testNamePattern='templates work python'",
-        "test-node-templates": "npm run test-templates -- --testNamePattern='templates work node'",
-        "test-agent-ai-templates": "npm run test-templates -- --testNamePattern='templates work agent ai'",
+        "test-python-templates": "npm run test-templates -- --testNamePattern=python-templates",
+        "test-node-templates": "npm run test-templates -- --testNamePattern=node-js-templates",
+        "test-llm-ai-templates": "npm run test-templates -- --testNamePattern=llm-ai-templates",
         "build": "node ./src/build.js"
     },
     "repository": {

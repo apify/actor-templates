@@ -9,7 +9,7 @@ const NODE_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category ==
 const SKIP_TESTS = templateManifest.templates.filter((t) => t.skipTests).map((t) => t.id);
 const PYTHON_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category === 'python').map((t) => t.id);
 
-const AGENT_AI_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.agent === true).map((t) => t.id);
+const AGENT_AI_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.useCases?.includes('AI')).map((t) => t.id);
 
 const TEMPLATES_DIR_NAME = 'templates';
 const WRAPPERS_DIR_NAME = 'wrappers';

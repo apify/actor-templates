@@ -57,11 +57,14 @@ jobs:
   test-node-templates:
     name: Test Node.js templates
     uses: apify/actor-templates/.github/workflows/test_node_templates.yml@fix/py-templates-types
+    secrets: inherit
 
   test-python-templates:
     name: Test Python templates
     uses: apify/actor-templates/.github/workflows/test_python_templates.yml@fix/py-templates-types
+    secrets: inherit
 
-  test-agent-ai-templates:
-    name: Test Agent AI templates
-    uses: apify/actor-templates/.github/workflows/test_agent_ai_templates.yml@fix/py-templates-types
+  test-llm-ai-templates:
+    name: Test LLM AI templates
+    uses: apify/actor-templates/.github/workflows/test_llm_ai_templates.yml@fix/py-templates-types
+    secrets: inherit
