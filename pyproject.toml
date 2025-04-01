@@ -5,8 +5,12 @@ requires-python = ">=3.9"
 dependencies = [
     "apify[scrapy]<3.0.0",
     "beautifulsoup4[lxml]<5.0.0",
-    "crawlee[all]<1.0.0" ,
+    "crawlee[all]<1.0.0",
+    "langchain>=0.3.21",
+    "langchain-openai>=0.3.11",
+    "langgraph>=0.3.21",
     "playwright<2.0.0",
+    "pydantic-ai>=0.0.46",
     "scrapy<3.0.0",
     "selenium<5.0.0",
 ]

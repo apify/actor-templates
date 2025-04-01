@@ -1,11 +1,8 @@
-name: Test Docker Builds
+name: Test Docker builds
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   find-and-test-dockerfiles:
@@ -15,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
+      - name: Set up Docker buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Maximize available disk space

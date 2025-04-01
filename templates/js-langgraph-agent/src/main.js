@@ -8,7 +8,7 @@ import { webSearchTool } from './tools.js';
 await Actor.init();
 
 try {
-    log.info(`Charging Actor start event.`);
+    log.info('Charging Actor start event.');
     await Actor.charge({ eventName: 'actor-start' });
 } catch (error) {
     log.error('Failed to charge for actor start event', { error });

@@ -6,7 +6,7 @@ const path = require('path');
 const JSON5 = require('json5');
 const semver = require('semver');
 
-const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS } = require('../src/consts');
+const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS, AGENT_AI_TEMPLATE_IDS } = require('../src/consts');
 
 const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
 
@@ -24,8 +24,6 @@ function spawnSync(command, args, options = {}) {
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
-
-const PYTHON_VERSION = spawnSync(PYTHON_COMMAND, ['-V']).stdout.toString().match(/Python (.*)/)[1];
 
 const checkSpawnResult = ({ status }) => {
     expect(status).toBe(0);
@@ -116,18 +114,12 @@ const prepareActor = (templateId) => {
     process.chdir(tmpDir);
 };
 
-describe('Templates work', () => {
-    describe('Python templates', () => {
+describe('templates-work', () => {
+    describe('python-templates', () => {
         PYTHON_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
-            // Skip python-crewai for Python 3.9 and 3.13
-            .filter((templateId) => {
-                if (templateId === 'python-crewai' && (PYTHON_VERSION.startsWith('3.9') || PYTHON_VERSION.startsWith('3.13'))) {
-                    console.log('Skipping python-crewai as Python version is 3.9 or 3.13');
-                    return false;
-                }
-                return true;
-            })
+            // Skip AI templates
+            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -139,9 +131,11 @@ describe('Templates work', () => {
             });
     });
 
-    describe('Node.js templates', () => {
+    describe('node-js-templates', () => {
         NODE_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
+            // Skip AI templates
+            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -153,5 +147,39 @@ describe('Templates work', () => {
                     checkTemplateRun();
                 });
             });
+    });
+
+    describe('python-llm-ai-templates', () => {
+        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
+            if (SKIP_TESTS.includes(templateId)) continue;
+
+            if (PYTHON_TEMPLATE_IDS.includes(templateId)) {
+                test(templateId, () => {
+                    prepareActor(templateId);
+
+                    checkCommonTemplateStructure(templateId);
+                    checkPythonTemplate();
+                    checkTemplateRun();
+                });
+            }
+        }
+    });
+
+    describe('node-js-llm-ai-templates', () => {
+        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
+            if (SKIP_TESTS.includes(templateId)) continue;
+
+            if (NODE_TEMPLATE_IDS.includes(templateId)) {
+                test(templateId, () => {
+                    prepareActor(templateId);
+
+                    checkCommonTemplateStructure(templateId);
+                    if (!canNodeTemplateRun(templateId)) return;
+
+                    checkNodeTemplate();
+                    checkTemplateRun();
+                });
+            }
+        }
     });
 });
