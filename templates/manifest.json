@@ -266,6 +266,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/tools.py"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -288,6 +291,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/tools.py"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -310,6 +316,9 @@
                 "src/main.py",
                 "src/agent.py",
                 "src/tools.py"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -331,6 +340,9 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/agents.py"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -776,6 +788,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/vector_index_cache.js"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -798,6 +813,9 @@
             "showcaseFiles": [
                 "src/main.js",
                 "src/tools.js"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -843,6 +861,9 @@
             },
             "showcaseFiles": [
                 "src/main.ts"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
@@ -864,6 +885,9 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/tools.ts"
+            ],
+            "useCases": [
+                "AI"
             ]
         },
         {
