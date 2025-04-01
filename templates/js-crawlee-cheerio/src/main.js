@@ -23,7 +23,7 @@ const crawler = new CheerioCrawler({
     async requestHandler({ enqueueLinks, request, $, log }) {
         log.info('enqueueing new URLs');
         await enqueueLinks();
-
+        bad change
         // Extract title from the page.
         const title = $('title').text();
         log.info(`${title}`, { url: request.loadedUrl });
