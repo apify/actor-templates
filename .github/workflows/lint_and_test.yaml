@@ -192,8 +192,8 @@ jobs:
         npx @puppeteer/browsers install chrome
         npx @puppeteer/browsers install chromedriver
 
-    - name: Test LLM AI templates
-      run: npm run test-llm-ai-templates
+    - name: Test Agent AI templates
+      run: npm run test-agent-ai-templates
       env:
         APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
         OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}

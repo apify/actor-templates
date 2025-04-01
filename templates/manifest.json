@@ -255,7 +255,7 @@
             "technologies": [
                 "langgraph"
             ],
-            "llm": true,
+            "agent": true,
             "description": "Example of how to use LangGraph with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langgraph.zip?raw=true",
             "defaultRunOptions": {
@@ -276,7 +276,7 @@
             "technologies": [
                 "crewai"
             ],
-            "llm": true,
+            "agent": true,
             "description": "Example of how to use CrewAI with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crewai.zip?raw=true",
             "defaultRunOptions": {
@@ -297,7 +297,7 @@
             "technologies": [
                 "llamaindex"
             ],
-            "llm": true,
+            "agent": true,
             "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -319,7 +319,7 @@
             "technologies": [
                 "pydanticai"
             ],
-            "llm": true,
+            "agent": true,
             "description": "PydanticAI agent to generate a joke",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
@@ -786,7 +786,7 @@
                 "nodejs",
                 "langgraph"
             ],
-            "llm": true,
+            "agent": true,
             "description": "LangGraph agent in JavaScript for answering questions via web search.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langgraph-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -832,7 +832,7 @@
             "technologies": [
                 "beeai"
             ],
-            "llm": true,
+            "agent": true,
             "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-beeai-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -852,7 +852,7 @@
             "technologies": [
                 "mastraai"
             ],
-            "llm": true,
+            "agent": true,
             "description": "Example of how to use Mastra with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mastraai.zip?raw=true",
             "defaultRunOptions": {

@@ -6,7 +6,7 @@ const path = require('path');
 const JSON5 = require('json5');
 const semver = require('semver');
 
-const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS, LLM_AI_TEMPLATE_IDS } = require('../src/consts');
+const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS, AGENT_AI_TEMPLATE_IDS } = require('../src/consts');
 
 const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
 
@@ -121,7 +121,7 @@ describe('Templates work', () => {
         PYTHON_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
-            .filter((templateId) => !LLM_AI_TEMPLATE_IDS.includes(templateId))
+            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -137,7 +137,7 @@ describe('Templates work', () => {
         NODE_TEMPLATE_IDS
             .filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
-            .filter((templateId) => !LLM_AI_TEMPLATE_IDS.includes(templateId))
+            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -151,8 +151,8 @@ describe('Templates work', () => {
             });
     });
 
-    describe('LLMAI templates', () => {
-        for (const templateId of LLM_AI_TEMPLATE_IDS) {
+    describe('Agent AI templates', () => {
+        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
             if (SKIP_TESTS.includes(templateId)) continue;
 
             if (templateId === 'python-crewai' && !['3.10', '3.11', '3.12'].some((version) => PYTHON_VERSION.trim().startsWith(version))) {
@@ -161,7 +161,7 @@ describe('Templates work', () => {
             }
 
             if (templateId.startsWith('python')) {
-                test(templateId.replace('python', ''), () => {
+                test(templateId, () => {
                     prepareActor(templateId);
 
                     checkCommonTemplateStructure(templateId);
@@ -169,7 +169,7 @@ describe('Templates work', () => {
                     checkTemplateRun();
                 });
             } else if (templateId.startsWith('node')) {
-                test(templateId.replace('node', ''), () => {
+                test(templateId, () => {
                     prepareActor(templateId);
 
                     checkCommonTemplateStructure(templateId);
