@@ -25,7 +25,7 @@
         "test-templates": "npm run test -- --testPathPattern=templates.test.js",
         "test-python-templates": "npm run test-templates -- --testNamePattern=python",
         "test-node-templates": "npm run test-templates -- --testNamePattern=node",
-        "test-llm-ai-templates": "npm run test-templates -- --testNamePattern='llm ai'",
+        "test-llm-ai-templates": "npm run test-templates -- --testNamePattern=llmai",
         "build": "node ./src/build.js"
     },
     "repository": {

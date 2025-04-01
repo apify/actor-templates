@@ -151,11 +151,11 @@ describe('Templates work', () => {
             });
     });
 
-    describe('LLM AI templates', () => {
+    describe('LLMAI templates', () => {
         for (const templateId of LLM_AI_TEMPLATE_IDS) {
             if (SKIP_TESTS.includes(templateId)) continue;
 
-            if (templateId === 'python-crewai' && !['3.10', '3.11', '3.12'].includes(PYTHON_VERSION)) {
+            if (templateId === 'python-crewai' && !['3.10', '3.11', '3.12'].includes(PYTHON_VERSION.trim())) {
                 console.log('Skipping python-crewai because it requires Python 3.10, 3.11 or 3.12');
                 continue;
             }
