@@ -1,0 +1,58 @@
+name: Test Python templates
+
+on:
+  workflow_call:
+
+jobs:
+  test-python-templates:
+    name: Test Python templates
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-latest]
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: .nvmrc
+        cache: 'npm'
+
+    - name: Get Node.js version
+      id: get-node-version
+      run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g apify-cli
+        ./node_modules/.bin/playwright install chromium --with-deps
+
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Chrome and Chromedriver
+      run: |
+        npx @puppeteer/browsers install chrome
+        npx @puppeteer/browsers install chromedriver
+
+    - name: Test Python templates
+      run: npm run test-python-templates
+      env:
+        APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
