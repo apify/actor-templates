@@ -156,7 +156,7 @@ describe('Templates work', () => {
             if (SKIP_TESTS.includes(templateId)) continue;
 
             if (templateId === 'python-crewai' && !['3.10', '3.11', '3.12'].includes(PYTHON_VERSION.trim())) {
-                console.log('Skipping python-crewai because it requires Python 3.10, 3.11 or 3.12');
+                console.log(`Skipping '${templateId}' because it requires Python 3.10, 3.11 or 3.12 (current version: '${PYTHON_VERSION}')`);
                 continue;
             }
 
