@@ -13,6 +13,6 @@ const crawler = new CheerioCrawler({
     requestHandler: router,
 });
 
-await crawler.run(['https://example.com']);
+await crawler.run(['bad change']);
 
 await Actor.exit();
