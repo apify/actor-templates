@@ -68,3 +68,7 @@ jobs:
     name: Test LLM AI templates
     uses: apify/actor-templates/.github/workflows/test_llm_ai_templates.yml@fix/py-templates-types
     secrets: inherit
+
+  test-docker-builds:
+    name: Test Docker builds
+    uses: apify/actor-templates/.github/workflows/test_dockerfile_builds.yml@fix/py-templates-types
