@@ -8,5 +8,5 @@
     "meta": {
         "templateId": "ts-empty"
     },
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }
