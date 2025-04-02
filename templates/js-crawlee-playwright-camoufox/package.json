@@ -7,21 +7,26 @@
         "node": ">=20.0.0"
     },
     "dependencies": {
-        "apify": "^3.2.6",
-        "camoufox-js": "^0.2.1",
-        "crawlee": "^3.11.5",
-        "playwright": "*"
+        "apify": "^3.4.0",
+        "camoufox-js": "^0.3.1",
+        "crawlee": "^3.13.0",
+        "playwright": "1.51.1"
     },
     "devDependencies": {
-        "@apify/eslint-config": "^0.4.0",
-        "eslint": "^8.50.0"
+        "@apify/eslint-config": "^1.0.0",
+        "eslint": "^9.23.0",
+        "eslint-config-prettier": "^10.1.1",
+        "prettier": "^3.5.3"
     },
     "scripts": {
         "start": "node src/main.js",
-        "lint": "eslint ./src --ext .js,.jsx",
-        "lint:fix": "eslint ./src --ext .js,.jsx --fix",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
-        "postinstall": "npx camoufox-js fetch"
+        "postinstall": "npx camoufox-js fetch",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint:format": "npm run format && npm run lint:fix"
     },
     "author": "It's not you it's me",
     "license": "ISC"
