@@ -7,10 +7,10 @@
     "buildTag": "latest",
     "storages": {
         "dataset": "./dataset_schema.json"
-      },
+    },
     "meta": {
         "templateId": "ts-beeai-agent"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

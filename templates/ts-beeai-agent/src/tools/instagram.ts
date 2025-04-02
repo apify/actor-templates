@@ -1,7 +1,10 @@
 import { ApifyClient, log } from 'apify';
+// eslint-disable-next-line import/extensions
 import { Emitter } from 'bee-agent-framework/emitter/emitter';
-import { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
-import { JSONToolOutput, Tool, ToolEmitter, ToolInput } from 'bee-agent-framework/tools/base';
+import type { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
+import type { ToolEmitter, ToolInput } from 'bee-agent-framework/tools/base';
+// eslint-disable-next-line import/extensions
+import { JSONToolOutput, Tool } from 'bee-agent-framework/tools/base';
 import { z } from 'zod';
 
 export interface InstagramPost {
@@ -27,23 +30,34 @@ interface InstagramScrapeToolOutput {
  * scraping posts from a given Instagram profile.
  */
 export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeToolOutput>> {
-    override name: string = 'instagram-scrape-profile-posts';
+    override name = 'instagram-scrape-profile-posts';
 
-    override description: string = 'Tool to scrape Instagram profile posts.';
+    override description = 'Tool to scrape Instagram profile posts.';
 
     override inputSchema(): Promise<AnyToolSchemaLike> | AnyToolSchemaLike {
-        return z.object({
-            handle: z.string().describe('Instagram handle of the profile to scrape (without the "@" symbol).'),
-            maxPosts: z.number().default(30).describe('Maximum number of posts to scrape.'),
-        }).required({ handle: true });
+        return z
+            .object({
+                handle: z
+                    .string()
+                    .describe(
+                        'Instagram handle of the profile to scrape (without the "@" symbol).',
+                    ),
+                maxPosts: z.number().default(30).describe('Maximum number of posts to scrape.'),
+            })
+            .required({ handle: true });
     }
 
-    public readonly emitter: ToolEmitter<ToolInput<this>, JSONToolOutput<InstagramScrapeToolOutput>> = Emitter.root.child({
+    public readonly emitter: ToolEmitter<
+        ToolInput<this>,
+        JSONToolOutput<InstagramScrapeToolOutput>
+    > = Emitter.root.child({
         namespace: ['tool', 'instagram_scrape'],
         creator: this,
     });
 
-    protected async _run(input: ToolInput<this>): Promise<JSONToolOutput<InstagramScrapeToolOutput>> {
+    protected async _run(
+        input: ToolInput<this>,
+    ): Promise<JSONToolOutput<InstagramScrapeToolOutput>> {
         const { handle, maxPosts = 30 } = input;
 
         const token = process.env.APIFY_TOKEN;
@@ -79,7 +93,12 @@ export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeTool
             };
 
             // Only include posts with all required fields
-            if (!post.url || post.likes === undefined || post.comments === undefined || !post.timestamp) {
+            if (
+                !post.url ||
+                post.likes === undefined ||
+                post.comments === undefined ||
+                !post.timestamp
+            ) {
                 log.warning('Skipping post with missing fields:', item);
                 continue;
             }

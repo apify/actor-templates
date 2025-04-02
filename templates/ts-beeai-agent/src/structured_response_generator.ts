@@ -1,6 +1,7 @@
-import { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/chat';
+import type { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/chat';
+// eslint-disable-next-line import/extensions
 import { Message } from 'bee-agent-framework/backend/message';
-import { ZodSchema } from 'zod';
+import type { ZodSchema } from 'zod';
 
 // Tool message interface
 interface ToolMemoryMessage {
@@ -24,7 +25,10 @@ export class StructuredOutputGenerator {
      * @param key - The key indicating whether the message is a tool name, input, or output.
      * @param value - The value associated with the key, which can be a string or an object.
      */
-    processToolMessage(key: 'tool_name' | 'tool_input' | 'tool_output', value: string | object): void {
+    processToolMessage(
+        key: 'tool_name' | 'tool_input' | 'tool_output',
+        value: string | object,
+    ): void {
         if (key === 'tool_name') {
             this.appendToolMessage(value as string);
         } else {
@@ -68,17 +72,21 @@ export class StructuredOutputGenerator {
         schema: T,
     ): Promise<{ object: T }> {
         const messages = [
-            ...this.toolMemory.map((message) => Message.of({
-                role: 'system',
-                text: `Tool call: ${message.toolName}\ninput: ${JSON.stringify(message.input)}\n\noutput: ${JSON.stringify(message.output)}`,
-            })),
+            ...this.toolMemory.map((message) =>
+                Message.of({
+                    role: 'system',
+                    text: `Tool call: ${message.toolName}\n`
+                        + `input: ${JSON.stringify(message.input)}`
+                        + `\n\noutput: ${JSON.stringify(message.output)}`,
+                }),
+            ),
             Message.of({
                 role: 'user',
                 text: query,
             }),
         ];
 
-        return await this.llm.createStructure({
+        return this.llm.createStructure({
             schema,
             messages,
         });
