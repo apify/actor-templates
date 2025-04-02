@@ -2,5 +2,6 @@
 
 .DS_Store
 .idea
+.zed
 node_modules
 storage
