@@ -8,5 +8,5 @@
         "templateId": "ts-crawlee-playwright-chrome"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

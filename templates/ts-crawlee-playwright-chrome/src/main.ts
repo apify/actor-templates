@@ -8,6 +8,7 @@
 import { Actor } from 'apify';
 // For more information, see https://crawlee.dev
 import { PlaywrightCrawler } from 'crawlee';
+
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 // note that we need to use `.js` even when inside TS files
@@ -22,10 +23,8 @@ interface Input {
 await Actor.init();
 
 // Structure of input is defined in input_schema.json
-const {
-    startUrls = ['https://crawlee.dev'],
-    maxRequestsPerCrawl = 100,
-} = await Actor.getInput<Input>() ?? {} as Input;
+const { startUrls = ['https://crawlee.dev'], maxRequestsPerCrawl = 100 } =
+    (await Actor.getInput<Input>()) ?? ({} as Input);
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
@@ -37,9 +36,9 @@ const crawler = new PlaywrightCrawler({
         launchOptions: {
             args: [
                 '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
-            ]
-        }
-    }
+            ],
+        },
+    },
 });
 
 await crawler.run(startUrls);
