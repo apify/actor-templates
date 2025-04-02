@@ -9,7 +9,5 @@
         "skipLibCheck": true,
         "lib": ["DOM"]
     },
-    "include": [
-        "./src/**/*"
-    ]
+    "include": ["./src/**/*"]
 }
