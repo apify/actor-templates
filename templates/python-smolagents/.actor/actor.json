@@ -1,0 +1,13 @@
+{
+  "actorSpecification": 1,
+  "name": "python-smolagents",
+  "title": "Python AI agent in Smolagents",
+  "description": "An AI news aggregator that fetches and summarizes the latest news based on user-defined interests using DuckDuckGo search and OpenAI models written in Python Smolagents.",
+  "version": "0.0",
+  "buildTag": "latest",
+  "meta": {
+    "templateId": "python-smolagents"
+  },
+  "input": "./input_schema.json",
+  "dockerfile": "./Dockerfile"
+}

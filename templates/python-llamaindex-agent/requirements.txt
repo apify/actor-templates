@@ -3,5 +3,5 @@
 
 apify >= 2.3.0,< 3
 apify-client < 2.0
-llama-index>=0.12.15
-polars>=1.22.0
+llama-index < 1.0.0
+polars < 2.0.0

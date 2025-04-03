@@ -1,0 +1,24 @@
+{
+  "title": "Python AI agent in Smolagents",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "interests": {
+      "title": "User interests",
+      "type": "array",
+      "description": "A list of topics the agent will use to fetch and summarize news.",
+      "editor": "stringList",
+      "prefill": ["Artificial intelligence", "Tech innovations", "Open source"],
+      "default": ["Artificial intelligence", "Tech innovations", "Open source"]
+    },
+    "model": {
+      "title": "OpenAI model",
+      "type": "string",
+      "description": "The OpenAI model to use.",
+      "editor": "textfield",
+      "default": "gpt-4o",
+      "prefill": "gpt-4o"
+    }
+  },
+  "required": ["interests", "model"]
+}
