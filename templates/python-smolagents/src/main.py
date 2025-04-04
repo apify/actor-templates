@@ -7,9 +7,18 @@ https://docs.apify.com/sdk/python
 """
 
 import os
+import sys
+from io import TextIOWrapper
 
 from apify import Actor
 from smolagents import CodeAgent, DuckDuckGoSearchTool, OpenAIServerModel
+
+# Configure stdout to use UTF-8 encoding for proper unicode support
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+else:
+    # Fall back to TextIOWrapper for environments where reconfigure is unavailable
+    sys.stdout = TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 OPENAI_API_BASE = 'https://api.openai.com/v1'
