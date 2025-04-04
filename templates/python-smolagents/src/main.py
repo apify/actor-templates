@@ -66,6 +66,6 @@ async def main() -> None:
         summary = agent.run(summary_prompt)
         Actor.log.info('News summarization operation completed successfully.')
 
-        # Push the results to the dataset
+        # Push the results to the dataset by wrapping it in an object.
         Actor.log.info('The results will be stored in the dataset.')
-        await Actor.push_data(summary)
+        await Actor.push_data({'summary': summary})
