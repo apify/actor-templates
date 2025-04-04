@@ -326,7 +326,7 @@
             "technologies": [
                 "pydanticai"
             ],
-            "description": "PydanticAI agent to generate a joke",
+            "description": "A PydanticAI agent designed to generate jokes, showcasing a minimal example using the Pydantic AI framework.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -336,6 +336,29 @@
             "showcaseFiles": [
                 "src/main.py",
                 "src/agents.py"
+            ],
+            "useCases": [
+                "AI"
+            ]
+        },
+        {
+            "id": "python-smolagents",
+            "name": "python-smolagents",
+            "label": "Smolagents agent",
+            "category": "python",
+            "technologies": [
+                "smolagents"
+            ],
+            "description": "An AI news aggregator that fetches and summarizes the latest news based on user-defined interests using DuckDuckGo search and OpenAI models written in Python Smolagents.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 128,
+                "timeoutSecs": 60
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/__main__.py"
             ],
             "useCases": [
                 "AI"

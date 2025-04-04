@@ -22,6 +22,7 @@ type-check:
 	uv run mypy templates/python-playwright
 	uv run mypy templates/python-scrapy
 	uv run mypy templates/python-selenium
+	uv run mypy templates/python-smolagents
 	uv run mypy templates/python-standby
 	uv run mypy templates/python-start
 	uv run mypy --ignore-missing-imports templates/python-crewai
