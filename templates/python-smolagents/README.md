@@ -13,7 +13,7 @@ This Actor works as an AI-powered news aggregator:
 ## How to use
 
 1. Provide input: Define your topics of interest by setting the `interests` field in the Actor input.
-2. Choose an OpenAI model: Specify the OpenAI model to use in the model field.
+2. Choose an OpenAI model: Specify the OpenAI model to use in the `model` field.
 3. Run the Actor: Execute the Actor on the Apify platform or locally.
 4. Retrieve results: The summarized news articles will be available in the default dataset.
 
