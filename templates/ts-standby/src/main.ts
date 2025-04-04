@@ -1,5 +1,6 @@
-import http from 'http';
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
+import http from 'node:http';
+
 import { Actor } from 'apify';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
