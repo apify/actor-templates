@@ -33,6 +33,7 @@ This Actor works as an AI-powered news aggregator:
 ## Resources
 
 - [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
+- [How to build and monetize an AI agent on Apify](https://blog.apify.com/how-to-build-an-ai-agent/)
 - [Python tutorials in Academy](https://docs.apify.com/academy/python)
 - [Apify Python SDK documentation](https://docs.apify.com/sdk/python/)
 - [Smolagents documentation](https://huggingface.co/docs/smolagents/index)
