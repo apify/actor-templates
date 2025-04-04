@@ -326,7 +326,7 @@
             "technologies": [
                 "pydanticai"
             ],
-            "description": "PydanticAI agent to generate a joke",
+            "description": "A PydanticAI agent designed to generate jokes, showcasing a minimal example using the Pydantic AI framework.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
