@@ -16,7 +16,7 @@ import { router } from './routes.js';
 await Actor.init();
 
 const {
-    startUrls = ['https://crawlee.dev'],
+    startUrls = ['https://apify.com'],
 } = await Actor.getInput() ?? {};
 
 const proxyConfiguration = await Actor.createProxyConfiguration();

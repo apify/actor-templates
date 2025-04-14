@@ -18,7 +18,7 @@ import { launchOptions as camoufoxLaunchOptions } from 'camoufox-js';
 await Actor.init();
 
 const {
-    startUrls = ['https://crawlee.dev'],
+    startUrls = ['https://apify.com'],
 } = await Actor.getInput() ?? {};
 
 const proxyConfiguration = await Actor.createProxyConfiguration();

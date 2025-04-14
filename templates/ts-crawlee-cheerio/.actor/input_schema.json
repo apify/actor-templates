@@ -10,7 +10,7 @@
             "editor": "requestListSources",
             "prefill": [
                 {
-                    "url": "https://crawlee.dev"
+                    "url": "https://apify.com"
                 }
             ]
         },
