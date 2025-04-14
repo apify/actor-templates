@@ -23,7 +23,7 @@ await Actor.init();
 
 // Structure of input is defined in input_schema.json
 const {
-    startUrls = ['https://crawlee.dev'],
+    startUrls = ['https://apify.com'],
     maxRequestsPerCrawl = 100,
 } = await Actor.getInput<Input>() ?? {} as Input;
 
