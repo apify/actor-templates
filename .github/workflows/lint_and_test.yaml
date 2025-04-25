@@ -6,6 +6,7 @@ on:
       - 'dist/**'
   schedule:
     - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   python_lint_check:
