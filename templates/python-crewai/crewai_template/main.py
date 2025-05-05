@@ -11,7 +11,7 @@ from __future__ import annotations
 from apify import Actor
 from crewai import Agent, Crew, Task
 
-from src.tools import InstagramScraperTool
+from .tools import InstagramScraperTool
 
 
 async def main() -> None:

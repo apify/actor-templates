@@ -15,20 +15,7 @@ lint:
 # Due to each template having its own "src" directory, running type checking on all templates together causes
 # the error: "Duplicate module named 'src'". Therefore, type checking must be executed separately for each template.
 type-check:
-	uv run mypy templates/python-beautifulsoup
-	uv run mypy templates/python-crawlee-beautifulsoup
-	uv run mypy templates/python-crawlee-playwright
-	uv run mypy templates/python-empty
-	uv run mypy templates/python-playwright
-	uv run mypy templates/python-scrapy
-	uv run mypy templates/python-selenium
-	uv run mypy templates/python-smolagents
-	uv run mypy templates/python-standby
-	uv run mypy templates/python-start
-	uv run mypy --ignore-missing-imports templates/python-crewai
-	uv run mypy templates/python-langgraph
-	uv run mypy --ignore-missing-imports templates/python-llamaindex-agent
-	uv run mypy --python-version 3.10 templates/python-pydanticai
+	uv run mypy templates
 
 format:
 	uv run ruff check --fix

@@ -26,7 +26,7 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python3 -m compileall -q src/
+RUN python3 -m compileall -q beautifulsoup_template/
 
 # Create and run as a non-root user.
 RUN useradd --create-home apify && \
@@ -35,4 +35,4 @@ USER apify
 
 # Specify how to launch the source code of your Actor.
 # By default, the "python3 -m src" command is run
-CMD ["python3", "-m", "src"]
+CMD ["python3", "-m", "beautifulsoup_template"]

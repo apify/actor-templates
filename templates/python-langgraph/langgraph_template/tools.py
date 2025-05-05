@@ -12,7 +12,7 @@ from __future__ import annotations
 from apify import Actor
 from langchain_core.tools import tool
 
-from src.models import InstagramPost
+from .models import InstagramPost
 
 
 @tool

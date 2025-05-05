@@ -34,5 +34,4 @@ RUN useradd --create-home apify && \
 USER apify
 
 # Specify how to launch the source code of your Actor.
-# By default, the "python3 -m ." command is run
-CMD ["python3", "-m", "src"]
+CMD ["python3", "-m", "pydanticai_template"]

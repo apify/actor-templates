@@ -16,7 +16,7 @@ from crewai.tools import BaseTool
 from crewai.utilities.converter import ValidationError
 from pydantic import BaseModel, Field
 
-from src.models import InstagramPost, InstagramPosts
+from .models import InstagramPost, InstagramPosts
 
 
 class InstagramScraperInput(BaseModel):
