@@ -10,7 +10,7 @@ An [agent](https://docs.crewai.com/concepts/agents) is created and given a set o
 
 ## How to use
 
-Add or modify the agent tools in the `src/tools.py` file, and make sure to include new tools in the agent tools list in `src/main.py`. Additionally, you can update the agent prompts in `src/main.py`. For more information, refer to the [CrewAI agent documentation](https://docs.crewai.com/concepts/agents) and the [CrewAI tools documentation](https://docs.crewai.com/concepts/tools).
+Add or modify the agent tools in the `crewai_template/tools.py` file, and make sure to include new tools in the agent tools list in `crewai_template/main.py`. Additionally, you can update the agent prompts in `crewai_template/main.py`. For more information, refer to the [CrewAI agent documentation](https://docs.crewai.com/concepts/agents) and the [CrewAI tools documentation](https://docs.crewai.com/concepts/tools).
 
 #### Pay Per Event
 
