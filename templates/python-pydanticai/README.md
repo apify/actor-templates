@@ -5,7 +5,7 @@ Start a new [AI agent](https://blog.apify.com/what-are-ai-agents/) based project
 
 ## How it works
 
-Insert your own code to `async with Actor:` block. You can use the [Apify SDK](https://docs.apify.com/sdk/python/) with any other Python library. Add or modify the agent and tools in the [agents.py](src/agents.py) file.
+Insert your own code to `async with Actor:` block. You can use the [Apify SDK](https://docs.apify.com/sdk/python/) with any other Python library. Add or modify the agent and tools in the [agents.py](pydanticai_template/agents.py) file.
 
 
 ## Getting started
@@ -82,5 +82,5 @@ To learn more about Apify, Actors and PydanticAI take a look at the following re
 - [AI agent architecture](https://blog.apify.com/ai-agent-architecture)
 - [What are AI agents](https://blog.apify.com/what-are-ai-agents/)
 - [How to build and monetize an AI agent on Apify](https://blog.apify.com/how-to-build-an-ai-agent/)
-- [PydanticAI documentation](https://ai.pydantic.dev/) 
+- [PydanticAI documentation](https://ai.pydantic.dev/)
 - [PydanticAI on GitHub](https://github.com/pydantic/pydantic-ai)

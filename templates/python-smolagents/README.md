@@ -19,7 +19,7 @@ This Actor works as an AI-powered news aggregator:
 
 ## Modifying the Agent
 
-- You can modify the `src/main.py` file to adjust the query structure or change how the results are summarized.
+- You can modify the `smolagents_template/main.py` file to adjust the query structure or change how the results are summarized.
 - If needed, you can replace the `DuckDuckGo` search tool with another search API.
 - Update the prompt used for summarization to fine-tune the output.
 

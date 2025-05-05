@@ -25,8 +25,8 @@
                 "getting_started_python"
             ],
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "start_template/main.py",
+                "start_template/__main__.py"
             ],
             "useCases": [
                 "STARTER",
@@ -53,8 +53,8 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "beautifulsoup_template/main.py",
+                "beautifulsoup_template/__main__.py"
             ],
             "useCases": [
                 "WEB_SCRAPING"
@@ -80,8 +80,8 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "playwright_template/main.py",
+                "playwright_template/__main__.py"
             ],
             "useCases": [
                 "WEB_SCRAPING"
@@ -107,8 +107,8 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "selenium_template/main.py",
+                "selenium_template/__main__.py"
             ],
             "useCases": [
                 "WEB_SCRAPING"
@@ -127,8 +127,8 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "empty_template/main.py",
+                "empty_template/__main__.py"
             ],
             "useCases": [
                 "WEB_SCRAPING"
@@ -148,8 +148,8 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "standby_template/main.py",
+                "standby_template/__main__.py"
             ],
             "useCases": [
                 "STARTER"
@@ -208,8 +208,8 @@
                 "getting_started_crawlee_beautifulsoup"
             ],
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "beautifulsoup_crawler/main.py",
+                "beautifulsoup_crawler/__main__.py"
             ],
             "useCases": [
                 "STARTER",
@@ -239,8 +239,8 @@
                 "getting_started_crawlee_playwright"
             ],
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "playwright_crawler/main.py",
+                "playwright_crawler/__main__.py"
             ],
             "useCases": [
                 "STARTER",
@@ -263,8 +263,8 @@
                 "timeoutSecs": 600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/tools.py"
+                "langgraph_template/main.py",
+                "langgraph_template/tools.py"
             ],
             "useCases": [
                 "AI"
@@ -287,8 +287,8 @@
                 "timeoutSecs": 600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/tools.py"
+                "crewai_template/main.py",
+                "crewai_template/tools.py"
             ],
             "useCases": [
                 "AI"
@@ -310,9 +310,9 @@
                 "timeoutSecs": 600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/agent.py",
-                "src/tools.py"
+                "llamaindex_template/main.py",
+                "llamaindex_template/agent.py",
+                "llamaindex_template/tools.py"
             ],
             "useCases": [
                 "AI"
@@ -334,8 +334,8 @@
                 "timeoutSecs": 60
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/agents.py"
+                "pydanticai_template/main.py",
+                "pydanticai_template/agents.py"
             ],
             "useCases": [
                 "AI"
@@ -357,8 +357,8 @@
                 "timeoutSecs": 60
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
+                "smolagents_template/main.py",
+                "smolagents_template/__main__.py"
             ],
             "useCases": [
                 "AI"

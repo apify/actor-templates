@@ -12,7 +12,7 @@ import os
 
 from apify import Actor
 
-from src.agents import Deps, get_joker_agent
+from .agents import Deps, get_joker_agent
 
 
 async def main() -> None:

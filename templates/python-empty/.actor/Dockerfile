@@ -26,7 +26,7 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python3 -m compileall -q src/
+RUN python3 -m compileall -q empty_template/
 
 # Create and run as a non-root user.
 RUN useradd --create-home apify && \

@@ -29,5 +29,4 @@ COPY . ./
 RUN python3 -m compileall -q playwright_crawler/
 
 # Specify how to launch the source code of your Actor.
-# By default, the "python3 -m src" command is run
 CMD ["python3", "-m", "playwright_crawler"]
