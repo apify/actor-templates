@@ -11,7 +11,7 @@ import sys
 from io import TextIOWrapper
 
 from apify import Actor
-from smolagents import CodeAgent, DuckDuckGoSearchTool, OpenAIServerModel
+from smolagents import CodeAgent, OpenAIServerModel, WebSearchTool
 
 # Configure stdout to use UTF-8 encoding for proper unicode support
 if hasattr(sys.stdout, 'reconfigure'):
@@ -51,7 +51,7 @@ async def main() -> None:
         )
 
         # Create the search tool and AI agent
-        search_tool = DuckDuckGoSearchTool()
+        search_tool = WebSearchTool()
         agent = CodeAgent(tools=[search_tool], model=model)
 
         # Construct a query using user-defined interests
