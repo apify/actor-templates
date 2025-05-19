@@ -58,7 +58,7 @@ export async function stdioToSse(args: StdioToSseArgs) {
     const app = express();
 
     app.use((req, res, next) => {
-        // Handle Apify stabdby readiness probe
+        // Handle Apify standby readiness probe
         if (req.headers['x-apify-container-server-readiness-probe']) {
             res.writeHead(200);
             res.end('ok');
