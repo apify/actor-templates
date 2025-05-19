@@ -8,7 +8,7 @@
  */
 
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
-import { Actor } from 'apify';
+import { Actor, log } from 'apify';
 import { stdioToSse } from './lib/server.js';
 import { getLogger } from './lib/getLogger.js';
 
@@ -38,7 +38,9 @@ await Actor.charge({ eventName: 'actor-start' });
 
 if (!STANDBY_MODE) {
     // If the Actor is not in standby mode, we should not run the MCP server
-    await Actor.fail('This actor is not meant to be run directly. It should be run in standby mode.');
+    const msg = 'This actor is not meant to be run directly. It should be run in standby mode.';
+    log.error(msg);
+    await Actor.exit({ statusMessage: msg });
 }
 
 const logger = getLogger({

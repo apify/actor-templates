@@ -17,7 +17,7 @@
     "completion-request": {
         "eventTitle": "Price for completing a completion request",
         "eventDescription": "Flat fee for completing a completion request.",
-        "eventPriceUsd": 0.01
+        "eventPriceUsd": 0.001
     },
     "resource-request": {
         "eventTitle": "Price for completing a resource request",
@@ -27,6 +27,6 @@
     "list-request": {
         "eventTitle": "Price for completing a list request",
         "eventDescription": "Flat fee for completing a list request.",
-        "eventPriceUsd": 0.01
+        "eventPriceUsd": 0.001
     }
 }

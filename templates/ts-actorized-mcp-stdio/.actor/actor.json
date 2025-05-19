@@ -11,7 +11,7 @@
 	},
 	"input": {
         "title": "Actor input schema",
-        "description": "This is actor input schema",
+        "description": "This is Actor input schema",
         "type": "object",
         "schemaVersion": 1,
         "properties": {},
