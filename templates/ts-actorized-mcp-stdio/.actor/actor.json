@@ -1,0 +1,21 @@
+{
+	"actorSpecification": 1,
+	"name": "ts-actorized-mcp-stdio",
+	"title": "Actorized STDIO MCP server",
+	"description": "Actorized STDIO Model Context Protocol server.",
+	"version": "0.0",
+	"buildTag": "latest",
+	"usesStandbyMode": true,
+	"meta": {
+		"templateId": "ts-actorized-mcp-stdio"
+	},
+	"input": {
+        "title": "Actor input schema",
+        "description": "This is actor input schema",
+        "type": "object",
+        "schemaVersion": 1,
+        "properties": {},
+        "required": []
+    },
+	"dockerfile": "./Dockerfile"
+}
