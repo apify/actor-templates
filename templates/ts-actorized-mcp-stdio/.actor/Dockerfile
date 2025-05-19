@@ -53,7 +53,7 @@ RUN npm --quiet set progress=false \
 # TODO: Install the MCP server you are actually using
 RUN uv tool install arxiv-mcp-server
 
-# Tell Node.js this is a production environemnt
+# Tell Node.js this is a production environment
 ENV NODE_ENV=production
 
 # Enable Node.js process to use a lot of memory (Actor has limit of 32GB)
