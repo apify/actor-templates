@@ -1,4 +1,4 @@
-## Actorized STDIO MCP server template
+## MCP server template
 
 A template for running and monetizing a [Model Context Protocol](https://modelcontextprotocol.io) server over [STDIO](https://modelcontextprotocol.io/docs/concepts/transports#standard-input%2Foutput-stdio) on [Apify platform](https://docs.apify.com/platform).
 This allows you to run any STDIO MCP server as a [standby Actor](https://docs.apify.com/platform/actors/development/programming-interface/standby) and connect via [SSE transport](https://modelcontextprotocol.io/docs/concepts/transports#server-sent-events-sse) with an [MCP client](https://modelcontextprotocol.io/clients).
