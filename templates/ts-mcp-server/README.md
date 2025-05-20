@@ -1,6 +1,7 @@
 ## Actorized STDIO MCP server template
 
-A template for [Actorizing](https://docs.apify.com/platform/actors) a [STDIO](https://modelcontextprotocol.io/docs/concepts/transports#standard-input%2Foutput-stdio) [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server. This allows you to run any STDIO MCP server as a [standby Actor](https://docs.apify.com/platform/actors/development/programming-interface/standby) and connect via [SSE transport](https://modelcontextprotocol.io/docs/concepts/transports#server-sent-events-sse) with an [MCP client](https://modelcontextprotocol.io/clients).
+A template for running and monetizing a [Model Context Protocol](https://modelcontextprotocol.io) server over [STDIO](https://modelcontextprotocol.io/docs/concepts/transports#standard-input%2Foutput-stdio) on [Apify platform](https://docs.apify.com/platform).
+This allows you to run any STDIO MCP server as a [standby Actor](https://docs.apify.com/platform/actors/development/programming-interface/standby) and connect via [SSE transport](https://modelcontextprotocol.io/docs/concepts/transports#server-sent-events-sse) with an [MCP client](https://modelcontextprotocol.io/clients).
 
 ## How to use
 
@@ -39,6 +40,11 @@ To set up the PPE model for this Actor:
 
 ## Resources
 
-- [Model Context Protocol](https://modelcontextprotocol.io)
+- [What is Anthropic's Model Context Protocol?](https://blog.apify.com/what-is-model-context-protocol/)
+- [How to use MCP with Apify Actors](https://blog.apify.com/how-to-use-mcp/)
+- [Apify MCP server](https://mcp.apify.com)
+- [Apify MCP server documentation](https://docs.apify.com/platform/integrations/mcp)
+- [Apify MCP client](https://apify.com/jiri.spilka/tester-mcp-client)
+- [Model Context Protocol documentation](https://modelcontextprotocol.io)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)

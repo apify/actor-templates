@@ -23,7 +23,8 @@ import { getLogger } from './lib/getLogger.js';
 const MCP_COMMAND = 'uv tool run arxiv-mcp-server';
 
 // Check if the Actor is running in standby mode
-const STANDBY_MODE = Actor.getEnv().metaOrigin === 'STANDBY';
+const STANDBY_MODE = process.env.APIFY_META_ORIGIN === 'STANDBY';
+const SERVER_PORT = parseInt(process.env.ACTOR_WEB_SERVER_PORT || '', 10);
 
 // Logger configuration
 const LOG_LEVEL = 'info';
@@ -38,7 +39,7 @@ await Actor.charge({ eventName: 'actor-start' });
 
 if (!STANDBY_MODE) {
     // If the Actor is not in standby mode, we should not run the MCP server
-    const msg = 'This actor is not meant to be run directly. It should be run in standby mode.';
+    const msg = 'This Actor is not meant to be run directly. It should be run in standby mode.';
     log.error(msg);
     await Actor.exit({ statusMessage: msg });
 }
@@ -48,7 +49,7 @@ const logger = getLogger({
     outputTransport: OUTPUT_TRANSPORT,
 });
 await stdioToSse({
-    port: Actor.config.get('standbyPort'),
+    port: SERVER_PORT,
     stdioCmd: MCP_COMMAND,
     logger,
 });
