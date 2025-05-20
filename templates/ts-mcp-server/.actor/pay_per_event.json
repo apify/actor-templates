@@ -1,0 +1,32 @@
+{
+    "actor-start": {
+        "eventTitle": "Price for Actor start",
+        "eventDescription": "Flat fee for starting an Actor run.",
+        "eventPriceUsd": 0.1
+    },
+    "tool-request": {
+        "eventTitle": "Price for completing a tool request",
+        "eventDescription": "Flat fee for completing a tool request.",
+        "eventPriceUsd": 0.05
+    },
+    "prompt-request": {
+        "eventTitle": "Price for completing a prompt request",
+        "eventDescription": "Flat fee for completing a prompt request.",
+        "eventPriceUsd": 0.01
+    },
+    "completion-request": {
+        "eventTitle": "Price for completing a completion request",
+        "eventDescription": "Flat fee for completing a completion request.",
+        "eventPriceUsd": 0.001
+    },
+    "resource-request": {
+        "eventTitle": "Price for completing a resource request",
+        "eventDescription": "Flat fee for completing a resource request.",
+        "eventPriceUsd": 0.025
+    },
+    "list-request": {
+        "eventTitle": "Price for completing a list request",
+        "eventDescription": "Flat fee for completing a list request.",
+        "eventPriceUsd": 0.001
+    }
+}

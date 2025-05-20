@@ -1,0 +1,21 @@
+{
+	"actorSpecification": 1,
+	"name": "ts-mcp-server",
+	"title": "TypeScript MCP server",
+	"description": "TypeScript Model Context Protocol server.",
+	"version": "0.0",
+	"buildTag": "latest",
+	"usesStandbyMode": true,
+	"meta": {
+		"templateId": "ts-mcp-server"
+	},
+	"input": {
+        "title": "Actor input schema",
+        "description": "This is Actor input schema",
+        "type": "object",
+        "schemaVersion": 1,
+        "properties": {},
+        "required": []
+    },
+	"dockerfile": "./Dockerfile"
+}

@@ -905,6 +905,25 @@
             "useCases": [
                 "AI"
             ]
+        },        {
+            "id": "ts-mcp-server",
+            "name": "ts-mcp-server",
+            "label": "TypeScript MCP server",
+            "category": "typescript",
+            "technologies": [
+                "mcp"
+            ],
+            "description": "Example of how to Actorize a STDIO Model Context Protocol server.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-server.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 600
+            },
+            "showcaseFiles": [
+                "src/main.ts",
+                "src/billing.ts"
+            ]
         },
         {
             "id": "cli-start",
