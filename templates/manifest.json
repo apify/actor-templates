@@ -923,9 +923,6 @@
             "showcaseFiles": [
                 "src/main.ts",
                 "src/billing.ts"
-            ],
-            "useCases": [
-                "AI"
             ]
         },
         {
