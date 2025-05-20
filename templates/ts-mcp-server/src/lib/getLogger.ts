@@ -11,7 +11,7 @@ const log = (
       formatArgs?: typeof defaultFormatArgs
     } = { formatArgs: defaultFormatArgs },
 // eslint-disable-next-line no-console
-) => (...args: unknown[]) => console.log('[Actorized MCP]', ...formatArgs(args));
+) => (...args: unknown[]) => console.log('[MCP]', ...formatArgs(args));
 
 const logStderr = (
     {
@@ -20,7 +20,7 @@ const logStderr = (
       formatArgs?: typeof defaultFormatArgs
     } = { formatArgs: defaultFormatArgs },
 // eslint-disable-next-line no-console
-) => (...args: unknown[]) => console.error('[Actorized MCP]', ...formatArgs(args));
+) => (...args: unknown[]) => console.error('[MCP]', ...formatArgs(args));
 
 const noneLogger: Logger = {
     info: () => {},

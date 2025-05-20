@@ -15,7 +15,7 @@ export function getVersion(): string {
         return packageJson.version || '1.0.0';
     } catch (err) {
         // eslint-disable-next-line no-console
-        console.error('[Actorized MCP]', 'Unable to retrieve version:', err);
+        console.error('[MCP]', 'Unable to retrieve version:', err);
         return 'unknown';
     }
 }

@@ -46,7 +46,7 @@ export async function stdioToSse(args: StdioToSseArgs) {
     });
 
     const server = new Server(
-        { name: 'Actorized MCP', version: getVersion() },
+        { name: 'MCP', version: getVersion() },
         { capabilities: {} },
     );
 
