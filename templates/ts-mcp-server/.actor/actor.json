@@ -1,13 +1,13 @@
 {
 	"actorSpecification": 1,
-	"name": "ts-actorized-mcp-stdio",
-	"title": "Actorized STDIO MCP server",
-	"description": "Actorized STDIO Model Context Protocol server.",
+	"name": "ts-mcp-server",
+	"title": "TypeScript MCP server",
+	"description": "TypeScript Model Context Protocol server.",
 	"version": "0.0",
 	"buildTag": "latest",
 	"usesStandbyMode": true,
 	"meta": {
-		"templateId": "ts-actorized-mcp-stdio"
+		"templateId": "ts-mcp-server"
 	},
 	"input": {
         "title": "Actor input schema",

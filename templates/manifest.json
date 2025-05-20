@@ -906,15 +906,15 @@
                 "AI"
             ]
         },        {
-            "id": "ts-actorized-mcp-stdio",
-            "name": "ts-actorized-mcp-stdio",
-            "label": "Actorized STDIO MCP server",
+            "id": "ts-mcp-server",
+            "name": "ts-mcp-server",
+            "label": "TypeScript MCP server",
             "category": "typescript",
             "technologies": [
                 "mcp"
             ],
             "description": "Example of how to Actorize a STDIO Model Context Protocol server.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-actorized-mcp-stdio.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-server.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
