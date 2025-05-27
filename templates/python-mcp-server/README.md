@@ -3,7 +3,7 @@
 A Python template for deploying and monetizing a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server in the cloud using the [Apify platform](https://docs.apify.com/platform/actors).
 
 This template enables you to:
-- Deploy any Python stdio MCP server (like [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)) to Apify
+- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)) to Apify
 - Connect to any remote MCP server via SSE transport
 - Expose your MCP server via Server-Sent Events (SSE) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
@@ -35,7 +35,7 @@ This template enables you to:
    )
    ```
 
-2. Deploy to Apify and enable standby mode
+2. Deploy to Apify and enable standby mode.
 3. Connect using an MCP client:
    ```json
    {
@@ -76,9 +76,9 @@ await Actor.charge('tool-call')    # Charge for tool execution
 ```
 
 To set up the PPE model:
-1. Go to your Actor's **Monetization settings**
-2. Set the **Pricing model** to `Pay per event`
-3. Add the pricing schema (see [pay_per_event.json](.actor/pay_per_event.json) for a complete example)
+1. Go to your Actor's **Publication settings**.
+2. Set the **Pricing model** to `Pay per event`.
+3. Add the pricing schema (see [pay_per_event.json](.actor/pay_per_event.json) for a complete example).
 
 ## 🔧 How It Works
 
@@ -131,4 +131,3 @@ Each operation can be configured for charging in the PPE model.
 - [Model Context Protocol documentation](https://modelcontextprotocol.io)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
-
