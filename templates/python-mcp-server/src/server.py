@@ -101,37 +101,31 @@ class ProxyServer:
 
     async def _run_server(self, app: 'Starlette') -> None:
         """Run the Starlette app with uvicorn."""
-        config_ = uvicorn.Config(app, host=self.host, port=self.port)
+        config_ = uvicorn.Config(
+            app,
+            host=self.host,
+            port=self.port,
+            log_level='info',
+            access_log=True,
+        )
         server = uvicorn.Server(config_)
         await server.serve()
+
+    async def _initialize_and_run_server(self, client_session_factory, **client_params):
+        """Helper function to initialize and run the server."""
+        async with client_session_factory(**client_params) as streams, ClientSession(*streams) as session:
+            mcp_server = await create_proxy_server(session)
+            app = await self.create_starlette_app(mcp_server)
+            await self._run_server(app)
 
     async def start(self):
         """Start Starlette app (SSE server) and connect to stdio or SSE based MCP server."""
         logger.info(f'Starting MCP server with client type: {self.server_type} and config {self.config}')
 
         if self.server_type == ServerType.STDIO:
-            async with stdio_client(self.config) as streams, ClientSession(*streams) as session:
-                mcp_server = await create_proxy_server(session)
-                app = await self.create_starlette_app(mcp_server)
-                await self._run_server(app)
+            logger.info(f'Starting and connecting to stdio based MCP server with config {self.config}')
+            await self._initialize_and_run_server(stdio_client, server=self.config)
         elif self.server_type == ServerType.SSE:
+            logger.info(f'Connecting to SSE based MCP server with config {self.config}')
             params = self.config.model_dump(exclude_unset=True)
-            async with sse_client(**params) as streams, ClientSession(*streams) as session:
-                mcp_server = await create_proxy_server(session)
-                app = await self.create_starlette_app(mcp_server)
-                await self._run_server(app)
-
-
-async def run():
-    server_params = StdioServerParameters(
-        command='uv',
-        args=['tool', 'run', 'arxiv-mcp-server'],
-    )
-    proxy_server = ProxyServer(server_params, 'localhost', 5001)
-    await proxy_server.start()
-
-
-if __name__ == '__main__':
-    import asyncio
-
-    asyncio.run(run())
+            await self._initialize_and_run_server(sse_client, **params)

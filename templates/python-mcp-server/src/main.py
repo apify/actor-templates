@@ -13,7 +13,7 @@ import os
 
 from apify import Actor
 
-from .server import ProxyServer, StdioServerParameters
+from .server import ProxyServer
 
 STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
 HOST = Actor.is_at_home() and os.environ.get('ACTOR_STANDBY_URL') or 'localhost'
@@ -23,14 +23,18 @@ PORT = Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT')) or 5001
 # EDIT THIS SECTION ------------------------------------------------------------
 # Configuration constants - You need to override these values
 # 1) For stdio server type, you need to provide the command and args
+from mcp.client.stdio import StdioServerParameters
+
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['tool', 'run', 'arxiv-mcp-server'],
 )
 
 # 2) For SSE server type, you need to provide the url
+# from .models import SseServerParameters
+#
 # MCP_SERVER_PARAMS = SseServerParameters(
-#     url='https://your-remote-server-url/sse',
+#     url='http://localhost:3001/sse',
 # )
 # ------------------------------------------------------------------------------
 
