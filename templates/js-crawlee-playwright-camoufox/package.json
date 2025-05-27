@@ -20,10 +20,10 @@
     },
     "scripts": {
         "start": "node src/main.js",
-        "format": "prettier --write ./src",
-        "format:check": "prettier --check ./src",
-        "lint": "eslint ./src",
-        "lint:fix": "eslint ./src --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
         "postinstall": "npx camoufox-js fetch"
     },
