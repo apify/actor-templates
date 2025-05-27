@@ -1,32 +1,43 @@
 """
-ArXiv MCP Server - main entry point for the Apify Actor.
+MCP Server - main entry point for the Apify Actor.
 
-This file serves as the entry point for the ArXiv MCP Server Actor.
-It sets up a proxy server that forwards requests to the locally running
-ArXiv MCP server, which provides a Model Context Protocol (MCP) interface
-for AI assistants to search and access arXiv papers.
+This file serves as the entry point for the MCP Server Actor.
+
+It sets up a proxy server that forwards requests to different types of MCP servers (stdio or SSE) while providing a unified SSE interface.
+
+You need to override the MCP_SERVER_TYPE and MCP_SERVER_CONFIG variables to configure the MCP server.
 """
 
-import os
 import asyncio
-import logging
+import os
 
 from apify import Actor
+from .server import ServerType, ProxyServer, StdioServerParameters, SseServerParameters
 
-# Configuration constants for the MCP server
-# TODO: Replace with the actual command to run the MCP server
-MCP_COMMAND = 'uv tool run arxiv-mcp-server'
-
-# Check if the Actor is running in standby mode
 STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
-SERVER_PORT = int(os.environ.get('ACTOR_WEB_SERVER_PORT', '8000'))
+HOST = Actor.is_at_home() and os.environ.get('ACTOR_STANDBY_URL') or 'localhost'
+PORT = Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT')) or 5001
 
-# Logger configuration
-LOG_LEVEL = logging.getLevelName(os.environ.get('INFO'))
-OUTPUT_TRANSPORT = 'sse'
+
+# EDIT THIS SECTION ------------------------------------------------------------
+# Configuration constants - You need to override these values
+# 1) For stdio server type, you need to provide the command and args
+MCP_SERVER_TYPE = ServerType.STDIO
+MCP_SERVER_PARAMS = StdioServerParameters(
+    command='uv',
+    args=['tool', 'run', 'arxiv-mcp-server'],
+)
+
+# 2) For SSE server type, you need to provide the url
+# MCP_SERVER_TYPE = ServerType.SSE
+# MCP_SERVER_PARAMS = SseServerParameters(
+#     url='https://your-remote-server-url/sse',
+# )
+# ------------------------------------------------------------------------------
+
 
 async def main() -> None:
-    """Define a main entry point for the Apify Actor."""
+    """Main entry point for the MCP Server Actor."""
     async with Actor:
         # Initialize and charge
         Actor.log.info('Starting MCP Server Actor')
@@ -38,13 +49,30 @@ async def main() -> None:
             await Actor.exit()
             return
 
-        from server import StdioToSse, StdioToSseArgs
-        server = StdioToSse(StdioToSseArgs(
-            stdio_cmd=MCP_COMMAND,
-            port=SERVER_PORT,
-            logger=Actor.log
-        ))
-        await server.start()
+        try:
+            # Choose server type and create appropriate parameters
+            if not MCP_SERVER_PARAMS:
+                raise ValueError('Server configuration must be provided')
+
+        except Exception as e:
+            Actor.log.error(f'Invalid server configuration: {e}')
+            await Actor.exit()
+            raise
+
+        try:
+            # Create and start the server
+            Actor.log.info(f'Starting MCP proxy server')
+            Actor.log.info(f'  - server type: {MCP_SERVER_TYPE}')
+            Actor.log.info(f'  - server config: {MCP_SERVER_PARAMS}')
+            Actor.log.info(f'  - host: {HOST}')
+            Actor.log.info(f'  - port: {PORT}')
+
+            proxy_server = ProxyServer(MCP_SERVER_TYPE, MCP_SERVER_PARAMS, HOST, PORT)
+            await proxy_server.start()
+        except Exception as e:
+            Actor.log.error(f'Server failed to start: {e}')
+            await Actor.exit()
+            raise
 
 if __name__ == '__main__':
     asyncio.run(main())

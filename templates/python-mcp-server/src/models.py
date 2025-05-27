@@ -6,9 +6,8 @@ from mcp.client.stdio import StdioServerParameters
 from pydantic import BaseModel, ConfigDict
 
 
-class ClientType(str, Enum):
-    """Type of client connection."""
-
+class ServerType(str, Enum):
+    """Type of server to connect."""
     STDIO = 'stdio'  # Connect to a stdio server
     SSE = 'sse'  # Connect to an SSE server
 

@@ -12,8 +12,8 @@ from mcp.client.sse import sse_client
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.server import Server
 from mcp.server.sse import SseServerTransport
-from models import ClientType, ServerParameters, SseServerParameters
-from proxy_server import create_proxy_server
+from .models import ServerType, ServerParameters, SseServerParameters
+from .proxy_server import create_proxy_server
 from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
@@ -29,21 +29,26 @@ class ProxyServer:
     It then connects to stdio or SSE based MCP servers and forwards the messages to the client.
     """
 
-    def __init__(self, client_type: ClientType, config: ServerParameters):
-        self.client_type: ClientType = client_type
+    def __init__(self, client_type: ServerType, config: ServerParameters, host: str, port: int):
+        self.server_type: ServerType = client_type
         self.config = self._validate_config(client_type, config)
         self.path_sse: str = '/sse'
         self.path_message: str = '/message'
+        self.host: str = host
+        self.port: int = port
 
     @staticmethod
-    def _validate_config(client_type: ClientType, config: ServerParameters) -> ServerParameters:
+    def _validate_config(client_type: ServerType, config: ServerParameters) -> ServerParameters:
         """Validate and return the appropriate server parameters."""
-        if client_type == ClientType.STDIO:
-            return StdioServerParameters.model_validate(config)
-        elif client_type == ClientType.SSE:
-            return SseServerParameters.model_validate(config)
-        else:
-            raise ValueError(f'Invalid client type: {client_type}')
+        try:
+            if client_type == ServerType.STDIO:
+                return StdioServerParameters.model_validate(config)
+            elif client_type == ServerType.SSE:
+                return SseServerParameters.model_validate(config)
+            else:
+                raise ValueError(f'Invalid client type: {client_type}')
+        except Exception as e:
+            raise ValueError(f'Invalid server configuration: {e}')
 
     @staticmethod
     async def create_starlette_app(mcp_server: Server) -> 'Starlette':
@@ -93,49 +98,40 @@ class ProxyServer:
             ],
         )
 
-    @staticmethod
-    async def _run_server(app: 'Starlette') -> None:
+    async def _run_server(self, app: 'Starlette') -> None:
         """Run the Starlette app with uvicorn."""
-        config_ = uvicorn.Config(app, host='localhost', port=50001)
+        config_ = uvicorn.Config(app, host=self.host, port=self.port)
         server = uvicorn.Server(config_)
         await server.serve()
 
     async def start(self):
         """Start Starlette app (SSE server) and connect to stdio or SSE based MCP server."""
-        logger.info(f'Starting MCP server with client type: {self.client_type}')
-        client = stdio_client if self.client_type == ClientType.STDIO else sse_client
-        client_params = self.config.model_dump() if self.client_type == ClientType.SSE else self.config
+        logger.info(f'Starting MCP server with client type: {self.server_type} and config {self.config}')
 
-        async with client(**client_params) as streams, ClientSession(*streams) as session:
-            mcp_server = await create_proxy_server(session)
-            app = await self.create_starlette_app(mcp_server)
-            await self._run_server(app)
+        if self.server_type == ServerType.STDIO:
+            async with stdio_client(self.config) as streams, ClientSession(*streams) as session:
+                mcp_server = await create_proxy_server(session)
+                app = await self.create_starlette_app(mcp_server)
+                await self._run_server(app)
+        elif self.server_type == ServerType.SSE:
+            params = self.config.model_dump(exclude_unset=True)
+            async with sse_client(**params) as streams, ClientSession(*streams) as session:
+                mcp_server = await create_proxy_server(session)
+                app = await self.create_starlette_app(mcp_server)
+                await self._run_server(app)
 
 
 async def run():
-    # Choose which server mode to run
-    # asyncio.run(run_with_client())
-    # # Configuration for the remote MCP server
-    # config = {
-    #     'args': ['tool', 'run', 'arxiv-mcp-server'],
-    #     'env': {
-    #         'MCP_SERVER_NAME': 'arxiv-mcp-server',
-    #         'MCP_SERVER_DESCRIPTION': 'Arxiv MCP Server',
-    #         'MCP_SERVER_VERSION': '1.0.0',
-    #     },
-    # }
-    # server_params = StdioServerParameters(
-    #     command='uv',
-    #     args=config.get("args"),
-    #     env=config.get("env"),
-    # )
-    # proxy_server = ProxyServer(ClientType.STDIO, server_params)
-    # await proxy_server.start()
 
     server_params = SseServerParameters(
         url='http://localhost:3001/sse',
     )
-    proxy_server = ProxyServer(ClientType.SSE, server_params)
+    server_params = StdioServerParameters(
+        command= 'uv',
+        args= ['tool', 'run', 'arxiv-mcp-server'],
+    )
+
+    proxy_server = ProxyServer(ServerType.STDIO, server_params, 'localhost', 5001)
     await proxy_server.start()
 
 
