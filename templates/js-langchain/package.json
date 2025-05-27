@@ -17,14 +17,17 @@
     },
     "scripts": {
         "start": "node src/main.js",
-        "lint": "eslint ./src --ext .js,.jsx",
-        "lint:fix": "eslint ./src --ext .js,.jsx --fix",
+        "format": "prettier --write ./src",
+        "lint": "eslint ./src",
+        "lint:fix": "eslint ./src --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
     "license": "ISC",
     "devDependencies": {
-        "@apify/eslint-config": "^0.4.0",
-        "eslint": "^8.57.0"
+        "@apify/eslint-config": "^1.0.0",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "prettier": "^3.5.3"
     }
 }
