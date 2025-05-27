@@ -6,7 +6,7 @@ from starlette.routing import Mount, Route
 
 import logging
 from enum import Enum
-from typing import Callable
+from typing import Callable, TypeAlias
 
 import uvicorn
 
@@ -14,10 +14,10 @@ from mcp.client.session import ClientSession
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.sse import sse_client
 from mcp.server import Server
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Any, Optional, Dict, Literal
 import httpx
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 from proxy_server import create_proxy_server
 
@@ -27,6 +27,7 @@ class ClientType(str, Enum):
 
     STDIO = 'stdio'  # Connect to a stdio server
     SSE = 'sse'  # Connect to an SSE server
+
 
 
 # Configure logging
@@ -39,8 +40,11 @@ class SseServerParameters(BaseModel):
     headers: dict[str, Any] | None = None
     timeout: float = 5  # Default timeout for SSE connection
     sse_read_timeout: float = 60 * 5 # Default read timeout for SSE connection
-    auth: None = None
+    auth: httpx.Auth | None = None
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
+# Type alias for server parameters
+ServerParameters: TypeAlias = StdioServerParameters | SseServerParameters
 
 class ProxyServer:
     """Main class implementing the proxy functionality using MCP SDK.
@@ -48,7 +52,7 @@ class ProxyServer:
     This proxy server is used to connect to stdio or SSE based MCP servers.
     """
 
-    def __init__(self, client_type: ClientType, config: StdioServerParameters | SseServerParameters):
+    def __init__(self, client_type: ClientType, config: ServerParameters):
         self.config = config
         self.client_type: ClientType = client_type
         self.path_sse: str = '/sse'
@@ -66,12 +70,14 @@ class ProxyServer:
                 mcp_server = await create_proxy_server(session)
                 starlette_app = await self.create_starlette_app(mcp_server)
                 await self.run_server(starlette_app)
-        else:
+        elif self.client_type.value == ClientType.SSE.value:
             sse_params = SseServerParameters.model_validate(self.config).model_dump()
             async with sse_client(**sse_params) as streams, ClientSession(*streams) as session:
                 mcp_server = await create_proxy_server(session)
                 starlette_app = await self.create_starlette_app(mcp_server)
                 await self.run_server(starlette_app)
+        else:
+            raise ValueError(f'Invalid client type: {self.client_type}')
 
     async def create_starlette_app(self, app: Server) -> 'Starlette':
         """Create a Starlette app that serves the MCP server over SSE."""
@@ -122,8 +128,7 @@ async def run():
     # await proxy_server.start()
 
     server_params = SseServerParameters(
-        url = 'http://localhost:3001/sse',
-
+        url = 'http://localhost:3001/mcp',
     )
     proxy_server = ProxyServer(ClientType.SSE, server_params)
     await proxy_server.start()
