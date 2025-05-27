@@ -19,7 +19,7 @@ from .const import ChargeEvents
 logger = logging.getLogger(__name__)
 
 
-async def _charge_mcp_operation(
+async def charge_mcp_operation(
     charge_function: Optional[Callable[[str], None]],
     event_name: ChargeEvents,
 ) -> None:
@@ -58,14 +58,14 @@ async def create_proxy_server(
         logger.debug('Capabilities: adding Prompts...')
 
         async def _list_prompts(_: Any) -> types.ServerResult:  # noqa: ANN401
-            await _charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_LIST)
+            await charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_LIST)
             result = await client_session.list_prompts()
             return types.ServerResult(result)
 
         app.request_handlers[types.ListPromptsRequest] = _list_prompts
 
         async def _get_prompt(req: types.GetPromptRequest) -> types.ServerResult:
-            await _charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_GET)
+            await charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_GET)
             result = await client_session.get_prompt(req.params.name, req.params.arguments)
             return types.ServerResult(result)
 
@@ -75,7 +75,7 @@ async def create_proxy_server(
         logger.debug('Capabilities: adding Resources...')
 
         async def _list_resources(_: Any) -> types.ServerResult:  # noqa: ANN401
-            await _charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_LIST)
+            await charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_LIST)
             result = await client_session.list_resources()
             return types.ServerResult(result)
 
@@ -88,7 +88,7 @@ async def create_proxy_server(
         app.request_handlers[types.ListResourceTemplatesRequest] = _list_resource_templates
 
         async def _read_resource(req: types.ReadResourceRequest) -> types.ServerResult:
-            await _charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_READ)
+            await charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_READ)
             result = await client_session.read_resource(req.params.uri)
             return types.ServerResult(result)
 
@@ -122,14 +122,14 @@ async def create_proxy_server(
         logger.debug('Capabilities: adding Tools...')
 
         async def _list_tools(_: Any) -> types.ServerResult:  # noqa: ANN401
-            await _charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_LIST)
+            await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_LIST)
             tools = await client_session.list_tools()
             return types.ServerResult(tools)
 
         app.request_handlers[types.ListToolsRequest] = _list_tools
 
         async def _call_tool(req: types.CallToolRequest) -> types.ServerResult:
-            await _charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
+            await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
             try:
                 result = await client_session.call_tool(req.params.name, (req.params.arguments or {}))
                 return types.ServerResult(result)
