@@ -1,13 +1,14 @@
+import { ChatOpenAI } from '@langchain/openai';
 import { Actor, log } from 'apify';
+import { LangChainChatModel } from 'bee-agent-framework/adapters/langchain/backend/chat';
+import { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/chat';
 import { BeeAgent } from 'bee-agent-framework/agents/bee/agent';
 import { UnconstrainedMemory } from 'bee-agent-framework/memory/unconstrainedMemory';
 import { z } from 'zod';
-import { LangChainChatModel } from 'bee-agent-framework/adapters/langchain/backend/chat';
-import { ChatOpenAI } from '@langchain/openai';
-import { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/chat';
+
+import { StructuredOutputGenerator } from './structured_response_generator.js';
 import { CalculatorSumTool } from './tools/calculator.js';
 import { InstagramScrapeTool } from './tools/instagram.js';
-import { StructuredOutputGenerator } from './structured_response_generator.js';
 
 // This is an ESM project, and as such, it requires you to specify extensions in your relative imports.
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions

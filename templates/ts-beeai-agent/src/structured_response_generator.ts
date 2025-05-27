@@ -1,6 +1,6 @@
-import { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/chat';
+import type { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/chat';
 import { Message } from 'bee-agent-framework/backend/message';
-import { ZodSchema } from 'zod';
+import type { ZodSchema } from 'zod';
 
 // Tool message interface
 interface ToolMemoryMessage {

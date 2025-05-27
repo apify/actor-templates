@@ -1,14 +1,15 @@
 {
     "extends": "@apify/tsconfig",
     "compilerOptions": {
-        "module": "CommonJS",
-        "target": "ES2020",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ESNext",
         "outDir": "dist",
         "noUnusedLocals": false,
         "skipLibCheck": true,
         "lib": ["DOM"]
     },
     "include": [
-        "./src/**/*"
+        "./**/*"
     ]
 }

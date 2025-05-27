@@ -1,7 +1,8 @@
 import { ApifyClient, log } from 'apify';
 import { Emitter } from 'bee-agent-framework/emitter/emitter';
-import { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
-import { JSONToolOutput, Tool, ToolEmitter, ToolInput } from 'bee-agent-framework/tools/base';
+import type { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
+import type { ToolEmitter, ToolInput } from 'bee-agent-framework/tools/base';
+import { JSONToolOutput, Tool } from 'bee-agent-framework/tools/base';
 import { z } from 'zod';
 
 export interface InstagramPost {
@@ -27,9 +28,9 @@ interface InstagramScrapeToolOutput {
  * scraping posts from a given Instagram profile.
  */
 export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeToolOutput>> {
-    override name: string = 'instagram-scrape-profile-posts';
+    override name = 'instagram-scrape-profile-posts';
 
-    override description: string = 'Tool to scrape Instagram profile posts.';
+    override description = 'Tool to scrape Instagram profile posts.';
 
     override inputSchema(): Promise<AnyToolSchemaLike> | AnyToolSchemaLike {
         return z.object({

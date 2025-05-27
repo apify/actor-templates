@@ -1,4 +1,4 @@
-const templates = require('../src/index');
+const templates = require('../src/index.js');
 const localManifest = require('../templates/manifest.json');
 
 // This needs to match the valid programming languages of the CLI

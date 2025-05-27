@@ -1,10 +1,13 @@
+import { execSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+
 import { Actor } from 'apify';
+import type { Dictionary } from 'apify-client';
+
 import log from '@apify/log';
-import { Dictionary } from 'apify-client';
-import fs from 'fs';
-import path from 'path';
-import { execSync } from 'child_process';
-import { collectAttachmentPaths, transformToTabular } from './transform';
+
+import { collectAttachmentPaths, transformToTabular } from './transform.js';
 
 function ensureFolder(pathname: string) {
     if (!fs.existsSync(pathname)) {
@@ -57,7 +60,7 @@ function runTests() {
             encoding: 'utf8',
             stdio: 'inherit',
         });
-    } catch (e) {
+    } catch {
         // suppress error, the report will be generated anyway
     }
 }
@@ -87,31 +90,29 @@ function updateConfig(args: {
     fs.writeFileSync(getConfigPath(), config, { encoding: 'utf-8' });
 }
 
-(async () => {
-    await Actor.init();
-    const input = (await Actor.getInput() ?? {}) as Dictionary;
+await Actor.init();
+const input = (await Actor.getInput() ?? {}) as Dictionary;
 
-    ensureFolder(getResultDir());
-    updateConfig(input);
+ensureFolder(getResultDir());
+updateConfig(input);
 
-    runTests();
+runTests();
 
-    const kvs = await Actor.openKeyValueStore();
-    await kvs.setValue('report', fs.readFileSync(path.join(getResultDir(), 'index.html'), { encoding: 'utf-8' }), { contentType: 'text/html' });
-    const jsonReport = JSON.parse(fs.readFileSync(path.join(getResultDir(), 'test-results.json'), { encoding: 'utf-8' }));
-    const attachmentPaths = collectAttachmentPaths(jsonReport);
+const kvs = await Actor.openKeyValueStore();
+await kvs.setValue('report', fs.readFileSync(path.join(getResultDir(), 'index.html'), { encoding: 'utf-8' }), { contentType: 'text/html' });
+const jsonReport = JSON.parse(fs.readFileSync(path.join(getResultDir(), 'test-results.json'), { encoding: 'utf-8' }));
+const attachmentPaths = collectAttachmentPaths(jsonReport);
 
-    const attachmentLinks = await Promise.all(attachmentPaths.map(async (x) => {
-        const attachment = fs.readFileSync(x.path);
-        await kvs.setValue(x.key, attachment, { contentType: x.type ?? 'application/octet' });
-        return {...x, url: await kvs.getPublicUrl(x.key)};
-    }));
+const attachmentLinks = await Promise.all(attachmentPaths.map(async (x) => {
+    const attachment = fs.readFileSync(x.path);
+    await kvs.setValue(x.key, attachment, { contentType: x.type ?? 'application/octet' });
+    return {...x, url: kvs.getPublicUrl(x.key)};
+}));
 
-    await Actor.pushData(transformToTabular(jsonReport, attachmentLinks));
+await Actor.pushData(transformToTabular(jsonReport, attachmentLinks));
 
-    const reportURL = await kvs.getPublicUrl('report');
-    log.info('The test run has finished! The report is available in the Output tab or at the link below:');
-    console.log(reportURL);
+const reportURL = kvs.getPublicUrl('report');
+log.info('The test run has finished! The report is available in the Output tab or at the link below:');
+console.log(reportURL);
 
-    await Actor.exit();
-})();
+await Actor.exit();

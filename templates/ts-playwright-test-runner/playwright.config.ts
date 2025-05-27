@@ -4,6 +4,8 @@
 
 // Tweak your configuration through the Actor's input through the Apify console or directly in the `input.json` file.
 import { defineConfig } from '@playwright/test';
+
+// eslint-disable-next-line import/no-default-export
 export default defineConfig({
     timeout: 60000,
     use: {
