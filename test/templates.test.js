@@ -26,11 +26,11 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
 
 const checkSpawnResult = ({ status, stderr }) => {
-    expect(status).toBe(0);
-
     if (stderr?.toString()) {
         console.log('stderr', stderr?.toString());
     }
+
+    expect(status).toBe(0);
 };
 
 const checkCommonTemplateStructure = (templateId) => {
