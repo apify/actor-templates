@@ -1,53 +1,25 @@
 """
-This module implements a MCP server that can be used to connect to stdio or SSE based MCP servers.
+This module implements an MCP server that can be used to connect to stdio or SSE based MCP servers.
 
 Heavily inspired by: https://github.com/sparfenyuk/mcp-proxy
 """
 
-from starlette.requests import Request
-from mcp.server.sse import SseServerTransport
-from starlette.applications import Starlette
-from starlette.routing import Mount, Route
-
 import logging
-from starlette.responses import JSONResponse, Response
-from enum import Enum
-from typing import TypeAlias
 
 import uvicorn
-
 from mcp.client.session import ClientSession
-from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.sse import sse_client
+from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.server import Server
-from pydantic import BaseModel, ConfigDict
-from typing import Any
-import httpx
-
+from mcp.server.sse import SseServerTransport
+from models import ClientType, ServerParameters, SseServerParameters
 from proxy_server import create_proxy_server
-
-
-class ClientType(str, Enum):
-    """Type of client connection."""
-
-    STDIO = 'stdio'  # Connect to a stdio server
-    SSE = 'sse'  # Connect to an SSE server
-
+from starlette.applications import Starlette
+from starlette.requests import Request
+from starlette.responses import JSONResponse, Response
+from starlette.routing import Mount, Route
 
 logger = logging.getLogger('apify')
-
-
-class SseServerParameters(BaseModel):
-    url: str
-    headers: dict[str, Any] | None = None
-    timeout: float = 5  # Default timeout for SSE connection
-    sse_read_timeout: float = 60 * 5  # Default read timeout for SSE connection
-    auth: httpx.Auth | None = None
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-
-# Type alias for server parameters
-ServerParameters: TypeAlias = StdioServerParameters | SseServerParameters
 
 
 class ProxyServer:
@@ -165,6 +137,7 @@ async def run():
     )
     proxy_server = ProxyServer(ClientType.SSE, server_params)
     await proxy_server.start()
+
 
 if __name__ == '__main__':
     import asyncio
