@@ -5,6 +5,7 @@ Heavily inspired by: https://github.com/sparfenyuk/mcp-proxy
 """
 
 import logging
+from typing import Callable, Optional
 
 import uvicorn
 from mcp.client.session import ClientSession
@@ -28,15 +29,37 @@ class ProxyServer:
 
     This proxy is running Starlette app that exposes /sse and /messages/ endpoints.
     It then connects to stdio or SSE based MCP servers and forwards the messages to the client.
+
+    The server can optionally charge for operations using a provided charging function.
+    This is typically used in Apify Actors to charge users for MCP operations.
+    The charging function should accept an event name and optional parameters.
     """
 
-    def __init__(self, config: ServerParameters, host: str, port: int):
+    def __init__(
+        self,
+        config: ServerParameters,
+        host: str,
+        port: int,
+        actor_charge_function: Optional[Callable[[str, int], None]] = None,
+    ):
+        """Initialize the proxy server.
+
+        Args:
+            config: Server configuration (stdio or SSE parameters)
+            host: Host to bind the server to
+            port: Port to bind the server to
+            actor_charge_function: Optional function to charge for operations.
+                           Should accept (event_name: str, count: int).
+                           Typically, Actor.charge in Apify Actors.
+                           If None, no charging will occur.
+        """
         self.server_type = ServerType.STDIO if isinstance(config, StdioServerParameters) else ServerType.SSE
         self.config = self._validate_config(self.server_type, config)
         self.path_sse: str = '/sse'
         self.path_message: str = '/message'
         self.host: str = host
         self.port: int = port
+        self.actor_charge_function = actor_charge_function
 
     @staticmethod
     def _validate_config(client_type: ServerType, config: ServerParameters) -> ServerParameters:
@@ -114,7 +137,7 @@ class ProxyServer:
     async def _initialize_and_run_server(self, client_session_factory, **client_params):
         """Helper function to initialize and run the server."""
         async with client_session_factory(**client_params) as streams, ClientSession(*streams) as session:
-            mcp_server = await create_proxy_server(session)
+            mcp_server = await create_proxy_server(session, self.actor_charge_function)
             app = await self.create_starlette_app(mcp_server)
             await self._run_server(app)
 

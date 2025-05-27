@@ -3,7 +3,9 @@ MCP Server - main entry point for the Apify Actor.
 
 This file serves as the entry point for the MCP Server Actor.
 
-It sets up a proxy server that forwards requests to different types of MCP servers (stdio or SSE) while providing a unified SSE interface.
+It sets up a proxy server that forwards requests to different types of MCP servers (stdio or SSE)
+while providing a unified SSE interface. The server can optionally charge for operations using
+Apify's charging system.
 
 You need to override the MCP_SERVER_TYPE and MCP_SERVER_CONFIG variables to configure the MCP server.
 """
@@ -13,6 +15,7 @@ import os
 
 from apify import Actor
 
+from .const import ChargeEvents
 from .server import ProxyServer
 
 STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
@@ -40,11 +43,26 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 
 
 async def main() -> None:
-    """Main entry point for the MCP Server Actor."""
+    """Main entry point for the MCP Server Actor.
+
+    This function:
+    1. Initializes the Actor
+    2. Charges for Actor startup
+    3. Creates and starts the proxy server
+    4. Configures charging for MCP operations using Actor.charge
+
+    The proxy server will charge for different MCP operations like:
+    - Tool calls
+    - Prompt operations
+    - Resource access
+    - List operations
+
+    Charging events are defined in .actor/pay_per_event.json
+    """
     async with Actor:
-        # Initialize and charge
+        # Initialize and charge for Actor startup
         Actor.log.info('Starting MCP Server Actor')
-        await Actor.charge('actor-start')
+        await Actor.charge(ChargeEvents.ACTOR_START.value)
 
         if not STANDBY_MODE:
             msg = 'This Actor is not meant to be run directly. It should be run in standby mode.'
@@ -53,12 +71,14 @@ async def main() -> None:
             return
 
         try:
-            # Create and start the server
+            # Create and start the server with charging enabled
             Actor.log.info(f'Starting MCP proxy server')
             Actor.log.info(f'  - proxy server host: {HOST}')
             Actor.log.info(f'  - proxy server port: {PORT}')
 
-            proxy_server = ProxyServer(MCP_SERVER_PARAMS, HOST, PORT)
+            # Pass Actor.charge to enable charging for MCP operations
+            # The proxy server will use this to charge for different operations
+            proxy_server = ProxyServer(MCP_SERVER_PARAMS, HOST, PORT, actor_charge_function=Actor.charge)
             await proxy_server.start()
         except Exception as e:
             Actor.log.error(f'Server failed to start: {e}')
