@@ -2,6 +2,7 @@ from enum import Enum
 from typing import Any, TypeAlias
 
 import httpx
+from mcp.client.stdio import StdioServerParameters
 from pydantic import BaseModel, ConfigDict
 
 
