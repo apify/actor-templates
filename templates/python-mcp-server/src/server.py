@@ -102,9 +102,7 @@ class ProxyServer:
             """Handle incoming SSE requests."""
             try:
                 async with transport.connect_sse(request.scope, request.receive, request._send) as streams:
-                    logger.info(f'Starting proxy server with name: {mcp_server.name}, version: {mcp_server.version}')
                     init_options = mcp_server.create_initialization_options()
-                    logger.info(f'Initialization options: {init_options}')
                     await mcp_server.run(streams[0], streams[1], init_options)
             except Exception as e:
                 logger.error(f'Error in SSE connection: {e}')
