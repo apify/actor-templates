@@ -68,6 +68,7 @@ class ProxyServer:
     @staticmethod
     def _validate_config(client_type: ServerType, config: ServerParameters) -> ServerParameters:
         """Validate and return the appropriate server parameters."""
+
         def validate_and_return() -> ServerParameters:
             if client_type == ServerType.STDIO:
                 return StdioServerParameters.model_validate(config)
