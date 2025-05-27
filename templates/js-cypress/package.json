@@ -14,13 +14,19 @@
         "globby": "^13.1.3"
     },
     "devDependencies": {
-        "@apify/eslint-config": "^0.4.0",
-        "eslint": "^8.50.0",
-        "eslint-plugin-cypress": "^2.15.1"
+        "@apify/eslint-config": "^1.0.0",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-plugin-cypress": "^4.3.0",
+        "prettier": "^3.5.3"
     },
     "scripts": {
         "cypress:open": "cypress open",
-        "start": "node ./src/main.js"
+        "start": "node ./src/main.js",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
     },
     "author": "It's not you it's me",
     "license": "ISC"

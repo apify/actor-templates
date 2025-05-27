@@ -1,4 +1,4 @@
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 import { Readable } from 'node:stream';
 import { finished } from 'node:stream/promises';
 
@@ -29,7 +29,9 @@ export async function cacheVectorIndex(config, indexPath) {
     const vectorIndexCacheStore = await Actor.openKeyValueStore(VECTOR_INDEX_CACHE_STORE_NAME);
     const packedVectorIndexStream = tar.c({}, [indexPath]);
 
-    await vectorIndexCacheStore.setValue(getIndexCacheKey(config), packedVectorIndexStream, { contentType: 'application/tar' });
+    await vectorIndexCacheStore.setValue(getIndexCacheKey(config), packedVectorIndexStream, {
+        contentType: 'application/tar',
+    });
 }
 
 /**
