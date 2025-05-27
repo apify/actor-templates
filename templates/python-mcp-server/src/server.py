@@ -1,237 +1,172 @@
 """
-Server implementation for ArXiv MCP Server.
-This module implements the stdioToSse functionality that bridges between HTTP clients
-and the MCP server process using Server-Sent Events (SSE).
+This module implements a MCP server that can be used to connect to stdio or SSE based MCP servers.
+
+Heavily inspired by: https://github.com/sparfenyuk/mcp-proxy
 """
 
-import asyncio
-import json
+from starlette.requests import Request
+from mcp.server.sse import SseServerTransport
+from starlette.applications import Starlette
+from starlette.routing import Mount, Route
+
 import logging
-from typing import Dict, Optional
-from dataclasses import dataclass
-from subprocess import Popen, PIPE
+from starlette.responses import JSONResponse, Response
+from enum import Enum
+from typing import TypeAlias
 
-from fastapi import FastAPI, Request, Response, HTTPException
-from fastapi.responses import JSONResponse
-from sse_starlette.sse import EventSourceResponse
-from pydantic import BaseModel
+import uvicorn
 
-from .billing import charge_message_request, MessageRequest as BillingMessageRequest
+from mcp.client.session import ClientSession
+from mcp.client.stdio import StdioServerParameters, stdio_client
+from mcp.client.sse import sse_client
+from mcp.server import Server
+from pydantic import BaseModel, ConfigDict
+from typing import Any
+import httpx
 
-app = FastAPI()
+from proxy_server import create_proxy_server
 
-@dataclass
-class Session:
-    """Represents an active SSE session."""
-    transport: EventSourceResponse
-    session_id: str
 
-class MessageRequest(BaseModel):
-    """Model for incoming message requests."""
-    method: str
-    # Add other fields as needed
+class ClientType(str, Enum):
+    """Type of client connection."""
 
-class StdioToSseArgs:
-    """Arguments for stdioToSse function."""
-    def __init__(
-        self,
-        stdio_cmd: str,
-        port: int,
-        base_url: str = '',
-        sse_path: str = '/sse',
-        message_path: str = '/message',
-        logger: logging.Logger = None
-    ):
-        self.stdio_cmd = stdio_cmd
-        self.port = port
-        self.base_url = base_url
-        self.sse_path = sse_path
-        self.message_path = message_path
-        self.logger = logger or logging.getLogger('apify')
+    STDIO = 'stdio'  # Connect to a stdio server
+    SSE = 'sse'  # Connect to an SSE server
 
-class StdioToSse:
-    """Main class implementing the stdioToSse functionality."""
 
-    def __init__(self, args: StdioToSseArgs):
-        self.args = args
-        self.app = FastAPI()
-        self.sessions: Dict[str, Session] = {}
-        self.child_process: Optional[Popen] = None
-        self._setup_routes()
+logger = logging.getLogger('apify')
 
-    def _setup_routes(self):
-        """Set up FastAPI routes for SSE and message endpoints."""
 
-        @self.app.get('/')
-        async def root():
-            """Root endpoint that provides information about available endpoints."""
-            return {
-                'message': 'MCP Server is running in standby mode',
-                'endpoints': {
-                    'sse': {
-                        'path': self.args.sse_path,
-                        'method': 'GET',
-                        'description': 'Server-Sent Events endpoint for streaming MCP server responses',
-                        'query_params': None,
-                        'example': f'curl -N http://localhost:{self.args.port}{self.args.sse_path}'
-                    },
-                    'message': {
-                        'path': self.args.message_path,
-                        'method': 'POST',
-                        'description': 'Send messages to the MCP server',
-                        'query_params': {
-                            'sessionId': 'Required. ID of the active SSE session'
-                        },
-                        'example': f'curl -X POST "http://localhost:{self.args.port}{self.args.message_path}?sessionId=123" -H "Content-Type: application/json" -d \'{{"method": "tools/search"}}\''
-                    }
-                },
-                'documentation': 'https://modelcontextprotocol.io/specification/2025-03-26/server'
-            }
+class SseServerParameters(BaseModel):
+    url: str
+    headers: dict[str, Any] | None = None
+    timeout: float = 5  # Default timeout for SSE connection
+    sse_read_timeout: float = 60 * 5  # Default read timeout for SSE connection
+    auth: httpx.Auth | None = None
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
-        @self.app.get(self.args.sse_path)
-        async def sse_endpoint(request: Request):
-            """Handle SSE connections."""
-            client_ip = request.client.host if request.client else 'unknown'
-            self.args.logger.info(f"New SSE connection from {client_ip}")
 
-            async def event_generator():
-                # Create a new session
-                session_id = str(len(self.sessions))
-                transport = EventSourceResponse(event_generator())
-                session = Session(transport=transport, session_id=session_id)
-                self.sessions[session_id] = session
+# Type alias for server parameters
+ServerParameters: TypeAlias = StdioServerParameters | SseServerParameters
 
-                try:
-                    # Keep the connection alive
-                    while True:
-                        if await request.is_disconnected():
-                            break
-                        await asyncio.sleep(1)
-                        yield {"event": "ping", "data": ""}
-                finally:
-                    self.args.logger.info(f"SSE connection closed (session {session_id})")
-                    if session_id in self.sessions:
-                        del self.sessions[session_id]
 
-            return EventSourceResponse(event_generator())
+class ProxyServer:
+    """Main class implementing the proxy functionality using MCP SDK.
 
-        @self.app.post(self.args.message_path)
-        async def message_endpoint(request: Request, message: MessageRequest):
-            """Handle incoming messages."""
-            session_id = request.query_params.get('sessionId')
-            if not session_id:
-                raise HTTPException(status_code=400, detail="Missing sessionId parameter")
+    This proxy is running Starlette app that exposes /sse and /messages/ endpoints.
+    It then connects to stdio or SSE based MCP servers and forwards the messages to the client.
+    """
 
-            if session_id not in self.sessions:
-                raise HTTPException(
-                    status_code=503,
-                    detail=f"No active SSE connection for session {session_id}"
+    def __init__(self, client_type: ClientType, config: ServerParameters):
+        self.client_type: ClientType = client_type
+        self.config = self._validate_config(client_type, config)
+        self.path_sse: str = '/sse'
+        self.path_message: str = '/message'
+
+    @staticmethod
+    def _validate_config(client_type: ClientType, config: ServerParameters) -> ServerParameters:
+        """Validate and return the appropriate server parameters."""
+        if client_type == ClientType.STDIO:
+            return StdioServerParameters.model_validate(config)
+        elif client_type == ClientType.SSE:
+            return SseServerParameters.model_validate(config)
+        else:
+            raise ValueError(f'Invalid client type: {client_type}')
+
+    @staticmethod
+    async def create_starlette_app(mcp_server: Server) -> 'Starlette':
+        """Create a Starlette app (SSE server) that exposes /sse and /messages/ endpoints."""
+        transport = SseServerTransport('/messages/')
+
+        async def handle_root(request: Request) -> Response:
+            """Handle root endpoint."""
+            # Handle Apify standby readiness probe
+            if 'x-apify-container-server-readiness-probe' in request.headers:
+                return Response(
+                    content=b'ok',
+                    media_type='text/plain',
+                    status_code=200,
                 )
 
-            # Charge for the request
-            await charge_message_request(BillingMessageRequest(method=message.method))
+            return JSONResponse(
+                {
+                    'status': 'running',
+                    'type': 'mcp-server',
+                    'transport': 'sse',
+                    'endpoints': {'sse': '/sse', 'messages': '/messages/'},
+                }
+            )
 
-            # Forward message to MCP server
+        async def handle_sse(request):
+            """Handle incoming SSE requests."""
             try:
-                message_str = json.dumps(message.dict()) + "\n"
-                self.child_process.stdin.write(message_str)
-                self.child_process.stdin.flush()
-                self.args.logger.info(f"Message sent to MCP server (session {session_id})")
-                return JSONResponse({"status": "ok"})
+                async with transport.connect_sse(request.scope, request.receive, request._send) as streams:
+                    logger.info(f'Starting server with name: {mcp_server.name}, version: {mcp_server.version}')
+                    init_options = mcp_server.create_initialization_options()
+                    logger.info(f'Initialization options: {init_options}')
+                    await mcp_server.run(streams[0], streams[1], init_options)
             except Exception as e:
-                self.args.logger.error(f"Error sending message: {e}")
-                raise HTTPException(status_code=500, detail="Failed to send message")
+                logger.error(f'Error in SSE connection: {e}')
+                return Response(status_code=500, content=str(e))
+            finally:
+                logger.info('SSE connection closed')
+                return Response()
 
-    async def start(self):
-        """Start the MCP server process and begin handling requests."""
-        self.args.logger.info(f"Starting MCP server: {self.args.stdio_cmd}")
-        self.args.logger.info(f"  - port: {self.args.port}")
-        self.args.logger.info(f"  - sse_path: {self.args.sse_path}")
-        self.args.logger.info(f"  - message_path: {self.args.message_path}")
-
-        # Start the MCP server process
-        self.child_process = Popen(
-            self.args.stdio_cmd,
-            shell=True,
-            stdin=PIPE,
-            stdout=PIPE,
-            stderr=PIPE,
-            text=True,
-            bufsize=1
+        return Starlette(
+            debug=True,
+            routes=[
+                Route('/', endpoint=handle_root),
+                Route('/sse', endpoint=handle_sse, methods=['GET']),
+                Mount('/messages/', app=transport.handle_post_message),
+            ],
         )
 
-        # Start background task to read from MCP server
-        asyncio.create_task(self._read_mcp_output())
-        asyncio.create_task(self._read_mcp_errors())
+    @staticmethod
+    async def _run_server(app: 'Starlette') -> None:
+        """Run the Starlette app with uvicorn."""
+        config_ = uvicorn.Config(app, host='localhost', port=50001)
+        server = uvicorn.Server(config_)
+        await server.serve()
 
-        # Monitor child process
-        asyncio.create_task(self._monitor_child_process())
+    async def start(self):
+        """Start Starlette app (SSE server) and connect to stdio or SSE based MCP server."""
+        logger.info(f'Starting MCP server with client type: {self.client_type}')
+        client = stdio_client if self.client_type == ClientType.STDIO else sse_client
+        client_params = self.config.model_dump() if self.client_type == ClientType.SSE else self.config
 
-    async def _read_mcp_output(self):
-        """Read and process output from the MCP server."""
-        buffer = ""
-        while True:
-            if self.child_process.stdout is None:
-                break
+        async with client(**client_params) as streams, ClientSession(*streams) as session:
+            mcp_server = await create_proxy_server(session)
+            app = await self.create_starlette_app(mcp_server)
+            await self._run_server(app)
 
-            line = self.child_process.stdout.readline()
-            if not line:
-                break
 
-            buffer += line
-            while "\n" in buffer:
-                line, buffer = buffer.split("\n", 1)
-                line = line.strip()
-                if not line:
-                    continue
+async def run():
+    # Choose which server mode to run
+    # asyncio.run(run_with_client())
+    # # Configuration for the remote MCP server
+    # config = {
+    #     'args': ['tool', 'run', 'arxiv-mcp-server'],
+    #     'env': {
+    #         'MCP_SERVER_NAME': 'arxiv-mcp-server',
+    #         'MCP_SERVER_DESCRIPTION': 'Arxiv MCP Server',
+    #         'MCP_SERVER_VERSION': '1.0.0',
+    #     },
+    # }
+    # server_params = StdioServerParameters(
+    #     command='uv',
+    #     args=config.get("args"),
+    #     env=config.get("env"),
+    # )
+    # proxy_server = ProxyServer(ClientType.STDIO, server_params)
+    # await proxy_server.start()
 
-                try:
-                    message = json.loads(line)
-                    self.args.logger.info(f"MCP server output: {json.dumps(message)}")
+    server_params = SseServerParameters(
+        url='http://localhost:3001/sse',
+    )
+    proxy_server = ProxyServer(ClientType.SSE, server_params)
+    await proxy_server.start()
 
-                    # Broadcast to all sessions
-                    for session_id, session in list(self.sessions.items()):
-                        try:
-                            # Send message to client
-                            # Note: This is a simplified version. In practice, you'd need
-                            # to implement proper message queuing and delivery
-                            pass
-                        except Exception as e:
-                            self.args.logger.error(f"Error sending to session {session_id}: {e}")
-                            del self.sessions[session_id]
-                except json.JSONDecodeError:
-                    self.args.logger.error(f"Non-JSON output from MCP server: {line}")
+if __name__ == '__main__':
+    import asyncio
 
-    async def _read_mcp_errors(self):
-        """Read and log errors from the MCP server."""
-        while True:
-            if self.child_process.stderr is None:
-                break
-
-            line = self.child_process.stderr.readline()
-            if not line:
-                break
-
-            self.args.logger.error(f"MCP server error: {line.strip()}")
-
-    async def _monitor_child_process(self):
-        """Monitor the MCP server process and handle its exit."""
-        while True:
-            if self.child_process.poll() is not None:
-                code = self.child_process.returncode
-                self.args.logger.error(f"MCP server process exited with code {code}")
-                # Clean up sessions
-                self.sessions.clear()
-                break
-            await asyncio.sleep(1)
-
-    async def stop(self):
-        """Stop the MCP server process and clean up."""
-        if self.child_process:
-            self.child_process.terminate()
-            try:
-                self.child_process.wait(timeout=5)
-            except TimeoutError:
-                self.child_process.kill()
-            self.child_process = None
-        self.sessions.clear()
+    asyncio.run(run())
