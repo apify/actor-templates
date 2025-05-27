@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/extensions
 import { DynamicStructuredTool } from '@langchain/core/tools';
 import { log } from 'apify';
 import { z } from 'zod';
@@ -14,7 +15,11 @@ export const webSearchTool = new DynamicStructuredTool({
     description: 'Search phrase or a URL at Google and return crawled web pages as text or Markdown',
     schema: z.object({
         query: z.string().describe('Google Search keywords or a URL of a specific web page'),
-        maxResults: z.number().int().positive().default(MAX_RESULTS_DEFAULT)
+        maxResults: z
+            .number()
+            .int()
+            .positive()
+            .default(MAX_RESULTS_DEFAULT)
             .describe('The maximum number of top organic Google Search results whose web pages will be extracted'),
     }),
     func: async ({ query, maxResults }) => {
