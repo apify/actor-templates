@@ -12,7 +12,8 @@ import asyncio
 import os
 
 from apify import Actor
-from .server import ServerType, ProxyServer, StdioServerParameters, SseServerParameters
+
+from .server import ProxyServer, StdioServerParameters
 
 STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
 HOST = Actor.is_at_home() and os.environ.get('ACTOR_STANDBY_URL') or 'localhost'
@@ -22,14 +23,12 @@ PORT = Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT')) or 5001
 # EDIT THIS SECTION ------------------------------------------------------------
 # Configuration constants - You need to override these values
 # 1) For stdio server type, you need to provide the command and args
-MCP_SERVER_TYPE = ServerType.STDIO
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['tool', 'run', 'arxiv-mcp-server'],
 )
 
 # 2) For SSE server type, you need to provide the url
-# MCP_SERVER_TYPE = ServerType.SSE
 # MCP_SERVER_PARAMS = SseServerParameters(
 #     url='https://your-remote-server-url/sse',
 # )
@@ -46,33 +45,22 @@ async def main() -> None:
         if not STANDBY_MODE:
             msg = 'This Actor is not meant to be run directly. It should be run in standby mode.'
             Actor.log.error(msg)
-            await Actor.exit()
+            await Actor.exit(status_message=msg)
             return
-
-        try:
-            # Choose server type and create appropriate parameters
-            if not MCP_SERVER_PARAMS:
-                raise ValueError('Server configuration must be provided')
-
-        except Exception as e:
-            Actor.log.error(f'Invalid server configuration: {e}')
-            await Actor.exit()
-            raise
 
         try:
             # Create and start the server
             Actor.log.info(f'Starting MCP proxy server')
-            Actor.log.info(f'  - server type: {MCP_SERVER_TYPE}')
-            Actor.log.info(f'  - server config: {MCP_SERVER_PARAMS}')
-            Actor.log.info(f'  - host: {HOST}')
-            Actor.log.info(f'  - port: {PORT}')
+            Actor.log.info(f'  - proxy server host: {HOST}')
+            Actor.log.info(f'  - proxy server port: {PORT}')
 
-            proxy_server = ProxyServer(MCP_SERVER_TYPE, MCP_SERVER_PARAMS, HOST, PORT)
+            proxy_server = ProxyServer(MCP_SERVER_PARAMS, HOST, PORT)
             await proxy_server.start()
         except Exception as e:
             Actor.log.error(f'Server failed to start: {e}')
             await Actor.exit()
             raise
+
 
 if __name__ == '__main__':
     asyncio.run(main())

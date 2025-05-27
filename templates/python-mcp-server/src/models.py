@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict
 
 class ServerType(str, Enum):
     """Type of server to connect."""
+
     STDIO = 'stdio'  # Connect to a stdio server
     SSE = 'sse'  # Connect to an SSE server
 
