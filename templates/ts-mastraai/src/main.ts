@@ -1,5 +1,6 @@
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
 import { Actor, log } from 'apify';
+
 import { createSocialMediaAgent } from './agents.js';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports

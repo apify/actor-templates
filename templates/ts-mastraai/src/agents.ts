@@ -1,5 +1,6 @@
 import { openai } from '@ai-sdk/openai';
 import { Agent } from '@mastra/core/agent';
+
 import { instagramScraperTool } from './tools.js';
 
 export const createSocialMediaAgent = (modelName: string): Agent =>

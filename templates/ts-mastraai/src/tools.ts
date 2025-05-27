@@ -1,6 +1,8 @@
-import { createTool, Tool } from '@mastra/core/tools';
-import { z } from 'zod';
+import type { Tool } from '@mastra/core/tools';
+import { createTool } from '@mastra/core/tools';
 import { ApifyClient, log } from 'apify';
+import { z } from 'zod';
+
 import { InstagramPosts, InstagramPostSchema } from './models.js';
 
 const instagramScraperInputSchema = z.object({
