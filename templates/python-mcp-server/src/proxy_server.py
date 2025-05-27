@@ -8,35 +8,45 @@ This is typically used in Apify Actors to charge users for different types of MC
 like tool calls, prompt operations, or resource access.
 """
 
+from __future__ import annotations
+
 import logging
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable
 
 from mcp import server, types
-from mcp.client.session import ClientSession
+
+if TYPE_CHECKING:
+    from mcp.client.session import ClientSession
 
 from .const import ChargeEvents
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('apify')
 
 
 async def charge_mcp_operation(
-    charge_function: Optional[Callable[[str], None]],
+    charge_function: Callable[[str], None] | None,
     event_name: ChargeEvents,
 ) -> None:
-    """Charge for an MCP operation if a charge function is provided."""
+    """Charge for an MCP operation.
+
+    Args:
+        charge_function: Function to call for charging, or None if charging is disabled
+        event_name: The type of event to charge for
+    """
     if not charge_function:
         return
 
     try:
         await charge_function(event_name.value)
         logger.info(f'Charged for event {event_name.value}')
-    except Exception as e:
-        logger.error(f'Failed to charge for event {event_name.value}: {e}')
+    except Exception:
+        logger.exception(f'Failed to charge for event {event_name.value}')
         # Don't raise the exception - we want the operation to continue even if charging fails
 
 
-async def create_proxy_server(
-    client_session: ClientSession, actor_charge_function: Optional[Callable[[str, Optional[dict]], None]] = None
+async def create_proxy_server(  # noqa: PLR0915
+    client_session: ClientSession,
+    actor_charge_function: Callable[[str, dict[str, Any] | None], None] | None = None,
 ) -> server.Server[object]:
     """Create a server instance from a remote app.
 
@@ -57,7 +67,7 @@ async def create_proxy_server(
     if capabilities.prompts:
         logger.debug('Capabilities: adding Prompts...')
 
-        async def _list_prompts(_: Any) -> types.ServerResult:  # noqa: ANN401
+        async def _list_prompts(_: Any) -> types.ServerResult:
             await charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_LIST)
             result = await client_session.list_prompts()
             return types.ServerResult(result)
@@ -74,14 +84,14 @@ async def create_proxy_server(
     if capabilities.resources:
         logger.debug('Capabilities: adding Resources...')
 
-        async def _list_resources(_: Any) -> types.ServerResult:  # noqa: ANN401
+        async def _list_resources(_: Any) -> types.ServerResult:
             await charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_LIST)
             result = await client_session.list_resources()
             return types.ServerResult(result)
 
         app.request_handlers[types.ListResourcesRequest] = _list_resources
 
-        async def _list_resource_templates(_: Any) -> types.ServerResult:  # noqa: ANN401
+        async def _list_resource_templates(_: Any) -> types.ServerResult:
             result = await client_session.list_resource_templates()
             return types.ServerResult(result)
 
@@ -121,7 +131,7 @@ async def create_proxy_server(
     if capabilities.tools:
         logger.debug('Capabilities: adding Tools...')
 
-        async def _list_tools(_: Any) -> types.ServerResult:  # noqa: ANN401
+        async def _list_tools(_: Any) -> types.ServerResult:
             await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_LIST)
             tools = await client_session.list_tools()
             return types.ServerResult(tools)
@@ -133,7 +143,7 @@ async def create_proxy_server(
             try:
                 result = await client_session.call_tool(req.params.name, (req.params.arguments or {}))
                 return types.ServerResult(result)
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:
                 return types.ServerResult(
                     types.CallToolResult(content=[types.TextContent(type='text', text=str(e))], isError=True),
                 )

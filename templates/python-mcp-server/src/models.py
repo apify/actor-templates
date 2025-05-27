@@ -14,6 +14,13 @@ class ServerType(str, Enum):
 
 
 class SseServerParameters(BaseModel):
+    """Parameters for connecting to an SSE-based MCP server.
+
+    Attributes:
+        url: The URL of the SSE server endpoint
+        headers: Optional HTTP headers to include in the connection request
+    """
+
     url: str
     headers: dict[str, Any] | None = None
     timeout: float = 5  # Default timeout for SSE connection

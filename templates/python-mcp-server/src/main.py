@@ -1,16 +1,5 @@
-"""
-MCP Server - main entry point for the Apify Actor.
+"""Main entry point for the MCP Server Actor."""
 
-This file serves as the entry point for the MCP Server Actor.
-
-It sets up a proxy server that forwards requests to different types of MCP servers (stdio or SSE)
-while providing a unified SSE interface. The server can optionally charge for operations using
-Apify's charging system.
-
-You need to override the MCP_SERVER_TYPE and MCP_SERVER_CONFIG variables to configure the MCP server.
-"""
-
-import asyncio
 import os
 
 from apify import Actor
@@ -18,14 +7,17 @@ from apify import Actor
 from .const import ChargeEvents
 from .server import ProxyServer
 
+# Actor configuration
 STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
-HOST = '0.0.0.0'  # Bind to all interfaces (don't use ACTOR_STANDBY_URL)
-PORT = Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT')) or 5001
+# Bind to all interfaces (0.0.0.0) as this is running in a containerized environment (Apify Actor)
+# The container's network is isolated, so this is safe
+HOST = '0.0.0.0'  # noqa: S104 - Required for container networking in Apify platform
+PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT'))) or 5001
 
 # EDIT THIS SECTION ------------------------------------------------------------
 # Configuration constants - You need to override these values. You can also pass environment variables if needed.
 # 1) For stdio server type, you need to provide the command and args
-from mcp.client.stdio import StdioServerParameters
+from mcp.client.stdio import StdioServerParameters  # noqa: E402
 
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
@@ -33,16 +25,14 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 )
 
 # 2) For SSE server type, you need to provide the url, you can also specify headers if needed with Authorization
-# from .models import SseServerParameters
+# from .models import SseServerParameters  # noqa: ERA001
 #
-# MCP_SERVER_PARAMS = SseServerParameters(
-#     url='http://localhost:3001/sse',
-# )
+# MCP_SERVER_PARAMS = SseServerParameters(url='http://localhost:3001/sse') # noqa: ERA001
 # ------------------------------------------------------------------------------
 
 
 async def main() -> None:
-    """Main entry point for the MCP Server Actor.
+    """Run the MCP Server Actor.
 
     This function:
     1. Initializes the Actor
@@ -72,7 +62,7 @@ async def main() -> None:
         try:
             # Create and start the server with charging enabled
             url = os.environ.get('ACTOR_STANDBY_URL', HOST)
-            Actor.log.info(f'Starting MCP proxy server')
+            Actor.log.info('Starting MCP proxy server')
             Actor.log.info(f'  - proxy server host: {os.environ.get("ACTOR_STANDBY_URL", HOST)}')
             Actor.log.info(f'  - proxy server port: {PORT}')
 
@@ -96,7 +86,3 @@ async def main() -> None:
             Actor.log.exception(f'Server failed to start: {e}')
             await Actor.exit()
             raise
-
-
-if __name__ == '__main__':
-    asyncio.run(main())
