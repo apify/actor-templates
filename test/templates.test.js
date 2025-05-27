@@ -27,7 +27,11 @@ const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 
     .stdout.toString()
     .match(/\((.*)\)/)[1];
 
-const checkSpawnResult = ({ status, stderr }) => {
+const checkSpawnResult = ({ status, stdout, stderr }) => {
+    if (stdout?.toString()) {
+        console.log('stdout', stdout.toString());
+    }
+
     if (stderr?.toString()) {
         console.log('stderr', stderr?.toString());
     }
