@@ -2,6 +2,7 @@
 import { Actor } from 'apify';
 // Web scraping and browser automation library (Read more at https://crawlee.dev)
 import { PuppeteerCrawler, Request } from 'crawlee';
+
 import { router } from './routes.js';
 
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init().
