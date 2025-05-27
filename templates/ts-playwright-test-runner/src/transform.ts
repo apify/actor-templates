@@ -2,7 +2,8 @@ import { v4 } from 'uuid';
 
 // as per https://github.com/microsoft/playwright/issues/13522
 // eslint-disable-next-line no-control-regex
-const ansiRegex = /[\u001B\u009B][[\]()#;?]*(?:(?:(?:[a-zA-Z\d]*(?:;[-a-zA-Z\d/#&.:=?%@~_]*)*)?\u0007)|(?:(?:\d{1,4}(?:;\d{0,4})*)?[\dA-PR-TZcf-ntqry=><~]))/g;
+const ansiRegex =
+    /[\u001B\u009B][[\]()#;?]*(?:(?:(?:[a-zA-Z\d]*(?:;[-a-zA-Z\d/#&.:=?%@~_]*)*)?\u0007)|(?:(?:\d{1,4}(?:;\d{0,4})*)?[\dA-PR-TZcf-ntqry=><~]))/g;
 function stripAnsi(str: string): string {
     return str.replace(ansiRegex, '');
 }
@@ -29,10 +30,26 @@ export function transformToTabular(testResults: Record<string, any>, attachmentL
                     testName: test.title,
                     runnerName: runner.projectName,
                     result: runner.status === 'expected',
-                    errors: results.reduce((p: string[], e: {errors: {message: string}[]}) => [...p, ...e.errors.map((err) => stripAnsi(err.message))], []),
-                    duration: results.reduce((acc2: number, curr: {duration: number}) => acc2 + curr.duration, 0),
-                    video: attachmentLinks.find(link => results.reduce((p: string[], x: {attachments: { path:string }[]}) => [...p, ...x.attachments.map(att => att.path)], []).includes(link.path))?.url,
-                })
+                    errors: results.reduce(
+                        (p: string[], e: { errors: { message: string }[] }) => [
+                            ...p,
+                            ...e.errors.map((err) => stripAnsi(err.message)),
+                        ],
+                        [],
+                    ),
+                    duration: results.reduce((acc2: number, curr: { duration: number }) => acc2 + curr.duration, 0),
+                    video: attachmentLinks.find((link) =>
+                        results
+                            .reduce(
+                                (p: string[], x: { attachments: { path: string }[] }) => [
+                                    ...p,
+                                    ...x.attachments.map((att) => att.path),
+                                ],
+                                [],
+                            )
+                            .includes(link.path),
+                    )?.url,
+                });
             }
         }
     }
@@ -42,10 +59,10 @@ export function transformToTabular(testResults: Record<string, any>, attachmentL
 
 // eslint-disable-next-line no-underscore-dangle
 function _collectAttachmentPaths(acc: Partial<Attachment>[], testResults: Record<string, unknown>) {
-    for(const e of Object.entries(testResults)) {
+    for (const e of Object.entries(testResults)) {
         const [key, value] = e;
         if (key === 'attachments') {
-            for (const attachment of (value as Attachment[])) {
+            for (const attachment of value as Attachment[]) {
                 acc.push({ path: attachment.path, type: attachment.contentType, key: v4() });
             }
         } else if (typeof value === 'object' && value !== null) {

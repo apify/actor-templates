@@ -24,10 +24,8 @@ interface Input {
 await Actor.init();
 
 // Structure of input is defined in input_schema.json
-const {
-    startUrls = ['https://apify.com'],
-    maxRequestsPerCrawl = 100,
-} = await Actor.getInput<Input>() ?? {} as Input;
+const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } =
+    (await Actor.getInput<Input>()) ?? ({} as Input);
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
@@ -41,7 +39,7 @@ const crawler = new PlaywrightCrawler({
             headless: true,
             // fonts: ['Times New Roman'] // <- custom Camoufox options
         }),
-    }
+    },
 });
 
 await crawler.run(startUrls);

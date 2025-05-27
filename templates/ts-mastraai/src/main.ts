@@ -18,7 +18,7 @@ await Actor.init();
 
 /**
  * Actor code
-*/
+ */
 
 // Charge for Actor start
 await Actor.charge({ eventName: 'actor-start' });
@@ -29,7 +29,7 @@ const {
     // You can remove it.
     query,
     modelName,
-} = await Actor.getInput() as Input;
+} = (await Actor.getInput()) as Input;
 if (!query) {
     throw new Error('An agent query is required.');
 }
@@ -40,9 +40,7 @@ const agent = createSocialMediaAgent(modelName);
 log.info(`Querying the agent with the following query: ${query}`);
 
 // Query the agent and get the response
-const response = await agent.generate([
-    { role: 'user', content: query },
-]);
+const response = await agent.generate([{ role: 'user', content: query }]);
 
 log.info(`Agent response: ${response.text}`);
 

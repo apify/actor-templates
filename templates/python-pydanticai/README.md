@@ -2,11 +2,9 @@
 
 Start a new [AI agent](https://blog.apify.com/what-are-ai-agents/) based project in Python with our PydanticAI project template. It provides a basic structure for the [Actor](https://apify.com/actors) using the [Apify SDK](https://docs.apify.com/sdk/python/) and [PydanticAI](https://ai.pydantic.dev/), and allows you to add your own functionality with minimal setup.
 
-
 ## How it works
 
 Insert your own code to `async with Actor:` block. You can use the [Apify SDK](https://docs.apify.com/sdk/python/) with any other Python library. Add or modify the agent and tools in the [agents.py](src/agents.py) file.
-
 
 ## Getting started
 
@@ -68,9 +66,9 @@ await Actor.charge(event_name='task-completed')
 This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services, such as LLM input/output tokens.
 
 To set up the PPE model for this Actor:
+
 - **Configure the OpenAI API key environment variable**: provide your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
 - **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Monetization settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
-
 
 ## Resources
 
@@ -82,5 +80,5 @@ To learn more about Apify, Actors and PydanticAI take a look at the following re
 - [AI agent architecture](https://blog.apify.com/ai-agent-architecture)
 - [What are AI agents](https://blog.apify.com/what-are-ai-agents/)
 - [How to build and monetize an AI agent on Apify](https://blog.apify.com/how-to-build-an-ai-agent/)
-- [PydanticAI documentation](https://ai.pydantic.dev/) 
+- [PydanticAI documentation](https://ai.pydantic.dev/)
 - [PydanticAI on GitHub](https://github.com/pydantic/pydantic-ai)

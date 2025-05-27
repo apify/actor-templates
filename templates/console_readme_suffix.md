@@ -24,6 +24,7 @@ If you would like to develop locally, you can pull the existing Actor from Apify
     ```
 
 2. Pull the Actor by its unique `<ActorId>`, which is one of the following:
+
     - unique name of the Actor to pull (e.g. "apify/hello-world")
     - or ID of the Actor to pull (e.g. "E2jjCZBezvAZnX8Rb")
 

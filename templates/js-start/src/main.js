@@ -23,12 +23,12 @@ const $ = cheerio.load(response.data);
 
 // Extract all headings from the page (tag name and text).
 const headings = [];
-$("h1, h2, h3, h4, h5, h6").each((i, element) => {
+$('h1, h2, h3, h4, h5, h6').each((i, element) => {
     const headingObject = {
-        level: $(element).prop("tagName").toLowerCase(),
+        level: $(element).prop('tagName').toLowerCase(),
         text: $(element).text(),
     };
-    console.log("Extracted heading", headingObject);
+    console.log('Extracted heading', headingObject);
     headings.push(headingObject);
 });
 

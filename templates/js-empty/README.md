@@ -19,4 +19,3 @@ This template is useful when you're already familiar with the [Apify SDK](https:
 - A short guide on how to create Actors using code templates:
 
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
-

@@ -23,7 +23,9 @@ function spawnSync(command, args, options = {}) {
 
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 
-const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
+const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'])
+    .stdout.toString()
+    .match(/\((.*)\)/)[1];
 
 const checkSpawnResult = ({ status, stderr }) => {
     if (stderr?.toString()) {
@@ -55,7 +57,9 @@ const canNodeTemplateRun = (templateId) => {
     }
 
     if (requiredNodeVersion && !semver.satisfies(currentNodeVersion, requiredNodeVersion)) {
-        console.log(`Skipping ${templateId} because it requires Node.js ${requiredNodeVersion} and you have ${currentNodeVersion}`);
+        console.log(
+            `Skipping ${templateId} because it requires Node.js ${requiredNodeVersion} and you have ${currentNodeVersion}`,
+        );
         return false;
     }
 
@@ -71,7 +75,12 @@ const checkNodeTemplate = () => {
     checkSpawnResult(npmInstallSpawnResult);
 
     if (packageJson.scripts?.lint) {
-        const lintSpawnResult = spawnSync(NPM_COMMAND, ['run', 'lint:fix']);
+        const lintSpawnResult = spawnSync(NPM_COMMAND, ['run', 'lint']);
+        checkSpawnResult(lintSpawnResult);
+    }
+
+    if (packageJson.scripts?.['format:check']) {
+        const lintSpawnResult = spawnSync(NPM_COMMAND, ['run', 'format:check']);
         checkSpawnResult(lintSpawnResult);
     }
 
@@ -119,8 +128,7 @@ const prepareActor = (templateId) => {
 
 describe('templates-work', () => {
     describe('python-templates', () => {
-        PYTHON_TEMPLATE_IDS
-            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+        PYTHON_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
@@ -135,8 +143,7 @@ describe('templates-work', () => {
     });
 
     describe('node-js-templates', () => {
-        NODE_TEMPLATE_IDS
-            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+        NODE_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
@@ -147,7 +154,7 @@ describe('templates-work', () => {
                     if (!canNodeTemplateRun(templateId)) return;
 
                     checkNodeTemplate();
-                    // checkTemplateRun();
+                    checkTemplateRun();
                 });
             });
     });

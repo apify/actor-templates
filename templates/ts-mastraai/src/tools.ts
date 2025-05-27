@@ -13,7 +13,8 @@ const instagramScraperOutputSchema = z.object({
 });
 
 // Define the Instagram Scraper Tool
-export const instagramScraperTool: Tool<'instagram-profile-posts-scraper',
+export const instagramScraperTool: Tool<
+    'instagram-profile-posts-scraper',
     typeof instagramScraperInputSchema,
     typeof instagramScraperOutputSchema
 > = createTool({

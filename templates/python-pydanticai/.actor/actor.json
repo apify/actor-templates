@@ -1,13 +1,13 @@
 {
-	"actorSpecification": 1,
-	"name": "template-pydanticai",
-	"title": "Empty PydanticAI project",
-	"description": "Empty project for PydanticAI agents.",
-	"version": "0.0",
-	"buildTag": "latest",
-	"meta": {
-		"templateId": "python-pydanticai"
-	},
-	"dockerfile": "./Dockerfile",
-	"input": "./input_schema.json"
+    "actorSpecification": 1,
+    "name": "template-pydanticai",
+    "title": "Empty PydanticAI project",
+    "description": "Empty project for PydanticAI agents.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "python-pydanticai"
+    },
+    "dockerfile": "./Dockerfile",
+    "input": "./input_schema.json"
 }

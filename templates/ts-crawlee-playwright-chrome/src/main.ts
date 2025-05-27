@@ -22,10 +22,8 @@ interface Input {
 await Actor.init();
 
 // Structure of input is defined in input_schema.json
-const {
-    startUrls = ['https://apify.com'],
-    maxRequestsPerCrawl = 100,
-} = await Actor.getInput<Input>() ?? {} as Input;
+const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } =
+    (await Actor.getInput<Input>()) ?? ({} as Input);
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
@@ -37,9 +35,9 @@ const crawler = new PlaywrightCrawler({
         launchOptions: {
             args: [
                 '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
-            ]
-        }
-    }
+            ],
+        },
+    },
 });
 
 await crawler.run(startUrls);

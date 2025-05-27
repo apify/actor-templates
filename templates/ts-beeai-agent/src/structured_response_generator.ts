@@ -63,15 +63,14 @@ export class StructuredOutputGenerator {
      * @param schema The Zod schema for the structured output.
      * @returns Promise containing the structured output.
      */
-    async generateStructuredOutput<T extends ZodSchema>(
-        query: string,
-        schema: T,
-    ): Promise<{ object: T }> {
+    async generateStructuredOutput<T extends ZodSchema>(query: string, schema: T): Promise<{ object: T }> {
         const messages = [
-            ...this.toolMemory.map((message) => Message.of({
-                role: 'system',
-                text: `Tool call: ${message.toolName}\ninput: ${JSON.stringify(message.input)}\n\noutput: ${JSON.stringify(message.output)}`,
-            })),
+            ...this.toolMemory.map((message) =>
+                Message.of({
+                    role: 'system',
+                    text: `Tool call: ${message.toolName}\ninput: ${JSON.stringify(message.input)}\n\noutput: ${JSON.stringify(message.output)}`,
+                }),
+            ),
             Message.of({
                 role: 'user',
                 text: query,

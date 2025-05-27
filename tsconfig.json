@@ -9,9 +9,5 @@
         "skipLibCheck": true,
         "lib": ["DOM"]
     },
-    "include": [
-        "./templates/**/*.ts",
-        "./test/**/*.ts",
-        "./src/**/*.ts"
-    ]
+    "include": ["./templates/**/*.ts", "./test/**/*.ts", "./src/**/*.ts"]
 }

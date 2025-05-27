@@ -1,18 +1,18 @@
 {
-	"name": "actor-arxiv-mcp-server",
-	"version": "0.0.1",
-	"type": "module",
-	"description": "The ArXiv MCP Server provides a bridge between AI assistants and arXiv's research repository through the Model Context Protocol (MCP). It allows AI models to search for papers and access their content in a programmatic way.",
-	"engines": {
-		"node": ">=20.0.0"
-	},
-	"dependencies": {
-		"@modelcontextprotocol/sdk": "^1.11.4",
-		"apify": "^3.4.1",
-		"body-parser": "^2.2.0",
-		"express": "^5.1.0"
-	},
-	"devDependencies": {
+    "name": "actor-arxiv-mcp-server",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "The ArXiv MCP Server provides a bridge between AI assistants and arXiv's research repository through the Model Context Protocol (MCP). It allows AI models to search for papers and access their content in a programmatic way.",
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.11.4",
+        "apify": "^3.4.1",
+        "body-parser": "^2.2.0",
+        "express": "^5.1.0"
+    },
+    "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
         "@types/body-parser": "^1.19.5",
@@ -25,14 +25,14 @@
         "tsx": "^4.19.4",
         "typescript": "^5.8.3",
         "typescript-eslint": "^8.32.1"
-	},
-	"scripts": {
-		"start": "npm run start:dev",
-		"start:prod": "node dist/main.js",
-		"start:dev": "tsx src/main.ts",
-		"build": "tsc",
-		"test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
-	},
-	"author": "It's not you it's me",
-	"license": "ISC"
+    },
+    "scripts": {
+        "start": "npm run start:dev",
+        "start:prod": "node dist/main.js",
+        "start:dev": "tsx src/main.ts",
+        "build": "tsc",
+        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    },
+    "author": "It's not you it's me",
+    "license": "ISC"
 }

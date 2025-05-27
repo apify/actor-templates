@@ -11,9 +11,7 @@ interface Input {
     startUrls: Request[];
 }
 // Define the URLs to start the crawler with - get them from the input of the Actor or use a default list.
-const {
-    startUrls = ['https://apify.com'],
-} = await Actor.getInput<Input>() ?? {};
+const { startUrls = ['https://apify.com'] } = (await Actor.getInput<Input>()) ?? {};
 
 // Create a proxy configuration that will rotate proxies from Apify Proxy.
 const proxyConfiguration = await Actor.createProxyConfiguration();
@@ -27,9 +25,9 @@ const crawler = new PuppeteerCrawler({
             args: [
                 '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
                 '--no-sandbox', // Mitigates the "sandboxed" process issue in Docker containers
-            ]
-        }
-    }
+            ],
+        },
+    },
 });
 
 // Run the crawler with the start URLs and wait for it to finish.

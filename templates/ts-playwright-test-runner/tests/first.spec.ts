@@ -4,11 +4,13 @@ test('has appropriate size', async ({ page }) => {
     let totalDownloaded = 0;
 
     page.on('response', (r) => {
-        r.body().then((b) => {
-            totalDownloaded += b.byteLength;
-        }).catch(() => {
-            // Ignore errors.
-        });
+        r.body()
+            .then((b) => {
+                totalDownloaded += b.byteLength;
+            })
+            .catch(() => {
+                // Ignore errors.
+            });
     });
 
     await page.goto('https://apify.com/about', { waitUntil: 'networkidle' });

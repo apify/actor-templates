@@ -1,4 +1,3 @@
-
 // Watch out! This file gets regenerated on every run of the actor.
 // Any changes you make will be lost.
 
@@ -18,6 +17,6 @@ export default defineConfig({
     },
     reporter: [
         ['html', { open: 'never' }],
-        ['json', { outputFile: 'test-results.json' }]
+        ['json', { outputFile: 'test-results.json' }],
     ],
 });

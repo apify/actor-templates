@@ -33,16 +33,19 @@ export class InstagramScrapeTool extends Tool<JSONToolOutput<InstagramScrapeTool
     override description = 'Tool to scrape Instagram profile posts.';
 
     override inputSchema(): Promise<AnyToolSchemaLike> | AnyToolSchemaLike {
-        return z.object({
-            handle: z.string().describe('Instagram handle of the profile to scrape (without the "@" symbol).'),
-            maxPosts: z.number().default(30).describe('Maximum number of posts to scrape.'),
-        }).required({ handle: true });
+        return z
+            .object({
+                handle: z.string().describe('Instagram handle of the profile to scrape (without the "@" symbol).'),
+                maxPosts: z.number().default(30).describe('Maximum number of posts to scrape.'),
+            })
+            .required({ handle: true });
     }
 
-    public readonly emitter: ToolEmitter<ToolInput<this>, JSONToolOutput<InstagramScrapeToolOutput>> = Emitter.root.child({
-        namespace: ['tool', 'instagram_scrape'],
-        creator: this,
-    });
+    public readonly emitter: ToolEmitter<ToolInput<this>, JSONToolOutput<InstagramScrapeToolOutput>> =
+        Emitter.root.child({
+            namespace: ['tool', 'instagram_scrape'],
+            creator: this,
+        });
 
     protected async _run(input: ToolInput<this>): Promise<JSONToolOutput<InstagramScrapeToolOutput>> {
         const { handle, maxPosts = 30 } = input;
