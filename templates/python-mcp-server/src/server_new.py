@@ -1,92 +1,144 @@
 import asyncio
+from mcp.server.sse import SseServerTransport
+from starlette.applications import Starlette
+from starlette.responses import Response
+from starlette.routing import Mount, Route
+
 import logging
+from enum import Enum
+from typing import Callable
+
 import uvicorn
 
 from mcp.client.session import ClientSession
 from mcp.client.stdio import StdioServerParameters, stdio_client
+from mcp.client.sse import sse_client
 from mcp.server import Server
-from mcp.server.stdio import stdio_server
+from pydantic import BaseModel, Field
+from typing import Any, Optional, Dict, Literal
+import httpx
+from datetime import datetime, timezone
 
 from proxy_server import create_proxy_server
+
+
+class ClientType(str, Enum):
+    """Type of client connection."""
+
+    STDIO = 'stdio'  # Connect to a stdio server
+    SSE = 'sse'  # Connect to an SSE server
+
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Configuration for the remote MCP server
-config = {
-    "args": ['tool', 'run', 'arxiv-mcp-server'],
-    "env": {
-        "MCP_SERVER_NAME": "arxiv-mcp-server",
-        "MCP_SERVER_DESCRIPTION": "Arxiv MCP Server",
-        "MCP_SERVER_VERSION": "1.0.0",
-    },
-}
 
-server_params = StdioServerParameters(
-    command='uv',
-    args=config.get("args"),
-    env=config.get("env"),
-)
+class SseServerParameters(BaseModel):
+    url: str
+    headers: dict[str, Any] | None = None
+    timeout: float = 5
+    sse_read_timeout: float = 60 * 5
+    auth: None = None
 
-async def create_starlette_app(app: Server) -> 'Starlette':
-    """Create a Starlette app that serves the MCP server over SSE."""
-    from mcp.server.sse import SseServerTransport
-    from starlette.applications import Starlette
-    from starlette.responses import Response
-    from starlette.routing import Mount, Route
 
-    sse = SseServerTransport("/messages/")
+class ProxyServer:
+    """Main class implementing the proxy functionality using MCP SDK.
 
-    async def handle_sse(request):
-        async with sse.connect_sse(request.scope, request.receive, request._send) as streams:
-            # Log server info and capabilities before running
-            logger.info(f"Starting server with name: {app.name}, version: {app.version}")
-            # Pass initialization options when running the server
-            init_options = app.create_initialization_options()
-            logger.info(f"Initialization options: {init_options}")
+    This proxy server is used to connect to stdio or SSE based MCP servers.
+    """
 
-            await app.run(streams[0], streams[1], init_options)
-        return Response()
+    def __init__(self, config: StdioServerParameters | SseServerParameters, client_type: ClientType):
+        self.config = config
+        self.client_type: ClientType = client_type
+        self.path_sse: str = '/sse'
+        self.path_message: str = '/message'
+        self.starlette_app: 'Starlette' = None
 
-    starlette_app = Starlette(
-        debug=True,
-        routes=[
-            Route("/sse", endpoint=handle_sse, methods=["GET"]),
-            Mount("/messages/", app=sse.handle_post_message),
-        ],
+    async def start(self):
+        """Start local SSE server and connect to stdio or SSE based MCP server."""
+
+        # Server mode
+        logger.info(f'Starting MCP server')
+        if self.client_type.value == ClientType.STDIO.value:
+            stdio_params = StdioServerParameters(
+                command=self.config.command, args=self.config.args, env=self.config.env
+            )
+            async with stdio_client(stdio_params) as streams, ClientSession(*streams) as session:
+                mcp_server = await create_proxy_server(session)
+                starlette_app = await self.create_starlette_app(mcp_server)
+                await self.run_server(starlette_app)
+        # else:
+        #     # Create standalone MCP server
+        #     mcp_server = Server(name="mcp-server")
+        #     starlette_app = self.create_starlette_app(mcp_server)
+        #     await self._run_server(starlette_app)
+
+    async def create_starlette_app(self, app: Server) -> 'Starlette':
+        """Create a Starlette app that serves the MCP server over SSE."""
+        sse = SseServerTransport('/messages/')
+
+        async def handle_sse(request):
+            async with sse.connect_sse(request.scope, request.receive, request._send) as streams:
+                # Log server info and capabilities before running
+                logger.info(f'Starting server with name: {app.name}, version: {app.version}')
+                # Pass initialization options when running the server
+                init_options = app.create_initialization_options()
+                logger.info(f'Initialization options: {init_options}')
+
+                await app.run(streams[0], streams[1], init_options)
+            return Response()
+
+        starlette_app = Starlette(
+            debug=True,
+            routes=[
+                Route('/sse', endpoint=handle_sse, methods=['GET']),
+                Mount('/messages/', app=sse.handle_post_message),
+            ],
+        )
+        return starlette_app
+
+    async def run_server(self, app: 'Starlette') -> None:
+        """Run the Starlette app with uvicorn."""
+        config_ = uvicorn.Config(app, host='localhost', port=3001)
+        server = uvicorn.Server(config_)
+        await server.serve()
+
+
+async def run():
+    # Choose which server mode to run
+    # asyncio.run(run_with_client())
+    # # Configuration for the remote MCP server
+    config = {
+        'args': ['tool', 'run', 'arxiv-mcp-server'],
+        'env': {
+            'MCP_SERVER_NAME': 'arxiv-mcp-server',
+            'MCP_SERVER_DESCRIPTION': 'Arxiv MCP Server',
+            'MCP_SERVER_VERSION': '1.0.0',
+        },
+    }
+
+    server_params = StdioServerParameters(
+        command='uv',
+        args=config.get("args"),
+        env=config.get("env"),
     )
-    return starlette_app
 
-async def run_server(app: 'Starlette') -> None:
-    """Run the Starlette app with uvicorn."""
-    config_ = uvicorn.Config(app, host="localhost", port=3001)
-    server = uvicorn.Server(config_)
-    await server.serve()
+    proxy = ProxyServer(server_params, ClientType.STDIO)
+    await proxy.start()
 
-async def run_stdio_server():
-    """Run the proxy as a stdio server."""
-    logger.info("Starting MCP proxy server with stdio transport")
-    async with stdio_client(server_params) as streams, ClientSession(*streams) as session:
-        server = await create_proxy_server(session)
-        async with stdio_server() as (server_read, server_write):
-            logger.info("Proxy server created, running...")
-            init_options = server.create_initialization_options()
-            await server.run(server_read, server_write, init_options)
-
-async def run_http_server():
-    """Run the proxy as an HTTP/SSE server."""
-    logger.info("Starting MCP proxy server with HTTP/SSE transport")
-    async with stdio_client(server_params) as streams, ClientSession(*streams) as session:
-        logger.info("Connected to remote MCP server")
-        server = await create_proxy_server(session)
-        logger.info("Proxy server created, setting up HTTP transport")
-        starlette_app = await create_starlette_app(server)
-        logger.info("Starting HTTP server on port 3001")
-        await run_server(starlette_app)
+# async def run_with_client(client: Callable, params) -> None:
+#     """Run the proxy as an HTTP/SSE server.
+#     """
+#     logger.info("Starting MCP proxy server with HTTP/SSE transport")
+#     async with client(server_params) as streams, ClientSession(*streams) as session:
+#         logger.info("Connected to remote MCP server")
+#         server = await create_proxy_server(session)
+#         starlette_app = await create_starlette_app(server)
+#         await run_server(starlette_app)
 
 
 if __name__ == '__main__':
-    # Choose which server mode to run
-    # asyncio.run(run_stdio_server())
-    asyncio.run(run_http_server())
+    import asyncio
+    asyncio.run(run())
+

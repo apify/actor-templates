@@ -12,4 +12,13 @@ Key features:
 - Configure billing logic with the [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) model.
 - Integrate with MCP clients via SSE transport.
 
-This template simplifies the process of running and monetizing Python MCP servers in a scalable and cloud-based environment.
+Implementation details:
+- Supports multiple client types: stdio, SSE, and streamable HTTP
+- Flexible server modes: server (standalone) and client (proxy to remote server)
+- Built on the official MCP SDK for robust protocol implementation
+- Handles session management and billing integration
+- Provides health monitoring and status endpoints
+- Supports CORS configuration for web clients
+- Implements proper error handling and logging
+
+## Usage Examples

@@ -15,15 +15,15 @@ logger = logging.getLogger(__name__)
 
 async def create_proxy_server(remote_app: ClientSession) -> server.Server[object]:  # noqa: C901, PLR0915
     """Create a server instance from a remote app."""
-    logger.debug("Sending initialization request to remote MCP server...")
+    logger.debug('Sending initialization request to remote MCP server...')
     response = await remote_app.initialize()
     capabilities: types.ServerCapabilities = response.capabilities
 
-    logger.debug("Configuring proxied MCP server...")
+    logger.debug('Configuring proxied MCP server...')
     app: server.Server[object] = server.Server(name=response.serverInfo.name, version=response.serverInfo.version)
 
     if capabilities.prompts:
-        logger.debug("Capabilities: adding Prompts...")
+        logger.debug('Capabilities: adding Prompts...')
 
         async def _list_prompts(_: t.Any) -> types.ServerResult:  # noqa: ANN401
             result = await remote_app.list_prompts()
@@ -38,7 +38,7 @@ async def create_proxy_server(remote_app: ClientSession) -> server.Server[object
         app.request_handlers[types.GetPromptRequest] = _get_prompt
 
     if capabilities.resources:
-        logger.debug("Capabilities: adding Resources...")
+        logger.debug('Capabilities: adding Resources...')
 
         async def _list_resources(_: t.Any) -> types.ServerResult:  # noqa: ANN401
             result = await remote_app.list_resources()
@@ -59,7 +59,7 @@ async def create_proxy_server(remote_app: ClientSession) -> server.Server[object
         app.request_handlers[types.ReadResourceRequest] = _read_resource
 
     if capabilities.logging:
-        logger.debug("Capabilities: adding Logging...")
+        logger.debug('Capabilities: adding Logging...')
 
         async def _set_logging_level(req: types.SetLevelRequest) -> types.ServerResult:
             await remote_app.set_logging_level(req.params.level)
@@ -68,7 +68,7 @@ async def create_proxy_server(remote_app: ClientSession) -> server.Server[object
         app.request_handlers[types.SetLevelRequest] = _set_logging_level
 
     if capabilities.resources:
-        logger.debug("Capabilities: adding Resources...")
+        logger.debug('Capabilities: adding Resources...')
 
         async def _subscribe_resource(req: types.SubscribeRequest) -> types.ServerResult:
             await remote_app.subscribe_resource(req.params.uri)
@@ -83,7 +83,7 @@ async def create_proxy_server(remote_app: ClientSession) -> server.Server[object
         app.request_handlers[types.UnsubscribeRequest] = _unsubscribe_resource
 
     if capabilities.tools:
-        logger.debug("Capabilities: adding Tools...")
+        logger.debug('Capabilities: adding Tools...')
 
         async def _list_tools(_: t.Any) -> types.ServerResult:  # noqa: ANN401
             tools = await remote_app.list_tools()
@@ -97,8 +97,9 @@ async def create_proxy_server(remote_app: ClientSession) -> server.Server[object
                 return types.ServerResult(result)
             except Exception as e:  # noqa: BLE001
                 return types.ServerResult(
-                    types.CallToolResult( content=[types.TextContent(type="text", text=str(e))], isError=True),
+                    types.CallToolResult(content=[types.TextContent(type='text', text=str(e))], isError=True),
                 )
+
         app.request_handlers[types.CallToolRequest] = _call_tool
 
     async def _send_progress_notification(req: types.ProgressNotification) -> None:
