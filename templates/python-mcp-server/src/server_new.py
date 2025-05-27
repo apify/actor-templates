@@ -53,54 +53,62 @@ class ProxyServer:
     """
 
     def __init__(self, client_type: ClientType, config: ServerParameters):
-        self.config = config
         self.client_type: ClientType = client_type
+        self.config = self._validate_config(client_type, config)
         self.path_sse: str = '/sse'
         self.path_message: str = '/message'
-        self.starlette_app: 'Starlette' = None
 
-    async def start(self):
-        """Start local SSE server and connect to stdio or SSE based MCP server."""
-
-        # Server mode
-        logger.info(f'Starting MCP server')
-        if self.client_type.value == ClientType.STDIO.value:
-            stdio_params = StdioServerParameters.model_validate(self.config)
-            async with stdio_client(stdio_params) as streams, ClientSession(*streams) as session:
-                mcp_server = await create_proxy_server(session)
-                starlette_app = await self.create_starlette_app(mcp_server)
-                await self.run_server(starlette_app)
-        elif self.client_type.value == ClientType.SSE.value:
-            sse_params = SseServerParameters.model_validate(self.config).model_dump()
-            async with sse_client(**sse_params) as streams, ClientSession(*streams) as session:
-                mcp_server = await create_proxy_server(session)
-                starlette_app = await self.create_starlette_app(mcp_server)
-                await self.run_server(starlette_app)
+    @staticmethod
+    def _validate_config(client_type: ClientType, config: ServerParameters) -> ServerParameters:
+        """Validate and return the appropriate server parameters."""
+        if client_type == ClientType.STDIO:
+            return StdioServerParameters.model_validate(config)
+        elif client_type == ClientType.SSE:
+            return SseServerParameters.model_validate(config)
         else:
-            raise ValueError(f'Invalid client type: {self.client_type}')
+            raise ValueError(f'Invalid client type: {client_type}')
 
-    async def create_starlette_app(self, app: Server) -> 'Starlette':
+    @staticmethod
+    async def create_starlette_app(mcp_server: Server) -> 'Starlette':
         """Create a Starlette app that serves the MCP server over SSE."""
-        sse = SseServerTransport('/messages/')
+        transport = SseServerTransport('/messages/')
 
         async def handle_sse(request):
-            async with sse.connect_sse(request.scope, request.receive, request._send) as streams:
-                logger.info(f'Starting server with name: {app.name}, version: {app.version}')
-                init_options = app.create_initialization_options()
-                logger.info(f'Initialization options: {init_options}')
-                await app.run(streams[0], streams[1], init_options)
-            return Response()
+            """Handle incoming SSE requests."""
+            try:
+                async with transport.connect_sse(request.scope, request.receive, request._send) as streams:
+                    logger.info(f'Starting server with name: {mcp_server.name}, version: {mcp_server.version}')
+                    init_options = mcp_server.create_initialization_options()
+                    logger.info(f'Initialization options: {init_options}')
+                    await mcp_server.run(streams[0], streams[1], init_options)
+            except Exception as e:
+                logger.error(f'Error in SSE connection: {e}')
+                return Response(status_code=500, content=str(e))
+            finally:
+                logger.info('SSE connection closed')
+                return Response()
 
-        starlette_app = Starlette(
+        return Starlette(
             debug=True,
             routes=[
                 Route('/sse', endpoint=handle_sse, methods=['GET']),
-                Mount('/messages/', app=sse.handle_post_message),
+                Mount('/messages/', app=transport.handle_post_message),
             ],
         )
-        return starlette_app
 
-    async def run_server(self, app: 'Starlette') -> None:
+    async def start(self):
+        """Start local SSE server and connect to stdio or SSE based MCP server."""
+        logger.info(f'Starting MCP server with client type: {self.client_type}')
+        client = stdio_client if self.client_type == ClientType.STDIO else sse_client
+        client_params = self.config.model_dump() if self.client_type == ClientType.SSE else self.config
+
+        async with client(**client_params) as streams, ClientSession(*streams) as session:
+            mcp_server = await create_proxy_server(session)
+            app = await self.create_starlette_app(mcp_server)
+            await self.run_server(app)
+
+    @staticmethod
+    async def run_server(app: 'Starlette') -> None:
         """Run the Starlette app with uvicorn."""
         config_ = uvicorn.Config(app, host='localhost', port=50001)
         server = uvicorn.Server(config_)
@@ -128,7 +136,7 @@ async def run():
     # await proxy_server.start()
 
     server_params = SseServerParameters(
-        url = 'http://localhost:3001/mcp',
+        url = 'http://localhost:3001/sse',
     )
     proxy_server = ProxyServer(ClientType.SSE, server_params)
     await proxy_server.start()
