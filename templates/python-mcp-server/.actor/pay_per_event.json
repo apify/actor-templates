@@ -1,12 +1,32 @@
 {
     "actor-start": {
-        "eventTitle": "Price for Actor start",
-        "eventDescription": "Flat fee for starting an Actor run.",
+        "eventTitle": "MCP Server Startup",
+        "eventDescription": "Initial fee for starting the MCP server proxy, which enables AI assistants to interact with the underlying service.",
         "eventPriceUsd": 0.1
     },
-    "task-completed": {
-        "eventTitle": "Price for completing the task",
-        "eventDescription": "Flat fee for completing the task.",
-        "eventPriceUsd": 0.4
+    "tool-request": {
+        "eventTitle": "MCP Tool Execution",
+        "eventDescription": "Fee for executing MCP tools, such as search, data retrieval, or specialized operations provided by the service.",
+        "eventPriceUsd": 0.05
+    },
+    "prompt-request": {
+        "eventTitle": "MCP Prompt Processing",
+        "eventDescription": "Fee for processing AI prompts to extract or generate information from the service's data.",
+        "eventPriceUsd": 0.01
+    },
+    "completion-request": {
+        "eventTitle": "MCP Content Analysis",
+        "eventDescription": "Fee for AI-assisted analysis of content, such as extracting insights or generating summaries from the service's data.",
+        "eventPriceUsd": 0.001
+    },
+    "resource-request": {
+        "eventTitle": "MCP Resource Access",
+        "eventDescription": "Fee for accessing full content or resources from the service, including documents, media, or other data types.",
+        "eventPriceUsd": 0.025
+    },
+    "list-request": {
+        "eventTitle": "MCP Data Listing",
+        "eventDescription": "Fee for listing available data, categories, or items from the service's repository.",
+        "eventPriceUsd": 0.001
     }
 }
