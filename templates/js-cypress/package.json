@@ -24,6 +24,7 @@
         "cypress:open": "cypress open",
         "start": "node ./src/main.js",
         "format": "prettier --write .",
+        "format:check": "prettier --check .",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix"
     },

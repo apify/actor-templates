@@ -17,6 +17,7 @@
     "scripts": {
         "start": "node src/main.js",
         "format": "prettier --write ./src",
+        "format:check": "prettier --check ./src",
         "lint": "eslint ./src",
         "lint:fix": "eslint ./src --fix",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
