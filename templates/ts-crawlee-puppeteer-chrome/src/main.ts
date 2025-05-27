@@ -1,7 +1,8 @@
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
 import { Actor } from 'apify';
 // Web scraping and browser automation library (Read more at https://crawlee.dev)
-import { PuppeteerCrawler, Request } from 'crawlee';
+import type { Request } from 'crawlee';
+import { PuppeteerCrawler } from 'crawlee';
 
 import { router } from './routes.js';
 
