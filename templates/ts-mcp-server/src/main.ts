@@ -1,10 +1,9 @@
 /**
- * ArXiv MCP Server - Main Entry Point
+ * MCP Server - Main Entry Point
  *
- * This file serves as the entry point for the ArXiv MCP Server Actor.
+ * This file serves as the entry point for the MCP Server Actor.
  * It sets up a proxy server that forwards requests to the locally running
- * ArXiv MCP server, which provides a Model Context Protocol (MCP) interface
- * for AI assistants to search and access arXiv papers.
+ * MCP server, which provides a Model Context Protocol (MCP) interface.
  */
 
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
@@ -18,9 +17,9 @@ import { getLogger } from './lib/getLogger.js';
 // import { router } from './routes.js';
 
 // Configuration constants for the MCP server
-// Command to run the ArXiv MCP server using uv package manager
-// TODO: Do not forget to install the MCP server in the Dockerfile
-const MCP_COMMAND = 'uv tool run arxiv-mcp-server';
+// Command to run the Sequential Thinking MCP server
+// TODO: Do not forget to install the MCP server in package.json (using `npm install ...`)
+const MCP_COMMAND = 'npx @modelcontextprotocol/server-sequential-thinking';
 
 // Check if the Actor is running in standby mode
 const STANDBY_MODE = process.env.APIFY_META_ORIGIN === 'STANDBY';

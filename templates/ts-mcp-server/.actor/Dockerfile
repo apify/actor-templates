@@ -18,9 +18,6 @@ RUN npm run build
 # Create final image
 FROM node:22-alpine
 
-# Install uv
-RUN apk add py3-uv
-
 # Create and run as a non-root user.
 RUN adduser -h /home/apify -D apify
 # Create app directory
@@ -48,10 +45,6 @@ RUN npm --quiet set progress=false \
     && echo "NPM version:" \
     && npm --version \
     && rm -r ~/.npm
-
-# Install the MCP server
-# TODO: Install the MCP server you are actually using
-RUN uv tool install arxiv-mcp-server
 
 # Tell Node.js this is a production environment
 ENV NODE_ENV=production
