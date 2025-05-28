@@ -365,6 +365,27 @@
             ]
         },
         {
+            "id": "python-mcp-server",
+            "name": "python-mcp-server",
+            "label": "Python MCP server",
+            "category": "python",
+            "technologies": [
+                "mcp"
+            ],
+            "description": "Demonstrates how to convert a Python stdio or SSE-based Model Context Protocol server into an Apify Actor.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-server.zip?raw=true",
+            "skipTests": true,
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 60
+            },
+            "showcaseFiles": [
+                "src/main.py",
+                "src/server.py"
+            ]
+        },
+        {
             "id": "js-start",
             "name": "getting_started_node",
             "label": "Start with JavaScript",
@@ -905,7 +926,8 @@
             "useCases": [
                 "AI"
             ]
-        },        {
+        },
+        {
             "id": "ts-mcp-server",
             "name": "ts-mcp-server",
             "label": "TypeScript MCP server",
