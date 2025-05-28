@@ -17,5 +17,6 @@
         "properties": {},
         "required": []
     },
-	"dockerfile": "./Dockerfile"
+	"dockerfile": "./Dockerfile",
+    "webServerMcpPath": "/sse"
 }
