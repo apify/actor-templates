@@ -48,4 +48,3 @@ For production use, we recommend you to:
 - A short guide on [how to create web scrapers using code templates](https://www.youtube.com/watch?v=u-i-Korzf8w)
 
 [Web Scraping Data for Generative AI](https://www.youtube.com/watch?v=8uvHH-ocSes)
-

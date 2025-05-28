@@ -4,23 +4,29 @@ import { Logger } from '../lib/types.js';
 
 const defaultFormatArgs = (args: unknown[]) => args;
 
-const log = (
-    {
-        formatArgs = defaultFormatArgs,
-    }: {
-      formatArgs?: typeof defaultFormatArgs
-    } = { formatArgs: defaultFormatArgs },
-// eslint-disable-next-line no-console
-) => (...args: unknown[]) => console.log('[MCP]', ...formatArgs(args));
+const log =
+    (
+        {
+            formatArgs = defaultFormatArgs,
+        }: {
+            formatArgs?: typeof defaultFormatArgs;
+        } = { formatArgs: defaultFormatArgs },
+        // eslint-disable-next-line no-console
+    ) =>
+    (...args: unknown[]) =>
+        console.log('[MCP]', ...formatArgs(args));
 
-const logStderr = (
-    {
-        formatArgs = defaultFormatArgs,
-    }: {
-      formatArgs?: typeof defaultFormatArgs
-    } = { formatArgs: defaultFormatArgs },
-// eslint-disable-next-line no-console
-) => (...args: unknown[]) => console.error('[MCP]', ...formatArgs(args));
+const logStderr =
+    (
+        {
+            formatArgs = defaultFormatArgs,
+        }: {
+            formatArgs?: typeof defaultFormatArgs;
+        } = { formatArgs: defaultFormatArgs },
+        // eslint-disable-next-line no-console
+    ) =>
+    (...args: unknown[]) =>
+        console.error('[MCP]', ...formatArgs(args));
 
 const noneLogger: Logger = {
     info: () => {},
@@ -37,17 +43,18 @@ const infoLoggerStdio: Logger = {
     error: logStderr(),
 };
 
-const debugFormatArgs = (args: unknown[]) => args.map((arg) => {
-    if (typeof arg === 'object') {
-        return util.inspect(arg, {
-            depth: null,
-            colors: process.stderr.isTTY,
-            compact: false,
-        });
-    }
+const debugFormatArgs = (args: unknown[]) =>
+    args.map((arg) => {
+        if (typeof arg === 'object') {
+            return util.inspect(arg, {
+                depth: null,
+                colors: process.stderr.isTTY,
+                compact: false,
+            });
+        }
 
-    return arg;
-});
+        return arg;
+    });
 
 const debugLogger: Logger = {
     info: log({ formatArgs: debugFormatArgs }),
@@ -59,13 +66,7 @@ const debugLoggerStdio: Logger = {
     error: logStderr({ formatArgs: debugFormatArgs }),
 };
 
-export const getLogger = ({
-    logLevel,
-    outputTransport,
-}: {
-  logLevel: string
-  outputTransport: string
-}): Logger => {
+export const getLogger = ({ logLevel, outputTransport }: { logLevel: string; outputTransport: string }): Logger => {
     if (logLevel === 'none') {
         return noneLogger;
     }

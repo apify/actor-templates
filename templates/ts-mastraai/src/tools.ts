@@ -1,6 +1,10 @@
-import { createTool, Tool } from '@mastra/core/tools';
-import { z } from 'zod';
+// eslint-disable-next-line import/extensions
+import type { Tool } from '@mastra/core/tools';
+// eslint-disable-next-line import/extensions
+import { createTool } from '@mastra/core/tools';
 import { ApifyClient, log } from 'apify';
+import { z } from 'zod';
+
 import { InstagramPosts, InstagramPostSchema } from './models.js';
 
 const instagramScraperInputSchema = z.object({
@@ -13,7 +17,8 @@ const instagramScraperOutputSchema = z.object({
 });
 
 // Define the Instagram Scraper Tool
-export const instagramScraperTool: Tool<'instagram-profile-posts-scraper',
+export const instagramScraperTool: Tool<
+    'instagram-profile-posts-scraper',
     typeof instagramScraperInputSchema,
     typeof instagramScraperOutputSchema
 > = createTool({

@@ -5,17 +5,13 @@
             "name": "python-scrapy",
             "label": "Scrapy",
             "category": "python",
-            "technologies": [
-                "scrapy"
-            ],
+            "technologies": ["scrapy"],
             "description": "Wrapper template for your existing Scrapy projects to make them work seamlessly on Apify.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/wrappers/python-scrapy.zip?raw=true",
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "useCases": ["WEB_SCRAPING"]
         }
     ]
 }

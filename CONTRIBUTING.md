@@ -41,6 +41,6 @@ To enable verbose output, add `verbose: true` to the `jest.config.js` file:
 ## Publish new/updated templates
 
 1. Templates are publishing automatically after committing to master branch or after merging pull requests.
-This happens with Github actions.
+   This happens with Github actions.
 
 2. If you want to add some templates or rename some, you need to change all actor templates list on [apify shared package](https://github.com/apifytech/apify-shared-js).

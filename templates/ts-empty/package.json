@@ -1,5 +1,5 @@
 {
-    "name": "ts-project-typescript",
+    "name": "ts-empty",
     "version": "0.0.1",
     "type": "module",
     "description": "This is an example of an Apify actor.",
@@ -11,19 +11,26 @@
         "crawlee": "^3.11.5"
     },
     "devDependencies": {
-        "@apify/eslint-config-ts": "^0.3.0",
-        "@apify/tsconfig": "^0.1.0",
-        "@typescript-eslint/eslint-plugin": "^7.18.0",
-        "@typescript-eslint/parser": "^7.18.0",
-        "eslint": "^8.50.0",
-        "tsx": "^4.6.2",
-        "typescript": "^5.3.3"
+        "@apify/eslint-config": "^1.0.0",
+        "@apify/tsconfig": "^0.1.1",
+        "@types/node": "^22.15.21",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "globals": "^16.2.0",
+        "prettier": "^3.5.3",
+        "tsx": "^4.19.4",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.32.1"
     },
     "scripts": {
         "start": "npm run start:dev",
         "start:prod": "node dist/main.js",
         "start:dev": "tsx src/main.ts",
         "build": "tsc",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",

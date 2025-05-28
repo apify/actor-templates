@@ -10,7 +10,6 @@ export interface Template {
     };
     archiveUrl: string;
     defaultRunOptions?: {
-
         build?: string;
         memoryMbytes?: number;
         timeoutSecs?: number;

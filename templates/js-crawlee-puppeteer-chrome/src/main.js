@@ -2,6 +2,7 @@
 import { Actor } from 'apify';
 // Web scraping and browser automation library (Read more at https://crawlee.dev)
 import { PuppeteerCrawler } from 'crawlee';
+
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 import { router } from './routes.js';
@@ -25,9 +26,9 @@ const crawler = new PuppeteerCrawler({
             args: [
                 '--disable-gpu', // Mitigates the "crashing GPU process" issue in Docker containers
                 '--no-sandbox', // Mitigates the "sandboxed" process issue in Docker containers
-            ]
-        }
-    }
+            ],
+        },
+    },
 });
 
 // Run the crawler with the start URLs and wait for it to finish.

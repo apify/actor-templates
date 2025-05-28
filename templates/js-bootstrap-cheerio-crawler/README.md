@@ -14,5 +14,3 @@ If you're looking for examples or want to learn how to use Apify, Apify SDK, or 
 - A short guide on how to create Actors using code templates
 
 [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
-
-

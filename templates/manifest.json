@@ -7,10 +7,7 @@
             "name": "python-start",
             "label": "Start with Python",
             "category": "python",
-            "technologies": [
-                "beautifulsoup",
-                "httpx"
-            ],
+            "technologies": ["beautifulsoup", "httpx"],
             "description": "Scrape single page with provided URL with HTTPX and extract data from page's HTML with Beautiful Soup.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -21,27 +18,16 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "aliases": [
-                "getting_started_python"
-            ],
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "STARTER",
-                "WEB_SCRAPING"
-            ]
+            "aliases": ["getting_started_python"],
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
             "label": "BeautifulSoup",
             "category": "python",
-            "technologies": [
-                "beautifulsoup",
-                "httpx"
-            ],
+            "technologies": ["beautifulsoup", "httpx"],
             "description": "Example of a web scraper that uses Python HTTPX to scrape HTML from URLs provided on input, parses it using BeautifulSoup and saves results to storage.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -52,23 +38,15 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-playwright",
             "name": "python-playwright",
             "label": "Playwright + Chrome",
             "category": "python",
-            "technologies": [
-                "playwright",
-                "chrome"
-            ],
+            "technologies": ["playwright", "chrome"],
             "description": "Crawler example that uses headless Chrome driven by Playwright to scrape a website. Headless browsers render JavaScript and can help when getting blocked.",
             "messages": {
                 "postCreate": "To run this actor, you need to have Playwright's browsers installed.\nTo do so, activate the virtual environment in the \".venv\" folder in the actor directory, and run \"playwright install --with-deps\".\nTo install additional Python packages, you need also need to activate the virtual environment in the \".venv\" folder in the actor directory.\n"
@@ -79,23 +57,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-selenium",
             "name": "python-selenium",
             "label": "Selenium + Chrome",
             "category": "python",
-            "technologies": [
-                "selenium",
-                "chrome"
-            ],
+            "technologies": ["selenium", "chrome"],
             "description": "Scraper example built with Selenium and headless Chrome browser to scrape a website and save the results to storage. A popular alternative to Playwright.",
             "messages": {
                 "postCreate": "To run this actor, you need to have the Selenium ChromeDriver installed.\nTo install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -106,13 +76,8 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-empty",
@@ -126,13 +91,8 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-standby",
@@ -147,22 +107,15 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "STARTER"
-            ]
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["STARTER"]
         },
         {
             "id": "python-scrapy",
             "name": "python-scrapy",
             "label": "Scrapy",
             "category": "python",
-            "technologies": [
-                "scrapy"
-            ],
+            "technologies": ["scrapy"],
             "description": "This example Scrapy spider scrapes page titles from URLs defined in input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -181,19 +134,14 @@
                 "src/pipelines.py",
                 "src/settings.py"
             ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-crawlee-beautifulsoup",
             "name": "python-crawlee-beautifulsoup",
             "label": "Crawlee + BeautifulSoup",
             "category": "python",
-            "technologies": [
-                "crawlee",
-                "beautifulsoup"
-            ],
+            "technologies": ["crawlee", "beautifulsoup"],
             "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a given start URLs, and store results to Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -204,27 +152,16 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "aliases": [
-                "getting_started_crawlee_beautifulsoup"
-            ],
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "STARTER",
-                "WEB_SCRAPING"
-            ]
+            "aliases": ["getting_started_crawlee_beautifulsoup"],
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "python-crawlee-playwright",
             "name": "python-crawlee-playwright",
             "label": "Crawlee + Playwright + Chrome",
             "category": "python",
-            "technologies": [
-                "crawlee",
-                "playwright"
-            ],
+            "technologies": ["crawlee", "playwright"],
             "description": "Crawl and scrape websites using Crawlee and Playwright. Start from a given start URLs, and store results to Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -235,26 +172,16 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "aliases": [
-                "getting_started_crawlee_playwright"
-            ],
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "STARTER",
-                "WEB_SCRAPING"
-            ]
+            "aliases": ["getting_started_crawlee_playwright"],
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "python-langgraph",
             "name": "python-langgraph",
             "label": "🦜️🔗 LangGraph AI agent",
             "category": "python",
-            "technologies": [
-                "langgraph"
-            ],
+            "technologies": ["langgraph"],
             "description": "Example of how to use LangGraph with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langgraph.zip?raw=true",
             "defaultRunOptions": {
@@ -262,22 +189,15 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/tools.py"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.py", "src/tools.py"],
+            "useCases": ["AI"]
         },
         {
             "id": "python-crewai",
             "name": "python-crewai",
             "label": "CrewAI agent",
             "category": "python",
-            "technologies": [
-                "crewai"
-            ],
+            "technologies": ["crewai"],
             "skipTests": true,
             "description": "Example of how to use CrewAI with Apify Actors to create a social media analysis tool-calling agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crewai.zip?raw=true",
@@ -286,22 +206,15 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/tools.py"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.py", "src/tools.py"],
+            "useCases": ["AI"]
         },
         {
             "id": "python-llamaindex-agent",
             "name": "python-llamaindex-agent",
             "label": "LlamaIndex agent",
             "category": "python",
-            "technologies": [
-                "llamaindex"
-            ],
+            "technologies": ["llamaindex"],
             "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -309,23 +222,15 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/agent.py",
-                "src/tools.py"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.py", "src/agent.py", "src/tools.py"],
+            "useCases": ["AI"]
         },
         {
             "id": "python-pydanticai",
             "name": "python-pydanticai",
             "label": "PydanticAI agent",
             "category": "python",
-            "technologies": [
-                "pydanticai"
-            ],
+            "technologies": ["pydanticai"],
             "description": "A PydanticAI agent designed to generate jokes, showcasing a minimal example using the Pydantic AI framework.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
@@ -333,22 +238,15 @@
                 "memoryMbytes": 128,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/agents.py"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.py", "src/agents.py"],
+            "useCases": ["AI"]
         },
         {
             "id": "python-smolagents",
             "name": "python-smolagents",
             "label": "Smolagents agent",
             "category": "python",
-            "technologies": [
-                "smolagents"
-            ],
+            "technologies": ["smolagents"],
             "description": "An AI news aggregator that fetches and summarizes the latest news based on user-defined interests using DuckDuckGo search and OpenAI models written in Python Smolagents.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
@@ -356,13 +254,8 @@
                 "memoryMbytes": 128,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": [
-                "src/main.py",
-                "src/__main__.py"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["AI"]
         },
         {
             "id": "python-mcp-server",
@@ -391,35 +284,22 @@
             "label": "Start with JavaScript",
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "cheerio",
-                "axios"
-            ],
+            "technologies": ["nodejs", "cheerio", "axios"],
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 256,
                 "timeoutSecs": 360
             },
-            "showcaseFiles": [
-                "src/main.js"
-            ],
-            "useCases": [
-                "STARTER",
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.js"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "ts-start",
             "name": "getting_started_typescript",
             "label": "Start with TypeScript",
             "category": "typescript",
-            "technologies": [
-                "nodejs",
-                "cheerio",
-                "axios"
-            ],
+            "technologies": ["nodejs", "cheerio", "axios"],
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
@@ -427,24 +307,15 @@
                 "memoryMbytes": 256,
                 "timeoutSecs": 360
             },
-            "showcaseFiles": [
-                "src/main.ts"
-            ],
-            "useCases": [
-                "STARTER",
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "js-crawlee-cheerio",
             "name": "project_cheerio_crawler_js",
             "label": "Crawlee + Cheerio",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "cheerio"
-            ],
+            "technologies": ["nodejs", "crawlee", "cheerio"],
             "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
@@ -453,24 +324,15 @@
                 "timeoutSecs": 3600
             },
             "skipOptionalDeps": true,
-            "showcaseFiles": [
-                "src/main.js"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.js"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "js-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_js",
             "label": "Crawlee + Puppeteer + Chrome",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "puppeteer",
-                "chrome"
-            ],
+            "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
             "description": "Example of a Puppeteer and headless Chrome web scraper. Headless browsers render JavaScript and are harder to block, but they're slower than plain HTTP.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
@@ -478,25 +340,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.js",
-                "src/routes.js"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.js", "src/routes.js"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "js-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_js",
             "label": "Crawlee + Playwright + Chrome",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "playwright",
-                "chrome"
-            ],
+            "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
             "description": "Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
@@ -504,25 +356,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.js",
-                "src/routes.js"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.js", "src/routes.js"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "js-crawlee-playwright-camoufox",
             "name": "project_playwright_camoufox_crawler_js",
             "label": "Crawlee + Playwright + Camoufox",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "playwright",
-                "camoufox"
-            ],
+            "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
             "description": "Web scraper example with Crawlee, Playwright and Camoufox. Camoufox is a custom stealthy fork of Firefox. Try this template if you're facing anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
@@ -530,24 +372,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.js",
-                "src/routes.js"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.js", "src/routes.js"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "js-bootstrap-cheerio-crawler",
             "name": "js-bootstrap-cheerio-crawler",
             "label": "Bootstrap CheerioCrawler",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "cheerio"
-            ],
+            "technologies": ["nodejs", "crawlee", "cheerio"],
             "description": "Skeleton project that helps you quickly bootstrap `CheerioCrawler` in JavaScript. It's best for developers who already know Apify SDK and Crawlee.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-bootstrap-cheerio-crawler.zip?raw=true",
             "defaultRunOptions": {
@@ -556,24 +389,15 @@
                 "timeoutSecs": 3600
             },
             "skipOptionalDeps": true,
-            "showcaseFiles": [
-                "src/main.js",
-                "src/routes.js"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.js", "src/routes.js"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-crawlee-cheerio",
             "name": "project_cheerio_crawler_ts",
             "label": "Crawlee + Cheerio",
             "category": "typescript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "cheerio"
-            ],
+            "technologies": ["nodejs", "crawlee", "cheerio"],
             "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
@@ -582,24 +406,15 @@
                 "timeoutSecs": 3600
             },
             "skipOptionalDeps": true,
-            "showcaseFiles": [
-                "src/main.ts"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_ts",
             "label": "Crawlee + Puppeteer + Chrome",
             "category": "typescript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "puppeteer",
-                "chrome"
-            ],
+            "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
             "description": "Example of a Puppeteer and headless Chrome web scraper. Headless browsers render JavaScript and are harder to block, but they're slower than plain HTTP.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
@@ -607,25 +422,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.ts",
-                "src/routes.ts"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts", "src/routes.ts"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_ts",
             "label": "Crawlee + Playwright + Chrome",
             "category": "typescript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "playwright",
-                "chrome"
-            ],
+            "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
             "description": "Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
@@ -633,25 +438,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.ts",
-                "src/routes.ts"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts", "src/routes.ts"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-crawlee-playwright-camoufox",
             "name": "project_playwright_camoufox_crawler_ts",
             "label": "Crawlee + Playwright + Camoufox",
             "category": "typescript",
-            "technologies": [
-                "nodejs",
-                "crawlee",
-                "playwright",
-                "camoufox"
-            ],
+            "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
             "description": "Web scraper example with Crawlee, Playwright and headless Camoufox. Camoufox is a custom stealthy fork of Firefox. Try this template if you're facing anti-scraping challenges.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
@@ -659,24 +454,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.ts",
-                "src/routes.ts"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts", "src/routes.ts"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-playwright-test-runner",
             "name": "project_playwright_test_runner",
             "label": "Playwright + Chrome Test Runner",
             "category": "typescript",
-            "technologies": [
-                "nodejs",
-                "playwright",
-                "chrome"
-            ],
+            "technologies": ["nodejs", "playwright", "chrome"],
             "description": "Example of using the Playwright Test project to run automated website tests in the cloud and display their results. Usable as an API.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-playwright-test-runner.zip?raw=true",
             "defaultRunOptions": {
@@ -684,23 +470,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.ts",
-                "src/runCodegen.ts",
-                "src/transform.ts"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts", "src/runCodegen.ts", "src/transform.ts"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-empty",
             "name": "ts_empty",
             "label": "Empty TypeScript project",
             "category": "typescript",
-            "technologies": [
-                "nodejs"
-            ],
+            "technologies": ["nodejs"],
             "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-empty.zip?raw=true",
             "defaultRunOptions": {
@@ -708,21 +486,15 @@
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.ts"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-standby",
             "name": "ts_standby",
             "label": "Standby TypeScript project",
             "category": "typescript",
-            "technologies": [
-                "nodejs"
-            ],
+            "technologies": ["nodejs"],
             "skipTests": true,
             "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-standby.zip?raw=true",
@@ -731,22 +503,15 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.ts"
-            ],
-            "useCases": [
-                "STARTER"
-            ]
+            "showcaseFiles": ["src/main.ts"],
+            "useCases": ["STARTER"]
         },
         {
             "id": "js-cypress",
             "name": "project_cypress",
             "label": "Cypress",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "cypress"
-            ],
+            "technologies": ["nodejs", "cypress"],
             "description": "Example of running Cypress tests and saving their results on the Apify platform. JSON results are saved to Dataset, videos to Key-value store.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-cypress.zip?raw=true",
             "defaultRunOptions": {
@@ -760,18 +525,14 @@
                 "cypress/e2e/second-spec.cy.js",
                 "cypress/support/e2e.js"
             ],
-            "useCases": [
-                "AUTOMATION"
-            ]
+            "useCases": ["AUTOMATION"]
         },
         {
             "id": "js-empty",
             "name": "project_empty",
             "label": "Empty JavaScript Project",
             "category": "javascript",
-            "technologies": [
-                "nodejs"
-            ],
+            "technologies": ["nodejs"],
             "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
             "defaultRunOptions": {
@@ -779,21 +540,15 @@
                 "memoryMbytes": 2048,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.js"
-            ],
-            "useCases": [
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.js"],
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "js-standby",
             "name": "js_standby",
             "label": "Standby JavaScript Project",
             "category": "javascript",
-            "technologies": [
-                "nodejs"
-            ],
+            "technologies": ["nodejs"],
             "skipTests": true,
             "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-standby.zip?raw=true",
@@ -802,22 +557,15 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.js"
-            ],
-            "useCases": [
-                "STARTER"
-            ]
+            "showcaseFiles": ["src/main.js"],
+            "useCases": ["STARTER"]
         },
         {
             "id": "js-langchain",
             "name": "project_langchain_js",
             "label": "🦜️🔗 LangChain",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "langchain"
-            ],
+            "technologies": ["nodejs", "langchain"],
             "description": "Example of how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langchain.zip?raw=true",
             "defaultRunOptions": {
@@ -825,23 +573,15 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": [
-                "src/main.js",
-                "src/vector_index_cache.js"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.js", "src/vector_index_cache.js"],
+            "useCases": ["AI"]
         },
         {
             "id": "js-langgraph-agent",
             "name": "project-langgraph-agent-javascript",
             "label": "LangGraph agent",
             "category": "javascript",
-            "technologies": [
-                "nodejs",
-                "langgraph"
-            ],
+            "technologies": ["nodejs", "langgraph"],
             "description": "LangGraph agent in JavaScript for answering questions via web search.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langgraph-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -849,24 +589,15 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 300
             },
-            "showcaseFiles": [
-                "src/main.js",
-                "src/tools.js"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.js", "src/tools.js"],
+            "useCases": ["AI"]
         },
         {
             "id": "ts-start-bun",
             "name": "getting_started_typescript_bun",
             "label": "Start with TypeScript on Bun",
             "category": "typescript",
-            "technologies": [
-                "bun",
-                "cheerio",
-                "axios"
-            ],
+            "technologies": ["bun", "cheerio", "axios"],
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start-bun.zip?raw=true",
             "defaultRunOptions": {
@@ -874,22 +605,15 @@
                 "memoryMbytes": 256,
                 "timeoutSecs": 360
             },
-            "showcaseFiles": [
-                "src/main.ts"
-            ],
-            "useCases": [
-                "STARTER",
-                "WEB_SCRAPING"
-            ]
+            "showcaseFiles": ["src/main.ts"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "ts-beeai-agent",
             "name": "ts-beeai-agent",
             "label": "🐝 BeeAI agent",
             "category": "typescript",
-            "technologies": [
-                "beeai"
-            ],
+            "technologies": ["beeai"],
             "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-beeai-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -897,21 +621,15 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": [
-                "src/main.ts"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.ts"],
+            "useCases": ["AI"]
         },
         {
             "id": "ts-mastraai",
             "name": "ts-mastraai",
             "label": "Mastra agent",
             "category": "typescript",
-            "technologies": [
-                "mastraai"
-            ],
+            "technologies": ["mastraai"],
             "description": "Example of how to use Mastra with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mastraai.zip?raw=true",
             "defaultRunOptions": {
@@ -919,22 +637,15 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": [
-                "src/main.ts",
-                "src/tools.ts"
-            ],
-            "useCases": [
-                "AI"
-            ]
+            "showcaseFiles": ["src/main.ts", "src/tools.ts"],
+            "useCases": ["AI"]
         },
         {
             "id": "ts-mcp-server",
             "name": "ts-mcp-server",
             "label": "TypeScript MCP server",
             "category": "typescript",
-            "technologies": [
-                "mcp"
-            ],
+            "technologies": ["mcp"],
             "description": "Example of how to Actorize a STDIO Model Context Protocol server.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-server.zip?raw=true",
             "defaultRunOptions": {
@@ -942,10 +653,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": [
-                "src/main.ts",
-                "src/billing.ts"
-            ]
+            "showcaseFiles": ["src/main.ts", "src/billing.ts"]
         },
         {
             "id": "cli-start",
@@ -960,9 +668,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": [
-                "main.sh"
-            ],
+            "showcaseFiles": ["main.sh"],
             "skipTests": true
         }
     ]

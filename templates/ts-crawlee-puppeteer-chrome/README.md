@@ -18,14 +18,16 @@ If you're looking for examples or want to learn more visit:
 ## How it works
 
 1. `Actor.getInput()` gets the input from `INPUT.json` where the start urls are defined
-2.  Create a configuration for proxy servers to be used during the crawling with `Actor.createProxyConfiguration()` to work around IP blocking. Use Apify Proxy or your own Proxy URLs provided and rotated according to the configuration. You can read more about proxy configuration [here](https://crawlee.dev/api/core/class/ProxyConfiguration).
+2. Create a configuration for proxy servers to be used during the crawling with `Actor.createProxyConfiguration()` to work around IP blocking. Use Apify Proxy or your own Proxy URLs provided and rotated according to the configuration. You can read more about proxy configuration [here](https://crawlee.dev/api/core/class/ProxyConfiguration).
 3. Create an instance of Crawlee's Puppeteer Crawler with `new PuppeteerCrawler()`. You can pass [options](https://crawlee.dev/api/puppeteer-crawler/interface/PuppeteerCrawlerOptions) to the crawler constructor as:
     - `proxyConfiguration` - provide the proxy configuration to the crawler
     - `requestHandler` - handle each request with custom router defined in the `routes.ts` file.
 4. Handle requests with the custom router from `routes.ts` file. Read more about custom routing for the Cheerio Crawler [here](https://crawlee.dev/api/puppeteer-crawler/function/createPuppeteerRouter)
+
     - Create a new router instance with `new createPuppeteerRouter()`
     - Define default handler that will be called for all URLs that are not handled by other handlers by adding `router.addDefaultHandler(() => { ... })`
     - Define additional handlers - here you can add your own handling of the page
+
         ```javascript
         router.addHandler('detail', async ({ request, page, log }) => {
             const title = await page.title();
@@ -37,6 +39,7 @@ If you're looking for examples or want to learn more visit:
             });
         });
         ```
+
 5. `crawler.run(startUrls);` start the crawler and wait for its finish
 
 ## Resources

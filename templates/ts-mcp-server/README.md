@@ -36,6 +36,7 @@ await Actor.charge({ eventName: 'tool-request' });
 This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services.
 
 To set up the PPE model for this Actor:
+
 - **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Monetization settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
 
 ## Resources

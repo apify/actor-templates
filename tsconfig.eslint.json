@@ -2,8 +2,5 @@
     "compilerOptions": {
         "allowJs": true
     },
-    "include": [
-        "templates/**/*.ts",
-        "templates/**/*.js",
-    ]
+    "include": ["templates/**/*.ts", "templates/**/*.js"]
 }
