@@ -22,12 +22,16 @@ from mcp.client.stdio import StdioServerParameters  # noqa: E402
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['run', 'arxiv-mcp-server'],
+    env={'YOUR-ENV_VAR', os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
 )
 
 # 2) For SSE server type, you need to provide the url, you can also specify headers if needed with Authorization
 # from .models import SseServerParameters  # noqa: ERA001
 #
-# MCP_SERVER_PARAMS = SseServerParameters(url='http://localhost:3001/sse') # noqa: ERA001
+# MCP_SERVER_PARAMS = SseServerParameters( # noqa: ERA001, RUF100
+#     url='https://actors-mcp-server.apify.actor/sse',  # noqa: ERA001
+#     headers={'Authorization':  'YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
+# )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
 
 

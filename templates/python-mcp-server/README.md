@@ -33,7 +33,7 @@ This template enables you to:
        url='your-server-url',
    )
    ```
-2. Add any required dependencies to the `requirements.txt` file (e.g. `arxiv-mcp-server`).
+2. Add any required dependencies to the `requirements.txt` file (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)).
 3. Deploy to Apify and enable standby mode.
 4. Connect using an MCP client:
    ```json
@@ -86,14 +86,40 @@ This template implements a proxy server that can connect to either a stdio-based
 ### Server types
 
 1. **Stdio Server** (`StdioServerParameters`):
-   - Spawns a local process that implements the MCP protocol over stdio
-   - Configure using `command` and `args` parameters
-   - Example: Running a Python script that implements MCP server
+   - Spawns a local process that implements the MCP protocol over stdio.
+   - Configure using the `command` parameter to specify the executable and the `args` parameter for additional arguments.
+   - Optionally, use the `env` parameter to pass environment variables to the process.
+
+Example:
+```python
+MCP_SERVER_PARAMS = StdioServerParameters(
+    command='uv',
+    args=['run', 'arxiv-mcp-server'],
+    env={'YOUR_ENV_VAR', os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
+)
+```
 
 2. **SSE Server** (`SseServerParameters`):
-   - Connects to a remote MCP server via SSE transport
-   - Configure using `url` and optional `headers`/`auth`
-   - Example: Connecting to an existing remote MCP server
+   - Connects to a remote MCP server via SSE transport.
+   - Configure using the `url` parameter to specify the server's endpoint.
+   - Optionally, use the `headers` parameter to include custom headers (e.g., for authentication) and the `auth` parameter for additional authentication mechanisms.
+
+Example:
+```python
+MCP_SERVER_PARAMS = SseServerParameters(
+    url='https://mcp.apify.com/sse',
+    headers={'Authorization':  os.getenv('YOUR-AUTH-TOKEN')},  # Replace with your authentication token
+)
+```
+- **Tips**:
+  - Ensure the remote server supports SSE transport and is accessible from the Actor's environment.
+  - Use environment variables to securely store sensitive information like tokens or API keys.
+
+#### Environment variables:
+
+Environment variables can be securely stored and managed at the Actor level on the [Apify platform](https://docs.apify.com/platform/actors/development/programming-interface/environment-variables#custom-environment-variables). These variables are automatically injected into the Actor's runtime environment, allowing you to:
+- Keep sensitive information like API keys secure.
+- Simplify configuration by avoiding hardcoded values in your code.
 
 ### Proxy implementation
 
