@@ -1,8 +1,6 @@
 import { Actor, log } from 'apify';
 
-export async function chargeMessageRequest(args: {
-    method: string
-}): Promise<void> {
+export async function chargeMessageRequest(args: { method: string }): Promise<void> {
     const { method } = args;
 
     // See https://modelcontextprotocol.io/specification/2025-03-26/server for more details

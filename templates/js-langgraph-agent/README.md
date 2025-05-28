@@ -16,6 +16,7 @@ In LangGraph.js, agents use **tools**, which are functions designed to perform s
 This agent has one tool, `webSearchTool`, defined in `src/tools.js`, which allows it to search the web for relevant data.
 
 ### Sample query
+
 - How to build a LangGraph agent on the Apify platform?
 
 ## Before you start

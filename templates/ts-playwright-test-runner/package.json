@@ -2,12 +2,17 @@
     "name": "playwright-test",
     "version": "1.0.0",
     "description": "",
+    "type": "module",
     "scripts": {
         "start": "npm run start:dev",
         "start:dev": "tsx src/main.ts",
         "start:prod": "node dist/main.js",
         "codegen": "tsx src/runCodegen.ts",
         "build": "tsc",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
         "test": "echo \"Error: no test specified\" && exit 1",
         "postinstall": "npx crawlee install-playwright-browsers"
     },
@@ -15,13 +20,20 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@apify/eslint-config-ts": "^0.3.0",
-        "@apify/tsconfig": "^0.1.0",
         "@playwright/test": "1.49.1",
         "@types/uuid": "^9.0.4",
         "apify": "^3.2.6",
-        "tsx": "^4.6.2",
-        "typescript": "^5.3.3",
-        "uuid": "^9.0.1"
+        "@apify/log": "^2.5.18",
+        "uuid": "^9.0.1",
+        "@apify/eslint-config": "^1.0.0",
+        "@apify/tsconfig": "^0.1.1",
+        "@types/node": "^22.15.21",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "globals": "^16.2.0",
+        "prettier": "^3.5.3",
+        "tsx": "^4.19.4",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.32.1"
     }
 }

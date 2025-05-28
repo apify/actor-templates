@@ -1,8 +1,0 @@
-{
-    "root": true,
-    "extends": "@apify/eslint-config-ts",
-    "parserOptions": {
-        "project": "./tsconfig.eslint.json",
-        "ecmaVersion": 2020
-    }
-}

@@ -1,14 +1,16 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('has appropriate size', async ({ page }) => {
     let totalDownloaded = 0;
 
-    await page.on('response', (r) => {
-        r.body().then((b) => {
-            totalDownloaded += b.byteLength;
-        }).catch(() => {
-            // Ignore errors.
-        });
+    page.on('response', (r) => {
+        r.body()
+            .then((b) => {
+                totalDownloaded += b.byteLength;
+            })
+            .catch(() => {
+                // Ignore errors.
+            });
     });
 
     await page.goto('https://apify.com/about', { waitUntil: 'networkidle' });

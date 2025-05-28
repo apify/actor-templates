@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/extensions
 import { HumanMessage } from '@langchain/core/messages';
+// eslint-disable-next-line import/extensions
 import { createReactAgent } from '@langchain/langgraph/prebuilt';
 import { ChatOpenAI } from '@langchain/openai';
 import { Actor, log } from 'apify';
@@ -26,10 +28,14 @@ const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 
 // You can configure the input for the Actor in the Apify UI when running on the Apify platform or editing
 // storage/key_value_stores/default/INPUT.json when running locally.
-const { query, modelName } = await Actor.getInput() || {};
+const { query, modelName } = (await Actor.getInput()) || {};
 
-if (!OPENAI_API_KEY) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
-if (!APIFY_TOKEN) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
+if (!OPENAI_API_KEY)
+    throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
+if (!APIFY_TOKEN)
+    throw new Error(
+        'Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.',
+    );
 
 const agent = createReactAgent({
     llm: new ChatOpenAI({ temperature: 0, model: modelName }),
@@ -39,10 +45,7 @@ const agent = createReactAgent({
 let agentFinalState;
 try {
     log.info('Starting agent ...');
-    agentFinalState = await agent.invoke(
-        { messages: [new HumanMessage(query)] },
-        { configurable: { thread_id: '1' } },
-    );
+    agentFinalState = await agent.invoke({ messages: [new HumanMessage(query)] }, { configurable: { thread_id: '1' } });
 } catch (error) {
     log.error('Failed to run the agent', { error });
     await Actor.exit(1);

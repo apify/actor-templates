@@ -11,23 +11,16 @@ import { onSignals } from '../lib/onSignals.js';
 import { chargeMessageRequest } from '../billing.js';
 
 export interface StdioToSseArgs {
-  stdioCmd: string
-  port: number
-  baseUrl?: string
-  ssePath?: string
-  messagePath?: string
-  logger: Logger
+    stdioCmd: string;
+    port: number;
+    baseUrl?: string;
+    ssePath?: string;
+    messagePath?: string;
+    logger: Logger;
 }
 
 export async function stdioToSse(args: StdioToSseArgs) {
-    const {
-        stdioCmd,
-        port,
-        baseUrl = '',
-        ssePath = '/sse',
-        messagePath = '/message',
-        logger,
-    } = args;
+    const { stdioCmd, port, baseUrl = '', ssePath = '/sse', messagePath = '/message', logger } = args;
 
     logger.info(`  - port: ${port}`);
     logger.info(`  - stdio: ${stdioCmd}`);
@@ -45,15 +38,9 @@ export async function stdioToSse(args: StdioToSseArgs) {
         process.exit(code ?? 1);
     });
 
-    const server = new Server(
-        { name: 'MCP', version: getVersion() },
-        { capabilities: {} },
-    );
+    const server = new Server({ name: 'MCP', version: getVersion() }, { capabilities: {} });
 
-    const sessions: Record<
-    string,
-    { transport: SSEServerTransport }
-  > = {};
+    const sessions: Record<string, { transport: SSEServerTransport }> = {};
 
     const app = express();
 

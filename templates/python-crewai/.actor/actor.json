@@ -1,16 +1,16 @@
 {
-  "actorSpecification": 1,
-  "name": "python-crewai",
-  "title": "Python CrewAI Agent",
-  "description": "CrewAI agent in python",
-  "version": "0.0",
-  "buildTag": "latest",
-  "input": "./input_schema.json",
-  "storages": {
-    "dataset": "./dataset_schema.json"
-  },
-  "meta": {
-    "templateId": "python-crewai"
-  },
-  "dockerfile": "./Dockerfile"
+    "actorSpecification": 1,
+    "name": "python-crewai",
+    "title": "Python CrewAI Agent",
+    "description": "CrewAI agent in python",
+    "version": "0.0",
+    "buildTag": "latest",
+    "input": "./input_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "meta": {
+        "templateId": "python-crewai"
+    },
+    "dockerfile": "./Dockerfile"
 }
