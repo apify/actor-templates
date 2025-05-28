@@ -3,8 +3,7 @@
 A Python template for deploying and monetizing a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server in the cloud using the [Apify platform](https://docs.apify.com/platform/actors).
 
 This template enables you to:
-- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)) to Apify
-- Connect to any remote MCP server via SSE transport
+- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using SSE transport
 - Expose your MCP server via Server-Sent Events (SSE) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
 
@@ -34,9 +33,9 @@ This template enables you to:
        url='your-server-url',
    )
    ```
-
-2. Deploy to Apify and enable standby mode.
-3. Connect using an MCP client:
+2. Add any required dependencies to the `requirements.txt` file (e.g. `arxiv-mcp-server`).
+3. Deploy to Apify and enable standby mode.
+4. Connect using an MCP client:
    ```json
    {
        "mcpServers": {
