@@ -1,29 +1,31 @@
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
-import { Actor } from 'apify';
-import fs from 'fs';
+// Library for console logging tables
+import 'console.table';
 
+import fs from 'node:fs';
+
+import { Actor } from 'apify';
 // Component and E2E testing library (read more at https://docs.cypress.io/guides/overview/why-cypress)
 import cypress from 'cypress';
 // File system traversing library (read more at https://www.jsdocs.io/package/globby)
 import { globby } from 'globby';
+
 // Apify logging utility library
 import log from '@apify/log';
-// Library for console logging tables
-import 'console.table';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 // import { router } from './routes.js';
 
-// Helper function to run tests from specific test file with given configuration from INPUT.json
-const runOneSpec = (spec) => cypress.run({ config: input, spec });
-
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
 await Actor.init();
 
 // Define the configuration to start the cypress test with - get it from the input of the Actor or use a default config.
-const input = await Actor.getInput() || { baseUrl: "https://apify.com", video: true };
+const input = (await Actor.getInput()) || { baseUrl: 'https://apify.com', video: true };
 log.info(`Running tests with following input: ${JSON.stringify(input)}`);
+
+// Helper function to run tests from specific test file with given configuration from INPUT.json
+const runOneSpec = (spec) => cypress.run({ config: input, spec });
 
 // Get cypress test files from ./cypress/e2e that end with spec.cy.js
 const tests = await globby('./cypress/e2e/*-spec.cy.js');
@@ -68,19 +70,19 @@ for (const test of tests) {
 }
 
 // Create a loggable test summary
-const summary = testsResultsSummary
-    .map((test) => {
-        return {
-            spec: test?.testSuiteTitle,
-            passes: test?.totalPassed,
-            failures: test?.totalFailed,
-            pending: test?.totalPending,
-            skipped: test?.totalSkipped,
-            duration: test?.totalDuration,
-        };
-    });
+const summary = testsResultsSummary.map((test) => {
+    return {
+        spec: test?.testSuiteTitle,
+        passes: test?.totalPassed,
+        failures: test?.totalFailed,
+        pending: test?.totalPending,
+        skipped: test?.totalSkipped,
+        duration: test?.totalDuration,
+    };
+});
 
 // Log the summary as a table
+// eslint-disable-next-line no-console
 console.table('Summary', summary);
 
 // Gracefully exit the Actor process. It's recommended to quit all Actors with an exit()

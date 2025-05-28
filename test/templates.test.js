@@ -1,12 +1,12 @@
-const { spawnSync: _spawnSync } = require('child_process');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+const { spawnSync: _spawnSync } = require('node:child_process');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const JSON5 = require('json5');
 const semver = require('semver');
 
-const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS, AGENT_AI_TEMPLATE_IDS } = require('../src/consts');
+const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS, AGENT_AI_TEMPLATE_IDS } = require('../src/consts.js');
 
 const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
 
@@ -23,9 +23,19 @@ function spawnSync(command, args, options = {}) {
 
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 
-const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify']).stdout.toString().match(/\((.*)\)/)[1];
+const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'])
+    .stdout.toString()
+    .match(/\((.*)\)/)[1];
 
-const checkSpawnResult = ({ status }) => {
+const checkSpawnResult = ({ status, stdout, stderr }) => {
+    if (stdout?.toString()) {
+        console.log('stdout', stdout.toString());
+    }
+
+    if (stderr?.toString()) {
+        console.log('stderr', stderr?.toString());
+    }
+
     expect(status).toBe(0);
 };
 
@@ -51,7 +61,9 @@ const canNodeTemplateRun = (templateId) => {
     }
 
     if (requiredNodeVersion && !semver.satisfies(currentNodeVersion, requiredNodeVersion)) {
-        console.log(`Skipping ${templateId} because it requires Node.js ${requiredNodeVersion} and you have ${currentNodeVersion}`);
+        console.log(
+            `Skipping ${templateId} because it requires Node.js ${requiredNodeVersion} and you have ${currentNodeVersion}`,
+        );
         return false;
     }
 
@@ -61,16 +73,20 @@ const canNodeTemplateRun = (templateId) => {
 const checkNodeTemplate = () => {
     expect(fs.existsSync('package.json')).toBe(true);
 
-    /* TODO: uncomment this and fix lint everywhere
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+    const npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    checkSpawnResult(npmInstallSpawnResult);
+
     if (packageJson.scripts?.lint) {
         const lintSpawnResult = spawnSync(NPM_COMMAND, ['run', 'lint']);
         checkSpawnResult(lintSpawnResult);
     }
-    */
 
-    const npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
-    checkSpawnResult(npmInstallSpawnResult);
+    if (packageJson.scripts?.['format:check']) {
+        const lintSpawnResult = spawnSync(NPM_COMMAND, ['run', 'format:check']);
+        checkSpawnResult(lintSpawnResult);
+    }
 
     const apifyModulePackageJsonPath = path.join('node_modules', 'apify', 'package.json');
     const apifyModulePackageJson = JSON.parse(fs.readFileSync(apifyModulePackageJsonPath, 'utf8'));
@@ -116,8 +132,7 @@ const prepareActor = (templateId) => {
 
 describe('templates-work', () => {
     describe('python-templates', () => {
-        PYTHON_TEMPLATE_IDS
-            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+        PYTHON_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {
@@ -132,8 +147,7 @@ describe('templates-work', () => {
     });
 
     describe('node-js-templates', () => {
-        NODE_TEMPLATE_IDS
-            .filter((templateId) => !SKIP_TESTS.includes(templateId))
+        NODE_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
             .forEach((templateId) => {

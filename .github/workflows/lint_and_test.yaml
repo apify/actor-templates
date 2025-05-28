@@ -22,38 +22,38 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version-file: .nvmrc
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
 
-    - name: Get Node.js version
-      id: get-node-version
-      run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
+      - name: Get Node.js version
+        id: get-node-version
+        run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
 
-    - name: Cache node_modules
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Lint
-      run: npm run lint
+      - name: Lint
+        run: npm run lint
 
-    - name: Test building templates
-      run: npm run build
+      - name: Test building templates
+        run: npm run build
 
-    - name: Test template manifest
-      run: npm run test-without-templates
+      - name: Test template manifest
+        run: npm run test-without-templates
 
   test-node-templates:
     name: Test Node.js templates

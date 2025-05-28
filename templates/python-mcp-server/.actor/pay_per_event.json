@@ -1,0 +1,37 @@
+{
+    "actor-start": {
+        "eventTitle": "MCP server startup",
+        "eventDescription": "Initial fee for starting the Actor MCP Server",
+        "eventPriceUsd": 0.1
+    },
+    "resource-list": {
+        "eventTitle": "MCP resource listing",
+        "eventDescription": "Fee for listing available resources.",
+        "eventPriceUsd": 0.0001
+    },
+    "resource-read": {
+        "eventTitle": "MCP resource access",
+        "eventDescription": "Fee for accessing full content or resources.",
+        "eventPriceUsd": 0.001
+    },
+    "prompt-list": {
+        "eventTitle": "MCP prompt listing",
+        "eventDescription": "Fee for listing available prompts.",
+        "eventPriceUsd": 0.0001
+    },
+    "prompt-get": {
+        "eventTitle": "MCP prompt processing",
+        "eventDescription": "Fee for processing AI prompts.",
+        "eventPriceUsd": 0.001
+    },
+    "tool-list": {
+        "eventTitle": "MCP tool listing",
+        "eventDescription": "Fee for listing available tools.",
+        "eventPriceUsd": 0.0001
+    },
+    "tool-call": {
+        "eventTitle": "MCP tool call",
+        "eventDescription": "Fee for executing MCP tools.",
+        "eventPriceUsd": 0.05
+    }
+}

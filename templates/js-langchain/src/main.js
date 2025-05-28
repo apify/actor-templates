@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { rm } from 'node:fs/promises';
 
 import { ApifyDatasetLoader } from '@langchain/community/document_loaders/web/apify_dataset';
@@ -11,7 +12,7 @@ import { Document } from 'langchain/document';
 
 // This is ESM project, and as such, it requires you to specify extensions in your relative imports.
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
-import { retrieveVectorIndex, cacheVectorIndex } from './vector_index_cache.js';
+import { cacheVectorIndex, retrieveVectorIndex } from './vector_index_cache.js';
 
 await Actor.init();
 
@@ -32,7 +33,7 @@ const {
     forceRecrawl = false, // Enforce a re-crawl of website content and re-creation of the vector index.
     query = 'What is Wikipedia?',
     openAIApiKey = OPENAI_API_KEY, // This is a fallback to the OPENAI_API_KEY environment variable when value is not present in the input.
-} = await Actor.getInput() || {};
+} = (await Actor.getInput()) || {};
 
 // Local directory where the vector index will be stored.
 const VECTOR_INDEX_PATH = './vector_index';
@@ -41,8 +42,12 @@ const prompt = ChatPromptTemplate.fromTemplate(
     `Answer the user's question: {input} based on the following context {context}`,
 );
 
-if (!openAIApiKey) throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
-if (!APIFY_TOKEN) throw new Error('Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.');
+if (!openAIApiKey)
+    throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
+if (!APIFY_TOKEN)
+    throw new Error(
+        'Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.',
+    );
 
 // Now we want to create a vector index from the crawled documents.
 // Following object represents an input for the https://apify.com/apify/website-content-crawler actor that crawls the website to gather the data.
@@ -59,25 +64,19 @@ if (reinitializeIndex) {
     // Run the Actor, wait for it to finish, and fetch its results from the Apify dataset into a LangChain document loader.
     log.info('Vector index was not found.');
     log.info('Running apify/website-content-crawler to gather the data...');
-    const loader = await ApifyDatasetLoader.fromActorCall(
-        'apify/website-content-crawler',
-        websiteContentCrawlerInput,
-        {
-            datasetMappingFunction: (item) => new Document({
-                pageContent: (item.text || ''),
+    const loader = await ApifyDatasetLoader.fromActorCall('apify/website-content-crawler', websiteContentCrawlerInput, {
+        datasetMappingFunction: (item) =>
+            new Document({
+                pageContent: item.text || '',
                 metadata: { source: item.url },
             }),
-            clientOptions: { token: APIFY_TOKEN },
-        },
-    );
+        clientOptions: { token: APIFY_TOKEN },
+    });
 
     // Initialize the vector index from the crawled documents.
     log.info('Feeding vector index with crawling results...');
     const docs = await loader.load();
-    vectorStore = await HNSWLib.fromDocuments(
-        docs,
-        new OpenAIEmbeddings({ openAIApiKey }),
-    );
+    vectorStore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings({ openAIApiKey }));
 
     // Save the vector index to the key-value store so that we can skip this phase in the next run.
     log.info('Saving vector index to the disk...');
