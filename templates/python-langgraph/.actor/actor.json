@@ -12,5 +12,5 @@
     "meta": {
         "templateId": "python-langgraph"
     },
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

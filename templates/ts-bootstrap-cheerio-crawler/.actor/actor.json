@@ -7,5 +7,5 @@
     "meta": {
         "templateId": "ts-bootstrap-cheerio-crawler"
     },
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

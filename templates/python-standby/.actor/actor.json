@@ -9,5 +9,5 @@
     "meta": {
         "templateId": "python-standby"
     },
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

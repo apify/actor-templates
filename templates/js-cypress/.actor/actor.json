@@ -9,7 +9,7 @@
     },
     "input": "./input_schema.json",
     "readme": "./README.md",
-    "dockerfile": "./Dockerfile",
+    "dockerfile": "../Dockerfile",
     "storages": {
         "dataset": "./output_schema.json"
     }

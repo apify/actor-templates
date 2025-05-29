@@ -12,5 +12,5 @@
         "templateId": "ts-mastraai"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

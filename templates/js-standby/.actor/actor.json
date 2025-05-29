@@ -9,5 +9,5 @@
     "meta": {
         "templateId": "js-standby"
     },
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

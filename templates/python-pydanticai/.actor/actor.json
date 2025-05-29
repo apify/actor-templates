@@ -8,6 +8,6 @@
     "meta": {
         "templateId": "python-pydanticai"
     },
-    "dockerfile": "./Dockerfile",
+    "dockerfile": "../Dockerfile",
     "input": "./input_schema.json"
 }
