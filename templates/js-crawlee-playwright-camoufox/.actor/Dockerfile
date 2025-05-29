@@ -1,7 +1,7 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://crawlee.dev/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node-playwright-chrome:20
+FROM apify/actor-node-playwright-camoufox:20
 
 # Check preinstalled packages
 RUN npm ls crawlee apify playwright
@@ -12,13 +12,13 @@ COPY --chown=myuser package*.json ./
 
 # Ensure we'll install Camoufox using the npm postinstall script
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
-# Install NPM packages, skip optional and development dependencies to
+# Install NPM packages, skip development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
 # tree for debugging
 RUN npm --quiet set progress=false \
-    && npm install --omit=dev \
+    && npm install \
     && echo "Installed NPM packages:" \
-    && (npm list --omit=dev --all || true) \
+    && (npm list --all || true) \
     && echo "Node.js version:" \
     && node --version \
     && echo "NPM version:" \
