@@ -12,5 +12,5 @@
         "templateId": "ts-beeai-agent"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

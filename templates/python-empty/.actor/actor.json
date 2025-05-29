@@ -8,5 +8,5 @@
     "meta": {
         "templateId": "python-empty"
     },
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

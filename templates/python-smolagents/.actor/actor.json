@@ -9,5 +9,5 @@
         "templateId": "python-smolagents"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

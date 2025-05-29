@@ -15,8 +15,7 @@ for dockerfile in "${dockerfiles[@]}"; do
     echo "Testing Dockerfile: $dockerfile"
     echo "--------------------------------"
 
-    build_dir=$(dirname "$dockerfile")
-    template_dir=$(dirname "$build_dir")
+    template_dir=$(dirname "$dockerfile")
 
     cd "$template_dir" || {
         echo "Failed to cd to $template_dir"
@@ -25,7 +24,7 @@ for dockerfile in "${dockerfiles[@]}"; do
 
     # Build the image with a unique tag
     image_tag="test-$(basename "$template_dir")-$(date +%s)"
-    if docker build -f ".actor/Dockerfile" -t "$image_tag" . --progress=plain; then
+    if docker build -f "./Dockerfile" -t "$image_tag" . --progress=plain; then
         echo "✓ Successfully built $dockerfile"
         (( successful_builds = successful_builds + 1 ))
 
