@@ -1,13 +1,14 @@
 {
-    "name": "actor-arxiv-mcp-server",
+    "name": "ts-mcp-server",
     "version": "0.0.1",
     "type": "module",
-    "description": "The ArXiv MCP Server provides a bridge between AI assistants and arXiv's research repository through the Model Context Protocol (MCP). It allows AI models to search for papers and access their content in a programmatic way.",
+    "description": "TypeScript Model Context Protocol server.",
     "engines": {
         "node": ">=20.0.0"
     },
     "dependencies": {
         "@modelcontextprotocol/sdk": "^1.11.4",
+		"@modelcontextprotocol/server-sequential-thinking": "^0.6.2",
         "apify": "^3.4.1",
         "body-parser": "^2.2.0",
         "express": "^5.1.0"
