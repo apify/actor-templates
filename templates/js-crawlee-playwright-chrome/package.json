@@ -2,7 +2,7 @@
     "name": "crawlee-playwright-javascript",
     "version": "0.0.1",
     "type": "module",
-    "description": "This is an example of an Apify actor.",
+    "description": "This is an example of an Apify Actor.",
     "dependencies": {
         "apify": "^3.2.6",
         "crawlee": "^3.11.5",
@@ -20,7 +20,7 @@
         "format:check": "prettier --check .",
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1",
         "postinstall": "npx crawlee install-playwright-browsers"
     },
     "author": "It's not you it's me",

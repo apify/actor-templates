@@ -7,7 +7,7 @@ This example template illustrates how to use LangChain.js with Apify to crawl th
 ## Included features
 
 - **[Apify SDK](https://docs.apify.com/sdk/js/)** - a toolkit for building [Actors](https://apify.com/actors)
-- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your actor's input
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Langchain.js](https://github.com/hwchase17/langchainjs)** - a framework for developing applications powered by language models
 - **[OpenAI](https://openai.com/)** - a powerful language model
 

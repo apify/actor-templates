@@ -2,7 +2,7 @@
     "name": "crawlee-playwright-javascript-camoufox",
     "version": "0.0.1",
     "type": "module",
-    "description": "This is an example of an Apify actor.",
+    "description": "This is an example of an Apify Actor.",
     "engines": {
         "node": ">=20.0.0"
     },
@@ -24,7 +24,7 @@
         "format:check": "prettier --check .",
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1",
         "postinstall": "npx camoufox-js fetch"
     },
     "author": "It's not you it's me",

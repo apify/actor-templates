@@ -39,7 +39,7 @@ async def main() -> None:
 
         # Exit if no start URLs are provided.
         if not start_urls:
-            Actor.log.info('No start URLs specified in actor input, exiting...')
+            Actor.log.info('No start URLs specified in Actor input, exiting...')
             await Actor.exit()
 
         # Open the default request queue for handling URLs to be processed.
