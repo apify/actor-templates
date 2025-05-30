@@ -32,7 +32,7 @@
         "start:prod": "node dist/main.js",
         "start:dev": "tsx src/main.ts",
         "build": "tsc",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
     "license": "ISC"

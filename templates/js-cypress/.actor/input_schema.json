@@ -1,6 +1,6 @@
 {
     "title": "Cypress Test",
-    "description": "Cypress is a tool to automate end-to-end web tests across all modern browsers. This actor runs Cypress tests from `Cypress -> e2e` folder in the cloud and stores the results in the Apify platform. The results can be (programmatically or manually) retrieved using Apify's REST API.",
+    "description": "Cypress is a tool to automate end-to-end web tests across all modern browsers. This Actor runs Cypress tests from `Cypress -> e2e` folder in the cloud and stores the results in the Apify platform. The results can be (programmatically or manually) retrieved using Apify's REST API.",
     "type": "object",
     "schemaVersion": 1,
     "properties": {

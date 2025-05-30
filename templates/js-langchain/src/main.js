@@ -50,7 +50,7 @@ if (!APIFY_TOKEN)
     );
 
 // Now we want to create a vector index from the crawled documents.
-// Following object represents an input for the https://apify.com/apify/website-content-crawler actor that crawls the website to gather the data.
+// Following object represents an input for the https://apify.com/apify/website-content-crawler Actor that crawls the website to gather the data.
 const websiteContentCrawlerInput = { startUrls, maxCrawlPages };
 
 // This variable will contain a vector index that we will use to retrieve the most relevant documents for a given query.

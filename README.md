@@ -3,11 +3,11 @@
 # Apify Actor templates
 
 > This repository stores boilerplate templates and code examples for [Apify Actor](https://apify.com/actors).
-> The purpose of these templates is to help developers get started with actor development on the Apify platform.
+> The purpose of these templates is to help developers get started with Actor development on the Apify platform.
 
 ## How to use the templates
 
-You can start using the actor templates right away with the [Apify CLI](https://docs.apify.com/cli):
+You can start using the Actor templates right away with the [Apify CLI](https://docs.apify.com/cli):
 
 ```Bash
 npx apify-cli create my-crawler
@@ -24,8 +24,8 @@ After running the command you will be prompted to select one of the templates fr
 
 ### Getting started templates
 
-Basic templates to start developing actors on the Apify platform using Node.js (JavaScript/Typescript), or Python.
-Just install the CLI and watch your actor run.
+Basic templates to start developing Actors on the Apify platform using Node.js (JavaScript/Typescript), or Python.
+Just install the CLI and watch your Actor run.
 
 - [Node.js + JavaScript](./templates/js-start/)
 - [Node.js + TypeScript](./templates/ts-start/)
