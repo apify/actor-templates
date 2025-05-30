@@ -1,6 +1,9 @@
-FROM apify/actor-node-playwright:22-1.49.1
+FROM apify/actor-node-playwright:22-1.52.0
 
-COPY package*.json ./
+COPY --chown=myuser package*.json Dockerfile ./
+
+# Check Playwright version is the same as the one from base image.
+RUN node check-playwright-version.mjs
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
