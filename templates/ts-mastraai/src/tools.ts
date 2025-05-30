@@ -42,7 +42,7 @@ export const instagramScraperTool: Tool<
 
         const apifyClient = new ApifyClient({ token });
 
-        // Call the Apify Instagram Scraper actor
+        // Call the Apify Instagram Scraper Actor
         const run = await apifyClient.actor('apify/instagram-scraper').call(runInput);
         if (!run) {
             throw new Error('Failed to start the Actor apify/instagram-scraper');

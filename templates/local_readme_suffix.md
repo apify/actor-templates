@@ -1,6 +1,6 @@
 ## Getting started
 
-For complete information [see this article](https://docs.apify.com/platform/actors/development#build-actor-locally). To run the actor use the following command:
+For complete information [see this article](https://docs.apify.com/platform/actors/development#build-actor-locally). To run the Actor use the following command:
 
 ```bash
 apify run
