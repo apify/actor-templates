@@ -10,8 +10,6 @@ RUN npm ls crawlee apify playwright
 # to speed up the build using Docker layer cache.
 COPY --chown=myuser package*.json ./
 
-# Ensure we'll install GeoDB database using the npm postinstall script
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
 # Install NPM packages, skip development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
 # tree for debugging
