@@ -9,11 +9,19 @@
     "dependencies": {
         "apify": "^3.2.6"
     },
+    "devDependencies": {
+        "@apify/eslint-config": "^1.0.0",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "prettier": "^3.5.3"
+    },
     "scripts": {
         "start": "node ./src/main.js",
-        "lint": "./node_modules/.bin/eslint ./src --ext .js,.jsx",
-        "lint:fix": "./node_modules/.bin/eslint ./src --ext .js,.jsx --fix",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
     "license": "ISC"

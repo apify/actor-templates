@@ -9,5 +9,5 @@
         "templateId": "python-llamaindex-agent"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

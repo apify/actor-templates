@@ -2,8 +2,8 @@
 import { Logger } from '../lib/types.js';
 
 export interface OnSignalsOptions {
-  logger: Logger
-  cleanup?: () => void
+    logger: Logger;
+    cleanup?: () => void;
 }
 
 /**

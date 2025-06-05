@@ -9,5 +9,5 @@
     "meta": {
         "templateId": "ts-standby"
     },
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

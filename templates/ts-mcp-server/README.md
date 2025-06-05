@@ -5,7 +5,13 @@ This allows you to run any stdio MCP server as a [standby Actor](https://docs.ap
 
 ## How to use
 
-Change the `MCP_COMMAND` to spawn your stdio MCP server in `src/main.ts`, and don't forget to install the required MCP server in the `.actor/Dockerfile`. Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/billing.ts`.
+Change the `MCP_COMMAND` to spawn your stdio MCP server in `src/main.ts`, and don't forget to install the required MCP server in the `package.json` (using `npm install ...`).
+By default, this template runs a [Sequential Thinking MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking) server using the following command:
+```
+npx @modelcontextprotocol/server-sequential-thinking
+```
+
+Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/billing.ts`.
 
 [Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform, configure [standby mode](https://docs.apify.com/platform/actors/development/programming-interface/standby), and then connect to the Actor standby URL with your MCP client (e.g., `https://me--my-mcp-server.apify.actor/sse`).
 
@@ -36,6 +42,7 @@ await Actor.charge({ eventName: 'tool-request' });
 This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services.
 
 To set up the PPE model for this Actor:
+
 - **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Monetization settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
 
 ## Resources

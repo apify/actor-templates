@@ -2,19 +2,25 @@
     "name": "crawlee-puppeteer-javascript",
     "version": "0.0.1",
     "type": "module",
-    "description": "This is an example of an Apify actor.",
+    "description": "This is an example of an Apify Actor.",
     "dependencies": {
         "apify": "^3.2.6",
         "crawlee": "^3.11.5",
-        "puppeteer": "*"
+        "puppeteer": "24.9.0"
     },
     "devDependencies": {
-        "@apify/eslint-config": "^0.4.0",
-        "eslint": "^8.50.0"
+        "@apify/eslint-config": "^1.0.0",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "prettier": "^3.5.3"
     },
     "scripts": {
         "start": "node src/main.js",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
     "license": "ISC"

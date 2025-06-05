@@ -1,6 +1,7 @@
 import { Emitter } from 'bee-agent-framework/emitter/emitter';
-import { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
-import { JSONToolOutput, Tool, ToolEmitter, ToolInput, ToolInputValidationError } from 'bee-agent-framework/tools/base';
+import type { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
+import type { ToolEmitter, ToolInput } from 'bee-agent-framework/tools/base';
+import { JSONToolOutput, Tool, ToolInputValidationError } from 'bee-agent-framework/tools/base';
 import { z } from 'zod';
 
 interface CalculatorSumToolOutput {
@@ -16,9 +17,9 @@ interface CalculatorSumToolOutput {
  * summing numbers.
  */
 export class CalculatorSumTool extends Tool<JSONToolOutput<CalculatorSumToolOutput>> {
-    override name: string = 'calculator-sum';
+    override name = 'calculator-sum';
 
-    override description: string = 'Calculates the sum of the provided list of numbers';
+    override description = 'Calculates the sum of the provided list of numbers';
 
     override inputSchema(): Promise<AnyToolSchemaLike> | AnyToolSchemaLike {
         return z.object({
@@ -26,10 +27,12 @@ export class CalculatorSumTool extends Tool<JSONToolOutput<CalculatorSumToolOutp
         });
     }
 
-    public readonly emitter: ToolEmitter<ToolInput<this>, JSONToolOutput<CalculatorSumToolOutput>> = Emitter.root.child({
-        namespace: ['tool', 'calculator_sum'],
-        creator: this,
-    });
+    public readonly emitter: ToolEmitter<ToolInput<this>, JSONToolOutput<CalculatorSumToolOutput>> = Emitter.root.child(
+        {
+            namespace: ['tool', 'calculator_sum'],
+            creator: this,
+        },
+    );
 
     protected async _run(input: ToolInput<this>): Promise<JSONToolOutput<CalculatorSumToolOutput>> {
         const { numbers } = input;

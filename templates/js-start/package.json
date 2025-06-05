@@ -2,7 +2,7 @@
     "name": "js-scrape-single-page",
     "version": "0.0.1",
     "type": "module",
-    "description": "This is an example of an Apify actor.",
+    "description": "This is an example of an Apify Actor.",
     "engines": {
         "node": ">=18.0.0"
     },
@@ -13,7 +13,7 @@
     },
     "scripts": {
         "start": "node ./src/main.js",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
     "license": "ISC"

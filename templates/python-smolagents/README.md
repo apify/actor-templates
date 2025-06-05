@@ -5,6 +5,7 @@ An AI news aggregator that fetches and summarizes the latest news based on user-
 ## How it works
 
 This Actor works as an AI-powered news aggregator:
+
 - The user provides a list of topics they are interested in.
 - The Actor searches for relevant news articles using DuckDuckGo.
 - The retrieved articles are processed and summarized using an OpenAI model.

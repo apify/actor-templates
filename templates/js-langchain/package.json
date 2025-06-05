@@ -2,7 +2,7 @@
     "name": "project-langchain",
     "version": "0.0.3",
     "type": "module",
-    "description": "This is a boilerplate of an Apify actor.",
+    "description": "This is a boilerplate of an Apify Actor.",
     "engines": {
         "node": ">=18.0.0"
     },
@@ -17,14 +17,18 @@
     },
     "scripts": {
         "start": "node src/main.js",
-        "lint": "eslint ./src --ext .js,.jsx",
-        "lint:fix": "eslint ./src --ext .js,.jsx --fix",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
     },
     "author": "It's not you it's me",
     "license": "ISC",
     "devDependencies": {
-        "@apify/eslint-config": "^0.4.0",
-        "eslint": "^8.57.0"
+        "@apify/eslint-config": "^1.0.0",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "prettier": "^3.5.3"
     }
 }

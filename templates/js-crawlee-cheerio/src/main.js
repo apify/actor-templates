@@ -10,10 +10,7 @@ import { CheerioCrawler, Dataset } from 'crawlee';
 await Actor.init();
 
 // Structure of input is defined in input_schema.json
-const {
-    startUrls = ['https://apify.com'],
-    maxRequestsPerCrawl = 100,
-} = await Actor.getInput() ?? {};
+const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } = (await Actor.getInput()) ?? {};
 
 const proxyConfiguration = await Actor.createProxyConfiguration();
 

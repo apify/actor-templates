@@ -21,6 +21,7 @@ Given a user query with a URL, the Agent uses the Contact Details Scraper to ret
 The Agent can decide how to handle the data—whether to process it further or skip summarization if it's not necessary.
 
 ### Sample queries:
+
 - Find contact details for `apify.com` and provide raw results.
 - Find contact details for `apify.com` and summarize them.
 

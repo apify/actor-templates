@@ -22,13 +22,9 @@ async function buildTemplatedFolder({ dirName, templateIds }) {
             const zipName = `${templateId}.zip`;
             const archivePath = path.join(distDir, zipName);
 
-            const files = await globby([
-                `./*`,
-                `./**/**`,
-                `!./node_modules/**`,
-                `!./.venv/**`,
-                `!./.DS_Store`,
-            ], { dot: true });
+            const files = await globby([`./*`, `./**/**`, `!./node_modules/**`, `!./.venv/**`, `!./.DS_Store`], {
+                dot: true,
+            });
             files.sort();
 
             // Reset the timestamp on the template files to have a deterministic zip

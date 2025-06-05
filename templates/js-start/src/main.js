@@ -1,9 +1,9 @@
+// Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
+import { Actor } from 'apify';
 // Axios - Promise based HTTP client for the browser and node.js (Read more at https://axios-http.com/docs/intro).
 import axios from 'axios';
 // Cheerio - The fast, flexible & elegant library for parsing and manipulating HTML and XML (Read more at https://cheerio.js.org/).
 import * as cheerio from 'cheerio';
-// Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
-import { Actor } from 'apify';
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 // import { router } from './routes.js';
@@ -23,12 +23,12 @@ const $ = cheerio.load(response.data);
 
 // Extract all headings from the page (tag name and text).
 const headings = [];
-$("h1, h2, h3, h4, h5, h6").each((i, element) => {
+$('h1, h2, h3, h4, h5, h6').each((i, element) => {
     const headingObject = {
-        level: $(element).prop("tagName").toLowerCase(),
+        level: $(element).prop('tagName').toLowerCase(),
         text: $(element).text(),
     };
-    console.log("Extracted heading", headingObject);
+    console.log('Extracted heading', headingObject);
     headings.push(headingObject);
 });
 

@@ -9,5 +9,5 @@
         "templateId": "python-crawlee-beautifulsoup"
     },
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }
