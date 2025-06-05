@@ -8,7 +8,7 @@
     },
     "dependencies": {
         "apify": "^3.2.6",
-        "camoufox-js": "^0.3.5",
+        "camoufox-js": "^0.4.0",
         "crawlee": "^3.11.5",
         "playwright": "1.52.0"
     },

@@ -34,15 +34,13 @@ RUN npm ls crawlee apify puppeteer playwright
 # to speed up the build using Docker layer cache.
 COPY --chown=myuser package*.json ./
 
-# Ensure we'll install Camoufox using the npm postinstall script
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
-# Install NPM packages, skip optional and development dependencies to
+# Install NPM packages, skip development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
 # tree for debugging
 RUN npm --quiet set progress=false \
-    && npm install --omit=dev \
+    && npm install \
     && echo "Installed NPM packages:" \
-    && (npm list --omit=dev --all || true) \
+    && (npm list --all || true) \
     && echo "Node.js version:" \
     && node --version \
     && echo "NPM version:" \

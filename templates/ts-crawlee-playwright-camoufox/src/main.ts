@@ -38,6 +38,8 @@ const crawler = new PlaywrightCrawler({
         launcher: firefox,
         launchOptions: await camoufoxLaunchOptions({
             headless: true,
+            proxy: await proxyConfiguration?.newUrl(),
+            geoip: true,
             // fonts: ['Times New Roman'] // <- custom Camoufox options
         }),
     },
