@@ -1,7 +1,7 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://crawlee.dev/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node-playwright-chrome:22-1.52.0 AS builder
+FROM apify/actor-node-playwright-camoufox:22-1.52.0 AS builder
 
 # Check preinstalled packages
 RUN npm ls crawlee apify puppeteer playwright
@@ -25,7 +25,7 @@ COPY --chown=myuser . ./
 RUN npm run build
 
 # Create final image
-FROM apify/actor-node-playwright-chrome:22-1.52.0
+FROM apify/actor-node-playwright-camoufox:22-1.52.0
 
 # Check preinstalled packages
 RUN npm ls crawlee apify puppeteer playwright
@@ -38,9 +38,9 @@ COPY --chown=myuser package*.json ./
 # keep the image small. Avoid logging too much and print the dependency
 # tree for debugging
 RUN npm --quiet set progress=false \
-    && npm install \
+    && npm install --omit=dev \
     && echo "Installed NPM packages:" \
-    && (npm list --all || true) \
+    && (npm list --omit=dev --all || true) \
     && echo "Node.js version:" \
     && node --version \
     && echo "NPM version:" \
