@@ -153,6 +153,11 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
+# Visual Studio Code
+#  Ignores the folder created by VS Code when changing workspace settings, doing debugger
+#  configuration, etc. Can be commented out to share Workspace Settings within a team
+.vscode
+
 # Zed editor
 #  Ignores the folder created when setting Project Settings in the Zed editor. Can be commented out
 #  to share Project Settings within a team
