@@ -4,13 +4,13 @@
     "type": "module",
     "description": "This is an example of an Apify Actor.",
     "dependencies": {
-        "apify": "^3.2.6",
+        "apify": "^3.4.2",
         "crawlee": "^3.11.5",
-        "playwright": "1.52.0"
+        "playwright": "1.53.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
-        "eslint": "^9.27.0",
+        "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "prettier": "^3.5.3"
     },

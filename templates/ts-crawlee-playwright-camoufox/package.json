@@ -7,22 +7,22 @@
         "node": ">=20.0.0"
     },
     "dependencies": {
-        "apify": "^3.2.6",
+        "apify": "^3.4.2",
         "camoufox-js": "^0.4.0",
         "crawlee": "^3.11.5",
-        "playwright": "1.52.0"
+        "playwright": "1.53.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
-        "@types/node": "^22.15.21",
-        "eslint": "^9.27.0",
+        "@types/node": "^22.15.32",
+        "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "globals": "^16.2.0",
         "prettier": "^3.5.3",
-        "tsx": "^4.19.4",
+        "tsx": "^4.20.3",
         "typescript": "^5.8.3",
-        "typescript-eslint": "^8.32.1"
+        "typescript-eslint": "^8.34.1"
     },
     "scripts": {
         "start": "npm run start:dev",
