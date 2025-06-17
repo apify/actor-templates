@@ -9,7 +9,7 @@
     "dependencies": {
         "@langchain/community": "^0.3.31",
         "@langchain/core": "^0.3.40",
-        "@langchain/langgraph": "^0.2.46",
+        "@langchain/langgraph": "^0.3.0",
         "@langchain/openai": "^0.4.4",
         "apify": "^3.3.1",
         "crawlee": "^3.12.2",
