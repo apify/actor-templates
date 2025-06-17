@@ -9,7 +9,7 @@
     "dependencies": {
         "@langchain/community": "^0.3.9",
         "@langchain/core": "^0.3.15",
-        "@langchain/openai": "^0.3.11",
+        "@langchain/openai": "^0.5.0",
         "apify": "^3.2.6",
         "hnswlib-node": "^3.0.0",
         "langchain": "^0.3.4",
