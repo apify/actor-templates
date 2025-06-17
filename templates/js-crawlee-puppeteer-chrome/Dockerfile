@@ -1,7 +1,7 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://crawlee.dev/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node-puppeteer-chrome:22-24.9.0
+FROM apify/actor-node-puppeteer-chrome:22-24.10.1
 
 # Check preinstalled packages
 RUN npm ls crawlee apify puppeteer playwright
