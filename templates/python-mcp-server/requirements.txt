@@ -1,7 +1,7 @@
 apify<3.0.0
 apify_client<2.0.0
 arxiv-mcp-server==0.2.11
-fastapi==0.115.12
+fastapi==0.115.13
 mcp==1.9.1
 pydantic>=2.0.0
 sse-starlette>=1.8.0
