@@ -1,7 +1,7 @@
 # Specify the base Docker image. You can read more about
 # See https://docs.apify.com/sdk/js/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node:22
+FROM apify/actor-node:24
 
 # Check preinstalled packages
 RUN npm ls crawlee apify puppeteer playwright
