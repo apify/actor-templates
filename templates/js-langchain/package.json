@@ -13,7 +13,7 @@
         "apify": "^3.4.2",
         "hnswlib-node": "^3.0.0",
         "langchain": "^0.3.4",
-        "tar": "^6.1.14"
+        "tar": "^7.0.0"
     },
     "scripts": {
         "start": "node src/main.js",
