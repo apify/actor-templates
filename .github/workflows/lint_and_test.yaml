@@ -19,7 +19,7 @@ jobs:
 
   lint_and_test:
     name: Lint and test (without templates)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repo
