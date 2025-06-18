@@ -3,6 +3,7 @@
 A Python template for deploying and monetizing a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server in the cloud using the [Apify platform](https://docs.apify.com/platform/actors).
 
 This template enables you to:
+
 - Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using SSE transport
 - Expose your MCP server via Server-Sent Events (SSE) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
@@ -11,40 +12,42 @@ This template enables you to:
 
 - Support for both stdio-based and SSE-based MCP servers
 - Built-in charging: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
-  - Server startup
-  - Tool calls
-  - Resource access
-  - Prompt operations
-  - List operations
+    - Server startup
+    - Tool calls
+    - Resource access
+    - Prompt operations
+    - List operations
 - Easy configuration: Simple setup through environment variables and configuration files
 
 ## Quick Start
 
 1. Configure your MCP server in `src/main.py`:
-   ```python
-   # For stdio server:
-   MCP_SERVER_PARAMS = StdioServerParameters(
-       command='your-command',
-       args=['your', 'args'],
-   )
 
-   # For SSE server:
-   MCP_SERVER_PARAMS = SseServerParameters(
-       url='your-server-url',
-   )
-   ```
+    ```python
+    # For stdio server:
+    MCP_SERVER_PARAMS = StdioServerParameters(
+        command='your-command',
+        args=['your', 'args'],
+    )
+
+    # For SSE server:
+    MCP_SERVER_PARAMS = SseServerParameters(
+        url='your-server-url',
+    )
+    ```
+
 2. Add any required dependencies to the `requirements.txt` file (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)).
 3. Deploy to Apify and enable standby mode.
 4. Connect using an MCP client:
-   ```json
-   {
-       "mcpServers": {
-           "your-server": {
-               "url": "https://your-actor.apify.actor/sse"
-           }
-       }
-   }
-   ```
+    ```json
+    {
+        "mcpServers": {
+            "your-server": {
+                "url": "https://your-actor.apify.actor/sse"
+            }
+        }
+    }
+    ```
 
 ## 💰 Pricing
 
@@ -75,6 +78,7 @@ await Actor.charge('tool-call')    # Charge for tool execution
 ```
 
 To set up the PPE model:
+
 1. Go to your Actor's **Publication settings**.
 2. Set the **Pricing model** to `Pay per event`.
 3. Add the pricing schema (see [pay_per_event.json](.actor/pay_per_event.json) for a complete example).
@@ -86,11 +90,12 @@ This template implements a proxy server that can connect to either a stdio-based
 ### Server types
 
 1. **Stdio Server** (`StdioServerParameters`):
-   - Spawns a local process that implements the MCP protocol over stdio.
-   - Configure using the `command` parameter to specify the executable and the `args` parameter for additional arguments.
-   - Optionally, use the `env` parameter to pass environment variables to the process.
+    - Spawns a local process that implements the MCP protocol over stdio.
+    - Configure using the `command` parameter to specify the executable and the `args` parameter for additional arguments.
+    - Optionally, use the `env` parameter to pass environment variables to the process.
 
 Example:
+
 ```python
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
@@ -100,36 +105,41 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 ```
 
 2. **SSE Server** (`SseServerParameters`):
-   - Connects to a remote MCP server via SSE transport.
-   - Configure using the `url` parameter to specify the server's endpoint.
-   - Optionally, use the `headers` parameter to include custom headers (e.g., for authentication) and the `auth` parameter for additional authentication mechanisms.
+    - Connects to a remote MCP server via SSE transport.
+    - Configure using the `url` parameter to specify the server's endpoint.
+    - Optionally, use the `headers` parameter to include custom headers (e.g., for authentication) and the `auth` parameter for additional authentication mechanisms.
 
 Example:
+
 ```python
 MCP_SERVER_PARAMS = SseServerParameters(
     url='https://mcp.apify.com/sse',
     headers={'Authorization':  os.getenv('YOUR-AUTH-TOKEN')},  # Replace with your authentication token
 )
 ```
+
 - **Tips**:
-  - Ensure the remote server supports SSE transport and is accessible from the Actor's environment.
-  - Use environment variables to securely store sensitive information like tokens or API keys.
+    - Ensure the remote server supports SSE transport and is accessible from the Actor's environment.
+    - Use environment variables to securely store sensitive information like tokens or API keys.
 
 #### Environment variables:
 
 Environment variables can be securely stored and managed at the Actor level on the [Apify platform](https://docs.apify.com/platform/actors/development/programming-interface/environment-variables#custom-environment-variables). These variables are automatically injected into the Actor's runtime environment, allowing you to:
+
 - Keep sensitive information like API keys secure.
 - Simplify configuration by avoiding hardcoded values in your code.
 
 ### Proxy implementation
 
 The proxy server (`ProxyServer` class) handles:
+
 - Creating a Starlette web server with SSE endpoints (`/sse` and `/messages/`)
 - Managing connections to the underlying MCP server
 - Forwarding requests and responses between clients and the MCP server
 - Handling charging through the `actor_charge_function`
 
 Key components:
+
 - `ProxyServer`: Main class that manages the proxy functionality
 - `create_proxy_server`: Creates an MCP server instance that proxies requests
 - `charge_mcp_operation`: Handles charging for different MCP operations
@@ -137,6 +147,7 @@ Key components:
 ### MCP operations
 
 The proxy supports all standard MCP operations:
+
 - `list_tools()`: List available tools
 - `call_tool()`: Execute a tool with arguments
 - `list_prompts()`: List available prompts
