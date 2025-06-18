@@ -1,14 +1,14 @@
-const { spawnSync: _spawnSync } = require('node:child_process');
-const fs = require('node:fs');
-const os = require('node:os');
-const path = require('node:path');
+import { spawnSync as _spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
-const JSON5 = require('json5');
-const semver = require('semver');
+import JSON5 from 'json5';
+import semver from 'semver';
 
-const { NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS, AGENT_AI_TEMPLATE_IDS } = require('../src/consts.js');
+import { AGENT_AI_TEMPLATE_IDS, NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS } from '../src/consts.js';
 
-const TEMPLATES_DIRECTORY = path.join(__dirname, '../templates');
+const TEMPLATES_DIRECTORY = path.join(import.meta.dirname, '../templates');
 
 const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
 const PYTHON_COMMAND = /^win/.test(process.platform) ? 'python' : 'python3';

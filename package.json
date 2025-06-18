@@ -1,31 +1,19 @@
 {
     "name": "@apify/actor-templates",
-    "version": "0.1.5",
+    "version": "0.2.0",
     "description": "A manifest of Apify actor templates.",
-    "main": "src/index.js",
-    "types": "src/index.d.cts",
+    "type": "module",
     "exports": {
-        "import": {
-            "types": "./src/index.d.mts",
-            "default": "./src/index.js"
-        },
-        "require": {
-            "types": "./src/index.d.cts",
-            "default": "./src/index.js"
-        }
+        ".": "./src/index.js"
     },
-    "files": [
-        "src/index.js",
-        "src/index.d.*"
-    ],
     "scripts": {
         "lint": "eslint",
         "lint:fix": "eslint --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "test": "jest",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
         "test-without-templates": "npm run test -- --testPathIgnorePatterns=templates.test.js",
-        "test-templates": "npm run test -- --testPathPattern=templates.test.js",
+        "test-templates": "npm run test -- --testPathPatterns=templates.test.js",
         "test-python-templates": "npm run test-templates -- --testNamePattern=python-templates",
         "test-node-templates": "npm run test-templates -- --testNamePattern=node-js-templates",
         "test-llm-ai-python-templates": "npm run test-templates -- --testNamePattern=python-llm-ai-templates",
@@ -49,22 +37,22 @@
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "0.1.1",
-        "@types/jest": "^29.5.14",
+        "@types/jest": "^30.0.0",
         "apify": "^3.4.2",
-        "crawlee": "^3.13.5",
-        "eslint": "^9.27.0",
+        "crawlee": "^3.13.8",
+        "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
-        "eslint-plugin-jest": "^28.11.0",
+        "eslint-plugin-jest": "^28.14.0",
         "globals": "^16.2.0",
-        "globby": "^11.1.0",
-        "jest": "^29.7.0",
+        "globby": "^14.1.0",
+        "jest": "^30.0.0",
         "json5": "^2.2.3",
         "mustache": "^4.2.0",
-        "playwright": "^1.51.1",
+        "playwright": "^1.53.0",
         "prettier": "^3.5.3",
-        "puppeteer": "^24.4.0",
-        "semver": "^7.5.4",
+        "puppeteer": "^24.10.1",
+        "semver": "^7.7.2",
         "typescript": "^5.8.3",
-        "typescript-eslint": "^8.32.1"
+        "typescript-eslint": "^8.34.1"
     }
 }

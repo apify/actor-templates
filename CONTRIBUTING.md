@@ -2,7 +2,7 @@
 
 ## Tests
 
-Tests are implemented using the [Mocha](https://mochajs.org/) framework.
+Tests are implemented using the [Jest](https://jestjs.io/) framework.
 You can run tests with commands in the repository root directory:
 
 Install dependencies:
@@ -32,7 +32,7 @@ npm run test-node-templates
 To enable verbose output, add `verbose: true` to the `jest.config.js` file:
 
 ```diff
- module.exports = {
+ export default {
      // ...
 +    verbose: true,
  };

@@ -1,5 +1,5 @@
-const templates = require('../src/index.js');
-const localManifest = require('../templates/manifest.json');
+import { fetchManifest } from '../src/index.js';
+import localManifest from '../templates/manifest.json';
 
 // This needs to match the valid programming languages of the CLI
 // create command available in apify-cli/src/lib/create-utils.js
@@ -9,7 +9,7 @@ const VALID_CATEGORIES = ['javascript', 'typescript', 'python'];
 
 describe('index', () => {
     test('template manifest should be valid', async () => {
-        const manifest = await templates.fetchManifest();
+        const manifest = await fetchManifest();
         expect(Array.isArray(manifest.templates)).toBe(true);
         for (const t of manifest.templates) {
             expect(typeof t.name).toBe('string');
@@ -27,7 +27,7 @@ describe('index', () => {
     test('should fetch template manifest from GitHub', async () => {
         // This fetches the remote === old manifest from GitHub.
         // It does not test your local changes.
-        const manifest = await templates.fetchManifest();
+        const manifest = await fetchManifest();
         expect(Array.isArray(manifest.templates)).toBe(true);
         for (const t of manifest.templates) {
             expect(typeof t.name).toBe('string');

@@ -1,6 +1,4 @@
-const { buildTemplates } = require('./build_templates');
+import { buildTemplates } from './build_templates.js';
 
-(async () => {
-    await buildTemplates();
-    console.log('Templates zips were created!');
-})();
+await buildTemplates();
+console.log('Templates zips were created!');
