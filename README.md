@@ -69,7 +69,7 @@ npm i @apify/actor-templates
 ```
 
 ```JavaScript
-const templates = require("@apify/actor-templates");
+import templates from '@apify/actor-templates';
 
 const manifest = await templates.fetchManifest();
 ```

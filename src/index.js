@@ -1,9 +1,9 @@
-const https = require('https');
+import https from 'node:https';
 
-const TEMPLATE_MANIFEST_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/manifest.json';
-const WRAPPER_MANIFEST_URL = 'https://raw.githubusercontent.com/apify/actor-templates/master/wrappers/manifest.json';
+const manifestUrl = 'https://raw.githubusercontent.com/apify/actor-templates/master/templates/manifest.json';
+const wrapperManifestUrl = 'https://raw.githubusercontent.com/apify/actor-templates/master/wrappers/manifest.json';
 
-exports.fetchManifest = async (url = TEMPLATE_MANIFEST_URL) => {
+export async function fetchManifest(url = manifestUrl) {
     return new Promise((resolve, reject) => {
         https
             .get(url, (res) => {
@@ -27,7 +27,7 @@ exports.fetchManifest = async (url = TEMPLATE_MANIFEST_URL) => {
             })
             .on('error', (err) => reject(err));
     });
-};
+}
 
-exports.manifestUrl = TEMPLATE_MANIFEST_URL;
-exports.wrapperManifestUrl = WRAPPER_MANIFEST_URL;
+// keep default export for BC
+export default { fetchManifest };
