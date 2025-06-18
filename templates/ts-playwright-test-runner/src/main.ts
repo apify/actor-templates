@@ -16,11 +16,11 @@ function ensureFolder(pathname: string) {
 }
 
 function getConfigPath() {
-    return `${__dirname}/../playwright.config.ts`;
+    return `${import.meta.dirname}/../playwright.config.ts`;
 }
 
 function getResultDir() {
-    return `${__dirname}/../playwright-report`;
+    return `${import.meta.dirname}/../playwright-report`;
 }
 
 const getConfig = (options: {
@@ -64,7 +64,7 @@ export default defineConfig({
 function runTests() {
     try {
         execSync(`npx playwright test --config=${getConfigPath()}`, {
-            cwd: __dirname,
+            cwd: import.meta.dirname,
             encoding: 'utf8',
             stdio: 'inherit',
         });

@@ -1,15 +1,15 @@
 {
-	"actorSpecification": 1,
-	"name": "python-mcp-server",
-	"title": "Python MCP server",
-	"description": "Python Model Context Protocol (MCP) server.",
-	"version": "0.0",
-	"buildTag": "latest",
-	"usesStandbyMode": true,
-	"meta": {
-		"templateId": "python-mcp-server"
-	},
-	"input": {
+    "actorSpecification": 1,
+    "name": "python-mcp-server",
+    "title": "Python MCP server",
+    "description": "Python Model Context Protocol (MCP) server.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "usesStandbyMode": true,
+    "meta": {
+        "templateId": "python-mcp-server"
+    },
+    "input": {
         "title": "Actor input schema",
         "description": "This is Actor input schema",
         "type": "object",
@@ -17,6 +17,6 @@
         "properties": {},
         "required": []
     },
-	"dockerfile": "../Dockerfile",
+    "dockerfile": "../Dockerfile",
     "webServerMcpPath": "/sse"
 }
