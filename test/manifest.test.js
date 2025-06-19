@@ -1,5 +1,5 @@
 import { fetchManifest } from '../src/index.js';
-import localManifest from '../templates/manifest.json';
+import localManifest from '../templates/manifest.json' with { type: 'json' };
 
 // This needs to match the valid programming languages of the CLI
 // create command available in apify-cli/src/lib/create-utils.js

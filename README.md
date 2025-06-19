@@ -69,9 +69,9 @@ npm i @apify/actor-templates
 ```
 
 ```JavaScript
-import templates from '@apify/actor-templates';
+import { fetchManifest } from '@apify/actor-templates';
 
-const manifest = await templates.fetchManifest();
+const manifest = await fetchManifest();
 ```
 
 ## Publish updated/new template
