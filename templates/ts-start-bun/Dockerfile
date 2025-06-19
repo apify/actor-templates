@@ -1,5 +1,5 @@
 # Specify the base Docker image
-FROM oven/bun:1.0
+FROM oven/bun:1.2
 
 # Next, copy the source files using the user set
 # in the base image.
