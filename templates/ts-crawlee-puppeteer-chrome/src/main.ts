@@ -1,7 +1,6 @@
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
 import { Actor } from 'apify';
 // Web scraping and browser automation library (Read more at https://crawlee.dev)
-import type { Request } from 'crawlee';
 import { PuppeteerCrawler } from 'crawlee';
 
 import { router } from './routes.js';
@@ -10,7 +9,12 @@ import { router } from './routes.js';
 await Actor.init();
 
 interface Input {
-    startUrls: Request[];
+    startUrls: {
+        url: string;
+        method?: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'TRACE' | 'OPTIONS' | 'CONNECT' | 'PATCH';
+        headers?: Record<string, string>;
+        userData: Record<string, unknown>;
+    }[];
 }
 // Define the URLs to start the crawler with - get them from the input of the Actor or use a default list.
 const { startUrls = ['https://apify.com'] } = (await Actor.getInput<Input>()) ?? {};
