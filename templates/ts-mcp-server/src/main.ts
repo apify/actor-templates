@@ -19,7 +19,7 @@ import { getLogger } from './lib/getLogger.js';
 // Configuration constants for the MCP server
 // Command to run the Sequential Thinking MCP server
 // TODO: Do not forget to install the MCP server in package.json (using `npm install ...`)
-const MCP_COMMAND = 'npx @modelcontextprotocol/server-sequential-thinking';
+const MCP_COMMAND = 'npx @modelcontextprotocol/server-everything';
 
 // Check if the Actor is running in standby mode
 const STANDBY_MODE = process.env.APIFY_META_ORIGIN === 'STANDBY';
