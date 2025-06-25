@@ -6,7 +6,7 @@ This allows you to run any stdio MCP server as a [standby Actor](https://docs.ap
 ## How to use
 
 Change the `MCP_COMMAND` to spawn your stdio MCP server in `src/main.ts`, and don't forget to install the required MCP server in the `package.json` (using `npm install ...`).
-By default, this template runs a [Everything MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/everything) server using the following command:
+By default, this template runs an [Everything MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/everything) using the following command:
 
 ```
 npx @modelcontextprotocol/server-everything
