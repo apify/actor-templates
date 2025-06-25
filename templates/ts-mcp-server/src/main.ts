@@ -17,7 +17,7 @@ import { getLogger } from './lib/getLogger.js';
 // import { router } from './routes.js';
 
 // Configuration constants for the MCP server
-// Command to run the Sequential Thinking MCP server
+// Command to run the Everything MCP Server
 // TODO: Do not forget to install the MCP server in package.json (using `npm install ...`)
 const MCP_COMMAND = 'npx @modelcontextprotocol/server-everything';
 
