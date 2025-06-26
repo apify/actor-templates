@@ -5,7 +5,7 @@ import apifyJs from '@apify/eslint-config/js.js';
 
 // eslint-disable-next-line import/no-default-export
 export default [
-    { ignores: ['**/dist', 'templates', 'src'] },
+    { ignores: ['**/dist', '**/venv', '**/.venv', 'templates', 'src', 'node_modules'] },
     ...apifyJs,
     prettier,
     {

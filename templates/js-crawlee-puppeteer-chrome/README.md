@@ -23,7 +23,6 @@ If you're looking for examples or want to learn more visit:
     - `proxyConfiguration` - provide the proxy configuration to the crawler
     - `requestHandler` - handle each request with custom router defined in the `routes.js` file.
 4. Handle requests with the custom router from `routes.js` file. Read more about custom routing for the Cheerio Crawler [here](https://crawlee.dev/api/puppeteer-crawler/function/createPuppeteerRouter)
-
     - Create a new router instance with `new createPuppeteerRouter()`
     - Define default handler that will be called for all URLs that are not handled by other handlers by adding `router.addDefaultHandler(() => { ... })`
     - Define additional handlers - here you can add your own handling of the page
