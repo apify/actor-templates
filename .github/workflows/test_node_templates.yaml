@@ -12,7 +12,7 @@ jobs:
         node-version: [20, 22, 24]
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 120
 
     steps:
       - name: Checkout repo

@@ -11,7 +11,9 @@ export const NODE_TEMPLATE_IDS = templateManifest.templates
 export const SKIP_TESTS = templateManifest.templates.filter((t) => t.skipTests).map((t) => t.id);
 export const PYTHON_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category === 'python').map((t) => t.id);
 
-export const AGENT_AI_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.useCases?.includes('AI')).map((t) => t.id);
+export const AGENT_AI_TEMPLATE_IDS = templateManifest.templates
+    .filter((t) => t.useCases?.includes('AI'))
+    .map((t) => t.id);
 
 export const TEMPLATES_DIR_NAME = 'templates';
 export const WRAPPERS_DIR_NAME = 'wrappers';
