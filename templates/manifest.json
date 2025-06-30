@@ -641,7 +641,7 @@
             "label": "TypeScript MCP server",
             "category": "typescript",
             "technologies": ["mcp"],
-            "description": "Example of how to Actorize a STDIO Model Context Protocol server.",
+            "description": "Example of how to turn a Model Context Protocol stdio server into an Apify Actor.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-server.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",

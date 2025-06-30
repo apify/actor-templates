@@ -8,8 +8,8 @@
 
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
 import { Actor, log } from 'apify';
-import { stdioToSse } from './lib/server.js';
-import { getLogger } from './lib/getLogger.js';
+
+import { startServer } from './server.js';
 
 // This is an ESM project, and as such, it requires you to specify extensions in your relative imports
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
@@ -25,10 +25,6 @@ const MCP_COMMAND = 'npx @modelcontextprotocol/server-everything';
 const STANDBY_MODE = process.env.APIFY_META_ORIGIN === 'STANDBY';
 const SERVER_PORT = parseInt(process.env.ACTOR_WEB_SERVER_PORT || '', 10);
 
-// Logger configuration
-const LOG_LEVEL = 'info';
-const OUTPUT_TRANSPORT = 'sse';
-
 // Initialize the Apify Actor environment
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
 await Actor.init();
@@ -43,12 +39,7 @@ if (!STANDBY_MODE) {
     await Actor.exit({ statusMessage: msg });
 }
 
-const logger = getLogger({
-    logLevel: LOG_LEVEL,
-    outputTransport: OUTPUT_TRANSPORT,
-});
-await stdioToSse({
-    port: SERVER_PORT,
-    stdioCmd: MCP_COMMAND,
-    logger,
+await startServer({
+    serverPort: SERVER_PORT,
+    command: MCP_COMMAND,
 });
