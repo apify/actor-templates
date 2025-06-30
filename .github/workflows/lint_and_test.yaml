@@ -57,24 +57,24 @@ jobs:
 
   test-node-templates:
     name: Test Node.js templates
-    uses: ./.github/workflows/test_node_templates.yml
+    uses: ./.github/workflows/test_node_templates.yaml
     secrets: inherit
 
   test-python-templates:
     name: Test Python templates
-    uses: ./.github/workflows/test_python_templates.yml
+    uses: ./.github/workflows/test_python_templates.yaml
     secrets: inherit
 
   test-llm-ai-python-templates:
     name: Test LLM AI Python templates
-    uses: ./.github/workflows/test_llm_ai_python_templates.yml
+    uses: ./.github/workflows/test_llm_ai_python_templates.yaml
     secrets: inherit
 
   test-llm-ai-node-templates:
     name: Test LLM AI Node.js templates
-    uses: ./.github/workflows/test_llm_ai_node_templates.yml
+    uses: ./.github/workflows/test_llm_ai_node_templates.yaml
     secrets: inherit
 
   test-docker-builds:
     name: Test Docker builds
-    uses: ./.github/workflows/test_dockerfile_builds.yml
+    uses: ./.github/workflows/test_dockerfile_builds.yaml
