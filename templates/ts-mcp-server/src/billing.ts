@@ -3,7 +3,7 @@ import { Actor, log } from 'apify';
 export async function chargeMessageRequest(request: { method: string }): Promise<void> {
     const { method } = request;
 
-    // See https://modelcontextprotocol.io/specification/2025-03-26/server for more details
+    // See https://modelcontextprotocol.io/specification/2025-06-18/server for more details
     // on the method names and protocol messages
     if (method.endsWith('/list')) {
         await Actor.charge({ eventName: 'list-request' });

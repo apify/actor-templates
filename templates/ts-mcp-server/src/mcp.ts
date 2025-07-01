@@ -52,7 +52,7 @@ export async function getMcpServer(command: string, options?: {
         });
     }
     
-    // Proxy route all notification from the proxy MCP client
+    // Register notification handlers for all proxy client notifications
     for (const schema of ServerNotificationSchema.options) {
         const method = schema.shape.method.value;
         proxyClient.setNotificationHandler(schema, async (notification) => {
