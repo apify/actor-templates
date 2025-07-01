@@ -9,7 +9,7 @@
     "dependencies": {
         "apify": "^3.4.2",
         "crawlee": "^3.13.8",
-        "playwright": "1.53.1"
+        "playwright": "1.53.2"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
