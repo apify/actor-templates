@@ -1,3 +1,8 @@
+/**
+ * This module provides functions to create and manage an MCP server and its proxy client.
+ * It registers protocol capabilities, request handlers, and notification handlers for the MCP server,
+ * and spawns a proxy client that communicates with another MCP process over stdio.
+ */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -6,9 +11,22 @@ import { ClientNotificationSchema, ClientRequestSchema , ServerNotificationSchem
 import { log } from "apify";
 import { z } from "zod";
 
+/**
+ * Creates and configures an MCP server instance.
+ *
+ * - Registers all protocol capabilities except experimental.
+ * - Spawns a proxy client to forward requests and notifications.
+ * - Sets up handlers for requests and notifications between the server and proxy client.
+ * - Handles server shutdown and proxy client cleanup.
+ *
+ * @param command - The command to start the MCP proxy process.
+ * @param options - Optional configuration (e.g., request timeout).
+ * @returns A Promise that resolves to a configured McpServer instance.
+ */
 export async function getMcpServer(command: string, options?: {
     timeout?: number;
 }): Promise<McpServer> {
+    // Create the MCP server instance
     const server = new McpServer({
       name: "mcp-server",
       version: "1.0.0",
@@ -23,11 +41,13 @@ export async function getMcpServer(command: string, options?: {
         logging: {},
     })
     
+    // Spawn MCP proxy client for the stdio MCP server
     const proxyClient = await getMcpProxyClient(command);
     
     // Register request handlers for all client requests
     for (const schema of ClientRequestSchema.options) {
         const method = schema.shape.method.value;
+        // Forward requests to the proxy client and return its response
         server.server.setRequestHandler(schema, async (req) => {
             log.info('Received MCP request', {
                 method,
@@ -43,6 +63,7 @@ export async function getMcpServer(command: string, options?: {
     // Register notification handlers for all client notifications
     for (const schema of ClientNotificationSchema.options) {
         const method = schema.shape.method.value;
+        // Forward notifications to the proxy client
         server.server.setNotificationHandler(schema, async (notification) => {
             log.info('Received MCP notification', {
                 method,
@@ -55,6 +76,7 @@ export async function getMcpServer(command: string, options?: {
     // Register notification handlers for all proxy client notifications
     for (const schema of ServerNotificationSchema.options) {
         const method = schema.shape.method.value;
+        // Forward notifications from the proxy client to the server
         proxyClient.setNotificationHandler(schema, async (notification) => {
             log.info('Sending MCP notification', {
                 method,
@@ -64,6 +86,7 @@ export async function getMcpServer(command: string, options?: {
         });
     }
     
+    // Handle server shutdown and cleanup proxy client
     server.server.onclose = () => {
         log.info('MCP Server is closing, shutting down the proxy client');
         proxyClient.close().catch((error) => {
@@ -90,17 +113,21 @@ export async function getMcpProxyClient(command: string): Promise<Client> {
     log.info('Starting MCP Proxy Client', {
         command,
     });
+    // Split the command string into executable and arguments
     const commandParts = command.split(' ');
+    // Create a stdio transport for the proxy client
     const transport = new StdioClientTransport({
         command: commandParts[0],
         args: commandParts.slice(1),
     });
 
+    // Create the MCP proxy client instance
     const client = new Client({
         name: 'mcp-proxy-client',
         version: '1.0.0',
     });
 
+    // Connect the client to the transport
     await client.connect(transport);
     log.info('MCP Proxy Client started successfully');
     return client;
