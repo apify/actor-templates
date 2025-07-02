@@ -1,7 +1,7 @@
 ## MCP server template
 
-A template for running and monetizing a [Model Context Protocol](https://modelcontextprotocol.io) server over [stdio](https://modelcontextprotocol.io/docs/concepts/transports#standard-input%2Foutput-stdio) on [Apify platform](https://docs.apify.com/platform).
-This allows you to run any stdio MCP server as a [standby Actor](https://docs.apify.com/platform/actors/development/programming-interface/standby) and connect via [SSE transport](https://modelcontextprotocol.io/docs/concepts/transports#server-sent-events-sse) with an [MCP client](https://modelcontextprotocol.io/clients).
+A template for running and monetizing a [Model Context Protocol](https://modelcontextprotocol.io) server using [stdio](https://modelcontextprotocol.io/docs/concepts/transports#standard-input%2Foutput-stdio) transport on [Apify platform](https://docs.apify.com/platform).
+This allows you to run any stdio MCP server as a [standby Actor](https://docs.apify.com/platform/actors/development/programming-interface/standby) and connect via either the [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) or the legacy [SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) with an [MCP client](https://modelcontextprotocol.io/clients).
 
 ## How to use
 
@@ -9,12 +9,40 @@ Change the `MCP_COMMAND` to spawn your stdio MCP server in `src/main.ts`, and do
 By default, this template runs an [Everything MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/everything) using the following command:
 
 ```
-npx @modelcontextprotocol/server-everything
+const MCP_COMMAND = [
+    'npx',
+    '@modelcontextprotocol/server-everything',
+];
+```
+
+Alternatively, you can use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) tool to turn a remote MCP server into an Actor. For example, to connect to a remote server over SSE with authentication:
+
+```
+const MCP_COMMAND = [
+    'npx',
+    'mcp-remote',
+    'https://mcp.apify.com/sse',
+    '--transport',
+    'sse-only',
+    '--header',
+    'Authorization: Bearer TOKEN',
+];
 ```
 
 Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/billing.ts`.
 
-[Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform, configure [standby mode](https://docs.apify.com/platform/actors/development/programming-interface/standby), and then connect to the Actor standby URL with your MCP client (e.g., `https://me--my-mcp-server.apify.actor/sse`).
+[Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform, configure [standby mode](https://docs.apify.com/platform/actors/development/programming-interface/standby), and then connect to the Actor standby URL with your MCP client. You can use either:
+
+- `https://me--my-mcp-server.apify.actor/mcp` ([streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http), recommended)
+- `https://me--my-mcp-server.apify.actor/sse` ([legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse))
+
+**Important:** When connecting to your deployed MCP server, you must pass your Apify API token in the `Authorization` header as a Bearer token. For example:
+
+```
+Authorization: Bearer <YOUR_APIFY_API_TOKEN>
+```
+
+This is required for authentication and to access your Actor endpoint.
 
 ### Pay per event
 

@@ -18,5 +18,5 @@
         "required": []
     },
     "dockerfile": "../Dockerfile",
-    "webServerMcpPath": "/sse"
+    "webServerMcpPath": "/sse,/mcp"
 }

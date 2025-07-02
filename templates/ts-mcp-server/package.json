@@ -9,9 +9,11 @@
     "dependencies": {
         "@modelcontextprotocol/sdk": "^1.11.4",
         "@modelcontextprotocol/server-everything": "^2025.5.12",
+        "mcp-remote": "0.1.17",
         "apify": "^3.4.1",
         "body-parser": "^2.2.0",
-        "express": "^5.1.0"
+        "express": "^5.1.0",
+        "zod": "^3.25.67"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
