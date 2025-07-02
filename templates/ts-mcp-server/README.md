@@ -7,9 +7,25 @@ This allows you to run any stdio MCP server as a [standby Actor](https://docs.ap
 
 Change the `MCP_COMMAND` to spawn your stdio MCP server in `src/main.ts`, and don't forget to install the required MCP server in the `package.json` (using `npm install ...`).
 By default, this template runs an [Everything MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/everything) using the following command:
+```
+const MCP_COMMAND = [
+    'npx',
+    '@modelcontextprotocol/server-everything',
+];
+```
+
+Alternatively, you can use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) tool to turn a remote MCP server into an Actor. For example, to connect to a remote server over SSE with authentication:
 
 ```
-npx @modelcontextprotocol/server-everything
+const MCP_COMMAND = [
+    'npx',
+    'mcp-remote',
+    'https://mcp.apify.com/sse',
+    '--transport',
+    'sse-only',
+    '--header',
+    'Authorization: Bearer TOKEN',
+];
 ```
 
 Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/billing.ts`.

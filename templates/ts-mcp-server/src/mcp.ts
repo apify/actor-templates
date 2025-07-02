@@ -23,7 +23,7 @@ import { z } from "zod";
  * @param options - Optional configuration (e.g., request timeout).
  * @returns A Promise that resolves to a configured McpServer instance.
  */
-export async function getMcpServer(command: string, options?: {
+export async function getMcpServer(command: string[], options?: {
     timeout?: number;
 }): Promise<McpServer> {
     // Create the MCP server instance
@@ -109,16 +109,14 @@ export async function getMcpServer(command: string, options?: {
  * @param command - The command to start the MCP proxy process (e.g., 'node server.js').
  * @returns A Promise that resolves to a connected Client instance.
  */
-export async function getMcpProxyClient(command: string): Promise<Client> {
+export async function getMcpProxyClient(command: string[]): Promise<Client> {
     log.info('Starting MCP Proxy Client', {
         command,
     });
-    // Split the command string into executable and arguments
-    const commandParts = command.split(' ');
     // Create a stdio transport for the proxy client
     const transport = new StdioClientTransport({
-        command: commandParts[0],
-        args: commandParts.slice(1),
+        command: command[0],
+        args: command.slice(1),
     });
 
     // Create the MCP proxy client instance

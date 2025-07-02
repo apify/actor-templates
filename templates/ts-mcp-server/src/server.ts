@@ -271,7 +271,7 @@ async function sseMessagesHandler(req: Request, res: Response) {
  */
 export async function startServer(options: {
     serverPort: number;
-    command: string;
+    command: string[];
 }) {
     log.info('Starting MCP Streamable HTTP Server', {
         serverPort: options.serverPort,
