@@ -36,6 +36,14 @@ Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/bil
 - `https://me--my-mcp-server.apify.actor/mcp` ([streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http), recommended)
 - `https://me--my-mcp-server.apify.actor/sse` ([legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse))
 
+**Important:** When connecting to your deployed MCP server, you must pass your Apify API token in the `Authorization` header as a Bearer token. For example:
+
+```
+Authorization: Bearer <YOUR_APIFY_API_TOKEN>
+```
+
+This is required for authentication and to access your Actor endpoint.
+
 ### Pay per event
 
 This template uses the [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) monetization model, which provides flexible pricing based on defined events.
