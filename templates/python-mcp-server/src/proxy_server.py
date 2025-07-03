@@ -11,14 +11,16 @@ like tool calls, prompt operations, or resource access.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any
 
 from mcp import server, types
 
-if TYPE_CHECKING:
-    from mcp.client.session import ClientSession
-
 from .const import ChargeEvents
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from mcp.client.session import ClientSession
 
 logger = logging.getLogger('apify')
 

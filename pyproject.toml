@@ -1,7 +1,7 @@
 [project]
 name = "actor-templates"
 version = "0.0.1"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "apify[scrapy]<3.0.0",
     "beautifulsoup4[lxml]<5.0.0",
@@ -78,7 +78,7 @@ asyncio_mode = "auto"
 timeout = 1200
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 plugins = ["pydantic.mypy"]
 files = ["templates"]
 check_untyped_defs = true
