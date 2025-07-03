@@ -6,7 +6,7 @@ Heavily inspired by: https://github.com/sparfenyuk/mcp-proxy
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any
 
 import uvicorn
 from mcp.client.session import ClientSession
@@ -21,6 +21,8 @@ from .models import ServerParameters, ServerType, SseServerParameters
 from .proxy_server import create_proxy_server
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from mcp.server import Server
     from starlette import types as st
     from starlette.requests import Request
