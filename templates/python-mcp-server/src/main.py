@@ -22,7 +22,7 @@ from mcp.client.stdio import StdioServerParameters  # noqa: E402
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['run', 'arxiv-mcp-server'],
-    env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ""},  # Optional environment variables
+    env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
 # 2) For SSE server type, you need to provide the url, you can also specify headers if needed with Authorization

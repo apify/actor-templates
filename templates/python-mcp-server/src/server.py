@@ -5,10 +5,9 @@ Heavily inspired by: https://github.com/sparfenyuk/mcp-proxy
 
 from __future__ import annotations
 
-import logging
 import contextlib
+import logging
 from typing import TYPE_CHECKING, Any
-from collections.abc import AsyncIterator
 
 import uvicorn
 from mcp.client.session import ClientSession
@@ -17,21 +16,21 @@ from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.server.sse import SseServerTransport
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from starlette.applications import Starlette
+from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Mount, Route
-from .event_store import InMemoryEventStore
-from starlette.types import Receive, Scope, Send
-from starlette.requests import Request
 
+from .event_store import InMemoryEventStore
 from .models import ServerParameters, ServerType, SseServerParameters
 from .proxy_server import create_proxy_server
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import AsyncIterator, Callable
 
     from mcp.server import Server
     from starlette import types as st
     from starlette.requests import Request
+    from starlette.types import Receive, Scope, Send
 
 logger = logging.getLogger('apify')
 
@@ -100,16 +99,16 @@ class ProxyServer:
             event_store=event_store,  # Enable resumability
             json_response=False,
         )
-        
+
         @contextlib.asynccontextmanager
-        async def lifespan(app: Starlette) -> AsyncIterator[None]:
+        async def lifespan(_app: Starlette) -> AsyncIterator[None]:
             """Context manager for managing session manager lifecycle."""
             async with session_manager.run():
-                logger.info("Application started with StreamableHTTP session manager!")
+                logger.info('Application started with StreamableHTTP session manager!')
                 try:
                     yield
                 finally:
-                    logger.info("Application shutting down...")
+                    logger.info('Application shutting down...')
 
         async def handle_root(request: Request) -> st.Response:
             """Handle root endpoint."""
@@ -149,9 +148,7 @@ class ProxyServer:
             return Response(status_code=204)  # No content response
 
         # ASGI handler for streamable HTTP connections
-        async def handle_streamable_http(
-            scope: Scope, receive: Receive, send: Send
-        ) -> None:
+        async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
             await session_manager.handle_request(scope, receive, send)
 
         return Starlette(
@@ -160,7 +157,7 @@ class ProxyServer:
                 Route('/', endpoint=handle_root),
                 Route('/sse', endpoint=handle_sse, methods=['GET']),
                 Mount('/messages/', app=transport.handle_post_message),
-                Mount("/mcp", app=handle_streamable_http),
+                Mount('/mcp', app=handle_streamable_http),
             ],
             lifespan=lifespan,
         )
