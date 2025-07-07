@@ -6,16 +6,22 @@ Heavily inspired by: https://github.com/sparfenyuk/mcp-proxy
 from __future__ import annotations
 
 import logging
+import contextlib
 from typing import TYPE_CHECKING, Any
+from collections.abc import AsyncIterator
 
 import uvicorn
 from mcp.client.session import ClientSession
 from mcp.client.sse import sse_client
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.server.sse import SseServerTransport
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Mount, Route
+from .event_store import InMemoryEventStore
+from starlette.types import Receive, Scope, Send
+from starlette.requests import Request
 
 from .models import ServerParameters, ServerType, SseServerParameters
 from .proxy_server import create_proxy_server
@@ -33,7 +39,8 @@ logger = logging.getLogger('apify')
 class ProxyServer:
     """Main class implementing the proxy functionality using MCP SDK.
 
-    This proxy is running Starlette app that exposes /sse and /messages/ endpoints.
+    This proxy runs a Starlette app that exposes /sse and /messages/ endpoints for legacy SSE transport,
+    and a /mcp endpoint for streamable HTTP transport.
     It then connects to stdio or SSE based MCP servers and forwards the messages to the client.
 
     The server can optionally charge for operations using a provided charging function.
@@ -87,6 +94,22 @@ class ProxyServer:
     async def create_starlette_app(mcp_server: Server) -> Starlette:
         """Create a Starlette app (SSE server) that exposes /sse and /messages/ endpoints."""
         transport = SseServerTransport('/messages/')
+        event_store = InMemoryEventStore()
+        session_manager = StreamableHTTPSessionManager(
+            app=mcp_server,
+            event_store=event_store,  # Enable resumability
+            json_response=False,
+        )
+        
+        @contextlib.asynccontextmanager
+        async def lifespan(app: Starlette) -> AsyncIterator[None]:
+            """Context manager for managing session manager lifecycle."""
+            async with session_manager.run():
+                logger.info("Application started with StreamableHTTP session manager!")
+                try:
+                    yield
+                finally:
+                    logger.info("Application shutting down...")
 
         async def handle_root(request: Request) -> st.Response:
             """Handle root endpoint."""
@@ -102,8 +125,12 @@ class ProxyServer:
                 {
                     'status': 'running',
                     'type': 'mcp-server',
-                    'transport': 'sse',
-                    'endpoints': {'sse': '/sse', 'messages': '/messages/'},
+                    'transport': 'sse+streamable-http',
+                    'endpoints': {
+                        'sse': '/sse',
+                        'messages': '/messages/',
+                        'streamableHttp': '/mcp',
+                    },
                 }
             )
 
@@ -118,6 +145,14 @@ class ProxyServer:
                 return Response(status_code=500, content=str(e))
             finally:
                 logger.info('SSE connection closed')
+            # Add Response to prevent the None type error
+            return Response(status_code=204)  # No content response
+
+        # ASGI handler for streamable HTTP connections
+        async def handle_streamable_http(
+            scope: Scope, receive: Receive, send: Send
+        ) -> None:
+            await session_manager.handle_request(scope, receive, send)
 
         return Starlette(
             debug=True,
@@ -125,7 +160,9 @@ class ProxyServer:
                 Route('/', endpoint=handle_root),
                 Route('/sse', endpoint=handle_sse, methods=['GET']),
                 Mount('/messages/', app=transport.handle_post_message),
+                Mount("/mcp", app=handle_streamable_http),
             ],
+            lifespan=lifespan,
         )
 
     async def _run_server(self, app: Starlette) -> None:
