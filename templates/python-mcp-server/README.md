@@ -5,7 +5,7 @@ A Python template for deploying and monetizing a [Model Context Protocol (MCP)](
 This template enables you to:
 
 - Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using SSE transport
-- Expose your MCP server via Server-Sent Events (SSE) transport
+- Expose your MCP server via [legacy Server-Sent Events (SSE)](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
 
 ## ✨ Features
@@ -39,15 +39,26 @@ This template enables you to:
 2. Add any required dependencies to the `requirements.txt` file (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)).
 3. Deploy to Apify and enable standby mode.
 4. Connect using an MCP client:
-    ```json
-    {
-        "mcpServers": {
-            "your-server": {
-                "url": "https://your-actor.apify.actor/sse"
+    - Using [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http):
+        ```json
+        {
+            "mcpServers": {
+                "your-server": {
+                    "url": "https://your-actor.apify.actor/mcp"
+                }
             }
         }
-    }
-    ```
+        ```
+    - Using [legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse):
+        ```json
+        {
+            "mcpServers": {
+                "your-server": {
+                    "url": "https://your-actor.apify.actor/sse"
+                }
+            }
+        }
+        ```
 
 ## 💰 Pricing
 
@@ -85,7 +96,7 @@ To set up the PPE model:
 
 ## 🔧 How It Works
 
-This template implements a proxy server that can connect to either a stdio-based or SSE-based MCP server and expose it via SSE transport. Here's how it works:
+This template implements a proxy server that can connect to either a stdio-based or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
 
 ### Server types
 
@@ -133,7 +144,7 @@ Environment variables can be securely stored and managed at the Actor level on t
 
 The proxy server (`ProxyServer` class) handles:
 
-- Creating a Starlette web server with SSE endpoints (`/sse` and `/messages/`)
+- Creating a Starlette web server with legacy SSE (`/sse` and `/messages/`) and streamable HTTP (`/mcp`) endpoints
 - Managing connections to the underlying MCP server
 - Forwarding requests and responses between clients and the MCP server
 - Handling charging through the `actor_charge_function`

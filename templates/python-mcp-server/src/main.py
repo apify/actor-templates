@@ -22,7 +22,7 @@ from mcp.client.stdio import StdioServerParameters  # noqa: E402
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['run', 'arxiv-mcp-server'],
-    env={'YOUR-ENV_VAR', os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
+    env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
 # 2) For SSE server type, you need to provide the url, you can also specify headers if needed with Authorization
@@ -70,13 +70,25 @@ async def main() -> None:
             Actor.log.info(f'  - proxy server host: {os.environ.get("ACTOR_STANDBY_URL", HOST)}')
             Actor.log.info(f'  - proxy server port: {PORT}')
 
-            Actor.log.info('Put this in your client config:')
+            Actor.log.info('Put this in your client config to use streamable HTTP transport:')
             Actor.log.info(
                 f"""
                 {{
                     "mcpServers": {{
                         "arxiv-mcp-server": {{
-                            "url": "{url}/sse"
+                            "url": "{url}/mcp",
+                        }}
+                    }}
+                }}
+                """
+            )
+            Actor.log.info('Put this in your client config to use legacy SSE transport:')
+            Actor.log.info(
+                f"""
+                {{
+                    "mcpServers": {{
+                        "arxiv-mcp-server": {{
+                            "url": "{url}/sse",
                         }}
                     }}
                 }}
