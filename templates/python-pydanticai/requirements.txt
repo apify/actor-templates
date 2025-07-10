@@ -2,4 +2,4 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify < 3.0
-pydantic_ai ~=0.3.0
+pydantic_ai ~=0.4.2
