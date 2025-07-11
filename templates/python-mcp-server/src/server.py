@@ -151,16 +151,29 @@ class ProxyServer:
         async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
             await session_manager.handle_request(scope, receive, send)
 
-        return Starlette(
+        app = Starlette(
             debug=True,
             routes=[
                 Route('/', endpoint=handle_root),
                 Route('/sse', endpoint=handle_sse, methods=['GET']),
                 Mount('/messages/', app=transport.handle_post_message),
-                Mount('/mcp', app=handle_streamable_http),
+                Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,
         )
+
+        # Add middleware to rewrite /mcp to /mcp/ to ensure consistent path handling.
+        # This is necessary so that Starlette does not return a 307 Temporary Redirect on the /mcp path,
+        # which would otherwise trigger the OAuth flow when the MCP server is deployed on the Apify platform.
+        @app.middleware('http')
+        async def rewrite_mcp(request: Request, call_next: Callable):  # noqa: ANN202
+            """Middleware to rewrite /mcp to /mcp/."""
+            if request.url.path == '/mcp':
+                request.scope['path'] = '/mcp/'
+                request.scope['raw_path'] = b'/mcp/'
+            return await call_next(request)
+
+        return app
 
     async def _run_server(self, app: Starlette) -> None:
         """Run the Starlette app with uvicorn."""
