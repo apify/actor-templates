@@ -166,7 +166,7 @@ class ProxyServer:
         # This is necessary so that Starlette does not return a 307 Temporary Redirect on the /mcp path,
         # which would otherwise trigger the OAuth flow when the MCP server is deployed on the Apify platform.
         @app.middleware('http')
-        async def rewrite_mcp(request: Request, call_next: Callable): # noqa: ANN202
+        async def rewrite_mcp(request: Request, call_next: Callable):  # noqa: ANN202
             """Middleware to rewrite /mcp to /mcp/."""
             if request.url.path == '/mcp':
                 request.scope['path'] = '/mcp/'
