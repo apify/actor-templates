@@ -10,7 +10,7 @@
         "@langchain/community": "^0.3.31",
         "@langchain/core": "^0.3.40",
         "@langchain/langgraph": "^0.3.0",
-        "@langchain/openai": "^0.5.0",
+        "@langchain/openai": "^0.6.0",
         "apify": "^3.4.2",
         "crawlee": "^3.13.8",
         "langchain": "^0.3.18",
