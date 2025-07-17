@@ -96,7 +96,7 @@ class ProxyServer:
         event_store = InMemoryEventStore()
         session_manager = StreamableHTTPSessionManager(
             app=mcp_server,
-            event_store=event_store,  # Enable resumability
+            event_store=event_store,  # Enable resume ability
             json_response=False,
         )
 
