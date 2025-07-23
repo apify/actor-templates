@@ -9,7 +9,7 @@ https://docs.apify.com/sdk/python
 from __future__ import annotations
 
 from apify import Actor
-from crawlee.crawlers import PlaywrightCrawler, PlaywrightCrawlingContext
+from crawlee.crawlers import ParselCrawler, ParselCrawlingContext
 
 
 async def main() -> None:
@@ -37,28 +37,23 @@ async def main() -> None:
             await Actor.exit()
 
         # Create a crawler.
-        crawler = PlaywrightCrawler(
+        crawler = ParselCrawler(
             # Limit the crawl to max requests. Remove or increase it for crawling all links.
             max_requests_per_crawl=10,
-            headless=True,
-            browser_launch_options={
-                'args': ['--disable-gpu', '--no-sandbox'],
-            },
         )
 
         # Define a request handler, which will be called for every request.
         @crawler.router.default_handler
-        async def request_handler(context: PlaywrightCrawlingContext) -> None:
+        async def request_handler(context: ParselCrawlingContext) -> None:
             url = context.request.url
             Actor.log.info(f'Scraping {url}...')
-
             # Extract the desired data.
             data = {
                 'url': context.request.url,
-                'title': await context.page.title(),
-                'h1s': [await h1.text_content() for h1 in await context.page.locator('h1').all()],
-                'h2s': [await h2.text_content() for h2 in await context.page.locator('h2').all()],
-                'h3s': [await h3.text_content() for h3 in await context.page.locator('h3').all()],
+                'title': context.selector.css('title::text').get(),
+                'h1s': context.selector.css('h1::text').getall(),
+                'h2s': context.selector.css('h2::text').getall(),
+                'h3s': context.selector.css('h3::text').getall(),
             }
 
             # Store the extracted data to the default dataset.
