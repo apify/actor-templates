@@ -157,6 +157,26 @@
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
+            "id": "python-crawlee-parsel",
+            "name": "python-crawlee-parsel",
+            "label": "Crawlee + Parsel",
+            "category": "python",
+            "technologies": ["crawlee", "parsel"],
+            "description": "Crawl and scrape websites using Crawlee and Parsel. Start from a given start URLs, and store results to Apify dataset.",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-parsel.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "aliases": ["getting_started_crawlee_parsel"],
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
+        },
+        {
             "id": "python-crawlee-playwright",
             "name": "python-crawlee-playwright",
             "label": "Crawlee + Playwright + Chrome",
