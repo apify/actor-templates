@@ -177,6 +177,26 @@
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
+            "id": "python-crawlee-playwright-camoufox",
+            "name": "python-crawlee-playwright-camoufox",
+            "label": "Crawlee + Playwright + Camoufox",
+            "category": "python",
+            "technologies": ["crawlee", "playwright", "camoufox"],
+            "description": "Crawl and scrape websites using Crawlee and Playwright with Camoufox. Start from a given start URLs, and store results to Apify dataset.",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-playwright.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "aliases": ["getting_started_crawlee_playwright_camoufox"],
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
+        },
+        {
             "id": "python-langgraph",
             "name": "python-langgraph",
             "label": "🦜️🔗 LangGraph AI agent",

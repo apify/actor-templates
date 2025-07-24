@@ -18,6 +18,7 @@ type-check:
 	uv run mypy templates/python-beautifulsoup
 	uv run mypy templates/python-crawlee-beautifulsoup
 	uv run mypy templates/python-crawlee-playwright
+	uv run mypy templates/python-crawlee-playwright-camoufox
 	uv run mypy templates/python-empty
 	uv run mypy templates/python-playwright
 	uv run mypy templates/python-scrapy
