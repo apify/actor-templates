@@ -1,0 +1,13 @@
+{
+    "actorSpecification": 1,
+    "name": "getting-started-python-crawlee-playwright-camoufox",
+    "title": "Getting started with Python Crawlee and Playwright with Camoufox",
+    "description": "Scrapes titles of websites using Crawlee and Playwright with Camoufox.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "python-crawlee-playwright-camoufox"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "../Dockerfile"
+}
