@@ -49,6 +49,19 @@ export async function getMcpServer(command: string[], options?: {
         const method = schema.shape.method.value;
         // Forward requests to the proxy client and return its response
         server.server.setRequestHandler(schema, async (req) => {
+            if (req.method === "initialize") {
+                // Handle the 'initialize' request separately and do not forward it to the proxy client
+                // this is needed for mcp-remote servers to work correctly
+                return {
+                    capabilities: proxyClient.getServerCapabilities(),
+                    protocolVersion: "2025-06-18",
+                    serverInfo: {
+                      name: "Apify MCP proxy server",
+                      title: "Apify MCP proxy server",
+                      version: "1.0.0"
+                    },
+                };
+            }
             log.info('Received MCP request', {
                 method,
                 request: req,
@@ -65,11 +78,16 @@ export async function getMcpServer(command: string[], options?: {
         const method = schema.shape.method.value;
         // Forward notifications to the proxy client
         server.server.setNotificationHandler(schema, async (notification) => {
+            if (notification.method === 'notifications/initialized') {
+                // Do not forward the 'notifications/initialized' notification
+                // This is needed for mcp-remote servers to work correctly
+                return;
+            }
             log.info('Received MCP notification', {
                 method,
                 notification,
             });
-            return proxyClient.notification(notification);
+            await proxyClient.notification(notification);
         });
     }
     
