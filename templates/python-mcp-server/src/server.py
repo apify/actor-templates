@@ -9,6 +9,7 @@ import contextlib
 import logging
 from typing import TYPE_CHECKING, Any
 
+import httpx
 import uvicorn
 from mcp.client.session import ClientSession
 from mcp.client.sse import sse_client
@@ -17,7 +18,7 @@ from mcp.server.sse import SseServerTransport
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from starlette.applications import Starlette
 from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
+from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.routing import Mount, Route
 
 from .event_store import InMemoryEventStore
@@ -147,6 +148,23 @@ class ProxyServer:
             # Add Response to prevent the None type error
             return Response(status_code=204)  # No content response
 
+        async def handle_favicon(_request: Request) -> st.Response:
+            """Handle favicon.ico requests by redirecting to Apify's favicon."""
+            return RedirectResponse(url='https://apify.com/favicon.ico', status_code=301)
+
+        async def handle_oauth_authorization_server(_request: Request) -> st.Response:
+            """Handle OAuth authorization server well-known endpoint."""
+            try:
+                # Some MCP clients do not follow redirects, so we need to fetch the data and return it directly.
+                async with httpx.AsyncClient() as client:
+                    response = await client.get('https://api.apify.com/.well-known/oauth-authorization-server')
+                    response.raise_for_status()
+                    data = response.json()
+                return JSONResponse(data, status_code=200)
+            except Exception:
+                logger.exception('Error fetching OAuth authorization server data')
+                return JSONResponse({'error': 'Failed to fetch OAuth authorization server data'}, status_code=500)
+
         # ASGI handler for streamable HTTP connections
         async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
             await session_manager.handle_request(scope, receive, send)
@@ -155,6 +173,12 @@ class ProxyServer:
             debug=True,
             routes=[
                 Route('/', endpoint=handle_root),
+                Route('/favicon.ico', endpoint=handle_favicon, methods=['GET']),
+                Route(
+                    '/.well-known/oauth-authorization-server',
+                    endpoint=handle_oauth_authorization_server,
+                    methods=['GET'],
+                ),
                 Route('/sse', endpoint=handle_sse, methods=['GET']),
                 Mount('/messages/', app=transport.handle_post_message),
                 Mount('/mcp/', app=handle_streamable_http),
