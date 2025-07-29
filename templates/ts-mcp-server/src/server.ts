@@ -282,6 +282,21 @@ export async function startServer(options: {
     getMcpServer = async () => getMCPServerWithCommand(command);
 
     const app = express();
+    
+    // Redirect to Apify favicon
+    app.get('/favicon.ico', (_req: Request, res: Response) => {
+        res.writeHead(301, { Location: "https://apify.com/favicon.ico" });
+        res.end();
+    });
+
+    // Return the Apify OAuth authorization server metadata to allow the MCP client to authenticate using OAuth
+    app.get('/.well-known/oauth-authorization-server', async (_req: Request, res: Response) => {
+        // Some MCP clients do not follow redirects, so we need to fetch the data and return it directly.
+        const response = await fetch(`https://api.apify.com/.well-known/oauth-authorization-server`);
+        const data = await response.json();
+        res.status(200).json(data);
+    });
+
     app.use(express.json());
 
     // Streamable HTTP endpoints
