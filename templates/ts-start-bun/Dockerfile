@@ -3,15 +3,10 @@ FROM oven/bun:1.2
 
 # Next, copy the source files using the user set
 # in the base image.
-COPY . ./
+COPY --chown=myuser:myuser . ./
 
 # Install all dependencies.
 RUN bun install
-
-# Create and run as a non-root user.
-RUN useradd --create-home apify && \
-    chown -R apify:apify ./
-USER apify
 
 # Run the image.
 CMD bun run start
