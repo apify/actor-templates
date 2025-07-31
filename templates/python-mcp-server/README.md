@@ -4,13 +4,13 @@ A Python template for deploying and monetizing a [Model Context Protocol (MCP)](
 
 This template enables you to:
 
-- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using SSE transport
+- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using [mcp-remote](https://github.com/geelen/mcp-remote)
 - Expose your MCP server via [legacy Server-Sent Events (SSE)](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
 
 ## ✨ Features
 
-- Support for both stdio-based and SSE-based MCP servers
+- Support for both stdio-based and remote MCP servers
 - Built-in charging: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
     - Server startup
     - Tool calls
@@ -30,9 +30,10 @@ This template enables you to:
         args=['your', 'args'],
     )
 
-    # For SSE server:
-    MCP_SERVER_PARAMS = SseServerParameters(
-        url='your-server-url',
+    # For remote server:
+    MCP_SERVER_PARAMS = StdioServerParameters(
+        command='npx',
+        args=['mcp-remote', 'your-server-url'],
     )
     ```
 
@@ -96,11 +97,11 @@ To set up the PPE model:
 
 ## 🔧 How It Works
 
-This template implements a proxy server that can connect to either a stdio-based or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
+This template implements a proxy server that can connect to either a stdio-based or remote MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
 
 ### Server types
 
-1. **Stdio Server** (`StdioServerParameters`):
+1. **Stdio Server**:
     - Spawns a local process that implements the MCP protocol over stdio.
     - Configure using the `command` parameter to specify the executable and the `args` parameter for additional arguments.
     - Optionally, use the `env` parameter to pass environment variables to the process.
@@ -115,22 +116,23 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 )
 ```
 
-2. **SSE Server** (`SseServerParameters`):
-    - Connects to a remote MCP server via SSE transport.
-    - Configure using the `url` parameter to specify the server's endpoint.
-    - Optionally, use the `headers` parameter to include custom headers (e.g., for authentication) and the `auth` parameter for additional authentication mechanisms.
+2. **Remote Server**:
+    - Spawns a local process that implements the MCP protocol over stdio and wraps the remote MCP server using `mcp-remote`.
+    - Configure the server endpoint in the `mcp-remote` command.
+    - Optionally, use the `--headers` parameter to include custom headers (e.g., for authentication). For more details, see the [mcp-remote documentation](https://github.com/geelen/mcp-remote).
 
 Example:
 
 ```python
-MCP_SERVER_PARAMS = SseServerParameters(
-    url='https://mcp.apify.com/sse',
-    headers={'Authorization':  os.getenv('YOUR-AUTH-TOKEN')},  # Replace with your authentication token
+MCP_SERVER_PARAMS = StdioServerParameters(
+    command='npx',
+    args=['mcp-remote', 'https://mcp.apify.com',
+           '--header', 'Authorization: Bearer YOUR_APIFY_TOKEN'], # Replace with your authentication token
 )
 ```
 
 - **Tips**:
-    - Ensure the remote server supports SSE transport and is accessible from the Actor's environment.
+    - Ensure the remote server is accessible from the Actor's environment.
     - Use environment variables to securely store sensitive information like tokens or API keys.
 
 #### Environment variables:
