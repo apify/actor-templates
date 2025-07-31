@@ -19,17 +19,18 @@ PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT'))) or 500
 # 1) For stdio server type, you need to provide the command and args
 from mcp.client.stdio import StdioServerParameters  # noqa: E402
 
-# MCP_SERVER_PARAMS = StdioServerParameters(
-#    command='uv',
-#    args=['run', 'arxiv-mcp-server'],
-#    env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
-# )
-
-# 2) For a remote server, you can use the mcp-remote MCP server wrapper. You can also specify headers if needed, such as Authorization.
 MCP_SERVER_PARAMS = StdioServerParameters(
-    command='npx',
-    args=['mcp-remote', 'https://mcp.apify.com', '--header', 'Authorization: Bearer YOUR_APIFY_TOKEN'],
+   command='uv',
+   args=['run', 'arxiv-mcp-server'],
+   env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
+
+# 2) For a remote server, you can use the mcp-remote MCP server wrapper.
+#  You can also specify headers if needed, such as Authorization.
+# MCP_SERVER_PARAMS = StdioServerParameters( # noqa: ERA001, RUF100
+#     command='npx', # noqa: ERA001
+#     args=['mcp-remote', 'https://mcp.apify.com', '--header', 'Authorization: Bearer YOUR_APIFY_TOKEN'], # noqa: ERA001
+# ) # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
 
 

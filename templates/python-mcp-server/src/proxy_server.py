@@ -170,7 +170,7 @@ async def create_proxy_server(  # noqa: PLR0915
 
     app.request_handlers[types.CompleteRequest] = _complete
 
-    # TODO: Implement notification handlers after this issue is resolved
+    # We should implement notification handlers after this issue is resolved
     # and the Python SDK supports them:
     # https://github.com/modelcontextprotocol/python-sdk/issues/889
 
