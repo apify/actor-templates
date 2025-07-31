@@ -20,9 +20,9 @@ PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT'))) or 500
 from mcp.client.stdio import StdioServerParameters  # noqa: E402
 
 MCP_SERVER_PARAMS = StdioServerParameters(
-   command='uv',
-   args=['run', 'arxiv-mcp-server'],
-   env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
+    command='uv',
+    args=['run', 'arxiv-mcp-server'],
+    env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
 # 2) For a remote server, you can use the mcp-remote MCP server wrapper.
