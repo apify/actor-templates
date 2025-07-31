@@ -20,6 +20,12 @@ RUN echo "Python version:" \
  && echo "All installed Python packages:" \
  && pip freeze
 
+# Install npx and globally install mcp-remote npm package, then clear node cache
+RUN apt-get update && apt-get install -y --no-install-recommends npm \
+  && npm install -g mcp-remote \
+  && npm cache clean --force \
+  && rm -rf /var/lib/apt/lists/*
+
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after installing the dependencies, quick builds will be really fast
 # for most source file changes.

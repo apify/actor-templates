@@ -12,7 +12,6 @@ from typing import TYPE_CHECKING, Any
 import httpx
 import uvicorn
 from mcp.client.session import ClientSession
-from mcp.client.sse import sse_client
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.server.sse import SseServerTransport
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
@@ -22,7 +21,6 @@ from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.routing import Mount, Route
 
 from .event_store import InMemoryEventStore
-from .models import ServerParameters, ServerType, SseServerParameters
 from .proxy_server import create_proxy_server
 
 if TYPE_CHECKING:
@@ -41,7 +39,7 @@ class ProxyServer:
 
     This proxy runs a Starlette app that exposes /sse and /messages/ endpoints for legacy SSE transport,
     and a /mcp endpoint for streamable HTTP transport.
-    It then connects to stdio or SSE based MCP servers and forwards the messages to the client.
+    It then connects to stdio MCP servers and forwards the messages to the client.
 
     The server can optionally charge for operations using a provided charging function.
     This is typically used in Apify Actors to charge users for MCP operations.
@@ -50,7 +48,7 @@ class ProxyServer:
 
     def __init__(
         self,
-        config: ServerParameters,
+        config: StdioServerParameters,
         host: str,
         port: int,
         actor_charge_function: Callable[[str, int], None] | None = None,
@@ -58,7 +56,7 @@ class ProxyServer:
         """Initialize the proxy server.
 
         Args:
-            config: Server configuration (stdio or SSE parameters)
+            config: Server configuration (stdio parameters)
             host: Host to bind the server to
             port: Port to bind the server to
             actor_charge_function: Optional function to charge for operations.
@@ -66,8 +64,7 @@ class ProxyServer:
                            Typically, Actor.charge in Apify Actors.
                            If None, no charging will occur.
         """
-        self.server_type = ServerType.STDIO if isinstance(config, StdioServerParameters) else ServerType.SSE
-        self.config = self._validate_config(self.server_type, config)
+        self.config = self._validate_config(config)
         self.path_sse: str = '/sse'
         self.path_message: str = '/message'
         self.host: str = host
@@ -75,15 +72,11 @@ class ProxyServer:
         self.actor_charge_function = actor_charge_function
 
     @staticmethod
-    def _validate_config(client_type: ServerType, config: ServerParameters) -> ServerParameters:
+    def _validate_config(config: StdioServerParameters) -> StdioServerParameters:
         """Validate and return the appropriate server parameters."""
 
-        def validate_and_return() -> ServerParameters:
-            if client_type == ServerType.STDIO:
-                return StdioServerParameters.model_validate(config)
-            if client_type == ServerType.SSE:
-                return SseServerParameters.model_validate(config)
-            raise ValueError(f'Invalid client type: {client_type}')
+        def validate_and_return() -> StdioServerParameters:
+            return StdioServerParameters.model_validate(config)
 
         try:
             return validate_and_return()
@@ -219,13 +212,8 @@ class ProxyServer:
             await self._run_server(app)
 
     async def start(self) -> None:
-        """Start Starlette app (SSE server) and connect to stdio or SSE based MCP server."""
-        logger.info(f'Starting MCP server with client type: {self.server_type} and config {self.config}')
+        """Start Starlette app (SSE server) and connect to stdio MCP server."""
+        logger.info(f'Starting MCP server with config {self.config}')
 
-        if self.server_type == ServerType.STDIO:
-            logger.info(f'Starting and connecting to stdio based MCP server with config {self.config}')
-            await self._initialize_and_run_server(stdio_client, server=self.config)
-        elif self.server_type == ServerType.SSE:
-            logger.info(f'Connecting to SSE based MCP server with config {self.config}')
-            params = self.config.model_dump(exclude_unset=True)
-            await self._initialize_and_run_server(sse_client, **params)
+        logger.info(f'Starting and connecting to stdio based MCP server with config {self.config}')
+        await self._initialize_and_run_server(stdio_client, server=self.config)

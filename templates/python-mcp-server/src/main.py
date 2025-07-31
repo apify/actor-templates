@@ -19,19 +19,18 @@ PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT'))) or 500
 # 1) For stdio server type, you need to provide the command and args
 from mcp.client.stdio import StdioServerParameters  # noqa: E402
 
-MCP_SERVER_PARAMS = StdioServerParameters(
-    command='uv',
-    args=['run', 'arxiv-mcp-server'],
-    env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
-)
+#MCP_SERVER_PARAMS = StdioServerParameters(
+#    command='uv',
+#    args=['run', 'arxiv-mcp-server'],
+#    env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
+#)
 
-# 2) For SSE server type, you need to provide the url, you can also specify headers if needed with Authorization
-# from .models import SseServerParameters  # noqa: ERA001
-#
-# MCP_SERVER_PARAMS = SseServerParameters( # noqa: ERA001, RUF100
-#     url='https://actors-mcp-server.apify.actor/sse',  # noqa: ERA001
-#     headers={'Authorization':  'YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
-# )  # noqa: ERA001, RUF100
+# 2) For a remote server, you can use the mcp-remote MCP server wrapper. You can also specify headers if needed, such as Authorization.
+MCP_SERVER_PARAMS = StdioServerParameters(
+    command='npx',
+    args=['mcp-remote', 'https://mcp.apify.com',
+           '--header', 'Authorization: Bearer YOUR_APIFY_TOKEN'],
+)
 # ------------------------------------------------------------------------------
 
 
