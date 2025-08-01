@@ -3,7 +3,7 @@ apify_client<2.0.0
 arxiv-mcp-server==0.2.11
 fastapi==0.116.1
 httpx>=0.24.0
-mcp==1.10.1
+mcp==1.12.3
 pydantic>=2.0.0
 sse-starlette>=1.8.0
 uv>=0.7.8
