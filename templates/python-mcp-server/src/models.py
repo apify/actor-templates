@@ -11,11 +11,11 @@ class ServerType(str, Enum):
 
     STDIO = 'stdio'  # Connect to a stdio server
     SSE = 'sse'  # Connect to an SSE server
-    HTTP = 'http'  # Connect to an HTTP server (streamable HTTP)
+    HTTP = 'http'  # Connect to an HTTP server (Streamable HTTP)
 
 
 class RemoteServerParameters(BaseModel):
-    """Parameters for connecting to an HTTP-streamable or SSE-based MCP server.
+    """Parameters for connecting to a Streamable HTTP or SSE-based MCP server.
 
     These parameters are passed either to the `streamable http_client` or `sse_client` from MCP SDK.
 

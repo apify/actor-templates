@@ -27,7 +27,7 @@ MCP_SERVER_PARAMS = StdioServerParameters(
     env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
-# 2) If you are wrapping HTTP-streamable or SSE server type, you need to provide the url and headers if needed
+# 2) If you are wrapping Streamable HTTP or SSE server type, you need to provide the url and headers if needed
 # from .models import RemoteServerParameters  # noqa: ERA001
 
 # server_type = ServerType.HTTP # or ServerType.SSE, depending on your server type # noqa: ERA001
@@ -73,7 +73,7 @@ async def main() -> None:
             Actor.log.info(f'  - proxy server host: {os.environ.get("ACTOR_STANDBY_URL", HOST)}')
             Actor.log.info(f'  - proxy server port: {PORT}')
 
-            Actor.log.info('Add the following configuration to your MCP client to use streamable HTTP transport:')
+            Actor.log.info('Add the following configuration to your MCP client to use Streamable HTTP transport:')
             Actor.log.info(
                 f"""
                 {{

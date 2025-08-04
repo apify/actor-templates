@@ -57,7 +57,7 @@ class ProxyServer:
     """Main class implementing the proxy functionality using MCP SDK.
 
     This proxy runs a Starlette app that exposes /sse and /messages/ endpoints for legacy SSE transport,
-    and a /mcp endpoint for streamable HTTP transport.
+            and a /mcp endpoint for Streamable HTTP transport.
     It then connects to stdio or remote MCP servers and forwards the messages to the client.
 
     The server can optionally charge for operations using a provided charging function.
@@ -114,7 +114,7 @@ class ProxyServer:
         event_store = InMemoryEventStore()
         session_manager = StreamableHTTPSessionManager(
             app=mcp_server,
-            event_store=event_store,  # Enable resume ability for streamable HTTP connections
+            event_store=event_store,  # Enable resume ability for Streamable HTTP connections
             json_response=False,
         )
 
@@ -182,7 +182,7 @@ class ProxyServer:
                 logger.exception('Error fetching OAuth authorization server data')
                 return JSONResponse({'error': 'Failed to fetch OAuth authorization server data'}, status_code=500)
 
-        # ASGI handler for streamable HTTP connections
+        # ASGI handler for Streamable HTTP connections
         async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
             await session_manager.handle_request(scope, receive, send)
 
@@ -211,7 +211,7 @@ class ProxyServer:
         await server.serve()
 
     async def start(self) -> None:
-        """Start Starlette app and connect to stdio, HTTP-streamable, or SSE based MCP server."""
+        """Start Starlette app and connect to stdio, Streamable HTTP, or SSE based MCP server."""
         logger.info(f'Starting MCP server with client type: {self.server_type} and config {self.config}')
         params: dict = (self.config and self.config.model_dump(exclude_unset=True)) or {}
 
