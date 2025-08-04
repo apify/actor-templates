@@ -51,16 +51,7 @@ This template enables you to:
             }
         }
         ```
-    - Using [legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse):
-        ```json
-        {
-            "mcpServers": {
-                "your-server": {
-                    "url": "https://your-actor.apify.actor/sse"
-                }
-            }
-        }
-        ```
+    - The template also supports [legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) via the `/sse` endpoint.
 
 ## 💰 Pricing
 
@@ -124,7 +115,7 @@ MCP_SERVER_PARAMS = StdioServerParameters(
     - Set the appropriate `server_type` (ServerType.HTTP or ServerType.SSE).
     - Optionally, use the `headers` parameter to include custom headers (e.g., for authentication) and the `auth` parameter for additional authentication mechanisms.
 
-Example for HTTP:
+Example:
 
 ```python
 server_type = ServerType.HTTP
@@ -134,15 +125,7 @@ MCP_SERVER_PARAMS = RemoteServerParameters(
 )
 ```
 
-Example for SSE:
-
-```python
-server_type = ServerType.SSE
-MCP_SERVER_PARAMS = RemoteServerParameters(
-    url='https://mcp.apify.com/sse',
-    headers={'Authorization': 'Bearer YOUR-API-KEY'},  # Replace with your authentication token
-)
-```
+Note: SSE transport is also supported by setting `server_type = ServerType.SSE`.
 
 - **Tips**:
     - Ensure the remote server supports the transport type you're using and is accessible from the Actor's environment.
@@ -191,5 +174,4 @@ Each operation can be configured for charging in the PPE model.
 - [Apify MCP server documentation](https://docs.apify.com/platform/integrations/mcp)
 - [Apify MCP client](https://apify.com/jiri.spilka/tester-mcp-client)
 - [Model Context Protocol documentation](https://modelcontextprotocol.io)
-- [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
