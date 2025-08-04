@@ -11,23 +11,26 @@ class ServerType(str, Enum):
 
     STDIO = 'stdio'  # Connect to a stdio server
     SSE = 'sse'  # Connect to an SSE server
+    HTTP = 'http'  # Connect to an HTTP server (streamable HTTP)
 
 
-class SseServerParameters(BaseModel):
-    """Parameters for connecting to an SSE-based MCP server.
+class RemoteServerParameters(BaseModel):
+    """Parameters for connecting to an HTTP-streamable or SSE-based MCP server.
+
+    These parameters are passed either to the `streamable http_client` or `sse_client` from MCP SDK.
 
     Attributes:
-        url: The URL of the SSE server endpoint
+        url: The URL of the HTTP or SSE server endpoint
         headers: Optional HTTP headers to include in the connection request
     """
 
     url: str
     headers: dict[str, Any] | None = None
-    timeout: float = 5  # Default timeout for SSE connection
-    sse_read_timeout: float = 60 * 5  # Default read timeout for SSE connection
-    auth: httpx.Auth | None = None
+    timeout: float = 60  # HTTP timeout for regular operations
+    sse_read_timeout: float = 60 * 5  # Timeout for SSE read operations
+    auth: httpx.Auth | None = None  # Optional HTTPX authentication handler
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
 # Type alias for server parameters
-ServerParameters: TypeAlias = StdioServerParameters | SseServerParameters
+ServerParameters: TypeAlias = StdioServerParameters | RemoteServerParameters

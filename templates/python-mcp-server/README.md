@@ -4,13 +4,13 @@ A Python template for deploying and monetizing a [Model Context Protocol (MCP)](
 
 This template enables you to:
 
-- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using SSE transport
+- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using HTTP or SSE transport
 - Expose your MCP server via [legacy Server-Sent Events (SSE)](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
 
 ## ✨ Features
 
-- Support for both stdio-based and SSE-based MCP servers
+- Support for stdio-based, HTTP-streamable, and SSE-based MCP servers
 - Built-in charging: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
     - Server startup
     - Tool calls
@@ -25,15 +25,17 @@ This template enables you to:
 
     ```python
     # For stdio server:
+    server_type = ServerType.STDIO
     MCP_SERVER_PARAMS = StdioServerParameters(
         command='your-command',
         args=['your', 'args'],
     )
 
-    # For SSE server:
-    MCP_SERVER_PARAMS = SseServerParameters(
-        url='your-server-url',
-    )
+    # For HTTP or SSE server:
+    # server_type = ServerType.HTTP  # or ServerType.SSE
+    # MCP_SERVER_PARAMS = RemoteServerParameters(
+    #     url='your-server-url',
+    # )
     ```
 
 2. Add any required dependencies to the `requirements.txt` file (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)).
@@ -84,8 +86,8 @@ To charge users, define events in JSON format and save them on the Apify platfor
 In the Actor, trigger events with:
 
 ```python
-await Actor.charge('actor-start')  # Charge for server startup
-await Actor.charge('tool-call')    # Charge for tool execution
+await Actor.charge('actor-start', 1)  # Charge for server startup
+await Actor.charge('tool-call', 1)    # Charge for tool execution
 ```
 
 To set up the PPE model:
@@ -96,7 +98,7 @@ To set up the PPE model:
 
 ## 🔧 How It Works
 
-This template implements a proxy server that can connect to either a stdio-based or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
+This template implements a proxy server that can connect to a stdio-based, HTTP-streamable, or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
 
 ### Server types
 
@@ -108,29 +110,42 @@ This template implements a proxy server that can connect to either a stdio-based
 Example:
 
 ```python
+server_type = ServerType.STDIO
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['run', 'arxiv-mcp-server'],
-    env={'YOUR_ENV_VAR', os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
+    env={'YOUR_ENV_VAR': os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
 )
 ```
 
-2. **SSE Server** (`SseServerParameters`):
-    - Connects to a remote MCP server via SSE transport.
+2. **Remote Server** (`RemoteServerParameters`):
+    - Connects to a remote MCP server via HTTP or SSE transport.
     - Configure using the `url` parameter to specify the server's endpoint.
+    - Set the appropriate `server_type` (ServerType.HTTP or ServerType.SSE).
     - Optionally, use the `headers` parameter to include custom headers (e.g., for authentication) and the `auth` parameter for additional authentication mechanisms.
 
-Example:
+Example for HTTP:
 
 ```python
-MCP_SERVER_PARAMS = SseServerParameters(
+server_type = ServerType.HTTP
+MCP_SERVER_PARAMS = RemoteServerParameters(
+    url='https://mcp.apify.com',
+    headers={'Authorization': 'Bearer YOUR-API-KEY'},  # Replace with your authentication token
+)
+```
+
+Example for SSE:
+
+```python
+server_type = ServerType.SSE
+MCP_SERVER_PARAMS = RemoteServerParameters(
     url='https://mcp.apify.com/sse',
-    headers={'Authorization':  os.getenv('YOUR-AUTH-TOKEN')},  # Replace with your authentication token
+    headers={'Authorization': 'Bearer YOUR-API-KEY'},  # Replace with your authentication token
 )
 ```
 
 - **Tips**:
-    - Ensure the remote server supports SSE transport and is accessible from the Actor's environment.
+    - Ensure the remote server supports the transport type you're using and is accessible from the Actor's environment.
     - Use environment variables to securely store sensitive information like tokens or API keys.
 
 #### Environment variables:
