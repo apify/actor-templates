@@ -18,7 +18,7 @@ from mcp import server, types
 from .const import ChargeEvents
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Awaitable, Callable
 
     from mcp.client.session import ClientSession
 
@@ -26,20 +26,20 @@ logger = logging.getLogger('apify')
 
 
 async def charge_mcp_operation(
-    charge_function: Callable[[str], None] | None,
-    event_name: ChargeEvents,
+    charge_function: Callable[[str, int], Awaitable[Any]] | None, event_name: ChargeEvents, count: int = 1
 ) -> None:
     """Charge for an MCP operation.
 
     Args:
         charge_function: Function to call for charging, or None if charging is disabled
         event_name: The type of event to charge for
+        count: The number of times the event occurred (typically 1, but can be more)
     """
     if not charge_function:
         return
 
     try:
-        await charge_function(event_name.value)
+        await charge_function(event_name.value, count)
         logger.info(f'Charged for event {event_name.value}')
     except Exception:
         logger.exception(f'Failed to charge for event {event_name.value}')
@@ -48,7 +48,7 @@ async def charge_mcp_operation(
 
 async def create_proxy_server(  # noqa: PLR0915
     client_session: ClientSession,
-    actor_charge_function: Callable[[str, dict[str, Any] | None], None] | None = None,
+    actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
 ) -> server.Server[object]:
     """Create a server instance from a remote app.
 
@@ -64,7 +64,7 @@ async def create_proxy_server(  # noqa: PLR0915
     capabilities: types.ServerCapabilities = response.capabilities
 
     logger.debug('Configuring proxied MCP server...')
-    app: server.Server[object] = server.Server(name=response.serverInfo.name, version=response.serverInfo.version)
+    app: server.Server = server.Server(name=response.serverInfo.name, version=response.serverInfo.version)
 
     if capabilities.prompts:
         logger.debug('Capabilities: adding Prompts...')

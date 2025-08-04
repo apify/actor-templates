@@ -4,13 +4,13 @@ A Python template for deploying and monetizing a [Model Context Protocol (MCP)](
 
 This template enables you to:
 
-- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using SSE transport
-- Expose your MCP server via [legacy Server-Sent Events (SSE)](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
+- Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using Streamable HTTP or SSE transport
+- Expose your MCP server via [legacy Server-Sent Events (SSE)](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
 
 ## ✨ Features
 
-- Support for both stdio-based and SSE-based MCP servers
+- Support for stdio-based, Streamable HTTP, and SSE-based MCP servers
 - Built-in charging: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
     - Server startup
     - Tool calls
@@ -25,21 +25,23 @@ This template enables you to:
 
     ```python
     # For stdio server:
+    server_type = ServerType.STDIO
     MCP_SERVER_PARAMS = StdioServerParameters(
         command='your-command',
         args=['your', 'args'],
     )
 
-    # For SSE server:
-    MCP_SERVER_PARAMS = SseServerParameters(
-        url='your-server-url',
-    )
+    # For HTTP or SSE server:
+    # server_type = ServerType.HTTP  # or ServerType.SSE
+    # MCP_SERVER_PARAMS = RemoteServerParameters(
+    #     url='your-server-url',
+    # )
     ```
 
 2. Add any required dependencies to the `requirements.txt` file (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)).
 3. Deploy to Apify and enable standby mode.
 4. Connect using an MCP client:
-    - Using [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http):
+    - Using [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http):
         ```json
         {
             "mcpServers": {
@@ -49,16 +51,7 @@ This template enables you to:
             }
         }
         ```
-    - Using [legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse):
-        ```json
-        {
-            "mcpServers": {
-                "your-server": {
-                    "url": "https://your-actor.apify.actor/sse"
-                }
-            }
-        }
-        ```
+    - The template also supports [legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) via the `/sse` endpoint.
 
 ## 💰 Pricing
 
@@ -84,8 +77,8 @@ To charge users, define events in JSON format and save them on the Apify platfor
 In the Actor, trigger events with:
 
 ```python
-await Actor.charge('actor-start')  # Charge for server startup
-await Actor.charge('tool-call')    # Charge for tool execution
+await Actor.charge('actor-start', 1)  # Charge for server startup
+await Actor.charge('tool-call', 1)    # Charge for tool execution
 ```
 
 To set up the PPE model:
@@ -96,7 +89,7 @@ To set up the PPE model:
 
 ## 🔧 How It Works
 
-This template implements a proxy server that can connect to either a stdio-based or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
+This template implements a proxy server that can connect to a stdio-based, Streamable HTTP, or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
 
 ### Server types
 
@@ -108,29 +101,34 @@ This template implements a proxy server that can connect to either a stdio-based
 Example:
 
 ```python
+server_type = ServerType.STDIO
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['run', 'arxiv-mcp-server'],
-    env={'YOUR_ENV_VAR', os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
+    env={'YOUR_ENV_VAR': os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
 )
 ```
 
-2. **SSE Server** (`SseServerParameters`):
-    - Connects to a remote MCP server via SSE transport.
+2. **Remote Server** (`RemoteServerParameters`):
+    - Connects to a remote MCP server via HTTP or SSE transport.
     - Configure using the `url` parameter to specify the server's endpoint.
+    - Set the appropriate `server_type` (ServerType.HTTP or ServerType.SSE).
     - Optionally, use the `headers` parameter to include custom headers (e.g., for authentication) and the `auth` parameter for additional authentication mechanisms.
 
 Example:
 
 ```python
-MCP_SERVER_PARAMS = SseServerParameters(
-    url='https://mcp.apify.com/sse',
-    headers={'Authorization':  os.getenv('YOUR-AUTH-TOKEN')},  # Replace with your authentication token
+server_type = ServerType.HTTP
+MCP_SERVER_PARAMS = RemoteServerParameters(
+    url='https://mcp.apify.com',
+    headers={'Authorization': 'Bearer YOUR-API-KEY'},  # Replace with your authentication token
 )
 ```
 
+Note: SSE transport is also supported by setting `server_type = ServerType.SSE`.
+
 - **Tips**:
-    - Ensure the remote server supports SSE transport and is accessible from the Actor's environment.
+    - Ensure the remote server supports the transport type you're using and is accessible from the Actor's environment.
     - Use environment variables to securely store sensitive information like tokens or API keys.
 
 #### Environment variables:
@@ -144,7 +142,7 @@ Environment variables can be securely stored and managed at the Actor level on t
 
 The proxy server (`ProxyServer` class) handles:
 
-- Creating a Starlette web server with legacy SSE (`/sse` and `/messages/`) and streamable HTTP (`/mcp`) endpoints
+- Creating a Starlette web server with legacy SSE (`/sse` and `/messages/`) and Streamable HTTP (`/mcp`) endpoints
 - Managing connections to the underlying MCP server
 - Forwarding requests and responses between clients and the MCP server
 - Handling charging through the `actor_charge_function`
@@ -176,5 +174,4 @@ Each operation can be configured for charging in the PPE model.
 - [Apify MCP server documentation](https://docs.apify.com/platform/integrations/mcp)
 - [Apify MCP client](https://apify.com/jiri.spilka/tester-mcp-client)
 - [Model Context Protocol documentation](https://modelcontextprotocol.io)
-- [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)

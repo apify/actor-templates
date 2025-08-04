@@ -5,32 +5,35 @@ import os
 from apify import Actor
 
 from .const import ChargeEvents
+from .models import ServerType
 from .server import ProxyServer
 
 # Actor configuration
 STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
 # Bind to all interfaces (0.0.0.0) as this is running in a containerized environment (Apify Actor)
 # The container's network is isolated, so this is safe
-HOST = '0.0.0.0'  # noqa: S104 - Required for container networking in Apify platform
-PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT'))) or 5001
+HOST = '0.0.0.0'  # noqa: S104 - Required for container networking at Apify platform
+PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT') or '5001')) or 5001
 
 # EDIT THIS SECTION ------------------------------------------------------------
 # Configuration constants - You need to override these values. You can also pass environment variables if needed.
-# 1) For stdio server type, you need to provide the command and args
+# 1) If you are wrapping stdio server type, you need to provide the command and args
 from mcp.client.stdio import StdioServerParameters  # noqa: E402
 
+server_type = ServerType.STDIO
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
     args=['run', 'arxiv-mcp-server'],
     env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
-# 2) For SSE server type, you need to provide the url, you can also specify headers if needed with Authorization
-# from .models import SseServerParameters  # noqa: ERA001
-#
-# MCP_SERVER_PARAMS = SseServerParameters( # noqa: ERA001, RUF100
-#     url='https://actors-mcp-server.apify.actor/sse',  # noqa: ERA001
-#     headers={'Authorization':  'YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
+# 2) If you are wrapping Streamable HTTP or SSE server type, you need to provide the url and headers if needed
+# from .models import RemoteServerParameters  # noqa: ERA001
+
+# server_type = ServerType.HTTP # or ServerType.SSE, depending on your server type # noqa: ERA001
+# MCP_SERVER_PARAMS = RemoteServerParameters( # noqa: ERA001, RUF100
+#     url='https://mcp.apify.com',  # noqa: ERA001
+#     headers={'Authorization':  'Bearer YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
 # )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
 
@@ -66,11 +69,11 @@ async def main() -> None:
         try:
             # Create and start the server with charging enabled
             url = os.environ.get('ACTOR_STANDBY_URL', HOST)
-            Actor.log.info('Starting MCP proxy server')
+            Actor.log.info('Starting MCP server')
             Actor.log.info(f'  - proxy server host: {os.environ.get("ACTOR_STANDBY_URL", HOST)}')
             Actor.log.info(f'  - proxy server port: {PORT}')
 
-            Actor.log.info('Put this in your client config to use streamable HTTP transport:')
+            Actor.log.info('Add the following configuration to your MCP client to use Streamable HTTP transport:')
             Actor.log.info(
                 f"""
                 {{
@@ -82,21 +85,9 @@ async def main() -> None:
                 }}
                 """
             )
-            Actor.log.info('Put this in your client config to use legacy SSE transport:')
-            Actor.log.info(
-                f"""
-                {{
-                    "mcpServers": {{
-                        "arxiv-mcp-server": {{
-                            "url": "{url}/sse",
-                        }}
-                    }}
-                }}
-                """
-            )
             # Pass Actor.charge to enable charging for MCP operations
             # The proxy server will use this to charge for different operations
-            proxy_server = ProxyServer(MCP_SERVER_PARAMS, HOST, PORT, actor_charge_function=Actor.charge)
+            proxy_server = ProxyServer(MCP_SERVER_PARAMS, HOST, PORT, server_type, actor_charge_function=Actor.charge)
             await proxy_server.start()
         except Exception as e:
             Actor.log.exception(f'Server failed to start: {e}')
