@@ -1,37 +1,29 @@
-FROM node:22-alpine AS builder
+FROM apify/actor-node:22 AS builder
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
-COPY package*.json ./
+COPY --chown=myuser:myuser package*.json ./
 
 # Install all dependencies. Don't audit to speed up the installation.
 RUN npm install --include=dev --audit=false
 
 # Next, copy the source files using the user set
 # in the base image.
-COPY . ./
+COPY --chown=myuser:myuser . ./
 
 # Install all dependencies and build the project.
 # Don't audit to speed up the installation.
 RUN npm run build
 
 # Create final image
-FROM node:22-alpine
-
-# Create and run as a non-root user.
-RUN adduser -h /home/apify -D apify
-# Create app directory
-RUN mkdir -p /home/apify/app
-WORKDIR /home/apify/app
+FROM apify/actor-node:22
 
 # Copy built JS files from builder image
-COPY --from=builder /dist ./dist
+COPY --from=builder --chown=myuser:myuser /home/myuser/dist ./dist
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
-COPY package*.json ./
-RUN chown -R apify:apify /home/apify/app
-USER apify
+COPY --chown=myuser:myuser package*.json ./
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
