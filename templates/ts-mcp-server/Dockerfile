@@ -1,4 +1,10 @@
-FROM node:22-alpine AS builder
+# Specify the base Docker image. You can read more about
+# the available images at https://docs.apify.com/sdk/js/docs/guides/docker-images
+# You can also use any other image from Docker Hub.
+FROM apify/actor-node:22 AS builder
+
+# Check preinstalled packages
+RUN npm ls crawlee apify puppeteer playwright
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
@@ -16,22 +22,14 @@ COPY . ./
 RUN npm run build
 
 # Create final image
-FROM node:22-alpine
+FROM apify/actor-node:22
 
-# Create and run as a non-root user.
-RUN adduser -h /home/apify -D apify
-# Create app directory
-RUN mkdir -p /home/apify/app
-WORKDIR /home/apify/app
-
-# Copy built JS files from builder image
-COPY --from=builder /dist ./dist
+# Check preinstalled packages
+RUN npm ls crawlee apify puppeteer playwright
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
 COPY package*.json ./
-RUN chown -R apify:apify /home/apify/app
-USER apify
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
@@ -46,15 +44,13 @@ RUN npm --quiet set progress=false \
     && npm --version \
     && rm -r ~/.npm
 
-# Tell Node.js this is a production environment
-ENV NODE_ENV=production
+# Copy built JS files from builder image
+COPY --from=builder /usr/src/app/dist ./dist
 
-# Enable Node.js process to use a lot of memory (Actor has limit of 32GB)
-# Increases default size of headers. The original limit was 80kb, but from node 10+ they decided to lower it to 8kb.
-# However they did not think about all the sites there with large headers,
-# so we put back the old limit of 80kb, which seems to work just fine.
-ENV NODE_OPTIONS="--max_old_space_size=30000 --max-http-header-size=80000"
+# Next, copy the remaining files and directories with the source code.
+# Since we do this after NPM install, quick build will be really fast
+# for most source file changes.
+COPY . ./
 
 # Run the image.
-#CMD ["npm", "run", "start:prod", "--silent"]
-CMD ["node", "dist/main.js", "--silent"]
+CMD npm run start:prod --silent
