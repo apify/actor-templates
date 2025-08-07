@@ -29,9 +29,7 @@ COPY --from=builder /dist ./dist
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
-COPY package*.json ./
-RUN chown -R apify:apify /home/apify/app
-USER apify
+COPY --chown=apify:apify package*.json ./
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
@@ -45,6 +43,8 @@ RUN npm --quiet set progress=false \
     && echo "NPM version:" \
     && npm --version \
     && rm -r ~/.npm
+
+USER apify
 
 # Tell Node.js this is a production environment
 ENV NODE_ENV=production
