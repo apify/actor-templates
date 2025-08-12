@@ -8,10 +8,11 @@ https://docs.apify.com/sdk/python
 
 from __future__ import annotations
 
+import os
+
 from apify import Actor
 from crewai import Agent, Crew, Task
-
-from src.tools import InstagramScraperTool
+from crewai_tools import ApifyActorsTool
 
 
 async def main() -> None:
@@ -25,6 +26,12 @@ async def main() -> None:
         ValueError: If the input is missing required attributes.
     """
     async with Actor:
+        apify_token = os.getenv('APIFY_TOKEN')
+        if not apify_token:
+            raise ValueError("APIFY_TOKEN environment variable must be set for authentication.")
+        # Set the env var that ApifyActorsTool expects
+        os.environ['APIFY_API_TOKEN'] = apify_token
+
         # Charge for Actor start
         await Actor.charge('actor-start')
 
@@ -38,7 +45,8 @@ async def main() -> None:
             raise ValueError(msg)
 
         # Create a toolkit for the agent
-        tools = [InstagramScraperTool()]
+        # containing the Instagram scraper tool
+        tools = [ApifyActorsTool('apify/instagram-scraper')]
 
         # Create an agent
         # For more information, see https://docs.crewai.com/concepts/agents

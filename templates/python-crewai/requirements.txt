@@ -1,4 +1,4 @@
 apify<3.0.0
 apify_client<2.0.0
-crewai<1.0.0
-crewai-tools<1.0.0
+langchain-apify<1.0.0
+crewai[tools]<1.0.0

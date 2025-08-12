@@ -1,16 +1,17 @@
 ## Python CrewAI template
 
-A template for [CrewAI](https://www.crewai.com/) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [agent](https://docs.crewai.com/concepts/agents) that calls [Actors](https://apify.com/actors) as tools in a workflow.
+A template for [CrewAI](https://www.crewai.com/) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [agent](https://docs.crewai.com/concepts/agents) that calls [Actors](https://apify.com/actors) via `ApifyActorsTool` in a workflow using the [CrewAI Apify Actors integration](https://docs.apify.com/platform/integrations/crewai).
 
 For a detailed guide, visit the [How to build an AI agent](https://blog.apify.com/how-to-build-an-ai-agent/) article.
 
 ## How it works
 
-An [agent](https://docs.crewai.com/concepts/agents) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this case, the agent is provided with an [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) to scrape Instagram profile posts. The agent produces textual output, which is saved to a dataset.
+An [agent](https://docs.crewai.com/concepts/agents) is created and given a set of tools to accomplish a task. The agent receives a query from the user and decides which tools to use and in what order to complete the task. In this template, the agent uses `ApifyActorsTool('apify/instagram-scraper')` from `crewai_tools` to run the [Instagram Scraper Actor](https://apify.com/apify/instagram-scraper) and analyze scraped posts. The agent produces textual output, which is saved to a dataset.
 
 ## How to use
 
-Add or modify the agent tools in the `src/tools.py` file, and make sure to include new tools in the agent tools list in `src/main.py`. Additionally, you can update the agent prompts in `src/main.py`. For more information, refer to the [CrewAI agent documentation](https://docs.crewai.com/concepts/agents) and the [CrewAI tools documentation](https://docs.crewai.com/concepts/tools).
+Tools are provided via `crewai_tools` and configured in `src/main.py`. To change tools, edit the `tools` list in `src/main.py`. You can also update the agent prompts in `src/main.py`. For more information, refer to the [CrewAI agent documentation](https://docs.crewai.com/concepts/agents) and the [CrewAI tools documentation](https://docs.crewai.com/concepts/tools).
+
 
 #### Pay Per Event
 
