@@ -1,7 +1,11 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-FROM apify/actor-python:3.13
+# We are using Python 3.12 because 3.13 required compilation of the packages for the CrewAI setup.
+FROM apify/actor-python:3.12
+
+# Ensure the directory where uv installs is on PATH
+#ENV PATH="/root/.local/bin:$PATH"
 
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency installation in the next step,
@@ -15,8 +19,12 @@ RUN echo "Python version:" \
  && python --version \
  && echo "Pip version:" \
  && pip --version \
- && echo "Installing dependencies:" \
- && pip install -r requirements.txt \
+ && echo "Installing uv:" \
+ && pip install uv \
+ && echo "uv version:" \
+ && uv --version \
+ && echo "Installing dependencies with uv:" \
+ && uv pip install --system -r requirements.txt \
  && echo "All installed Python packages:" \
  && pip freeze
 

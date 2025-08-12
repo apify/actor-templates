@@ -8,7 +8,7 @@
             "type": "string",
             "description": "Query for the agent.",
             "editor": "textfield",
-            "prefill": "Analyze the posts of the @openai and @googledeepmind and summarize me current trends in the AI.",
+            "prefill": "Analyze the last 5 posts from @openai and @googledeepmind and summarize AI trends.",
             "default": "This is a fallback test query, do nothing and !!do not call any tools!!. If asked to generate structured response, create a dummy one without optional fields, and empty lists - keep it as minimal as possible."
         },
         "modelName": {
