@@ -28,7 +28,7 @@ async def main() -> None:
     async with Actor:
         apify_token = os.getenv('APIFY_TOKEN')
         if not apify_token:
-            raise ValueError("APIFY_TOKEN environment variable must be set for authentication.")
+            raise ValueError('APIFY_TOKEN environment variable must be set for authentication.')
         # Set the env var that ApifyActorsTool expects
         os.environ['APIFY_API_TOKEN'] = apify_token
 
