@@ -2,7 +2,7 @@
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
 # We are using Python 3.12 because 3.13 required compilation of the packages for the CrewAI setup.
-FROM apify/actor-python:3.12
+FROM apify/actor-python:3.13
 
 # Ensure the directory where uv installs is on PATH
 #ENV PATH="/root/.local/bin:$PATH"
