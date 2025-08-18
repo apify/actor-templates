@@ -15,15 +15,13 @@ const MCP_COMMAND = [
 ];
 ```
 
-Alternatively, you can use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) tool to turn a remote MCP server into an Actor. For example, to connect to a remote server over SSE with authentication:
+Alternatively, you can use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) tool to turn a remote MCP server into an Actor. For example, to connect to a remote server with authentication:
 
 ```
 const MCP_COMMAND = [
     'npx',
     'mcp-remote',
-    'https://mcp.apify.com/sse',
-    '--transport',
-    'sse-only',
+    'https://mcp.apify.com',
     '--header',
     'Authorization: Bearer TOKEN',
 ];
