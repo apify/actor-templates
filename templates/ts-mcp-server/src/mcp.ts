@@ -43,7 +43,7 @@ export async function getMcpServer(command: string[], options?: {
     
     // Spawn MCP proxy client for the stdio MCP server
     const proxyClient = await getMcpProxyClient(command);
-    
+
     // Register request handlers for all client requests
     for (const schema of ClientRequestSchema.options) {
         const method = schema.shape.method.value;
@@ -54,7 +54,8 @@ export async function getMcpServer(command: string[], options?: {
                 // this is needed for mcp-remote servers to work correctly
                 return {
                     capabilities: proxyClient.getServerCapabilities(),
-                    protocolVersion: "2025-06-18",
+                    // Return back the client protocolVersion
+                    protocolVersion: req.params.protocolVersion,
                     serverInfo: {
                       name: "Apify MCP proxy server",
                       title: "Apify MCP proxy server",

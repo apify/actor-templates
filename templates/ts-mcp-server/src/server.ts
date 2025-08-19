@@ -95,6 +95,9 @@ async function mcpPostHandler(req: Request, res: Response) {
             const server = await getMcpServer();
             await server.connect(transport);
 
+            // Charge for the request
+            await chargeMessageRequest(req.body);
+            
             await transport.handleRequest(req, res, req.body);
             return; // Already handled
         } else {
@@ -198,7 +201,7 @@ async function sseGetHandler(_req: Request, res: Response) {
         res.status(500).send('Server not initialized');
         return;
     }
-    console.log('Received GET request to /sse (establishing SSE stream)');
+    log.info('Received GET request to /sse (establishing SSE stream)');
 
     try {
         // Create a new SSE transport for the client
@@ -209,9 +212,21 @@ async function sseGetHandler(_req: Request, res: Response) {
         const { sessionId } = transport;
         transports[sessionId] = transport;
 
+        // Charge for each message request received on this transport
+        transport.onmessage = (message) => {
+            chargeMessageRequest(message as { method: string }).catch((error) => {
+                log.error('Error charging for message request:', {
+                    error,
+                    sessionId: sessionId || null,
+                });
+            });
+        };
+
         // Set up onclose handler to clean up transport when closed
         transport.onclose = () => {
-            console.log(`SSE transport closed for session ${sessionId}`);
+            log.info('SSE transport closed', {
+                sessionId: sessionId || null,
+            });
             delete transports[sessionId];
         };
 
@@ -219,9 +234,13 @@ async function sseGetHandler(_req: Request, res: Response) {
         const server = await getMcpServer();
         await server.connect(transport);
 
-        console.log(`Established SSE stream with session ID: ${sessionId}`);
+        log.info('Established SSE stream', {
+            sessionId: sessionId || null,
+        });
     } catch (error) {
-        console.error('Error establishing SSE stream:', error);
+        log.error('Error establishing SSE stream:', {
+            error,
+        });
         if (!res.headersSent) {
             res.status(500).send('Error establishing SSE stream');
         }
@@ -233,30 +252,40 @@ async function sseGetHandler(_req: Request, res: Response) {
  * - Routes messages to the correct SSE transport based on session ID.
  */
 async function sseMessagesHandler(req: Request, res: Response) {
-    console.log('Received POST request to /messages');
+    log.info('Received POST request to /messages', {
+        body: req.body,
+    });
 
     // Extract session ID from URL query parameter
     // In the SSE protocol, this is added by the client based on the endpoint event
     const sessionId = req.query.sessionId as string | undefined;
 
     if (!sessionId) {
-        console.error('No session ID provided in request URL');
+        log.error('No session ID provided in request URL');
         res.status(400).send('Missing sessionId parameter');
         return;
     }
 
     const transport = transports[sessionId] as SSEServerTransport | undefined;
     if (!transport) {
-        console.error(`No active transport found for session ID: ${sessionId}`);
+        log.error('No active transport found', {
+            sessionId: sessionId || null,
+        });
         res.status(404).send('Session not found');
         return;
     }
 
     try {
+        // Charge for the request
+        await chargeMessageRequest(req.body);
+        
         // Handle the POST message with the transport
         await transport.handlePostMessage(req, res, req.body);
     } catch (error) {
-        console.error('Error handling request:', error);
+        log.error('Error handling request:', {
+            error,
+            sessionId: sessionId || null,
+        });
         if (!res.headersSent) {
             res.status(500).send('Error handling request');
         }
