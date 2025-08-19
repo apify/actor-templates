@@ -26,7 +26,7 @@ const MCP_COMMAND = [
 
 // Check if the Actor is running in standby mode
 const STANDBY_MODE = process.env.APIFY_META_ORIGIN === 'STANDBY';
-const SERVER_PORT = parseInt(process.env.ACTOR_WEB_SERVER_PORT || '', 10);
+const SERVER_PORT = parseInt(process.env.ACTOR_WEB_SERVER_PORT || '3001', 10);
 
 // Initialize the Apify Actor environment
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
