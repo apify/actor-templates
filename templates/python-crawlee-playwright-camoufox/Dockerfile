@@ -27,7 +27,7 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python -m compileall -q .
+RUN python -m compileall -q ./src
 
 # Fetch camoufox files that are always needed when using camoufox.
 RUN python -m camoufox fetch
