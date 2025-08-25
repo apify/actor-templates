@@ -3,10 +3,14 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-node:22
 
+USER root
+
 # Install system dependencies
 RUN apk add --no-cache jq wget bash curl && \
     curl --silent --location \
         https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh | sh
+
+USER myuser
 
 # Install the Apify CLI
 RUN npm --quiet set progress=false \
