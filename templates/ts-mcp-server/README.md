@@ -1,7 +1,7 @@
 ## MCP server template
 
 A template for running and monetizing a [Model Context Protocol](https://modelcontextprotocol.io) server using [stdio](https://modelcontextprotocol.io/docs/concepts/transports#standard-input%2Foutput-stdio) transport on [Apify platform](https://docs.apify.com/platform).
-This allows you to run any stdio MCP server as a [standby Actor](https://docs.apify.com/platform/actors/development/programming-interface/standby) and connect via either the [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) or the legacy [SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) with an [MCP client](https://modelcontextprotocol.io/clients).
+This allows you to run any stdio MCP server as a [standby Actor](https://docs.apify.com/platform/actors/development/programming-interface/standby) and connect via either the [streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) with an [MCP client](https://modelcontextprotocol.io/clients).
 
 ## How to use
 
@@ -29,10 +29,7 @@ const MCP_COMMAND = [
 
 Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/billing.ts`.
 
-[Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform, configure [standby mode](https://docs.apify.com/platform/actors/development/programming-interface/standby), and then connect to the Actor standby URL with your MCP client. You can use either:
-
-- `https://me--my-mcp-server.apify.actor/mcp` ([streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http), recommended)
-- `https://me--my-mcp-server.apify.actor/sse` ([legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse))
+[Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform, configure [standby mode](https://docs.apify.com/platform/actors/development/programming-interface/standby), and then connect to the Actor standby URL with your MCP client using the endpoint: `https://me--my-mcp-server.apify.actor/mcp` ([streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http)).
 
 **Important:** When connecting to your deployed MCP server, you must pass your Apify API token in the `Authorization` header as a Bearer token. For example:
 
