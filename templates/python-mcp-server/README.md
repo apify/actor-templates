@@ -17,18 +17,7 @@ This template enables you to:
     - Resource access
     - Prompt operations
     - List operations
-- **Gateway architecture**: Acts as a controlled entry point with charging and authorization logic
-
-## 🏗️ Architecture
-
-This template implements an **MCP Gateway** (formerly called "proxy server") that serves as a controlled entry point to MCP servers. The gateway provides:
-
-- **Request forwarding**: Proxies MCP requests to underlying servers
-- **Tool authorization**: Only allows whitelisted tools to execute (using `AUTHORIZED_TOOLS` list)
-- **Charging integration**: Charges for authorized operations using Apify's PPE model
-- **Access control**: Blocks unauthorized tools with clear error messages
-
-The gateway pattern is more accurate than "proxy" because it doesn't just forward requests—it actively controls access, manages authorization, and handles charging before allowing operations to proceed.
+- **Gateway**: Acts as a controlled entry point to MCP servers with charging and authorization logic
 
 ## Quick Start
 
@@ -133,10 +122,10 @@ Charge different amounts for different tools based on computational cost:
 }
 ```
 
-#### 3. No Charging (Free Service)
+#### 3. No charging (free service)
 Comment out all charging lines in the code for a free service.
 
-### How to Implement Charging
+### How to implement charging
 
 1. **Define your events** in `.actor/pay_per_event.json` (see examples above). This file is not actually used at Apify platform but serves as a reference.
 
@@ -184,16 +173,17 @@ AUTHORIZED_TOOLS = [
 1. Add charge event to `ChargeEvents` enum
 2. Add tool value to `AUTHORIZED_TOOLS` list
 3. Update pricing in `pay_per_event.json`
+4. Update pricing at Apify platform
 
 Unauthorized tools are blocked with clear error messages.
 
-## 🔧 How It Works
+## 🔧 How it works
 
-This template implements a proxy server that can connect to a stdio-based, Streamable HTTP, or SSE-based MCP server and expose it via [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
+This template implements a MCP gateway that can connect to a stdio-based, Streamable HTTP, or SSE-based MCP server and expose it via [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
 
 ### Server types
 
-1. **Stdio Server** (`StdioServerParameters`):
+1. **Stdio server** (`StdioServerParameters`):
     - Spawns a local process that implements the MCP protocol over stdio.
     - Configure using the `command` parameter to specify the executable and the `args` parameter for additional arguments.
     - Optionally, use the `env` parameter to pass environment variables to the process.
@@ -209,7 +199,7 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 )
 ```
 
-2. **Remote Server** (`RemoteServerParameters`):
+2. **Remote server** (`RemoteServerParameters`):
     - Connects to a remote MCP server via HTTP or SSE transport.
     - Configure using the `url` parameter to specify the server's endpoint.
     - Set the appropriate `server_type` (ServerType.HTTP or ServerType.SSE).
@@ -240,25 +230,24 @@ Environment variables can be securely stored and managed at the Actor level on t
 
 ### Gateway implementation
 
-The MCP gateway (`ProxyServer` class) handles:
+The MCP gateway (`create_gateway` function) handles:
 
 - Creating a Starlette web server with Streamable HTTP (`/mcp`) endpoint
 - Managing connections to the underlying MCP server
 - Forwarding requests and responses between clients and the MCP server
-- Handling charging through the `actor_charge_function`
-- **Tool authorization**: Only allowing whitelisted tools to execute
-- **Access control**: Blocking unauthorized tool calls with clear error messages
+- Handling charging through the `actor_charge_function` (`Actor.charge` in Apify Actors)
+- Tool authorization: Only allowing whitelisted tools to execute
+- Access control: Blocking unauthorized tool calls with clear error messages
 
 Key components:
 
-- `ProxyServer`: Main class that manages the gateway functionality
-- `create_gateway`: Creates an MCP server instance that acts as a gateway (formerly `create_proxy_server`)
+- `create_gateway`: Creates an MCP server instance that acts as a gateway
 - `charge_mcp_operation`: Handles charging for different MCP operations
 - `AUTHORIZED_TOOLS`: Whitelist of allowed tools defined in `src/const.py`
 
 ### MCP operations
 
-The proxy supports all standard MCP operations:
+The MCP gateway supports all standard MCP operations:
 
 - `list_tools()`: List available tools
 - `call_tool()`: Execute a tool with arguments
@@ -269,7 +258,7 @@ The proxy supports all standard MCP operations:
 
 Each operation can be configured for charging in the PPE model.
 
-## 📚 Resources
+## 📚 Resources 
 
 - [What is Anthropic's Model Context Protocol?](https://blog.apify.com/what-is-model-context-protocol/)
 - [How to use MCP with Apify Actors](https://blog.apify.com/how-to-use-mcp/)
