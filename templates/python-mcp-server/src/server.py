@@ -15,7 +15,6 @@ from mcp.client.session import ClientSession
 from mcp.client.sse import sse_client
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.streamable_http import streamablehttp_client
-from mcp.server.sse import SseServerTransport
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from pydantic import ValidationError
 from starlette.applications import Starlette
@@ -57,9 +56,9 @@ class McpPathRewriteMiddleware(BaseHTTPMiddleware):
 class ProxyServer:
     """Main class implementing the proxy functionality using MCP SDK.
 
-    This proxy runs a Starlette app that exposes /sse and /messages/ endpoints for legacy SSE transport,
-            and a /mcp endpoint for Streamable HTTP transport.
+    This proxy runs a Starlette app that exposes a /mcp endpoint for Streamable HTTP transport.
     It then connects to stdio or remote MCP servers and forwards the messages to the client.
+    Note: SSE endpoint serving has been deprecated, but SSE client connections are still supported.
 
     The server can optionally charge for operations using a provided charging function.
     This is typically used in Apify Actors to charge users for MCP operations.
@@ -88,8 +87,6 @@ class ProxyServer:
         """
         self.server_type = server_type
         self.config = self._validate_config(self.server_type, config)
-        self.path_sse: str = '/sse'
-        self.path_message: str = '/message'
         self.host: str = host
         self.port: int = port
         self.actor_charge_function = actor_charge_function
@@ -110,8 +107,7 @@ class ProxyServer:
 
     @staticmethod
     async def create_starlette_app(mcp_server: Server) -> Starlette:
-        """Create a Starlette app (SSE server) that exposes /sse and /messages/ endpoints."""
-        transport = SseServerTransport('/messages/')  # Only used for legacy SSE transport
+        """Create a Starlette app that exposes /mcp endpoint for Streamable HTTP transport."""
         event_store = InMemoryEventStore()
         session_manager = StreamableHTTPSessionManager(
             app=mcp_server,
@@ -143,28 +139,14 @@ class ProxyServer:
                 {
                     'status': 'running',
                     'type': 'mcp-server',
-                    'transport': 'sse+streamable-http',
+                    'transport': 'streamable-http',
                     'endpoints': {
-                        'sse': '/sse',
-                        'messages': '/messages/',
                         'streamableHttp': '/mcp',
                     },
                 }
             )
 
-        async def handle_sse(request: st.Request) -> st.Response | None:
-            """Handle incoming SSE requests."""
-            try:
-                async with transport.connect_sse(request.scope, request.receive, request._send) as streams:  # noqa: SLF001
-                    init_options = mcp_server.create_initialization_options()
-                    await mcp_server.run(streams[0], streams[1], init_options)
-            except Exception as e:
-                logger.exception('Error in SSE connection')
-                return Response(status_code=500, content=str(e))
-            finally:
-                logger.info('SSE connection closed')
-            # Add Response to prevent the None type error
-            return Response(status_code=204)  # No content response
+
 
         async def handle_favicon(_request: Request) -> st.Response:
             """Handle favicon.ico requests by redirecting to Apify's favicon."""
@@ -197,8 +179,6 @@ class ProxyServer:
                     endpoint=handle_oauth_authorization_server,
                     methods=['GET'],
                 ),
-                Route('/sse', endpoint=handle_sse, methods=['GET']),
-                Mount('/messages/', app=transport.handle_post_message),
                 Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,

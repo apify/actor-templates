@@ -27,7 +27,7 @@ MCP_SERVER_PARAMS = StdioServerParameters(
     env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
-# 2) If you are wrapping Streamable HTTP or SSE server type, you need to provide the url and headers if needed
+# 2) If you are connecting to a Streamable HTTP or SSE server, you need to provide the url and headers if needed
 # from .models import RemoteServerParameters  # noqa: ERA001
 
 # server_type = ServerType.HTTP # or ServerType.SSE, depending on your server type # noqa: ERA001
@@ -62,7 +62,7 @@ async def main() -> None:
 
         if not STANDBY_MODE:
             msg = 'This Actor is not meant to be run directly. It should be run in standby mode.'
-            Actor.log.error(msg)
+            Actor.log.warning(msg)
             await Actor.exit(status_message=msg)
             return
 

@@ -5,7 +5,7 @@ A Python template for deploying and monetizing a [Model Context Protocol (MCP)](
 This template enables you to:
 
 - Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using Streamable HTTP or SSE transport
-- Expose your MCP server via [legacy Server-Sent Events (SSE)](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
+- Expose your MCP server via [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
 
 ## ✨ Features
@@ -51,7 +51,7 @@ This template enables you to:
             }
         }
         ```
-    - The template also supports [legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) via the `/sse` endpoint.
+    - Note: SSE endpoint serving has been deprecated, but SSE client connections are still supported.
 
 ## 💰 Pricing
 
@@ -89,7 +89,7 @@ To set up the PPE model:
 
 ## 🔧 How It Works
 
-This template implements a proxy server that can connect to a stdio-based, Streamable HTTP, or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
+This template implements a proxy server that can connect to a stdio-based, Streamable HTTP, or SSE-based MCP server and expose it via [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
 
 ### Server types
 
@@ -142,7 +142,7 @@ Environment variables can be securely stored and managed at the Actor level on t
 
 The proxy server (`ProxyServer` class) handles:
 
-- Creating a Starlette web server with legacy SSE (`/sse` and `/messages/`) and Streamable HTTP (`/mcp`) endpoints
+- Creating a Starlette web server with Streamable HTTP (`/mcp`) endpoint
 - Managing connections to the underlying MCP server
 - Forwarding requests and responses between clients and the MCP server
 - Handling charging through the `actor_charge_function`
