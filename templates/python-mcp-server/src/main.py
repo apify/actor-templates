@@ -27,12 +27,12 @@ MCP_SERVER_PARAMS = StdioServerParameters(
     env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
-# 2) If you are wrapping Streamable HTTP or SSE server type, you need to provide the url and headers if needed
+# 2) If you are connecting to a Streamable HTTP or SSE server, you need to provide the url and headers if needed
 # from .models import RemoteServerParameters  # noqa: ERA001
 
 # server_type = ServerType.HTTP # or ServerType.SSE, depending on your server type # noqa: ERA001
 # MCP_SERVER_PARAMS = RemoteServerParameters( # noqa: ERA001, RUF100
-#     url='https://mcp.apify.com',  # noqa: ERA001
+#     url='https://your-mcp-server',  # noqa: ERA001
 #     headers={'Authorization':  'Bearer YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
 # )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
@@ -47,11 +47,24 @@ async def main() -> None:
     3. Creates and starts the proxy server
     4. Configures charging for MCP operations using Actor.charge
 
-    The proxy server will charge for different MCP operations like:
-    - Tool calls
-    - Prompt operations
-    - Resource access
-    - List operations
+    CHARGING STRATEGIES:
+    The template supports multiple charging approaches:
+
+    1. GENERIC MCP CHARGING:
+       - Charge for all tool calls with a flat rate (TOOL_CALL event)
+       - Charge for resource operations (RESOURCE_LIST, RESOURCE_READ)
+       - Charge for prompt operations (PROMPT_LIST, PROMPT_GET)
+       - Charge for tool listing (TOOL_LIST)
+
+    2. DOMAIN-SPECIFIC CHARGING (arXiv example):
+       - Charge different amounts for different tools
+       - search_papers: $0.01 per search
+       - list_papers: $0.001 per listing
+       - download_paper: $0.005 per download
+       - read_paper: $0.02 per paper read
+
+    3. NO CHARGING:
+       - Comment out all charging lines for free service
 
     Charging events are defined in .actor/pay_per_event.json
     """
@@ -62,7 +75,7 @@ async def main() -> None:
 
         if not STANDBY_MODE:
             msg = 'This Actor is not meant to be run directly. It should be run in standby mode.'
-            Actor.log.error(msg)
+            Actor.log.warning(msg)
             await Actor.exit(status_message=msg)
             return
 

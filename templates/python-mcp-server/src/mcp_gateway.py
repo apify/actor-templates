@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING, Any
 
 from mcp import server, types
 
-from .const import ChargeEvents
+from .const import AUTHORIZED_TOOLS, ChargeEvents, get_charge_event
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
@@ -26,7 +26,7 @@ logger = logging.getLogger('apify')
 
 
 async def charge_mcp_operation(
-    charge_function: Callable[[str, int], Awaitable[Any]] | None, event_name: ChargeEvents, count: int = 1
+    charge_function: Callable[[str, int], Awaitable[Any]] | None, event_name: ChargeEvents | None, count: int = 1
 ) -> None:
     """Charge for an MCP operation.
 
@@ -38,15 +38,18 @@ async def charge_mcp_operation(
     if not charge_function:
         return
 
+    if not event_name:
+        return
+
     try:
         await charge_function(event_name.value, count)
-        logger.info(f'Charged for event {event_name.value}')
+        logger.info(f'Charged for event: {event_name.value}')
     except Exception:
         logger.exception(f'Failed to charge for event {event_name.value}')
         # Don't raise the exception - we want the operation to continue even if charging fails
 
 
-async def create_proxy_server(  # noqa: PLR0915
+async def create_gateway(  # noqa: PLR0915
     client_session: ClientSession,
     actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
 ) -> server.Server[object]:
@@ -70,14 +73,14 @@ async def create_proxy_server(  # noqa: PLR0915
         logger.debug('Capabilities: adding Prompts...')
 
         async def _list_prompts(_: Any) -> types.ServerResult:
-            await charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_LIST)
             result = await client_session.list_prompts()
             return types.ServerResult(result)
 
         app.request_handlers[types.ListPromptsRequest] = _list_prompts
 
         async def _get_prompt(req: types.GetPromptRequest) -> types.ServerResult:
-            await charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_GET)
+            # Uncomment the line below to charge for getting prompts
+            # await charge_mcp_operation(actor_charge_function, ChargeEvents.PROMPT_GET) # noqa: ERA001
             result = await client_session.get_prompt(req.params.name, req.params.arguments)
             return types.ServerResult(result)
 
@@ -87,7 +90,6 @@ async def create_proxy_server(  # noqa: PLR0915
         logger.debug('Capabilities: adding Resources...')
 
         async def _list_resources(_: Any) -> types.ServerResult:
-            await charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_LIST)
             result = await client_session.list_resources()
             return types.ServerResult(result)
 
@@ -100,7 +102,8 @@ async def create_proxy_server(  # noqa: PLR0915
         app.request_handlers[types.ListResourceTemplatesRequest] = _list_resource_templates
 
         async def _read_resource(req: types.ReadResourceRequest) -> types.ServerResult:
-            await charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_READ)
+            # Uncomment the line below to charge for reading resources
+            # await charge_mcp_operation(actor_charge_function, ChargeEvents.RESOURCE_READ)  # noqa: ERA001
             result = await client_session.read_resource(req.params.uri)
             return types.ServerResult(result)
 
@@ -134,20 +137,38 @@ async def create_proxy_server(  # noqa: PLR0915
         logger.debug('Capabilities: adding Tools...')
 
         async def _list_tools(_: Any) -> types.ServerResult:
-            await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_LIST)
             tools = await client_session.list_tools()
             return types.ServerResult(tools)
 
         app.request_handlers[types.ListToolsRequest] = _list_tools
 
         async def _call_tool(req: types.CallToolRequest) -> types.ServerResult:
-            await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
+            tool_name = req.params.name
+            arguments = req.params.arguments or {}
+
+            # Safe diagnostic logging for every tool call
+            logger.info(f"Received tool call, tool: '{tool_name}', arguments: {arguments}")
+
+            if tool_name not in AUTHORIZED_TOOLS:
+                # Block unauthorized tools
+                error_message = f"The requested tool '{tool_name or 'unknown'}' is not authorized."
+                error_message += f'Authorized tools are: {AUTHORIZED_TOOLS}'
+                logger.error(f'Blocking unauthorized tool call for: {tool_name or "unknown tool"}')
+                return types.ServerResult(
+                    types.CallToolResult(content=[types.TextContent(type='text', text=error_message)], isError=True),
+                )
+
             try:
-                result = await client_session.call_tool(req.params.name, (req.params.arguments or {}))
+                result = await client_session.call_tool(tool_name, arguments)
+                logger.info(f'Tool executed successfully: {tool_name}')
+                await charge_mcp_operation(actor_charge_function, get_charge_event(tool_name))
                 return types.ServerResult(result)
             except Exception as e:
+                # Log the full exception for debugging
+                error_details = f"SERVER FAILED. Tool: '{tool_name}'. Arguments: {arguments}. Full exception: {e}"
+                logger.exception(error_details)
                 return types.ServerResult(
-                    types.CallToolResult(content=[types.TextContent(type='text', text=str(e))], isError=True),
+                    types.CallToolResult(content=[types.TextContent(type='text', text=error_details)], isError=True),
                 )
 
         app.request_handlers[types.CallToolRequest] = _call_tool

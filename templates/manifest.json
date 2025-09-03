@@ -303,15 +303,16 @@
             "label": "Python MCP server",
             "category": "python",
             "technologies": ["mcp"],
-            "description": "Demonstrates how to convert a Python stdio or SSE-based Model Context Protocol server into an Apify Actor.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-server.zip?raw=true",
             "skipTests": true,
+            "description": "Demonstrates how to convert a Python stdio, HTTP-streamable, or SSE-based Model Context Protocol server into an Apify Actor.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-server.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py", "src/server.py"]
+            "showcaseFiles": ["src/main.py", "src/server.py"],
+            "useCases": ["AI"]
         },
         {
             "id": "js-start",
@@ -681,14 +682,15 @@
             "label": "TypeScript MCP server",
             "category": "typescript",
             "technologies": ["mcp"],
-            "description": "Example of how to turn a Model Context Protocol stdio server into an Apify Actor.",
+            "description": "Example of how to turn a Model Context Protocol stdio, HTTP Streamable, or SSE server into an Apify Actor.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-server.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.ts", "src/billing.ts"]
+            "showcaseFiles": ["src/main.ts", "src/billing.ts"],
+            "useCases": ["AI"]
         },
         {
             "id": "cli-start",

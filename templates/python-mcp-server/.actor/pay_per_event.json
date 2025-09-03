@@ -1,37 +1,27 @@
 {
     "actor-start": {
         "eventTitle": "MCP server startup",
-        "eventDescription": "Initial fee for starting the Actor MCP Server",
+        "eventDescription": "Initial fee for starting the MCP Server Actor",
         "eventPriceUsd": 0.1
     },
-    "resource-list": {
-        "eventTitle": "MCP resource listing",
-        "eventDescription": "Fee for listing available resources.",
-        "eventPriceUsd": 0.0001
-    },
-    "resource-read": {
-        "eventTitle": "MCP resource access",
-        "eventDescription": "Fee for accessing full content or resources.",
+    "search-papers": {
+        "eventTitle": "arXiv paper search",
+        "eventDescription": "Fee for searching papers on arXiv using the search_papers tool.",
         "eventPriceUsd": 0.001
     },
-    "prompt-list": {
-        "eventTitle": "MCP prompt listing",
-        "eventDescription": "Fee for listing available prompts.",
-        "eventPriceUsd": 0.0001
-    },
-    "prompt-get": {
-        "eventTitle": "MCP prompt processing",
-        "eventDescription": "Fee for processing AI prompts.",
+    "list-papers": {
+        "eventTitle": "arXiv paper listing",
+        "eventDescription": "Fee for listing available papers using the list_papers tool.",
         "eventPriceUsd": 0.001
     },
-    "tool-list": {
-        "eventTitle": "MCP tool listing",
-        "eventDescription": "Fee for listing available tools.",
-        "eventPriceUsd": 0.0001
+    "download-paper": {
+        "eventTitle": "arXiv paper download",
+        "eventDescription": "Fee for downloading a paper from arXiv using the download_paper tool.",
+        "eventPriceUsd": 0.01
     },
-    "tool-call": {
-        "eventTitle": "MCP tool call",
-        "eventDescription": "Fee for executing MCP tools.",
-        "eventPriceUsd": 0.05
+    "read-paper": {
+        "eventTitle": "arXiv paper reading",
+        "eventDescription": "Fee for reading the full content of a paper using the read_paper tool.",
+        "eventPriceUsd": 0.01
     }
-}
+  }

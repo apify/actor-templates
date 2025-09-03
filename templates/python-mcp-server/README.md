@@ -5,19 +5,19 @@ A Python template for deploying and monetizing a [Model Context Protocol (MCP)](
 This template enables you to:
 
 - Deploy any Python stdio MCP server (e.g., [ArXiv MCP Server](https://github.com/blazickjp/arxiv-mcp-server)), or connect to an existing remote MCP server using Streamable HTTP or SSE transport
-- Expose your MCP server via [legacy Server-Sent Events (SSE)](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
+- Expose your MCP server via [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport
 - Monetize your server using Apify's Pay Per Event (PPE) model
 
 ## ✨ Features
 
-- Support for stdio-based, Streamable HTTP, and SSE-based MCP servers
-- Built-in charging: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
+- Support for **stdio-based, Streamable HTTP**, and SSE-based MCP servers
+- **Built-in charging**: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
     - Server startup
     - Tool calls
     - Resource access
     - Prompt operations
     - List operations
-- Easy configuration: Simple setup through environment variables and configuration files
+- **Gateway**: Acts as a controlled entry point to MCP servers with charging and authorization logic
 
 ## Quick Start
 
@@ -51,13 +51,18 @@ This template enables you to:
             }
         }
         ```
-    - The template also supports [legacy SSE transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) via the `/sse` endpoint.
+    - Note: SSE endpoint serving has been deprecated, but SSE client connections are still supported.
 
 ## 💰 Pricing
 
 This template uses the [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) monetization model, which provides flexible pricing based on defined events.
 
-To charge users, define events in JSON format and save them on the Apify platform. Here is an example schema:
+### Charging strategy options
+
+The template supports multiple charging approaches that you can customize based on your needs:
+
+#### 1. Generic MCP charging
+Charge for standard MCP operations with flat rates:
 
 ```json
 {
@@ -70,30 +75,115 @@ To charge users, define events in JSON format and save them on the Apify platfor
         "eventTitle": "MCP tool call",
         "eventDescription": "Fee for executing MCP tools",
         "eventPriceUsd": 0.05
+    },
+    "resource-read": {
+        "eventTitle": "MCP resource access",
+        "eventDescription": "Fee for accessing full content or resources",
+        "eventPriceUsd": 0.0001
+    },
+    "prompt-get": {
+        "eventTitle": "MCP prompt processing",
+        "eventDescription": "Fee for processing AI prompts",
+        "eventPriceUsd": 0.0001
     }
 }
 ```
 
-In the Actor, trigger events with:
+#### 2. Domain-specific charging (arXiv example)
+Charge different amounts for different tools based on computational cost:
 
-```python
-await Actor.charge('actor-start', 1)  # Charge for server startup
-await Actor.charge('tool-call', 1)    # Charge for tool execution
+```json
+{
+    "actor-start": {
+        "eventTitle": "arXiv MCP server startup",
+        "eventDescription": "Initial fee for starting the arXiv MCP Server Actor",
+        "eventPriceUsd": 0.1
+    },
+    "search_papers": {
+        "eventTitle": "arXiv paper search",
+        "eventDescription": "Fee for searching papers on arXiv",
+        "eventPriceUsd": 0.001
+    },
+    "list_papers": {
+        "eventTitle": "arXiv paper listing",
+        "eventDescription": "Fee for listing available papers",
+        "eventPriceUsd": 0.001
+    },
+    "download_paper": {
+        "eventTitle": "arXiv paper download",
+        "eventDescription": "Fee for downloading a paper from arXiv",
+        "eventPriceUsd": 0.001
+    },
+    "read_paper": {
+        "eventTitle": "arXiv paper reading",
+        "eventDescription": "Fee for reading the full content of a paper",
+        "eventPriceUsd": 0.01
+    }
+}
 ```
 
-To set up the PPE model:
+#### 3. No charging (free service)
+Comment out all charging lines in the code for a free service.
 
-1. Go to your Actor's **Publication settings**.
-2. Set the **Pricing model** to `Pay per event`.
-3. Add the pricing schema (see [pay_per_event.json](.actor/pay_per_event.json) for a complete example).
+### How to implement charging
 
-## 🔧 How It Works
+1. **Define your events** in `.actor/pay_per_event.json` (see examples above). This file is not actually used at Apify platform but serves as a reference.
 
-This template implements a proxy server that can connect to a stdio-based, Streamable HTTP, or SSE-based MCP server and expose it via [legacy Server-Sent Events (SSE) transport](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) or [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
+2. **Enable charging in code** by uncommenting the appropriate lines in `src/mcp_gateway.py`:
+
+   ```python
+   # For generic charging:
+   await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
+
+   # For domain-specific charging:
+   if tool_name == 'search_papers':
+       await charge_mcp_operation(actor_charge_function, ChargeEvents.SEARCH_PAPERS)
+   ```
+
+3. **Add custom events** to `src/const.py` if needed:
+
+   ```python
+   class ChargeEvents(str, Enum):
+       # Your custom events
+       CUSTOM_OPERATION = 'custom-operation'
+   ```
+
+4. **Set up PPE model** on Apify:
+   - Go to your Actor's **Publication settings**
+   - Set the **Pricing model** to `Pay per event`
+   - Add your pricing schema from `pay_per_event.json`
+
+### Authorized tools
+
+This template includes **tool authorization** - only tools listed in `src/const.py` can be executed:
+
+**Note**: The `AUTHORIZED_TOOLS` list only applies to **tools** (executable functions).
+Prompts (like `deep-paper-analysis`) are handled separately and don't need to be added to this list.
+
+```python
+AUTHORIZED_TOOLS = [
+    ChargeEvents.SEARCH_PAPERS.value,
+    ChargeEvents.LIST_PAPERS.value,
+    ChargeEvents.DOWNLOAD_PAPER.value,
+    ChargeEvents.READ_PAPER.value,
+]
+```
+
+**To add new tools:**
+1. Add charge event to `ChargeEvents` enum
+2. Add tool value to `AUTHORIZED_TOOLS` list
+3. Update pricing in `pay_per_event.json`
+4. Update pricing at Apify platform
+
+Unauthorized tools are blocked with clear error messages.
+
+## 🔧 How it works
+
+This template implements a MCP gateway that can connect to a stdio-based, Streamable HTTP, or SSE-based MCP server and expose it via [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http). Here's how it works:
 
 ### Server types
 
-1. **Stdio Server** (`StdioServerParameters`):
+1. **Stdio server** (`StdioServerParameters`):
     - Spawns a local process that implements the MCP protocol over stdio.
     - Configure using the `command` parameter to specify the executable and the `args` parameter for additional arguments.
     - Optionally, use the `env` parameter to pass environment variables to the process.
@@ -109,7 +199,7 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 )
 ```
 
-2. **Remote Server** (`RemoteServerParameters`):
+2. **Remote server** (`RemoteServerParameters`):
     - Connects to a remote MCP server via HTTP or SSE transport.
     - Configure using the `url` parameter to specify the server's endpoint.
     - Set the appropriate `server_type` (ServerType.HTTP or ServerType.SSE).
@@ -138,24 +228,26 @@ Environment variables can be securely stored and managed at the Actor level on t
 - Keep sensitive information like API keys secure.
 - Simplify configuration by avoiding hardcoded values in your code.
 
-### Proxy implementation
+### Gateway implementation
 
-The proxy server (`ProxyServer` class) handles:
+The MCP gateway (`create_gateway` function) handles:
 
-- Creating a Starlette web server with legacy SSE (`/sse` and `/messages/`) and Streamable HTTP (`/mcp`) endpoints
+- Creating a Starlette web server with Streamable HTTP (`/mcp`) endpoint
 - Managing connections to the underlying MCP server
 - Forwarding requests and responses between clients and the MCP server
-- Handling charging through the `actor_charge_function`
+- Handling charging through the `actor_charge_function` (`Actor.charge` in Apify Actors)
+- Tool authorization: Only allowing whitelisted tools to execute
+- Access control: Blocking unauthorized tool calls with clear error messages
 
 Key components:
 
-- `ProxyServer`: Main class that manages the proxy functionality
-- `create_proxy_server`: Creates an MCP server instance that proxies requests
+- `create_gateway`: Creates an MCP server instance that acts as a gateway
 - `charge_mcp_operation`: Handles charging for different MCP operations
+- `AUTHORIZED_TOOLS`: Whitelist of allowed tools defined in `src/const.py`
 
 ### MCP operations
 
-The proxy supports all standard MCP operations:
+The MCP gateway supports all standard MCP operations:
 
 - `list_tools()`: List available tools
 - `call_tool()`: Execute a tool with arguments
@@ -166,7 +258,7 @@ The proxy supports all standard MCP operations:
 
 Each operation can be configured for charging in the PPE model.
 
-## 📚 Resources
+## 📚 Resources 
 
 - [What is Anthropic's Model Context Protocol?](https://blog.apify.com/what-is-model-context-protocol/)
 - [How to use MCP with Apify Actors](https://blog.apify.com/how-to-use-mcp/)
