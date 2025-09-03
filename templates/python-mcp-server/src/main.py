@@ -106,8 +106,3 @@ async def main() -> None:
             Actor.log.exception(f'Server failed to start: {e}')
             await Actor.exit()
             raise
-
-
-if __name__ == '__main__':
-    import asyncio
-    asyncio.run(main())

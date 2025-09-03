@@ -43,7 +43,7 @@ async def charge_mcp_operation(
 
     try:
         await charge_function(event_name.value, count)
-        logger.info(f'Charged for event {event_name.value}')
+        logger.info(f'Charged for event: {event_name.value}')
     except Exception:
         logger.exception(f'Failed to charge for event {event_name.value}')
         # Don't raise the exception - we want the operation to continue even if charging fails
@@ -149,9 +149,7 @@ async def create_gateway(  # noqa: PLR0915
             # Safe diagnostic logging for every tool call
             logger.info(f"Received tool call. Tool: '{tool_name}', Arguments: {arguments}")
 
-            if tool_name in AUTHORIZED_TOOLS:
-                await charge_mcp_operation(actor_charge_function, get_charge_event(tool_name))
-            else:
+            if tool_name not in AUTHORIZED_TOOLS:
                 # Block unauthorized tools
                 error_message = f"The requested tool '{tool_name or 'unknown'}' is not authorized."
                 error_message += f'Authorized tools are: {AUTHORIZED_TOOLS}'
@@ -159,10 +157,11 @@ async def create_gateway(  # noqa: PLR0915
                 return types.ServerResult(
                     types.CallToolResult(content=[types.TextContent(type='text', text=error_message)], isError=True),
                 )
-            # Proceed with the tool call
+
             try:
-                logger.info(f"ATTEMPTING tool call. Tool: '{tool_name}', Arguments: {arguments}")
                 result = await client_session.call_tool(tool_name, arguments)
+                logger.info(f"Tool '{tool_name}' executed successfully.")
+                await charge_mcp_operation(actor_charge_function, get_charge_event(tool_name))
                 return types.ServerResult(result)
             except Exception as e:
                 # Log the full exception for debugging
