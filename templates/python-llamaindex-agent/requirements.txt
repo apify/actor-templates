@@ -2,6 +2,6 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify>=2.7.3,<3
-apify-client<2.0
+apify-client<2.1
 llama-index<1.0.0
 polars<2.0.0
