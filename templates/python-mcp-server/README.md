@@ -164,9 +164,12 @@ Comment out all charging lines in the code for a free service.
    - Set the **Pricing model** to `Pay per event`
    - Add your pricing schema from `pay_per_event.json`
 
-### Authorized Tools
+### Authorized tools
 
 This template includes **tool authorization** - only tools listed in `src/const.py` can be executed:
+
+**Note**: The `AUTHORIZED_TOOLS` list only applies to **tools** (executable functions).
+Prompts (like `deep-paper-analysis`) are handled separately and don't need to be added to this list.
 
 ```python
 AUTHORIZED_TOOLS = [
