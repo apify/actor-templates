@@ -57,7 +57,12 @@ This template enables you to:
 
 This template uses the [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) monetization model, which provides flexible pricing based on defined events.
 
-To charge users, define events in JSON format and save them on the Apify platform. Here is an example schema:
+### Charging strategy options
+
+The template supports multiple charging approaches that you can customize based on your needs:
+
+#### 1. Generic MCP charging
+Charge for standard MCP operations with flat rates:
 
 ```json
 {
@@ -70,22 +75,103 @@ To charge users, define events in JSON format and save them on the Apify platfor
         "eventTitle": "MCP tool call",
         "eventDescription": "Fee for executing MCP tools",
         "eventPriceUsd": 0.05
+    },
+    "resource-read": {
+        "eventTitle": "MCP resource access",
+        "eventDescription": "Fee for accessing full content or resources",
+        "eventPriceUsd": 0.0001
+    },
+    "prompt-get": {
+        "eventTitle": "MCP prompt processing",
+        "eventDescription": "Fee for processing AI prompts",
+        "eventPriceUsd": 0.0001
     }
 }
 ```
 
-In the Actor, trigger events with:
+#### 2. Domain-specific charging (arXiv example)
+Charge different amounts for different tools based on computational cost:
 
-```python
-await Actor.charge('actor-start', 1)  # Charge for server startup
-await Actor.charge('tool-call', 1)    # Charge for tool execution
+```json
+{
+    "actor-start": {
+        "eventTitle": "arXiv MCP server startup",
+        "eventDescription": "Initial fee for starting the arXiv MCP Server Actor",
+        "eventPriceUsd": 0.1
+    },
+    "search-papers": {
+        "eventTitle": "arXiv paper search",
+        "eventDescription": "Fee for searching papers on arXiv",
+        "eventPriceUsd": 0.001
+    },
+    "list-papers": {
+        "eventTitle": "arXiv paper listing",
+        "eventDescription": "Fee for listing available papers",
+        "eventPriceUsd": 0.001
+    },
+    "download-paper": {
+        "eventTitle": "arXiv paper download",
+        "eventDescription": "Fee for downloading a paper from arXiv",
+        "eventPriceUsd": 0.001
+    },
+    "read-paper": {
+        "eventTitle": "arXiv paper reading",
+        "eventDescription": "Fee for reading the full content of a paper",
+        "eventPriceUsd": 0.01
+    }
+}
 ```
 
-To set up the PPE model:
+#### 3. No Charging (Free Service)
+Comment out all charging lines in the code for a free service.
 
-1. Go to your Actor's **Publication settings**.
-2. Set the **Pricing model** to `Pay per event`.
-3. Add the pricing schema (see [pay_per_event.json](.actor/pay_per_event.json) for a complete example).
+### How to Implement Charging
+
+1. **Define your events** in `.actor/pay_per_event.json` (see examples above). This file is not actually used at Apify platform but serves as a reference.
+
+2. **Enable charging in code** by uncommenting the appropriate lines in `src/proxy_server.py`:
+
+   ```python
+   # For generic charging:
+   await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
+
+   # For domain-specific charging:
+   if tool_name == 'search_papers':
+       await charge_mcp_operation(actor_charge_function, ChargeEvents.SEARCH_PAPERS)
+   ```
+
+3. **Add custom events** to `src/const.py` if needed:
+
+   ```python
+   class ChargeEvents(str, Enum):
+       # Your custom events
+       CUSTOM_OPERATION = 'custom-operation'
+   ```
+
+4. **Set up PPE model** on Apify:
+   - Go to your Actor's **Publication settings**
+   - Set the **Pricing model** to `Pay per event`
+   - Add your pricing schema from `pay_per_event.json`
+
+### Authorized Tools
+
+This template includes **tool authorization** - only tools listed in `src/const.py` can be executed:
+
+```python
+AUTHORIZED_TOOLS = [
+    ChargeEvents.SEARCH_PAPERS.value,
+    ChargeEvents.LIST_PAPERS.value,
+    ChargeEvents.DOWNLOAD_PAPER.value,
+    ChargeEvents.READ_PAPER.value,
+]
+```
+
+**To add new tools:**
+1. Add charge event to `ChargeEvents` enum
+2. Add tool value to `AUTHORIZED_TOOLS` list
+3. Update pricing in `pay_per_event.json`
+
+Unauthorized tools are blocked with clear error messages.
 
 ## 🔧 How It Works
 

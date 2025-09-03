@@ -146,8 +146,6 @@ class ProxyServer:
                 }
             )
 
-
-
         async def handle_favicon(_request: Request) -> st.Response:
             """Handle favicon.ico requests by redirecting to Apify's favicon."""
             return RedirectResponse(url='https://apify.com/favicon.ico', status_code=301)

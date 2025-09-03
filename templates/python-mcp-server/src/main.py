@@ -47,11 +47,24 @@ async def main() -> None:
     3. Creates and starts the proxy server
     4. Configures charging for MCP operations using Actor.charge
 
-    The proxy server will charge for different MCP operations like:
-    - Tool calls
-    - Prompt operations
-    - Resource access
-    - List operations
+    CHARGING STRATEGIES:
+    The template supports multiple charging approaches:
+
+    1. GENERIC MCP CHARGING:
+       - Charge for all tool calls with a flat rate (TOOL_CALL event)
+       - Charge for resource operations (RESOURCE_LIST, RESOURCE_READ)
+       - Charge for prompt operations (PROMPT_LIST, PROMPT_GET)
+       - Charge for tool listing (TOOL_LIST)
+
+    2. DOMAIN-SPECIFIC CHARGING (arXiv example):
+       - Charge different amounts for different tools
+       - search_papers: $0.01 per search
+       - list_papers: $0.001 per listing
+       - download_paper: $0.005 per download
+       - read_paper: $0.02 per paper read
+
+    3. NO CHARGING:
+       - Comment out all charging lines for free service
 
     Charging events are defined in .actor/pay_per_event.json
     """
