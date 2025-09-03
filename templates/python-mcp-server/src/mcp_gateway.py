@@ -147,7 +147,7 @@ async def create_gateway(  # noqa: PLR0915
             arguments = req.params.arguments or {}
 
             # Safe diagnostic logging for every tool call
-            logger.info(f"Received tool call. Tool: '{tool_name}', Arguments: {arguments}")
+            logger.info(f"Received tool call, tool: '{tool_name}', arguments: {arguments}")
 
             if tool_name not in AUTHORIZED_TOOLS:
                 # Block unauthorized tools
@@ -160,7 +160,7 @@ async def create_gateway(  # noqa: PLR0915
 
             try:
                 result = await client_session.call_tool(tool_name, arguments)
-                logger.info(f"Tool '{tool_name}' executed successfully.")
+                logger.info(f'Tool executed successfully: {tool_name}')
                 await charge_mcp_operation(actor_charge_function, get_charge_event(tool_name))
                 return types.ServerResult(result)
             except Exception as e:
