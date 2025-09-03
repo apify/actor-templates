@@ -10,14 +10,25 @@ This template enables you to:
 
 ## ✨ Features
 
-- Support for stdio-based, Streamable HTTP, and SSE-based MCP servers
-- Built-in charging: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
+- Support for **stdio-based, Streamable HTTP**, and SSE-based MCP servers
+- **Built-in charging**: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
     - Server startup
     - Tool calls
     - Resource access
     - Prompt operations
     - List operations
-- Easy configuration: Simple setup through environment variables and configuration files
+- **Gateway architecture**: Acts as a controlled entry point with charging and authorization logic
+
+## 🏗️ Architecture
+
+This template implements an **MCP Gateway** (formerly called "proxy server") that serves as a controlled entry point to MCP servers. The gateway provides:
+
+- **Request forwarding**: Proxies MCP requests to underlying servers
+- **Tool authorization**: Only allows whitelisted tools to execute (using `AUTHORIZED_TOOLS` list)
+- **Charging integration**: Charges for authorized operations using Apify's PPE model
+- **Access control**: Blocks unauthorized tools with clear error messages
+
+The gateway pattern is more accurate than "proxy" because it doesn't just forward requests—it actively controls access, manages authorization, and handles charging before allowing operations to proceed.
 
 ## Quick Start
 
@@ -99,22 +110,22 @@ Charge different amounts for different tools based on computational cost:
         "eventDescription": "Initial fee for starting the arXiv MCP Server Actor",
         "eventPriceUsd": 0.1
     },
-    "search-papers": {
+    "search_papers": {
         "eventTitle": "arXiv paper search",
         "eventDescription": "Fee for searching papers on arXiv",
         "eventPriceUsd": 0.001
     },
-    "list-papers": {
+    "list_papers": {
         "eventTitle": "arXiv paper listing",
         "eventDescription": "Fee for listing available papers",
         "eventPriceUsd": 0.001
     },
-    "download-paper": {
+    "download_paper": {
         "eventTitle": "arXiv paper download",
         "eventDescription": "Fee for downloading a paper from arXiv",
         "eventPriceUsd": 0.001
     },
-    "read-paper": {
+    "read_paper": {
         "eventTitle": "arXiv paper reading",
         "eventDescription": "Fee for reading the full content of a paper",
         "eventPriceUsd": 0.01
@@ -129,7 +140,7 @@ Comment out all charging lines in the code for a free service.
 
 1. **Define your events** in `.actor/pay_per_event.json` (see examples above). This file is not actually used at Apify platform but serves as a reference.
 
-2. **Enable charging in code** by uncommenting the appropriate lines in `src/proxy_server.py`:
+2. **Enable charging in code** by uncommenting the appropriate lines in `src/mcp_gateway.py`:
 
    ```python
    # For generic charging:
@@ -224,20 +235,23 @@ Environment variables can be securely stored and managed at the Actor level on t
 - Keep sensitive information like API keys secure.
 - Simplify configuration by avoiding hardcoded values in your code.
 
-### Proxy implementation
+### Gateway implementation
 
-The proxy server (`ProxyServer` class) handles:
+The MCP gateway (`ProxyServer` class) handles:
 
 - Creating a Starlette web server with Streamable HTTP (`/mcp`) endpoint
 - Managing connections to the underlying MCP server
 - Forwarding requests and responses between clients and the MCP server
 - Handling charging through the `actor_charge_function`
+- **Tool authorization**: Only allowing whitelisted tools to execute
+- **Access control**: Blocking unauthorized tool calls with clear error messages
 
 Key components:
 
-- `ProxyServer`: Main class that manages the proxy functionality
-- `create_proxy_server`: Creates an MCP server instance that proxies requests
+- `ProxyServer`: Main class that manages the gateway functionality
+- `create_gateway`: Creates an MCP server instance that acts as a gateway (formerly `create_proxy_server`)
 - `charge_mcp_operation`: Handles charging for different MCP operations
+- `AUTHORIZED_TOOLS`: Whitelist of allowed tools defined in `src/const.py`
 
 ### MCP operations
 

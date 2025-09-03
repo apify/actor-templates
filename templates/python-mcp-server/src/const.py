@@ -20,10 +20,10 @@ class ChargeEvents(str, Enum):
     TOOL_CALL = 'tool-call'
 
     # arXiv-specific operations (example for domain-specific charging)
-    SEARCH_PAPERS = 'search-papers'
-    LIST_PAPERS = 'list-papers'
-    DOWNLOAD_PAPER = 'download-paper'
-    READ_PAPER = 'read-paper'
+    SEARCH_PAPERS = 'search_papers'
+    LIST_PAPERS = 'list_papers'
+    DOWNLOAD_PAPER = 'download_paper'
+    READ_PAPER = 'read_paper'
 
 
 # Authorized tools list for MCP server

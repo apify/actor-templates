@@ -24,8 +24,8 @@ from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.routing import Mount, Route
 
 from .event_store import InMemoryEventStore
+from .mcp_gateway import create_gateway
 from .models import RemoteServerParameters, ServerParameters, ServerType
-from .proxy_server import create_proxy_server
 
 if TYPE_CHECKING:
     from collections.abc import AsyncIterator, Awaitable, Callable
@@ -201,7 +201,7 @@ class ProxyServer:
                 stdio_client(config_) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_proxy_server(session, self.actor_charge_function)
+                mcp_server = await create_gateway(session, self.actor_charge_function)
                 app = await self.create_starlette_app(mcp_server)
                 await self._run_server(app)
 
@@ -210,7 +210,7 @@ class ProxyServer:
                 sse_client(**params) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_proxy_server(session, self.actor_charge_function)
+                mcp_server = await create_gateway(session, self.actor_charge_function)
                 app = await self.create_starlette_app(mcp_server)
                 await self._run_server(app)
 
@@ -220,7 +220,7 @@ class ProxyServer:
                 streamablehttp_client(**params) as (read_stream, write_stream, _),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_proxy_server(session, self.actor_charge_function)
+                mcp_server = await create_gateway(session, self.actor_charge_function)
                 app = await self.create_starlette_app(mcp_server)
                 await self._run_server(app)
         else:

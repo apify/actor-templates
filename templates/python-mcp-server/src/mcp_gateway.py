@@ -49,7 +49,7 @@ async def charge_mcp_operation(
         # Don't raise the exception - we want the operation to continue even if charging fails
 
 
-async def create_proxy_server(  # noqa: PLR0915
+async def create_gateway(  # noqa: PLR0915
     client_session: ClientSession,
     actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
 ) -> server.Server[object]:

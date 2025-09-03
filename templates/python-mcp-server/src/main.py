@@ -32,7 +32,7 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 
 # server_type = ServerType.HTTP # or ServerType.SSE, depending on your server type # noqa: ERA001
 # MCP_SERVER_PARAMS = RemoteServerParameters( # noqa: ERA001, RUF100
-#     url='https://mcp.apify.com',  # noqa: ERA001
+#     url='https://your-mcp-server',  # noqa: ERA001
 #     headers={'Authorization':  'Bearer YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
 # )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
@@ -106,3 +106,8 @@ async def main() -> None:
             Actor.log.exception(f'Server failed to start: {e}')
             await Actor.exit()
             raise
+
+
+if __name__ == '__main__':
+    import asyncio
+    asyncio.run(main())
