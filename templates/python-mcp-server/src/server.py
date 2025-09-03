@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING, Any
 import httpx
 import uvicorn
 from mcp.client.session import ClientSession
+from mcp.client.sse import sse_client
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.streamable_http import streamablehttp_client
 from mcp.server.sse import SseServerTransport
@@ -215,9 +216,20 @@ class ProxyServer:
         logger.info(f'Starting MCP server with client type: {self.server_type} and config {self.config}')
         params: dict = (self.config and self.config.model_dump(exclude_unset=True)) or {}
 
-        if self.server_type in (ServerType.STDIO, ServerType.SSE):
+        if self.server_type == ServerType.STDIO:
+            # validate config again to prevent mypy errors
+            config_ = StdioServerParameters.model_validate(self.config)
             async with (
-                stdio_client(**params) as (read_stream, write_stream),
+                stdio_client(config_) as (read_stream, write_stream),
+                ClientSession(read_stream, write_stream) as session,
+            ):
+                mcp_server = await create_proxy_server(session, self.actor_charge_function)
+                app = await self.create_starlette_app(mcp_server)
+                await self._run_server(app)
+
+        elif self.server_type == ServerType.SSE:
+            async with (
+                sse_client(**params) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
                 mcp_server = await create_proxy_server(session, self.actor_charge_function)

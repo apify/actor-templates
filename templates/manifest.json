@@ -305,7 +305,6 @@
             "technologies": ["mcp"],
             "description": "Demonstrates how to convert a Python stdio or SSE-based Model Context Protocol server into an Apify Actor.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-server.zip?raw=true",
-            "skipTests": true,
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
