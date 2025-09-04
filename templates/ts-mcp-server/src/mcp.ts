@@ -7,9 +7,8 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { DEFAULT_REQUEST_TIMEOUT_MSEC } from "@modelcontextprotocol/sdk/shared/protocol.js";
-import { ClientNotificationSchema, ClientRequestSchema , ServerNotificationSchema } from "@modelcontextprotocol/sdk/types.js";
+import { ClientNotificationSchema, ClientRequestSchema, ResultSchema, ServerNotificationSchema } from "@modelcontextprotocol/sdk/types.js";
 import { log } from "apify";
-import { z } from "zod";
 
 /**
  * Creates and configures an MCP server instance.
@@ -67,7 +66,7 @@ export async function getMcpServer(command: string[], options?: {
                 method,
                 request: req,
             });
-            return proxyClient.request(req, z.any(), {
+            return proxyClient.request(req, ResultSchema, {
                 timeout: options?.timeout || DEFAULT_REQUEST_TIMEOUT_MSEC,
             });
         });

@@ -13,7 +13,7 @@
         "apify": "^3.4.4",
         "body-parser": "^2.2.0",
         "express": "^5.1.0",
-        "zod": "^4.1.5"
+        "zod": "^3.25.76"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
