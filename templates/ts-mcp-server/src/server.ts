@@ -1,15 +1,14 @@
 /**
- * This module implements the HTTP and SSE server for the MCP protocol.
+ * This module implements the HTTP server for the MCP protocol.
  * It manages session-based transports, request routing, and billing for protocol messages.
  *
- * The server supports both streamable HTTP and legacy SSE endpoints, and handles session
+ * The server supports streamable HTTP endpoints and handles session
  * initialization, message routing, and resource cleanup on shutdown.
  */
 import { randomUUID } from 'node:crypto';
 
 import { InMemoryEventStore } from '@modelcontextprotocol/sdk/examples/shared/inMemoryEventStore.js';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 import { log } from 'apify';
@@ -22,7 +21,7 @@ import { getMcpServer as getMCPServerWithCommand } from './mcp.js';
 let getMcpServer: null | (() => Promise<McpServer>) = null;
 
 // Map to store transports by session ID
-const transports: { [sessionId: string]: StreamableHTTPServerTransport | SSEServerTransport } = {};
+const transports: { [sessionId: string]: StreamableHTTPServerTransport } = {};
 
 /**
  * Handles POST requests to the /mcp endpoint.
@@ -192,117 +191,18 @@ async function mcpDeleteHandler(req: Request, res: Response) {
     }
 };
 
-/**
- * Handles GET requests to the /sse endpoint for legacy SSE streaming.
- * - Establishes a new SSE transport and connects it to the MCP server.
- */
-async function sseGetHandler(_req: Request, res: Response) {
-    if (!getMcpServer) {
-        res.status(500).send('Server not initialized');
-        return;
-    }
-    log.info('Received GET request to /sse (establishing SSE stream)');
-
-    try {
-        // Create a new SSE transport for the client
-        // The endpoint for POST messages is '/messages'
-        const transport = new SSEServerTransport('/messages', res);
-
-        // Store the transport by session ID
-        const { sessionId } = transport;
-        transports[sessionId] = transport;
-
-        // Charge for each message request received on this transport
-        transport.onmessage = (message) => {
-            chargeMessageRequest(message as { method: string }).catch((error) => {
-                log.error('Error charging for message request:', {
-                    error,
-                    sessionId: sessionId || null,
-                });
-            });
-        };
-
-        // Set up onclose handler to clean up transport when closed
-        transport.onclose = () => {
-            log.info('SSE transport closed', {
-                sessionId: sessionId || null,
-            });
-            delete transports[sessionId];
-        };
-
-        // Connect the transport to the MCP server
-        const server = await getMcpServer();
-        await server.connect(transport);
-
-        log.info('Established SSE stream', {
-            sessionId: sessionId || null,
-        });
-    } catch (error) {
-        log.error('Error establishing SSE stream:', {
-            error,
-        });
-        if (!res.headersSent) {
-            res.status(500).send('Error establishing SSE stream');
-        }
-    }
-}
 
 /**
- * Handles POST requests to the /messages endpoint for legacy SSE message delivery.
- * - Routes messages to the correct SSE transport based on session ID.
- */
-async function sseMessagesHandler(req: Request, res: Response) {
-    log.info('Received POST request to /messages', {
-        body: req.body,
-    });
-
-    // Extract session ID from URL query parameter
-    // In the SSE protocol, this is added by the client based on the endpoint event
-    const sessionId = req.query.sessionId as string | undefined;
-
-    if (!sessionId) {
-        log.error('No session ID provided in request URL');
-        res.status(400).send('Missing sessionId parameter');
-        return;
-    }
-
-    const transport = transports[sessionId] as SSEServerTransport | undefined;
-    if (!transport) {
-        log.error('No active transport found', {
-            sessionId: sessionId || null,
-        });
-        res.status(404).send('Session not found');
-        return;
-    }
-
-    try {
-        // Charge for the request
-        await chargeMessageRequest(req.body);
-        
-        // Handle the POST message with the transport
-        await transport.handlePostMessage(req, res, req.body);
-    } catch (error) {
-        log.error('Error handling request:', {
-            error,
-            sessionId: sessionId || null,
-        });
-        if (!res.headersSent) {
-            res.status(500).send('Error handling request');
-        }
-    }
-}
-
-/**
- * Starts the MCP HTTP/SSE server and sets up all endpoints.
+ * Starts the MCP HTTP server and sets up all endpoints.
  * - Initializes the MCP server factory.
- * - Registers all HTTP and SSE endpoints.
+ * - Registers all HTTP endpoints.
  * - Handles graceful shutdown and resource cleanup.
  */
 export async function startServer(options: {
     serverPort: number;
     command: string[];
 }) {
-    log.info('Starting MCP Streamable HTTP Server', {
+    log.info('Starting MCP HTTP Server', {
         serverPort: options.serverPort,
         command: options.command,
     });
@@ -332,12 +232,9 @@ export async function startServer(options: {
     app.post('/mcp', mcpPostHandler);
     app.get('/mcp', mcpGetHandler);
     app.delete('/mcp', mcpDeleteHandler);
-    // Legacy SSE endpoints
-    app.get('/sse', sseGetHandler);
-    app.post('/messages', sseMessagesHandler);
 
     app.listen(serverPort, () => {
-        log.info(`MCP Streamable HTTP Server listening on port ${serverPort}`);
+        log.info(`MCP HTTP Server listening on port ${serverPort}`);
     });
 
     // Handle server shutdown

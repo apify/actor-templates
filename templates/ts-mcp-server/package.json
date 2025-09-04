@@ -7,13 +7,13 @@
         "node": ">=20.0.0"
     },
     "dependencies": {
-        "@modelcontextprotocol/sdk": "^1.11.4",
-        "@modelcontextprotocol/server-everything": "^2025.5.12",
-        "mcp-remote": "0.1.18",
-        "apify": "^3.4.1",
+        "@modelcontextprotocol/sdk": "^1.17.5",
+        "@modelcontextprotocol/server-everything": "^2025.8.18",
+        "mcp-remote": "0.1.29",
+        "apify": "^3.4.4",
         "body-parser": "^2.2.0",
         "express": "^5.1.0",
-        "zod": "^3.25.67"
+        "zod": "^3.25.76"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
