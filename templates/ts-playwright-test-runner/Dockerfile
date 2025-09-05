@@ -1,6 +1,6 @@
 FROM apify/actor-node-playwright:22-1.54.1
 
-COPY --chown=myuser package*.json Dockerfile ./
+COPY --chown=myuser:myuser package*.json Dockerfile ./
 
 # Check Playwright version is the same as the one from base image.
 RUN node check-playwright-version.mjs
