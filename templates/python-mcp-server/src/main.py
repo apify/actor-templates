@@ -79,7 +79,7 @@ async def main() -> None:
             msg = (
                 'Actor is not designed to run in the NORMAL mode. Use MCP server URL to connect to the server.\n'
                 f'Connect to {url}/mcp to establish a connection.\n'
-                'Learn more at https://mcp.apify.com/.'
+                'Learn more at https://mcp.apify.com/'
             )
             Actor.log.info(msg)
             await Actor.exit(status_message=msg)
