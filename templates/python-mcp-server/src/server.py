@@ -45,35 +45,28 @@ def is_html_browser(request: Request) -> bool:
 
 
 def get_html_page(server_name: str, mcp_url: str) -> str:
-    """Generate simple HTML page with server URL and MCP client link. """
+    """Generate simple HTML page with server URL and MCP client link."""
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>MCP Server</title>
+    <title>{server_name}</title>
     <style>
-        body {{ font-family: system-ui; max-width: 600px; margin: 50px auto; padding: 20px; }}
-        .url {{ background: #f0f0f0; padding: 10px; border-radius: 4px; font-family: monospace; word-break: break-all; margin: 10px 0; }}
-        .test-link {{ display: inline-block; background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin: 10px 0; }}
-        .test-link:hover {{ background: #0056b3; }}
-        .recommended {{ background: #d4edda; border: 1px solid #c3e6cb; padding: 10px; border-radius: 4px; margin: 10px 0; }}
-        .legacy {{ background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 4px; margin: 10px 0; }}
+        body {{ font-family: system-ui; max-width: 500px; margin: 2rem auto; padding: 1rem; }}
+        h1 {{ color: #2563eb; margin-bottom: 1rem; }}
+        .url {{ background: #f3f4f6; padding: 0.75rem; border-radius: 6px; font-family: monospace; word-break: break-all; }}
+        pre {{ background: #f9fafb; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; }}
     </style>
 </head>
 <body>
     <h1>{server_name}</h1>
-    <p>Model Context Protocol server for your application.</p>
+    <p><strong>Endpoint:</strong></p>
+    <div class="url">{mcp_url}</div>
 
-    <div>
-        <p><strong>Connect with MCP client to this URL:</strong></p>
-        <div class="url">{mcp_url}</div>
-    </div>
-
-    <h2>MCP client configuration (claude-desktop)</h2>
-    <pre style="background: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto;">
-{{
+    <p><strong>Configuration:</strong></p>
+    <pre>{{
   "mcpServers": {{
-    "mcp-server": {{
+    "{server_name.lower().replace('-', '_')}": {{
       "url": "{mcp_url}",
       "headers": {{
         "Authorization": "Bearer YOUR_APIFY_TOKEN"
