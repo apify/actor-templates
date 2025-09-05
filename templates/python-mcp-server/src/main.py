@@ -74,8 +74,8 @@ async def main() -> None:
         Actor.log.info('Starting MCP Server Actor')
         await Actor.charge(ChargeEvents.ACTOR_START.value)
 
+        url = os.environ.get('ACTOR_STANDBY_URL', HOST)
         if not STANDBY_MODE:
-            url = os.environ.get('ACTOR_STANDBY_URL', HOST)
             msg = (
                 'Actor is not designed to run in the NORMAL mode. Use MCP server URL to connect to the server.\n'
                 f'Connect to {url}/mcp to establish a connection.\n'
@@ -87,7 +87,6 @@ async def main() -> None:
 
         try:
             # Create and start the server with charging enabled
-            url = os.environ.get('ACTOR_STANDBY_URL', HOST)
             Actor.log.info('Starting MCP server')
             Actor.log.info(f'  - proxy server host: {os.environ.get("ACTOR_STANDBY_URL", HOST)}')
             Actor.log.info(f'  - proxy server port: {PORT}')
