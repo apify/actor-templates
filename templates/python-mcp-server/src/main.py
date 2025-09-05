@@ -75,8 +75,13 @@ async def main() -> None:
         await Actor.charge(ChargeEvents.ACTOR_START.value)
 
         if not STANDBY_MODE:
-            msg = 'This Actor is not meant to be run directly. It should be run in standby mode.'
-            Actor.log.warning(msg)
+            url = os.environ.get('ACTOR_STANDBY_URL', HOST)
+            msg = (
+                'Actor is not designed to run in the NORMAL mode. Use MCP server URL to connect to the server.\n'
+                f'Connect to {url}/mcp to establish a connection.\n'
+                'Learn more at https://mcp.apify.com/.'
+            )
+            Actor.log.info(msg)
             await Actor.exit(status_message=msg)
             return
 
