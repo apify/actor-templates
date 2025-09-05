@@ -39,7 +39,7 @@ logger = logging.getLogger('apify')
 
 
 def is_html_browser(request: Request) -> bool:
-    """Detect if the request is from an HTML browser based on Accept header. """
+    """Detect if the request is from an HTML browser based on Accept header."""
     accept_header = request.headers.get('accept', '')
     return 'text/html' in accept_header
 
@@ -54,19 +54,21 @@ def get_html_page(server_name: str, mcp_url: str) -> str:
     <style>
         body {{ font-family: system-ui; max-width: 500px; margin: 2rem auto; padding: 1rem; }}
         h1 {{ color: #2563eb; margin-bottom: 1rem; }}
-        .url {{ background: #f3f4f6; padding: 0.75rem; border-radius: 6px; font-family: monospace; word-break: break-all; }}
+        .url {{ background: #f3f4f6; padding: 0.75rem; border-radius: 6px; font-family: monospace;
+        word-break: break-all; }}
         pre {{ background: #f9fafb; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; }}
     </style>
 </head>
 <body>
     <h1>{server_name}</h1>
-    <p><strong>Endpoint:</strong></p>
+    <p><strong>MCP endpoint URL:</strong></p>
     <div class="url">{mcp_url}</div>
 
-    <p><strong>Configuration:</strong></p>
+    <p><strong>Add to your MCP client (e.g. VS code):</strong></p>
     <pre>{{
   "mcpServers": {{
-    "{server_name.lower().replace('-', '_')}": {{
+    "{server_name.lower().replace(' ', '-')}": {{
+      "type": "http",
       "url": "{mcp_url}",
       "headers": {{
         "Authorization": "Bearer YOUR_APIFY_TOKEN"
@@ -111,7 +113,7 @@ class ProxyServer:
     The charging function should accept an event name and optional parameters.
     """
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         server_name: str,
         config: ServerParameters,
@@ -186,7 +188,7 @@ class ProxyServer:
 
             # Browser client logic - Check if the request is from a HTML browser
             if is_html_browser(request):
-                server_url = f"{request.url.scheme}://{request.headers.get('host', 'localhost')}"
+                server_url = f'{request.url.scheme}://{request.headers.get("host", "localhost")}'
                 mcp_url = f'{server_url}/mcp'
                 return serve_html_page(server_name, mcp_url)
 
@@ -222,7 +224,7 @@ class ProxyServer:
             """Handle GET requests to /mcp endpoint."""
             # Browser client logic - Check if the request is from a HTML browser
             if is_html_browser(request):
-                server_url = f"{request.url.scheme}://{request.headers.get('host', 'localhost')}"
+                server_url = f'{request.url.scheme}://{request.headers.get("host", "localhost")}'
                 mcp_url = f'{server_url}/mcp'
                 return serve_html_page(server_name, mcp_url)
 
@@ -236,7 +238,7 @@ class ProxyServer:
                     },
                     'id': None,
                 },
-                status_code=400
+                status_code=400,
             )
 
         # ASGI handler for Streamable HTTP connections
@@ -253,7 +255,7 @@ class ProxyServer:
                     endpoint=handle_oauth_authorization_server,
                     methods=['GET'],
                 ),
-                Route('/mcp', endpoint=handle_mcp_get, methods=['GET']),
+                Route('/mcp/', endpoint=handle_mcp_get, methods=['GET']),
                 Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,

@@ -14,7 +14,7 @@ STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
 # The container's network is isolated, so this is safe
 HOST = '0.0.0.0'  # noqa: S104 - Required for container networking at Apify platform
 PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT') or '5001')) or 5001
-SERVER_NAME = 'arxiv-mcp-server'
+SERVER_NAME = 'arxiv-mcp-server'  # Name of the MCP server, without spaces
 
 # EDIT THIS SECTION ------------------------------------------------------------
 # Configuration constants - You need to override these values. You can also pass environment variables if needed.
@@ -101,7 +101,9 @@ async def main() -> None:
             )
             # Pass Actor.charge to enable charging for MCP operations
             # The proxy server will use this to charge for different operations
-            proxy_server = ProxyServer(SERVER_NAME, MCP_SERVER_PARAMS, HOST, PORT, server_type, actor_charge_function=Actor.charge)
+            proxy_server = ProxyServer(
+                SERVER_NAME, MCP_SERVER_PARAMS, HOST, PORT, server_type, actor_charge_function=Actor.charge
+            )
             await proxy_server.start()
         except Exception as e:
             Actor.log.exception(f'Server failed to start: {e}')
