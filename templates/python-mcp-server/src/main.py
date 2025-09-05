@@ -88,9 +88,6 @@ async def main() -> None:
         try:
             # Create and start the server with charging enabled
             Actor.log.info('Starting MCP server')
-            Actor.log.info(f'  - proxy server host: {os.environ.get("ACTOR_STANDBY_URL", HOST)}')
-            Actor.log.info(f'  - proxy server port: {PORT}')
-
             Actor.log.info('Add the following configuration to your MCP client to use Streamable HTTP transport:')
             Actor.log.info(
                 f"""
