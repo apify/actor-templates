@@ -38,6 +38,59 @@ if TYPE_CHECKING:
 logger = logging.getLogger('apify')
 
 
+def is_html_browser(request: Request) -> bool:
+    """Detect if the request is from an HTML browser based on Accept header. """
+    accept_header = request.headers.get('accept', '')
+    return 'text/html' in accept_header
+
+
+def get_html_page(server_name: str, mcp_url: str) -> str:
+    """Generate simple HTML page with server URL and MCP client link. """
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MCP Server</title>
+    <style>
+        body {{ font-family: system-ui; max-width: 600px; margin: 50px auto; padding: 20px; }}
+        .url {{ background: #f0f0f0; padding: 10px; border-radius: 4px; font-family: monospace; word-break: break-all; margin: 10px 0; }}
+        .test-link {{ display: inline-block; background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin: 10px 0; }}
+        .test-link:hover {{ background: #0056b3; }}
+        .recommended {{ background: #d4edda; border: 1px solid #c3e6cb; padding: 10px; border-radius: 4px; margin: 10px 0; }}
+        .legacy {{ background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 4px; margin: 10px 0; }}
+    </style>
+</head>
+<body>
+    <h1>{server_name}</h1>
+    <p>Model Context Protocol server for your application.</p>
+
+    <div>
+        <p><strong>Connect with MCP client to this URL:</strong></p>
+        <div class="url">{mcp_url}</div>
+    </div>
+
+    <h2>MCP client configuration (claude-desktop)</h2>
+    <pre style="background: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto;">
+{{
+  "mcpServers": {{
+    "mcp-server": {{
+      "url": "{mcp_url}",
+      "headers": {{
+        "Authorization": "Bearer YOUR_APIFY_TOKEN"
+      }}
+    }}
+  }}
+}}</pre>
+</body>
+</html>"""
+
+
+def serve_html_page(server_name: str, mcp_url: str) -> Response:
+    """Serve HTML page for browser requests."""
+    html = get_html_page(server_name, mcp_url)
+    return Response(content=html, media_type='text/html')
+
+
 class McpPathRewriteMiddleware(BaseHTTPMiddleware):
     """Add middleware to rewrite /mcp to /mcp/ to ensure consistent path handling.
 
@@ -67,6 +120,7 @@ class ProxyServer:
 
     def __init__(
         self,
+        server_name: str,
         config: ServerParameters,
         host: str,
         port: int,
@@ -76,6 +130,7 @@ class ProxyServer:
         """Initialize the proxy server.
 
         Args:
+            server_name: Name of the server (used in HTML page)
             config: Server configuration (stdio or SSE parameters)
             host: Host to bind the server to
             port: Port to bind the server to
@@ -85,6 +140,7 @@ class ProxyServer:
                            Typically, Actor.charge in Apify Actors.
                            If None, no charging will occur.
         """
+        self.server_name = server_name
         self.server_type = server_type
         self.config = self._validate_config(self.server_type, config)
         self.host: str = host
@@ -106,7 +162,7 @@ class ProxyServer:
             raise ValueError(f'Invalid server configuration: {e}') from e
 
     @staticmethod
-    async def create_starlette_app(mcp_server: Server) -> Starlette:
+    async def create_starlette_app(server_name: str, mcp_server: Server) -> Starlette:
         """Create a Starlette app that exposes /mcp endpoint for Streamable HTTP transport."""
         event_store = InMemoryEventStore()
         session_manager = StreamableHTTPSessionManager(
@@ -134,6 +190,12 @@ class ProxyServer:
                     media_type='text/plain',
                     status_code=200,
                 )
+
+            # Browser client logic - Check if the request is from a HTML browser
+            if is_html_browser(request):
+                server_url = f"{request.url.scheme}://{request.headers.get('host', 'localhost')}"
+                mcp_url = f'{server_url}/mcp'
+                return serve_html_page(server_name, mcp_url)
 
             return JSONResponse(
                 {
@@ -163,6 +225,27 @@ class ProxyServer:
                 logger.exception('Error fetching OAuth authorization server data')
                 return JSONResponse({'error': 'Failed to fetch OAuth authorization server data'}, status_code=500)
 
+        async def handle_mcp_get(request: Request) -> st.Response:
+            """Handle GET requests to /mcp endpoint."""
+            # Browser client logic - Check if the request is from a HTML browser
+            if is_html_browser(request):
+                server_url = f"{request.url.scheme}://{request.headers.get('host', 'localhost')}"
+                mcp_url = f'{server_url}/mcp'
+                return serve_html_page(server_name, mcp_url)
+
+            # For non-browser requests, return error as GET is not supported for MCP
+            return JSONResponse(
+                {
+                    'jsonrpc': '2.0',
+                    'error': {
+                        'code': -32000,
+                        'message': 'Bad Request: GET method not supported for MCP endpoint',
+                    },
+                    'id': None,
+                },
+                status_code=400
+            )
+
         # ASGI handler for Streamable HTTP connections
         async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
             await session_manager.handle_request(scope, receive, send)
@@ -177,6 +260,7 @@ class ProxyServer:
                     endpoint=handle_oauth_authorization_server,
                     methods=['GET'],
                 ),
+                Route('/mcp', endpoint=handle_mcp_get, methods=['GET']),
                 Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,
@@ -202,7 +286,7 @@ class ProxyServer:
                 ClientSession(read_stream, write_stream) as session,
             ):
                 mcp_server = await create_gateway(session, self.actor_charge_function)
-                app = await self.create_starlette_app(mcp_server)
+                app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
 
         elif self.server_type == ServerType.SSE:
@@ -211,7 +295,7 @@ class ProxyServer:
                 ClientSession(read_stream, write_stream) as session,
             ):
                 mcp_server = await create_gateway(session, self.actor_charge_function)
-                app = await self.create_starlette_app(mcp_server)
+                app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
 
         elif self.server_type == ServerType.HTTP:
@@ -221,7 +305,7 @@ class ProxyServer:
                 ClientSession(read_stream, write_stream) as session,
             ):
                 mcp_server = await create_gateway(session, self.actor_charge_function)
-                app = await self.create_starlette_app(mcp_server)
+                app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
         else:
             raise ValueError(f'Unknown server type: {self.server_type}')
