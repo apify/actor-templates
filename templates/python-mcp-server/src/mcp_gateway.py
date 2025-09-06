@@ -138,6 +138,14 @@ async def create_gateway(  # noqa: PLR0915
 
         async def _list_tools(_: Any) -> types.ServerResult:
             tools = await client_session.list_tools()
+
+            # Filter tools to only include authorized ones
+            authorized_tools = []
+            for tool in tools.tools:
+                if tool.name in AUTHORIZED_TOOLS:
+                    authorized_tools.append(tool)
+
+            tools.tools = authorized_tools
             return types.ServerResult(tools)
 
         app.request_handlers[types.ListToolsRequest] = _list_tools

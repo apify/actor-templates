@@ -27,7 +27,7 @@ class ChargeEvents(str, Enum):
 
 
 # Authorized tools list for MCP server
-# Only tools listed here will be allowed to execute.
+# Only tools listed here will be present to the user and allowed to execute.
 # To add new authorized tools, simply add the tool value to this list.
 AUTHORIZED_TOOLS = [
     ChargeEvents.SEARCH_PAPERS.value,
