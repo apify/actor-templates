@@ -4,7 +4,7 @@ import os
 
 from apify import Actor
 
-from .const import ChargeEvents
+from .const import TOOL_WHITELIST, ChargeEvents
 from .models import ServerType
 from .server import ProxyServer
 
@@ -103,7 +103,13 @@ async def main() -> None:
             # Pass Actor.charge to enable charging for MCP operations
             # The proxy server will use this to charge for different operations
             proxy_server = ProxyServer(
-                SERVER_NAME, MCP_SERVER_PARAMS, HOST, PORT, server_type, actor_charge_function=Actor.charge
+                SERVER_NAME,
+                MCP_SERVER_PARAMS,
+                HOST,
+                PORT,
+                server_type,
+                actor_charge_function=Actor.charge,
+                tool_whitelist=TOOL_WHITELIST,
             )
             await proxy_server.start()
         except Exception as e:

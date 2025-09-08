@@ -26,21 +26,13 @@ class ChargeEvents(str, Enum):
     READ_PAPER = 'read_paper'
 
 
-# Authorized tools list for MCP server
+# Tool whitelist for MCP server
 # Only tools listed here will be present to the user and allowed to execute.
-# To add new authorized tools, simply add the tool value to this list.
-AUTHORIZED_TOOLS = [
-    ChargeEvents.SEARCH_PAPERS.value,
-    ChargeEvents.LIST_PAPERS.value,
-    ChargeEvents.DOWNLOAD_PAPER.value,
-    ChargeEvents.READ_PAPER.value,
-]
-
-
-# Helper function to get ChargeEvents enum from tool name
-def get_charge_event(tool_name: str) -> ChargeEvents | None:
-    """Get the ChargeEvents enum member from a tool name string."""
-    for event in ChargeEvents:
-        if event.value == tool_name:
-            return event
-    return None
+# Format of the dictionary: {tool_name: (charge_event_name, default_count)}
+# To add new authorized tools, add an entry with the tool name and its charging configuration.
+TOOL_WHITELIST = {
+    ChargeEvents.SEARCH_PAPERS.value: (ChargeEvents.SEARCH_PAPERS.value, 1),
+    ChargeEvents.LIST_PAPERS.value: (ChargeEvents.LIST_PAPERS.value, 1),
+    ChargeEvents.DOWNLOAD_PAPER.value: (ChargeEvents.DOWNLOAD_PAPER.value, 1),
+    ChargeEvents.READ_PAPER.value: (ChargeEvents.READ_PAPER.value, 1),
+}

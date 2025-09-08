@@ -157,21 +157,26 @@ Comment out all charging lines in the code for a free service.
 
 This template includes **tool authorization** - only tools listed in `src/const.py` can be executed:
 
-**Note**: The `AUTHORIZED_TOOLS` list only applies to **tools** (executable functions).
+**Note**: The `TOOL_WHITELIST` dictionary only applies to **tools** (executable functions).
 Prompts (like `deep-paper-analysis`) are handled separately and don't need to be added to this list.
 
+Tool whitelist for MCP server
+Only tools listed here will be present to the user and allowed to execute.
+Format of the dictionary: {tool_name: (charge_event_name, default_count)}
+To add new authorized tools, add an entry with the tool name and its charging configuration.
+
 ```python
-AUTHORIZED_TOOLS = [
-    ChargeEvents.SEARCH_PAPERS.value,
-    ChargeEvents.LIST_PAPERS.value,
-    ChargeEvents.DOWNLOAD_PAPER.value,
-    ChargeEvents.READ_PAPER.value,
-]
+TOOL_WHITELIST = {
+    ChargeEvents.SEARCH_PAPERS.value: (ChargeEvents.SEARCH_PAPERS.value, 1),
+    ChargeEvents.LIST_PAPERS.value: (ChargeEvents.LIST_PAPERS.value, 1),
+    ChargeEvents.DOWNLOAD_PAPER.value: (ChargeEvents.DOWNLOAD_PAPER.value, 1),
+    ChargeEvents.READ_PAPER.value: (ChargeEvents.READ_PAPER.value, 1),
+}
 ```
 
 **To add new tools:**
 1. Add charge event to `ChargeEvents` enum
-2. Add tool value to `AUTHORIZED_TOOLS` list
+2. Add tool entry to `TOOL_WHITELIST` dictionary with format: `tool_name: (event_name, count)`
 3. Update pricing in `pay_per_event.json`
 4. Update pricing at Apify platform
 
@@ -243,7 +248,7 @@ Key components:
 
 - `create_gateway`: Creates an MCP server instance that acts as a gateway
 - `charge_mcp_operation`: Handles charging for different MCP operations
-- `AUTHORIZED_TOOLS`: Whitelist of allowed tools defined in `src/const.py`
+- `TOOL_WHITELIST`: Dictionary mapping tool names to (event_name, count) tuples for authorization and charging
 
 ### MCP operations
 
@@ -258,7 +263,7 @@ The MCP gateway supports all standard MCP operations:
 
 Each operation can be configured for charging in the PPE model.
 
-## 📚 Resources 
+## 📚 Resources
 
 - [What is Anthropic's Model Context Protocol?](https://blog.apify.com/what-is-model-context-protocol/)
 - [How to use MCP with Apify Actors](https://blog.apify.com/how-to-use-mcp/)

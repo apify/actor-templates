@@ -121,6 +121,7 @@ class ProxyServer:
         port: int,
         server_type: ServerType,
         actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
+        tool_whitelist: dict[str, tuple[str, int]] | None = None,
     ) -> None:
         """Initialize the proxy server.
 
@@ -134,6 +135,9 @@ class ProxyServer:
                            Should accept (event_name: str, count: int).
                            Typically, Actor.charge in Apify Actors.
                            If None, no charging will occur.
+            tool_whitelist: Optional dict mapping tool names to (event_name, default_count) tuples.
+                           If provided, only whitelisted tools will be allowed and charged.
+                           If None, all tools are allowed without specific charging.
         """
         self.server_name = server_name
         self.server_type = server_type
@@ -141,6 +145,7 @@ class ProxyServer:
         self.host: str = host
         self.port: int = port
         self.actor_charge_function = actor_charge_function
+        self.tool_whitelist = tool_whitelist
 
     @staticmethod
     def _validate_config(client_type: ServerType, config: ServerParameters) -> ServerParameters | None:
@@ -280,7 +285,7 @@ class ProxyServer:
                 stdio_client(config_) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_gateway(session, self.actor_charge_function)
+                mcp_server = await create_gateway(session, self.actor_charge_function, self.tool_whitelist)
                 app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
 
@@ -289,7 +294,7 @@ class ProxyServer:
                 sse_client(**params) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_gateway(session, self.actor_charge_function)
+                mcp_server = await create_gateway(session, self.actor_charge_function, self.tool_whitelist)
                 app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
 
@@ -299,7 +304,7 @@ class ProxyServer:
                 streamablehttp_client(**params) as (read_stream, write_stream, _),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_gateway(session, self.actor_charge_function)
+                mcp_server = await create_gateway(session, self.actor_charge_function, self.tool_whitelist)
                 app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
         else:
