@@ -4,7 +4,7 @@ import os
 
 from apify import Actor
 
-from .const import ChargeEvents
+from .const import TOOL_WHITELIST, ChargeEvents
 from .models import ServerType
 from .server import ProxyServer
 
@@ -14,6 +14,7 @@ STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
 # The container's network is isolated, so this is safe
 HOST = '0.0.0.0'  # noqa: S104 - Required for container networking at Apify platform
 PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT') or '5001')) or 5001
+SERVER_NAME = 'arxiv-mcp-server'  # Name of the MCP server, without spaces
 
 # EDIT THIS SECTION ------------------------------------------------------------
 # Configuration constants - You need to override these values. You can also pass environment variables if needed.
@@ -73,25 +74,26 @@ async def main() -> None:
         Actor.log.info('Starting MCP Server Actor')
         await Actor.charge(ChargeEvents.ACTOR_START.value)
 
+        url = os.environ.get('ACTOR_STANDBY_URL', HOST)
         if not STANDBY_MODE:
-            msg = 'This Actor is not meant to be run directly. It should be run in standby mode.'
-            Actor.log.warning(msg)
+            msg = (
+                'Actor is not designed to run in the NORMAL mode. Use MCP server URL to connect to the server.\n'
+                f'Connect to {url}/mcp to establish a connection.\n'
+                'Learn more at https://mcp.apify.com/'
+            )
+            Actor.log.info(msg)
             await Actor.exit(status_message=msg)
             return
 
         try:
             # Create and start the server with charging enabled
-            url = os.environ.get('ACTOR_STANDBY_URL', HOST)
             Actor.log.info('Starting MCP server')
-            Actor.log.info(f'  - proxy server host: {os.environ.get("ACTOR_STANDBY_URL", HOST)}')
-            Actor.log.info(f'  - proxy server port: {PORT}')
-
             Actor.log.info('Add the following configuration to your MCP client to use Streamable HTTP transport:')
             Actor.log.info(
                 f"""
                 {{
                     "mcpServers": {{
-                        "arxiv-mcp-server": {{
+                        "{SERVER_NAME}": {{
                             "url": "{url}/mcp",
                         }}
                     }}
@@ -100,7 +102,15 @@ async def main() -> None:
             )
             # Pass Actor.charge to enable charging for MCP operations
             # The proxy server will use this to charge for different operations
-            proxy_server = ProxyServer(MCP_SERVER_PARAMS, HOST, PORT, server_type, actor_charge_function=Actor.charge)
+            proxy_server = ProxyServer(
+                SERVER_NAME,
+                MCP_SERVER_PARAMS,
+                HOST,
+                PORT,
+                server_type,
+                actor_charge_function=Actor.charge,
+                tool_whitelist=TOOL_WHITELIST,
+            )
             await proxy_server.start()
         except Exception as e:
             Actor.log.exception(f'Server failed to start: {e}')

@@ -38,6 +38,54 @@ if TYPE_CHECKING:
 logger = logging.getLogger('apify')
 
 
+def is_html_browser(request: Request) -> bool:
+    """Detect if the request is from an HTML browser based on Accept header."""
+    accept_header = request.headers.get('accept', '')
+    return 'text/html' in accept_header
+
+
+def get_html_page(server_name: str, mcp_url: str) -> str:
+    """Generate simple HTML page with server URL and MCP client link."""
+    return f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{server_name}</title>
+    <style>
+        body {{ font-family: system-ui; max-width: 500px; margin: 2rem auto; padding: 1rem; }}
+        h1 {{ color: #2563eb; margin-bottom: 1rem; }}
+        .url {{ background: #f3f4f6; padding: 0.75rem; border-radius: 6px; font-family: monospace;
+        word-break: break-all; }}
+        pre {{ background: #f9fafb; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; }}
+    </style>
+</head>
+<body>
+    <h1>{server_name}</h1>
+    <p><strong>MCP endpoint URL:</strong></p>
+    <div class="url">{mcp_url}</div>
+
+    <p><strong>Add to your MCP client (e.g. VS code):</strong></p>
+    <pre>{{
+  "mcpServers": {{
+    "{server_name.lower().replace(' ', '-')}": {{
+      "type": "http",
+      "url": "{mcp_url}",
+      "headers": {{
+        "Authorization": "Bearer YOUR_APIFY_TOKEN"
+      }}
+    }}
+  }}
+}}</pre>
+</body>
+</html>"""
+
+
+def serve_html_page(server_name: str, mcp_url: str) -> Response:
+    """Serve HTML page for browser requests."""
+    html = get_html_page(server_name, mcp_url)
+    return Response(content=html, media_type='text/html')
+
+
 class McpPathRewriteMiddleware(BaseHTTPMiddleware):
     """Add middleware to rewrite /mcp to /mcp/ to ensure consistent path handling.
 
@@ -65,17 +113,20 @@ class ProxyServer:
     The charging function should accept an event name and optional parameters.
     """
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
+        server_name: str,
         config: ServerParameters,
         host: str,
         port: int,
         server_type: ServerType,
         actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
+        tool_whitelist: dict[str, tuple[str, int]] | None = None,
     ) -> None:
         """Initialize the proxy server.
 
         Args:
+            server_name: Name of the server (used in HTML page)
             config: Server configuration (stdio or SSE parameters)
             host: Host to bind the server to
             port: Port to bind the server to
@@ -84,12 +135,17 @@ class ProxyServer:
                            Should accept (event_name: str, count: int).
                            Typically, Actor.charge in Apify Actors.
                            If None, no charging will occur.
+            tool_whitelist: Optional dict mapping tool names to (event_name, default_count) tuples.
+                           If provided, only whitelisted tools will be allowed and charged.
+                           If None, all tools are allowed without specific charging.
         """
+        self.server_name = server_name
         self.server_type = server_type
         self.config = self._validate_config(self.server_type, config)
         self.host: str = host
         self.port: int = port
         self.actor_charge_function = actor_charge_function
+        self.tool_whitelist = tool_whitelist
 
     @staticmethod
     def _validate_config(client_type: ServerType, config: ServerParameters) -> ServerParameters | None:
@@ -106,7 +162,7 @@ class ProxyServer:
             raise ValueError(f'Invalid server configuration: {e}') from e
 
     @staticmethod
-    async def create_starlette_app(mcp_server: Server) -> Starlette:
+    async def create_starlette_app(server_name: str, mcp_server: Server) -> Starlette:
         """Create a Starlette app that exposes /mcp endpoint for Streamable HTTP transport."""
         event_store = InMemoryEventStore()
         session_manager = StreamableHTTPSessionManager(
@@ -134,6 +190,12 @@ class ProxyServer:
                     media_type='text/plain',
                     status_code=200,
                 )
+
+            # Browser client logic - Check if the request is from a HTML browser
+            if is_html_browser(request):
+                server_url = f'{request.url.scheme}://{request.headers.get("host", "localhost")}'
+                mcp_url = f'{server_url}/mcp'
+                return serve_html_page(server_name, mcp_url)
 
             return JSONResponse(
                 {
@@ -163,6 +225,27 @@ class ProxyServer:
                 logger.exception('Error fetching OAuth authorization server data')
                 return JSONResponse({'error': 'Failed to fetch OAuth authorization server data'}, status_code=500)
 
+        async def handle_mcp_get(request: Request) -> st.Response:
+            """Handle GET requests to /mcp endpoint."""
+            # Browser client logic - Check if the request is from a HTML browser
+            if is_html_browser(request):
+                server_url = f'{request.url.scheme}://{request.headers.get("host", "localhost")}'
+                mcp_url = f'{server_url}/mcp'
+                return serve_html_page(server_name, mcp_url)
+
+            # For non-browser requests, return error as GET is not supported for MCP
+            return JSONResponse(
+                {
+                    'jsonrpc': '2.0',
+                    'error': {
+                        'code': -32000,
+                        'message': 'Bad Request: GET method not supported for MCP endpoint',
+                    },
+                    'id': None,
+                },
+                status_code=400,
+            )
+
         # ASGI handler for Streamable HTTP connections
         async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
             await session_manager.handle_request(scope, receive, send)
@@ -177,6 +260,7 @@ class ProxyServer:
                     endpoint=handle_oauth_authorization_server,
                     methods=['GET'],
                 ),
+                Route('/mcp/', endpoint=handle_mcp_get, methods=['GET']),
                 Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,
@@ -201,8 +285,8 @@ class ProxyServer:
                 stdio_client(config_) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_gateway(session, self.actor_charge_function)
-                app = await self.create_starlette_app(mcp_server)
+                mcp_server = await create_gateway(session, self.actor_charge_function, self.tool_whitelist)
+                app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
 
         elif self.server_type == ServerType.SSE:
@@ -210,8 +294,8 @@ class ProxyServer:
                 sse_client(**params) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_gateway(session, self.actor_charge_function)
-                app = await self.create_starlette_app(mcp_server)
+                mcp_server = await create_gateway(session, self.actor_charge_function, self.tool_whitelist)
+                app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
 
         elif self.server_type == ServerType.HTTP:
@@ -220,8 +304,8 @@ class ProxyServer:
                 streamablehttp_client(**params) as (read_stream, write_stream, _),
                 ClientSession(read_stream, write_stream) as session,
             ):
-                mcp_server = await create_gateway(session, self.actor_charge_function)
-                app = await self.create_starlette_app(mcp_server)
+                mcp_server = await create_gateway(session, self.actor_charge_function, self.tool_whitelist)
+                app = await self.create_starlette_app(self.server_name, mcp_server)
                 await self._run_server(app)
         else:
             raise ValueError(f'Unknown server type: {self.server_type}')
