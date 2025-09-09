@@ -270,5 +270,6 @@ Each operation can be configured for charging in the PPE model.
 - [Apify MCP server](https://mcp.apify.com)
 - [Apify MCP server documentation](https://docs.apify.com/platform/integrations/mcp)
 - [Apify MCP client](https://apify.com/jiri.spilka/tester-mcp-client)
+- [MCP Servers hosted at Apify](https://apify.com/store/categories/mcp-servers)
 - [Model Context Protocol documentation](https://modelcontextprotocol.io)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
