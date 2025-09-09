@@ -10,7 +10,7 @@
         "@apify/log": "^2.5.20",
         "apify": "^3.4.2",
         "console.table": "^0.10.0",
-        "cypress": "^14.0.0",
+        "cypress": "^15.0.0",
         "globby": "^14.1.0"
     },
     "devDependencies": {
