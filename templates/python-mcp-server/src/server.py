@@ -193,7 +193,7 @@ class ProxyServer:
 
             # Browser client logic - Check if the request is from a HTML browser
             if is_html_browser(request):
-                server_url = f'{request.url.scheme}://{request.headers.get("host", "localhost")}'
+                server_url = f'https://{request.headers.get("host", "localhost")}'
                 mcp_url = f'{server_url}/mcp'
                 return serve_html_page(server_name, mcp_url)
 
@@ -229,7 +229,7 @@ class ProxyServer:
             """Handle GET requests to /mcp endpoint."""
             # Browser client logic - Check if the request is from a HTML browser
             if is_html_browser(request):
-                server_url = f'{request.url.scheme}://{request.headers.get("host", "localhost")}'
+                server_url = f'https://{request.headers.get("host", "localhost")}'
                 mcp_url = f'{server_url}/mcp'
                 return serve_html_page(server_name, mcp_url)
 
