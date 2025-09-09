@@ -1,5 +1,8 @@
-apify<3.0.0
-apify_client<2.0.0
+# Feel free to add your Python dependencies below. For formatting guidelines, see:
+# https://pip.pypa.io/en/latest/reference/requirements-file-format/
+
+apify < 3.0.0
+apify-client
 arxiv-mcp-server==0.2.11
 fastapi==0.116.1
 httpx>=0.24.0

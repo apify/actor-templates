@@ -1,5 +1,5 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
-apify < 3.0
-pydantic_ai ~=0.4.2
+apify < 3.0.0
+pydantic-ai < 2.0.0
