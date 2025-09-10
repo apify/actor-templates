@@ -16,7 +16,7 @@ from apify import Actor
 class GetHandler(SimpleHTTPRequestHandler):
     """A simple GET HTTP handler that will respond with a message."""
 
-    def do_GET(self) -> None:  # noqa: N802
+    def do_GET(self) -> None:
         """Handle GET request and respond with a message."""
         # Handle Apify standby readiness probe
         # https://docs.apify.com/platform/actors/development/programming-interface/standby#readiness-probe
