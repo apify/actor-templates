@@ -24,7 +24,7 @@
         "@types/uuid": "^10.0.0",
         "apify": "^3.4.2",
         "@apify/log": "^2.5.20",
-        "uuid": "^11.0.0",
+        "uuid": "^13.0.0",
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
         "@types/node": "^22.15.32",
