@@ -2,11 +2,17 @@
 
 **High-level conceptual guide for building serverless web scraping and automation tools using the Actor programming model.**
 
-⚠️ **CRITICAL:** This guide provides conceptual overviews only. For detailed code examples, implementation specifics, and API documentation, **use the available tools listed at the end**. The tools will fetch current, accurate documentation automatically.
+⚠️ **CRITICAL:** This guide provides conceptual overviews only.
+For detailed code examples, implementation specifics, and API documentation, **use the available tools listed at the end**.
+The tools will fetch current, accurate documentation automatically.
+
+## Prerequisites
+- Apify account (free tier available)
+- Apify CLI installed (`npm install -g apify-cli`)
 
 ## What are Actors?
 
-**Actors are serverless programs that run in the cloud.** 
+**Actors are serverless programs that run in the cloud.**
 They're inspired by the UNIX philosophy - programs that do one thing well and can be easily combined to build complex systems.
 
 **Core Concept:** Actors are programs packaged as Docker images that:
@@ -15,6 +21,47 @@ They're inspired by the UNIX philosophy - programs that do one thing well and ca
 - Produce structured JSON output
 - Can run from seconds to hours or even indefinitely
 - Persist state and can be restarted
+
+## Quick Setup Overview
+
+```bash
+# Basic CLI commands
+apify login
+apify create my-actor
+apify run
+apify push --no-prompt
+```
+
+Basic workflow: Install CLI → Login → Create Actor → Run locally → Deploy
+
+## Actor Development Workflow
+
+### Actor templates
+
+Always start with a template!
+Apify provides various [Actor templates](https://raw.githubusercontent.com/apify/actor-templates/master/templates/manifest.json) to jumpstart development.
+Before starting a new project, explore existing templates for common use cases and decide on the best template to use.
+
+Template can be created using the Apify CLI:
+
+```bash
+apify create -t <template-name> my-actor  # template-name can be found in the manifest linked above
+````
+
+### Project Structure
+Standard Actor project includes:
+```
+├── src/                                  # Core source code
+│   ├── main.ts                           # Main orchestrator
+├── .actor/                               # Apify Actor configuration
+│   ├── actor.json                        # Actor metadata and configuration
+│   ├── Dockerfile                        # Docker container configuration
+│   └── input_schema.json                 # Input parameter schema
+├── README.md                             # Project overview
+└── LICENSE.md                            # License information
+```
+
+
 
 ## Storage Systems
 
@@ -52,40 +99,6 @@ await queue.addRequest({ url, userData });
 - Handles deduplication and retry logic
 - Supports breadth-first and depth-first crawling
 
-## Quick Setup Overview
-
-```bash
-# Basic CLI commands
-apify login
-apify create my-actor
-apify run
-apify push
-```
-
-Basic workflow: Install CLI → Login → Create Actor → Run locally → Deploy
-
-## Actor Development Workflow
-
-### Project Structure
-Standard Actor project includes:
-- `.actor/` directory with configuration files
-- `src/` directory for main logic
-- Input/output schemas for validation
-- Dockerfile for containerization
-
-### Key Configuration Files
-- `actor.json` - Actor metadata and settings
-- `input_schema.json` - Input validation rules
-- `output_schema.json` - Output structure definition
-
-### Basic Actor Lifecycle
-```javascript
-// Core Actor methods
-await Actor.init();
-const input = await Actor.getInput();
-await Actor.setStatusMessage('Processing...');
-await Actor.exit('Completed successfully');
-```
 
 # Crawlee - Web Scraping Framework
 
@@ -201,7 +214,7 @@ const proxyConfig = await Actor.createProxyConfiguration({
 
 ### When to Use Each Approach:
 
-**CheerioCrawler (Static HTML):** 
+**CheerioCrawler (Static HTML):**
 - Server-rendered content, fastest option
 - E-commerce, news sites, listings
 - Simple HTML parsing requirements
@@ -358,7 +371,7 @@ Use these tools to fetch detailed documentation and examples:
 
 ### Apify Documentation & Store Tools:
 - **search-apify-docs** - Search Apify documentation
-- **fetch-apify-docs** - Get full documentation pages  
+- **fetch-apify-docs** - Get full documentation pages
 - **search-actors** - Find existing Actors in the store
 - **fetch-actor-details** - Get Actor specifications
 
@@ -374,10 +387,10 @@ Use these tools to fetch detailed documentation and examples:
 
 **Use for:**
 - Google Search + scraping top results
-- Individual URL scraping 
+- Individual URL scraping
 - Converting web content to Markdown
 
-#### mcp-servers/context7-mcp-server  
+#### mcp-servers/context7-mcp-server
 **Description:** Context7 MCP server, which provides additional development resources and tools.
 
 **Use for:**
@@ -391,7 +404,7 @@ These tools are available via your configured MCP server endpoint.
 
 **AUTOMATIC CONTEXT7 USAGE:** Always use Context7 MCP tools when I need:
 - Code generation or examples
-- Setup or configuration steps  
+- Setup or configuration steps
 - Library/API documentation
 - Implementation guidance
 
