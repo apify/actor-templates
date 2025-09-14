@@ -20,6 +20,7 @@ from pydantic import ValidationError
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
 from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.routing import Mount, Route
 
@@ -32,7 +33,6 @@ if TYPE_CHECKING:
 
     from mcp.server import Server
     from starlette import types as st
-    from starlette.requests import Request
     from starlette.types import Receive, Scope, Send
 
 logger = logging.getLogger('apify')
@@ -225,29 +225,19 @@ class ProxyServer:
                 logger.exception('Error fetching OAuth authorization server data')
                 return JSONResponse({'error': 'Failed to fetch OAuth authorization server data'}, status_code=500)
 
-        async def handle_mcp_get(request: Request) -> st.Response:
-            """Handle GET requests to /mcp endpoint."""
-            # Browser client logic - Check if the request is from a HTML browser
-            if is_html_browser(request):
-                server_url = f'https://{request.headers.get("host", "localhost")}'
-                mcp_url = f'{server_url}/mcp'
-                return serve_html_page(server_name, mcp_url)
-
-            # For non-browser requests, return error as GET is not supported for MCP
-            return JSONResponse(
-                {
-                    'jsonrpc': '2.0',
-                    'error': {
-                        'code': -32000,
-                        'message': 'Bad Request: GET method not supported for MCP endpoint',
-                    },
-                    'id': None,
-                },
-                status_code=400,
-            )
-
         # ASGI handler for Streamable HTTP connections
         async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
+            # Check if this is a GET request from a browser
+            if scope['method'] == 'GET':
+                request = Request(scope, receive)
+                if is_html_browser(request):
+                    server_url = f'https://{request.headers.get("host", "localhost")}'
+                    mcp_url = f'{server_url}/mcp'
+                    response = serve_html_page(server_name, mcp_url)
+                    await response(scope, receive, send)
+                    return
+
+            # For non-browser requests or non-GET requests, delegate to session manager
             await session_manager.handle_request(scope, receive, send)
 
         return Starlette(
@@ -260,7 +250,6 @@ class ProxyServer:
                     endpoint=handle_oauth_authorization_server,
                     methods=['GET'],
                 ),
-                Route('/mcp/', endpoint=handle_mcp_get, methods=['GET']),
                 Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,
