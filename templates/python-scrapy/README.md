@@ -1,5 +1,5 @@
-<!-- This is an Apify template readme -->
 ## Python Scrapy template
+<!-- This is an Apify template readme -->
 
 A template example built with Scrapy to scrape page titles from URLs defined in the input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.
 

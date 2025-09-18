@@ -1,5 +1,5 @@
-<!-- This is an Apify template readme -->
 ## TypeScript Crawlee & CheerioCrawler template
+<!-- This is an Apify template readme -->
 
 A template example built with [Crawlee](https://crawlee.dev/) to scrape data from a website using [Cheerio](https://cheerio.js.org/) wrapped into [CheerioCrawler](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler).
 

@@ -1,5 +1,5 @@
-<!-- This is an Apify template readme -->
 ## Python CrewAI template
+<!-- This is an Apify template readme -->
 
 A template for [CrewAI](https://www.crewai.com/) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [agent](https://docs.crewai.com/concepts/agents) that calls [Actors](https://apify.com/actors) via `ApifyActorsTool` in a workflow using the [CrewAI Apify Actors integration](https://docs.apify.com/platform/integrations/crewai).
 

@@ -1,5 +1,5 @@
-<!-- This is an Apify template readme -->
 ## Python Playwright template
+<!-- This is an Apify template readme -->
 
 ## Included features
 

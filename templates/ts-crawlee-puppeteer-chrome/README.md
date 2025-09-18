@@ -1,5 +1,5 @@
-<!-- This is an Apify template readme -->
 # TypeScript PuppeteerCrawler Actor template
+<!-- This is an Apify template readme -->
 
 This template is a production ready boilerplate for developing with `PuppeteerCrawler`. The `PuppeteerCrawler` provides a simple framework for parallel crawling of web pages using headless Chrome with Puppeteer. Since `PuppeteerCrawler` uses headless Chrome to download web pages and extract data, it is useful for crawling of websites that require to execute JavaScript.
 

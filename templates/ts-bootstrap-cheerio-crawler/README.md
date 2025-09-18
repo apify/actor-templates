@@ -1,5 +1,5 @@
-<!-- This is an Apify template readme -->
 ## Bootstrap CheerioCrawler template
+<!-- This is an Apify template readme -->
 
 This is a project skeleton to help you bootstrap `CheerioCrawler` [web scraping](https://apify.com/web-scraping) projects in TypeScript faster. It will always use the most up-to-date configuration and include all the common files. It's made for developers already familiar with [Apify SDK](https://docs.apify.com/sdk/js/) and [Crawlee](https://crawlee.dev/).
 

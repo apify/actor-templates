@@ -1,5 +1,5 @@
-<!-- This is an Apify template readme -->
 ## Python Smolagents template
+<!-- This is an Apify template readme -->
 
 An AI news aggregator that fetches and summarizes the latest news based on user-defined interests using DuckDuckGo search and OpenAI models, built with Python Smolagents.
 
