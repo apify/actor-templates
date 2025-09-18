@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 ## Python Playwright template
 
 ## Included features

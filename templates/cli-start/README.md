@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 # Actor CLI starter template
 
 Start a new Actorization project quickly and easily with this project template. It provides a basic structure for building an Actor with the [Apify CLI](https://docs.apify.com/cli) and allows you to easily add your own functionality.

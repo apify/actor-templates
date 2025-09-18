@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 ## PlaywrightCrawler template
 
 This template is a production ready boilerplate for developing an [Actor](https://apify.com/actors) with `PlaywrightCrawler`. Use this to bootstrap your projects using the most up-to-date code.

@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 ## MCP server template
 
 A template for running and monetizing a [Model Context Protocol](https://modelcontextprotocol.io) server using [stdio](https://modelcontextprotocol.io/docs/concepts/transports#standard-input%2Foutput-stdio) transport on [Apify platform](https://docs.apify.com/platform).

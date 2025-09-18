@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 ## Playwright test template
 
 Run your Playwright tests on the Apify platform effectively and easily. Just set up your test environment using a user-friendly UI and let the platform do the rest.

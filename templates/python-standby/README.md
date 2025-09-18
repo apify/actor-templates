@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 ## Python standby template
 
 Start a new [web scraping](https://apify.com/web-scraping) project quickly and easily in Python with our Standby project template. It provides a basic structure for the [Actor](https://apify.com/actors) with [Apify SDK](https://docs.apify.com/sdk/python/) and allows you to easily add your own functionality.

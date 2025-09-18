@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 ## LangChain.js template
 
 > LangChain is a framework for developing applications powered by language models.

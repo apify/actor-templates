@@ -1,3 +1,4 @@
+<!-- This is an Apify template readme -->
 ## TypeScript BeeAI agent Template
 
 A template for [BeeAI agent](https://beeai.dev/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). This template offers a structured setup and an example [ReAct agent](https://react-lm.github.io/) utilizing [Instagram Scraper](https://apify.com/apify/instagram-scraper) and a calculator tool in a workflow context.
