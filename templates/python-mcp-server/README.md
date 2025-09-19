@@ -1,4 +1,5 @@
 ## 🚀 Python MCP Server Template
+<!-- This is an Apify template readme -->
 
 A Python template for deploying and monetizing a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server in the cloud using the [Apify platform](https://docs.apify.com/platform/actors).
 

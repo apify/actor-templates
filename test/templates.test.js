@@ -45,6 +45,13 @@ const checkCommonTemplateStructure = (templateId) => {
 
     const actorJson = JSON5.parse(fs.readFileSync(actorJsonPath, 'utf8'));
     expect(actorJson.meta?.templateId).toBe(templateId);
+
+    const readmePath = path.join('README.md');
+    expect(fs.existsSync(readmePath)).toBe(true);
+
+    // In order to detect if user changed the readme of his actor, we add a comment to the readme
+    const readme = fs.readFileSync(readmePath, 'utf8');
+    expect(readme).toContain('<!-- This is an Apify template readme -->');
 };
 
 const canNodeTemplateRun = (templateId) => {
