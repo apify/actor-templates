@@ -3,6 +3,8 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-python:3.13
 
+USER myuser
+
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency installation in the next step,
 # in order to speed up the build.

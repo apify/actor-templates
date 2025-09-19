@@ -4,6 +4,8 @@
 # We are using Python 3.12 because 3.13 required compilation of the packages for the CrewAI setup.
 FROM apify/actor-python:3.12
 
+USER myuser
+
 # Ensure the directory where uv installs is on PATH
 #ENV PATH="/root/.local/bin:$PATH"
 

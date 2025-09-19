@@ -31,6 +31,4 @@ RUN npm --quiet set progress=false \
 # for most source file changes.
 COPY --chown=myuser:myuser . ./
 
-# Run the image. If you know you won't need headful browsers,
-# you can remove the XVFB start script for a micro perf gain.
-CMD ./start_xvfb_and_run_cmd.sh && npm start --silent
+CMD npm start --silent

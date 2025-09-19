@@ -55,6 +55,4 @@ COPY --from=builder --chown=myuser:myuser /home/myuser/dist ./dist
 # for most source file changes.
 COPY --chown=myuser:myuser . ./
 
-# Run the image. If you know you won't need headful browsers,
-# you can remove the XVFB start script for a micro perf gain.
 CMD npm run start:prod --silent
