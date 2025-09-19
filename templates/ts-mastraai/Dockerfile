@@ -39,7 +39,7 @@ RUN npm --quiet set progress=false \
     && rm -r ~/.npm
 
 # Copy built JS files from builder image
-COPY --from=builder --chown=myuser:myuser /home/myuser/dist ./dist
+COPY --from=builder --chown=myuser:myuser /usr/src/app/dist ./dist
 
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after NPM install, quick build will be really fast

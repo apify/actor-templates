@@ -7,11 +7,7 @@ FROM apify/actor-node:22
 RUN npm ls crawlee apify puppeteer playwright
 
 # Install the dependencies as root
-USER root
-
 RUN apk add g++ make py3-pip
-
-USER myuser
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
