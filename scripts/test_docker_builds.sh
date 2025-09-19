@@ -1,4 +1,4 @@
-#!/opt/homebrew/bin/bash
+#!/bin/bash
 
 # Find all Dockerfiles in the templates directory
 mapfile -t dockerfiles < <(find templates -name "Dockerfile" -type f)
