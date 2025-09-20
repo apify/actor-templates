@@ -96,7 +96,7 @@ async function mcpPostHandler(req: Request, res: Response) {
 
             // Charge for the request
             await chargeMessageRequest(req.body);
-            
+
             await transport.handleRequest(req, res, req.body);
             return; // Already handled
         } else {
@@ -211,11 +211,21 @@ export async function startServer(options: {
     getMcpServer = async () => getMCPServerWithCommand(command);
 
     const app = express();
-    
+
     // Redirect to Apify favicon
     app.get('/favicon.ico', (_req: Request, res: Response) => {
         res.writeHead(301, { Location: "https://apify.com/favicon.ico" });
         res.end();
+    });
+
+    // Readiness probe handler
+    app.get('/', (req: Request, res: Response) => {
+        if (req.headers['x-apify-container-server-readiness-probe']) {
+            console.log('Readiness probe');
+            res.end('ok\n');
+            return;
+        }
+        res.status(404).end();
     });
 
     // Return the Apify OAuth authorization server metadata to allow the MCP client to authenticate using OAuth
