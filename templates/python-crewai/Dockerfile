@@ -6,9 +6,6 @@ FROM apify/actor-python:3.12
 
 USER myuser
 
-# Ensure the directory where uv installs is on PATH
-#ENV PATH="/root/.local/bin:$PATH"
-
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency installation in the next step,
 # in order to speed up the build.

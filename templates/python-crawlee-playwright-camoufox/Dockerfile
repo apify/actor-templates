@@ -4,8 +4,6 @@
 # Currently camoufox has issues installing on Python 3.13
 FROM apify/actor-python-playwright:3.12
 
-USER myuser
-
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency install in the next step,
 # in order to speed up the build
