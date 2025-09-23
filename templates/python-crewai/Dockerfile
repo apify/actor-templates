@@ -4,8 +4,6 @@
 # We are using Python 3.12 because 3.13 required compilation of the packages for the CrewAI setup.
 FROM apify/actor-python:3.12
 
-USER myuser
-
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency installation in the next step,
 # in order to speed up the build.
