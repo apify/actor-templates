@@ -1,4 +1,5 @@
 ## Python CrewAI template
+
 <!-- This is an Apify template readme -->
 
 A template for [CrewAI](https://www.crewai.com/) projects in Python for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [agent](https://docs.crewai.com/concepts/agents) that calls [Actors](https://apify.com/actors) via `ApifyActorsTool` in a workflow using the [CrewAI Apify Actors integration](https://docs.apify.com/platform/integrations/crewai).
@@ -12,7 +13,6 @@ An [agent](https://docs.crewai.com/concepts/agents) is created and given a set o
 ## How to use
 
 Tools are provided via `crewai_tools` and configured in `src/main.py`. To change tools, edit the `tools` list in `src/main.py`. You can also update the agent prompts in `src/main.py`. For more information, refer to the [CrewAI agent documentation](https://docs.crewai.com/concepts/agents) and the [CrewAI tools documentation](https://docs.crewai.com/concepts/tools).
-
 
 #### Pay Per Event
 

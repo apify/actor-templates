@@ -1,4 +1,5 @@
 ## LangGraph.js agent template
+
 <!-- This is an Apify template readme -->
 
 > [LangGraph](https://langchain-ai.github.io/langgraphjs/) is a library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows.

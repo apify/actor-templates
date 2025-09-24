@@ -20,23 +20,23 @@ export async function chargeMessageRequest(request: { method: string }): Promise
     if (method.endsWith('/list')) {
         await Actor.charge({ eventName: 'list-request' });
         log.info(`Charged for list request: ${method}`);
-    // Charge for tool-related requests
+        // Charge for tool-related requests
     } else if (method.startsWith('tools/')) {
         await Actor.charge({ eventName: 'tool-request' });
         log.info(`Charged for tool request: ${method}`);
-    // Charge for resource-related requests
+        // Charge for resource-related requests
     } else if (method.startsWith('resources/')) {
         await Actor.charge({ eventName: 'resource-request' });
         log.info(`Charged for resource request: ${method}`);
-    // Charge for prompt-related requests
+        // Charge for prompt-related requests
     } else if (method.startsWith('prompts/')) {
         await Actor.charge({ eventName: 'prompt-request' });
         log.info(`Charged for prompt request: ${method}`);
-    // Charge for completion-related requests
+        // Charge for completion-related requests
     } else if (method.startsWith('completion/')) {
         await Actor.charge({ eventName: 'completion-request' });
         log.info(`Charged for completion request: ${method}`);
-    // Do not charge for other methods
+        // Do not charge for other methods
     } else {
         log.info(`Not charging for method: ${method}`);
     }

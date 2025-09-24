@@ -1,4 +1,5 @@
 ## 🚀 Python MCP Server Template
+
 <!-- This is an Apify template readme -->
 
 A Python template for deploying and monetizing a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server in the cloud using the [Apify platform](https://docs.apify.com/platform/actors).
@@ -63,6 +64,7 @@ This template uses the [Pay Per Event (PPE)](https://docs.apify.com/platform/act
 The template supports multiple charging approaches that you can customize based on your needs:
 
 #### 1. Generic MCP charging
+
 Charge for standard MCP operations with flat rates:
 
 ```json
@@ -91,6 +93,7 @@ Charge for standard MCP operations with flat rates:
 ```
 
 #### 2. Domain-specific charging (arXiv example)
+
 Charge different amounts for different tools based on computational cost:
 
 ```json
@@ -124,6 +127,7 @@ Charge different amounts for different tools based on computational cost:
 ```
 
 #### 3. No charging (free service)
+
 Comment out all charging lines in the code for a free service.
 
 ### How to implement charging
@@ -132,27 +136,27 @@ Comment out all charging lines in the code for a free service.
 
 2. **Enable charging in code** by uncommenting the appropriate lines in `src/mcp_gateway.py`:
 
-   ```python
-   # For generic charging:
-   await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
+    ```python
+    # For generic charging:
+    await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
 
-   # For domain-specific charging:
-   if tool_name == 'search_papers':
-       await charge_mcp_operation(actor_charge_function, ChargeEvents.SEARCH_PAPERS)
-   ```
+    # For domain-specific charging:
+    if tool_name == 'search_papers':
+        await charge_mcp_operation(actor_charge_function, ChargeEvents.SEARCH_PAPERS)
+    ```
 
 3. **Add custom events** to `src/const.py` if needed:
 
-   ```python
-   class ChargeEvents(str, Enum):
-       # Your custom events
-       CUSTOM_OPERATION = 'custom-operation'
-   ```
+    ```python
+    class ChargeEvents(str, Enum):
+        # Your custom events
+        CUSTOM_OPERATION = 'custom-operation'
+    ```
 
 4. **Set up PPE model** on Apify:
-   - Go to your Actor's **Publication settings**
-   - Set the **Pricing model** to `Pay per event`
-   - Add your pricing schema from `pay_per_event.json`
+    - Go to your Actor's **Publication settings**
+    - Set the **Pricing model** to `Pay per event`
+    - Add your pricing schema from `pay_per_event.json`
 
 ### Authorized tools
 
@@ -176,6 +180,7 @@ TOOL_WHITELIST = {
 ```
 
 **To add new tools:**
+
 1. Add charge event to `ChargeEvents` enum
 2. Add tool entry to `TOOL_WHITELIST` dictionary with format: `tool_name: (event_name, count)`
 3. Update pricing in `pay_per_event.json`

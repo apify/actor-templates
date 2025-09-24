@@ -1,4 +1,5 @@
 ## TypeScript Mastra agent template
+
 <!-- This is an Apify template readme -->
 
 A template for [Mastra](https://mastra.ai/) projects in TypeScript for building AI agents with [Apify Actors](https://apify.com/actors). The template provides a basic structure and an example [agent](https://mastra.ai/docs/agents/00-overview) that calls [Actors](https://apify.com/actors) as tools in a workflow.
