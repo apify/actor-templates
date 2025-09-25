@@ -65,7 +65,7 @@ async function mcpPostHandler(req: Request, res: Response) {
                         sessionId: initializedSessionId,
                     });
                     transports[initializedSessionId] = transport;
-                }
+                },
             });
 
             // Charge for each message request received on this transport
@@ -96,7 +96,7 @@ async function mcpPostHandler(req: Request, res: Response) {
 
             // Charge for the request
             await chargeMessageRequest(req.body);
-            
+
             await transport.handleRequest(req, res, req.body);
             return; // Already handled
         } else {
@@ -133,7 +133,7 @@ async function mcpPostHandler(req: Request, res: Response) {
             });
         }
     }
-};
+}
 
 /**
  * Handles GET requests to the /mcp endpoint for streaming responses.
@@ -160,8 +160,7 @@ async function mcpGetHandler(req: Request, res: Response) {
 
     const transport = transports[sessionId] as StreamableHTTPServerTransport;
     await transport.handleRequest(req, res);
-};
-
+}
 
 /**
  * Handles DELETE requests to the /mcp endpoint for session termination.
@@ -183,14 +182,13 @@ async function mcpDeleteHandler(req: Request, res: Response) {
         await transport.handleRequest(req, res);
     } catch (error) {
         log.error('Error handling session termination:', {
-            error
+            error,
         });
         if (!res.headersSent) {
             res.status(500).send('Error processing session termination');
         }
     }
-};
-
+}
 
 /**
  * Starts the MCP HTTP server and sets up all endpoints.
@@ -198,10 +196,7 @@ async function mcpDeleteHandler(req: Request, res: Response) {
  * - Registers all HTTP endpoints.
  * - Handles graceful shutdown and resource cleanup.
  */
-export async function startServer(options: {
-    serverPort: number;
-    command: string[];
-}) {
+export async function startServer(options: { serverPort: number; command: string[] }) {
     log.info('Starting MCP HTTP Server', {
         serverPort: options.serverPort,
         command: options.command,
@@ -211,10 +206,10 @@ export async function startServer(options: {
     getMcpServer = async () => getMCPServerWithCommand(command);
 
     const app = express();
-    
+
     // Redirect to Apify favicon
     app.get('/favicon.ico', (_req: Request, res: Response) => {
-        res.writeHead(301, { Location: "https://apify.com/favicon.ico" });
+        res.writeHead(301, { Location: 'https://apify.com/favicon.ico' });
         res.end();
     });
 
@@ -249,7 +244,7 @@ export async function startServer(options: {
                 delete transports[sessionId];
             } catch (error) {
                 log.error(`Error closing transport for session ${sessionId}:`, {
-                    error
+                    error,
                 });
             }
         }
