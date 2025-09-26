@@ -208,6 +208,16 @@ export async function startServer(options: { serverPort: number; command: string
         res.end();
     });
 
+    // Readiness probe handler
+    app.get('/', (req: Request, res: Response) => {
+        if (req.headers['x-apify-container-server-readiness-probe']) {
+            console.log('Readiness probe');
+            res.end('ok\n');
+            return;
+        }
+        res.status(404).end();
+    });
+
     // Return the Apify OAuth authorization server metadata to allow the MCP client to authenticate using OAuth
     app.get('/.well-known/oauth-authorization-server', async (_req: Request, res: Response) => {
         // Some MCP clients do not follow redirects, so we need to fetch the data and return it directly.
