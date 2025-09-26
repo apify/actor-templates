@@ -8,7 +8,7 @@
     },
     "dependencies": {
         "@ai-sdk/openai": "^1.2.1",
-        "@mastra/core": "^0.4.4",
+        "@mastra/core": "^0.18.0",
         "apify": "^3.4.2",
         "mastra": "^0.2.8",
         "zod": "^3.25.67"
