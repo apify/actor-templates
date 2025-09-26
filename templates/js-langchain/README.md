@@ -1,5 +1,7 @@
 ## LangChain.js template
 
+<!-- This is an Apify template readme -->
+
 > LangChain is a framework for developing applications powered by language models.
 
 This example template illustrates how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model. All of this is within a single Apify Actor and slightly over a hundred lines of code.

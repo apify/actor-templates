@@ -1,5 +1,7 @@
 ## Playwright test template
 
+<!-- This is an Apify template readme -->
+
 Run your Playwright tests on the Apify platform effectively and easily. Just set up your test environment using a user-friendly UI and let the platform do the rest.
 
 > Note: This is a custom version of Playwright Test Runner Actor. Unlike the original Actor, this version reads test suite files from the tests folder and does not allow you to pass the test files via Apify input.

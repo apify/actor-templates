@@ -1,5 +1,7 @@
 ## PlaywrightCrawler template
 
+<!-- This is an Apify template readme -->
+
 This template is a production-ready boilerplate for developing an [Actor](https://apify.com/actors) with `PlaywrightCrawler`. It has [Camoufox](https://github.com/daijro/camoufox) - a stealthy fork of Firefox - preinstalled. Note that Camoufox might consume more resources than the default Playwright-bundled Chromium or Firefox.
 
 Use this template to bootstrap your projects using the most up-to-date code.

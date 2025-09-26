@@ -1,5 +1,7 @@
 ## Python LlamaIndex Agent Template
 
+<!-- This is an Apify template readme -->
+
 Create a new [AI Agent](https://blog.apify.com/what-are-ai-agents) with [LlamaIndex](https://www.llamaindex.ai/) using this template.
 It provides a basic structure for the Agent with the Apify SDK and allows you to easily add your own functionality.
 

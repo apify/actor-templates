@@ -1,5 +1,7 @@
 ## PydanticAI template
 
+<!-- This is an Apify template readme -->
+
 Start a new [AI agent](https://blog.apify.com/what-are-ai-agents/) based project in Python with our PydanticAI project template. It provides a basic structure for the [Actor](https://apify.com/actors) using the [Apify SDK](https://docs.apify.com/sdk/python/) and [PydanticAI](https://ai.pydantic.dev/), and allows you to add your own functionality with minimal setup.
 
 ## How it works

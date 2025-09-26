@@ -1,5 +1,7 @@
 ## Python Playwright template
 
+<!-- This is an Apify template readme -->
+
 ## Included features
 
 - **[Apify SDK](https://docs.apify.com/sdk/python/)** for Python - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in Python
