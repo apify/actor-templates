@@ -94,9 +94,6 @@ async function mcpPostHandler(req: Request, res: Response) {
             const server = await getMcpServer();
             await server.connect(transport);
 
-            // Charge for the request
-            await chargeMessageRequest(req.body);
-
             await transport.handleRequest(req, res, req.body);
             return; // Already handled
         } else {
@@ -112,8 +109,6 @@ async function mcpPostHandler(req: Request, res: Response) {
             return;
         }
 
-        // Charge for the request
-        await chargeMessageRequest(req.body);
         // Handle the request with existing transport - no need to reconnect
         // The existing transport is already connected to the server
         await transport.handleRequest(req, res, req.body);
