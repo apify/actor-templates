@@ -10,7 +10,7 @@
         "@ai-sdk/openai": "^1.2.1",
         "@mastra/core": "^0.18.0",
         "apify": "^3.4.2",
-        "mastra": "^0.2.8",
+        "mastra": "^0.13.2",
         "zod": "^3.25.67"
     },
     "devDependencies": {
