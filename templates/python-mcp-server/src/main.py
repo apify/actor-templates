@@ -72,8 +72,6 @@ async def main() -> None:
     async with Actor:
         # Initialize and charge for Actor startup
         Actor.log.info('Starting MCP Server Actor')
-        await Actor.charge(ChargeEvents.ACTOR_START.value)
-
         url = os.environ.get('ACTOR_STANDBY_URL', HOST)
         if not STANDBY_MODE:
             msg = (

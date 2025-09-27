@@ -66,25 +66,10 @@ Charge for standard MCP operations with flat rates:
 
 ```json
 {
-    "actor-start": {
-        "eventTitle": "MCP server startup",
-        "eventDescription": "Initial fee for starting the Actor MCP Server",
-        "eventPriceUsd": 0.1
-    },
     "tool-call": {
         "eventTitle": "MCP tool call",
         "eventDescription": "Fee for executing MCP tools",
         "eventPriceUsd": 0.05
-    },
-    "resource-read": {
-        "eventTitle": "MCP resource access",
-        "eventDescription": "Fee for accessing full content or resources",
-        "eventPriceUsd": 0.0001
-    },
-    "prompt-get": {
-        "eventTitle": "MCP prompt processing",
-        "eventDescription": "Fee for processing AI prompts",
-        "eventPriceUsd": 0.0001
     }
 }
 ```
@@ -94,11 +79,6 @@ Charge different amounts for different tools based on computational cost:
 
 ```json
 {
-    "actor-start": {
-        "eventTitle": "arXiv MCP server startup",
-        "eventDescription": "Initial fee for starting the arXiv MCP Server Actor",
-        "eventPriceUsd": 0.1
-    },
     "search_papers": {
         "eventTitle": "arXiv paper search",
         "eventDescription": "Fee for searching papers on arXiv",

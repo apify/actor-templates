@@ -13,10 +13,6 @@ class ChargeEvents(str, Enum):
     """
 
     # Generic MCP operations (can be used for any MCP server)
-    ACTOR_START = 'actor-start'
-    RESOURCE_READ = 'resource-read'
-    TOOL_LIST = 'tool-list'
-    PROMPT_GET = 'prompt-get'
     TOOL_CALL = 'tool-call'
 
     # arXiv-specific operations (example for domain-specific charging)
