@@ -4,7 +4,7 @@ import os
 
 from apify import Actor
 
-from .const import TOOL_WHITELIST, ChargeEvents
+from .const import TOOL_WHITELIST
 from .models import ServerType
 from .server import ProxyServer
 
