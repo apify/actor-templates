@@ -21,9 +21,6 @@ await Actor.init();
  * Actor code
  */
 
-// Charge for Actor start
-await Actor.charge({ eventName: 'actor-start' });
-
 // Handle input
 const {
     // The query default value is provided only for template testing purposes.
