@@ -1,7 +1,7 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
-apify < 3.0.0
+apify < 4.0.0
 beautifulsoup4[lxml]
 httpx
 types-beautifulsoup4
