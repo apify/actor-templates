@@ -3,10 +3,12 @@
 # You can also use any other image from Docker Hub.
 FROM apify/actor-python:3.13
 
+USER myuser
+
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency installation in the next step,
 # in order to speed up the build.
-COPY requirements.txt ./
+COPY --chown=myuser:myuser requirements.txt ./
 
 # Install the packages specified in requirements.txt,
 # print the installed Python version, pip version,
@@ -23,7 +25,7 @@ RUN echo "Python version:" \
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after installing the dependencies, quick builds will be really fast
 # for most source file changes.
-COPY . ./
+COPY --chown=myuser:myuser . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
 RUN python3 -m compileall -q src/

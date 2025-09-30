@@ -8,7 +8,7 @@ RUN npm ls crawlee apify puppeteer playwright
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
-COPY --chown=myuser package*.json Dockerfile ./
+COPY --chown=myuser:myuser package*.json Dockerfile ./
 
 # Check Puppeteer version is the same as the one from base image.
 RUN node check-puppeteer-version.mjs
@@ -18,7 +18,7 @@ RUN npm install --include=dev --audit=false
 
 # Next, copy the source files using the user set
 # in the base image.
-COPY --chown=myuser . ./
+COPY --chown=myuser:myuser . ./
 
 # Install all dependencies and build the project.
 # Don't audit to speed up the installation.
@@ -32,7 +32,7 @@ RUN npm ls crawlee apify puppeteer playwright
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
-COPY --chown=myuser package*.json ./
+COPY --chown=myuser:myuser package*.json ./
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
@@ -48,14 +48,11 @@ RUN npm --quiet set progress=false \
     && rm -r ~/.npm
 
 # Copy built JS files from builder image
-COPY --from=builder --chown=myuser /home/myuser/dist ./dist
+COPY --from=builder --chown=myuser:myuser /home/myuser/dist ./dist
 
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after NPM install, quick build will be really fast
 # for most source file changes.
-COPY --chown=myuser . ./
+COPY --chown=myuser:myuser . ./
 
-
-# Run the image. If you know you won't need headful browsers,
-# you can remove the XVFB start script for a micro perf gain.
-CMD ./start_xvfb_and_run_cmd.sh && npm run start:prod --silent
+CMD npm run start:prod --silent
