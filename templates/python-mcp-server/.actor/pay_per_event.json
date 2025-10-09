@@ -1,9 +1,4 @@
 {
-    "actor-start": {
-        "eventTitle": "MCP server startup",
-        "eventDescription": "Initial fee for starting the MCP Server Actor",
-        "eventPriceUsd": 0.1
-    },
     "search-papers": {
         "eventTitle": "arXiv paper search",
         "eventDescription": "Fee for searching papers on arXiv using the search_papers tool.",

@@ -20,6 +20,7 @@ This template enables you to:
     - Prompt operations
     - List operations
 - **Gateway**: Acts as a controlled entry point to MCP servers with charging and authorization logic
+- **Session management**: Automatic session timeout and cleanup for idle connections (see [Session management challenges](#session-management-challenges) for details)
 
 ## Quick Start
 
@@ -69,11 +70,6 @@ Charge for standard MCP operations with flat rates:
 
 ```json
 {
-    "actor-start": {
-        "eventTitle": "MCP server startup",
-        "eventDescription": "Initial fee for starting the Actor MCP Server",
-        "eventPriceUsd": 0.1
-    },
     "tool-call": {
         "eventTitle": "MCP tool call",
         "eventDescription": "Fee for executing MCP tools",
@@ -98,29 +94,24 @@ Charge different amounts for different tools based on computational cost:
 
 ```json
 {
-    "actor-start": {
-        "eventTitle": "arXiv MCP server startup",
-        "eventDescription": "Initial fee for starting the arXiv MCP Server Actor",
-        "eventPriceUsd": 0.1
-    },
     "search_papers": {
         "eventTitle": "arXiv paper search",
-        "eventDescription": "Fee for searching papers on arXiv",
+        "eventDescription": "Fee for searching papers on arXiv using the search_papers tool.",
         "eventPriceUsd": 0.001
     },
     "list_papers": {
         "eventTitle": "arXiv paper listing",
-        "eventDescription": "Fee for listing available papers",
+        "eventDescription": "Fee for listing available papers using the list_papers tool.",
         "eventPriceUsd": 0.001
     },
     "download_paper": {
         "eventTitle": "arXiv paper download",
-        "eventDescription": "Fee for downloading a paper from arXiv",
-        "eventPriceUsd": 0.001
+        "eventDescription": "Fee for downloading a paper from arXiv using the download_paper tool.",
+        "eventPriceUsd": 0.01
     },
     "read_paper": {
         "eventTitle": "arXiv paper reading",
-        "eventDescription": "Fee for reading the full content of a paper",
+        "eventDescription": "Fee for reading the full content of a paper using the read_paper tool.",
         "eventPriceUsd": 0.01
     }
 }
@@ -255,6 +246,8 @@ Key components:
 - `create_gateway`: Creates an MCP server instance that acts as a gateway
 - `charge_mcp_operation`: Handles charging for different MCP operations
 - `TOOL_WHITELIST`: Dictionary mapping tool names to (event_name, count) tuples for authorization and charging
+- `ProxyServer`: Main server class with session management and timeout handling
+- `SESSION_TIMEOUT_SECS`: Configurable timeout for idle session termination
 
 ### MCP operations
 
@@ -268,6 +261,18 @@ The MCP gateway supports all standard MCP operations:
 - `read_resource()`: Read a specific resource
 
 Each operation can be configured for charging in the PPE model.
+
+## Session management challenges
+
+MCP connections may not properly close when clients disconnect, keeping containers alive indefinitely.
+- Containers remain running even after client disconnection
+- Setting `stateless` mode and `json_response=true` doesn't resolve the issue
+- Only manual session deletion via `DELETE /mcp` properly terminates connections
+
+**Workaround**:
+The template implements automatic session cleanup using internal DELETE requests after a configurable timeout (`SESSION_TIMEOUT_SECS = 300` seconds). This ensures containers are properly terminated when idle.
+
+This is a temporary solution until the MCP specification or client implementations provide a more robust mechanism for session management.
 
 ## 📚 Resources
 
