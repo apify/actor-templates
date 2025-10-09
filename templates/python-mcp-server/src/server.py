@@ -337,7 +337,7 @@ class ProxyServer:
                 await response(scope, receive, send)
                 return
 
-            if scope['method'] not in {'DELETE'}:
+            if scope['method'] == 'DELETE':
                 await session_manager.handle_request(scope, receive, send)  # type: ignore[arg-type]
                 if req_sid := request.headers.get('mcp-session-id'):
                     self._cleanup_session_last_activity(req_sid)
