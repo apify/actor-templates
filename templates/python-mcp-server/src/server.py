@@ -170,13 +170,11 @@ class ProxyServer:
     def _touch_session(self, session_id: str, session_manager: StreamableHTTPSessionManager) -> None:
         """Record activity for a session and (re)schedule inactivity termination."""
         self._session_last_activity[session_id] = time.time()
-        logger.info(f'Touching session {session_id}. Scheduling inactivity kill in {self._session_timeout_secs}s')
 
         # Cancel existing timer if present
         timer = self._session_timers.get(session_id)
         if timer and not timer.done():
             timer.cancel()
-            logger.info(f'Cancelled previous inactivity timer for session {session_id}')
 
         async def _idle_close() -> None:
             try:
@@ -211,7 +209,6 @@ class ProxyServer:
                     # Ignore internal response
                     return
 
-                logger.info(f'Sending internal DELETE for session {session_id}')
                 await session_manager.handle_request(scope, _receive, _send)  # type: ignore[arg-type]
                 self._cleanup_session_last_activity(session_id)
                 self._cleanup_session_timer(session_id)
@@ -360,7 +357,6 @@ class ProxyServer:
 
             # If this was an initialization (no session id in request), capture from response and touch
             if not req_sid and session_id_from_resp['sid']:
-                logger.info(f'Initializing activity tracking for new session: {session_id_from_resp["sid"]}')
                 self._touch_session(session_id_from_resp['sid'], session_manager)
 
         return Starlette(
