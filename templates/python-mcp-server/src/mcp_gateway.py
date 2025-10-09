@@ -151,7 +151,6 @@ async def create_gateway(  # noqa: PLR0915
                         authorized_tools.append(tool)  # noqa: PERF401
                 tools.tools = authorized_tools
 
-            await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_LIST.value)
             return types.ServerResult(tools)
 
         app.request_handlers[types.ListToolsRequest] = _list_tools
