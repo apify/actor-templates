@@ -225,7 +225,7 @@ Then to specify that output is stored in the key-value store, update `.actor/out
         "files": {
             "type": "string",
             "title": "Files",
-            "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys" // read more template variables in the next section
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys"
         }
     }
 }
