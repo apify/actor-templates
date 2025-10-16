@@ -20,6 +20,23 @@ apify login # first, you need to log in if you haven't already done so
 apify push
 ```
 
+## Project Structure
+
+.actor/
+├── actor.json # Actor config: name, version, env vars, runtime settings
+├── dataset_schena.json # Structure and representation of data produced by an Actor
+├── input_schema.json # Input validation & Console form definition
+└── output_schema.json # Specifies where an Actor stores its output
+src/
+└── main.js # Actor entry point and orchestrator
+storage/ # Local storage (mirrors Cloud during development)
+├── datasets/ # Output items (JSON objects)
+├── key_value_stores/ # Files, config, INPUT
+└── request_queues/ # Pending crawl requests
+Dockerfile # Container image definition
+
+For more information, see the [Actor definition](https://docs.apify.com/platform/actors/development/actor-definition) documentation.
+
 ## How it works
 
 This code is a JavaScript script that uses Cheerio to scrape data from a website. It then stores the website titles in a dataset.
@@ -27,7 +44,7 @@ This code is a JavaScript script that uses Cheerio to scrape data from a website
 - The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of scraped pages is limited by `maxPagesPerCrawl` field from the input schema.
 - The crawler uses `requestHandler` for each URL to extract the data from the page with the Cheerio library and to save the title and URL of each page to the dataset. It also logs out each result that is being saved.
 
-## Features
+## What's included
 
 - **[Apify SDK](https://docs.apify.com/sdk/js)** - toolkit for building [Actors](https://apify.com/actors)
 - **[Crawlee](https://crawlee.dev/)** - web scraping and browser automation library
@@ -38,11 +55,14 @@ This code is a JavaScript script that uses Cheerio to scrape data from a website
 
 ## Resources
 
+- [Quick Start](https://docs.apify.com/platform/actors/development/quick-start) guide for building your first Actor
 - [Video tutorial](https://www.youtube.com/watch?v=yTRHomGg9uQ) on building a scraper using CheerioCrawler
 - [Written tutorial](https://docs.apify.com/academy/web-scraping-for-beginners/challenge) on building a scraper using CheerioCrawler
 - [Web scraping with Cheerio in 2023](https://blog.apify.com/web-scraping-with-cheerio/)
 - How to [scrape a dynamic page](https://blog.apify.com/what-is-a-dynamic-page/) using Cheerio
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive and others
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
-- A short guide on how to create Actors using code templates:
-- [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
+
+## Creating Actors with templates
+
+[How to create Apify Actors with web scraping code templates](https://www.youtube.com/watch?v=u-i-Korzf8w)
