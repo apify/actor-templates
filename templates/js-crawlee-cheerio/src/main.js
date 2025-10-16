@@ -9,7 +9,11 @@ await Actor.init();
 // Structure of input is defined in input_schema.json
 const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } = (await Actor.getInput()) ?? {};
 
+<<<<<<< HEAD
 // Proxy configuration to rotate IP addresses and prevent blocking (https://docs.apify.com/platform/proxy)
+=======
+// Proxy configuration to rotate IP addresses and prevent blocking (Read more at https://docs.apify.com/platform/proxy)
+>>>>>>> 5e49a26 (feat: Review of templates #1)
 const proxyConfiguration = await Actor.createProxyConfiguration();
 
 const crawler = new CheerioCrawler({

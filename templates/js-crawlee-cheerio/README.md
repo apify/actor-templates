@@ -2,7 +2,7 @@
 
 <!-- This is an Apify template readme -->
 
-This template example was built with [Crawlee](https://crawlee.dev/) to scrape data from a website using [Cheerio](https://cheerio.js.org/) wrapped into [CheerioCrawler](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler).
+A JavaScript Crawlee & CheerioCrawler Actor Template for scraping data from websites.
 
 ## Quick Start
 
