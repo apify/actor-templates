@@ -8,5 +8,6 @@
         "templateId": "js-crawlee-cheerio"
     },
     "input": "./input_schema.json",
+    "output": "./output_schema.json",
     "dockerfile": "../Dockerfile"
 }

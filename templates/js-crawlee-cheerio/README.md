@@ -1,16 +1,24 @@
-## JavaScript Crawlee & CheerioCrawler template
+# JavaScript Crawlee & CheerioCrawler Actor Template
 
 <!-- This is an Apify template readme -->
 
-This template example was built with [Crawlee](https://crawlee.dev/) to scrape data from a website using [Cheerio](https://cheerio.js.org/) wrapped into [CheerioCrawler](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler).
+A JavaScript Crawlee & CheerioCrawler Actor Template for scraping data from websites.
 
-## Included features
+## Quick Start
 
-- **[Apify SDK](https://docs.apify.com/sdk/js)** - toolkit for building [Actors](https://apify.com/actors)
-- **[Crawlee](https://crawlee.dev/)** - web scraping and browser automation library
-- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
-- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
-- **[Cheerio](https://cheerio.js.org/)** - a fast, flexible & elegant library for parsing and manipulating HTML and XML
+Once you've installed the dependencies, start the Actor:
+
+```bash
+apify run
+```
+
+Once your Actor is ready, you can push it to the Apify Console:
+
+```bash
+apify login # first, you need to log in if you haven't already done so
+
+apify push
+```
 
 ## How it works
 
@@ -18,6 +26,15 @@ This code is a JavaScript script that uses Cheerio to scrape data from a website
 
 - The crawler starts with URLs provided from the input `startUrls` field defined by the input schema. Number of scraped pages is limited by `maxPagesPerCrawl` field from the input schema.
 - The crawler uses `requestHandler` for each URL to extract the data from the page with the Cheerio library and to save the title and URL of each page to the dataset. It also logs out each result that is being saved.
+
+## Features
+
+- **[Apify SDK](https://docs.apify.com/sdk/js)** - toolkit for building [Actors](https://apify.com/actors)
+- **[Crawlee](https://crawlee.dev/)** - web scraping and browser automation library
+- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
+- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
+- **[Cheerio](https://cheerio.js.org/)** - a fast, flexible & elegant library for parsing and manipulating HTML and XML
+- **[Proxy configuration](https://docs.apify.com/platform/proxy)** - rotate IP addresses to prevent blocking
 
 ## Resources
 
@@ -28,5 +45,4 @@ This code is a JavaScript script that uses Cheerio to scrape data from a website
 - [Integration with Zapier](https://apify.com/integrations), Make, Google Drive and others
 - [Video guide on getting data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
 - A short guide on how to create Actors using code templates:
-
-[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
+- [web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
