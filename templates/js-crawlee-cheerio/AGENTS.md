@@ -1,6 +1,6 @@
 # Apify Actors Development Guide
 
-Important: before you begin, fill out the `model` property in the `meta` section in `.actor/actor.json`. Change <FILL-IN-MODEL> to the currently used model.
+Important: Before you begin, fill in the model property in the meta section of `.actor/actor.json`. Replace it with the model you're currently using. This helps Apify monitor and improve AGENTS.md for specific LLM models.
 
 ## What are Apify Actors?
 
@@ -11,7 +11,7 @@ Important: before you begin, fill out the `model` property in the `meta` section
 
 - Accept well-defined JSON input
 - Perform isolated tasks (web scraping, automation, data processing)
-- Produce structured JSON output
+- Produce structured JSON output to datasets and/or store data in key-value stores
 - Can run from seconds to hours or even indefinitely
 - Persist state and can be restarted
 
@@ -35,8 +35,7 @@ Important: before you begin, fill out the `model` property in the `meta` section
 ## Don't
 
 - do not rely on `Dataset.getInfo()` for final counts on Cloud platform
-- do not use Apify Proxy without "External access" plan or test locally first
-- do not use browser crawlers when HTTP/Cheerio works (massive performance cost)
+- do not use browser crawlers when HTTP/Cheerio works (massive performance gains with HTTP)
 - do not hard code values that should be in input schema or environment variables
 - do not skip input validation or error handling
 - do not overload servers - use appropriate concurrency and delays
@@ -157,81 +156,40 @@ The input schema defines the input parameters for an Actor. It's a JSON object c
 
 ## Actor Output Schema
 
-The output schema specifies where an Actor stores its output and defines templates for accessing that output.
+The Actor output schema builds upon the schemas for the dataset and key-value store. It specifies where an Actor stores its output and defines templates for accessing that output. Apify Console uses these output definitions to display run results.
 
 ### Structure
-
-Specify `output_schema.json` in `.actor/actor.json`:
-
-```json
-{
-    "actorSpecification": 1,
-    "name": "files-scraper",
-    "title": "Files scraper",
-    "version": "1.0.0",
-    "output": "./output_schema.json"
-}
-```
-
-Define `output_schema.json`:
 
 ```json
 {
     "actorOutputSchemaVersion": 1,
-    "title": "Output schema of the files scraper",
+    "title": "<OUTPUT-SCHEMA-TITLE>",
     "properties": { /* define your outputs here */ }
 }
 ```
 
 ### Example
 
-The following example Actor calls `Actor.setValue()` to save two files to the key-value store:
-
-```javascript
-import { Actor } from 'apify';
-// Initialize the JavaScript SDK
-await Actor.init();
-
-/**
- * Store data in key-value store
- */
-await Actor.setValue('document-1.txt', 'my text data', { contentType: 'text/plain' });
-
-await Actor.setValue(`image-1.jpeg`, imageBuffer, { contentType: 'image/jpeg' });
-
-// Exit successfully
-await Actor.exit();
-```
-
-To specify that the Actor is using output schema, update the `.actor/actor.json` file:
-
-```json
-{
-    "actorSpecification": 1,
-    "name": "Actor Name",
-    "title": "Actor Title",
-    "version": "1.0.0",
-    "output": "./output_schema.json"
-}
-```
-
-Then to specify that output is stored in the key-value store, update `.actor/output_schema.json`:
-
 ```json
 {
     "actorOutputSchemaVersion": 1,
-    "title": "Output schema of the Actor",
+    "title": "Output schema of the files scraper",
     "properties": {
         "files": {
             "type": "string",
             "title": "Files",
             "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys"
+        },
+        "dataset": {
+            "type": "string",
+            "title": "Dataset",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
         }
     }
 }
 ```
 
-### Template Variables
+### Output Schema Template Variables
 
 - `links` (object) - Contains quick links to most commonly used URLs
 - `links.publicRunUrl` (string) - Public run url in format `https://console.apify.com/view/runs/:runId`
@@ -246,7 +204,7 @@ Then to specify that output is stored in the key-value store, update `.actor/out
 
 ## Dataset Schema Specification
 
-The dataset schema defines how your Actor's output data is structured, transformed, and displayed in the Output tab UI.
+The dataset schema defines how your Actor's output data is structured, transformed, and displayed in the Output tab in the Apify Console.
 
 ### Example
 
@@ -352,7 +310,37 @@ Then create the dataset schema in `.actor/dataset_schema.json`:
 }
 ```
 
-### Structure Definitions
+### Structure
+
+```json
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "<VIEW_NAME>": {
+            "title": "string (required)",
+            "description": "string (optional)",
+            "transformation": {
+                "fields": ["string (required)"],
+                "unwind": ["string (optional)"],
+                "flatten": ["string (optional)"],
+                "omit": ["string (optional)"],
+                "limit": "integer (optional)",
+                "desc": "boolean (optional)"
+            },
+            "display": {
+                "component": "table (required)",
+                "properties": {
+                    "<FIELD_NAME>": {
+                        "label": "string (optional)",
+                        "format": "text|number|date|link|boolean|image|array|object (optional)"
+                    }
+                }
+            }
+        }
+    }
+}
+```
 
 **Dataset Schema Properties:**
 
@@ -446,7 +434,25 @@ Then create the key-value store schema in `.actor/key_value_store_schema.json`:
 }
 ```
 
-### Structure Definitions
+### Structure
+
+```json
+{
+    "actorKeyValueStoreSchemaVersion": 1,
+    "title": "string (required)",
+    "description": "string (optional)",
+    "collections": {
+        "<COLLECTION_NAME>": {
+            "title": "string (required)",
+            "description": "string (optional)",
+            "key": "string (conditional - use key OR keyPrefix)",
+            "keyPrefix": "string (conditional - use key OR keyPrefix)",
+            "contentTypes": ["string (optional)"],
+            "jsonSchema": "object (optional)"
+        }
+    }
+}
+```
 
 **Key-Value Store Schema Properties:**
 
