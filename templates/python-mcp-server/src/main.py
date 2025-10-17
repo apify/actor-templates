@@ -4,7 +4,7 @@ import os
 
 from apify import Actor
 
-from .const import TOOL_WHITELIST
+from .const import SESSION_TIMEOUT_SECS, TOOL_WHITELIST
 from .models import ServerType
 from .server import ProxyServer
 
@@ -37,6 +37,8 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 #     headers={'Authorization':  'Bearer YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
 # )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
+
+session_timeout_secs = int(os.getenv('SESSION_TIMEOUT_SECS', SESSION_TIMEOUT_SECS))
 
 
 async def main() -> None:
@@ -106,6 +108,7 @@ async def main() -> None:
                 server_type,
                 actor_charge_function=Actor.charge,
                 tool_whitelist=TOOL_WHITELIST,
+                session_timeout_secs=session_timeout_secs,
             )
             await proxy_server.start()
         except Exception as e:
