@@ -2,15 +2,10 @@
     "actorOutputSchemaVersion": 1,
     "title": "Output schema of the files scraper",
     "properties": { 
-        "url": {
+        "overview": {
             "type": "string",
-            "title": "URL",
-            "template": "{{links.apiDefaultDatasetUrl}}/items?view=url"
-        },
-        "title": {
-            "type": "string",
-            "title": "Title",
-            "template": "{{links.apiDefaultDatasetUrl}}/items?view=title"
+            "title": "Overview",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
         }
      }
 }

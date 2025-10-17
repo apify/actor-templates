@@ -1,21 +1,6 @@
 {
     "actorSpecification": 1,
-    "fields": {
-        "type": "object",
-        "properties": {
-            "url": {
-                "type": "string",
-                "description": "The URL of the scraped page",
-                "editor": "textfield"
-            },
-            "title": {
-                "type": "string",
-                "description": "The title of the scraped page",
-                "editor": "textfield"
-            }
-        },
-        "required": ["url", "title"]
-    },
+    "fields": {},
     "views": {
         "overview": {
             "title": "Overview",
