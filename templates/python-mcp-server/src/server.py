@@ -125,6 +125,7 @@ class ProxyServer:
         server_type: ServerType,
         actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
         tool_whitelist: dict[str, tuple[str, int]] | None = None,
+        session_timeout_secs: int = SESSION_TIMEOUT_SECS,
     ) -> None:
         """Initialize the proxy server.
 
@@ -141,6 +142,7 @@ class ProxyServer:
             tool_whitelist: Optional dict mapping tool names to (event_name, default_count) tuples.
                            If provided, only whitelisted tools will be allowed and charged.
                            If None, all tools are allowed without specific charging.
+            session_timeout_secs: Inactivity timeout in seconds before terminating idle sessions
         """
         self.server_name = server_name
         self.server_type = server_type
@@ -153,7 +155,7 @@ class ProxyServer:
         self._session_last_activity: dict[str, float] = {}
         self._session_timers: dict[str, asyncio.Task] = {}
         # Inactivity window (seconds) before we terminate a session (DELETE)
-        self._session_timeout_secs: int = SESSION_TIMEOUT_SECS
+        self._session_timeout_secs: int = session_timeout_secs
 
     @staticmethod
     def _log_request(request: Request) -> None:
