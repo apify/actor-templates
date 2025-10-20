@@ -2,7 +2,7 @@
 
 <!-- This is an Apify template readme -->
 
-A JavaScript Crawlee & CheerioCrawler Actor Template for scraping data from websites.
+This template example was built with [Crawlee](https://crawlee.dev/) to scrape data from a website using [Cheerio](https://cheerio.js.org/) wrapped into [CheerioCrawler](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler).
 
 ## Quick Start
 
@@ -22,6 +22,7 @@ apify push
 
 ## Project Structure
 
+```text
 .actor/
 ├── actor.json # Actor config: name, version, env vars, runtime settings
 ├── dataset_schena.json # Structure and representation of data produced by an Actor
@@ -34,6 +35,7 @@ storage/ # Local storage (mirrors Cloud during development)
 ├── key_value_stores/ # Files, config, INPUT
 └── request_queues/ # Pending crawl requests
 Dockerfile # Container image definition
+```
 
 For more information, see the [Actor definition](https://docs.apify.com/platform/actors/development/actor-definition) documentation.
 
