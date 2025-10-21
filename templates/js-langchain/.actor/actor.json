@@ -5,7 +5,8 @@
     "description": "LangChain project in JavaScript.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-langchain"
+        "templateId": "js-langchain",
+        "model": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile",
     "environmentVariables": {

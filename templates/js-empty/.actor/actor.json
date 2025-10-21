@@ -6,7 +6,8 @@
     "version": "0.0",
     "buildTag": "latest",
     "meta": {
-        "templateId": "js-empty"
+        "templateId": "js-empty",
+        "model": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile"
 }

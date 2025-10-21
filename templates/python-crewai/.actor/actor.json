@@ -10,7 +10,8 @@
         "dataset": "./dataset_schema.json"
     },
     "meta": {
-        "templateId": "python-crewai"
+        "templateId": "python-crewai",
+        "model": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile"
 }

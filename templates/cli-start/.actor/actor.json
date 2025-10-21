@@ -6,7 +6,8 @@
     "version": "0.0",
     "buildTag": "latest",
     "meta": {
-        "templateId": "cli-start"
+        "templateId": "cli-start",
+        "model": "<FILL-IN-MODEL>"
     },
     "input": {
         "title": "Actor input",
