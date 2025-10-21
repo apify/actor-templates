@@ -61,6 +61,7 @@ apify help                             # List all commands
 ## Safety and Permissions
 
 Allowed without prompt:
+
 - read files with `Actor.getValue()`, `Dataset.getData()`
 - push data with `Actor.pushData()`, `Dataset.pushData()`
 - set values with `Actor.setValue()`
@@ -68,6 +69,7 @@ Allowed without prompt:
 - run locally with `apify run`
 
 Ask first:
+
 - npm/pip package installations
 - apify push (deployment to cloud)
 - proxy configuration changes (requires paid plan)
@@ -100,7 +102,9 @@ The input schema defines the input parameters for an Actor. It's a JSON object c
     "title": "<INPUT-SCHEMA-TITLE>",
     "type": "object",
     "schemaVersion": 1,
-    "properties": { /* define input fields here */ },
+    "properties": {
+        /* define input fields here */
+    },
     "required": []
 }
 ```
@@ -109,48 +113,48 @@ The input schema defines the input parameters for an Actor. It's a JSON object c
 
 ```json
 {
-  "title": "E-commerce Product Scraper Input",
-  "type": "object",
-  "schemaVersion": 1,
-  "properties": {
-    "startUrls": {
-      "title": "Start URLs",
-      "type": "array",
-      "description": "URLs to start scraping from (category pages or product pages)",
-      "editor": "requestListSources",
-      "default": [{"url": "https://example.com/category"}],
-      "prefill": [{"url": "https://example.com/category"}]
+    "title": "E-commerce Product Scraper Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "URLs to start scraping from (category pages or product pages)",
+            "editor": "requestListSources",
+            "default": [{ "url": "https://example.com/category" }],
+            "prefill": [{ "url": "https://example.com/category" }]
+        },
+        "followVariants": {
+            "title": "Follow Product Variants",
+            "type": "boolean",
+            "description": "Whether to scrape product variants (different colors, sizes)",
+            "default": true
+        },
+        "maxRequestsPerCrawl": {
+            "title": "Max Requests per Crawl",
+            "type": "integer",
+            "description": "Maximum number of pages to scrape (0 = unlimited)",
+            "default": 1000,
+            "minimum": 0
+        },
+        "proxyConfiguration": {
+            "title": "Proxy Configuration",
+            "type": "object",
+            "description": "Proxy settings for anti-bot protection",
+            "editor": "proxy",
+            "default": { "useApifyProxy": false }
+        },
+        "locale": {
+            "title": "Locale",
+            "type": "string",
+            "description": "Language/country code for localized content",
+            "default": "cs",
+            "enum": ["cs", "en", "de", "sk"],
+            "enumTitles": ["Czech", "English", "German", "Slovak"]
+        }
     },
-    "followVariants": {
-      "title": "Follow Product Variants",
-      "type": "boolean",
-      "description": "Whether to scrape product variants (different colors, sizes)",
-      "default": true
-    },
-    "maxRequestsPerCrawl": {
-      "title": "Max Requests per Crawl",
-      "type": "integer",
-      "description": "Maximum number of pages to scrape (0 = unlimited)",
-      "default": 1000,
-      "minimum": 0
-    },
-    "proxyConfiguration": {
-      "title": "Proxy Configuration",
-      "type": "object",
-      "description": "Proxy settings for anti-bot protection",
-      "editor": "proxy",
-      "default": {"useApifyProxy": false}
-    },
-    "locale": {
-      "title": "Locale",
-      "type": "string",
-      "description": "Language/country code for localized content",
-      "default": "cs",
-      "enum": ["cs", "en", "de", "sk"],
-      "enumTitles": ["Czech", "English", "German", "Slovak"]
-    }
-  },
-  "required": ["startUrls"]
+    "required": ["startUrls"]
 }
 ```
 
@@ -164,7 +168,9 @@ The Actor output schema builds upon the schemas for the dataset and key-value st
 {
     "actorOutputSchemaVersion": 1,
     "title": "<OUTPUT-SCHEMA-TITLE>",
-    "properties": { /* define your outputs here */ }
+    "properties": {
+        /* define your outputs here */
+    }
 }
 ```
 
@@ -465,16 +471,17 @@ Then create the key-value store schema in `.actor/key_value_store_schema.json`:
 
 - `title` (string, required) - Collection title shown in UI tabs
 - `description` (string, optional) - Description appearing in UI tooltips
-- `key` (string, conditional*) - Single specific key for this collection
-- `keyPrefix` (string, conditional*) - Prefix for keys included in this collection
+- `key` (string, conditional\*) - Single specific key for this collection
+- `keyPrefix` (string, conditional\*) - Prefix for keys included in this collection
 - `contentTypes` (string[], optional) - Allowed content types for validation
 - `jsonSchema` (object, optional) - JSON Schema Draft 07 format for `application/json` content type validation
 
-*Either `key` or `keyPrefix` must be specified for each collection, but not both.
+\*Either `key` or `keyPrefix` must be specified for each collection, but not both.
 
 ## Apify MCP Tools
 
 If MCP server is configured, use these tools for documentation:
+
 - `search-apify-docs` - Search documentation
 - `fetch-apify-docs` - Get full doc pages
 
