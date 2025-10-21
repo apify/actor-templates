@@ -471,12 +471,12 @@ Then create the key-value store schema in `.actor/key_value_store_schema.json`:
 
 - `title` (string, required) - Collection title shown in UI tabs
 - `description` (string, optional) - Description appearing in UI tooltips
-- `key` (string, conditional\*) - Single specific key for this collection
-- `keyPrefix` (string, conditional\*) - Prefix for keys included in this collection
+- `key` (string, conditional) - Single specific key for this collection
+- `keyPrefix` (string, conditional) - Prefix for keys included in this collection
 - `contentTypes` (string[], optional) - Allowed content types for validation
 - `jsonSchema` (object, optional) - JSON Schema Draft 07 format for `application/json` content type validation
 
-\*Either `key` or `keyPrefix` must be specified for each collection, but not both.
+Either `key` or `keyPrefix` must be specified for each collection, but not both.
 
 ## Apify MCP Tools
 
