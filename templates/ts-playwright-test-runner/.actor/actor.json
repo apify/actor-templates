@@ -6,7 +6,8 @@
     "version": "0.0",
     "buildTag": "latest",
     "meta": {
-        "templateId": "ts-playwright-test-runner"
+        "templateId": "ts-playwright-test-runner",
+        "model": "<FILL-IN-MODEL>"
     },
     "storages": {
         "dataset": "./output_schema.json"

@@ -45,9 +45,13 @@ const checkCommonTemplateStructure = (templateId) => {
 
     const actorJson = JSON5.parse(fs.readFileSync(actorJsonPath, 'utf8'));
     expect(actorJson.meta?.templateId).toBe(templateId);
+    expect(actorJson.meta?.model).toBeDefined();
 
     const readmePath = path.join('README.md');
     expect(fs.existsSync(readmePath)).toBe(true);
+
+    const agentMdPath = path.join('AGENTS.md');
+    expect(fs.existsSync(agentMdPath)).toBe(true);
 
     // In order to detect if user changed the readme of his actor, we add a comment to the readme
     const readme = fs.readFileSync(readmePath, 'utf8');

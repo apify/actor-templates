@@ -5,7 +5,8 @@
     "description": "LangGraph agent in JavaScript for answering questions via web search.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-langgraph-agent"
+        "templateId": "js-langgraph-agent",
+        "model": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile",
     "environmentVariables": {

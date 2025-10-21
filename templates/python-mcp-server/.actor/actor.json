@@ -7,7 +7,8 @@
     "buildTag": "latest",
     "usesStandbyMode": true,
     "meta": {
-        "templateId": "python-mcp-server"
+        "templateId": "python-mcp-server",
+        "model": "<FILL-IN-MODEL>"
     },
     "input": {
         "title": "Actor input schema",

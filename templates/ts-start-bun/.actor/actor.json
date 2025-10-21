@@ -5,7 +5,8 @@
     "description": "Scrapes data using TypeScript from a given single page. In comparison to the original TypeScript template, it uses a highly performing Bun runtime.",
     "version": "0.0",
     "meta": {
-        "templateId": "ts-start-bun"
+        "templateId": "ts-start-bun",
+        "model": "<FILL-IN-MODEL>"
     },
     "input": "./input_schema.json",
     "dockerfile": "../Dockerfile"

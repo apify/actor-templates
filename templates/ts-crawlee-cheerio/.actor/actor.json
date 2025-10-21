@@ -6,7 +6,8 @@
     "version": "0.0",
     "buildTag": "latest",
     "meta": {
-        "templateId": "ts-crawlee-cheerio"
+        "templateId": "ts-crawlee-cheerio",
+        "model": "<FILL-IN-MODEL>"
     },
     "input": "./input_schema.json",
     "output": "./output_schema.json",

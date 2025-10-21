@@ -9,7 +9,8 @@
         "dataset": "./dataset_schema.json"
     },
     "meta": {
-        "templateId": "ts-beeai-agent"
+        "templateId": "ts-beeai-agent",
+        "model": "<FILL-IN-MODEL>"
     },
     "input": "./input_schema.json",
     "dockerfile": "../Dockerfile"

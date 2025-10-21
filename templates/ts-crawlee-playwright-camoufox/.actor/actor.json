@@ -5,7 +5,8 @@
     "description": "Crawlee and Playwright project with Camoufox in TypeScript.",
     "version": "0.0",
     "meta": {
-        "templateId": "ts-crawlee-playwright-camoufox"
+        "templateId": "ts-crawlee-playwright-camoufox",
+        "model": "<FILL-IN-MODEL>"
     },
     "input": "./input_schema.json",
     "dockerfile": "../Dockerfile"
