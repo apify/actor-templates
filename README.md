@@ -84,6 +84,13 @@ The archive is used to create a boilerplate template in `apify CLI` or other pla
 
 If you want to change a template, you will have to update the template files and the [`manifest.json`](./templates/manifest.json) file before pushing the changes to the `master` branch. After pushing to `master`, the archive will be automatically built using Github actions.
 
+### Update the AGENTS.md file
+
+The AGENTS.md file is provided in templates. Each file has a prefix in the name, which matches the prefix of the template in the templates directory.
+For example, for all `js` templates (so `js-start`, `js-empty`, `js-crawlee-cheerio`, etc.), the AGENTS.md file is located in the `./bases/js.AGENTS.md` file.
+To update the AGENTS.md file, you will have to update the file in the `./bases` directory. Once merged, the GitHub workflow will automatically update the
+templates with the new content.
+
 ## How to propagate templates into Apify CLI?
 
 Templates are propagated to Apify CLI templates. You can then find your newly added template when using the `apify create` command.
