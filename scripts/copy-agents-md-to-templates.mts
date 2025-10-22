@@ -1,7 +1,6 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
 
-const baseDir = new URL('../bases/', import.meta.url);
+const baseDir = new URL('../agent-bases/', import.meta.url);
 const templatesDir = new URL('../templates/', import.meta.url);
 
 const baseFiles = await Promise.all(
