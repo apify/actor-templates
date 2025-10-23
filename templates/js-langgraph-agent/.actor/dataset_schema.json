@@ -1,0 +1,27 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["question", "answer"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "question": {
+                        "label": "Question",
+                        "format": "text"
+                    },
+                    "answer": {
+                        "label": "Answer",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
