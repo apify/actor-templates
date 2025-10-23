@@ -3,9 +3,44 @@
     "localReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md",
     "templates": [
         {
+            "id": "python-crawlee-beautifulsoup",
+            "name": "python-crawlee-beautifulsoup",
+            "label": "Crawlee + BeautifulSoup (Quick start)",
+            "category": "python",
+            "technologies": ["crawlee", "beautifulsoup"],
+            "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a given start URLs, and store results to Apify dataset.",
+            "messages": {
+                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-beautifulsoup.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "aliases": ["getting_started_crawlee_beautifulsoup"],
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
+        },
+        {
+            "id": "python-empty",
+            "name": "python-empty",
+            "label": "Empty Python project",
+            "category": "python",
+            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "useCases": ["WEB_SCRAPING"]
+        },
+        {
             "id": "python-start",
             "name": "python-start",
-            "label": "Start with Python",
+            "label": "One‑Page HTML Scraper with BeautifulSoup",
             "category": "python",
             "technologies": ["beautifulsoup", "httpx"],
             "description": "Scrape single page with provided URL with HTTPX and extract data from page's HTML with Beautiful Soup.",
@@ -80,21 +115,6 @@
             "useCases": ["WEB_SCRAPING"]
         },
         {
-            "id": "python-empty",
-            "name": "python-empty",
-            "label": "Empty Python project",
-            "category": "python",
-            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 1024,
-                "timeoutSecs": 3600
-            },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
-            "useCases": ["WEB_SCRAPING"]
-        },
-        {
             "id": "python-standby",
             "name": "python-standby",
             "label": "Standby Python project",
@@ -135,26 +155,6 @@
                 "src/settings.py"
             ],
             "useCases": ["WEB_SCRAPING"]
-        },
-        {
-            "id": "python-crawlee-beautifulsoup",
-            "name": "python-crawlee-beautifulsoup",
-            "label": "Crawlee + BeautifulSoup",
-            "category": "python",
-            "technologies": ["crawlee", "beautifulsoup"],
-            "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a given start URLs, and store results to Apify dataset.",
-            "messages": {
-                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
-            },
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-beautifulsoup.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 1024,
-                "timeoutSecs": 3600
-            },
-            "aliases": ["getting_started_crawlee_beautifulsoup"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
-            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "python-crawlee-parsel",
@@ -315,9 +315,26 @@
             "useCases": ["AI"]
         },
         {
+            "id": "js-crawlee-cheerio",
+            "name": "project_cheerio_crawler_js",
+            "label": "Crawlee + Cheerio (Quick start)",
+            "category": "javascript",
+            "technologies": ["nodejs", "crawlee", "cheerio"],
+            "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 3600
+            },
+            "skipOptionalDeps": true,
+            "showcaseFiles": ["src/main.js"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
+        },
+        {
             "id": "js-start",
             "name": "getting_started_node",
-            "label": "Start with JavaScript",
+            "label": "One‑Page HTML Scraper with Cheerio",
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
             "technologies": ["nodejs", "cheerio", "axios"],
@@ -331,37 +348,21 @@
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
-            "id": "ts-start",
-            "name": "getting_started_typescript",
-            "label": "Start with TypeScript",
+            "id": "ts-crawlee-cheerio",
+            "name": "project_cheerio_crawler_ts",
+            "label": "Crawlee + Cheerio (Quick start)",
             "category": "typescript",
-            "technologies": ["nodejs", "cheerio", "axios"],
-            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 256,
-                "timeoutSecs": 360
-            },
-            "showcaseFiles": ["src/main.ts"],
-            "useCases": ["STARTER", "WEB_SCRAPING"]
-        },
-        {
-            "id": "js-crawlee-cheerio",
-            "name": "project_cheerio_crawler_js",
-            "label": "Crawlee + Cheerio",
-            "category": "javascript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
             "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
                 "timeoutSecs": 3600
             },
             "skipOptionalDeps": true,
-            "showcaseFiles": ["src/main.js"],
-            "useCases": ["WEB_SCRAPING"]
+            "showcaseFiles": ["src/main.ts"],
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "js-crawlee-puppeteer-chrome",
@@ -429,21 +430,20 @@
             "useCases": ["WEB_SCRAPING"]
         },
         {
-            "id": "ts-crawlee-cheerio",
-            "name": "project_cheerio_crawler_ts",
-            "label": "Crawlee + Cheerio",
+            "id": "ts-start",
+            "name": "getting_started_typescript",
+            "label": "One‑Page HTML Scraper with Cheerio",
             "category": "typescript",
-            "technologies": ["nodejs", "crawlee", "cheerio"],
-            "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
+            "technologies": ["nodejs", "cheerio", "axios"],
+            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
-                "memoryMbytes": 512,
-                "timeoutSecs": 3600
+                "memoryMbytes": 256,
+                "timeoutSecs": 360
             },
-            "skipOptionalDeps": true,
             "showcaseFiles": ["src/main.ts"],
-            "useCases": ["WEB_SCRAPING"]
+            "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
             "id": "ts-crawlee-puppeteer-chrome",
