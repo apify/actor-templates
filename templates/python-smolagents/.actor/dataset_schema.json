@@ -1,0 +1,25 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "summary"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "summary": {
+                        "label": "Summary",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
