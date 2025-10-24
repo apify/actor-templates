@@ -6,11 +6,8 @@
             "type": "string",
             "title": "Overview",
             "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
-        },
-        "report": {
-            "type": "string",
-            "title": "HTML Report",
-            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/report"
         }
     }
 }
+
+

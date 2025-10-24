@@ -8,6 +8,7 @@
     "storages": {
         "dataset": "./dataset_schema.json"
     },
+    "output": "./output_schema.json",
     "meta": {
         "templateId": "ts-beeai-agent",
         "model": "<FILL-IN-MODEL>"
