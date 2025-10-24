@@ -5,15 +5,7 @@
         "overview": {
             "title": "Test Report",
             "transformation": {
-                "fields": [
-                    "suiteName",
-                    "testName",
-                    "runnerName",
-                    "result",
-                    "errors",
-                    "duration",
-                    "video"
-                ]
+                "fields": ["suiteName", "testName", "runnerName", "result", "errors", "duration", "video"]
             },
             "display": {
                 "component": "table",
@@ -30,5 +22,3 @@
         }
     }
 }
-
-

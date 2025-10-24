@@ -5,13 +5,7 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": [
-                    "title",
-                    "url",
-                    "h1s",
-                    "h2s",
-                    "h3s"
-                ]
+                "fields": ["title", "url", "h1s", "h2s", "h3s"]
             },
             "display": {
                 "component": "table",
@@ -41,5 +35,3 @@
         }
     }
 }
-
-

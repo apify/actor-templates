@@ -5,10 +5,7 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": [
-                    "Topic",
-                    "Joke"
-                ]
+                "fields": ["Topic", "Joke"]
             },
             "display": {
                 "component": "table",
@@ -26,5 +23,3 @@
         }
     }
 }
-
-
