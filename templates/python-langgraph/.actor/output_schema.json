@@ -6,6 +6,11 @@
             "type": "string",
             "title": "Overview",
             "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+        },
+        "responses": {
+            "type": "string",
+            "title": "Responses",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys?collection=responses"
         }
     }
 }
