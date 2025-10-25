@@ -5,7 +5,7 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["title", "url", "h1s", "h2s", "h3s"]
+                "fields": ["title", "url"]
             },
             "display": {
                 "component": "table",
@@ -17,18 +17,6 @@
                     "url": {
                         "label": "URL",
                         "format": "link"
-                    },
-                    "h1s": {
-                        "label": "H1s",
-                        "format": "array"
-                    },
-                    "h2s": {
-                        "label": "H2s",
-                        "format": "array"
-                    },
-                    "h3s": {
-                        "label": "H3s",
-                        "format": "array"
                     }
                 }
             }

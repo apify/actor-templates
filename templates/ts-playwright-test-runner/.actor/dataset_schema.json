@@ -1,0 +1,24 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Test Report",
+            "transformation": {
+                "fields": ["suiteName", "testName", "runnerName", "result", "errors", "duration", "video"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "suiteName": { "label": "Test Suite" },
+                    "testName": { "label": "Name" },
+                    "runnerName": { "label": "Runner" },
+                    "result": { "label": "Result", "format": "boolean" },
+                    "errors": { "label": "Error messages", "format": "array" },
+                    "duration": { "label": "Duration", "format": "number" },
+                    "video": { "label": "Video recording", "format": "link" }
+                }
+            }
+        }
+    }
+}

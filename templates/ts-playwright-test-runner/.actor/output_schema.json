@@ -1,42 +1,16 @@
 {
-    "actorSpecification": 1,
-    "fields": {},
-    "views": {
+    "actorOutputSchemaVersion": 1,
+    "title": "Output schema",
+    "properties": {
         "overview": {
-            "title": "Test Report",
-            "transformation": {
-                "fields": ["suiteName", "testName", "runnerName", "result", "errors", "duration", "video"]
-            },
-            "display": {
-                "component": "table",
-                "properties": {
-                    "suiteName": {
-                        "label": "Test Suite"
-                    },
-                    "testName": {
-                        "label": "Name"
-                    },
-                    "runnerName": {
-                        "label": "Runner"
-                    },
-                    "result": {
-                        "label": "Result",
-                        "format": "boolean"
-                    },
-                    "errors": {
-                        "label": "Error messages",
-                        "format": "array"
-                    },
-                    "duration": {
-                        "label": "Duration",
-                        "format": "number"
-                    },
-                    "video": {
-                        "label": "Video recording",
-                        "format": "link"
-                    }
-                }
-            }
+            "type": "string",
+            "title": "Overview",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+        },
+        "report": {
+            "type": "string",
+            "title": "HTML Report",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/report"
         }
     }
 }

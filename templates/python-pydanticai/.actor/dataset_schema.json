@@ -1,0 +1,25 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["Topic", "Joke"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "Topic": {
+                        "label": "Topic",
+                        "format": "text"
+                    },
+                    "Joke": {
+                        "label": "Joke",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}

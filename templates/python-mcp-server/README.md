@@ -265,6 +265,7 @@ Each operation can be configured for charging in the PPE model.
 ## Session management challenges
 
 MCP connections may not properly close when clients disconnect, keeping containers alive indefinitely.
+
 - Containers remain running even after client disconnection
 - Setting `stateless` mode and `json_response=true` doesn't resolve the issue
 - Only manual session deletion via `DELETE /mcp` properly terminates connections

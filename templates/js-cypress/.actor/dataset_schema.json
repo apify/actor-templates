@@ -1,0 +1,51 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Filtered output",
+            "transformation": {
+                "fields": [
+                    "testSuiteTitle",
+                    "totalPassed",
+                    "totalPending",
+                    "totalFailed",
+                    "totalSkipped",
+                    "totalDuration",
+                    "videoLink"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "testSuiteTitle": {
+                        "label": "Test Suite Title"
+                    },
+                    "totalPassed": {
+                        "label": "Total Passed"
+                    },
+                    "totalPending": {
+                        "label": "Total Pending",
+                        "format": "number"
+                    },
+                    "totalFailed": {
+                        "label": "Total Failed",
+                        "format": "number"
+                    },
+                    "totalSkipped": {
+                        "label": "Total Skipped",
+                        "format": "number"
+                    },
+                    "totalDuration": {
+                        "label": "Total Duration",
+                        "format": "number"
+                    },
+                    "videoLink": {
+                        "label": "Video recording",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}

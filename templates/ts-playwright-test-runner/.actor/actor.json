@@ -10,8 +10,9 @@
         "model": "<FILL-IN-MODEL>"
     },
     "storages": {
-        "dataset": "./output_schema.json"
+        "dataset": "./dataset_schema.json"
     },
+    "output": "./output_schema.json",
     "input": "./input_schema.json",
     "dockerfile": "../Dockerfile"
 }

@@ -9,6 +9,10 @@
         "model": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile",
+    "output": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
     "environmentVariables": {
         "OPENAI_API_KEY": "@OPENAI_API_KEY"
     }

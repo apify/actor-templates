@@ -1,0 +1,25 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["level", "text"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "level": {
+                        "label": "Level",
+                        "format": "text"
+                    },
+                    "text": {
+                        "label": "Text",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}
