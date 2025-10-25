@@ -5,7 +5,7 @@
         {
             "id": "python-crawlee-beautifulsoup",
             "name": "python-crawlee-beautifulsoup",
-            "label": "Crawlee + BeautifulSoup (Quick start)",
+            "label": "Crawlee + BeautifulSoup",
             "category": "python",
             "technologies": ["crawlee", "beautifulsoup"],
             "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a given start URLs, and store results to Apify dataset.",
@@ -317,7 +317,7 @@
         {
             "id": "js-crawlee-cheerio",
             "name": "project_cheerio_crawler_js",
-            "label": "Crawlee + Cheerio (Quick start)",
+            "label": "Crawlee + Cheerio",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
             "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
@@ -350,7 +350,7 @@
         {
             "id": "ts-crawlee-cheerio",
             "name": "project_cheerio_crawler_ts",
-            "label": "Crawlee + Cheerio (Quick start)",
+            "label": "Crawlee + Cheerio",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
             "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
