@@ -1,0 +1,12 @@
+{
+    "actorKeyValueStoreSchemaVersion": 1,
+    "title": "Key-Value Store Schema",
+    "collections": {
+        "result": {
+            "title": "Result",
+            "description": "LLM answer stored by the Actor",
+            "key": "OUTPUT",
+            "contentTypes": ["application/json"]
+        }
+    }
+}

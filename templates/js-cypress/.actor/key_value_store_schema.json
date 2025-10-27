@@ -1,0 +1,12 @@
+{
+    "actorKeyValueStoreSchemaVersion": 1,
+    "title": "Key-Value Store Schema",
+    "collections": {
+        "videos": {
+            "title": "Videos",
+            "description": "Videos stored by the Actor",
+            "key": "video-",
+            "contentTypes": ["video/mp4"]
+        }
+    }
+}
