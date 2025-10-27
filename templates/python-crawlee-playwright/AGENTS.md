@@ -61,10 +61,9 @@ apify help                             # List all commands
 ## Safety and Permissions
 
 Allowed without prompt:
-
-- read files with `Actor.getValue()`, `Dataset.getData()`
-- push data with `Actor.pushData()`, `Dataset.pushData()`
-- set values with `Actor.setValue()`
+- read files with `Actor.get_value()`
+- push data with `Actor.push_data()`
+- set values with `Actor.set_value()`
 - enqueue requests to RequestQueue
 - run locally with `apify run`
 
