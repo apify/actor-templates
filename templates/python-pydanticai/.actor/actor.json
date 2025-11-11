@@ -7,7 +7,7 @@
     "buildTag": "latest",
     "meta": {
         "templateId": "python-pydanticai",
-        "model": "<FILL-IN-MODEL>"
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile",
     "input": "./input_schema.json",

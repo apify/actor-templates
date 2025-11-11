@@ -7,7 +7,7 @@
     "buildTag": "latest",
     "meta": {
         "templateId": "cli-start",
-        "model": "<FILL-IN-MODEL>"
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "input": {
         "title": "Actor input",

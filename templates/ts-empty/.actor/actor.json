@@ -7,7 +7,7 @@
     "buildTag": "latest",
     "meta": {
         "templateId": "ts-empty",
-        "model": "<FILL-IN-MODEL>"
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile"
 }

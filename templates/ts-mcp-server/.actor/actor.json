@@ -8,7 +8,7 @@
     "usesStandbyMode": true,
     "meta": {
         "templateId": "ts-mcp-server",
-        "model": "<FILL-IN-MODEL>"
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "input": {
         "title": "Actor input schema",
