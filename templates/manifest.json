@@ -206,7 +206,7 @@
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-playwright.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/16578a3a11efefdd010650a34c7143fa56c5d457/dist/templates/python-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 1024,
