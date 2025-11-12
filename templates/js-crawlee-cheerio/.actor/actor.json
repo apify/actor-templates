@@ -6,7 +6,7 @@
     "version": "0.0",
     "meta": {
         "templateId": "js-crawlee-cheerio",
-        "model": "<FILL-IN-MODEL>"
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "input": "./input_schema.json",
     "output": "./output_schema.json",
