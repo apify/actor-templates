@@ -12,7 +12,7 @@
     "output": "./output_schema.json",
     "meta": {
         "templateId": "python-crewai",
-        "model": "<FILL-IN-MODEL>"
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile"
 }

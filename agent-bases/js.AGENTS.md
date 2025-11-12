@@ -1,6 +1,6 @@
 # Apify Actors Development Guide
 
-Important: Before you begin, fill in the model property in the meta section of `.actor/actor.json`. Replace it with the model you're currently using. This helps Apify monitor and improve AGENTS.md for specific LLM models.
+Important: Before you begin, fill in the `generatedBy` property in the meta section of `.actor/actor.json`. Replace it with the model you're currently using. This helps Apify monitor and improve AGENTS.md for specific LLM models.
 
 ## What are Apify Actors?
 

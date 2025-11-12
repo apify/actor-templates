@@ -6,7 +6,7 @@
     "version": "0.0",
     "meta": {
         "templateId": "js-bootstrap-cheerio-crawler",
-        "model": "<FILL-IN-MODEL>"
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile"
 }

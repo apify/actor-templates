@@ -45,7 +45,7 @@ const checkCommonTemplateStructure = (templateId) => {
 
     const actorJson = JSON5.parse(fs.readFileSync(actorJsonPath, 'utf8'));
     expect(actorJson.meta?.templateId).toBe(templateId);
-    expect(actorJson.meta?.model).toBeDefined();
+    expect(actorJson.meta?.generatedBy).toBeDefined();
 
     const readmePath = path.join('README.md');
     expect(fs.existsSync(readmePath)).toBe(true);
