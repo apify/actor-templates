@@ -499,6 +499,7 @@
             "label": "Playwright + Chrome Test Runner",
             "category": "typescript",
             "technologies": ["nodejs", "playwright", "chrome"],
+            "skipTests": true,
             "description": "Example of using the Playwright Test project to run automated website tests in the cloud and display their results. Usable as an API.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-playwright-test-runner.zip?raw=true",
             "defaultRunOptions": {
