@@ -21,9 +21,6 @@ await Actor.init();
  * Actor code
  */
 
-// Charge for Actor start
-await Actor.charge({ eventName: 'actor-start' });
-
 // Handle input
 const {
     // The query default value is provided only for template testing purposes.
@@ -41,7 +38,7 @@ const agent = createSocialMediaAgent(modelName);
 log.info(`Querying the agent with the following query: ${query}`);
 
 // Query the agent and get the response
-const response = await agent.generate([{ role: 'user', content: query }]);
+const response = await agent.generateVNext([{ role: 'user', content: query }]);
 
 log.info(`Agent response: ${response.text}`);
 
