@@ -1,8 +1,8 @@
 {
-    "name": "ts-mcp-server",
+    "name": "ts-mcp-proxy",
     "version": "0.0.1",
     "type": "module",
-    "description": "TypeScript Model Context Protocol server.",
+    "description": "TypeScript Model Context Protocol proxy.",
     "engines": {
         "node": ">=20.0.0"
     },
