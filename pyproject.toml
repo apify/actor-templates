@@ -94,6 +94,7 @@ warn_unused_ignores = true
 
 [[tool.mypy.overrides]]
 module = [
+    "fastmcp",    # Untyped and/or stubs not available
     "smolagents", # Untyped and/or stubs not available
 ]
 ignore_missing_imports = true
