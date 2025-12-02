@@ -1,11 +1,9 @@
 """Main entry point for the MCP Server Actor."""
 
 import os
-from contextlib import asynccontextmanager
 
-from fastmcp import FastMCP
 from apify import Actor
-
+from fastmcp import FastMCP
 
 # Initialize the Apify Actor environment
 # This call configures the Actor for its environment and should be called at startup
@@ -17,7 +15,7 @@ def get_server() -> FastMCP:
 
     @server.tool()
     def add(a: float, b: float) -> dict:
-        """Adds two numbers together and returns the sum with structured output.
+        """Add two numbers together and return the sum with structured output.
 
         Args:
             a: First number to add
