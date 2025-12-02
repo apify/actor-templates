@@ -21,6 +21,7 @@ type-check:
 	uv run mypy templates/python-crawlee-playwright
 	uv run mypy --ignore-missing-imports templates/python-crawlee-playwright-camoufox
 	uv run mypy templates/python-empty
+	uv run mypy templates/python-mcp-empty
 	uv run mypy templates/python-mcp-proxy
 	uv run mypy templates/python-playwright
 	uv run mypy templates/python-scrapy

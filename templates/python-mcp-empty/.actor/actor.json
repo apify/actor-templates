@@ -1,13 +1,13 @@
 {
     "actorSpecification": 1,
-    "name": "python-mcp-server",
+    "name": "python-mcp-empty",
     "title": "Python MCP Server",
     "description": "Python Model Context Protocol (MCP) server using FastMCP.",
     "version": "0.0",
     "buildTag": "latest",
     "usesStandbyMode": true,
     "meta": {
-        "templateId": "python-mcp-server",
+        "templateId": "python-mcp-empty",
         "generatedBy": "<FILL-IN-MODEL>"
     },
     "input": {

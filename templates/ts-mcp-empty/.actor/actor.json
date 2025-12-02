@@ -1,13 +1,13 @@
 {
     "actorSpecification": 1,
-    "name": "ts-mcp-server",
+    "name": "ts-mcp-empty",
     "title": "TypeScript MCP server",
     "description": "TypeScript Model Context Protocol server with streamable HTTP transport.",
     "version": "0.0",
     "buildTag": "latest",
     "usesStandbyMode": true,
     "meta": {
-        "templateId": "ts-mcp-server",
+        "templateId": "ts-mcp-empty",
         "generatedBy": "<FILL-IN-MODEL>"
     },
     "input": {

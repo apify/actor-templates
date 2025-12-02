@@ -315,6 +315,23 @@
             "useCases": ["AI"]
         },
         {
+            "id": "python-mcp-empty",
+            "name": "python-mcp-empty",
+            "label": "Python MCP server",
+            "category": "python",
+            "technologies": ["mcp"],
+            "skipTests": true,
+            "description": "Create a Model Context Protocol server using Python and FastMCP with Apify Actor integration for pay-per-event monetization.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 60
+            },
+            "showcaseFiles": ["src/main.py"],
+            "useCases": ["AI"]
+        },
+        {
             "id": "js-crawlee-cheerio",
             "name": "project_cheerio_crawler_js",
             "label": "Crawlee + Cheerio",
@@ -691,6 +708,22 @@
                 "timeoutSecs": 600
             },
             "showcaseFiles": ["src/main.ts", "src/billing.ts"],
+            "useCases": ["AI"]
+        },
+        {
+            "id": "ts-mcp-empty",
+            "name": "ts-mcp-empty",
+            "label": "TypeScript MCP server",
+            "category": "typescript",
+            "technologies": ["mcp"],
+            "description": "Create a Model Context Protocol server using TypeScript and Express with Apify Actor integration for pay-per-event monetization.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 600
+            },
+            "showcaseFiles": ["src/main.ts"],
             "useCases": ["AI"]
         },
         {
