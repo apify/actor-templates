@@ -75,6 +75,6 @@ To set up the PPE model for this Actor:
 - [What is Anthropic's Model Context Protocol?](https://blog.apify.com/what-is-model-context-protocol/)
 - [How to use MCP with Apify Actors](https://blog.apify.com/how-to-use-mcp/)
 - [Model Context Protocol documentation](https://modelcontextprotocol.io)
-- [TypeScript SDK examples](https://github.com/modelcontextprotocol/typescript-sdk/tree/main)
+- [TypeScript MCP SDK examples](https://github.com/modelcontextprotocol/typescript-sdk/tree/main)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
