@@ -11,7 +11,7 @@ from fastmcp import FastMCP
 
 def get_server() -> FastMCP:
     """Create an MCP server with implementation details."""
-    server = FastMCP('add-tool-mcp-server', '1.0.0')
+    server = FastMCP('python-mcp-empty', '1.0.0')
 
     @server.tool()  # type: ignore[misc]
     def add(a: float, b: float) -> dict:
