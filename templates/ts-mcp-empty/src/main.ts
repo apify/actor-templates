@@ -14,7 +14,7 @@ const getServer = () => {
     // Create an MCP server with implementation details
     const server = new McpServer(
         {
-            name: 'add-tool-mcp-server',
+            name: 'ts-mcp-empty',
             version: '1.0.0',
         },
         { capabilities: { logging: {} } },
