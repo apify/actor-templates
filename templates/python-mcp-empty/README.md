@@ -72,8 +72,10 @@ To set up the PPE model for this Actor:
 
 - [What is Anthropic's Model Context Protocol?](https://blog.apify.com/what-is-model-context-protocol/)
 - [How to use MCP with Apify Actors](https://blog.apify.com/how-to-use-mcp/)
-- [Model Context Protocol documentation](https://modelcontextprotocol.io)
 - [FastMCP documentation](https://gofastmcp.com/getting-started/welcome)
 - [Python SDK examples](https://github.com/modelcontextprotocol/python-sdk/tree/main)
 - [Python tutorials in Academy](https://docs.apify.com/academy/python)
 - [Apify SDK documentation](https://docs.apify.com/sdk/python/)
+- [Webinar: Building and monetizing MCP servers on Apify](https://www.youtube.com/watch?v=w3AH3jIrXXo)
+- [Apify MCP server documentation](https://docs.apify.com/platform/integrations/mcp)
+- [Apify MCP server configuration](https://mcp.apify.com/)
