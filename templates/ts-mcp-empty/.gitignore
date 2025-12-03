@@ -1,0 +1,12 @@
+.idea
+.vscode
+.zed
+storage
+apify_storage
+crawlee_storage
+node_modules
+dist
+tsconfig.tsbuildinfo
+
+# Added by Apify CLI
+.venv

@@ -298,20 +298,37 @@
             "useCases": ["AI"]
         },
         {
-            "id": "python-mcp-server",
-            "name": "python-mcp-server",
-            "label": "Python MCP server",
+            "id": "python-mcp-proxy",
+            "name": "python-mcp-proxy",
+            "label": "Python MCP proxy",
             "category": "python",
             "technologies": ["mcp"],
             "skipTests": true,
             "description": "Demonstrates how to convert a Python stdio, HTTP-streamable, or SSE-based Model Context Protocol server into an Apify Actor.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-server.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
             "showcaseFiles": ["src/main.py", "src/server.py"],
+            "useCases": ["AI"]
+        },
+        {
+            "id": "python-mcp-empty",
+            "name": "python-mcp-empty",
+            "label": "Python MCP server",
+            "category": "python",
+            "technologies": ["mcp"],
+            "skipTests": true,
+            "description": "Create a Model Context Protocol server using Python and FastMCP with Apify Actor integration for pay-per-event monetization.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 60
+            },
+            "showcaseFiles": ["src/main.py"],
             "useCases": ["AI"]
         },
         {
@@ -678,19 +695,35 @@
             "useCases": ["AI"]
         },
         {
-            "id": "ts-mcp-server",
-            "name": "ts-mcp-server",
-            "label": "TypeScript MCP server",
+            "id": "ts-mcp-proxy",
+            "name": "ts-mcp-proxy",
+            "label": "TypeScript MCP proxy",
             "category": "typescript",
             "technologies": ["mcp"],
             "description": "Example of how to turn a Model Context Protocol stdio, HTTP Streamable, or SSE server into an Apify Actor.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-server.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
             "showcaseFiles": ["src/main.ts", "src/billing.ts"],
+            "useCases": ["AI"]
+        },
+        {
+            "id": "ts-mcp-empty",
+            "name": "ts-mcp-empty",
+            "label": "TypeScript MCP server",
+            "category": "typescript",
+            "technologies": ["mcp"],
+            "description": "Create a Model Context Protocol server using TypeScript and Express with Apify Actor integration for pay-per-event monetization.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-empty.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 512,
+                "timeoutSecs": 600
+            },
+            "showcaseFiles": ["src/main.ts"],
             "useCases": ["AI"]
         },
         {

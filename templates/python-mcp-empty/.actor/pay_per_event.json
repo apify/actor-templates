@@ -1,0 +1,7 @@
+{
+    "tool-call": {
+        "eventTitle": "Price for completing a tool call",
+        "eventDescription": "Flat fee for completing a tool call.",
+        "eventPriceUsd": 0.05
+    }
+}

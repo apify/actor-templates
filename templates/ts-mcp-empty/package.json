@@ -8,19 +8,17 @@
     },
     "dependencies": {
         "@modelcontextprotocol/sdk": "^1.17.5",
-        "@modelcontextprotocol/server-everything": "^2025.8.18",
-        "mcp-remote": "0.1.29",
-        "apify": "^3.4.4",
-        "body-parser": "^2.2.0",
         "express": "^5.1.0",
-        "zod": "^3.25.76"
+        "cors": "^2.8.5",
+        "zod": "^3.25.76",
+        "apify": "^3.4.4"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
-        "@types/body-parser": "^1.19.5",
-        "@types/express": "^5.0.2",
         "@types/node": "^22.15.32",
+        "@types/express": "^5.0.2",
+        "@types/cors": "^2.8.13",
         "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "globals": "^16.2.0",
