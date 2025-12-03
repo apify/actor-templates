@@ -6,7 +6,7 @@ apify-client < 3.0.0
 arxiv-mcp-server==0.3.1
 fastapi==0.119.1
 httpx>=0.24.0
-mcp==1.16.0
+mcp==1.23.0
 pydantic>=2.0.0
 uv>=0.7.8
 uvicorn>=0.27.0
