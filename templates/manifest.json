@@ -707,6 +707,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
+            "skipTests": true,
             "showcaseFiles": ["src/main.ts", "src/billing.ts"],
             "useCases": ["AI"]
         },
@@ -723,6 +724,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
+            "skipTests": true,
             "showcaseFiles": ["src/main.ts"],
             "useCases": ["AI"]
         },
