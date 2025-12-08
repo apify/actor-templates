@@ -1,7 +1,7 @@
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
 import { Actor } from 'apify';
 // Crawlee - web scraping and browser automation library (Read more at https://crawlee.dev)
-import { CheerioCrawler, Dataset } from 'crawlee';
+import { CheerioCrawler, Dataset } from '@crawlee/cheerio';
 
 interface Input {
     startUrls: {
@@ -20,7 +20,8 @@ await Actor.init();
 const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } =
     (await Actor.getInput<Input>()) ?? ({} as Input);
 
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 const crawler = new CheerioCrawler({
     proxyConfiguration,

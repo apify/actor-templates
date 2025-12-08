@@ -5,7 +5,7 @@
     "description": "This is an example of an Apify Actor.",
     "dependencies": {
         "apify": "^3.4.2",
-        "crawlee": "^3.13.8",
+        "@crawlee/playwright": "^3.13.8",
         "playwright": "1.54.1"
     },
     "devDependencies": {

@@ -8,7 +8,7 @@
 import { Actor } from 'apify';
 import { launchOptions as camoufoxLaunchOptions } from 'camoufox-js';
 // For more information, see https://crawlee.dev
-import { PlaywrightCrawler } from 'crawlee';
+import { PlaywrightCrawler } from '@crawlee/playwright';
 import { firefox } from 'playwright';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
@@ -33,7 +33,8 @@ await Actor.init();
 const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } =
     (await Actor.getInput<Input>()) ?? ({} as Input);
 
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 const crawler = new PlaywrightCrawler({
     proxyConfiguration,

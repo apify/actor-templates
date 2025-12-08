@@ -8,7 +8,7 @@
     },
     "dependencies": {
         "apify": "^3.4.2",
-        "crawlee": "^3.13.8",
+        "@crawlee/puppeteer": "^3.13.8",
         "puppeteer": "24.12.1"
     },
     "devDependencies": {

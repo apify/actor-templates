@@ -7,7 +7,7 @@
 // For more information, see https://docs.apify.com/sdk/js
 import { Actor } from 'apify';
 // For more information, see https://crawlee.dev
-import { PlaywrightCrawler } from 'crawlee';
+import { PlaywrightCrawler } from '@crawlee/playwright';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
@@ -31,7 +31,8 @@ await Actor.init();
 const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } =
     (await Actor.getInput<Input>()) ?? ({} as Input);
 
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 const crawler = new PlaywrightCrawler({
     proxyConfiguration,

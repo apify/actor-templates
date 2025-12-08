@@ -1,5 +1,5 @@
 import { Actor } from 'apify';
-import { CheerioCrawler } from 'crawlee';
+import { CheerioCrawler } from '@crawlee/cheerio';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
@@ -8,7 +8,8 @@ import { router } from './routes.js';
 
 await Actor.init();
 
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 const crawler = new CheerioCrawler({
     proxyConfiguration,
