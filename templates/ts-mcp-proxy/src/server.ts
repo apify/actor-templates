@@ -211,7 +211,7 @@ export async function startServer(options: { serverPort: number; command: string
     // Readiness probe handler
     app.get('/', (req: Request, res: Response) => {
         if (req.headers['x-apify-container-server-readiness-probe']) {
-            console.log('Readiness probe');
+            log.info('Readiness probe');
             res.end('ok\n');
             return;
         }

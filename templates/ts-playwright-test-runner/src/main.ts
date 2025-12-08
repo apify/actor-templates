@@ -2,10 +2,8 @@ import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { Actor } from 'apify';
+import { Actor, log } from 'apify';
 import type { Dictionary } from 'apify-client';
-
-import log from '@apify/log';
 
 import { collectAttachmentPaths, transformToTabular } from './transform.js';
 
@@ -133,6 +131,6 @@ await Actor.pushData(transformToTabular(jsonReport, attachmentLinks));
 
 const reportURL = kvs.getPublicUrl('report');
 log.info('The test run has finished! The report is available in the Output tab or at the link below:');
-console.log(reportURL);
+log.info(reportURL);
 
 await Actor.exit();
