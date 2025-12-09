@@ -1,5 +1,5 @@
-import { Actor } from 'apify';
 import { CheerioCrawler } from '@crawlee/cheerio';
+import { Actor } from 'apify';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions

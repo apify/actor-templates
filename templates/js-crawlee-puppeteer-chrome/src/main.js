@@ -1,7 +1,7 @@
-// Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
-import { Actor } from 'apify';
 // Web scraping and browser automation library (Read more at https://crawlee.dev)
 import { PuppeteerCrawler } from '@crawlee/puppeteer';
+// Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
+import { Actor } from 'apify';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
