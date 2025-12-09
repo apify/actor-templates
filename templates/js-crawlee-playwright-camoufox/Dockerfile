@@ -1,7 +1,7 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://crawlee.dev/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node-playwright-camoufox:22-1.57.0
+FROM apify/actor-node-playwright-camoufox:22-1.56.1
 
 # Check preinstalled packages
 RUN npm ls @crawlee/core apify playwright
