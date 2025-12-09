@@ -4,7 +4,7 @@
 FROM apify/actor-node:22
 
 # Check preinstalled packages
-RUN npm ls crawlee apify puppeteer playwright
+RUN npm ls @crawlee/core apify puppeteer playwright
 
 # Install the dependencies as root
 RUN apk add g++ make py3-pip
