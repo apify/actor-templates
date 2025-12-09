@@ -7,7 +7,7 @@
         "node": ">=20.0.0"
     },
     "dependencies": {
-        "apify": "^3.4.2",
+        "apify": "^3.5.2",
         "camoufox-js": "^0.7.0",
         "@crawlee/playwright": "^3.15.3",
         "playwright": "1.57.0"

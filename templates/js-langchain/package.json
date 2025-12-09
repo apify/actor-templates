@@ -10,7 +10,7 @@
         "@langchain/community": "^0.3.9",
         "@langchain/core": "^0.3.15",
         "@langchain/openai": "^0.6.0",
-        "apify": "^3.4.2",
+        "apify": "^3.5.2",
         "hnswlib-node": "^3.0.0",
         "langchain": "^0.3.4",
         "tar": "^7.0.0"

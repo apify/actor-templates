@@ -22,7 +22,7 @@
     "dependencies": {
         "@playwright/test": "1.57.0",
         "@types/uuid": "^11.0.0",
-        "apify": "^3.4.2",
+        "apify": "^3.5.2",
         "uuid": "^13.0.0",
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
@@ -32,7 +32,7 @@
         "globals": "^16.2.0",
         "prettier": "^3.5.3",
         "tsx": "^4.20.3",
-        "typescript": "^5.8.3",
+        "typescript": "^5.9.3",
         "typescript-eslint": "^8.34.1"
     }
 }
