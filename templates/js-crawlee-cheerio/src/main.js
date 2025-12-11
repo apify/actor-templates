@@ -10,7 +10,8 @@ await Actor.init();
 const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } = (await Actor.getInput()) ?? {};
 
 // Proxy configuration to rotate IP addresses and prevent blocking (https://docs.apify.com/platform/proxy)
-// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+// `checkAccess` flag ensures the proxy credentials are valid, but the check can take a few hundred milliseconds.
+// Disable it for short runs if you are sure your proxy configuration is correct
 const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 const crawler = new CheerioCrawler({

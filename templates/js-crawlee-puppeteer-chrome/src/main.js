@@ -15,7 +15,8 @@ const input = await Actor.getInput();
 const startUrls = input?.startUrls || [{ url: 'https://apify.com' }];
 
 // Create a proxy configuration that will rotate proxies from Apify Proxy.
-// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+// `checkAccess` flag ensures the proxy credentials are valid, but the check can take a few hundred milliseconds.
+// Disable it for short runs if you are sure your proxy configuration is correct
 const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 // Create a PuppeteerCrawler that will use the proxy configuration and and handle requests with the router from routes.js file.

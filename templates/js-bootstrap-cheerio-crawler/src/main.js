@@ -7,7 +7,8 @@ import { router } from './routes.js';
 
 await Actor.init();
 
-// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+// `checkAccess` flag ensures the proxy credentials are valid, but the check can take a few hundred milliseconds.
+// Disable it for short runs if you are sure your proxy configuration is correct
 const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 const crawler = new CheerioCrawler({

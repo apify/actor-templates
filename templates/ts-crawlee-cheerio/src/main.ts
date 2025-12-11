@@ -20,7 +20,8 @@ await Actor.init();
 const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } =
     (await Actor.getInput<Input>()) ?? ({} as Input);
 
-// For short runs, you might want to disable the `checkAccess` flag, which ensures the proxy credentials are valid.
+// `checkAccess` flag ensures the proxy credentials are valid, but the check can take a few hundred milliseconds.
+// Disable it for short runs if you are sure your proxy configuration is correct
 const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 const crawler = new CheerioCrawler({
