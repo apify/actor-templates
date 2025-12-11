@@ -1,10 +1,10 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://crawlee.dev/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node-puppeteer-chrome:22-24.12.1
+FROM apify/actor-node-puppeteer-chrome:22-24.32.1
 
 # Check preinstalled packages
-RUN npm ls crawlee apify puppeteer playwright
+RUN npm ls @crawlee/core apify puppeteer playwright
 
 # Copy just package.json and package-lock.json
 # to speed up the build using Docker layer cache.
@@ -31,4 +31,4 @@ RUN npm --quiet set progress=false \
 # for most source file changes.
 COPY --chown=myuser:myuser . ./
 
-CMD npm start --silent
+CMD node dist/main.js

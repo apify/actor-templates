@@ -4,7 +4,7 @@
 FROM apify/actor-node:22
 
 # Check preinstalled packages
-RUN npm ls crawlee apify puppeteer playwright
+RUN npm ls @crawlee/core apify puppeteer playwright
 
 # Install the dependencies as root
 RUN apk add g++ make py3-pip
@@ -32,4 +32,4 @@ RUN npm --quiet set progress=false \
 COPY --chown=myuser:myuser . ./
 
 # Run the image.
-CMD npm start --silent
+CMD node dist/main.js

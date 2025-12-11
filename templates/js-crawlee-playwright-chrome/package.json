@@ -4,9 +4,9 @@
     "type": "module",
     "description": "This is an example of an Apify Actor.",
     "dependencies": {
-        "apify": "^3.4.2",
-        "crawlee": "^3.13.8",
-        "playwright": "1.54.1"
+        "apify": "^3.5.2",
+        "@crawlee/playwright": "^3.15.3",
+        "playwright": "1.56.1"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",

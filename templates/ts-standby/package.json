@@ -7,7 +7,7 @@
         "node": ">=20.0.0"
     },
     "dependencies": {
-        "apify": "^3.4.2"
+        "apify": "^3.5.2"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
@@ -18,7 +18,7 @@
         "globals": "^16.2.0",
         "prettier": "^3.5.3",
         "tsx": "^4.20.3",
-        "typescript": "^5.8.3",
+        "typescript": "^5.9.3",
         "typescript-eslint": "^8.34.1"
     },
     "scripts": {

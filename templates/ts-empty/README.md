@@ -11,7 +11,7 @@ Start a new [web scraping](https://apify.com/web-scraping) project quickly and e
 
 ## How it works
 
-Insert your own code between `await Actor.init()` and `await Actor.exit()`. If you would like to use the [Crawlee](https://crawlee.dev/) library simply uncomment its import `import { CheerioCrawler } from 'crawlee';`.
+Insert your own code between `await Actor.init()` and `await Actor.exit()`. If you would like to use the [Crawlee](https://crawlee.dev/) library simply uncomment its import `import { CheerioCrawler } from '@crawlee/cheerio';`.
 
 ## Resources
 

@@ -1,4 +1,4 @@
-FROM apify/actor-node-playwright:22-1.54.1
+FROM apify/actor-node-playwright:22-1.56.1
 
 COPY --chown=myuser:myuser package*.json Dockerfile ./
 
@@ -24,4 +24,4 @@ RUN npm --quiet set progress=false \
 COPY --chown=myuser:myuser . ./
 
 # Run the image.
-CMD npm start --silent
+CMD node dist/main.js

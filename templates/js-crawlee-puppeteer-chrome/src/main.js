@@ -1,7 +1,7 @@
+// Web scraping and browser automation library (Read more at https://crawlee.dev)
+import { PuppeteerCrawler } from '@crawlee/puppeteer';
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
 import { Actor } from 'apify';
-// Web scraping and browser automation library (Read more at https://crawlee.dev)
-import { PuppeteerCrawler } from 'crawlee';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
@@ -15,7 +15,9 @@ const input = await Actor.getInput();
 const startUrls = input?.startUrls || [{ url: 'https://apify.com' }];
 
 // Create a proxy configuration that will rotate proxies from Apify Proxy.
-const proxyConfiguration = await Actor.createProxyConfiguration();
+// `checkAccess` flag ensures the proxy credentials are valid, but the check can take a few hundred milliseconds.
+// Disable it for short runs if you are sure your proxy configuration is correct
+const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 
 // Create a PuppeteerCrawler that will use the proxy configuration and and handle requests with the router from routes.js file.
 const crawler = new PuppeteerCrawler({
