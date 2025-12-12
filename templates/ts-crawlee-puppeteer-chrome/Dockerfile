@@ -55,4 +55,4 @@ COPY --from=builder --chown=myuser:myuser /home/myuser/dist ./dist
 # for most source file changes.
 COPY --chown=myuser:myuser . ./
 
-CMD npm run start:prod --silent
+CMD ["node", "dist/main.js"]

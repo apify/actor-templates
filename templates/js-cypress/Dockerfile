@@ -24,4 +24,4 @@ RUN npm --quiet set progress=false \
 COPY . ./
 
 # Run the image.
-CMD node dist/main.js
+CMD ["node", "src/main.js"]

@@ -9,4 +9,4 @@ COPY --chown=myuser:myuser . ./
 RUN bun install
 
 # Run the image.
-CMD bun run start
+CMD ["bun", "run", "start"]
