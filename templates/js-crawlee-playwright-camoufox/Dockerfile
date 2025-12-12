@@ -31,4 +31,4 @@ RUN npm --quiet set progress=false \
 # for most source file changes.
 COPY --chown=myuser:myuser . ./
 
-CMD node dist/main.js
+CMD ["node", "src/main.js"]

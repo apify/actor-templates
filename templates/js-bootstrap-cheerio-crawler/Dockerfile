@@ -29,4 +29,4 @@ RUN npm --quiet set progress=false \
 COPY --chown=myuser:myuser . ./
 
 # Run the image.
-CMD node dist/main.js
+CMD ["node", "src/main.js"]

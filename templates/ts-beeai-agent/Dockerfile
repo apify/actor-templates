@@ -53,4 +53,4 @@ COPY --from=builder --chown=myuser:myuser /usr/src/app/dist ./dist
 COPY --chown=myuser:myuser . ./
 
 # Run the image.
-CMD npm run start:prod --silent
+CMD ["node", "dist/main.js"]
