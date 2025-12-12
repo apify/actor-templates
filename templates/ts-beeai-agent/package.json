@@ -7,7 +7,7 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "@ai-sdk/openai": "^1.1.12",
+        "@ai-sdk/openai": "^2.0.0",
         "@langchain/openai": "^0.6.0",
         "apify": "^3.5.2",
         "bee-agent-framework": "^0.1.2",
