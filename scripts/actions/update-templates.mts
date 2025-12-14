@@ -22,6 +22,8 @@ console.log(`Module version (Playwright or Puppeteer or similar): ${MODULE_VERSI
 
 const templatesDir = new URL('../../templates/', import.meta.url);
 
+const baseImages = BASE_IMAGE.split(',');
+
 for await (const dockerfileEntry of glob('**/Dockerfile', { cwd: templatesDir })) {
     const filePath = new URL(dockerfileEntry, templatesDir);
     const content = await readFile(filePath, 'utf-8');
@@ -33,22 +35,24 @@ for await (const dockerfileEntry of glob('**/Dockerfile', { cwd: templatesDir })
             continue;
         }
 
-        const fromLineSplit = lineSplit[idx].split(' ');
-        const fromLineSplitIndex = fromLineSplit.findIndex((piece) => piece.includes(`${BASE_IMAGE}:`));
+        for (const baseImage of baseImages) {
+            const fromLineSplit = lineSplit[idx].split(' ');
+            const fromLineSplitIndex = fromLineSplit.findIndex((piece) => piece.includes(`${baseImage}:`));
 
-        if (fromLineSplitIndex === -1) {
-            continue;
+            if (fromLineSplitIndex === -1) {
+                continue;
+            }
+
+            console.log(`Updating Dockerfile: ${filePath} with base image: ${baseImage}`);
+
+            fromLineSplit[fromLineSplitIndex] = `${baseImage}:${DEFAULT_RUNTIME_VERSION}`;
+
+            if (MODULE_VERSION) {
+                fromLineSplit[fromLineSplitIndex] += `-${MODULE_VERSION}`;
+            }
+
+            lineSplit[idx] = fromLineSplit.join(' ');
         }
-
-        console.log(`Updating Dockerfile: ${filePath}`);
-
-        fromLineSplit[fromLineSplitIndex] = `${BASE_IMAGE}:${DEFAULT_RUNTIME_VERSION}`;
-
-        if (MODULE_VERSION) {
-            fromLineSplit[fromLineSplitIndex] += `-${MODULE_VERSION}`;
-        }
-
-        lineSplit[idx] = fromLineSplit.join(' ');
     }
 
     await writeFile(filePath, lineSplit.join('\n'), 'utf-8');
