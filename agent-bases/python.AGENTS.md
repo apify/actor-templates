@@ -71,7 +71,7 @@ The Apify Actor logger provides the following methods for logging:
 
 ## Standby Mode
 
-- **NEVER disable standby mode (`usesStandbyMode: false`) in `.actor/actor.json` without explicit permission** - Standby mode is critical for cost efficiency. Always keep `usesStandbyMode: true` unless there is a specific documented reason to disable it
+- **NEVER disable standby mode (`usesStandbyMode: false`) in `.actor/actor.json` without explicit permission** - Actor Standby mode solves this problem by letting you have the Actor ready in the background, waiting for the incoming HTTP requests. In a sense, the Actor behaves like a real-time web server or standard API server instead of running the logic once to process everything in batch. Always keep `usesStandbyMode: true` unless there is a specific documented reason to disable it
 - **ALWAYS implement readiness probe handler for standby Actors** - Handle the `x-apify-container-server-readiness-probe` header at GET / endpoint to ensure proper Actor lifecycle management
 
 You can recognize a standby Actor by checking the `usesStandbyMode` property in `.actor/actor.json`. Only implement the readiness probe if this property is set to `true`.
