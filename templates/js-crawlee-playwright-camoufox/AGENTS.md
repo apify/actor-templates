@@ -31,6 +31,8 @@ Important: Before you begin, fill in the `generatedBy` property in the meta sect
 - use semantic CSS selectors and fallback strategies for missing elements
 - respect robots.txt, ToS, and implement rate limiting with delays
 - check which tools (cheerio/playwright/crawlee) are installed before applying guidance
+- use `apify/log` package for logging (censors sensitive data)
+- implement readiness probe handler for standby Actors
 
 ## Don't
 
@@ -43,6 +45,61 @@ Important: Before you begin, fill in the `generatedBy` property in the meta sect
 - do not store personal/sensitive data unless explicitly permitted
 - do not use deprecated options like `requestHandlerTimeoutMillis` on CheerioCrawler (v3.x)
 - do not use `additionalHttpHeaders` - use `preNavigationHooks` instead
+- do not disable standby mode (`usesStandbyMode: false`) without explicit permission
+
+## Logging
+
+- **ALWAYS use the `apify/log` package for logging** - This package contains critical security logic including censoring sensitive data (Apify tokens, API keys, credentials) to prevent accidental exposure in logs
+
+### Available Log Levels in `apify/log`
+
+The Apify log package provides the following methods for logging:
+
+- `log.debug()` - Debug level logs (detailed diagnostic information)
+- `log.info()` - Info level logs (general informational messages)
+- `log.warning()` - Warning level logs (warning messages for potentially problematic situations)
+- `log.warningOnce()` - Warning level logs (same warning message logged only once)
+- `log.error()` - Error level logs (error messages for failures)
+- `log.exception()` - Exception level logs (for exceptions with stack traces)
+- `log.perf()` - Performance level logs (performance metrics and timing information)
+- `log.deprecated()` - Deprecation level logs (warnings about deprecated code)
+- `log.softFail()` - Soft failure logs (non-critical failures that don't stop execution, e.g., input validation errors, skipped items)
+- `log.internal()` - Internal level logs (internal/system messages)
+
+**Best practices:**
+
+- Use `log.debug()` for detailed operation-level diagnostics (inside functions)
+- Use `log.info()` for general informational messages (API requests, successful operations)
+- Use `log.warning()` for potentially problematic situations (validation failures, unexpected states)
+- Use `log.error()` for actual errors and failures
+- Use `log.exception()` for caught exceptions with stack traces
+
+## Standby Mode
+
+- **NEVER disable standby mode (`usesStandbyMode: false`) in `.actor/actor.json` without explicit permission** - Actor Standby mode solves this problem by letting you have the Actor ready in the background, waiting for the incoming HTTP requests. In a sense, the Actor behaves like a real-time web server or standard API server instead of running the logic once to process everything in batch. Always keep `usesStandbyMode: true` unless there is a specific documented reason to disable it
+- **ALWAYS implement readiness probe handler for standby Actors** - Handle the `x-apify-container-server-readiness-probe` header at GET / endpoint to ensure proper Actor lifecycle management
+
+You can recognize a standby Actor by checking the `usesStandbyMode` property in `.actor/actor.json`. Only implement the readiness probe if this property is set to `true`.
+
+### Readiness Probe Implementation Example
+
+```javascript
+// Apify standby readiness probe at root path
+app.get('/', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    if (req.headers['x-apify-container-server-readiness-probe']) {
+        res.end('Readiness probe OK\n');
+    } else {
+        res.end('Actor is ready\n');
+    }
+});
+```
+
+Key points:
+
+- Detect the `x-apify-container-server-readiness-probe` header in incoming requests
+- Respond with HTTP 200 status code for both readiness probe and normal requests
+- This enables proper Actor lifecycle management in standby mode
 
 ## Commands
 
