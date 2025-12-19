@@ -46,6 +46,7 @@ export async function getMcpServer(
         resources: {},
         completions: {},
         logging: {},
+        tasks: {},
     });
 
     // Spawn MCP proxy client for the stdio MCP server
