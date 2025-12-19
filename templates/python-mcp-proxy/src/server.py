@@ -280,7 +280,7 @@ class ProxyServer:
         # Case is handled automatically by Starlette's case-insensitive headers
         for key in ('mcp-session-id', 'mcp_session_id'):
             if value := headers.get(key):
-                return value
+                return value  # type: ignore[no-any-return]
         return None
 
     async def create_starlette_app(self, mcp_server: Server) -> Starlette:
