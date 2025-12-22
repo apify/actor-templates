@@ -263,6 +263,26 @@ class ProxyServer:
 
         return capturing_send
 
+    @staticmethod
+    def _get_session_id_from_headers(headers: Any) -> str | None:
+        """Extract session ID from headers, trying both hyphen and underscore variants.
+
+        HTTP headers are case-insensitive per spec, and Starlette's Request.headers
+        handles this automatically. We only need to check for hyphen vs underscore variants.
+
+        Args:
+            headers: Either a Starlette Request.headers object or a dict
+
+        Returns:
+            Session ID string if found, None otherwise
+        """
+        # Try both hyphen and underscore variants
+        # Case is handled automatically by Starlette's case-insensitive headers
+        for key in ('mcp-session-id', 'mcp_session_id'):
+            if value := headers.get(key):
+                return value  # type: ignore[no-any-return]
+        return None
+
     async def create_starlette_app(self, mcp_server: Server) -> Starlette:
         """Create a Starlette app that exposes /mcp endpoint for Streamable HTTP transport."""
         event_store = InMemoryEventStore()
@@ -341,7 +361,7 @@ class ProxyServer:
 
             if scope['method'] == 'DELETE':
                 await session_manager.handle_request(scope, receive, send)
-                if req_sid := request.headers.get('mcp-session-id'):
+                if req_sid := self._get_session_id_from_headers(request.headers):
                     self._cleanup_session_last_activity(req_sid)
                     self._cleanup_session_timer(req_sid)
                 return
@@ -352,7 +372,7 @@ class ProxyServer:
             capturing_send = self._create_capturing_send(send, session_id_from_resp)
 
             # Log and touch existing session if present on request
-            if req_sid := request.headers.get('mcp-session-id'):
+            if req_sid := self._get_session_id_from_headers(request.headers):
                 self._touch_session(req_sid, session_manager)
 
             await session_manager.handle_request(scope, receive, capturing_send)  # type: ignore[arg-type]
