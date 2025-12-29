@@ -35,6 +35,7 @@ jobs:
         id: branch-name
         run: |
           echo "BRANCH_NAME=$(echo '${{ env.RAW_BRANCH_NAME }}' | sed 's/,/_/g')" >> $GITHUB_OUTPUT
+          echo "BASE_IMAGE_FORMATTED=$(echo '${{ env.BASE_IMAGE_RAW }}' | sed 's/,/, /g')" >> $GITHUB_OUTPUT
 
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -100,11 +101,11 @@ jobs:
           if [ "$PR_EXISTS" -eq "0" ]; then
             echo "Creating new PR"
             gh pr create \
-              --title "chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}" \
-              --body "Automated update of templates for base image \`${{ env.BASE_IMAGE_RAW }}\`
+              --title "chore: Update templates for base image: ${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}" \
+              --body "Automated update of templates for base image \`${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}\`
 
             **Parameters:**
-            - Base Image: \`${{ env.BASE_IMAGE_RAW }}\`
+            - Base Image: \`${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}\`
             - Runtime Version: \`${{ env.DEFAULT_RUNTIME_VERSION }}\`
             - Module Version: \`${{ env.MODULE_VERSION || 'N/A' }}\`
 
@@ -119,10 +120,10 @@ jobs:
             # gh pr edit supports a branch name or a PR number or a URL
 
             gh pr edit "${{ steps.branch-name.outputs.BRANCH_NAME }}" \
-              --body "Automated update of templates for base image \`${{ env.BASE_IMAGE_RAW }}\`
+              --body "Automated update of templates for base image \`${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}\`
 
             **Parameters:**
-            - Base Image: \`${{ env.BASE_IMAGE_RAW }}\`
+            - Base Image: \`${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}\`
             - Runtime Version: \`${{ env.DEFAULT_RUNTIME_VERSION }}\`
             - Module Version: \`${{ env.MODULE_VERSION || 'N/A' }}\`
 
