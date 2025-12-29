@@ -100,7 +100,7 @@ jobs:
           if [ "$PR_EXISTS" -eq "0" ]; then
             echo "Creating new PR"
             gh pr create \
-              --title "chore: Update templates for base image: ${{ steps.branch-name.outputs.BRANCH_NAME }}" \
+              --title "chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}" \
               --body "Automated update of templates for base image \`${{ env.BASE_IMAGE_RAW }}\`
 
               **Parameters:**
