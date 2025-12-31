@@ -24,8 +24,7 @@ const templatesDir = new URL('../../templates/', import.meta.url);
 
 const baseImages = BASE_IMAGE.split(',');
 
-for await (const dockerfileEntry of glob('**/Dockerfile', { cwd: templatesDir })) {
-    const filePath = new URL(dockerfileEntry, templatesDir);
+async function updateDockerfile(filePath: URL) {
     const content = await readFile(filePath, 'utf-8');
 
     const lineSplit = content.split('\n');
@@ -43,7 +42,9 @@ for await (const dockerfileEntry of glob('**/Dockerfile', { cwd: templatesDir })
                 continue;
             }
 
-            console.log(`Updating Dockerfile: ${filePath} with base image: ${baseImage}`);
+            console.log(
+                `Updating Dockerfile: ${filePath} with base image: ${baseImage}, runtime version: ${DEFAULT_RUNTIME_VERSION}${MODULE_VERSION ? `, module version: ${MODULE_VERSION}` : ''}`,
+            );
 
             fromLineSplit[fromLineSplitIndex] = `${baseImage}:${DEFAULT_RUNTIME_VERSION}`;
 
@@ -56,4 +57,44 @@ for await (const dockerfileEntry of glob('**/Dockerfile', { cwd: templatesDir })
     }
 
     await writeFile(filePath, lineSplit.join('\n'), 'utf-8');
+}
+
+const puppeteerDependencies = ['puppeteer'];
+const playwrightDependencies = ['playwright', '@playwright/test'];
+
+async function updatePackageJson(filePath: URL) {
+    const content = await readFile(filePath, 'utf-8');
+
+    const packageJson = JSON.parse(content);
+
+    let dependenciesToUpdate: string[] = [];
+
+    // Handle playwright
+    if (BASE_IMAGE!.includes('playwright')) {
+        dependenciesToUpdate = playwrightDependencies;
+    }
+
+    // Handle puppeteer
+    if (BASE_IMAGE!.includes('puppeteer')) {
+        dependenciesToUpdate = puppeteerDependencies;
+    }
+
+    for (const dependency of dependenciesToUpdate) {
+        if (packageJson.dependencies?.[dependency]) {
+            console.log(`Updating package.json: ${filePath} with ${dependency} version: ${MODULE_VERSION}`);
+            packageJson.dependencies[dependency] = MODULE_VERSION!;
+        }
+    }
+
+    await writeFile(filePath, JSON.stringify(packageJson, null, 4) + '\n', 'utf-8');
+}
+
+for await (const fileEntry of glob(['**/Dockerfile', '**/package.json'], { cwd: templatesDir })) {
+    const filePath = new URL(fileEntry, templatesDir);
+
+    if (fileEntry.endsWith('Dockerfile')) {
+        await updateDockerfile(filePath);
+    } else if (fileEntry.endsWith('package.json')) {
+        await updatePackageJson(filePath);
+    }
 }
