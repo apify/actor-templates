@@ -35,6 +35,9 @@ jobs:
           node-version-file: .nvmrc
           cache: 'npm'
 
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Get Node.js version
         id: get-node-version
         run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
