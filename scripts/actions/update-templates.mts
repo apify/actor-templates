@@ -81,8 +81,15 @@ async function updatePackageJson(filePath: URL) {
 
     for (const dependency of dependenciesToUpdate) {
         if (packageJson.dependencies?.[dependency]) {
-            console.log(`Updating package.json: ${filePath} with ${dependency} version: ${MODULE_VERSION}`);
+            console.log(`Updating package.json: ${filePath} with dependency: ${dependency} version: ${MODULE_VERSION}`);
             packageJson.dependencies[dependency] = MODULE_VERSION!;
+        }
+
+        if (packageJson.devDependencies?.[dependency]) {
+            console.log(
+                `Updating package.json: ${filePath} with dev dependency: ${dependency} version: ${MODULE_VERSION}`,
+            );
+            packageJson.devDependencies[dependency] = MODULE_VERSION!;
         }
     }
 
@@ -98,3 +105,6 @@ for await (const fileEntry of glob(['**/Dockerfile', '**/package.json'], { cwd: 
         await updatePackageJson(filePath);
     }
 }
+
+const rootPackageJson = new URL('../../package.json', import.meta.url);
+await updatePackageJson(rootPackageJson);
