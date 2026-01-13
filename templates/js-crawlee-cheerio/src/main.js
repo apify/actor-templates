@@ -6,6 +6,13 @@ import { Actor } from 'apify';
 // The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
 await Actor.init();
 
+// Handle graceful abort - Actor is being stopped by user or platform
+Actor.on('aborting', async () => {
+    // Persist any state, do any cleanup you need, and terminate the Actor using `await Actor.exit()` explicitly as soon as possible
+    // This will help ensure that the Actor is doing best effort to honor any potential limits on costs of a single run set by the user
+    await Actor.exit();
+});
+
 // Structure of input is defined in input_schema.json
 const { startUrls = ['https://apify.com'], maxRequestsPerCrawl = 100 } = (await Actor.getInput()) ?? {};
 

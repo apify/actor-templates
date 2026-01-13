@@ -33,6 +33,7 @@ Important: Before you begin, fill in the `generatedBy` property in the meta sect
 - check which tools (cheerio/playwright/crawlee) are installed before applying guidance
 - use `apify/log` package for logging (censors sensitive data)
 - implement readiness probe handler for standby Actors
+- handle the `aborting` event to gracefully shut down when Actor is stopped
 
 ## Don't
 
@@ -73,6 +74,18 @@ The Apify log package provides the following methods for logging:
 - Use `log.warning()` for potentially problematic situations (validation failures, unexpected states)
 - Use `log.error()` for actual errors and failures
 - Use `log.exception()` for caught exceptions with stack traces
+
+## Graceful Abort Handling
+
+Handle the `aborting` event to terminate the Actor quickly when stopped by user or platform, minimizing costs especially for PPU/PPE+U billing.
+
+```javascript
+Actor.on('aborting', async () => {
+    // Persist any state, do any cleanup you need, and terminate the Actor using `await Actor.exit()` explicitly as soon as possible
+    // This will help ensure that the Actor is doing best effort to honor any potential limits on costs of a single run set by the user
+    await Actor.exit();
+});
+```
 
 ## Standby Mode
 

@@ -21,6 +21,14 @@ async def main() -> None:
     """
     # Enter the context of the Actor.
     async with Actor:
+        # Handle graceful abort - Actor is being stopped by user or platform
+        async def on_aborting() -> None:
+            # Persist any state, do any cleanup you need, and terminate the Actor using `await Actor.exit()` explicitly as soon as possible
+            # This will help ensure that the Actor is doing best effort to honor any potential limits on costs of a single run set by the user
+            await Actor.exit()
+
+        Actor.on('aborting', on_aborting)
+
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = [

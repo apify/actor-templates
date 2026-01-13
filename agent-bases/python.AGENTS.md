@@ -69,6 +69,19 @@ The Apify Actor logger provides the following methods for logging:
 - Use `Actor.log.error()` for actual errors and failures
 - Use `Actor.log.exception()` for caught exceptions with stack traces
 
+## Graceful Abort Handling
+
+Handle the `aborting` event to terminate the Actor quickly when stopped by user or platform, minimizing costs especially for PPU/PPE+U billing.
+
+```python
+async def on_aborting() -> None:
+    # Persist any state, do any cleanup you need, and terminate the Actor using `await Actor.exit()` explicitly as soon as possible
+    # This will help ensure that the Actor is doing best effort to honor any potential limits on costs of a single run set by the user
+    await Actor.exit()
+
+Actor.on('aborting', on_aborting)
+```
+
 ## Standby Mode
 
 - **NEVER disable standby mode (`usesStandbyMode: false`) in `.actor/actor.json` without explicit permission** - Actor Standby mode solves this problem by letting you have the Actor ready in the background, waiting for the incoming HTTP requests. In a sense, the Actor behaves like a real-time web server or standard API server instead of running the logic once to process everything in batch. Always keep `usesStandbyMode: true` unless there is a specific documented reason to disable it
