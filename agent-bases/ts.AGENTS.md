@@ -33,6 +33,7 @@ Important: Before you begin, fill in the `generatedBy` property in the meta sect
 - check which tools (cheerio/playwright/crawlee) are installed before applying guidance
 - use `apify/log` package for logging (censors sensitive data)
 - implement readiness probe handler for standby Actors
+- handle the `aborting` event to gracefully shut down when Actor is stopped
 
 ## Don't
 
@@ -82,6 +83,9 @@ Handle the `aborting` event to terminate the Actor quickly when stopped by user 
 Actor.on('aborting', async () => {
     // Persist any state, do any cleanup you need, and terminate the Actor using `await Actor.exit()` explicitly as soon as possible
     // This will help ensure that the Actor is doing best effort to honor any potential limits on costs of a single run set by the user
+    // Wait 1 second to allow Crawlee/SDK useState and other state persistence operations to complete
+    // This is a temporary workaround until SDK implements proper state persistence in the aborting event
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await Actor.exit();
 });
 ```
