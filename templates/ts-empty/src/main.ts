@@ -8,7 +8,7 @@ import { Actor, log } from 'apify';
 // note that we need to use `.js` even when inside TS files
 // import { router } from './routes.js';
 
-// The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
+// The init() call configures the Actor to correctly work with the Apify-provided environment - mainly the storage infrastructure. It is necessary that every Actor performs an init() call.
 await Actor.init();
 
 log.info('Hello from the Actor!');

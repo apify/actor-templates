@@ -7,7 +7,7 @@ import { Actor } from 'apify';
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 import { router } from './routes.js';
 
-// The init() call configures the Actor for its environment. It's recommended to start every Actor with an init().
+// The init() call configures the Actor to correctly work with the Apify-provided environment - mainly the storage infrastructure. It is necessary that every Actor performs an init() call.
 await Actor.init();
 
 // Define the URLs to start the crawler with - get them from the input of the Actor or use a default list.
