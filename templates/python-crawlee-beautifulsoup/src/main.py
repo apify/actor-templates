@@ -10,8 +10,7 @@ from __future__ import annotations
 
 import asyncio
 
-from apify import Actor
-from apify.consts import Event
+from apify import Actor, Event
 from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
 
