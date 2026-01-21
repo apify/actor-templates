@@ -1,3 +1,5 @@
+import { setTimeout } from 'node:timers/promises';
+
 // Crawlee - web scraping and browser automation library (Read more at https://crawlee.dev)
 import { CheerioCrawler, Dataset } from '@crawlee/cheerio';
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
@@ -12,7 +14,7 @@ Actor.on('aborting', async () => {
     // This will help ensure that the Actor is doing best effort to honor any potential limits on costs of a single run set by the user
     // Wait 1 second to allow Crawlee/SDK useState and other state persistence operations to complete
     // This is a temporary workaround until SDK implements proper state persistence in the aborting event
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await setTimeout(1000);
     await Actor.exit();
 });
 
