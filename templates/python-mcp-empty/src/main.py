@@ -17,7 +17,7 @@ def get_server() -> FastMCP:
     """Create an MCP server with tools and resources."""
     server = FastMCP('python-mcp-empty', '1.0.0')
 
-    @server.tool()  # type: ignore[misc]
+    @server.tool()
     def add(a: float, b: float) -> dict:
         """Add two numbers together and return the sum."""
         result = a + b
@@ -31,7 +31,7 @@ def get_server() -> FastMCP:
             },
         }
 
-    @server.resource(uri='https://example.com/calculator', name='calculator-info')  # type: ignore[misc]
+    @server.resource(uri='https://example.com/calculator', name='calculator-info')
     def calculator_info() -> str:
         """Get information about the calculator service."""
         return 'This is a simple calculator MCP server that can add two numbers together.'
