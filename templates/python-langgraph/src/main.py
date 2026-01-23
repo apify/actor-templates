@@ -44,7 +44,7 @@ async def main() -> None:
             msg = 'Missing "query" attribute in input!'
             raise ValueError(msg)
 
-        llm = ChatOpenAI(model=model_name)
+        llm = ChatOpenAI(model=model_name)  # ty: ignore[unknown-argument]
 
         # Create the ReAct agent graph
         # see https://langchain-ai.github.io/langgraph/reference/prebuilt/?h=react#langgraph.prebuilt.chat_agent_executor.create_react_agent

@@ -15,7 +15,7 @@ from smolagents import CodeAgent, OpenAIServerModel, WebSearchTool
 
 # Configure stdout to use UTF-8 encoding for proper unicode support
 if hasattr(sys.stdout, 'reconfigure'):
-    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stdout.reconfigure(encoding='utf-8')  # ty: ignore[call-non-callable]
 else:
     # Fall back to TextIOWrapper for environments where reconfigure is unavailable
     sys.stdout = TextIOWrapper(sys.stdout.buffer, encoding='utf-8')

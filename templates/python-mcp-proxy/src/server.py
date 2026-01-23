@@ -211,7 +211,7 @@ class ProxyServer:
                     # Ignore internal response
                     return
 
-                await session_manager.handle_request(scope, _receive, _send)  # type: ignore[arg-type]
+                await session_manager.handle_request(scope, _receive, _send)  # ty: ignore[invalid-argument-type]
                 self._cleanup_session_last_activity(session_id)
                 self._cleanup_session_timer(session_id)
             except asyncio.CancelledError:
@@ -280,7 +280,7 @@ class ProxyServer:
         # Case is handled automatically by Starlette's case-insensitive headers
         for key in ('mcp-session-id', 'mcp_session_id'):
             if value := headers.get(key):
-                return value  # type: ignore[no-any-return]
+                return value
         return None
 
     async def create_starlette_app(self, mcp_server: Server) -> Starlette:
@@ -375,7 +375,7 @@ class ProxyServer:
             if req_sid := self._get_session_id_from_headers(request.headers):
                 self._touch_session(req_sid, session_manager)
 
-            await session_manager.handle_request(scope, receive, capturing_send)  # type: ignore[arg-type]
+            await session_manager.handle_request(scope, receive, capturing_send)  # ty: ignore[invalid-argument-type]
 
             # If this was an initialization (no session id in request), capture from response and touch
             if not req_sid and session_id_from_resp['sid']:
@@ -394,7 +394,7 @@ class ProxyServer:
                 Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,
-            middleware=[Middleware(McpPathRewriteMiddleware)],
+            middleware=[Middleware(McpPathRewriteMiddleware)],  # ty: ignore[invalid-argument-type]
         )
 
     async def _run_server(self, app: Starlette) -> None:

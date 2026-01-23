@@ -68,6 +68,8 @@ async def main() -> None:
                     if depth < max_depth:
                         for link in soup.find_all('a'):
                             link_href = link.get('href')
+                            if not isinstance(link_href, str):
+                                continue
                             link_url = urljoin(url, link_href)
 
                             if link_url.startswith(('http://', 'https://')):
