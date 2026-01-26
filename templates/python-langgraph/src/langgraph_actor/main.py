@@ -14,9 +14,9 @@ from apify import Actor
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
 
-from src.models import AgentStructuredOutput
-from src.tools import tool_calculator_sum, tool_scrape_instagram_profile_posts
-from src.utils import log_state
+from .models import AgentStructuredOutput
+from .tools import tool_calculator_sum, tool_scrape_instagram_profile_posts
+from .utils import log_state
 
 
 async def main() -> None:

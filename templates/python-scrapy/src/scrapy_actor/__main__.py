@@ -20,7 +20,7 @@ from apify.scrapy import initialize_logging, run_scrapy_actor
 from .main import main
 
 # Ensure the location to the Scrapy settings module is defined.
-os.environ['SCRAPY_SETTINGS_MODULE'] = 'src.settings'
+os.environ['SCRAPY_SETTINGS_MODULE'] = 'scrapy_actor.settings'
 
 
 if __name__ == '__main__':
