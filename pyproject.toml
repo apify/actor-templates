@@ -83,7 +83,7 @@ python-version = "3.10"
 [tool.ty.src]
 include = ["templates"]
 
-# The templates use relative imports as they're run as packages (python -m src).
+# The templates use relative imports as they're run as packages (e.g., python -m start_actor).
 # ty doesn't fully support this pattern yet, so we ignore unresolved-import errors.
 [tool.ty.rules]
 unresolved-import = "ignore"
@@ -92,33 +92,10 @@ unresolved-import = "ignore"
 clean = "rm -rf .ty_cache .pytest_cache .ruff_cache build dist htmlcov .coverage"
 install-dev = "uv sync --all-extras"
 check-code = ["lint", "type-check"]
+type-check = "uv run ty check"
 
 [tool.poe.tasks.lint]
 shell = "uv run ruff format --check && uv run ruff check"
 
 [tool.poe.tasks.format]
 shell = "uv run ruff check --fix && uv run ruff format"
-
-# Due to each template having its own "src" directory, running type checking on all templates together causes
-# the error: "Duplicate module named 'src'". Therefore, type checking must be executed separately for each template.
-[tool.poe.tasks.type-check]
-shell = """
-uv run ty check templates/python-beautifulsoup && \
-uv run ty check templates/python-crawlee-beautifulsoup && \
-uv run ty check templates/python-crawlee-parsel && \
-uv run ty check templates/python-crawlee-playwright && \
-uv run ty check templates/python-crawlee-playwright-camoufox && \
-uv run ty check templates/python-empty && \
-uv run ty check templates/python-mcp-empty && \
-uv run ty check templates/python-mcp-proxy && \
-uv run ty check templates/python-playwright && \
-uv run ty check templates/python-scrapy && \
-uv run ty check templates/python-selenium && \
-uv run ty check templates/python-smolagents && \
-uv run ty check templates/python-standby && \
-uv run ty check templates/python-start && \
-uv run ty check templates/python-crewai && \
-uv run ty check templates/python-langgraph && \
-uv run ty check templates/python-llamaindex-agent && \
-uv run ty check templates/python-pydanticai
-"""
