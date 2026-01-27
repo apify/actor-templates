@@ -44,7 +44,7 @@
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-jest": "^28.14.0",
         "globals": "^17.0.0",
-        "globby": "^15.0.0",
+        "globby": "^16.0.0",
         "jest": "^30.0.0",
         "json5": "^2.2.3",
         "mustache": "^4.2.0",
