@@ -20,3 +20,4 @@ __pycache__
 .ruff_cache
 .venv
 venv
+config.bat
