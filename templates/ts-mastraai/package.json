@@ -11,7 +11,7 @@
         "@mastra/core": "^0.24.9",
         "apify": "^3.5.2",
         "mastra": "^0.18.9",
-        "zod": "^3.25.67"
+        "zod": "^4.0.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
