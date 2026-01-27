@@ -5,9 +5,14 @@
     "description": "LangGraph agent in JavaScript for answering questions via web search.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-langgraph-agent"
+        "templateId": "js-langgraph-agent",
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile",
+    "output": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
     "environmentVariables": {
         "OPENAI_API_KEY": "@OPENAI_API_KEY"
     }

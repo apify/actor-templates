@@ -7,9 +7,9 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "apify": "^3.4.2",
-        "crawlee": "^3.13.8",
-        "puppeteer": "24.12.1"
+        "apify": "^3.5.2",
+        "@crawlee/puppeteer": "^3.15.3",
+        "puppeteer": "24.36.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
@@ -20,7 +20,7 @@
         "globals": "^16.2.0",
         "prettier": "^3.5.3",
         "tsx": "^4.20.3",
-        "typescript": "^5.8.3",
+        "typescript": "^5.9.3",
         "typescript-eslint": "^8.34.1"
     },
     "scripts": {

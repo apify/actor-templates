@@ -1,51 +1,16 @@
 {
-    "actorSpecification": 1,
-    "fields": {},
-    "views": {
+    "actorOutputSchemaVersion": 1,
+    "title": "Output schema",
+    "properties": {
         "overview": {
-            "title": "Filtered output",
-            "transformation": {
-                "fields": [
-                    "testSuiteTitle",
-                    "totalPassed",
-                    "totalPending",
-                    "totalFailed",
-                    "totalSkipped",
-                    "totalDuration",
-                    "videoLink"
-                ]
-            },
-            "display": {
-                "component": "table",
-                "properties": {
-                    "testSuiteTitle": {
-                        "label": "Test Suite Title"
-                    },
-                    "totalPassed": {
-                        "label": "Total Passed"
-                    },
-                    "totalPending": {
-                        "label": "Total Pending",
-                        "format": "number"
-                    },
-                    "totalFailed": {
-                        "label": "Total Failed",
-                        "format": "number"
-                    },
-                    "totalSkipped": {
-                        "label": "Total Skipped",
-                        "format": "number"
-                    },
-                    "totalDuration": {
-                        "label": "Total Duration",
-                        "format": "number"
-                    },
-                    "videoLink": {
-                        "label": "Video recording",
-                        "format": "link"
-                    }
-                }
-            }
+            "type": "string",
+            "title": "Overview",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+        },
+        "videos": {
+            "type": "string",
+            "title": "Responses",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys?collection=videos"
         }
     }
 }

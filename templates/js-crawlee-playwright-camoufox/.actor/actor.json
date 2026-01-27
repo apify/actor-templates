@@ -5,8 +5,13 @@
     "description": "Crawlee and Playwright project with Camoufox in JavaScript.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-crawlee-playwright-camoufox"
+        "templateId": "js-crawlee-playwright-camoufox",
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "input": "./input_schema.json",
+    "output": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
     "dockerfile": "../Dockerfile"
 }

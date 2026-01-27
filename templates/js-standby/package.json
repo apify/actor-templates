@@ -7,7 +7,7 @@
         "node": ">=20.0.0"
     },
     "dependencies": {
-        "apify": "^3.4.2"
+        "apify": "^3.5.2"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",

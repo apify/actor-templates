@@ -8,7 +8,9 @@ https://docs.apify.com/sdk/python
 
 from __future__ import annotations
 
-from apify import Actor
+import asyncio
+
+from apify import Actor, Event
 from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
 
 
@@ -21,6 +23,19 @@ async def main() -> None:
     """
     # Enter the context of the Actor.
     async with Actor:
+        # Handle graceful abort - Actor is being stopped by user or platform
+        async def on_aborting() -> None:
+            # Persist any state, do any cleanup you need, and terminate the Actor using
+            # `await Actor.exit()` explicitly as soon as possible. This will help ensure that
+            # the Actor is doing best effort to honor any potential limits on costs of a
+            # single run set by the user.
+            # Wait 1 second to allow Crawlee/SDK state persistence operations to complete
+            # This is a temporary workaround until SDK implements proper state persistence in the aborting event
+            await asyncio.sleep(1)
+            await Actor.exit()
+
+        Actor.on(Event.ABORTING, on_aborting)
+
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
         start_urls = [

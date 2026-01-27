@@ -1,0 +1,12 @@
+{
+    "actorKeyValueStoreSchemaVersion": 1,
+    "title": "Key-Value Store Schema",
+    "collections": {
+        "report": {
+            "title": "HTML Report",
+            "description": "Playwright HTML test report",
+            "key": "report",
+            "contentTypes": ["text/html"]
+        }
+    }
+}

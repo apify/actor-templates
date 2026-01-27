@@ -1,0 +1,22 @@
+{
+    "search-papers": {
+        "eventTitle": "arXiv paper search",
+        "eventDescription": "Fee for searching papers on arXiv using the search_papers tool.",
+        "eventPriceUsd": 0.001
+    },
+    "list-papers": {
+        "eventTitle": "arXiv paper listing",
+        "eventDescription": "Fee for listing available papers using the list_papers tool.",
+        "eventPriceUsd": 0.001
+    },
+    "download-paper": {
+        "eventTitle": "arXiv paper download",
+        "eventDescription": "Fee for downloading a paper from arXiv using the download_paper tool.",
+        "eventPriceUsd": 0.01
+    },
+    "read-paper": {
+        "eventTitle": "arXiv paper reading",
+        "eventDescription": "Fee for reading the full content of a paper using the read_paper tool.",
+        "eventPriceUsd": 0.01
+    }
+}

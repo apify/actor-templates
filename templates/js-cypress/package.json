@@ -7,11 +7,10 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "@apify/log": "^2.5.20",
-        "apify": "^3.4.2",
+        "apify": "^3.5.2",
         "console.table": "^0.10.0",
         "cypress": "^15.0.0",
-        "globby": "^14.1.0"
+        "globby": "^15.0.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",

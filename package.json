@@ -18,7 +18,7 @@
         "test-node-templates": "npm run test-templates -- --testNamePattern=node-js-templates",
         "test-llm-ai-python-templates": "npm run test-templates -- --testNamePattern=python-llm-ai-templates",
         "test-llm-ai-node-templates": "npm run test-templates -- --testNamePattern=node-js-llm-ai-templates",
-        "build": "node ./src/build.js"
+        "build": "node ./scripts/copy-agents-md-to-templates.mts && node ./src/build.js"
     },
     "repository": {
         "type": "git",
@@ -35,24 +35,24 @@
     },
     "homepage": "https://github.com/apify/actor-templates#readme",
     "devDependencies": {
-        "@apify/eslint-config": "^1.0.0",
+        "@apify/eslint-config": "^1.1.0",
         "@apify/tsconfig": "0.1.1",
         "@types/jest": "^30.0.0",
-        "apify": "^3.4.2",
-        "crawlee": "^3.13.8",
+        "apify": "^3.5.2",
+        "crawlee": "^3.15.3",
         "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-jest": "^28.14.0",
         "globals": "^16.2.0",
-        "globby": "^14.1.0",
+        "globby": "^15.0.0",
         "jest": "^30.0.0",
         "json5": "^2.2.3",
         "mustache": "^4.2.0",
-        "playwright": "^1.54.1",
-        "prettier": "^3.5.3",
-        "puppeteer": "^24.12.1",
+        "playwright": "1.58.0",
+        "prettier": "^3.7.4",
+        "puppeteer": "24.36.0",
         "semver": "^7.7.2",
-        "typescript": "^5.8.3",
+        "typescript": "^5.9.3",
         "typescript-eslint": "^8.34.1"
     }
 }

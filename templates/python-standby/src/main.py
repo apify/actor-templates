@@ -40,5 +40,5 @@ async def main() -> None:
     """
     async with Actor:
         # A simple HTTP server listening on Actor standby port.
-        with HTTPServer(('', Actor.config.standby_port), GetHandler) as http_server:
+        with HTTPServer(('', Actor.configuration.standby_port), GetHandler) as http_server:
             http_server.serve_forever()

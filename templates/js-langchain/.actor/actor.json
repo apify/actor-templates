@@ -5,9 +5,14 @@
     "description": "LangChain project in JavaScript.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-langchain"
+        "templateId": "js-langchain",
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile",
+    "output": "./output_schema.json",
+    "storages": {
+        "keyValueStore": "./key_value_store_schema.json"
+    },
     "environmentVariables": {
         "OPENAI_API_KEY": "@OPENAI_API_KEY"
     }

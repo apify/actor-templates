@@ -13,13 +13,13 @@ jobs:
     name: Python lint check
     uses: apify/workflows/.github/workflows/python_lint_check.yaml@main
     with:
-      python-versions: '["3.10", "3.11", "3.12", "3.13"]'
+      python_versions: '["3.10", "3.11", "3.12", "3.13"]'
 
   python_type_check:
     name: Python type check
     uses: apify/workflows/.github/workflows/python_type_check.yaml@main
     with:
-      python-versions: '["3.10", "3.11", "3.12", "3.13"]'
+      python_versions: '["3.10", "3.11", "3.12", "3.13"]'
 
   lint_and_test:
     name: Lint and test (without templates)
@@ -27,10 +27,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: 'npm'
@@ -40,7 +40,7 @@ jobs:
         run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
 
       - name: Cache node_modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}

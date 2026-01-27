@@ -1,4 +1,4 @@
-import { createCheerioRouter } from 'crawlee';
+import { createCheerioRouter } from '@crawlee/cheerio';
 
 export const router = createCheerioRouter();
 

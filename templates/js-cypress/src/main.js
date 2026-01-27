@@ -4,20 +4,17 @@ import 'console.table';
 
 import fs from 'node:fs';
 
-import { Actor } from 'apify';
+import { Actor, log } from 'apify';
 // Component and E2E testing library (read more at https://docs.cypress.io/guides/overview/why-cypress)
 import cypress from 'cypress';
 // File system traversing library (read more at https://www.jsdocs.io/package/globby)
 import { globby } from 'globby';
 
-// Apify logging utility library
-import log from '@apify/log';
-
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 // import { router } from './routes.js';
 
-// The init() call configures the Actor for its environment. It's recommended to start every Actor with an init()
+// The init() call configures the Actor to correctly work with the Apify-provided environment - mainly the storage infrastructure. It is necessary that every Actor performs an init() call.
 await Actor.init();
 
 // Define the configuration to start the cypress test with - get it from the input of the Actor or use a default config.

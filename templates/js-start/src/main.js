@@ -1,5 +1,5 @@
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/).
-import { Actor } from 'apify';
+import { Actor, log } from 'apify';
 // Axios - Promise based HTTP client for the browser and node.js (Read more at https://axios-http.com/docs/intro).
 import axios from 'axios';
 // Cheerio - The fast, flexible & elegant library for parsing and manipulating HTML and XML (Read more at https://cheerio.js.org/).
@@ -8,7 +8,7 @@ import * as cheerio from 'cheerio';
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 // import { router } from './routes.js';
 
-// The init() call configures the Actor for its environment. It's recommended to start every Actor with an init().
+// The init() call configures the Actor to correctly work with the Apify-provided environment - mainly the storage infrastructure. It is necessary that every Actor performs an init() call.
 await Actor.init();
 
 // Structure of input is defined in input_schema.json
@@ -28,7 +28,7 @@ $('h1, h2, h3, h4, h5, h6').each((i, element) => {
         level: $(element).prop('tagName').toLowerCase(),
         text: $(element).text(),
     };
-    console.log('Extracted heading', headingObject);
+    log.info('Extracted heading', headingObject);
     headings.push(headingObject);
 });
 

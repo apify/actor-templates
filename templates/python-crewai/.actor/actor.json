@@ -9,8 +9,10 @@
     "storages": {
         "dataset": "./dataset_schema.json"
     },
+    "output": "./output_schema.json",
     "meta": {
-        "templateId": "python-crewai"
+        "templateId": "python-crewai",
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile"
 }

@@ -5,7 +5,8 @@
     "description": "A skeleton project to bootstrap development with CheerioCrawler in JavaScript.",
     "version": "0.0",
     "meta": {
-        "templateId": "js-bootstrap-cheerio-crawler"
+        "templateId": "js-bootstrap-cheerio-crawler",
+        "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile"
 }

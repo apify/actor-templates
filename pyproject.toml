@@ -3,9 +3,9 @@ name = "actor-templates"
 version = "0.0.1"
 requires-python = ">=3.10"
 dependencies = [
-    "apify[scrapy]<3.0.0",
+    "apify[scrapy]>=3.0.0,<4.0.0",
+    "crawlee[all]>=1.0.0,<2.0.0",
     "beautifulsoup4[lxml]<5.0.0",
-    "crawlee[all]<1.0.0",
     "langchain<1.0.0",
     "langchain-openai<1.0.0",
     "langgraph<1.0.0",
@@ -17,9 +17,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "mypy",
-    "ruff",
-    "types-beautifulsoup4",
+    "poethepoet<1.0.0",
+    "ruff~=0.14.0",
+    "ty~=0.0.0",
 ]
 
 [tool.ruff]
@@ -77,23 +77,48 @@ asyncio_default_fixture_loop_scope = "function"
 asyncio_mode = "auto"
 timeout = 1200
 
-[tool.mypy]
-python_version = "3.10"
-plugins = ["pydantic.mypy"]
-files = ["templates"]
-check_untyped_defs = true
-disallow_incomplete_defs = true
-disallow_untyped_calls = true
-disallow_untyped_decorators = true
-disallow_untyped_defs = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_return_any = true
-warn_unreachable = true
-warn_unused_ignores = true
+[tool.ty.environment]
+python-version = "3.10"
 
-[[tool.mypy.overrides]]
-module = [
-    "smolagents", # Untyped and/or stubs not available
-]
-ignore_missing_imports = true
+[tool.ty.src]
+include = ["templates"]
+
+# The templates use relative imports as they're run as packages (python -m src).
+# ty doesn't fully support this pattern yet, so we ignore unresolved-import errors.
+[tool.ty.rules]
+unresolved-import = "ignore"
+
+[tool.poe.tasks]
+clean = "rm -rf .ty_cache .pytest_cache .ruff_cache build dist htmlcov .coverage"
+install-dev = "uv sync --all-extras"
+check-code = ["lint", "type-check"]
+
+[tool.poe.tasks.lint]
+shell = "uv run ruff format --check && uv run ruff check"
+
+[tool.poe.tasks.format]
+shell = "uv run ruff check --fix && uv run ruff format"
+
+# Due to each template having its own "src" directory, running type checking on all templates together causes
+# the error: "Duplicate module named 'src'". Therefore, type checking must be executed separately for each template.
+[tool.poe.tasks.type-check]
+shell = """
+uv run ty check templates/python-beautifulsoup && \
+uv run ty check templates/python-crawlee-beautifulsoup && \
+uv run ty check templates/python-crawlee-parsel && \
+uv run ty check templates/python-crawlee-playwright && \
+uv run ty check templates/python-crawlee-playwright-camoufox && \
+uv run ty check templates/python-empty && \
+uv run ty check templates/python-mcp-empty && \
+uv run ty check templates/python-mcp-proxy && \
+uv run ty check templates/python-playwright && \
+uv run ty check templates/python-scrapy && \
+uv run ty check templates/python-selenium && \
+uv run ty check templates/python-smolagents && \
+uv run ty check templates/python-standby && \
+uv run ty check templates/python-start && \
+uv run ty check templates/python-crewai && \
+uv run ty check templates/python-langgraph && \
+uv run ty check templates/python-llamaindex-agent && \
+uv run ty check templates/python-pydanticai
+"""

@@ -1,4 +1,4 @@
-import { createPuppeteerRouter, Dataset } from 'crawlee';
+import { createPuppeteerRouter, Dataset } from '@crawlee/puppeteer';
 
 export const router = createPuppeteerRouter();
 

@@ -1,0 +1,16 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Output schema",
+    "properties": {
+        "answer": {
+            "type": "string",
+            "title": "Answer",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/OUTPUT"
+        },
+        "vectorIndexCache": {
+            "type": "string",
+            "title": "Vector index cache",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys?store=vector-index-cache"
+        }
+    }
+}
