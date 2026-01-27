@@ -7,10 +7,10 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "@ai-sdk/openai": "^1.2.1",
-        "@mastra/core": "^0.4.4",
+        "@ai-sdk/openai": "^2.0.3",
+        "@mastra/core": "^0.24.9",
         "apify": "^3.5.2",
-        "mastra": "^0.2.8",
+        "mastra": "^0.18.9",
         "zod": "^3.25.67"
     },
     "devDependencies": {
