@@ -19,7 +19,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_beautifulsoup"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["crawlee_beautifulsoup_actor/main.py", "crawlee_beautifulsoup_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -34,7 +34,7 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["empty_actor/main.py", "empty_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -54,7 +54,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_python"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["start_actor/main.py", "start_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -73,7 +73,7 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["beautifulsoup_actor/main.py", "beautifulsoup_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -92,7 +92,7 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["playwright_actor/main.py", "playwright_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -111,7 +111,7 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["selenium_actor/main.py", "selenium_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -127,7 +127,7 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["standby_actor/main.py", "standby_actor/__main__.py"],
             "useCases": ["STARTER"]
         },
         {
@@ -147,12 +147,12 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/spiders/title.py",
-                "src/__main__.py",
-                "src/items.py",
-                "src/pipelines.py",
-                "src/settings.py"
+                "scrapy_actor/main.py",
+                "scrapy_actor/spiders/title.py",
+                "scrapy_actor/__main__.py",
+                "scrapy_actor/items.py",
+                "scrapy_actor/pipelines.py",
+                "scrapy_actor/settings.py"
             ],
             "useCases": ["WEB_SCRAPING"]
         },
@@ -173,7 +173,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_parsel"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["crawlee_parsel_actor/main.py", "crawlee_parsel_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -193,7 +193,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_playwright"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["crawlee_playwright_actor/main.py", "crawlee_playwright_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -213,7 +213,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_playwright_camoufox"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["crawlee_playwright_camoufox_actor/main.py", "crawlee_playwright_camoufox_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -229,7 +229,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py", "src/tools.py"],
+            "showcaseFiles": ["langgraph_actor/main.py", "langgraph_actor/tools.py"],
             "useCases": ["AI"]
         },
         {
@@ -246,7 +246,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py", "src/tools.py"],
+            "showcaseFiles": ["crewai_actor/main.py", "crewai_actor/tools.py"],
             "useCases": ["AI"]
         },
         {
@@ -262,7 +262,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py", "src/agent.py", "src/tools.py"],
+            "showcaseFiles": ["llamaindex_agent_actor/main.py", "llamaindex_agent_actor/agent.py", "llamaindex_agent_actor/tools.py"],
             "useCases": ["AI"]
         },
         {
@@ -278,7 +278,7 @@
                 "memoryMbytes": 128,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py", "src/agents.py"],
+            "showcaseFiles": ["pydanticai_actor/main.py", "pydanticai_actor/agents.py"],
             "useCases": ["AI"]
         },
         {
@@ -294,7 +294,7 @@
                 "memoryMbytes": 128,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["smolagents_actor/main.py", "smolagents_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -311,7 +311,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py", "src/server.py"],
+            "showcaseFiles": ["mcp_proxy_actor/main.py", "mcp_proxy_actor/server.py"],
             "useCases": ["AI"]
         },
         {
@@ -328,7 +328,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py"],
+            "showcaseFiles": ["mcp_empty_actor/main.py"],
             "useCases": ["AI"]
         },
         {
