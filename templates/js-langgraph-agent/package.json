@@ -7,7 +7,7 @@
         "node": ">=20.0.0"
     },
     "dependencies": {
-        "@langchain/community": "^0.3.31",
+        "@langchain/community": "^1.0.0",
         "@langchain/core": "^0.3.40",
         "@langchain/langgraph": "^0.3.0",
         "@langchain/openai": "^0.6.0",
