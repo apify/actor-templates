@@ -7,7 +7,7 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "@ai-sdk/openai": "^2.0.3",
+        "@ai-sdk/openai": "^3.0.0",
         "@mastra/core": "^0.24.9",
         "apify": "^3.5.2",
         "mastra": "^0.18.9",
