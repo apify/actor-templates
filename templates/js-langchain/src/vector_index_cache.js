@@ -3,7 +3,7 @@ import { Readable } from 'node:stream';
 import { finished } from 'node:stream/promises';
 
 import { Actor } from 'apify';
-import * as tar from 'tar';
+import tar from 'tar';
 
 const VECTOR_INDEX_CACHE_STORE_NAME = 'vector-index-cache';
 
