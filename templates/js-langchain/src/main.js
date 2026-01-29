@@ -1,14 +1,14 @@
 /* eslint-disable import/extensions */
 import { rm } from 'node:fs/promises';
 
+import { createStuffDocumentsChain } from '@langchain/classic/chains/combine_documents';
+import { createRetrievalChain } from '@langchain/classic/chains/retrieval';
 import { ApifyDatasetLoader } from '@langchain/community/document_loaders/web/apify_dataset';
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
+import { Document } from '@langchain/core/documents';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { OpenAI, OpenAIEmbeddings } from '@langchain/openai';
 import { Actor, log } from 'apify';
-import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
-import { createRetrievalChain } from 'langchain/chains/retrieval';
-import { Document } from 'langchain/document';
 
 // This is ESM project, and as such, it requires you to specify extensions in your relative imports.
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
