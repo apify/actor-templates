@@ -3,12 +3,12 @@ import { DynamicStructuredTool } from '@langchain/core/tools';
 import { log } from 'apify';
 import { z } from 'zod';
 
-const MAX_RESULTS_DEFAULT = 1;
-const ACTOR_BASE_URL = 'https://rag-web-browser.apify.actor/search';
+const DEFAULT_MAX_RESULTS = 1;
+const RAG_WEB_BROWSER_URL = 'https://rag-web-browser.apify.actor/search';
 
 /**
- * Search phrase or a URL at Google and return crawled web pages as text or Markdown using ApiFy RAG Web Browser.
- * @type {DynamicStructuredTool<{readonly query?: *, readonly maxResults?: *}>}
+ * Tool for searching the web using Apify RAG Web Browser.
+ * Searches Google or crawls a specific URL and returns content as text or Markdown.
  */
 export const webSearchTool = new DynamicStructuredTool({
     name: 'search',
@@ -19,7 +19,7 @@ export const webSearchTool = new DynamicStructuredTool({
             .number()
             .int()
             .positive()
-            .default(MAX_RESULTS_DEFAULT)
+            .default(DEFAULT_MAX_RESULTS)
             .describe('The maximum number of top organic Google Search results whose web pages will be extracted'),
     }),
     func: async ({ query, maxResults }) => {
@@ -31,8 +31,10 @@ export const webSearchTool = new DynamicStructuredTool({
             query,
             maxResults: maxResults.toString(),
         });
-        const url = `${ACTOR_BASE_URL}?${queryParams.toString()}`;
+        const url = `${RAG_WEB_BROWSER_URL}?${queryParams}`;
+
         log.info(`Calling RAG Web Browser with URL: ${url}`);
+
         const response = await fetch(url, {
             method: 'GET',
             headers: { Authorization: `Bearer ${process.env.APIFY_TOKEN}` },
@@ -41,7 +43,9 @@ export const webSearchTool = new DynamicStructuredTool({
         if (!response.ok) {
             throw new Error(`Failed to call RAG Web Browser: ${response.statusText}`);
         }
-        const responseBody = await response.json();
-        return responseBody.map((item) => `### ${item?.metadata?.title}\n${item?.text || item?.markdown}`).join('\n\n');
+
+        const results = await response.json();
+
+        return results.map((item) => `### ${item?.metadata?.title}\n${item?.text ?? item?.markdown}`).join('\n\n');
     },
 });
