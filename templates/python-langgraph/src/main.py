@@ -2,7 +2,7 @@
 
 Feel free to modify this file to suit your specific needs.
 
-To build Apify Actors, utilize the Apify SDK toolkit, read more at the official documentation:
+To build Apify Actors, use the Apify SDK toolkit, read more at the official documentation:
 https://docs.apify.com/sdk/python
 """
 
@@ -11,8 +11,8 @@ from __future__ import annotations
 import logging
 
 from apify import Actor
+from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
-from langgraph.prebuilt import create_react_agent
 
 from src.models import AgentStructuredOutput
 from src.tools import tool_calculator_sum, tool_scrape_instagram_profile_posts
@@ -37,19 +37,20 @@ async def main() -> None:
         actor_input = await Actor.get_input()
 
         query = actor_input.get('query')
-        model_name = actor_input.get('modelName', 'gpt-4o-mini')
-        if actor_input.get('debug', False):
-            Actor.log.setLevel(logging.DEBUG)
         if not query:
             msg = 'Missing "query" attribute in input!'
             raise ValueError(msg)
 
+        model_name = actor_input.get('modelName', 'gpt-4o-mini')
+        if actor_input.get('debug', False):
+            Actor.log.setLevel(logging.DEBUG)
+
         llm = ChatOpenAI(model=model_name)  # ty: ignore[unknown-argument]
 
-        # Create the ReAct agent graph
-        # see https://langchain-ai.github.io/langgraph/reference/prebuilt/?h=react#langgraph.prebuilt.chat_agent_executor.create_react_agent
+        # Create the agent graph
+        # see https://docs.langchain.com/oss/python/langchain/agents
         tools = [tool_calculator_sum, tool_scrape_instagram_profile_posts]
-        graph = create_react_agent(llm, tools, response_format=AgentStructuredOutput)
+        graph = create_agent(llm, tools, response_format=AgentStructuredOutput)
 
         inputs: dict = {'messages': [('user', query)]}
         response: AgentStructuredOutput | None = None
@@ -62,8 +63,8 @@ async def main() -> None:
                 break
 
         if not response or not last_message:
-            Actor.log.error('Failed to get a response from the ReAct agent!')
-            await Actor.fail(status_message='Failed to get a response from the ReAct agent!')
+            Actor.log.error('Failed to get a response from the agent!')
+            await Actor.fail(status_message='Failed to get a response from the agent!')
             return
 
         # Charge for task completion
@@ -77,7 +78,7 @@ async def main() -> None:
         await Actor.push_data(
             {
                 'response': last_message,
-                'structured_response': response.dict() if response else {},
+                'structured_response': response.dict(),
             }
         )
-        Actor.log.info('Pushed the into the dataset!')
+        Actor.log.info('Pushed data into the dataset!')

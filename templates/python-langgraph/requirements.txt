@@ -2,5 +2,6 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify < 4.0.0
-langchain-openai < 1.0.0
-langgraph < 1.0.0
+langchain < 2.0.0
+langchain-openai < 2.0.0
+langgraph < 2.0.0
