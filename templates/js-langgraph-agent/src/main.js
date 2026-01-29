@@ -1,4 +1,4 @@
-    // eslint-disable-next-line import/extensions
+// eslint-disable-next-line import/extensions
 import { HumanMessage } from '@langchain/core/messages';
 import { ChatOpenAI } from '@langchain/openai';
 import { Actor, log } from 'apify';
