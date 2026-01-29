@@ -42,12 +42,14 @@ const prompt = ChatPromptTemplate.fromTemplate(
     `Answer the user's question: {input} based on the following context {context}`,
 );
 
-if (!openAIApiKey)
+if (!openAIApiKey) {
     throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
-if (!APIFY_TOKEN)
+}
+if (!APIFY_TOKEN) {
     throw new Error(
         'Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.',
     );
+}
 
 // Now we want to create a vector index from the crawled documents.
 // Following object represents an input for the https://apify.com/apify/website-content-crawler Actor that crawls the website to gather the data.

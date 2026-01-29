@@ -20,7 +20,7 @@ function getIndexCacheKey(config) {
 }
 
 /**
- * Caches a vector index from `indexPath` in a VECTOR_INDEX_CACHE_STORE_NAME key-value store a key generated from `config`.
+ * Caches a vector index from `indexPath` in a VECTOR_INDEX_CACHE_STORE_NAME key-value store with a key generated from `config`.
  *
  * @param {Object} config
  * @param {String} indexPath
