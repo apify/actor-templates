@@ -1,14 +1,14 @@
 /* eslint-disable import/extensions */
 import { rm } from 'node:fs/promises';
 
+import { createStuffDocumentsChain } from '@langchain/classic/chains/combine_documents';
+import { createRetrievalChain } from '@langchain/classic/chains/retrieval';
 import { ApifyDatasetLoader } from '@langchain/community/document_loaders/web/apify_dataset';
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
+import { Document } from '@langchain/core/documents';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { OpenAI, OpenAIEmbeddings } from '@langchain/openai';
 import { Actor, log } from 'apify';
-import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
-import { createRetrievalChain } from 'langchain/chains/retrieval';
-import { Document } from 'langchain/document';
 
 // This is ESM project, and as such, it requires you to specify extensions in your relative imports.
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
@@ -42,12 +42,14 @@ const prompt = ChatPromptTemplate.fromTemplate(
     `Answer the user's question: {input} based on the following context {context}`,
 );
 
-if (!openAIApiKey)
+if (!openAIApiKey) {
     throw new Error('Please configure the OPENAI_API_KEY as environment variable or enter it into the input!');
-if (!APIFY_TOKEN)
+}
+if (!APIFY_TOKEN) {
     throw new Error(
         'Please configure the APIFY_TOKEN environment variable! Call `apify login` in your terminal to authenticate.',
     );
+}
 
 // Now we want to create a vector index from the crawled documents.
 // Following object represents an input for the https://apify.com/apify/website-content-crawler Actor that crawls the website to gather the data.
