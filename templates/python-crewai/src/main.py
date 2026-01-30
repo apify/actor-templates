@@ -42,10 +42,10 @@ async def main() -> None:
         actor_input = await Actor.get_input()
 
         query = actor_input.get('query')
-        model_name = actor_input.get('modelName', 'gpt-4o-mini')
         if not query:
-            msg = 'Missing "query" attribute in input!'
-            raise ValueError(msg)
+            raise ValueError('Missing "query" attribute in input!')
+
+        model_name = actor_input.get('modelName', 'gpt-4o-mini')
 
         # Create a toolkit for the agent
         # containing the Instagram scraper tool
