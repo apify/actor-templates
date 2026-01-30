@@ -8,7 +8,7 @@ dependencies = [
     "beautifulsoup4[lxml]<5.0.0",
     "langchain<1.0.0",
     "langchain-openai<1.0.0",
-    "langgraph<1.0.0",
+    "langgraph<1.0.8",
     "playwright<2.0.0",
     "pydantic-ai<2.0.0",
     "scrapy<3.0.0",
