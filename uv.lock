@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.13'",
@@ -36,9 +36,9 @@ requires-dist = [
     { name = "apify", extras = ["scrapy"], specifier = ">=3.0.0,<4.0.0" },
     { name = "beautifulsoup4", extras = ["lxml"], specifier = "<5.0.0" },
     { name = "crawlee", extras = ["all"], specifier = ">=1.0.0,<2.0.0" },
-    { name = "langchain", specifier = "<1.0.0" },
-    { name = "langchain-openai", specifier = "<1.0.0" },
-    { name = "langgraph", specifier = "<1.0.0" },
+    { name = "langchain", specifier = "<2.0.0" },
+    { name = "langchain-openai", specifier = "<2.0.0" },
+    { name = "langgraph", specifier = "<2.0.0" },
     { name = "playwright", specifier = "<2.0.0" },
     { name = "pydantic-ai", specifier = "<2.0.0" },
     { name = "scrapy", specifier = "<3.0.0" },
