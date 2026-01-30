@@ -36,7 +36,7 @@ requires-dist = [
     { name = "apify", extras = ["scrapy"], specifier = ">=3.0.0,<4.0.0" },
     { name = "beautifulsoup4", extras = ["lxml"], specifier = "<5.0.0" },
     { name = "crawlee", extras = ["all"], specifier = ">=1.0.0,<2.0.0" },
-    { name = "langchain", specifier = "<1.0.0" },
+    { name = "langchain", specifier = "<1.2.8" },
     { name = "langchain-openai", specifier = "<1.0.0" },
     { name = "langgraph", specifier = "<1.0.0" },
     { name = "playwright", specifier = "<2.0.0" },
