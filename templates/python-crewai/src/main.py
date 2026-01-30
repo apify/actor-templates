@@ -25,6 +25,9 @@ async def main() -> None:
     Raises:
         ValueError: If the input is missing required attributes.
     """
+    # Disable crewAI tracing to prevent stdin read issues at shutdown
+    os.environ['CREWAI_TRACING_ENABLED'] = 'false'
+
     async with Actor:
         apify_token = os.getenv('APIFY_TOKEN')
         if not apify_token:
