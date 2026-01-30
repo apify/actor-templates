@@ -7,23 +7,23 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "@ai-sdk/openai": "^2.0.3",
-        "@mastra/core": "^0.24.9",
-        "apify": "^3.5.2",
-        "mastra": "^0.18.9",
-        "zod": "^3.25.67"
+        "@ai-sdk/openai": "^3.0.23",
+        "@mastra/core": "^1.1.0",
+        "apify": "^3.5.3",
+        "mastra": "^1.1.0",
+        "zod": "^4.3.6"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
-        "@types/node": "^22.15.32",
-        "eslint": "^9.29.0",
-        "eslint-config-prettier": "^10.1.5",
-        "globals": "^17.0.0",
-        "prettier": "^3.5.3",
-        "tsx": "^4.20.3",
+        "@types/node": "^25.1.0",
+        "eslint": "^9.39.2",
+        "eslint-config-prettier": "^10.1.8",
+        "globals": "^17.2.0",
+        "prettier": "^3.8.1",
+        "tsx": "^4.21.0",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.34.1"
+        "typescript-eslint": "^8.54.0"
     },
     "scripts": {
         "start": "npm run start:dev",

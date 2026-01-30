@@ -6,6 +6,7 @@ import { instagramScraperTool } from './tools.js';
 
 export const createSocialMediaAgent = (modelName: string): Agent =>
     new Agent({
+        id: 'social-media-agent',
         name: 'Social Media Agent',
         instructions: `You are an expert social media analyst specializing in Instagram analysis.
         You help users understand social media data and extract meaningful insights from
