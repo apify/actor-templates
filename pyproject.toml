@@ -7,7 +7,7 @@ dependencies = [
     "crawlee[all]>=1.0.0,<2.0.0",
     "beautifulsoup4[lxml]<5.0.0",
     "langchain<1.0.0",
-    "langchain-openai<1.0.0",
+    "langchain-openai<1.1.8",
     "langgraph<1.0.0",
     "playwright<2.0.0",
     "pydantic-ai<2.0.0",
