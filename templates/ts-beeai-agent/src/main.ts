@@ -1,9 +1,9 @@
 import { ChatOpenAI } from '@langchain/openai';
 import { Actor, log } from 'apify';
-import { LangChainChatModel } from 'bee-agent-framework/adapters/langchain/backend/chat';
-import { OpenAIChatModel } from 'bee-agent-framework/adapters/openai/backend/chat';
-import { BeeAgent } from 'bee-agent-framework/agents/bee/agent';
-import { UnconstrainedMemory } from 'bee-agent-framework/memory/unconstrainedMemory';
+import { LangChainChatModel } from 'beeai-framework/adapters/langchain/backend/chat';
+import { OpenAIChatModel } from 'beeai-framework/adapters/openai/backend/chat';
+import { ReActAgent } from 'beeai-framework/agents/react/agent';
+import { UnconstrainedMemory } from 'beeai-framework/memory/unconstrainedMemory';
 import { z } from 'zod';
 
 import { StructuredOutputGenerator } from './structured_response_generator.js';
@@ -46,9 +46,9 @@ if (!query) {
 /**
  * Actor code
  */
-// Create a ReAct agent that can use tools.
-// See https://i-am-bee.github.io/bee-agent-framework/#/agents?id=bee-agent
-// In order to use PPE, the LangChain adapter must be used
+// Create an agent that can use tools.
+// See https://i-am-bee.github.io/beeai-framework/#/agents?id=react-agent
+// To use PPE, the LangChain adapter must be used
 // otherwise, the token usage is not tracked.
 log.debug(`Using model: ${modelName}`);
 const llm = new LangChainChatModel(new ChatOpenAI({ model: modelName }));
@@ -56,7 +56,7 @@ const llm = new LangChainChatModel(new ChatOpenAI({ model: modelName }));
 // for some reason.
 // Create a separate LLM for structured output generation.
 const llmStructured = new OpenAIChatModel(modelName);
-const agent = new BeeAgent({
+const agent = new ReActAgent({
     llm,
     memory: new UnconstrainedMemory(),
     tools: [new CalculatorSumTool(), new InstagramScrapeTool()],
