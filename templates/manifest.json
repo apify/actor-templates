@@ -414,6 +414,22 @@
             "useCases": ["WEB_SCRAPING"]
         },
         {
+            "id": "js-crawlee-stagehand-chrome",
+            "name": "project_stagehand_crawler_js",
+            "label": "Crawlee + Stagehand + Chrome",
+            "category": "javascript",
+            "technologies": ["nodejs", "crawlee", "stagehand", "chrome"],
+            "description": "AI-powered web scraper using Crawlee and Stagehand. Uses natural language to interact with pages and extract structured data using LLMs.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-stagehand-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": ["src/main.js", "src/routes.js"],
+            "useCases": ["AI", "WEB_SCRAPING"]
+        },
+        {
             "id": "js-crawlee-playwright-camoufox",
             "name": "project_playwright_camoufox_crawler_js",
             "label": "Crawlee + Playwright + Camoufox",
@@ -493,6 +509,22 @@
             },
             "showcaseFiles": ["src/main.ts", "src/routes.ts"],
             "useCases": ["WEB_SCRAPING"]
+        },
+        {
+            "id": "ts-crawlee-stagehand-chrome",
+            "name": "project_stagehand_crawler_ts",
+            "label": "Crawlee + Stagehand + Chrome",
+            "category": "typescript",
+            "technologies": ["nodejs", "crawlee", "stagehand", "chrome"],
+            "description": "AI-powered web scraper using Crawlee and Stagehand. Uses natural language to interact with pages and extract structured data using LLMs.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-stagehand-chrome.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": ["src/main.ts", "src/routes.ts"],
+            "useCases": ["AI", "WEB_SCRAPING"]
         },
         {
             "id": "ts-crawlee-playwright-camoufox",
