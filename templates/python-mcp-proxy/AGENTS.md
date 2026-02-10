@@ -46,6 +46,7 @@ Important: Before you begin, fill in the `generatedBy` property in the meta sect
 - do not store personal/sensitive data unless explicitly permitted
 - do not use deprecated options like `requestHandlerTimeoutMillis` on CheerioCrawler (v3.x)
 - do not use `additionalHttpHeaders` - use `preNavigationHooks` instead
+- do not assume that local storage is persistent or automatically synced to Apify Console - when running locally with `apify run`, the `storage/` directory is local-only and is NOT pushed to the Cloud
 - do not disable standby mode (`usesStandbyMode: false`) without explicit permission
 
 ## Logging
@@ -161,12 +162,22 @@ Ask first:
 └── output_schema.json # Specifies where an Actor stores its output
 src/
 └── main.js # Actor entry point and orchestrator
-storage/ # Local storage (mirrors Cloud during development)
+storage/ # Local-only storage for development (NOT synced to Cloud)
 ├── datasets/ # Output items (JSON objects)
 ├── key_value_stores/ # Files, config, INPUT
 └── request_queues/ # Pending crawl requests
 Dockerfile # Container image definition
 AGENTS.md # AI agent instructions (this file)
+
+## Local vs Cloud Storage
+
+When running locally with `apify run`, the Apify SDK emulates Cloud storage APIs using the local `storage/` directory. This local storage behaves differently from Cloud storage:
+
+- **Local storage is NOT persistent** - The `storage/` directory is meant for local development and testing only. Data stored there (datasets, key-value stores, request queues) exists only on your local disk.
+- **Local storage is NOT automatically pushed to Apify Console** - Running `apify run` does not upload any storage data to the Apify platform. The data stays local.
+- **Each local run may overwrite previous data** - The local `storage/` directory is reused between runs, but this is local-only behavior, not Cloud persistence.
+- **Cloud storage only works when running on Apify platform** - After deploying with `apify push` and running the Actor in the Cloud, storage calls (`Actor.push_data()`, `Actor.set_value()`, etc.) interact with real Apify Cloud storage, which is then visible in the Apify Console.
+- **To verify Actor output, deploy and run in Cloud** - Do not rely on local `storage/` contents as proof that data will appear in the Apify Console. Always test by deploying (`apify push`) and running the Actor on the platform.
 
 ## Actor Input Schema
 
