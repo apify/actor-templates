@@ -1,7 +1,7 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-FROM apify/actor-python-playwright:3.14-1.57.0
+FROM apify/actor-python-playwright:3.14-1.58.0
 
 USER myuser
 
