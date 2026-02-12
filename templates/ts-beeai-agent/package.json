@@ -12,7 +12,7 @@
         "@langchain/openai": "0.3.16",
         "apify": "^3.5.3",
         "beeai-framework": "0.1.20",
-        "zod": "^3.25.67"
+        "zod": "^4.0.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.1.0",
