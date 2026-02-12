@@ -25,7 +25,7 @@ apify push
 ```text
 .actor/
 ├── actor.json # Actor config: name, version, env vars, runtime settings
-├── dataset_schena.json # Structure and representation of data produced by an Actor
+├── dataset_schema.json # Structure and representation of data produced by an Actor
 ├── input_schema.json # Input validation & Console form definition
 └── output_schema.json # Specifies where an Actor stores its output
 src/
