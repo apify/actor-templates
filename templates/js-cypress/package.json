@@ -10,7 +10,7 @@
         "apify": "^3.5.2",
         "console.table": "^0.10.0",
         "cypress": "^15.0.0",
-        "globby": "^15.0.0"
+        "globby": "^16.0.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
