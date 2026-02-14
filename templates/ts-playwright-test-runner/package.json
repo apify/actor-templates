@@ -20,7 +20,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@playwright/test": "1.58.2",
+        "@playwright/test": "1.58.0",
         "@types/uuid": "^11.0.0",
         "apify": "^3.5.2",
         "uuid": "^13.0.0",
