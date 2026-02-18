@@ -90,7 +90,7 @@ class InMemoryEventStore(EventStore):
         # Events in deque are already in chronological order
         found_last = False
         for event in stream_events:
-            if found_last:
+            if found_last and event.message is not None:
                 await send_callback(EventMessage(event.message, event.event_id))
             elif event.event_id == last_event_id:
                 found_last = True
