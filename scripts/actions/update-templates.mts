@@ -63,6 +63,10 @@ const puppeteerDependencies = ['puppeteer'];
 const playwrightDependencies = ['playwright', '@playwright/test'];
 
 async function updatePackageJson(filePath: URL) {
+    if (!BASE_IMAGE.includes('node')) {
+        return;
+    }
+
     const content = await readFile(filePath, 'utf-8');
 
     const packageJson = JSON.parse(content);
