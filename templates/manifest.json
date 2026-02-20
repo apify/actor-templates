@@ -58,44 +58,6 @@
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
-            "id": "python-beautifulsoup",
-            "name": "python-beautifulsoup",
-            "label": "BeautifulSoup",
-            "category": "python",
-            "technologies": ["beautifulsoup", "httpx"],
-            "description": "Example of a web scraper that uses Python HTTPX to scrape HTML from URLs provided on input, parses it using BeautifulSoup and saves results to storage.",
-            "messages": {
-                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
-            },
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-beautifulsoup.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 1024,
-                "timeoutSecs": 3600
-            },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
-            "useCases": ["WEB_SCRAPING"]
-        },
-        {
-            "id": "python-playwright",
-            "name": "python-playwright",
-            "label": "Playwright + Chrome",
-            "category": "python",
-            "technologies": ["playwright", "chrome"],
-            "description": "Crawler example that uses headless Chrome driven by Playwright to scrape a website. Headless browsers render JavaScript and can help when getting blocked.",
-            "messages": {
-                "postCreate": "To run this actor, you need to have Playwright's browsers installed.\nTo do so, activate the virtual environment in the \".venv\" folder in the actor directory, and run \"playwright install --with-deps\".\nTo install additional Python packages, you need also need to activate the virtual environment in the \".venv\" folder in the actor directory.\n"
-            },
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
-            "defaultRunOptions": {
-                "build": "latest",
-                "memoryMbytes": 4096,
-                "timeoutSecs": 3600
-            },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
-            "useCases": ["WEB_SCRAPING"]
-        },
-        {
             "id": "python-selenium",
             "name": "python-selenium",
             "label": "Selenium + Chrome",
