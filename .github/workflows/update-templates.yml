@@ -176,7 +176,7 @@ jobs:
 
           # Build CI status message for the PR body
           if [ "$CI_CONCLUSION" = "success" ]; then
-            CI_STATUS="⚠️ CI passed but merge to master failed (likely due to conflicts). Please resolve manually."
+            CI_STATUS="⚠️ CI passed, but the automatic merge into master did not complete. Please check for merge conflicts, branch protection rules, or permission issues and resolve manually. See workflow logs for details."
           elif [ -n "$CI_RUN_ID" ]; then
             CI_STATUS="❌ CI failed. [View CI run](https://github.com/${{ github.repository }}/actions/runs/$CI_RUN_ID)"
           else
