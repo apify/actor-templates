@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile, symlink, unlink, lstat } from 'node:fs/promises';
 
 const baseDir = new URL('../agent-bases/', import.meta.url);
 const templatesDir = new URL('../templates/', import.meta.url);
@@ -24,6 +24,16 @@ for (const templateId of templateDirectoryElements) {
 
     if (templateFile) {
         await writeFile(new URL(`./${templateId}/AGENTS.md`, templatesDir), templateFile.content, 'utf-8');
+
+        // Create CLAUDE.md as a symlink to AGENTS.md
+        const claudeMdUrl = new URL(`./${templateId}/CLAUDE.md`, templatesDir);
+        try {
+            await lstat(claudeMdUrl);
+            await unlink(claudeMdUrl);
+        } catch {
+            // File doesn't exist, nothing to remove
+        }
+        await symlink('AGENTS.md', claudeMdUrl);
     }
 }
 
