@@ -1,5 +1,5 @@
 # Add your dependencies here.
 # See https://pip.pypa.io/en/latest/reference/requirements-file-format/
 # for how to format them
-apify[scrapy] < 3.0
-scrapy < 3.0
+apify[scrapy] >= 3.3.0, < 4.0.0
+scrapy >= 2.14.0, < 3.0.0
