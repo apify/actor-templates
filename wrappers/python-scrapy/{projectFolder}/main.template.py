@@ -22,8 +22,7 @@ from __future__ import annotations
 
 from apify import Actor
 from apify.scrapy import apply_apify_settings
-from scrapy.crawler import CrawlerRunner
-from scrapy.utils.defer import deferred_to_future
+from scrapy.crawler import AsyncCrawlerRunner
 
 # Import your Scrapy spider here.
 from {{spider_module_name}} import {{spider_class_name}} as Spider
@@ -44,11 +43,10 @@ async def main() -> None:
         # Apply Apify settings, which will override the Scrapy project settings.
         settings = apply_apify_settings(proxy_config=proxy_config)
 
-        # Create CrawlerRunner and execute the Scrapy spider.
-        crawler_runner = CrawlerRunner(settings)
-        crawl_deferred = crawler_runner.crawl(
+        # Create AsyncCrawlerRunner and execute the Scrapy spider.
+        crawler_runner = AsyncCrawlerRunner(settings)
+        await crawler_runner.crawl(
             Spider,
             start_urls=start_urls,
             allowed_domains=allowed_domains,
         )
-        await deferred_to_future(crawl_deferred)
