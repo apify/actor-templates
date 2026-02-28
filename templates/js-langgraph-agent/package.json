@@ -13,7 +13,7 @@
         "@langchain/openai": "^1.2.3",
         "apify": "^3.5.3",
         "langchain": "^1.2.15",
-        "zod": "^3.25.76"
+        "zod": "^4.0.0"
     },
     "scripts": {
         "start": "node src/main.js",

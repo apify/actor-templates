@@ -10,7 +10,7 @@
         "@modelcontextprotocol/sdk": "^1.17.5",
         "express": "^5.1.0",
         "cors": "^2.8.5",
-        "zod": "^3.25.76",
+        "zod": "^4.0.0",
         "apify": "^3.4.4"
     },
     "devDependencies": {
