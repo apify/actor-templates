@@ -2,15 +2,10 @@
     "actorOutputSchemaVersion": 1,
     "title": "Output schema",
     "properties": {
-        "overview": {
+        "results": {
             "type": "string",
-            "title": "Overview",
-            "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
-        },
-        "report": {
-            "type": "string",
-            "title": "HTML Report",
-            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/report"
+            "title": "Results",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
         }
     }
 }
