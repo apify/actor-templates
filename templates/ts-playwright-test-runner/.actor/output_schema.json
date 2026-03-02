@@ -6,6 +6,11 @@
             "type": "string",
             "title": "Results",
             "template": "{{links.apiDefaultDatasetUrl}}/items"
+        },
+        "report": {
+            "type": "string",
+            "title": "HTML Report",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/report"
         }
     }
 }
