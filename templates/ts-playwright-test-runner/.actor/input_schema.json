@@ -649,19 +649,9 @@
         "video": {
             "title": "Record video",
             "type": "string",
-            "enum": [
-                "on",
-                "off",
-                "retain-on-failure",
-                "on-first-retry"
-            ],
+            "enum": ["on", "off", "retain-on-failure", "on-first-retry"],
             "default": "off",
-            "enumTitles": [
-                "Always",
-                "Never",
-                "Retain on failure",
-                "On first retry"
-            ],
+            "enumTitles": ["Always", "Never", "Retain on failure", "On first retry"],
             "description": "Record video of the test run. If set to 'retain-on-failure', video will be recorded only if the test fails. If set to 'on-first-retry', video will be recorded only on the first retry of the test."
         }
     },

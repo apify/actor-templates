@@ -16,7 +16,5 @@
             "editor": "requestListSources"
         }
     },
-    "required": [
-        "start_urls"
-    ]
+    "required": ["start_urls"]
 }

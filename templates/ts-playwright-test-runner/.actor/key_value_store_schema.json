@@ -7,9 +7,7 @@
             "title": "HTML Report",
             "description": "Playwright HTML test report",
             "key": "report",
-            "contentTypes": [
-                "text/html"
-            ]
+            "contentTypes": ["text/html"]
         }
     }
 }

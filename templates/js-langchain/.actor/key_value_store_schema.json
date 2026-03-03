@@ -7,9 +7,7 @@
             "title": "Result",
             "description": "LLM answer stored by the Actor",
             "key": "OUTPUT",
-            "contentTypes": [
-                "application/json"
-            ]
+            "contentTypes": ["application/json"]
         }
     }
 }

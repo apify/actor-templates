@@ -12,7 +12,5 @@
             "prefill": "https://www.apify.com"
         }
     },
-    "required": [
-        "url"
-    ]
+    "required": ["url"]
 }

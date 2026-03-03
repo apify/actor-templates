@@ -13,16 +13,8 @@
             "type": "array",
             "description": "A list of topics the agent will use to fetch and summarize news.",
             "editor": "stringList",
-            "prefill": [
-                "Artificial intelligence",
-                "Tech innovations",
-                "Open source"
-            ],
-            "default": [
-                "Artificial intelligence",
-                "Tech innovations",
-                "Open source"
-            ]
+            "prefill": ["Artificial intelligence", "Tech innovations", "Open source"],
+            "default": ["Artificial intelligence", "Tech innovations", "Open source"]
         },
         "model": {
             "title": "OpenAI model",
@@ -33,8 +25,5 @@
             "prefill": "gpt-4o"
         }
     },
-    "required": [
-        "interests",
-        "model"
-    ]
+    "required": ["interests", "model"]
 }

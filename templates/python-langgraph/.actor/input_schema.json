@@ -16,12 +16,7 @@
             "title": "OpenAI model",
             "type": "string",
             "description": "The OpenAI model to use. Currently supported models are gpt-4o and gpt-4o-mini, and the reasoning models o1 and o3-mini.",
-            "enum": [
-                "gpt-4o",
-                "gpt-4o-mini",
-                "o1",
-                "o3-mini"
-            ],
+            "enum": ["gpt-4o", "gpt-4o-mini", "o1", "o3-mini"],
             "default": "gpt-4o-mini",
             "prefill": "gpt-4o-mini"
         },
@@ -33,7 +28,5 @@
             "default": false
         }
     },
-    "required": [
-        "query"
-    ]
+    "required": ["query"]
 }

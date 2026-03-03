@@ -24,9 +24,7 @@
                 "editor": "textfield"
             }
         },
-        "required": [
-            "name"
-        ]
+        "required": ["name"]
     },
     "dockerfile": "../Dockerfile"
 }

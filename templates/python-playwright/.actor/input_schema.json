@@ -22,7 +22,5 @@
             "default": 1
         }
     },
-    "required": [
-        "start_urls"
-    ]
+    "required": ["start_urls"]
 }

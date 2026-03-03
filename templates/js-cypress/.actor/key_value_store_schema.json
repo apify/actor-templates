@@ -7,9 +7,7 @@
             "title": "Videos",
             "description": "Videos stored by the Actor",
             "key": "video-",
-            "contentTypes": [
-                "video/mp4"
-            ]
+            "contentTypes": ["video/mp4"]
         }
     }
 }

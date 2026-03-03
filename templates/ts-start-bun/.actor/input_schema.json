@@ -12,7 +12,5 @@
             "prefill": "https://crawlee.dev"
         }
     },
-    "required": [
-        "url"
-    ]
+    "required": ["url"]
 }

@@ -5,10 +5,7 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": [
-                    "response",
-                    "structured_response"
-                ]
+                "fields": ["response", "structured_response"]
             },
             "display": {
                 "component": "table",

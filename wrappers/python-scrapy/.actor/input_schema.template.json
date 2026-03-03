@@ -25,12 +25,8 @@
             "type": "array",
             "description": "Domains that the scraper is allowed to crawl.",
             "editor": "json",
-            "prefill": [
-                "apify.com"
-            ],
-            "default": [
-                "apify.com"
-            ]
+            "prefill": ["apify.com"],
+            "default": ["apify.com"]
         },
         "proxyConfiguration": {
             "sectionCaption": "Proxy and HTTP configuration",
@@ -46,7 +42,5 @@
             }
         }
     },
-    "required": [
-        "startUrls"
-    ]
+    "required": ["startUrls"]
 }

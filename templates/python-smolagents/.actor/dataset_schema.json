@@ -6,9 +6,7 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": [
-                    "summary"
-                ]
+                "fields": ["summary"]
             },
             "display": {
                 "component": "table",

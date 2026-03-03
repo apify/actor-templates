@@ -20,7 +20,5 @@
             "editor": "textfield"
         }
     },
-    "required": [
-        "jokeTopic"
-    ]
+    "required": ["jokeTopic"]
 }
