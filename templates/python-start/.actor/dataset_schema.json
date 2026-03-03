@@ -1,11 +1,15 @@
 {
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
     "actorSpecification": 1,
     "fields": {},
     "views": {
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["level", "text"]
+                "fields": [
+                    "level",
+                    "text"
+                ]
             },
             "display": {
                 "component": "table",

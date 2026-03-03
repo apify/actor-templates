@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
     "title": "Scrape data from a web page",
     "type": "object",
     "schemaVersion": 1,
@@ -11,5 +12,7 @@
             "prefill": "https://www.apify.com/"
         }
     },
-    "required": ["url"]
+    "required": [
+        "url"
+    ]
 }

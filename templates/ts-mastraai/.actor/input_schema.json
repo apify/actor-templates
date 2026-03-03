@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
     "title": "Mastra Agent TypeScript",
     "type": "object",
     "schemaVersion": 1,
@@ -15,10 +16,16 @@
             "title": "OpenAI model",
             "type": "string",
             "description": "The OpenAI model to use. Currently supported models are gpt-4o and gpt-4o-mini.",
-            "enum": ["gpt-4o", "gpt-4o-mini"],
+            "enum": [
+                "gpt-4o",
+                "gpt-4o-mini"
+            ],
             "default": "gpt-4o-mini",
             "prefill": "gpt-4o-mini"
         }
     },
-    "required": ["query", "modelName"]
+    "required": [
+        "query",
+        "modelName"
+    ]
 }

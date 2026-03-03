@@ -1,10 +1,15 @@
 {
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
     "actorSpecification": 1,
     "views": {
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["query", "response", "structuredResponse"]
+                "fields": [
+                    "query",
+                    "response",
+                    "structuredResponse"
+                ]
             },
             "display": {
                 "component": "table",

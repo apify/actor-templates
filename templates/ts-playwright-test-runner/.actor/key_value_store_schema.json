@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/key-value-store.ide.json",
     "actorKeyValueStoreSchemaVersion": 1,
     "title": "Key-Value Store Schema",
     "collections": {
@@ -6,7 +7,9 @@
             "title": "HTML Report",
             "description": "Playwright HTML test report",
             "key": "report",
-            "contentTypes": ["text/html"]
+            "contentTypes": [
+                "text/html"
+            ]
         }
     }
 }

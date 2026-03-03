@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
     "title": "Python Scrapy scraper",
     "type": "object",
     "schemaVersion": 1,
@@ -8,16 +9,28 @@
             "type": "array",
             "description": "URLs to start with",
             "editor": "requestListSources",
-            "prefill": [{ "url": "https://apify.com/" }],
-            "default": [{ "url": "https://apify.com/" }]
+            "prefill": [
+                {
+                    "url": "https://apify.com/"
+                }
+            ],
+            "default": [
+                {
+                    "url": "https://apify.com/"
+                }
+            ]
         },
         "allowedDomains": {
             "title": "Allowed domains",
             "type": "array",
             "description": "Domains that the scraper is allowed to crawl.",
             "editor": "json",
-            "prefill": ["apify.com"],
-            "default": ["apify.com"]
+            "prefill": [
+                "apify.com"
+            ],
+            "default": [
+                "apify.com"
+            ]
         },
         "proxyConfiguration": {
             "sectionCaption": "Proxy and HTTP configuration",
@@ -25,9 +38,15 @@
             "type": "object",
             "description": "Specifies proxy servers that will be used by the scraper in order to hide its origin.",
             "editor": "proxy",
-            "prefill": { "useApifyProxy": true },
-            "default": { "useApifyProxy": true }
+            "prefill": {
+                "useApifyProxy": true
+            },
+            "default": {
+                "useApifyProxy": true
+            }
         }
     },
-    "required": ["startUrls"]
+    "required": [
+        "startUrls"
+    ]
 }
