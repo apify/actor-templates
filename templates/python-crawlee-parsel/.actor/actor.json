@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
     "actorSpecification": 1,
     "name": "getting-started-python-crawlee-parsel",
     "title": "Getting started with Python Crawlee and Parsel",

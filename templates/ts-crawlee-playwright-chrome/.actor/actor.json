@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
     "actorSpecification": 1,
     "name": "project-playwright-crawler-typescript",
     "title": "Project Playwright Crawler Typescript",
