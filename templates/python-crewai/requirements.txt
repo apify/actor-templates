@@ -4,4 +4,4 @@
 apify < 4.0.0
 apify-client
 langchain-apify < 1.0.0
-crewai[tools] < 1.0.0
+crewai[tools] < 2.0.0
