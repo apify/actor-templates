@@ -229,7 +229,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py"],
+            "showcaseFiles": ["src/main.py", "src/tools.py"],
             "useCases": ["AI"]
         },
         {
@@ -246,7 +246,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py", "src/tools.py"],
+            "showcaseFiles": ["src/main.py"],
             "useCases": ["AI"]
         },
         {
