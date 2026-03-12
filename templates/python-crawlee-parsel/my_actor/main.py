@@ -9,7 +9,9 @@ https://docs.apify.com/sdk/python
 from __future__ import annotations
 
 from apify import Actor
-from crawlee.crawlers import ParselCrawler, ParselCrawlingContext
+from crawlee.crawlers import ParselCrawler
+
+from .routes import router
 
 
 async def main() -> None:
@@ -40,27 +42,9 @@ async def main() -> None:
         crawler = ParselCrawler(
             # Limit the crawl to max requests. Remove or increase it for crawling all links.
             max_requests_per_crawl=10,
+            # Set the request handler to the request router defined in routes.py.
+            request_handler=router,
         )
-
-        # Define a request handler, which will be called for every request.
-        @crawler.router.default_handler
-        async def request_handler(context: ParselCrawlingContext) -> None:
-            url = context.request.url
-            Actor.log.info(f'Scraping {url}...')
-            # Extract the desired data.
-            data = {
-                'url': context.request.url,
-                'title': context.selector.css('title::text').get(),
-                'h1s': context.selector.css('h1::text').getall(),
-                'h2s': context.selector.css('h2::text').getall(),
-                'h3s': context.selector.css('h3::text').getall(),
-            }
-
-            # Store the extracted data to the default dataset.
-            await context.push_data(data)
-
-            # Enqueue additional links found on the current page.
-            await context.enqueue_links()
 
         # Run the crawler with the starting requests.
         await crawler.run(start_urls)

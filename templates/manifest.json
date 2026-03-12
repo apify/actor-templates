@@ -19,7 +19,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_beautifulsoup"],
-            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -174,7 +174,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_parsel"],
-            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -194,7 +194,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_playwright"],
-            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -214,7 +214,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_playwright_camoufox"],
-            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {

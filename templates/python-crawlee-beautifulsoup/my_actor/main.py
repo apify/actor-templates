@@ -11,7 +11,9 @@ from __future__ import annotations
 import asyncio
 
 from apify import Actor, Event
-from crawlee.crawlers import BeautifulSoupCrawler, BeautifulSoupCrawlingContext
+from crawlee.crawlers import BeautifulSoupCrawler
+
+from .routes import router
 
 
 async def main() -> None:
@@ -55,28 +57,9 @@ async def main() -> None:
         crawler = BeautifulSoupCrawler(
             # Limit the crawl to max requests. Remove or increase it for crawling all links.
             max_requests_per_crawl=10,
+            # Set the request handler to the request router defined in routes.py.
+            request_handler=router,
         )
-
-        # Define a request handler, which will be called for every request.
-        @crawler.router.default_handler
-        async def request_handler(context: BeautifulSoupCrawlingContext) -> None:
-            url = context.request.url
-            Actor.log.info(f'Scraping {url}...')
-
-            # Extract the desired data.
-            data = {
-                'url': context.request.url,
-                'title': context.soup.title.string if context.soup.title else None,
-                'h1s': [h1.text for h1 in context.soup.find_all('h1')],
-                'h2s': [h2.text for h2 in context.soup.find_all('h2')],
-                'h3s': [h3.text for h3 in context.soup.find_all('h3')],
-            }
-
-            # Store the extracted data to the default dataset.
-            await context.push_data(data)
-
-            # Enqueue additional links found on the current page.
-            await context.enqueue_links()
 
         # Run the crawler with the starting requests.
         await crawler.run(start_urls)

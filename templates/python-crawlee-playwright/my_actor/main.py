@@ -9,7 +9,9 @@ https://docs.apify.com/sdk/python
 from __future__ import annotations
 
 from apify import Actor
-from crawlee.crawlers import PlaywrightCrawler, PlaywrightCrawlingContext
+from crawlee.crawlers import PlaywrightCrawler
+
+from .routes import router
 
 
 async def main() -> None:
@@ -41,31 +43,10 @@ async def main() -> None:
             # Limit the crawl to max requests. Remove or increase it for crawling all links.
             max_requests_per_crawl=10,
             headless=True,
-            browser_launch_options={
-                'args': ['--disable-gpu', '--no-sandbox'],
-            },
+            browser_launch_options={'args': ['--disable-gpu', '--no-sandbox']},
+            # Set the request handler to the request router defined in routes.py.
+            request_handler=router,
         )
-
-        # Define a request handler, which will be called for every request.
-        @crawler.router.default_handler
-        async def request_handler(context: PlaywrightCrawlingContext) -> None:
-            url = context.request.url
-            Actor.log.info(f'Scraping {url}...')
-
-            # Extract the desired data.
-            data = {
-                'url': context.request.url,
-                'title': await context.page.title(),
-                'h1s': [await h1.text_content() for h1 in await context.page.locator('h1').all()],
-                'h2s': [await h2.text_content() for h2 in await context.page.locator('h2').all()],
-                'h3s': [await h3.text_content() for h3 in await context.page.locator('h3').all()],
-            }
-
-            # Store the extracted data to the default dataset.
-            await context.push_data(data)
-
-            # Enqueue additional links found on the current page.
-            await context.enqueue_links()
 
         # Run the crawler with the starting requests.
         await crawler.run(start_urls)
