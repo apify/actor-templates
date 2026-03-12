@@ -27,11 +27,10 @@ RUN echo "Python version:" \
 COPY --chown=myuser:myuser . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python -m compileall -q src/crawlee_playwright_camoufox_actor/
+RUN python -m compileall -q my_actor/
 
 # Fetch camoufox files that are always needed when using camoufox.
 RUN python -m camoufox fetch
 
 # Specify how to launch the source code of your Actor.
-ENV PYTHONPATH=/home/myuser/src
-CMD ["python", "-m", "crawlee_playwright_camoufox_actor"]
+CMD ["python", "-m", "my_actor"]

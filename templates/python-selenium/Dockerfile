@@ -26,9 +26,7 @@ RUN echo "Python version:" \
 COPY . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python3 -m compileall -q src/selenium_actor/
+RUN python -m compileall -q my_actor/
 
 # Specify how to launch the source code of your Actor.
-# By default, the "python3 -m selenium_actor" command is run
-ENV PYTHONPATH=/home/myuser/src
-CMD ["python3", "-m", "selenium_actor"]
+CMD ["python", "-m", "my_actor"]

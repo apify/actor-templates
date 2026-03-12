@@ -83,7 +83,7 @@ python-version = "3.10"
 [tool.ty.src]
 include = ["templates"]
 
-# The templates use relative imports as they're run as packages (e.g., python -m src.start_actor).
+# The templates use relative imports as they're run as packages (e.g., python -m my_actor).
 # ty doesn't fully support this pattern yet, so we ignore unresolved-import errors.
 [tool.ty.rules]
 unresolved-import = "ignore"

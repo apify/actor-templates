@@ -9,20 +9,20 @@ http://doc.scrapy.org/en/latest/topics/settings.html
 BOT_NAME = 'titlebot'
 DEPTH_LIMIT = 1
 LOG_LEVEL = 'INFO'
-NEWSPIDER_MODULE = 'scrapy_actor.spiders'
+NEWSPIDER_MODULE = 'my_actor.spiders'
 ROBOTSTXT_OBEY = True
-SPIDER_MODULES = ['scrapy_actor.spiders']
+SPIDER_MODULES = ['my_actor.spiders']
 TELNETCONSOLE_ENABLED = False
 # Do not change the Twisted reactor unless you really know what you are doing.
 TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
 HTTPCACHE_ENABLED = True
 HTTPCACHE_EXPIRATION_SECS = 7200
 ITEM_PIPELINES = {
-    'scrapy_actor.pipelines.TitleItemPipeline': 123,
+    'my_actor.pipelines.TitleItemPipeline': 123,
 }
 SPIDER_MIDDLEWARES = {
-    'scrapy_actor.middlewares.TitleSpiderMiddleware': 543,
+    'my_actor.middlewares.TitleSpiderMiddleware': 543,
 }
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy_actor.middlewares.TitleDownloaderMiddleware': 543,
+    'my_actor.middlewares.TitleDownloaderMiddleware': 543,
 }
