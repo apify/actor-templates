@@ -1,7 +1,7 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
-apify < 4.0.0
-apify-client
-llama-index < 1.0.0
-polars < 2.0.0
+apify >= 3.0.0, < 4.0.0
+apify-client >= 2.0.0, < 3.0.0
+llama-index >= 0.14.16, < 1.0.0
+polars >= 1.39.0, < 2.0.0

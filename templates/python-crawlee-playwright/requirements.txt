@@ -1,5 +1,5 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
-apify < 4.0.0
-crawlee[playwright]
+apify >= 3.0.0, < 4.0.0
+crawlee[playwright] >= 1.0.0, < 2.0.0
