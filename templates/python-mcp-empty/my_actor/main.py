@@ -182,7 +182,3 @@ async def main() -> None:
     except Exception as e:
         Actor.log.error(f'Server failed: {e}')
         raise
-
-
-if __name__ == '__main__':
-    asyncio.run(main())

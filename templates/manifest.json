@@ -148,11 +148,12 @@
             },
             "showcaseFiles": [
                 "my_actor/main.py",
-                "my_actor/spiders/title.py",
-                "my_actor/__main__.py",
                 "my_actor/items.py",
+                "my_actor/middlewares.py",
                 "my_actor/pipelines.py",
-                "my_actor/settings.py"
+                "my_actor/settings.py",
+                "my_actor/spiders/title.py",
+                "my_actor/__main__.py"
             ],
             "useCases": ["WEB_SCRAPING"]
         },
@@ -229,7 +230,13 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["my_actor/main.py", "my_actor/tools.py"],
+            "showcaseFiles": [
+                "my_actor/main.py",
+                "my_actor/models.py",
+                "my_actor/tools.py",
+                "my_actor/utils.py",
+                "my_actor/__main__.py"
+            ],
             "useCases": ["AI"]
         },
         {
@@ -246,7 +253,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["my_actor/main.py", "my_actor/tools.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -262,7 +269,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["my_actor/main.py", "my_actor/agent.py", "my_actor/tools.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/agent.py", "my_actor/tools.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -278,7 +285,7 @@
                 "memoryMbytes": 128,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["my_actor/main.py", "my_actor/agents.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/agents.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -311,7 +318,15 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["my_actor/main.py", "my_actor/server.py"],
+            "showcaseFiles": [
+                "my_actor/main.py",
+                "my_actor/const.py",
+                "my_actor/event_store.py",
+                "my_actor/mcp_gateway.py",
+                "my_actor/models.py",
+                "my_actor/server.py",
+                "my_actor/__main__.py"
+            ],
             "useCases": ["AI"]
         },
         {
@@ -328,7 +343,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["my_actor/main.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
