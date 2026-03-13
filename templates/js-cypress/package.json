@@ -17,7 +17,8 @@
         "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-cypress": "^5.0.0",
-        "prettier": "^3.5.3"
+        "prettier": "^3.5.3",
+        "vitest": "^2.0.5"
     },
     "scripts": {
         "cypress:open": "cypress open",
@@ -25,7 +26,8 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "lint": "eslint .",
-        "lint:fix": "eslint . --fix"
+        "lint:fix": "eslint . --fix",
+        "test": "vitest run"
     },
     "author": "It's not you it's me",
     "license": "ISC"

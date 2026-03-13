@@ -21,11 +21,12 @@
         "prettier": "^3.5.3",
         "tsx": "^4.20.3",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.34.1"
+        "typescript-eslint": "^8.34.1",
+        "vitest": "^2.0.5"
     },
     "scripts": {
         "start": "bun src/main.ts",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+        "test": "vitest run"
     },
     "author": "It's not you it's me",
     "license": "ISC"

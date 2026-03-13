@@ -13,7 +13,7 @@
         "lint:fix": "eslint --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "vitest run",
         "postinstall": "npx crawlee install-playwright-browsers"
     },
     "keywords": [],
@@ -34,5 +34,8 @@
         "tsx": "^4.20.3",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.34.1"
+    },
+    "devDependencies": {
+        "vitest": "^2.0.5"
     }
 }

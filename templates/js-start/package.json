@@ -13,8 +13,11 @@
     },
     "scripts": {
         "start": "node ./src/main.js",
-        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
+        "test": "vitest run"
     },
     "author": "It's not you it's me",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "vitest": "^2.0.5"
+    }
 }
