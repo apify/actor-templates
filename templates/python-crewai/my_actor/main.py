@@ -9,10 +9,14 @@ https://docs.apify.com/sdk/python
 from __future__ import annotations
 
 import os
+from typing import TYPE_CHECKING
 
 from apify import Actor
 from crewai import Agent, Crew, Task
 from crewai_tools import ApifyActorsTool
+
+if TYPE_CHECKING:
+    from crewai.tools import BaseTool
 
 
 async def main() -> None:
@@ -46,7 +50,7 @@ async def main() -> None:
 
         # Create a toolkit for the agent
         # containing the Instagram scraper tool
-        tools = [ApifyActorsTool('apify/instagram-scraper')]
+        tools: list[BaseTool] = [ApifyActorsTool('apify/instagram-scraper')]
 
         # Create an agent
         # For more information, see https://docs.crewai.com/concepts/agents
