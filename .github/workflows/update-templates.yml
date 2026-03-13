@@ -121,17 +121,25 @@ jobs:
 
           if [ -z "$PR_NUMBER" ]; then
             echo "Creating new PR"
-            PR_URL=$(gh pr create \
+            gh pr create \
               --title "chore: Update templates for base image: ${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}" \
               --body "$PR_BODY" \
               --base master \
               --head "$BRANCH" \
               --reviewer B4nan \
-              --reviewer vladfrangu)
-            PR_NUMBER=$(gh pr view "$PR_URL" --json number --jq '.number')
+              --reviewer vladfrangu
+
+            # Retrieve PR number by head branch after creation
+            PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
           else
             echo "PR #$PR_NUMBER already exists for branch $BRANCH, updating it"
             gh pr edit "$PR_NUMBER" --body "$PR_BODY"
+          fi
+
+          # Validate that we have a PR number before proceeding
+          if [ -z "$PR_NUMBER" ]; then
+            echo "::error::Failed to determine pull request number for branch $BRANCH"
+            exit 1
           fi
 
           # Enable auto-merge so the PR merges automatically when CI passes.
