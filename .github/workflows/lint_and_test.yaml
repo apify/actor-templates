@@ -2,6 +2,10 @@ name: Test Templates
 
 on:
   push:
+    branches: [master]
+    paths-ignore:
+      - 'dist/**'
+  pull_request:
     paths-ignore:
       - 'dist/**'
   schedule:

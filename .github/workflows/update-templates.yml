@@ -77,7 +77,11 @@ jobs:
 
       - name: Commit and push changes
         id: commit-and-push
+        env:
+          GH_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
         run: |
+          BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
+
           # Check if there are any changes
           if git diff --quiet && git diff --cached --quiet; then
             echo "No changes to commit"
@@ -85,10 +89,16 @@ jobs:
             git add -A
             git commit -m "chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}"
             echo "committed=true" >> $GITHUB_OUTPUT
-          fi
 
-          # Force push the branch
-          git push --force origin "${{ steps.branch-name.outputs.BRANCH_NAME }}"
+            # Disable auto-merge on any existing PR before force-pushing,
+            # so the old commit can't be merged while we push the new one.
+            PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
+            if [ -n "$PR_NUMBER" ]; then
+              gh pr merge "$BRANCH" --disable-auto || true
+            fi
+
+            git push --force origin "$BRANCH"
+          fi
 
       - name: Create or update Pull Request
         env:
@@ -126,4 +136,4 @@ jobs:
           # Enable auto-merge so the PR merges automatically when CI passes.
           # If CI fails, the PR stays open for manual review.
           echo "Enabling auto-merge for PR on branch $BRANCH"
-          gh pr merge "$BRANCH" --auto --merge --delete-branch
+          gh pr merge "$BRANCH" --auto --squash --delete-branch
