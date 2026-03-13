@@ -11,7 +11,7 @@
         "express": "^5.1.0",
         "cors": "^2.8.5",
         "zod": "^3.25.76",
-        "apify": "^3.4.4"
+        "apify": "^3.7.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",

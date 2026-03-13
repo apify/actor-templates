@@ -9,7 +9,7 @@
     "dependencies": {
         "@ai-sdk/openai": "^3.0.23",
         "@mastra/core": "^1.1.0",
-        "apify": "^3.5.3",
+        "apify": "^3.7.0",
         "mastra": "^1.1.0",
         "zod": "^4.3.6"
     },
