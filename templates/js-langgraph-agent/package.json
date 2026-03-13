@@ -11,7 +11,7 @@
         "@langchain/core": "^1.1.17",
         "@langchain/langgraph": "^1.1.2",
         "@langchain/openai": "^1.2.3",
-        "apify": "^3.5.3",
+        "apify": "^3.7.0",
         "langchain": "^1.2.15",
         "zod": "^3.25.76"
     },

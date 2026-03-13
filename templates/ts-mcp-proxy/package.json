@@ -10,7 +10,7 @@
         "@modelcontextprotocol/sdk": "^1.17.5",
         "@modelcontextprotocol/server-everything": "^2026.0.0",
         "mcp-remote": "0.1.38",
-        "apify": "^3.4.4",
+        "apify": "^3.7.0",
         "body-parser": "^2.2.0",
         "express": "^5.1.0",
         "zod": "^3.25.76"
@@ -20,7 +20,7 @@
         "@apify/tsconfig": "^0.1.1",
         "@types/body-parser": "^1.19.5",
         "@types/express": "^5.0.2",
-        "@types/node": "^22.15.32",
+        "@types/node": "^24.0.0",
         "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "globals": "^17.0.0",

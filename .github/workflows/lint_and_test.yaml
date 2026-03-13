@@ -2,11 +2,19 @@ name: Test Templates
 
 on:
   push:
+    branches: [master]
+    paths-ignore:
+      - 'dist/**'
+  pull_request:
     paths-ignore:
       - 'dist/**'
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
 
 jobs:
   python_lint_check:

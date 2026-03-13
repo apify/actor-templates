@@ -22,11 +22,11 @@
     "dependencies": {
         "@playwright/test": "1.58.2",
         "@types/uuid": "^11.0.0",
-        "apify": "^3.5.2",
+        "apify": "^3.7.0",
         "uuid": "^13.0.0",
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
-        "@types/node": "^22.15.32",
+        "@types/node": "^24.0.0",
         "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "globals": "^17.0.0",
