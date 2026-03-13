@@ -19,7 +19,7 @@ from llama_index.llms.openai import OpenAI
 from .agent import run_agent
 
 if TYPE_CHECKING:
-    from llama_index.core.chat_engine.types import AgentChatResponse
+    from llama_index.core.agent import AgentOutput
 
 
 async def main() -> None:
@@ -57,7 +57,7 @@ async def check_inputs(actor_input: dict) -> None:
         await Actor.fail(status_message=msg)
 
 
-async def run_query(query: str, model_name: str) -> AgentChatResponse | None:
+async def run_query(query: str, model_name: str) -> AgentOutput | None:
     """Process query with LlamaIndex Agent."""
     llm = OpenAI(model=str(model_name), temperature=0)
     try:

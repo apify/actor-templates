@@ -7,14 +7,14 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "apify": "^3.5.2",
+        "apify": "^3.7.0",
         "@crawlee/puppeteer": "^3.15.3",
-        "puppeteer": "24.39.0"
+        "puppeteer": "24.39.1"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
         "@apify/tsconfig": "^0.1.1",
-        "@types/node": "^22.15.32",
+        "@types/node": "^24.0.0",
         "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "globals": "^17.0.0",
