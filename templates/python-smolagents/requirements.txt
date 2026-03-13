@@ -2,4 +2,4 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify >= 3.0.0, < 4.0.0
-smolagents[openai] >= 1.24.0, < 2.0.0
+smolagents[openai] >= 1.0.0, < 2.0.0
