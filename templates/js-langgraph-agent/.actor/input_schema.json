@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
     "title": "LangGraph agent with a web browser tool",
     "description": "LangGraph agent to provide answers by searching the web",
     "type": "object",

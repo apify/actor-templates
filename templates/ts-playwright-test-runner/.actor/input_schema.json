@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
     "title": "Playwright Test",
     "description": "Playwright Test is a Node.js library to automate end-to-end web tests across all modern browsers. This Actor runs Playwright Test in the cloud and stores the results in the Apify platform. The results can be (programmatically or manually) retrieved using Apify's REST API.",
     "type": "object",
