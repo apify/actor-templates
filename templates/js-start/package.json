@@ -18,6 +18,6 @@
     "author": "It's not you it's me",
     "license": "ISC",
     "devDependencies": {
-        "vitest": "^2.0.5"
+        "vitest": "^4.1.0"
     }
 }
