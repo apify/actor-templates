@@ -90,3 +90,25 @@ jobs:
   test-docker-builds:
     name: Test Docker builds
     uses: ./.github/workflows/test_dockerfile_builds.yaml
+
+  all-checks-passed:
+    name: All checks passed
+    if: always()
+    needs:
+      - python_lint_check
+      - python_type_check
+      - lint_and_test
+      - test-node-templates
+      - test-python-templates
+      - test-llm-ai-python-templates
+      - test-llm-ai-node-templates
+      - test-docker-builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check results
+        run: |
+          if [[ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+            echo "::error::Some checks failed or were cancelled"
+            exit 1
+          fi
+          echo "All checks passed successfully"
