@@ -106,25 +106,47 @@ const checkNodeTemplate = () => {
 };
 
 const checkPythonTemplate = () => {
-    expect(fs.existsSync('requirements.txt')).toBe(true);
+    const hasPyproject = fs.existsSync('pyproject.toml');
+    const hasRequirements = fs.existsSync('requirements.txt');
+    expect(hasPyproject || hasRequirements).toBe(true);
 
-    spawnSync(PYTHON_COMMAND, ['-m', 'venv', '.venv']);
+    if (hasPyproject) {
+        // uv-based template: use uv sync to install deps
+        const uvSyncResult = spawnSync('uv', ['sync', '--frozen', '--no-dev']);
+        checkSpawnResult(uvSyncResult);
 
-    const pipInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'install', '-r', 'requirements.txt']);
-    checkSpawnResult(pipInstallSpawnResult);
+        const pipShowApifySpawnResult = spawnSync('uv', ['run', 'python', '-m', 'pip', 'show', 'apify']);
+        checkSpawnResult(pipShowApifySpawnResult);
 
-    const pipShowApifySpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'apify']);
-    checkSpawnResult(pipShowApifySpawnResult);
+        // If playwright is used in the template, we have to do a post-install step
+        const pipShowPlaywrightSpawnResult = spawnSync('uv', ['run', 'python', '-m', 'pip', 'show', 'playwright']);
+        if (pipShowPlaywrightSpawnResult.status === 0) {
+            const playwrightInstallSpawnResult = spawnSync('uv', ['run', 'python', '-m', 'playwright', 'install']);
+            checkSpawnResult(playwrightInstallSpawnResult);
+        }
 
-    // If playwright is used in the template, we have to do a post-install step
-    const pipShowPlaywrightSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'playwright']);
-    if (pipShowPlaywrightSpawnResult.status === 0) {
-        const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'playwright', 'install']);
-        checkSpawnResult(playwrightInstallSpawnResult);
+        const installedApifySdkVersion = pipShowApifySpawnResult.stdout.toString().match(/Version: (.*)/)[1];
+        expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
+    } else {
+        // Legacy requirements.txt-based template
+        spawnSync(PYTHON_COMMAND, ['-m', 'venv', '.venv']);
+
+        const pipInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'install', '-r', 'requirements.txt']);
+        checkSpawnResult(pipInstallSpawnResult);
+
+        const pipShowApifySpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'apify']);
+        checkSpawnResult(pipShowApifySpawnResult);
+
+        // If playwright is used in the template, we have to do a post-install step
+        const pipShowPlaywrightSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'playwright']);
+        if (pipShowPlaywrightSpawnResult.status === 0) {
+            const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'playwright', 'install']);
+            checkSpawnResult(playwrightInstallSpawnResult);
+        }
+
+        const installedApifySdkVersion = pipShowApifySpawnResult.stdout.toString().match(/Version: (.*)/)[1];
+        expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
     }
-
-    const installedApifySdkVersion = pipShowApifySpawnResult.stdout.toString().match(/Version: (.*)/)[1];
-    expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
 };
 
 const checkTemplateRun = () => {

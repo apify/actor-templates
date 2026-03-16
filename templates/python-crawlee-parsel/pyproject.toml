@@ -1,0 +1,77 @@
+[project]
+name = "python-crawlee-parsel"
+version = "0.0.1"
+requires-python = ">= 3.10"
+description = "Crawl and scrape websites using Crawlee and Parsel."
+dependencies = [
+    "apify >= 3.0.0, < 4.0.0",
+    "crawlee[parsel]",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+    "ty",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN401",
+    "BLE001",
+    "C901",
+    "COM812",
+    "D100",
+    "D104",
+    "D107",
+    "D203",
+    "D213",
+    "D413",
+    "EM",
+    "G004",
+    "ISC001",
+    "FIX",
+    "TRY003",
+]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = [
+    "F401",
+]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+inline-quotes = "single"
+
+[tool.ruff.lint.flake8-type-checking]
+runtime-evaluated-base-classes = [
+    "pydantic.BaseModel",
+    "pydantic_settings.BaseSettings",
+]
+
+[tool.ruff.lint.flake8-builtins]
+builtins-ignorelist = ["id"]
+
+[tool.ruff.lint.pylint]
+max-branches = 18
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
+timeout = 1200
+
+[tool.ty.environment]
+python-version = "3.10"
+
+[tool.ty.rules]
+unresolved-import = "ignore"

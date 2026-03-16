@@ -1,6 +1,8 @@
 .mise.toml
 .nvim.lua
 storage
+.ruff_cache/
+.ty_cache/
 
 # The rest is copied from https://github.com/github/gitignore/blob/main/Python.gitignore
 
