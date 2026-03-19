@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll } from 'vitest';
 import { CheerioCrawler, purgeDefaultStorages } from '@crawlee/cheerio';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 describe('CheerioCrawler', () => {
     beforeAll(async () => {

@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll } from 'vitest';
 import { PlaywrightCrawler, purgeDefaultStorages } from '@crawlee/playwright';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 describe('PlaywrightCrawler', () => {
     beforeAll(async () => {

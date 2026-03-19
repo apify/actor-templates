@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll } from 'vitest';
 import { PuppeteerCrawler, purgeDefaultStorages } from '@crawlee/puppeteer';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 describe('PuppeteerCrawler', () => {
     beforeAll(async () => {
