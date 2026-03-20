@@ -24,7 +24,7 @@ for dockerfile in "${dockerfiles[@]}"; do
 
     # Build the image with a unique tag
     image_tag="test-$(basename "$template_dir")-$(date +%s)"
-    if docker build -f "./Dockerfile" -t "$image_tag" --build-arg GITHUB_TOKEN="${GITHUB_TOKEN}" . --progress=plain; then
+    if docker build -f "./Dockerfile" -t "$image_tag" --build-arg GITHUB_TOKEN . --progress=plain; then
         echo "✓ Successfully built $dockerfile"
         (( successful_builds = successful_builds + 1 ))
 

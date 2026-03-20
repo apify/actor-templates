@@ -30,7 +30,7 @@ COPY --chown=myuser:myuser . ./
 RUN python -m compileall -q my_actor/
 
 # Fetch camoufox files that are always needed when using camoufox.
-ARG GITHUB_TOKEN
+ARG GITHUB_TOKEN=""
 RUN GITHUB_TOKEN=${GITHUB_TOKEN} python -m camoufox fetch
 
 # Specify how to launch the source code of your Actor.
