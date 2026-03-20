@@ -35,6 +35,8 @@ jobs:
       - name: Test Dockerfile builds
         shell: bash
         run: ./scripts/test_docker_builds.sh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Cleanup
         if: always()

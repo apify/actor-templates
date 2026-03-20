@@ -45,4 +45,5 @@ jobs:
         run: npm run test-node-templates
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
