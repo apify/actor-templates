@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 from typing import Any, TypeAlias
 
 import httpx
@@ -6,7 +6,7 @@ from mcp.client.stdio import StdioServerParameters
 from pydantic import BaseModel, ConfigDict
 
 
-class ServerType(str, Enum):
+class ServerType(StrEnum):
     """Type of server to connect."""
 
     STDIO = 'stdio'  # Connect to a stdio server
