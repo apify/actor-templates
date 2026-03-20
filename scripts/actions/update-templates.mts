@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process';
 import { glob, readFile, writeFile } from 'node:fs/promises';
 
 const { BASE_IMAGE, DEFAULT_RUNTIME_VERSION, MODULE_VERSION } = process.env;
@@ -63,7 +64,7 @@ const puppeteerDependencies = ['puppeteer'];
 const playwrightDependencies = ['playwright', '@playwright/test'];
 
 async function updatePackageJson(filePath: URL) {
-    if (!BASE_IMAGE.includes('node')) {
+    if (!BASE_IMAGE?.includes('node')) {
         return;
     }
 
@@ -112,3 +113,4 @@ for await (const fileEntry of glob(['**/Dockerfile', '**/package.json'], { cwd: 
 
 const rootPackageJson = new URL('../../package.json', import.meta.url);
 await updatePackageJson(rootPackageJson);
+execSync('npm install', { cwd: new URL('../../', import.meta.url) });
