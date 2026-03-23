@@ -1,7 +1,12 @@
 // Crawlee - web scraping and browser automation library (Read more at https://crawlee.dev)
-import { CheerioCrawler, Dataset } from '@crawlee/cheerio';
+import { CheerioCrawler } from '@crawlee/cheerio';
 // Apify SDK - toolkit for building Apify Actors (Read more at https://docs.apify.com/sdk/js/)
 import { Actor } from 'apify';
+
+// this is ESM project, and as such, it requires you to specify extensions in your relative imports
+// read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
+// note that we need to use `.js` even when inside TS files
+import { router } from './routes.js';
 
 interface Input {
     startUrls: {
@@ -27,17 +32,7 @@ const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: t
 const crawler = new CheerioCrawler({
     proxyConfiguration,
     maxRequestsPerCrawl,
-    requestHandler: async ({ enqueueLinks, request, $, log }) => {
-        log.info('enqueueing new URLs');
-        await enqueueLinks();
-
-        // Extract title from the page.
-        const title = $('title').text();
-        log.info(`${title}`, { url: request.loadedUrl });
-
-        // Save url and title to Dataset - a table-like storage.
-        await Dataset.pushData({ url: request.loadedUrl, title });
-    },
+    requestHandler: router,
 });
 
 await crawler.run(startUrls);
