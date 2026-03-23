@@ -16,6 +16,8 @@ describe('PlaywrightCrawler', () => {
 
         await crawler.run(['https://apify.com']);
 
+        expect(crawler.stats.state.requestsFinished).toBeGreaterThanOrEqual(10);
+
         const { items } = await crawler.getData();
         expect(items.length).toBeGreaterThan(0);
         expect(items[0].url).toBeDefined();

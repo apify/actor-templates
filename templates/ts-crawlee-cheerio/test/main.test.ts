@@ -16,6 +16,8 @@ describe('CheerioCrawler', () => {
 
         await crawler.run(['https://www.example.com']);
 
+        expect(crawler.stats.state.requestsFinished).toBeGreaterThanOrEqual(1);
+
         const { items } = await crawler.getData();
         expect(items.length).toBeGreaterThan(0);
         expect(items[0].url).toContain('example.com');
