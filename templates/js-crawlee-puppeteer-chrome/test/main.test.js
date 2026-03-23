@@ -1,4 +1,4 @@
-import { Dataset, PuppeteerCrawler, purgeDefaultStorages } from '@crawlee/puppeteer';
+import { PuppeteerCrawler, purgeDefaultStorages } from '@crawlee/puppeteer';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { router } from '../src/routes.js';
@@ -16,7 +16,7 @@ describe('PuppeteerCrawler', () => {
 
         await crawler.run(['https://apify.com']);
 
-        const { items } = await Dataset.getData();
+        const { items } = await crawler.getData();
         expect(items.length).toBeGreaterThan(0);
         expect(items[0].url).toBeDefined();
         expect(items[0].title).toBeDefined();
