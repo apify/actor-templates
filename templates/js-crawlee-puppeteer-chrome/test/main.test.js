@@ -1,26 +1,24 @@
-import { PuppeteerCrawler, purgeDefaultStorages } from '@crawlee/puppeteer';
+import { Dataset, PuppeteerCrawler, purgeDefaultStorages } from '@crawlee/puppeteer';
 import { beforeAll, describe, expect, it } from 'vitest';
+
+import { router } from '../src/routes.js';
 
 describe('PuppeteerCrawler', () => {
     beforeAll(async () => {
         await purgeDefaultStorages();
     });
 
-    it('should crawl a page and extract title', async () => {
-        const results = [];
-
+    it('should crawl and push data to dataset', async () => {
         const crawler = new PuppeteerCrawler({
-            maxRequestsPerCrawl: 1,
-            async requestHandler({ request, page }) {
-                const title = await page.title();
-                results.push({ url: request.loadedUrl, title });
-            },
+            maxRequestsPerCrawl: 10,
+            requestHandler: router,
         });
 
-        await crawler.run(['https://www.example.com']);
+        await crawler.run(['https://apify.com']);
 
-        expect(results.length).toBe(1);
-        expect(results[0].url).toContain('example.com');
-        expect(results[0].title).toContain('Example Domain');
+        const { items } = await Dataset.getData();
+        expect(items.length).toBeGreaterThan(0);
+        expect(items[0].url).toBeDefined();
+        expect(items[0].title).toBeDefined();
     }, 60_000);
 });

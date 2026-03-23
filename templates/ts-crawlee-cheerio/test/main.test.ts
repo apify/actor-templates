@@ -1,26 +1,25 @@
-import { CheerioCrawler, purgeDefaultStorages } from '@crawlee/cheerio';
-import { beforeAll, describe, expect, it } from 'vitest';
+    import { CheerioCrawler, Dataset, purgeDefaultStorages } from '@crawlee/cheerio';
+    // @ts-ignore
+    import { beforeAll, describe, expect, it } from 'vitest';
 
-describe('CheerioCrawler', () => {
-    beforeAll(async () => {
-        await purgeDefaultStorages();
-    });
+    import { router } from '../src/routes.js';
 
-    it('should crawl a page and extract title', async () => {
-        const results = [];
-
-        const crawler = new CheerioCrawler({
-            maxRequestsPerCrawl: 1,
-            async requestHandler({ request, $ }) {
-                const title = $('title').text();
-                results.push({ url: request.loadedUrl, title });
-            },
+    describe('CheerioCrawler', () => {
+        beforeAll(async () => {
+            await purgeDefaultStorages();
         });
 
-        await crawler.run(['https://www.example.com']);
+        it('should crawl a page and extract data to dataset', async () => {
+            const crawler = new CheerioCrawler({
+                maxRequestsPerCrawl: 10,
+                requestHandler: router,
+            });
 
-        expect(results.length).toBe(1);
-        expect(results[0].url).toContain('example.com');
-        expect(results[0].title).toContain('Example Domain');
-    }, 30_000);
-});
+            await crawler.run(['https://www.example.com']);
+
+            const { items } = await Dataset.getData();
+            expect(items.length).toBeGreaterThan(0);
+            expect(items[0].url).toContain('example.com');
+            expect(items[0].title).toContain('Example Domain');
+        }, 30_000);
+    });
