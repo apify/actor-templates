@@ -1,8 +1,8 @@
-import { createCheerioRouter, Dataset } from '@crawlee/cheerio';
+import { createCheerioRouter } from '@crawlee/cheerio';
 
 export const router = createCheerioRouter();
 
-router.addDefaultHandler(async ({ enqueueLinks, request, $, log }) => {
+router.addDefaultHandler(async ({ enqueueLinks, request, $, log, pushData }) => {
     log.info('enqueueing new URLs');
     await enqueueLinks();
 
@@ -11,5 +11,5 @@ router.addDefaultHandler(async ({ enqueueLinks, request, $, log }) => {
     log.info(`${title}`, { url: request.loadedUrl });
 
     // Save url and title to Dataset - a table-like storage.
-    await Dataset.pushData({ url: request.loadedUrl, title });
+    await pushData({ url: request.loadedUrl, title });
 });
