@@ -29,12 +29,8 @@ COPY --chown=myuser:myuser . ./
 # Use compileall to ensure the runnability of the Actor Python code.
 RUN python -m compileall -q my_actor/
 
-# If you hit GitHub API rate limits, pass a token via BuildKit secret:
-#   docker build --build-arg GITHUB_TOKEN=<token> .
-# Note that this token will be visible in the Docker image history!
-ARG GITHUB_TOKEN=""
 # Fetch camoufox files that are always needed when using camoufox.
-RUN GITHUB_TOKEN=${GITHUB_TOKEN} python -m camoufox fetch
+RUN python -m camoufox fetch
 
 # Specify how to launch the source code of your Actor.
 CMD ["python", "-m", "my_actor"]
