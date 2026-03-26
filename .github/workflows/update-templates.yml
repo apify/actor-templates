@@ -12,7 +12,7 @@ on:
         required: false
         type: string
       default_runtime_version:
-        description: 'Default runtime version (example: 24 for node, 3.13 for python)'
+        description: 'Default runtime version (example: 24 for node, 3.14 for python)'
         required: false
         type: string
   repository_dispatch:

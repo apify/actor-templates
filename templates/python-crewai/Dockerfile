@@ -1,7 +1,6 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-# We are using Python 3.13 because onnxruntime (a crewai dependency) doesn't have Python 3.14 wheels yet.
 FROM apify/actor-python:3.14
 
 # Second, copy just requirements.txt into the Actor image,
