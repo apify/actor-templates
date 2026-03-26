@@ -9,7 +9,7 @@
     "dependencies": {
         "apify": "^3.7.0",
         "@crawlee/puppeteer": "^3.15.3",
-        "puppeteer": "24.39.1"
+        "puppeteer": "24.40.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^1.0.0",
@@ -21,7 +21,8 @@
         "prettier": "^3.5.3",
         "tsx": "^4.20.3",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.34.1"
+        "typescript-eslint": "^8.34.1",
+        "vitest": "^4.1.0"
     },
     "scripts": {
         "start": "npm run start:dev",
@@ -32,7 +33,7 @@
         "lint:fix": "eslint --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
+        "test": "vitest run"
     },
     "author": "It's not you it's me",
     "license": "ISC"
