@@ -38,5 +38,8 @@
         "postinstall": "npx camoufox-js fetch"
     },
     "author": "It's not you it's me",
-    "license": "ISC"
+    "license": "ISC",
+    "overrides": {
+        "typescript": "$typescript"
+    }
 }

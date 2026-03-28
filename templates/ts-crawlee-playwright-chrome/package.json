@@ -37,5 +37,8 @@
         "postinstall": "npx crawlee install-playwright-browsers"
     },
     "author": "It's not you it's me",
-    "license": "ISC"
+    "license": "ISC",
+    "overrides": {
+        "typescript": "$typescript"
+    }
 }
