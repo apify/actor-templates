@@ -12,6 +12,7 @@ test-actors
 # JS
 node_modules
 templates/**/package-lock.json
+*.tsbuildinfo
 
 # Python
 __pycache__
