@@ -1,8 +1,7 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-# We are using Python 3.13 because onnxruntime (a crewai dependency) doesn't have Python 3.14 wheels yet.
-FROM apify/actor-python:3.13
+FROM apify/actor-python:3.14
 
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency installation in the next step,
@@ -31,8 +30,7 @@ RUN echo "Python version:" \
 COPY --chown=myuser:myuser . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python3 -m compileall -q src/
+RUN python -m compileall -q my_actor/
 
 # Specify how to launch the source code of your Actor.
-# By default, the "python3 -m ." command is run.
-CMD ["python3", "-m", "src"]
+CMD ["python", "-m", "my_actor"]

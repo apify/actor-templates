@@ -1,7 +1,7 @@
-import { Emitter } from 'bee-agent-framework/emitter/emitter';
-import type { AnyToolSchemaLike } from 'bee-agent-framework/internals/helpers/schema';
-import type { ToolEmitter, ToolInput } from 'bee-agent-framework/tools/base';
-import { JSONToolOutput, Tool, ToolInputValidationError } from 'bee-agent-framework/tools/base';
+import { Emitter } from 'beeai-framework/emitter/emitter';
+import type { AnyToolSchemaLike } from 'beeai-framework/internals/helpers/schema';
+import type { ToolEmitter, ToolInput } from 'beeai-framework/tools/base';
+import { JSONToolOutput, Tool, ToolInputValidationError } from 'beeai-framework/tools/base';
 import { z } from 'zod';
 
 interface CalculatorSumToolOutput {

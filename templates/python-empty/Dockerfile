@@ -28,8 +28,7 @@ RUN echo "Python version:" \
 COPY --chown=myuser:myuser . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python3 -m compileall -q src/
+RUN python -m compileall -q my_actor/
 
 # Specify how to launch the source code of your Actor.
-# By default, the "python3 -m ." command is run
-CMD ["python3", "-m", "src"]
+CMD ["python", "-m", "my_actor"]

@@ -2,24 +2,32 @@ name: Test Templates
 
 on:
   push:
+    branches: [master]
+    paths-ignore:
+      - 'dist/**'
+  pull_request:
     paths-ignore:
       - 'dist/**'
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
 jobs:
   python_lint_check:
     name: Python lint check
     uses: apify/workflows/.github/workflows/python_lint_check.yaml@main
     with:
-      python_versions: '["3.10", "3.11", "3.12", "3.13"]'
+      python_versions: '["3.10", "3.11", "3.12", "3.13", "3.14"]'
 
   python_type_check:
     name: Python type check
     uses: apify/workflows/.github/workflows/python_type_check.yaml@main
     with:
-      python_versions: '["3.10", "3.11", "3.12", "3.13"]'
+      python_versions: '["3.10", "3.11", "3.12", "3.13", "3.14"]'
 
   lint_and_test:
     name: Lint and test (without templates)
@@ -82,3 +90,25 @@ jobs:
   test-docker-builds:
     name: Test Docker builds
     uses: ./.github/workflows/test_dockerfile_builds.yaml
+
+  all-checks-passed:
+    name: All checks passed
+    if: always()
+    needs:
+      - python_lint_check
+      - python_type_check
+      - lint_and_test
+      - test-node-templates
+      - test-python-templates
+      - test-llm-ai-python-templates
+      - test-llm-ai-node-templates
+      - test-docker-builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check results
+        run: |
+          if [[ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+            echo "::error::Some checks failed or were cancelled"
+            exit 1
+          fi
+          echo "All checks passed successfully"

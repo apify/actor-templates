@@ -19,7 +19,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_beautifulsoup"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -34,7 +34,7 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -54,7 +54,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_python"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -73,7 +73,7 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -92,7 +92,7 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -111,7 +111,7 @@
                 "memoryMbytes": 4096,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["WEB_SCRAPING"]
         },
         {
@@ -127,7 +127,7 @@
                 "memoryMbytes": 1024,
                 "timeoutSecs": 3600
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["STARTER"]
         },
         {
@@ -147,12 +147,13 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": [
-                "src/main.py",
-                "src/spiders/title.py",
-                "src/__main__.py",
-                "src/items.py",
-                "src/pipelines.py",
-                "src/settings.py"
+                "my_actor/main.py",
+                "my_actor/items.py",
+                "my_actor/middlewares.py",
+                "my_actor/pipelines.py",
+                "my_actor/settings.py",
+                "my_actor/spiders/title.py",
+                "my_actor/__main__.py"
             ],
             "useCases": ["WEB_SCRAPING"]
         },
@@ -173,7 +174,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_parsel"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -193,7 +194,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_playwright"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -213,7 +214,7 @@
                 "timeoutSecs": 3600
             },
             "aliases": ["getting_started_crawlee_playwright_camoufox"],
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
@@ -229,7 +230,13 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py", "src/tools.py"],
+            "showcaseFiles": [
+                "my_actor/main.py",
+                "my_actor/models.py",
+                "my_actor/tools.py",
+                "my_actor/utils.py",
+                "my_actor/__main__.py"
+            ],
             "useCases": ["AI"]
         },
         {
@@ -246,7 +253,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py", "src/tools.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -262,7 +269,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "showcaseFiles": ["src/main.py", "src/agent.py", "src/tools.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/agent.py", "my_actor/tools.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -278,7 +285,7 @@
                 "memoryMbytes": 128,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py", "src/agents.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/agents.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -294,7 +301,7 @@
                 "memoryMbytes": 128,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py", "src/__main__.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {
@@ -311,7 +318,15 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py", "src/server.py"],
+            "showcaseFiles": [
+                "my_actor/main.py",
+                "my_actor/const.py",
+                "my_actor/event_store.py",
+                "my_actor/mcp_gateway.py",
+                "my_actor/models.py",
+                "my_actor/server.py",
+                "my_actor/__main__.py"
+            ],
             "useCases": ["AI"]
         },
         {
@@ -328,7 +343,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 60
             },
-            "showcaseFiles": ["src/main.py"],
+            "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
             "useCases": ["AI"]
         },
         {

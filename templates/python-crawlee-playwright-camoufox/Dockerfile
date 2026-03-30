@@ -1,8 +1,7 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-# Currently camoufox has issues installing on Python 3.13
-FROM apify/actor-python-playwright:3.14-1.57.0
+FROM apify/actor-python-playwright-camoufox:3.14-1.58.0
 
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency install in the next step,
@@ -27,10 +26,7 @@ RUN echo "Python version:" \
 COPY --chown=myuser:myuser . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python -m compileall -q ./src
-
-# Fetch camoufox files that are always needed when using camoufox.
-RUN python -m camoufox fetch
+RUN python -m compileall -q my_actor/
 
 # Specify how to launch the source code of your Actor.
-CMD ["python", "-m", "src"]
+CMD ["python", "-m", "my_actor"]

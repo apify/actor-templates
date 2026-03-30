@@ -7,14 +7,17 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "apify": "^3.5.2",
+        "apify": "^3.7.0",
         "axios": "^1.5.0",
         "cheerio": "^1.0.0-rc.12"
     },
     "scripts": {
         "start": "node ./src/main.js",
-        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1"
+        "test": "vitest run"
     },
     "author": "It's not you it's me",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "vitest": "^4.1.0"
+    }
 }

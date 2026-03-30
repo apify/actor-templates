@@ -1,25 +1,41 @@
 [project]
 name = "actor-templates"
 version = "0.0.1"
-requires-python = ">=3.10"
+requires-python = ">= 3.10"
 dependencies = [
-    "apify[scrapy]>=3.0.0,<4.0.0",
-    "crawlee[all]>=1.0.0,<2.0.0",
-    "beautifulsoup4[lxml]<5.0.0",
-    "langchain<1.0.0",
-    "langchain-openai<1.0.0",
-    "langgraph<1.0.0",
-    "playwright<2.0.0",
-    "pydantic-ai<2.0.0",
-    "scrapy<3.0.0",
-    "selenium<5.0.0",
+    "apify[scrapy] >= 3.0.0, < 4.0.0",
+    "apify-client",
+    # "arxiv-mcp-server >= 0.3.1, < 1.0.0",  # Requires Python >= 3.11, incompatible with requires-python >= 3.10
+    "beautifulsoup4[lxml] >= 4.0.0, < 5.0.0",
+    "camoufox[geoip] >= 0.4.5, < 1.0.0",
+    "crawlee[all]",
+    # "crewai[tools] >= 0.11.0, < 1.0.0",  # Pulls onnxruntime via chromadb, which requires Python >= 3.11
+    "fastapi >= 0.135.0, < 1.0.0",
+    "fastmcp >= 3.0.0, < 4.0.0",
+    "httpx >= 0.28.0, < 1.0.0",
+    "langchain >= 1.0.0, < 2.0.0",
+    # "langchain-apify >= 0.1.0, < 1.0.0",  # Incompatible with langchain >= 1.0.0 (requires langchain-core < 0.4.0)
+    "langchain-openai >= 1.0.0, < 2.0.0",
+    "langgraph >= 1.0.0, < 2.0.0",
+    "llama-index >= 0.14.0, < 1.0.0",
+    "mcp >= 1.25.0, < 2.0.0",
+    "playwright >= 1.58.0, < 2.0.0",
+    "polars >= 1.0.0, < 2.0.0",
+    "pydantic >= 2.0.0, < 3.0.0",
+    "pydantic-ai >= 1.0.0, < 2.0.0",
+    "scrapy >= 2.14.0, < 3.0.0",
+    "selenium >= 4.41.0, < 5.0.0",
+    "smolagents[openai] >= 1.0.0, < 2.0.0",
+    "types-beautifulsoup4 >= 4.0.0, < 5.0.0",
+    "uv >= 0.7.8, < 1.0.0",
+    "uvicorn >= 0.27.0, < 1.0.0",
 ]
 
 [dependency-groups]
 dev = [
-    "poethepoet<1.0.0",
-    "ruff~=0.14.0",
-    "ty~=0.0.0",
+    "poethepoet < 1.0.0",
+    "ruff ~= 0.15.0",
+    "ty ~= 0.0.0",
 ]
 
 [tool.ruff]
@@ -83,7 +99,7 @@ python-version = "3.10"
 [tool.ty.src]
 include = ["templates"]
 
-# The templates use relative imports as they're run as packages (python -m src).
+# The templates use relative imports as they're run as packages (e.g., python -m my_actor).
 # ty doesn't fully support this pattern yet, so we ignore unresolved-import errors.
 [tool.ty.rules]
 unresolved-import = "ignore"
@@ -92,33 +108,10 @@ unresolved-import = "ignore"
 clean = "rm -rf .ty_cache .pytest_cache .ruff_cache build dist htmlcov .coverage"
 install-dev = "uv sync --all-extras"
 check-code = ["lint", "type-check"]
+type-check = "uv run ty check"
 
 [tool.poe.tasks.lint]
 shell = "uv run ruff format --check && uv run ruff check"
 
 [tool.poe.tasks.format]
 shell = "uv run ruff check --fix && uv run ruff format"
-
-# Due to each template having its own "src" directory, running type checking on all templates together causes
-# the error: "Duplicate module named 'src'". Therefore, type checking must be executed separately for each template.
-[tool.poe.tasks.type-check]
-shell = """
-uv run ty check templates/python-beautifulsoup && \
-uv run ty check templates/python-crawlee-beautifulsoup && \
-uv run ty check templates/python-crawlee-parsel && \
-uv run ty check templates/python-crawlee-playwright && \
-uv run ty check templates/python-crawlee-playwright-camoufox && \
-uv run ty check templates/python-empty && \
-uv run ty check templates/python-mcp-empty && \
-uv run ty check templates/python-mcp-proxy && \
-uv run ty check templates/python-playwright && \
-uv run ty check templates/python-scrapy && \
-uv run ty check templates/python-selenium && \
-uv run ty check templates/python-smolagents && \
-uv run ty check templates/python-standby && \
-uv run ty check templates/python-start && \
-uv run ty check templates/python-crewai && \
-uv run ty check templates/python-langgraph && \
-uv run ty check templates/python-llamaindex-agent && \
-uv run ty check templates/python-pydanticai
-"""

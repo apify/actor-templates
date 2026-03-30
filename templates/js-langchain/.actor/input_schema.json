@@ -1,4 +1,5 @@
 {
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
     "title": "Input schema for LangChainJS example",
     "description": "Enter start URL of a website(s) to crawl, configure other optional settings, and decide if you want to use existing cached vector database.",
     "type": "object",

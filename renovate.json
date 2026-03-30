@@ -21,6 +21,17 @@
             "groupSlug": "all-non-major",
             "automerge": true,
             "automergeType": "branch"
+        },
+        {
+            "description": "Disable updates for ts-beeai-agent packages with strict version constraints",
+            "matchFileNames": ["templates/ts-beeai-agent/**"],
+            "matchPackageNames": [
+                "beeai-framework",
+                "@ai-sdk/openai",
+                "@langchain/openai",
+                "@langchain/community"
+            ],
+            "enabled": false
         }
     ],
     "schedule": ["every weekday"],

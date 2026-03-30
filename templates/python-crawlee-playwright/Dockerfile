@@ -1,7 +1,7 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-FROM apify/actor-python-playwright:3.14-1.57.0
+FROM apify/actor-python-playwright:3.14-1.58.0
 
 USER myuser
 
@@ -28,8 +28,7 @@ RUN echo "Python version:" \
 COPY --chown=myuser:myuser . ./
 
 # Use compileall to ensure the runnability of the Actor Python code.
-RUN python3 -m compileall -q src/
+RUN python -m compileall -q my_actor/
 
 # Specify how to launch the source code of your Actor.
-# By default, the "python3 -m src" command is run
-CMD ["python3", "-m", "src"]
+CMD ["python", "-m", "my_actor"]

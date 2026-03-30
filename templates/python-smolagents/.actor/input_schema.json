@@ -1,11 +1,8 @@
 {
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
     "title": "Python AI agent in Smolagents",
     "type": "object",
     "schemaVersion": 1,
-    "meta": {
-        "templateId": "python-smolagents",
-        "generatedBy": "<FILL-IN-MODEL>"
-    },
     "properties": {
         "interests": {
             "title": "User interests",
