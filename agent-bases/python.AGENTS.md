@@ -577,6 +577,41 @@ Then create the key-value store schema in `.actor/key_value_store_schema.json`:
 
 \*Either `key` or `keyPrefix` must be specified for each collection, but not both.
 
+## Actor README
+
+**Always generate a README.md file as part of Actor development.** The README is the Actor's public landing page on Apify Store - it serves as SEO, first impression, documentation, and support page combined.
+
+### Required: Generate README automatically
+
+When building an Actor, always create a `README.md` in the project root. Do not wait for the user to ask for it. The README is a critical part of a complete Actor.
+
+### README structure
+
+Write in Markdown. Use H2 (`##`) for main sections (these become the table of contents) and H3 (`###`) for subsections. Do not use H1 - the Actor name is automatically the H1. Aim for at least 300 words.
+
+Include these sections in order:
+
+1. **What does [Actor name] do?** - 2-3 sentences explaining what it does, what data it extracts, and how to try it. Link to the target website. Mention Apify platform advantages (API access, scheduling, integrations, proxy rotation, monitoring).
+2. **Why use [Actor name]?** - Business use cases and benefits.
+3. **How to use [Actor name]** - Numbered step-by-step tutorial. Keep it simple and reassuring.
+4. **Input** - Describe input fields. Reference the Input tab. Optionally include a screenshot or JSON example of the input schema.
+5. **Output** - Show a simplified JSON output example. Mention "You can download the dataset in various formats such as JSON, HTML, CSV, or Excel."
+6. **Data table** - If the Actor extracts data, include a table of the main data fields it outputs.
+7. **Pricing / Cost estimation** - Set expectations on cost. Mention free tier limits if applicable. Frame as "How much does it cost to scrape [target site]?"
+8. **Tips or Advanced options** - How to optimize runs, limit compute units, improve speed or accuracy.
+9. **FAQ, disclaimers, and support** - Legality disclaimer for scrapers, known limitations, link to Issues tab for feedback, mention custom solution availability.
+
+### README best practices
+
+- Write SEO-friendly headings with relevant keywords (e.g., "How to scrape [site] data" not just "Tutorial")
+- Bold the most important words in the intro
+- The first 25% of the README matters most - front-load the value proposition
+- Match the tone to the target audience: simple language for no-code users, technical details for developers
+- Include a JSON output example showing 1-2 representative items
+- Promote other related Actors from the same developer if applicable
+- Embed YouTube video URLs on their own line (Apify Console auto-renders them)
+- Use HTML for image sizing if needed; CSS is not supported
+
 ## Apify MCP Tools
 
 If MCP server is configured, use these tools for documentation:
