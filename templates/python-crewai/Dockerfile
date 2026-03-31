@@ -1,7 +1,10 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-FROM apify/actor-python:3.14
+
+# Note: Python 3.14 is not used because crewai depends on tiktoken, which lacks
+# pre-built wheels for Python 3.14 and requires a Rust compiler to build from source.
+FROM apify/actor-python:3.13
 
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency installation in the next step,

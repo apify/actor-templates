@@ -2,7 +2,7 @@
 
 Feel free to modify this file to suit your specific needs.
 
-To build Apify Actors, utilize the Apify SDK toolkit, read more at the official documentation:
+To build Apify Actors, use the Apify SDK toolkit, read more at the official documentation:
 https://docs.apify.com/sdk/python
 """
 
@@ -10,6 +10,15 @@ from __future__ import annotations
 
 import os
 from typing import TYPE_CHECKING
+
+# On first run in a fresh container, crewAI prompts "Would you like to view your
+# execution traces?" and waits up to 20 s for stdin input that never comes.
+# There is no dedicated "non-interactive" env var in crewAI; CREWAI_TESTING=true
+# is the only flag that suppresses this prompt (it is checked first in
+# should_auto_collect_first_time_traces() and prompt_user_for_trace_viewing()).
+# setdefault is used so an explicit override in the environment is still respected.
+# See: https://github.com/crewAIInc/crewAI/issues/3789
+os.environ.setdefault('CREWAI_TESTING', 'true')
 
 from apify import Actor
 from crewai import Agent, Crew, Task
@@ -43,10 +52,10 @@ async def main() -> None:
         actor_input = await Actor.get_input()
 
         query = actor_input.get('query')
-        model_name = actor_input.get('modelName', 'gpt-4o-mini')
         if not query:
-            msg = 'Missing "query" attribute in input!'
-            raise ValueError(msg)
+            raise ValueError('Missing "query" attribute in input!')
+
+        model_name = actor_input.get('modelName', 'gpt-4o-mini')
 
         # Create a toolkit for the agent
         # containing the Instagram scraper tool
@@ -80,7 +89,8 @@ async def main() -> None:
         crew = Crew(agents=[agent], tasks=[task])
 
         # Kick off the crew and get the response
-        crew_output = crew.kickoff()
+        # Use kickoff_async() to avoid blocking the event loop in async context
+        crew_output = await crew.kickoff_async()
         raw_response = crew_output.raw
 
         # Log total token usage
