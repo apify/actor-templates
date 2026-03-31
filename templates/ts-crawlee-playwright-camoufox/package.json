@@ -22,7 +22,8 @@
         "prettier": "^3.5.3",
         "tsx": "^4.20.3",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.34.1"
+        "typescript-eslint": "^8.34.1",
+        "vitest": "^4.1.0"
     },
     "scripts": {
         "start": "npm run start:dev",
@@ -33,7 +34,7 @@
         "lint:fix": "eslint --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1",
+        "test": "vitest run",
         "postinstall": "npx camoufox-js fetch"
     },
     "author": "It's not you it's me",
