@@ -586,6 +586,74 @@ If MCP server is configured, use these tools for documentation:
 
 Otherwise, reference: `@https://mcp.apify.com/`
 
+## Actor README Generation
+
+When asked to generate a README for an Actor, follow these instructions:
+
+### What to Include
+
+1. **Title** — Actor name as the H1 heading.
+2. **Short description** — One sentence explaining what the Actor does and what problem it solves.
+3. **How it works** — 2–4 sentences describing the approach (what it scrapes/processes, what libraries it uses, how it outputs data).
+4. **Usage** — Step-by-step: how to run the Actor on Apify Console or via API. Include the `apify call` CLI command if applicable.
+5. **Input** — A table or JSON block documenting every input field: name, type, required/optional, default, description.
+6. **Output** — Describe the dataset schema. Show a sample output JSON object.
+7. **Cost & limits** — Rough compute unit estimate per run, any rate limits or known constraints.
+8. **Development** — How to clone, install dependencies, and run locally (`apify run`).
+9. **License** — One line.
+
+### Style Rules
+
+- Keep the README under 300 lines.
+- Use fenced code blocks for all JSON/CLI examples.
+- Write in plain, direct English — no marketing language.
+- Do not include placeholder sections; omit any section that does not apply to the specific Actor.
+
+### Example Skeleton
+
+```markdown
+# Actor Name
+
+One-sentence description of what it does.
+
+## How it works
+
+Brief explanation of scraping/processing approach.
+
+## Usage
+
+\`\`\`bash
+apify call username/actor-name
+\`\`\`
+
+## Input
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| startUrls | Array | Yes | — | List of URLs to scrape |
+
+## Output
+
+\`\`\`json
+{
+  "url": "https://example.com",
+  "title": "Page Title"
+}
+\`\`\`
+
+## Development
+
+\`\`\`bash
+git clone https://github.com/username/actor-name
+pip install -r requirements.txt
+apify run
+\`\`\`
+
+## License
+
+Apache-2.0
+```
+
 ## Resources
 
 - [docs.apify.com/llms.txt](https://docs.apify.com/llms.txt) - Quick reference
