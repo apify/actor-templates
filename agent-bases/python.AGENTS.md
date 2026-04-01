@@ -608,7 +608,7 @@ Include these sections in order:
 - The first 25% of the README matters most - front-load the value proposition
 - Match the tone to the target audience: simple language for no-code users, technical details for developers
 - Include a JSON output example showing 1-2 representative items
-- Promote other related Actors from the same developer if applicable
+- Reference these top Actors for README best practices: https://apify.com/apify/instagram-scraper and https://apify.com/compass/crawler-google-places
 - Embed YouTube video URLs on their own line (Apify Console auto-renders them)
 - Use HTML for image sizing if needed; CSS is not supported
 
