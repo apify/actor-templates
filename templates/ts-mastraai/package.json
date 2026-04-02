@@ -23,7 +23,7 @@
         "prettier": "^3.8.1",
         "tsx": "^4.21.0",
         "typescript": "^6.0.0",
-        "typescript-eslint": "^8.54.0",
+        "typescript-eslint": "^8.58.0",
         "vitest": "^4.1.0"
     },
     "scripts": {
@@ -38,8 +38,5 @@
         "test": "vitest run"
     },
     "author": "It's not you it's me",
-    "license": "ISC",
-    "overrides": {
-        "typescript": "$typescript"
-    }
+    "license": "ISC"
 }
