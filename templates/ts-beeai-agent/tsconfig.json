@@ -5,6 +5,7 @@
         "moduleResolution": "NodeNext",
         "target": "ES2022",
         "outDir": "dist",
+        "rootDir": "./src",
         "noUnusedLocals": false,
         "skipLibCheck": true,
         "lib": ["DOM"]
