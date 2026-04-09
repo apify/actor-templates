@@ -9,7 +9,7 @@
         "puppeteer": "24.40.0"
     },
     "devDependencies": {
-        "@apify/eslint-config": "^1.0.0",
+        "@apify/eslint-config": "^2.0.0",
         "eslint": "^9.29.0",
         "eslint-config-prettier": "^10.1.5",
         "prettier": "^3.5.3",

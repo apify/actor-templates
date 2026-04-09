@@ -34,13 +34,8 @@
         "url": "https://github.com/apify/actor-templates/issues"
     },
     "homepage": "https://github.com/apify/actor-templates#readme",
-    "overrides": {
-        "eslint-config-airbnb-base": {
-            "eslint": "$eslint"
-        }
-    },
     "devDependencies": {
-        "@apify/eslint-config": "^1.1.0",
+        "@apify/eslint-config": "^2.0.0",
         "@apify/tsconfig": "0.1.1",
         "@types/jest": "^30.0.0",
         "apify": "^3.5.2",
