@@ -86,7 +86,11 @@ const checkNodeTemplate = () => {
 
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
-    const npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    // CI integration test — bypass the per-template `min-release-age` gate that the
+    // shipped `.npmrc` enforces for end users. We still want CI to verify the templates
+    // work against the *current* published packages even when those packages were
+    // published less than 24 hours ago.
+    const npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install', '--min-release-age=0']);
     checkSpawnResult(npmInstallSpawnResult);
 
     if (packageJson.scripts?.lint) {
