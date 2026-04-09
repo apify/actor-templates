@@ -24,16 +24,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      # Direct `npm install -g npm@latest` from the Node-bundled npm fails on
-      # Node 22 with `Cannot find module 'promise-retry'` — see npm/cli#9151.
-      # Installing an intermediate `npm@11.11` first pulls in the missing dep,
-      # then the latest upgrade succeeds. Drop the first line once npm/cli#9151
-      # is fixed.
-      - name: Update npm to latest
-        run: |
-          npm install -g 'npm@11.11'
-          npm install -g npm@latest
-
       - name: Cache node_modules
         uses: actions/cache@v5
         with:
