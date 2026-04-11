@@ -1,5 +1,5 @@
 import { openai } from '@ai-sdk/openai';
-// eslint-disable-next-line import/extensions
+// eslint-disable-next-line import-x/extensions
 import { Agent } from '@mastra/core/agent';
 
 import { instagramScraperTool } from './tools.js';
