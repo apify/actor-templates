@@ -35,7 +35,7 @@
     },
     "homepage": "https://github.com/apify/actor-templates#readme",
     "devDependencies": {
-        "@apify/eslint-config": "^2.0.0",
+        "@apify/eslint-config": "^2.0.5",
         "@apify/tsconfig": "0.1.1",
         "@types/jest": "^30.0.0",
         "apify": "^3.5.2",
