@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/extensions
+// eslint-disable-next-line import-x/extensions
 import { DynamicStructuredTool } from '@langchain/core/tools';
 import { log } from 'apify';
 import { z } from 'zod';

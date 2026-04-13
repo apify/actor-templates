@@ -11,7 +11,7 @@
         "@crawlee/cheerio": "^3.15.3"
     },
     "devDependencies": {
-        "@apify/eslint-config": "^1.0.0",
+        "@apify/eslint-config": "^2.0.0",
         "@apify/tsconfig": "^0.1.1",
         "@types/node": "^24.0.0",
         "eslint": "^9.29.0",

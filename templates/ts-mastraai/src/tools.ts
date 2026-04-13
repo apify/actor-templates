@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/extensions
+// eslint-disable-next-line import-x/extensions
 import { createTool } from '@mastra/core/tools';
 import { ApifyClient, log } from 'apify';
 import { z } from 'zod';

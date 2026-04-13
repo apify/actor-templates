@@ -2,6 +2,7 @@
     "extends": ["config:base", ":semanticCommitTypeAll(chore)"],
     "pinVersions": false,
     "separateMajorMinor": false,
+    "minimumReleaseAge": "1 day",
     "dependencyDashboard": false,
     "semanticCommits": "enabled",
     "lockFileMaintenance": {

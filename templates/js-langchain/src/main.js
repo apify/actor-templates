@@ -1,4 +1,4 @@
-/* eslint-disable import/extensions */
+/* eslint-disable import-x/extensions */
 import { rm } from 'node:fs/promises';
 
 import { createStuffDocumentsChain } from '@langchain/classic/chains/combine_documents';

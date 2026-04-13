@@ -4,7 +4,7 @@ import apify from '@apify/eslint-config/ts.js';
 import globals from 'globals';
 import tsEslint from 'typescript-eslint';
 
-// eslint-disable-next-line import/no-default-export
+// eslint-disable-next-line import-x/no-default-export
 export default [
     { ignores: ['**/dist', '**/test', 'eslint.config.mjs'] },
     ...apify,
@@ -24,7 +24,7 @@ export default [
             '@typescript-eslint': tsEslint.plugin,
         },
         rules: {
-            'import/extensions': 0,
+            'import-x/extensions': 0,
             'no-console': 0,
         },
     },
