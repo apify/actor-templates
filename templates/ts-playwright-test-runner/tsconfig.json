@@ -6,6 +6,7 @@
         "target": "ESNext",
         "outDir": "dist",
         "rootDir": ".",
+        "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
         "noUnusedLocals": false,
         "skipLibCheck": true,
         "lib": ["DOM"]
