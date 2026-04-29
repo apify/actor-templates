@@ -6,6 +6,7 @@
         "target": "ES2022",
         "outDir": "dist",
         "rootDir": "./src",
+        "incremental": false,
         "noUnusedLocals": false,
         "skipLibCheck": true,
         "lib": ["DOM"]

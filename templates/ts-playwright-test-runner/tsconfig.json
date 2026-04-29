@@ -6,6 +6,7 @@
         "target": "ESNext",
         "outDir": "dist",
         "rootDir": ".",
+        "incremental": false,
         "noUnusedLocals": false,
         "skipLibCheck": true,
         "lib": ["DOM"]
