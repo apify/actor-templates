@@ -23,7 +23,7 @@
         "@playwright/test": "1.59.1",
         "@types/uuid": "^11.0.0",
         "apify": "^3.7.0",
-        "uuid": "^13.0.0",
+        "uuid": "^14.0.0",
         "@apify/eslint-config": "^2.0.0",
         "@apify/tsconfig": "^0.1.1",
         "@types/node": "^24.0.0",
