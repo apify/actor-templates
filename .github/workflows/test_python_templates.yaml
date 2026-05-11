@@ -37,9 +37,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install Chrome and Chromedriver
+        # Use pnpm dlx instead of npx — npx is the npm CLI and trips
+        # devEngines.packageManager=pnpm at the repo root.
         run: |
-          npx @puppeteer/browsers install chrome
-          npx @puppeteer/browsers install chromedriver
+          pnpm dlx @puppeteer/browsers install chrome
+          pnpm dlx @puppeteer/browsers install chromedriver
 
       - name: Test Python templates
         run: pnpm run test-python-templates
