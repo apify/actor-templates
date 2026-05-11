@@ -21,16 +21,30 @@ function spawnSync(command, args, options = {}) {
     return _spawnSync(command, args, { ...options, ...windowsOptions });
 }
 
-// Query the latest published `apify` SDK version via npm, but from a tmp
-// directory so npm doesn't read this repo's devEngines.packageManager=pnpm
-// (which would block npm with EBADDEVENGINES). Using npm here — not pnpm — so
-// the version check and the per-template `npm install` below share npm's
-// registry metadata cache; switching to `pnpm view` introduced false
-// negatives when a fresh apify release hit the registry but hadn't yet
-// propagated to npm's CDN edge that `npm install` reads from.
-const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version'], {
-    cwd: os.tmpdir(),
-}).stdout.toString().trim();
+// Find the "latest" apify SDK version using the same `npm install` code path
+// the per-template assertions below use, so the reference value is whatever
+// npm install would currently resolve `apify@latest` to on this runner.
+//
+// We can't compare against `npm view apify version` because npm view and npm
+// install hit different code paths and can disagree right after a release:
+// view fetches the `dist-tags` document fresh, while install resolves through
+// a full metadata fetch that may still be served from a stale CDN edge for a
+// few minutes after a publish. Cross-checking two npm-install results means
+// both sides see the same registry state and the test never flakes for
+// "Expected: 3.7.2 / Received: 3.7.1" during the propagation window.
+//
+// Spawned with cwd = a fresh tmpdir so the repo's devEngines.packageManager=pnpm
+// doesn't block npm with EBADDEVENGINES.
+const versionProbeDir = fs.mkdtempSync(path.join(os.tmpdir(), 'apify-sdk-version-probe'));
+fs.writeFileSync(
+    path.join(versionProbeDir, 'package.json'),
+    JSON.stringify({ name: 'version-probe', private: true, dependencies: { apify: 'latest' } }),
+);
+spawnSync(NPM_COMMAND, ['install', '--no-fund', '--no-audit', '--silent'], { cwd: versionProbeDir });
+const APIFY_SDK_JS_LATEST_VERSION = JSON.parse(
+    fs.readFileSync(path.join(versionProbeDir, 'node_modules', 'apify', 'package.json'), 'utf8'),
+).version;
+fs.rmSync(versionProbeDir, { recursive: true, force: true });
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'])
     .stdout.toString()
