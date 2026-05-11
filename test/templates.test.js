@@ -11,6 +11,7 @@ import { AGENT_AI_TEMPLATE_IDS, NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TES
 const TEMPLATES_DIRECTORY = path.join(import.meta.dirname, '../templates');
 
 const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
+const PNPM_COMMAND = /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm';
 const PYTHON_COMMAND = /^win/.test(process.platform) ? 'python' : 'python3';
 const PYTHON_VENV_COMMAND = /^win/.test(process.platform) ? '.venv\\Scripts\\python.exe' : '.venv/bin/python3';
 const APIFY_COMMAND = /^win/.test(process.platform) ? 'apify.cmd' : 'apify';
@@ -21,7 +22,11 @@ function spawnSync(command, args, options = {}) {
     return _spawnSync(command, args, { ...options, ...windowsOptions });
 }
 
-const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
+// Query the latest published `apify` SDK version via pnpm rather than npm.
+// `npm view` would refuse to run from this repo root because devEngines pins
+// the package manager to pnpm; pnpm v11 has its own native `view` implementation
+// that doesn't shell out and works regardless of devEngines settings.
+const APIFY_SDK_JS_LATEST_VERSION = spawnSync(PNPM_COMMAND, ['view', 'apify', 'version']).stdout.toString().trim();
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'])
     .stdout.toString()
