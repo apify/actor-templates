@@ -1,0 +1,30 @@
+# pnpm-workspace.yaml is a settings file here; the `templates/` subdirectories
+# each have their own package.json but they are NOT pnpm workspaces — they
+# stay npm-driven so Apify Actors created from a template can be `npm install`d
+# the way users expect. Without a `packages:` key pnpm only manages the root.
+
+# Supply-chain protection: require packages to be at least 24h old before pnpm
+# will install them. Mitigates compromised npm packages discovered and yanked
+# within the first day (shai-hulud worm, nx self-replicator, etc.). 1440
+# minutes = 24 hours. Internal @apify/* and @crawlee/* are excluded because
+# we publish them ourselves.
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - "@apify/*"
+  - "@crawlee/*"
+  - "apify-client"
+  - "apify"
+  - "crawlee"
+  - "got-scraping"
+
+# Lets unknown build-requesting deps fall back to a warning instead of erroring
+# out, so a new build-requesting dev dep doesn't break the install before it
+# can be explicitly listed under allowBuilds.
+strictDepBuilds: false
+
+# Postinstall scripts that we explicitly allow to run. `puppeteer` downloads a
+# Chrome binary; `unrs-resolver` builds native bindings for the eslint resolver
+# used by @apify/eslint-config.
+allowBuilds:
+  puppeteer: true
+  unrs-resolver: true

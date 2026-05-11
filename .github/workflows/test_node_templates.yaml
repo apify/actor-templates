@@ -9,7 +9,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-24.04, windows-latest]
-        node-version: [20, 22, 24]
+        # pnpm v11 requires Node >= 22.13, and Node 20 is EOL since 2026-04, so the
+        # test harness only runs on Node 22 and 24. Users can still author templates
+        # targeting older Node versions in their own Actors.
+        node-version: [22, 24]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     timeout-minutes: 120
@@ -22,24 +25,18 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
-      - name: Cache node_modules
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}
+      - name: Install pnpm and dependencies
+        uses: apify/workflows/pnpm-install@v0.41.1
 
-      - name: Install dependencies
-        run: |
-          npm install
-          npm install -g apify-cli
-          ./node_modules/.bin/playwright install chromium --with-deps
+      - name: Install apify CLI globally
+        run: npm install -g apify-cli
+
+      - name: Install playwright browsers
+        run: pnpm exec playwright install chromium --with-deps
 
       - name: Test Node.js templates
-        run: npm run test-node-templates
+        run: pnpm run test-node-templates
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
