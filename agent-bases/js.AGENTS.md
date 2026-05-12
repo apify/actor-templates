@@ -130,9 +130,18 @@ apify run                              # Run Actor locally
 apify login                            # Authenticate account
 apify push                             # Deploy to Apify platform
 
+# Discover existing Actors (search Apify Store for community Actors)
+apify actors search "<query>" --user-agent <your-agent-name>
+
 # Help
 apify help                             # List all commands
 ```
+
+Note: If no dedicated Actor exists for your target, search Apify Store for community options with `apify actors search "<query>" --user-agent <your-agent-name>` before building from scratch.
+
+## Apify Platform Environment
+
+When the Actor runs on the Apify platform, the API token is automatically available via the `APIFY_TOKEN` environment variable (note: the variable is `APIFY_TOKEN`, not `APIFY_API_TOKEN`). The Apify SDK reads it automatically, so you do not need to pass it explicitly. Locally, run `apify login` once and the SDK will use your stored credentials.
 
 ## Safety and Permissions
 
@@ -599,14 +608,39 @@ Include these sections in order:
 - Embed YouTube video URLs on their own line (Apify Console auto-renders them)
 - Use HTML for image sizing if needed; CSS is not supported
 
-## Apify MCP Tools
+## MCP Tools
 
-If MCP server is configured, use these tools for documentation:
+### Apify MCP
+
+If the Apify MCP server is configured, use these tools for documentation:
 
 - `search-apify-docs` - Search documentation
 - `fetch-apify-docs` - Get full doc pages
 
 Otherwise, reference: `@https://mcp.apify.com/`
+
+### Playwright MCP (debugging)
+
+The Playwright MCP server is a useful tool for debugging Actors that interact with the web - it lets the agent drive a real browser to inspect pages, capture selectors, and reproduce issues.
+
+Install with the Claude Code CLI:
+
+```bash
+claude mcp add playwright npx @playwright/mcp@latest
+```
+
+Or add it manually to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}
+```
 
 ## Resources
 
