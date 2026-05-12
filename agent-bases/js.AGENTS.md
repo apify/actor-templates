@@ -123,21 +123,44 @@ Key points:
 ## Commands
 
 ```bash
-# Local development
-apify run                              # Run Actor locally
+# Bootstrap & local development
+apify create [name]                    # Create new Actor project from a template
+apify init                             # Initialize Actor in current directory
+apify run                              # Run Actor locally with simulated platform env
+apify run --purge                      # Run after clearing previous local storage
+apify validate-schema                  # Validate .actor/input_schema.json
 
-# Authentication & deployment
-apify login                            # Authenticate account
-apify push                             # Deploy to Apify platform
+# Authentication & account
+apify login                            # Authenticate account (token stored in ~/.apify)
+apify logout                           # Remove stored credentials
+apify info                             # Print currently authenticated account info
 
-# Discover existing Actors (search Apify Store for community Actors)
+# Deployment & remote execution
+apify push                             # Deploy Actor to platform per .actor/actor.json
+apify pull <actor>                     # Download Actor code from the platform
+apify call <actor>                     # Execute Actor remotely on the platform
+apify actors build <actor>             # Create a new build of an Actor
+apify runs ls                          # List recent runs
+
+# Discovery (search Apify Store for community Actors)
 apify actors search "<query>" --user-agent <your-agent-name>
+apify actors info <actor>              # Details about a specific Actor
+
+# Secrets (referenced from actor.json via "@mySecret")
+apify secrets add <name> <value>       # Store a secret locally; uploaded on push
+apify secrets ls                       # List stored secret keys
+
+# Direct API access
+apify api <endpoint>                   # Authenticated HTTP request to Apify API
 
 # Help
 apify help                             # List all commands
+apify <command> --help                 # Detailed help for a specific command
 ```
 
 Note: If no dedicated Actor exists for your target, search Apify Store for community options with `apify actors search "<query>" --user-agent <your-agent-name>` before building from scratch.
+
+Tip: Inside a running Actor, prefer the SDK (`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`) over the equivalent `apify actor` runtime subcommands.
 
 ## Apify Platform Environment
 
