@@ -146,18 +146,18 @@ apify runs ls                          # List recent runs
 
 # Discovery (search Apify Store for community Actors)
 apify actors search "<query>" --user-agent <your-agent-name>
-apify actors info <actor>              # Details about a specific Actor
+apify actors info <actor>              # Get details about a specific Actor
 
 # Secrets (referenced from actor.json via "@mySecret")
 apify secrets add <name> <value>       # Store a secret locally; uploaded on push
 apify secrets ls                       # List stored secret keys
 
 # Direct API access
-apify api <endpoint>                   # Authenticated HTTP request to Apify API
+apify api <endpoint>                   # Send an authenticated HTTP request to Apify API
 
 # Help
 apify help                             # List all commands
-apify <command> --help                 # Detailed help for a specific command
+apify <command> --help                 # Get help for a specific command
 ```
 
 Note: If no dedicated Actor exists for your target, search Apify Store for community options with `apify actors search "<query>" --user-agent <your-agent-name>` before building from scratch.
