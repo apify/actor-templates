@@ -123,16 +123,48 @@ Key points:
 ## Commands
 
 ```bash
-# Local development
-apify run                              # Run Actor locally
+# Bootstrap & local development
+apify create [name]                    # Create new Actor project from a template
+apify init                             # Initialize Actor in current directory
+apify run                              # Run Actor locally with simulated platform env
+apify run --purge                      # Run after clearing previous local storage
+apify validate-schema                  # Validate .actor/input_schema.json
 
-# Authentication & deployment
-apify login                            # Authenticate account
-apify push                             # Deploy to Apify platform
+# Authentication & account
+apify login                            # Authenticate account (token stored in ~/.apify)
+apify logout                           # Remove stored credentials
+apify info                             # Print currently authenticated account info
+
+# Deployment & remote execution
+apify push                             # Deploy Actor to platform per .actor/actor.json
+apify pull <actor>                     # Download Actor code from the platform
+apify call <actor>                     # Execute Actor remotely on the platform
+apify actors build <actor>             # Create a new build of an Actor
+apify runs ls                          # List recent runs
+
+# Discovery (search Apify Store for community Actors)
+apify actors search "<query>" --user-agent <your-agent-name>
+apify actors info <actor>              # Details about a specific Actor
+
+# Secrets (referenced from actor.json via "@mySecret")
+apify secrets add <name> <value>       # Store a secret locally; uploaded on push
+apify secrets ls                       # List stored secret keys
+
+# Direct API access
+apify api <endpoint>                   # Authenticated HTTP request to Apify API
 
 # Help
 apify help                             # List all commands
+apify <command> --help                 # Detailed help for a specific command
 ```
+
+Note: If no dedicated Actor exists for your target, search Apify Store for community options with `apify actors search "<query>" --user-agent <your-agent-name>` before building from scratch.
+
+Tip: Inside a running Actor, prefer the SDK (`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`) over the equivalent `apify actor` runtime subcommands.
+
+## Apify Platform Environment
+
+When the Actor runs on the Apify platform, the API token is automatically available via the `APIFY_TOKEN` environment variable (note: the variable is `APIFY_TOKEN`, not `APIFY_API_TOKEN`). The Apify SDK reads it automatically, so you do not need to pass it explicitly. Locally, run `apify login` once and the SDK will use your stored credentials.
 
 ## Safety and Permissions
 
@@ -599,14 +631,39 @@ Include these sections in order:
 - Embed YouTube video URLs on their own line (Apify Console auto-renders them)
 - Use HTML for image sizing if needed; CSS is not supported
 
-## Apify MCP Tools
+## MCP Tools
 
-If MCP server is configured, use these tools for documentation:
+### Apify MCP
+
+If the Apify MCP server is configured, use these tools for documentation:
 
 - `search-apify-docs` - Search documentation
 - `fetch-apify-docs` - Get full doc pages
 
 Otherwise, reference: `@https://mcp.apify.com/`
+
+### Playwright MCP (debugging)
+
+The Playwright MCP server is a useful tool for debugging Actors that interact with the web - it lets the agent drive a real browser to inspect pages, capture selectors, and reproduce issues.
+
+Install with the Claude Code CLI:
+
+```bash
+claude mcp add playwright npx @playwright/mcp@latest
+```
+
+Or add it manually to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}
+```
 
 ## Resources
 
