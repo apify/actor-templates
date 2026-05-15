@@ -659,12 +659,12 @@ Or add it manually to your MCP config:
 
 ```json
 {
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": ["@playwright/mcp@latest"]
+    "mcpServers": {
+        "playwright": {
+            "command": "npx",
+            "args": ["@playwright/mcp@latest"]
+        }
     }
-  }
 }
 ```
 

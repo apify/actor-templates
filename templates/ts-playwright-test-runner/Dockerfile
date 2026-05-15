@@ -1,4 +1,4 @@
-FROM apify/actor-node-playwright:24-1.59.1
+FROM apify/actor-node-playwright:24-1.60.0
 
 COPY --chown=myuser:myuser package*.json Dockerfile ./
 
