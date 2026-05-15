@@ -55,11 +55,10 @@ jobs:
           MODULE_VERSION: ${{ env.MODULE_VERSION }}
         run: node ./scripts/actions/update-templates.mts
 
-      - name: Stage changes
+      - name: Detect changes
         id: stage
         run: |
-          git add -A
-          if git diff --cached --quiet; then
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
             echo "has-changes=false" >> "$GITHUB_OUTPUT"
           else
             echo "has-changes=true" >> "$GITHUB_OUTPUT"
@@ -89,9 +88,9 @@ jobs:
       - name: Commit and push changes
         id: commit-and-push
         if: steps.stage.outputs.has-changes == 'true'
-        uses: apify/workflows/commit@v0.44.0
+        uses: apify/actions/signed-commit@v1.0.0
         with:
-          commit-message: "chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}"
+          message: "chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}"
           github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
           branch: ${{ steps.branch-name.outputs.BRANCH_NAME }}
           create-branch: 'true'
@@ -99,7 +98,7 @@ jobs:
       - name: Create or update Pull Request
         env:
           GH_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
-        if: steps.stage.outputs.has-changes == 'true'
+        if: steps.commit-and-push.outputs.committed == 'true'
         run: |
           BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
 

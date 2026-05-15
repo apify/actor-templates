@@ -28,19 +28,9 @@ jobs:
       - name: Build template archives
         run: npm run build
 
-      - name: Stage the updated template archives
-        id: stage
-        run: |
-          git add dist/* templates/*
-          if git diff --cached --quiet; then
-            echo "has-changes=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "has-changes=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Commit the updated template archives
-        if: steps.stage.outputs.has-changes == 'true'
-        uses: apify/workflows/commit@v0.44.0
+        uses: apify/actions/signed-commit@v1.0.0
         with:
-          commit-message: 'chore: Update template archives [skip ci]'
+          message: 'chore: Update template archives [skip ci]'
+          add: 'dist/* templates/*'
           github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
