@@ -10,12 +10,12 @@
 # we publish them ourselves.
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - "@apify/*"
-  - "@crawlee/*"
-  - "apify-client"
-  - "apify"
-  - "crawlee"
-  - "got-scraping"
+    - '@apify/*'
+    - '@crawlee/*'
+    - 'apify-client'
+    - 'apify'
+    - 'crawlee'
+    - 'got-scraping'
 
 # Lets unknown build-requesting deps fall back to a warning instead of erroring
 # out, so a new build-requesting dev dep doesn't break the install before it
@@ -26,5 +26,5 @@ strictDepBuilds: false
 # Chrome binary; `unrs-resolver` builds native bindings for the eslint resolver
 # used by @apify/eslint-config.
 allowBuilds:
-  puppeteer: true
-  unrs-resolver: true
+    puppeteer: true
+    unrs-resolver: true

@@ -39,7 +39,9 @@ function spawnSync(command, args, options = {}) {
 // npm with EBADDEVENGINES.
 const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 'version'], {
     cwd: os.tmpdir(),
-}).stdout.toString().trim();
+})
+    .stdout.toString()
+    .trim();
 
 const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'])
     .stdout.toString()
