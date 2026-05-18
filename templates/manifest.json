@@ -548,7 +548,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.ts", "src/runCodegen.ts", "src/transform.ts"],
-            "useCases": ["AUTOMATION", "INTEGRATION"]
+            "useCases": ["AUTOMATION"]
         },
         {
             "id": "ts-empty",
@@ -766,7 +766,7 @@
             },
             "showcaseFiles": ["main.sh"],
             "skipTests": true,
-            "useCases": ["STARTER", "INTEGRATION", "AUTOMATION"]
+            "useCases": ["STARTER", "INTEGRATION"]
         }
     ]
 }
