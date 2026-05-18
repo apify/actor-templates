@@ -88,7 +88,7 @@ jobs:
       - name: Commit and push changes
         id: commit-and-push
         if: steps.stage.outputs.has-changes == 'true'
-        uses: apify/actions/signed-commit@v1.0.0
+        uses: apify/actions/signed-commit@v1.1.2
         with:
           message: 'chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}'
           github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}

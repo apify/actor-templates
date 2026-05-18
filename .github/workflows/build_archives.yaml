@@ -29,7 +29,7 @@ jobs:
         run: npm run build
 
       - name: Commit the updated template archives
-        uses: apify/actions/signed-commit@v1.0.0
+        uses: apify/actions/signed-commit@v1.1.2
         with:
           message: 'chore: Update template archives [skip ci]'
           add: 'dist/* templates/*'
