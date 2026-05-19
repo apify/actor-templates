@@ -278,7 +278,7 @@
                 "timeoutSecs": 600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/agent.py", "my_actor/tools.py", "my_actor/__main__.py"],
-            "useCases": ["AI", "WEB_SCRAPING"]
+            "useCases": ["AI"]
         },
         {
             "id": "python-pydanticai",
@@ -467,7 +467,7 @@
             },
             "skipOptionalDeps": true,
             "showcaseFiles": ["src/main.js", "src/routes.js"],
-            "useCases": ["STARTER", "WEB_SCRAPING"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "ts-start",
@@ -651,7 +651,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.js", "src/vector_index_cache.js"],
-            "useCases": ["AI", "WEB_SCRAPING"]
+            "useCases": ["AI"]
         },
         {
             "id": "js-langgraph-agent",
