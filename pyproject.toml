@@ -1,15 +1,15 @@
 [project]
 name = "actor-templates"
 version = "0.0.1"
-requires-python = ">= 3.10"
+requires-python = ">= 3.11"
 dependencies = [
     "apify[scrapy] >= 3.0.0, < 4.0.0",
     "apify-client",
-    # "arxiv-mcp-server >= 0.3.1, < 1.0.0",  # Requires Python >= 3.11, incompatible with requires-python >= 3.10
+    "arxiv-mcp-server >= 0.3.1, < 1.0.0",
     "beautifulsoup4[lxml] >= 4.0.0, < 5.0.0",
     "camoufox[geoip] >= 0.4.5, < 1.0.0",
     "crawlee[all]",
-    # "crewai[tools] >= 0.11.0, < 1.0.0",  # Pulls onnxruntime via chromadb, which requires Python >= 3.11
+    "crewai[tools] >= 0.11.0, < 1.0.0",
     "fastapi >= 0.135.0, < 1.0.0",
     "fastmcp >= 3.0.0, < 4.0.0",
     "httpx >= 0.28.0, < 1.0.0",
@@ -94,7 +94,7 @@ asyncio_mode = "auto"
 timeout = 1200
 
 [tool.ty.environment]
-python-version = "3.10"
+python-version = "3.11"
 
 [tool.ty.src]
 include = ["templates"]
