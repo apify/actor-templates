@@ -43,26 +43,6 @@ jobs:
           token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Check and manage branch
-        run: |
-          # Fetch all branches
-          git fetch origin
-
-          # Check if branch exists on remote
-          if git ls-remote --heads origin "${{ steps.branch-name.outputs.BRANCH_NAME }}" | grep -q "${{ steps.branch-name.outputs.BRANCH_NAME }}"; then
-            echo "Branch ${{ steps.branch-name.outputs.BRANCH_NAME }} exists, checking it out and resetting to origin/master"
-            git checkout "${{ steps.branch-name.outputs.BRANCH_NAME }}"
-            git reset --hard origin/master
-          else
-            echo "Branch ${{ steps.branch-name.outputs.BRANCH_NAME }} does not exist, creating it"
-            git checkout -b "${{ steps.branch-name.outputs.BRANCH_NAME }}"
-          fi
-
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
@@ -78,30 +58,45 @@ jobs:
           MODULE_VERSION: ${{ env.MODULE_VERSION }}
         run: node ./scripts/actions/update-templates.mts
 
-      - name: Commit and push changes
-        id: commit-and-push
+      - name: Detect changes
+        id: stage
+        run: |
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "has-changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Reset existing branch
+        if: steps.stage.outputs.has-changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
         run: |
           BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
 
-          # Check if there are any changes
-          if git diff --quiet && git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git add -A
-            git commit -m "chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}"
-            echo "committed=true" >> $GITHUB_OUTPUT
-
-            # Disable auto-merge on any existing PR before force-pushing,
-            # so the old commit can't be merged while we push the new one.
-            PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
-            if [ -n "$PR_NUMBER" ]; then
-              gh pr merge "$PR_NUMBER" --disable-auto || true
-            fi
-
-            git push --force origin "$BRANCH"
+          # If a PR already exists for this branch, disable auto-merge before
+          # we recreate the branch so the old commit can't be merged.
+          PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr merge "$PR_NUMBER" --disable-auto || true
           fi
+
+          # Delete the remote branch if it exists. The commit action below
+          # will recreate it from the current HEAD (which is origin/master).
+          if git ls-remote --heads origin "$BRANCH" | grep -q "$BRANCH"; then
+            echo "Deleting existing remote branch $BRANCH"
+            git push origin --delete "$BRANCH"
+          fi
+
+      - name: Commit and push changes
+        id: commit-and-push
+        if: steps.stage.outputs.has-changes == 'true'
+        uses: apify/actions/signed-commit@v1.1.2
+        with:
+          message: 'chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}'
+          github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+          branch: ${{ steps.branch-name.outputs.BRANCH_NAME }}
+          create-branch: 'true'
 
       - name: Create or update Pull Request
         env:
