@@ -12,7 +12,7 @@
         "automergeType": "branch"
     },
     "constraints": {
-        "npm": "^10.0.0"
+        "pnpm": "^11.0.0"
     },
     "packageRules": [
         {
@@ -28,6 +28,11 @@
             "matchFileNames": ["templates/ts-beeai-agent/**"],
             "matchPackageNames": ["beeai-framework", "@ai-sdk/openai", "@langchain/openai", "@langchain/community"],
             "enabled": false
+        },
+        {
+            "description": "Mirror pnpm-workspace.yaml minimumReleaseAgeExclude — we publish these ourselves",
+            "matchPackageNames": ["apify", "apify-client", "crawlee", "got-scraping", "@apify/**", "@crawlee/**"],
+            "minimumReleaseAge": "0 days"
         }
     ],
     "schedule": ["every weekday"],

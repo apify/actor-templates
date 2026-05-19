@@ -18,24 +18,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version-file: .nvmrc
 
-      - name: Cache node_modules
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}
+      - name: Install pnpm and dependencies
+        uses: apify/workflows/pnpm-install@v0.41.1
 
-      - name: Install dependencies
-        run: |
-          npm install
-          npm install -g apify-cli
+      - name: Install apify CLI globally
+        run: npm install -g apify-cli
 
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
@@ -43,7 +35,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Test LLM AI Python templates
-        run: npm run test-llm-ai-python-templates
+        run: pnpm run test-llm-ai-python-templates
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}

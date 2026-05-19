@@ -21,12 +21,12 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install pnpm and dependencies
+        uses: apify/workflows/pnpm-install@v0.41.1
 
       # TODO: Also replace links in manifest.json
       - name: Build template archives
-        run: npm run build
+        run: pnpm run build
 
       - name: Commit the updated template archives
         uses: apify/actions/signed-commit@v1.1.2
