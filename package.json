@@ -12,12 +12,12 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-        "test-without-templates": "npm run test -- --testPathIgnorePatterns=templates.test.js",
-        "test-templates": "npm run test -- --testPathPatterns=templates.test.js",
-        "test-python-templates": "npm run test-templates -- --testNamePattern=python-templates",
-        "test-node-templates": "npm run test-templates -- --testNamePattern=node-js-templates",
-        "test-llm-ai-python-templates": "npm run test-templates -- --testNamePattern=python-llm-ai-templates",
-        "test-llm-ai-node-templates": "npm run test-templates -- --testNamePattern=node-js-llm-ai-templates",
+        "test-without-templates": "pnpm run test --testPathIgnorePatterns=templates.test.js",
+        "test-templates": "pnpm run test --testPathPatterns=templates.test.js",
+        "test-python-templates": "pnpm run test-templates --testNamePattern=python-templates",
+        "test-node-templates": "pnpm run test-templates --testNamePattern=node-js-templates",
+        "test-llm-ai-python-templates": "pnpm run test-templates --testNamePattern=python-llm-ai-templates",
+        "test-llm-ai-node-templates": "pnpm run test-templates --testNamePattern=node-js-llm-ai-templates",
         "build": "node ./scripts/copy-agents-md-to-templates.mts && node ./src/build.js"
     },
     "repository": {
@@ -54,5 +54,13 @@
         "semver": "^7.7.2",
         "typescript": "^6.0.0",
         "typescript-eslint": "^8.58.0"
+    },
+    "packageManager": "pnpm@11.0.9",
+    "devEngines": {
+        "packageManager": {
+            "name": "pnpm",
+            "version": "11.0.9",
+            "onFail": "error"
+        }
     }
 }

@@ -41,34 +41,21 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
-          cache: 'npm'
 
-      - name: Get Node.js version
-        id: get-node-version
-        run: echo "version=$(node --version | tr -d 'v' | cut -d '.' -f 1)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache node_modules
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ steps.get-node-version.outputs.version }}-
-
-      - name: Install dependencies
-        run: npm install
+      - name: Install pnpm and dependencies
+        uses: apify/workflows/pnpm-install@v0.41.1
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Check formatting
-        run: npm run format:check
+        run: pnpm run format:check
 
       - name: Test building templates
-        run: npm run build
+        run: pnpm run build
 
       - name: Test template manifest
-        run: npm run test-without-templates
+        run: pnpm run test-without-templates
 
   test-node-templates:
     name: Test Node.js templates
