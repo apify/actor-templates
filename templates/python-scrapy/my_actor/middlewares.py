@@ -18,7 +18,7 @@ from typing import TYPE_CHECKING
 from scrapy import Request, Spider, signals
 
 if TYPE_CHECKING:
-    from collections.abc import Generator, Iterable
+    from collections.abc import AsyncGenerator, AsyncIterable, Iterable
 
     from scrapy.crawler import Crawler
     from scrapy.http.response import Response
@@ -43,17 +43,17 @@ class TitleSpiderMiddleware:
         # Should return None or raise an exception.
         return None
 
-    def process_spider_output(
+    async def process_spider_output(
         self,
         response: Response,
-        result: Iterable,
+        result: AsyncIterable,
         spider: Spider,
-    ) -> Generator[Iterable[Request] | None, None, None]:
+    ) -> AsyncGenerator[Iterable[Request] | None, None]:
         # Called with the results returned from the Spider, after
         # it has processed the response.
 
         # Must return an iterable of Request, or item objects.
-        for i in result:
+        async for i in result:
             yield i
 
     def process_spider_exception(
