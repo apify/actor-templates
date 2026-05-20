@@ -1,6 +1,14 @@
 {
     "consoleReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/console_readme_suffix.md",
     "localReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md",
+    "_useCaseDescriptions": {
+        "_note": "Reference for what each value in a template's `useCases` array represents. Templates may carry multiple use cases; pick the tag(s) that reflect what the template actually IS, not what it could become.",
+        "STARTER": "Entry-level scaffold for a user's first Actor — language quickstarts, empty projects, standby starters, generic wrappers (e.g. cli-start).",
+        "WEB_SCRAPING": "Extracting structured data from websites — HTTP scrapers, browser scrapers, crawlers. The template's primary output is scraped data.",
+        "INTEGRATION": "Bridges Apify with external systems — Standby mode (serves HTTP), MCP servers (callable by AI clients), or templates that call out to external APIs, services, or CLIs.",
+        "AUTOMATION": "Performs actions rather than extracting data — test runners, browser automation (Playwright/Selenium/Cypress used for interaction), CLI orchestration.",
+        "AI": "LLM-powered agents, AI tool servers (MCP), and AI framework integration demos (LangChain, CrewAI, etc.)."
+    },
     "templates": [
         {
             "id": "python-crawlee-beautifulsoup",
@@ -8,7 +16,7 @@
             "label": "Crawlee + BeautifulSoup",
             "category": "python",
             "technologies": ["crawlee", "beautifulsoup"],
-            "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a given start URLs, and store results to Apify dataset.",
+            "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a URL and store results to your Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -27,7 +35,7 @@
             "name": "python-empty",
             "label": "Empty Python project",
             "category": "python",
-            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
+            "description": "Start with Apify SDK already set up, then build any features you need.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -35,7 +43,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["WEB_SCRAPING"]
+            "useCases": ["STARTER"]
         },
         {
             "id": "python-start",
@@ -93,7 +101,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["WEB_SCRAPING"]
+            "useCases": ["WEB_SCRAPING", "AUTOMATION"]
         },
         {
             "id": "python-selenium",
@@ -112,14 +120,14 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["WEB_SCRAPING"]
+            "useCases": ["WEB_SCRAPING", "AUTOMATION"]
         },
         {
             "id": "python-standby",
             "name": "python-standby",
             "label": "Standby Python project",
             "category": "python",
-            "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
+            "description": "Start with a working Actor in Standby mode that stays ready in the background, then build any features you need.",
             "skipTests": true,
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-standby.zip?raw=true",
             "defaultRunOptions": {
@@ -128,7 +136,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["STARTER"]
+            "useCases": ["STARTER", "INTEGRATION"]
         },
         {
             "id": "python-scrapy",
@@ -163,7 +171,7 @@
             "label": "Crawlee + Parsel",
             "category": "python",
             "technologies": ["crawlee", "parsel"],
-            "description": "Crawl and scrape websites using Crawlee and Parsel. Start from a given start URLs, and store results to Apify dataset.",
+            "description": "Crawl and scrape websites using Crawlee and Parsel. Start from a URL and store results to your Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -183,7 +191,7 @@
             "label": "Crawlee + Playwright + Chrome",
             "category": "python",
             "technologies": ["crawlee", "playwright"],
-            "description": "Crawl and scrape websites using Crawlee and Playwright. Start from a given start URLs, and store results to Apify dataset.",
+            "description": "Crawl and scrape websites using Crawlee and Playwright. Start from a URL and store results to your Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -203,7 +211,7 @@
             "label": "Crawlee + Playwright + Camoufox",
             "category": "python",
             "technologies": ["crawlee", "playwright", "camoufox"],
-            "description": "Crawl and scrape websites using Crawlee and Playwright with Camoufox. Start from a given start URLs, and store results to Apify dataset.",
+            "description": "Crawl and scrape websites using Crawlee and Playwright with Camoufox. Start from a URL and store results to your Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -294,7 +302,7 @@
             "label": "Smolagents agent",
             "category": "python",
             "technologies": ["smolagents"],
-            "description": "An AI news aggregator that fetches and summarizes the latest news based on user-defined interests using DuckDuckGo search and OpenAI models written in Python Smolagents.",
+            "description": "Create an AI news aggregator that fetches and summarizes the latest news based on your interests, using DuckDuckGo search and OpenAI models with Python Smolagents.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -327,7 +335,7 @@
                 "my_actor/server.py",
                 "my_actor/__main__.py"
             ],
-            "useCases": ["AI"]
+            "useCases": ["AI", "INTEGRATION"]
         },
         {
             "id": "python-mcp-empty",
@@ -344,7 +352,7 @@
                 "timeoutSecs": 60
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["AI"]
+            "useCases": ["AI", "INTEGRATION"]
         },
         {
             "id": "js-crawlee-cheerio",
@@ -540,7 +548,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.ts", "src/runCodegen.ts", "src/transform.ts"],
-            "useCases": ["WEB_SCRAPING"]
+            "useCases": ["AUTOMATION"]
         },
         {
             "id": "ts-empty",
@@ -556,7 +564,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.ts"],
-            "useCases": ["WEB_SCRAPING"]
+            "useCases": ["STARTER"]
         },
         {
             "id": "ts-standby",
@@ -573,7 +581,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.ts"],
-            "useCases": ["STARTER"]
+            "useCases": ["STARTER", "INTEGRATION"]
         },
         {
             "id": "js-cypress",
@@ -610,7 +618,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.js"],
-            "useCases": ["WEB_SCRAPING"]
+            "useCases": ["STARTER"]
         },
         {
             "id": "js-standby",
@@ -627,7 +635,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.js"],
-            "useCases": ["STARTER"]
+            "useCases": ["STARTER", "INTEGRATION"]
         },
         {
             "id": "js-langchain",
@@ -635,7 +643,7 @@
             "label": "🦜️🔗 LangChain",
             "category": "javascript",
             "technologies": ["nodejs", "langchain"],
-            "description": "Example of how to use LangChain.js with Apify to crawl the web data, vectorize them, and prompt the OpenAI model.",
+            "description": "Example of how to use LangChain.js with Apify to crawl, vectorize, and query web data with the OpenAI model.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langchain.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -724,7 +732,7 @@
             },
             "skipTests": true,
             "showcaseFiles": ["src/main.ts", "src/billing.ts"],
-            "useCases": ["AI"]
+            "useCases": ["AI", "INTEGRATION"]
         },
         {
             "id": "ts-mcp-empty",
@@ -741,7 +749,7 @@
             },
             "skipTests": true,
             "showcaseFiles": ["src/main.ts"],
-            "useCases": ["AI"]
+            "useCases": ["AI", "INTEGRATION"]
         },
         {
             "id": "cli-start",
@@ -749,7 +757,7 @@
             "label": "CLI-based Actor starter",
             "category": "javascript",
             "technologies": ["jq"],
-            "description": "Actorize a CLI utility with the Apify Actor CLI",
+            "description": "Turn any CLI utility into an Apify Actor using the Apify CLI.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/cli-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -757,7 +765,8 @@
                 "timeoutSecs": 600
             },
             "showcaseFiles": ["main.sh"],
-            "skipTests": true
+            "skipTests": true,
+            "useCases": ["STARTER", "INTEGRATION"]
         }
     ]
 }
