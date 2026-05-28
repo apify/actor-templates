@@ -8,6 +8,12 @@ import { StructuredOutputGenerator } from './structured_response_generator.js';
 import { CalculatorSumTool } from './tools/calculator.js';
 import { InstagramScrapeTool } from './tools/instagram.js';
 
+// Apify-hosted OpenRouter proxy (https://apify.com/apify/openrouter): an
+// OpenAI-compatible endpoint billed against the user's Apify account, so no
+// provider API key is needed. The proxy authenticates via the `Authorization`
+// header carrying the run's APIFY_TOKEN.
+const OPENROUTER_BASE_URL = 'https://openrouter.apify.actor/api/v1';
+
 // This is an ESM project, and as such, it requires you to specify extensions in your relative imports.
 // Read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 // Note that we need to use `.js` even when inside TS files
@@ -46,17 +52,12 @@ if (!query) {
  */
 // Create an agent that can use tools.
 // See https://framework.beeai.dev/modules/agents
-//
-// The LLM is routed through the Apify-hosted OpenRouter proxy
-// (https://apify.com/apify/openrouter): an OpenAI-compatible endpoint billed
-// against the user's Apify account, so no provider API key is needed. The
-// proxy authenticates via the `Authorization` header, not the `apiKey` field.
 log.debug(`Using model: ${modelName}`);
 const llm = new OpenAIChatModel(
     modelName,
     {},
     {
-        baseURL: 'https://openrouter.apify.actor/api/v1',
+        baseURL: OPENROUTER_BASE_URL,
         apiKey: 'apify-openrouter-proxy', // unused by the proxy; OpenAI SDK rejects an empty string
         headers: { Authorization: `Bearer ${process.env.APIFY_TOKEN}` },
     },
