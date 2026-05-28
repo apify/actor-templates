@@ -6,7 +6,13 @@ Start a new [AI agent](https://blog.apify.com/what-are-ai-agents/) based project
 
 ## How it works
 
-Insert your own code to `async with Actor:` block. You can use the [Apify SDK](https://docs.apify.com/sdk/python/) with any other Python library. Add or modify the agent and tools in the [agents.py](src/agents.py) file.
+Insert your own code to `async with Actor:` block. You can use the [Apify SDK](https://docs.apify.com/sdk/python/) with any other Python library. Add or modify the agent and tools in [`my_actor/agents.py`](my_actor/agents.py).
+
+## LLM provider
+
+The agent talks to its LLM through the [Apify OpenRouter proxy](https://apify.com/apify/openrouter) — an OpenAI-compatible endpoint at `https://openrouter.apify.actor/api/v1` that fronts the full [OpenRouter](https://openrouter.ai) model catalog. Token usage is billed against the user's Apify account (pay-per-event), so **no `OPENAI_API_KEY` or any other provider API key is required**. The Actor authenticates with the proxy using the `APIFY_TOKEN` that the platform injects into every run automatically.
+
+If you'd rather call OpenAI / Anthropic / etc. directly with your own key, swap the `OpenAIProvider` configuration in `my_actor/agents.py` — see the [PydanticAI OpenAI docs](https://ai.pydantic.dev/models/openai/).
 
 ## Getting started
 
@@ -69,8 +75,9 @@ This approach allows you to programmatically charge users directly from your Act
 
 To set up the PPE model for this Actor:
 
-- **Configure the OpenAI API key environment variable**: provide your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
 - **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Monetization settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
+
+No provider API key (e.g. `OPENAI_API_KEY`) needs to be configured — LLM costs are billed through the Apify OpenRouter proxy to the user running the Actor.
 
 ## Resources
 
