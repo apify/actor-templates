@@ -1,6 +1,4 @@
-import { ChatOpenAI } from '@langchain/openai';
 import { Actor, log } from 'apify';
-import { LangChainChatModel } from 'beeai-framework/adapters/langchain/backend/chat';
 import { OpenAIChatModel } from 'beeai-framework/adapters/openai/backend/chat';
 import { ReActAgent } from 'beeai-framework/agents/react/agent';
 import { UnconstrainedMemory } from 'beeai-framework/memory/unconstrainedMemory';
@@ -47,15 +45,22 @@ if (!query) {
  * Actor code
  */
 // Create an agent that can use tools.
-// See https://i-am-bee.github.io/beeai-framework/#/agents?id=react-agent
-// To use PPE, the LangChain adapter must be used
-// otherwise, the token usage is not tracked.
+// See https://framework.beeai.dev/modules/agents
+//
+// The LLM is routed through the Apify-hosted OpenRouter proxy
+// (https://apify.com/apify/openrouter): an OpenAI-compatible endpoint billed
+// against the user's Apify account, so no provider API key is needed. The
+// proxy authenticates via the `Authorization` header, not the `apiKey` field.
 log.debug(`Using model: ${modelName}`);
-const llm = new LangChainChatModel(new ChatOpenAI({ model: modelName }));
-// The LangChain adapter does not work with the structured output generation
-// for some reason.
-// Create a separate LLM for structured output generation.
-const llmStructured = new OpenAIChatModel(modelName);
+const llm = new OpenAIChatModel(
+    modelName,
+    {},
+    {
+        baseURL: 'https://openrouter.apify.actor/api/v1',
+        apiKey: 'apify-openrouter-proxy', // unused by the proxy; OpenAI SDK rejects an empty string
+        headers: { Authorization: `Bearer ${process.env.APIFY_TOKEN}` },
+    },
+);
 const agent = new ReActAgent({
     llm,
     memory: new UnconstrainedMemory(),
@@ -64,7 +69,7 @@ const agent = new ReActAgent({
 
 // Store tool messages for later structured output generation.
 // This can be removed if you don't need structured output.
-const structuredOutputGenerator = new StructuredOutputGenerator(llmStructured);
+const structuredOutputGenerator = new StructuredOutputGenerator(llm);
 
 // Prompt the agent with the query.
 // Debug log agent status updates, e.g., thoughts, tool calls, etc.

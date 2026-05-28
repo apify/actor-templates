@@ -8,9 +8,15 @@ A template for [BeeAI agent](https://beeai.dev/) projects in TypeScript for buil
 
 A [ReAct agent](https://react-lm.github.io/) is employed, equipped with tools to respond to user queries. The agent processes a user query, decides on the tools to use, and in what sequence, to achieve the desired outcome. Here, the agent leverages an Instagram Scraper to fetch posts from a profile and a calculator tool to compute sums, such as totaling likes or comments. The agent produces textual and structured output, which is saved to a dataset.
 
+### LLM provider
+
+The agent talks to its LLM through the [Apify OpenRouter proxy](https://apify.com/apify/openrouter) — an OpenAI-compatible endpoint at `https://openrouter.apify.actor/api/v1` that fronts the full [OpenRouter](https://openrouter.ai) model catalog. Token usage is billed against the user's Apify account (pay-per-event), so **no `OPENAI_API_KEY` or any other provider API key is required**. The Actor authenticates with the proxy using the `APIFY_TOKEN` that the platform injects into every run automatically.
+
+If you'd rather call OpenAI / Anthropic / etc. directly with your own key, swap the `OpenAIChatModel` configuration in `src/main.ts` for a different `baseURL` / `apiKey` / provider adapter — see the [BeeAI backend docs](https://framework.beeai.dev/modules/backend).
+
 ### How to Use
 
-Add or modify tools in the `src/tool_calculator.ts` and `src/tool_instagram.ts` files, and ensure they are included in the agent's tool list in `src/main.ts`. Additionally, you can update the agent's system prompt or other configurations within `src/main.ts`. For more information, refer to the [BeeAI documentation](https://docs.beeai.dev/concepts/agents).
+Add or modify tools in `src/tools/calculator.ts` and `src/tools/instagram.ts`, and register them in the agent's tool list in `src/main.ts`. You can also adjust the agent's system prompt or other configuration in `src/main.ts`. For more details, see the [BeeAI framework agents documentation](https://framework.beeai.dev/modules/agents).
 
 #### Pay Per Event
 
@@ -40,8 +46,9 @@ This approach allows you to programmatically charge users directly from your Act
 
 To set up the PPE model for this Actor:
 
-- **Configure the OpenAI API key environment variable**: provide your OpenAI API key to the `OPENAI_API_KEY` in the Actor's **Environment variables**.
 - **Configure Pay Per Event**: establish the Pay Per Event pricing schema in the Actor's **Monetization settings**. First, set the **Pricing model** to `Pay per event` and add the schema. An example schema can be found in [pay_per_event.json](.actor/pay_per_event.json).
+
+No provider API key (e.g. `OPENAI_API_KEY`) needs to be configured — LLM costs are billed through the Apify OpenRouter proxy to the user running the Actor.
 
 ### Included Features
 
@@ -55,5 +62,5 @@ To set up the PPE model for this Actor:
 - [What are AI agents?](https://blog.apify.com/what-are-ai-agents/)
 - [TypeScript tutorials in Academy](https://docs.apify.com/academy/node-js)
 - [Apify SDK documentation](https://docs.apify.com/sdk/js/)
-- [BeeAI documentation](https://docs.beeai.dev/introduction/welcome)
+- [BeeAI framework documentation](https://framework.beeai.dev/introduction/welcome)
 - [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)
