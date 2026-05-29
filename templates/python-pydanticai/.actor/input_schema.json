@@ -12,12 +12,13 @@
             "prefill": "Bad weather.",
             "default": "Bad weather."
         },
-        "openAIApiKey": {
-            "title": "OpenAI token",
+        "modelName": {
+            "title": "LLM model (OpenRouter)",
             "type": "string",
-            "isSecret": true,
-            "description": "Your own OpenAI token. Optional, but you will be charged more if you want to use Apify's token.",
-            "editor": "textfield"
+            "description": "Model ID routed through the Apify OpenRouter proxy (https://apify.com/apify/openrouter). Tokens are charged automatically to your Apify account, so no provider API key is needed.",
+            "enum": ["deepseek/deepseek-v4-flash", "deepseek/deepseek-v4-pro", "moonshotai/kimi-k2.6", "z-ai/glm-5.1"],
+            "default": "deepseek/deepseek-v4-flash",
+            "prefill": "deepseek/deepseek-v4-flash"
         }
     },
     "required": ["jokeTopic"]

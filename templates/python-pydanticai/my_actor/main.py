@@ -8,8 +8,6 @@ https://docs.apify.com/sdk/python
 
 from __future__ import annotations
 
-import os
-
 from apify import Actor
 
 from .agents import Deps, get_joker_agent
@@ -24,18 +22,17 @@ async def main() -> None:
 
         # Process inputs
         actor_input = await Actor.get_input()
-        if openai_api_key := (actor_input.get('openAIApiKey') or os.environ.get('OPENAI_API_KEY')):
-            os.environ['OPENAI_API_KEY'] = openai_api_key
-        else:
-            await Actor.fail(
-                status_message='OpenAI API key is missing. Create issues at the Apify platform to inform the developer'
-            )
 
         if not (joke_topic := actor_input.get('jokeTopic')):
             await Actor.fail(status_message='Missing "jokeTopic" attribute in input!')
 
+        model_name = actor_input.get('modelName', 'deepseek/deepseek-v4-flash')
+
         # Generate joke
-        joke = (await get_joker_agent().run(user_prompt='Tell me a joke.', deps=Deps(joke_topic=joke_topic))).output
+        agent = get_joker_agent(model_name)
+        joke = (
+            await agent.run(user_prompt='Tell me a joke.', deps=Deps(joke_topic=joke_topic, model_name=model_name))
+        ).output
         Actor.log.info(f'The AI generated joke about {joke_topic}:\n{joke}')
 
         # Store the joke
