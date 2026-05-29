@@ -23,11 +23,11 @@ dependencies = [
     "polars >= 1.0.0, < 2.0.0",
     "pydantic >= 2.0.0, < 3.0.0",
     "pydantic-ai >= 1.99.0, < 2.0.0",  # >= 1.99.0 patches SSRF advisories GHSA-cqp8-fcvh-x7r3 and GHSA-2jrp-274c-jhv3
-    "scrapy>=2.15.2,<3.0.0",
+    "scrapy>=2.16.0,<3.0.0",
     "selenium >= 4.41.0, < 5.0.0",
     "smolagents[openai] >= 1.0.0, < 2.0.0",
     "types-beautifulsoup4 >= 4.0.0, < 5.0.0",
-    "uv>=0.11.6,<1.0.0",
+    "uv>=0.11.15,<1.0.0",
     "uvicorn >= 0.27.0, < 1.0.0",
 ]
 
