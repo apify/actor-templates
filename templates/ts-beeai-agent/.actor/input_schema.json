@@ -13,12 +13,12 @@
             "default": "This is a fallback test query, do nothing and !!do not call any tools!!. If asked to generate structured response, create a dummy one without optional fields - minimal as possible."
         },
         "modelName": {
-            "title": "OpenAI model",
+            "title": "LLM model (OpenRouter)",
             "type": "string",
-            "description": "The OpenAI model to use. Currently supported models are gpt-4o and gpt-4o-mini.",
-            "enum": ["gpt-4o", "gpt-4o-mini"],
-            "default": "gpt-4o-mini",
-            "prefill": "gpt-4o-mini"
+            "description": "Model ID routed through the Apify OpenRouter proxy (https://apify.com/apify/openrouter). Tokens are charged automatically to your Apify account, so no provider API key is needed.",
+            "enum": ["deepseek/deepseek-v4-flash", "deepseek/deepseek-v4-pro", "moonshotai/kimi-k2.6", "z-ai/glm-5.1"],
+            "default": "deepseek/deepseek-v4-flash",
+            "prefill": "deepseek/deepseek-v4-flash"
         },
         "debug": {
             "title": "Debug",

@@ -6,9 +6,11 @@ FROM apify/actor-node:24 AS builder
 # Check preinstalled packages
 RUN npm ls apify
 
-# Copy just package.json and package-lock.json
-# to speed up the build using Docker layer cache.
-COPY --chown=myuser:myuser package*.json ./
+# Copy just package.json, package-lock.json, and .npmrc
+# to speed up the build using Docker layer cache. .npmrc is needed
+# because beeai-framework declares mutually-incompatible optional peer
+# deps (LangChain, vector DBs, ...) that require legacy-peer-deps=true.
+COPY --chown=myuser:myuser package*.json .npmrc ./
 
 # Install all dependencies. Don't audit to speed up the installation.
 RUN npm install --include=dev --audit=false
@@ -27,9 +29,9 @@ FROM apify/actor-node:24
 # Check preinstalled packages
 RUN npm ls apify
 
-# Copy just package.json and package-lock.json
+# Copy just package.json, package-lock.json, and .npmrc
 # to speed up the build using Docker layer cache.
-COPY --chown=myuser:myuser package*.json ./
+COPY --chown=myuser:myuser package*.json .npmrc ./
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
