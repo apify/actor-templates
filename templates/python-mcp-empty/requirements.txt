@@ -5,3 +5,4 @@ apify >= 3.0.0, < 4.0.0
 apify-client
 fastmcp >= 3.0.0, < 4.0.0
 mcp >= 1.25.0, < 2.0.0
+pyjwt >= 2.12.0  # Transitive dep of mcp; direct pin until mcp bumps its floor above vulnerable < 2.12.0
