@@ -12,8 +12,8 @@ importers:
         specifier: ^2.0.6
         version: 2.0.6(@eslint/js@9.39.4)(@typescript-eslint/utils@8.59.2(eslint@9.39.4)(typescript@6.0.3))(eslint-plugin-jest@28.14.0(@typescript-eslint/eslint-plugin@8.59.2(@typescript-eslint/parser@8.59.2(eslint@9.39.4)(typescript@6.0.3))(eslint@9.39.4)(typescript@6.0.3))(eslint@9.39.4)(jest@30.4.2(@types/node@25.6.2))(typescript@6.0.3))(eslint@9.39.4)(typescript-eslint@8.59.2(eslint@9.39.4)(typescript@6.0.3))
       '@apify/tsconfig':
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: 0.1.2
+        version: 0.1.2
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -110,8 +110,8 @@ packages:
   '@apify/timeout@0.3.5':
     resolution: {integrity: sha512-3nuQXwxh2sKxBo5tgDoZWuZHiSpqrKg1+sJHjFSk8blhyX6I2FZzpfW7UaCELeYLZiSjWUPh2rXNrc3zLmJGJg==}
 
-  '@apify/tsconfig@0.1.1':
-    resolution: {integrity: sha512-cS7mwN2UW1UXcluGXRDHH0Vr2VsSLkw2DwLTwoSBkcJSe8fvCr3MPryTSq0uod4MashpMURxJ7CsLKxs82VmOQ==}
+  '@apify/tsconfig@0.1.2':
+    resolution: {integrity: sha512-9dzEI1ZQ5+iM0k0fmPJrpdSSPUolVdeI1nDGFZMjD9UabTmIvjQrzui+1a25uy913AUEBrKTojEPj87pU9/Ekg==}
 
   '@apify/utilities@2.30.0':
     resolution: {integrity: sha512-oMkWQwUZHl+txUoS121hMRvSidis4ZN+5HKVMEFgfKi0uejfizhYuup+nK6IiiOHjxF8HEq0tICl4M+62Pgbxw==}
@@ -3428,7 +3428,7 @@ snapshots:
 
   '@apify/timeout@0.3.5': {}
 
-  '@apify/tsconfig@0.1.1': {}
+  '@apify/tsconfig@0.1.2': {}
 
   '@apify/utilities@2.30.0':
     dependencies:
