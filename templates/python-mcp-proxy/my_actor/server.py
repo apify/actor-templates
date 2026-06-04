@@ -394,7 +394,7 @@ class ProxyServer:
                 Mount('/mcp/', app=handle_streamable_http),
             ],
             lifespan=lifespan,
-            middleware=[Middleware(McpPathRewriteMiddleware)],  # ty: ignore[invalid-argument-type]
+            middleware=[Middleware(McpPathRewriteMiddleware)],
         )
 
     async def _run_server(self, app: Starlette) -> None:
