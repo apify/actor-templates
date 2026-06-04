@@ -45,7 +45,7 @@ async def main() -> None:
         if actor_input.get('debug', False):
             Actor.log.setLevel(logging.DEBUG)
 
-        llm = ChatOpenAI(model=model_name)  # ty: ignore[unknown-argument]
+        llm = ChatOpenAI(model=model_name)
 
         # Create the agent graph
         # see https://docs.langchain.com/oss/python/langchain/agents
