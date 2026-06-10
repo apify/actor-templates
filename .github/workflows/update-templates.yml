@@ -26,6 +26,9 @@ env:
   DEFAULT_RUNTIME_VERSION: ${{ github.event.client_payload.default_runtime_version || inputs.default_runtime_version }}
   MODULE_VERSION: ${{ github.event.client_payload.module_version || inputs.module_version }}
 
+permissions:
+  contents: read
+
 jobs:
   update-templates:
     runs-on: ubuntu-latest
