@@ -10,7 +10,7 @@
             "type": "string",
             "description": "Base url for the tests.",
             "editor": "textfield",
-            "prefill": "https://apify.com"
+            "prefill": "https://example.com"
         },
         "viewportWidth": {
             "title": "Viewport width",

@@ -1,9 +1,11 @@
 describe('second tests suite', () => {
-    it('visit apify store', () => {
-        cy.visit('/store');
-        cy.log('Visiting Apify Store, clicking on Actor');
-        cy.contains('.ActorStoreItem-title', 'Web Scraper').should('be.visible').click();
-        cy.log('Asserting store Actor redirect');
-        cy.url().should('eq', 'https://apify.com/apify/web-scraper');
+    it('finds the outbound link', () => {
+        cy.visit('/');
+        cy.log('Locating the outbound link by its target');
+        // Select the link by its href attribute rather than its text. This is
+        // robust to copy changes on the page (the visible label may differ) and
+        // demonstrates asserting on an attribute instead of clicking through to
+        // another domain, which Cypress restricts across origins.
+        cy.get('a[href*="iana.org"]').should('be.visible');
     });
 });

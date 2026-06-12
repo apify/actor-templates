@@ -18,7 +18,7 @@ import { globby } from 'globby';
 await Actor.init();
 
 // Define the configuration to start the cypress test with - get it from the input of the Actor or use a default config.
-const input = (await Actor.getInput()) || { baseUrl: 'https://apify.com', video: true };
+const input = (await Actor.getInput()) || { baseUrl: 'https://example.com', video: true };
 log.info(`Running tests with following input: ${JSON.stringify(input)}`);
 
 // Helper function to run tests from specific test file with given configuration from INPUT.json

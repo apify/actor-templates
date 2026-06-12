@@ -15,6 +15,8 @@ Run your [Cypress tests](https://www.cypress.io/) on the Apify Platform effectiv
 
 You can easily run your tests on the Apify Platform, just copy-paste your test files into `cypress/e2e` folder. The tests' names need to end with `-spec.cy.js`.
 
+The bundled example specs visit [`https://example.com`](https://example.com) — a stable site reserved for documentation — so the demo passes reliably out of the box. Point the tests at your own site by setting the `baseUrl` input (or editing `baseUrl` in `cypress.config.js`); `cy.visit('/')` then resolves against it.
+
 You can also customize the test run by specifying other options in the input, e.g. the screen size, video recording, or the default command timeout.
 
 After running the tests, the Apify platform stores the results in a comprehensive way - datasets for JSON results, and key-value store for videos. You can view the results directly on the platform or download them to your local machine using a REST API.
