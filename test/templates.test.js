@@ -17,6 +17,14 @@ const APIFY_COMMAND = /^win/.test(process.platform) ? 'apify.cmd' : 'apify';
 
 const windowsOptions = /^win/.test(process.platform) ? { shell: true, windowsHide: true } : {};
 
+// Puppeteer templates download their pinned Chrome during `npm install`. Pin that to
+// one explicit cache dir shared by the CI pre-install step, each template's install,
+// and the later `apify run` — the default per-user cache is reused across templates,
+// where a partial download from one poisons the next (mostly on Windows). Honor a
+// workflow-provided value; fall back to a temp dir locally.
+process.env.PUPPETEER_CACHE_DIR ||= path.join(os.tmpdir(), 'apify-templates-puppeteer-cache');
+const { PUPPETEER_CACHE_DIR } = process.env;
+
 function spawnSync(command, args, options = {}) {
     return _spawnSync(command, args, { ...options, ...windowsOptions });
 }
@@ -106,7 +114,18 @@ const checkNodeTemplate = () => {
 
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
-    const npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    // Templates depending on puppeteer download Chrome during `npm install` (a
+    // postinstall hook). That download can be flaky and leave a corrupt entry in
+    // PUPPETEER_CACHE_DIR that wedges the install, so for those templates clear the
+    // cache and retry a couple of times.
+    const usesPuppeteer = Boolean(packageJson.dependencies?.puppeteer ?? packageJson.devDependencies?.puppeteer);
+
+    let npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    for (let retry = 0; usesPuppeteer && retry < 2 && npmInstallSpawnResult.status !== 0; retry++) {
+        console.log('npm install failed, clearing Puppeteer cache and retrying...');
+        fs.rmSync(PUPPETEER_CACHE_DIR, { recursive: true, force: true });
+        npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    }
     checkSpawnResult(npmInstallSpawnResult);
 
     if (packageJson.scripts?.lint) {
