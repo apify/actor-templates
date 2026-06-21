@@ -17,6 +17,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 120
 
+    # Pin Puppeteer's browser cache to one explicit dir shared by the pre-install step
+    # below and the per-template install/run in the harness (avoids cross-template
+    # cache corruption, mostly on Windows).
+    env:
+      PUPPETEER_CACHE_DIR: ${{ github.workspace }}/.puppeteer-cache
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -34,6 +40,11 @@ jobs:
 
       - name: Install playwright browsers
         run: pnpm exec playwright install chromium --with-deps
+
+      # Warm PUPPETEER_CACHE_DIR with the pinned browsers so templates don't race to
+      # download Chrome during `npm install`.
+      - name: Install puppeteer browsers
+        run: pnpm exec puppeteer browsers install
 
       - name: Test Node.js templates
         run: pnpm run test-node-templates

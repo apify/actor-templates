@@ -8,7 +8,10 @@ jobs:
     name: Test LLM AI Node.js templates
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-latest]
+        # windows-2022, not windows-latest: js-langchain's native hnswlib-node addon
+        # fails to build on windows-latest (VS 2026 isn't detected by node-gyp).
+        # Removing the native dependency is tracked in #813.
+        os: [ubuntu-24.04, windows-2022]
         node-version: [22]
       fail-fast: false
     runs-on: ${{ matrix.os }}
