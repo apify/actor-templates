@@ -1,0 +1,9 @@
+# .actorignore — files NOT included in `apify push` archives.
+*.log
+.env
+.env.*
+.idea/
+.vscode/
+.zed/
+.DS_Store
+.git/

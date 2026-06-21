@@ -5,7 +5,10 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["query", "response"]
+                "fields": [
+                    "query",
+                    "response"
+                ]
             },
             "display": {
                 "component": "table",
@@ -21,5 +24,23 @@
                 }
             }
         }
+    },
+    "fields": {
+        "title": "Overview",
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "title": "Query"
+            },
+            "response": {
+                "type": "string",
+                "title": "Response"
+            }
+        },
+        "required": [
+            "query",
+            "response"
+        ]
     }
 }

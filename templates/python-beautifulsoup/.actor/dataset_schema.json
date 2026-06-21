@@ -1,12 +1,60 @@
 {
     "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
     "actorSpecification": 1,
-    "fields": {},
+    "fields": {
+        "title": "Overview",
+        "type": "object",
+        "properties": {
+            "h1s": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "title": "H1s"
+            },
+            "h2s": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "title": "H2s"
+            },
+            "h3s": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "title": "H3s"
+            },
+            "title": {
+                "type": "string",
+                "title": "Title"
+            },
+            "url": {
+                "type": "string",
+                "format": "uri",
+                "title": "URL"
+            }
+        },
+        "required": [
+            "h1s",
+            "h2s",
+            "h3s",
+            "title",
+            "url"
+        ]
+    },
     "views": {
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["title", "url", "h1s", "h2s", "h3s"]
+                "fields": [
+                    "title",
+                    "url",
+                    "h1s",
+                    "h2s",
+                    "h3s"
+                ]
             },
             "display": {
                 "component": "table",
