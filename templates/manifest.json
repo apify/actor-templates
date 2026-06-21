@@ -356,7 +356,8 @@
         },
         {
             "id": "js-crawlee-cheerio",
-            "name": "project_cheerio_crawler_js",
+            "name": "js-crawlee-cheerio",
+            "aliases": ["project_cheerio_crawler_js"],
             "label": "Crawlee + Cheerio",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
@@ -373,7 +374,8 @@
         },
         {
             "id": "js-start",
-            "name": "getting_started_node",
+            "name": "js-start",
+            "aliases": ["getting_started_node"],
             "label": "One‑Page HTML Scraper with Cheerio",
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
@@ -389,7 +391,8 @@
         },
         {
             "id": "ts-crawlee-cheerio",
-            "name": "project_cheerio_crawler_ts",
+            "name": "ts-crawlee-cheerio",
+            "aliases": ["project_cheerio_crawler_ts"],
             "label": "Crawlee + Cheerio",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
@@ -406,7 +409,8 @@
         },
         {
             "id": "js-crawlee-puppeteer-chrome",
-            "name": "project_puppeteer_crawler_js",
+            "name": "js-crawlee-puppeteer-chrome",
+            "aliases": ["project_puppeteer_crawler_js"],
             "label": "Crawlee + Puppeteer + Chrome",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
@@ -422,7 +426,8 @@
         },
         {
             "id": "js-crawlee-playwright-chrome",
-            "name": "project_playwright_crawler_js",
+            "name": "js-crawlee-playwright-chrome",
+            "aliases": ["project_playwright_crawler_js"],
             "label": "Crawlee + Playwright + Chrome",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
@@ -438,7 +443,8 @@
         },
         {
             "id": "js-crawlee-playwright-camoufox",
-            "name": "project_playwright_camoufox_crawler_js",
+            "name": "js-crawlee-playwright-camoufox",
+            "aliases": ["project_playwright_camoufox_crawler_js"],
             "label": "Crawlee + Playwright + Camoufox",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
@@ -471,7 +477,8 @@
         },
         {
             "id": "ts-start",
-            "name": "getting_started_typescript",
+            "name": "ts-start",
+            "aliases": ["getting_started_typescript"],
             "label": "One‑Page HTML Scraper with Cheerio",
             "category": "typescript",
             "technologies": ["nodejs", "cheerio", "axios"],
@@ -487,7 +494,8 @@
         },
         {
             "id": "ts-crawlee-puppeteer-chrome",
-            "name": "project_puppeteer_crawler_ts",
+            "name": "ts-crawlee-puppeteer-chrome",
+            "aliases": ["project_puppeteer_crawler_ts"],
             "label": "Crawlee + Puppeteer + Chrome",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
@@ -503,7 +511,8 @@
         },
         {
             "id": "ts-crawlee-playwright-chrome",
-            "name": "project_playwright_crawler_ts",
+            "name": "ts-crawlee-playwright-chrome",
+            "aliases": ["project_playwright_crawler_ts"],
             "label": "Crawlee + Playwright + Chrome",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
@@ -519,7 +528,8 @@
         },
         {
             "id": "ts-crawlee-playwright-camoufox",
-            "name": "project_playwright_camoufox_crawler_ts",
+            "name": "ts-crawlee-playwright-camoufox",
+            "aliases": ["project_playwright_camoufox_crawler_ts"],
             "label": "Crawlee + Playwright + Camoufox",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
@@ -535,7 +545,8 @@
         },
         {
             "id": "ts-playwright-test-runner",
-            "name": "project_playwright_test_runner",
+            "name": "ts-playwright-test-runner",
+            "aliases": ["project_playwright_test_runner"],
             "label": "Playwright + Chrome Test Runner",
             "category": "typescript",
             "technologies": ["nodejs", "playwright", "chrome"],
@@ -552,7 +563,8 @@
         },
         {
             "id": "ts-empty",
-            "name": "ts_empty",
+            "name": "ts-empty",
+            "aliases": ["ts_empty"],
             "label": "Empty TypeScript project",
             "category": "typescript",
             "technologies": ["nodejs"],
@@ -568,7 +580,8 @@
         },
         {
             "id": "ts-standby",
-            "name": "ts_standby",
+            "name": "ts-standby",
+            "aliases": ["ts_standby"],
             "label": "Standby TypeScript project",
             "category": "typescript",
             "technologies": ["nodejs"],
@@ -585,7 +598,8 @@
         },
         {
             "id": "js-cypress",
-            "name": "project_cypress",
+            "name": "js-cypress",
+            "aliases": ["project_cypress"],
             "label": "Cypress",
             "category": "javascript",
             "technologies": ["nodejs", "cypress"],
@@ -606,7 +620,8 @@
         },
         {
             "id": "js-empty",
-            "name": "project_empty",
+            "name": "js-empty",
+            "aliases": ["project_empty"],
             "label": "Empty JavaScript Project",
             "category": "javascript",
             "technologies": ["nodejs"],
@@ -622,7 +637,8 @@
         },
         {
             "id": "js-standby",
-            "name": "js_standby",
+            "name": "js-standby",
+            "aliases": ["js_standby"],
             "label": "Standby JavaScript Project",
             "category": "javascript",
             "technologies": ["nodejs"],
@@ -639,7 +655,8 @@
         },
         {
             "id": "js-langchain",
-            "name": "project_langchain_js",
+            "name": "js-langchain",
+            "aliases": ["project_langchain_js"],
             "label": "🦜️🔗 LangChain",
             "category": "javascript",
             "technologies": ["nodejs", "langchain"],
@@ -655,7 +672,8 @@
         },
         {
             "id": "js-langgraph-agent",
-            "name": "project-langgraph-agent-javascript",
+            "name": "js-langgraph-agent",
+            "aliases": ["project-langgraph-agent-javascript"],
             "label": "LangGraph agent",
             "category": "javascript",
             "technologies": ["nodejs", "langgraph"],
@@ -671,7 +689,8 @@
         },
         {
             "id": "ts-start-bun",
-            "name": "getting_started_typescript_bun",
+            "name": "ts-start-bun",
+            "aliases": ["getting_started_typescript_bun"],
             "label": "Start with TypeScript on Bun",
             "category": "typescript",
             "technologies": ["bun", "cheerio", "axios"],
