@@ -1,7 +1,50 @@
 {
     "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
     "actorSpecification": 1,
-    "fields": {},
+    "fields": {
+        "title": "Filtered output",
+        "type": "object",
+        "properties": {
+            "testSuiteTitle": {
+                "type": "string",
+                "title": "Test Suite Title"
+            },
+            "totalDuration": {
+                "type": "number",
+                "title": "Total Duration"
+            },
+            "totalFailed": {
+                "type": "number",
+                "title": "Total Failed"
+            },
+            "totalPassed": {
+                "type": "string",
+                "title": "Total Passed"
+            },
+            "totalPending": {
+                "type": "number",
+                "title": "Total Pending"
+            },
+            "totalSkipped": {
+                "type": "number",
+                "title": "Total Skipped"
+            },
+            "videoLink": {
+                "type": "string",
+                "format": "uri",
+                "title": "Video recording"
+            }
+        },
+        "required": [
+            "testSuiteTitle",
+            "totalDuration",
+            "totalFailed",
+            "totalPassed",
+            "totalPending",
+            "totalSkipped",
+            "videoLink"
+        ]
+    },
     "views": {
         "overview": {
             "title": "Filtered output",

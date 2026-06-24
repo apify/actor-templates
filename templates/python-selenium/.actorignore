@@ -1,0 +1,28 @@
+# .actorignore — files NOT included in `apify push` archives.
+
+# Bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local-development storage
+storage/
+apify_storage/
+crawlee_storage/
+
+# Logs / env / IDE / OS
+*.log
+.env
+.env.*
+.idea/
+.vscode/
+.zed/
+.DS_Store
+
+# Git history
+.git/
