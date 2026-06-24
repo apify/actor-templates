@@ -1,0 +1,23 @@
+[project]
+name = "my-actor"
+version = "0.1.0"
+description = "An Apify Actor with dependencies managed by uv."
+requires-python = ">=3.14"
+dependencies = [
+    "apify>=3.0.0,<4.0.0",
+    "beautifulsoup4[lxml]>=4.0.0,<5.0.0",
+    "httpx>=0.28.0,<1.0.0",
+]
+
+[dependency-groups]
+# Development-only dependencies. They are installed by `uv sync` locally,
+# but skipped in the Actor's Docker image thanks to `uv sync --no-dev`.
+dev = [
+    "types-beautifulsoup4>=4.0.0,<5.0.0",
+]
+
+[tool.uv]
+# The Actor runs straight from the source tree as a module (`python -m my_actor`).
+# uv only manages its dependencies, the project itself is not built and installed
+# as a package.
+package = false
