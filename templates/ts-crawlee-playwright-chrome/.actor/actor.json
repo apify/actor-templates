@@ -9,8 +9,8 @@
         "templateId": "ts-crawlee-playwright-chrome",
         "generatedBy": "<FILL-IN-MODEL>"
     },
-    "input": "./input_schema.json",
-    "output": "./output_schema.json",
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
     "storages": {
         "dataset": "./dataset_schema.json"
     },
