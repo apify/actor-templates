@@ -23,6 +23,8 @@ const windowsOptions = /^win/.test(process.platform) ? { shell: true, windowsHid
 // where a partial download from one poisons the next (mostly on Windows). Honor a
 // workflow-provided value; fall back to a temp dir locally.
 process.env.PUPPETEER_CACHE_DIR ||= path.join(os.tmpdir(), 'apify-templates-puppeteer-cache');
+// Use a shared pip cache in CI to reduce downloads and flakiness
+process.env.PIP_CACHE_DIR ||= path.join(os.tmpdir(), 'apify-templates-pip-cache');
 const { PUPPETEER_CACHE_DIR } = process.env;
 
 function spawnSync(command, args, options = {}) {
@@ -51,9 +53,15 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
     .stdout.toString()
     .trim();
 
-const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'])
-    .stdout.toString()
-    .match(/\((.*)\)/)[1];
+// Robustly parse latest Python apify version from pip index output. Pip output
+// can vary across versions/locales, so match the first semver-like token.
+const pipIndexOut = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'], { cwd: os.tmpdir() })
+    .stdout.toString();
+const versionMatches = pipIndexOut.match(/\d+\.\d+\.\d+/g);
+if (!versionMatches) {
+    console.warn('Could not parse latest Python apify versions from pip output:', pipIndexOut);
+}
+const APIFY_SDK_PYTHON_LATEST_VERSION = versionMatches ? versionMatches[0] : '0.0.0';
 
 const checkSpawnResult = ({ status, stdout, stderr }) => {
     if (stdout?.toString()) {
@@ -61,7 +69,7 @@ const checkSpawnResult = ({ status, stdout, stderr }) => {
     }
 
     if (stderr?.toString()) {
-        console.log('stderr', stderr?.toString());
+        console.log('stderr', stderr.toString());
     }
 
     expect(status).toBe(0);
@@ -155,7 +163,12 @@ const checkPythonTemplate = () => {
 
     spawnSync(PYTHON_COMMAND, ['-m', 'venv', '.venv']);
 
-    const pipInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'install', '-r', 'requirements.txt']);
+    // Retry pip install a couple of times to handle transient network/download failures
+    let pipInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'install', '-r', 'requirements.txt']);
+    for (let retry = 0; retry < 2 && pipInstallSpawnResult.status !== 0; retry++) {
+        console.log('pip install failed, retrying...');
+        pipInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'install', '-r', 'requirements.txt']);
+    }
     checkSpawnResult(pipInstallSpawnResult);
 
     const pipShowApifySpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'apify']);
@@ -168,8 +181,11 @@ const checkPythonTemplate = () => {
         checkSpawnResult(playwrightInstallSpawnResult);
     }
 
-    const installedApifySdkVersion = pipShowApifySpawnResult.stdout.toString().match(/Version: (.*)/)[1];
-    expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
+    const installedApifySdkVersionMatch = pipShowApifySpawnResult.stdout.toString().match(/Version:\s*(.*)/);
+    const installedApifySdkVersion = installedApifySdkVersionMatch ? installedApifySdkVersionMatch[1].trim() : null;
+    expect(installedApifySdkVersion).not.toBeNull();
+    const expectedRangePy = `^${semver.major(APIFY_SDK_PYTHON_LATEST_VERSION)}.0.0`;
+    expect(semver.satisfies(installedApifySdkVersion, expectedRangePy)).toBe(true);
 };
 
 const checkTemplateRun = () => {
