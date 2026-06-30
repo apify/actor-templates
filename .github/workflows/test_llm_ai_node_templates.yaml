@@ -27,7 +27,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.41.1
+        uses: apify/workflows/pnpm-install@v0.46.0
 
       - name: Install apify CLI globally
         run: npm install -g apify-cli
