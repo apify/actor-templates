@@ -52,7 +52,7 @@ jobs:
           node-version: 24
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.41.1
+        uses: apify/workflows/pnpm-install@v0.46.0
 
       - name: Run update script
         env:
@@ -94,7 +94,7 @@ jobs:
       - name: Commit and push changes
         id: commit-and-push
         if: steps.stage.outputs.has-changes == 'true'
-        uses: apify/actions/signed-commit@v1.1.2
+        uses: apify/actions/signed-commit@v1.3.0
         with:
           message: 'chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}'
           github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
