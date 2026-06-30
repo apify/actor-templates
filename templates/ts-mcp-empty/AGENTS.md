@@ -223,9 +223,7 @@ The input schema defines the input parameters for an Actor. It's a JSON object c
     "title": "<INPUT-SCHEMA-TITLE>",
     "type": "object",
     "schemaVersion": 1,
-    "properties": {
-        /* define input fields here */
-    },
+    "properties": {/* define input fields here */},
     "required": []
 }
 ```
@@ -289,9 +287,7 @@ The Actor output schema builds upon the schemas for the dataset and key-value st
 {
     "actorOutputSchemaVersion": 1,
     "title": "<OUTPUT-SCHEMA-TITLE>",
-    "properties": {
-        /* define your outputs here */
-    }
+    "properties": {/* define your outputs here */}
 }
 ```
 
