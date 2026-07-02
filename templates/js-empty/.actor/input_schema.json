@@ -1,0 +1,15 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Actor Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "example": {
+            "title": "Example Field",
+            "type": "string",
+            "description": "Replace this with your actual input fields.",
+            "editor": "textfield"
+        }
+    },
+    "required": []
+}
