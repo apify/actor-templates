@@ -12,7 +12,7 @@
     "output": "./output_schema.json",
     "meta": {
         "templateId": "ts-mastraai",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "input": "./input_schema.json",
     "dockerfile": "../Dockerfile"

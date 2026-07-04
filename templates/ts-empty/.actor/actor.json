@@ -8,7 +8,7 @@
     "buildTag": "latest",
     "meta": {
         "templateId": "ts-empty",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "dockerfile": "../Dockerfile"
 }

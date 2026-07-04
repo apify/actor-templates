@@ -7,7 +7,7 @@
     "version": "0.0",
     "meta": {
         "templateId": "ts-crawlee-playwright-chrome",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "input": "./input_schema.json",
     "output": "./output_schema.json",
