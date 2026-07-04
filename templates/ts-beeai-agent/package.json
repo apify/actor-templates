@@ -10,7 +10,9 @@
         "@ai-sdk/openai": "3.0.63",
         "apify": "^3.7.2",
         "beeai-framework": "^0.1.29",
-        "zod": "^3.25.76"
+        "zod": "^3.25.76",
+        "tsx": "^4.22.3",
+        "typescript": "^6.0.3"
     },
     "devDependencies": {
         "@apify/eslint-config": "^2.0.6",
@@ -20,8 +22,6 @@
         "eslint-config-prettier": "^10.1.8",
         "globals": "^17.6.0",
         "prettier": "^3.8.3",
-        "tsx": "^4.22.3",
-        "typescript": "^6.0.3",
         "typescript-eslint": "^8.60.0",
         "vitest": "^4.1.7"
     },
