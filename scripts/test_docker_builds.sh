@@ -1,12 +1,28 @@
 #!/bin/bash
 
-# Find all Dockerfiles in the templates directory
-mapfile -t dockerfiles < <(find templates -name "Dockerfile" -type f)
+# Optional shard argument ("2/4"): build only a round-robin slice of the
+# Dockerfiles, same n/m convention as TEST_SHARD in test/templates.test.js.
+# No argument = build everything.
+shard="${1:-1/1}"
+shard_index="${shard%%/*}"
+shard_total="${shard##*/}"
+
+# `find` order is filesystem-dependent — sort so all shards agree on indexing.
+mapfile -t all_dockerfiles < <(find templates -name "Dockerfile" -type f | sort)
+
+dockerfiles=()
+for i in "${!all_dockerfiles[@]}"; do
+    if (( i % shard_total == shard_index - 1 )); then
+        dockerfiles+=("${all_dockerfiles[$i]}")
+    fi
+done
 
 if [ ${#dockerfiles[@]} -eq 0 ]; then
-    echo "No Dockerfiles found in templates directory"
+    echo "No Dockerfiles found in templates directory (shard $shard)"
     exit 1
 fi
+
+echo "Building ${#dockerfiles[@]} of ${#all_dockerfiles[@]} Dockerfiles (shard $shard)"
 
 successful_builds=0
 failed_builds=0
@@ -35,13 +51,15 @@ for dockerfile in "${dockerfiles[@]}"; do
         (( failed_builds = failed_builds + 1 ))
     fi
 
-    # Clean up dangling images and unused layers after build
-    echo "Cleaning up Docker images after build..."
-    echo "Disk usage before cleanup:"
-    df -h
-    docker system prune -f >/dev/null 2>&1
-    echo "Disk usage after cleanup:"
-    df -h
+    # Keep base images and the BuildKit cache between builds — most templates
+    # share the same apify/actor-* base layers. Reclaim disk only under
+    # real pressure, and then reclaim everything (bases get re-pulled).
+    available_gb=$(df --output=avail -BG / | tail -1 | tr -dc '0-9')
+    if (( available_gb < 15 )); then
+        echo "Only ${available_gb}GB free, pruning all Docker caches..."
+        docker system prune -af >/dev/null 2>&1
+        df -h /
+    fi
 
     cd - >/dev/null || {
         echo "Failed to return to root directory"
