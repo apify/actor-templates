@@ -19,7 +19,9 @@ jobs:
         shard: ['1/4', '2/4', '3/4', '4/4']
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 120
+    # Slowest observed shard is ~26 min (windows) — 40 is headroom for runner
+    # jitter, not a target; tighten to 30 once shard balancing lands.
+    timeout-minutes: 40
 
     # Pin Puppeteer's browser cache to one explicit dir shared by the pre-install step
     # below and the per-template install/run in the harness (avoids cross-template
