@@ -13,6 +13,10 @@ jobs:
         # test harness only runs on Node 22 and 24. Users can still author templates
         # targeting older Node versions in their own Actors.
         node-version: [22, 24]
+        # Each shard runs a round-robin slice of the templates (TEST_SHARD in
+        # test/templates.test.js) — the per-template install+run loop is serial,
+        # so sharding is what parallelizes it.
+        shard: ['1/4', '2/4', '3/4', '4/4']
       fail-fast: false
     runs-on: ${{ matrix.os }}
     timeout-minutes: 120
@@ -49,5 +53,6 @@ jobs:
       - name: Test Node.js templates
         run: pnpm run test-node-templates
         env:
+          TEST_SHARD: ${{ matrix.shard }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}

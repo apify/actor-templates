@@ -180,6 +180,13 @@ const checkTemplateRun = () => {
     checkSpawnResult(apifyRunSpawnResult);
 };
 
+// TEST_SHARD="2/4" (set by the CI matrix) makes this process run only its
+// round-robin slice of each template list, so the serial install+run loop can be
+// parallelized across jobs. Jest's own --shard splits by test *file* and this is
+// a single file, hence the env var. Unset = run everything.
+const [shardIndex, shardTotal] = (process.env.TEST_SHARD ?? '1/1').split('/').map(Number);
+const inShard = (_, index) => index % shardTotal === shardIndex - 1;
+
 const prepareActor = (templateId) => {
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), templateId));
     fs.cpSync(path.join(TEMPLATES_DIRECTORY, templateId), tmpDir, { recursive: true });
@@ -191,6 +198,7 @@ describe('templates-work', () => {
         PYTHON_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
+            .filter(inShard)
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -206,6 +214,7 @@ describe('templates-work', () => {
         NODE_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
             // Skip AI templates
             .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
+            .filter(inShard)
             .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
@@ -220,10 +229,10 @@ describe('templates-work', () => {
     });
 
     describe('python-llm-ai-templates', () => {
-        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
-            if (SKIP_TESTS.includes(templateId)) continue;
-
-            if (PYTHON_TEMPLATE_IDS.includes(templateId)) {
+        AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
+            .filter((templateId) => PYTHON_TEMPLATE_IDS.includes(templateId))
+            .filter(inShard)
+            .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
 
@@ -231,15 +240,14 @@ describe('templates-work', () => {
                     checkPythonTemplate();
                     checkTemplateRun();
                 });
-            }
-        }
+            });
     });
 
     describe('node-js-llm-ai-templates', () => {
-        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
-            if (SKIP_TESTS.includes(templateId)) continue;
-
-            if (NODE_TEMPLATE_IDS.includes(templateId)) {
+        AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
+            .filter((templateId) => NODE_TEMPLATE_IDS.includes(templateId))
+            .filter(inShard)
+            .forEach((templateId) => {
                 test(templateId, () => {
                     prepareActor(templateId);
 
@@ -249,7 +257,6 @@ describe('templates-work', () => {
                     checkNodeTemplate();
                     checkTemplateRun();
                 });
-            }
-        }
+            });
     });
 });

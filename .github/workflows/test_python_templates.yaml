@@ -10,6 +10,8 @@ jobs:
       matrix:
         os: [ubuntu-24.04, windows-latest]
         python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        # Round-robin template slice, see TEST_SHARD in test/templates.test.js.
+        shard: ['1/2', '2/2']
       fail-fast: false
     runs-on: ${{ matrix.os }}
     timeout-minutes: 120
@@ -47,5 +49,6 @@ jobs:
       - name: Test Python templates
         run: pnpm run test-python-templates
         env:
+          TEST_SHARD: ${{ matrix.shard }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
