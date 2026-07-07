@@ -32,7 +32,7 @@ interface Input {
 // error). Survive that one specific decode bug so a broken page can't kill the whole
 // run; anything else stays fatal. Remove once the upstream playwright bug is fixed.
 process.on('uncaughtException', (err) => {
-    if (err instanceof TypeError && /reading 'url'/.test(err.message) && /coreBundle/.test(err.stack ?? '')) {
+    if (err instanceof TypeError && err.message.includes("reading 'url'") && (err.stack ?? '').includes('coreBundle')) {
         log.warning(`Ignored known playwright Firefox pageError decode bug: ${err.message}`);
         return;
     }
