@@ -2,5 +2,4 @@
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
 apify >= 3.0.0, < 4.0.0
-# >= 1.99.0 patches SSRF advisories GHSA-cqp8-fcvh-x7r3 and GHSA-2jrp-274c-jhv3
-pydantic-ai >=2.5.1, <2.6.0
+pydantic-ai >= 2.0.0, < 3.0.0
