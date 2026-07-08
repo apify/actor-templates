@@ -7,26 +7,13 @@
 // For more information, see https://crawlee.dev
 import { PlaywrightCrawler } from '@crawlee/playwright';
 // For more information, see https://docs.apify.com/sdk/js
-import { Actor, log } from 'apify';
+import { Actor } from 'apify';
 import { launchOptions as camoufoxLaunchOptions } from 'camoufox-js';
 import { firefox } from 'playwright';
 
 // this is ESM project, and as such, it requires you to specify extensions in your relative imports
 // read more about this here: https://nodejs.org/docs/latest-v18.x/api/esm.html#mandatory-file-extensions
 import { router } from './routes.js';
-
-// Camoufox runs Firefox, and playwright-core (through 1.62) crashes while decoding a
-// page's uncaught error that Firefox reports without a source location — it does an
-// unguarded `pageError.location.url`. Some sites trigger this (e.g. a React hydration
-// error). Survive that one specific decode bug so a broken page can't kill the whole
-// run; anything else stays fatal. Remove once the upstream playwright bug is fixed.
-process.on('uncaughtException', (err) => {
-    if (err instanceof TypeError && err.message.includes("reading 'url'") && (err.stack ?? '').includes('coreBundle')) {
-        log.warning(`Ignored known playwright Firefox pageError decode bug: ${err.message}`);
-        return;
-    }
-    throw err;
-});
 
 // Initialize the Apify SDK
 await Actor.init();
