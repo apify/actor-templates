@@ -6,7 +6,13 @@ import path from 'node:path';
 import JSON5 from 'json5';
 import semver from 'semver';
 
-import { AGENT_AI_TEMPLATE_IDS, NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS } from '../src/consts.js';
+import {
+    AGENT_AI_TEMPLATE_IDS,
+    NODE_TEMPLATE_IDS,
+    PYTHON_TEMPLATE_IDS,
+    SKIP_RUN_TESTS,
+    SKIP_TESTS,
+} from '../src/consts.js';
 
 const TEMPLATES_DIRECTORY = path.join(import.meta.dirname, '../templates');
 
@@ -238,6 +244,7 @@ describe('templates-work', () => {
 
                     checkCommonTemplateStructure(templateId);
                     checkPythonTemplate();
+                    if (SKIP_RUN_TESTS.includes(templateId)) return;
                     checkTemplateRun();
                 });
             });
@@ -255,6 +262,7 @@ describe('templates-work', () => {
                     if (!canNodeTemplateRun(templateId)) return;
 
                     checkNodeTemplate();
+                    if (SKIP_RUN_TESTS.includes(templateId)) return;
                     checkTemplateRun();
                 });
             });

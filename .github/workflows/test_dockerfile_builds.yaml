@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Free disk space
         # Only the fast rm -rf part of the old "maximize disk space" step — the
