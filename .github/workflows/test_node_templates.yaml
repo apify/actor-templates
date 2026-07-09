@@ -13,15 +13,13 @@ jobs:
         # test harness only runs on Node 22 and 24. Users can still author templates
         # targeting older Node versions in their own Actors.
         node-version: [22, 24]
-        # Each shard runs a round-robin slice of the templates (TEST_SHARD in
+        # Each shard runs a duration-balanced slice of the templates (TEST_SHARD in
         # test/templates.test.js) — the per-template install+run loop is serial,
         # so sharding is what parallelizes it.
         shard: ['1/4', '2/4', '3/4', '4/4']
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    # Slowest observed shard is ~26 min (windows) — 40 is headroom for runner
-    # jitter, not a target; tighten to 30 once shard balancing lands.
-    timeout-minutes: 40
+    timeout-minutes: 30
 
     # Pin Puppeteer's browser cache to one explicit dir shared by the pre-install step
     # below and the per-template install/run in the harness (avoids cross-template

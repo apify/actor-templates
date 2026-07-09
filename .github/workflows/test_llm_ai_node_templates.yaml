@@ -13,7 +13,7 @@ jobs:
         # Removing the native dependency is tracked in #813.
         os: [ubuntu-24.04, windows-2022]
         node-version: [22]
-        # Round-robin template slice, see TEST_SHARD in test/templates.test.js.
+        # Duration-balanced template slice, see TEST_SHARD in test/templates.test.js.
         shard: ['1/2', '2/2']
       fail-fast: false
     runs-on: ${{ matrix.os }}

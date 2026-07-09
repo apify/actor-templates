@@ -186,12 +186,66 @@ const checkTemplateRun = () => {
     checkSpawnResult(apifyRunSpawnResult);
 };
 
-// TEST_SHARD="2/4" (set by the CI matrix) makes this process run only its
-// round-robin slice of each template list, so the serial install+run loop can be
-// parallelized across jobs. Jest's own --shard splits by test *file* and this is
-// a single file, hence the env var. Unset = run everything.
+// TEST_SHARD="2/4" (set by the CI matrix) makes this process run only its slice
+// of each template list, so the serial install+run loop can be parallelized
+// across jobs. Jest's own --shard splits by test *file* and this is a single
+// file, hence the env var. Unset = run everything.
 const [shardIndex, shardTotal] = (process.env.TEST_SHARD ?? '1/1').split('/').map(Number);
-const inShard = (_, index) => index % shardTotal === shardIndex - 1;
+
+// Approximate per-template cost in Windows-runner minutes (the slowest leg),
+// measured from run 28877048802 (2026-07). Used to balance the shards — exact
+// values don't matter, relative size does. Unlisted templates default to 3.
+const TEMPLATE_WEIGHTS = {
+    'js-bootstrap-cheerio-crawler': 1.9,
+    'js-crawlee-cheerio': 3.9,
+    'js-crawlee-playwright-camoufox': 4.5,
+    'js-crawlee-playwright-chrome': 7.5,
+    'js-crawlee-puppeteer-chrome': 8.1,
+    'js-cypress': 3.8,
+    'js-empty': 2.1,
+    'js-langchain': 7.4,
+    'js-langgraph-agent': 4.3,
+    'js-start': 1.2,
+    'python-beautifulsoup': 0.7,
+    'python-crawlee-beautifulsoup': 0.5,
+    'python-crawlee-parsel': 0.3,
+    'python-crawlee-playwright': 2.3,
+    'python-crawlee-playwright-camoufox': 0.9,
+    'python-empty': 0.3,
+    'python-langgraph': 0.7,
+    'python-llamaindex-agent': 1.3,
+    'python-playwright': 4.2,
+    'python-pydanticai': 1.9,
+    'python-scrapy': 0.9,
+    'python-selenium': 1.6,
+    'python-smolagents': 0.9,
+    'python-start': 0.7,
+    'ts-beeai-agent': 3.5,
+    'ts-crawlee-cheerio': 4.0,
+    'ts-crawlee-playwright-camoufox': 5.3,
+    'ts-crawlee-playwright-chrome': 6.0,
+    'ts-crawlee-puppeteer-chrome': 6.8,
+    'ts-empty': 2.4,
+    'ts-mastraai': 5.2,
+    'ts-start': 2.4,
+    'ts-start-bun': 0,
+};
+
+// LPT scheduling: heaviest template first, each into the currently lightest
+// shard. Deterministic (weight desc, then name), so every shard process computes
+// the same partition without coordination.
+const shardSlice = (templateIds) => {
+    const loads = Array(shardTotal).fill(0);
+    const shards = Array.from({ length: shardTotal }, () => []);
+    const weight = (id) => TEMPLATE_WEIGHTS[id] ?? 3;
+    const sorted = [...templateIds].sort((a, b) => weight(b) - weight(a) || a.localeCompare(b));
+    for (const id of sorted) {
+        const lightest = loads.indexOf(Math.min(...loads));
+        loads[lightest] += weight(id);
+        shards[lightest].push(id);
+    }
+    return shards[shardIndex - 1];
+};
 
 const prepareActor = (templateId) => {
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), templateId));
@@ -201,70 +255,72 @@ const prepareActor = (templateId) => {
 
 describe('templates-work', () => {
     describe('python-templates', () => {
-        PYTHON_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
-            // Skip AI templates
-            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
-            .filter(inShard)
-            .forEach((templateId) => {
-                test(templateId, () => {
-                    prepareActor(templateId);
+        shardSlice(
+            PYTHON_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
+                // Skip AI templates
+                .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId)),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-                    checkCommonTemplateStructure(templateId);
-                    checkPythonTemplate();
-                    checkTemplateRun();
-                });
+                checkCommonTemplateStructure(templateId);
+                checkPythonTemplate();
+                checkTemplateRun();
             });
+        });
     });
 
     describe('node-js-templates', () => {
-        NODE_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
-            // Skip AI templates
-            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
-            .filter(inShard)
-            .forEach((templateId) => {
-                test(templateId, () => {
-                    prepareActor(templateId);
+        shardSlice(
+            NODE_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
+                // Skip AI templates
+                .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId)),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-                    checkCommonTemplateStructure(templateId);
-                    if (!canNodeTemplateRun(templateId)) return;
+                checkCommonTemplateStructure(templateId);
+                if (!canNodeTemplateRun(templateId)) return;
 
-                    checkNodeTemplate();
-                    checkTemplateRun();
-                });
+                checkNodeTemplate();
+                checkTemplateRun();
             });
+        });
     });
 
     describe('python-llm-ai-templates', () => {
-        AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
-            .filter((templateId) => PYTHON_TEMPLATE_IDS.includes(templateId))
-            .filter(inShard)
-            .forEach((templateId) => {
-                test(templateId, () => {
-                    prepareActor(templateId);
+        shardSlice(
+            AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId)).filter((templateId) =>
+                PYTHON_TEMPLATE_IDS.includes(templateId),
+            ),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-                    checkCommonTemplateStructure(templateId);
-                    checkPythonTemplate();
-                    if (SKIP_RUN_TESTS.includes(templateId)) return;
-                    checkTemplateRun();
-                });
+                checkCommonTemplateStructure(templateId);
+                checkPythonTemplate();
+                if (SKIP_RUN_TESTS.includes(templateId)) return;
+                checkTemplateRun();
             });
+        });
     });
 
     describe('node-js-llm-ai-templates', () => {
-        AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
-            .filter((templateId) => NODE_TEMPLATE_IDS.includes(templateId))
-            .filter(inShard)
-            .forEach((templateId) => {
-                test(templateId, () => {
-                    prepareActor(templateId);
+        shardSlice(
+            AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId)).filter((templateId) =>
+                NODE_TEMPLATE_IDS.includes(templateId),
+            ),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-                    checkCommonTemplateStructure(templateId);
-                    if (!canNodeTemplateRun(templateId)) return;
+                checkCommonTemplateStructure(templateId);
+                if (!canNodeTemplateRun(templateId)) return;
 
-                    checkNodeTemplate();
-                    if (SKIP_RUN_TESTS.includes(templateId)) return;
-                    checkTemplateRun();
-                });
+                checkNodeTemplate();
+                if (SKIP_RUN_TESTS.includes(templateId)) return;
+                checkTemplateRun();
             });
+        });
     });
 });

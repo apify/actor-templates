@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, windows-latest]
         python-version: ['3.11', '3.12', '3.13', '3.14']
-        # Round-robin template slice, see TEST_SHARD in test/templates.test.js.
+        # Duration-balanced template slice, see TEST_SHARD in test/templates.test.js.
         shard: ['1/2', '2/2']
       fail-fast: false
     runs-on: ${{ matrix.os }}
