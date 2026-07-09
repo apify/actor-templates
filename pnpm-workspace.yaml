@@ -26,6 +26,8 @@ strictDepBuilds: false
 # Chrome binary; `unrs-resolver` builds native bindings for the eslint resolver
 # used by @apify/eslint-config.
 allowBuilds:
+    # apify-cli's postinstall only prints a Discord invite — skip it.
+    apify-cli: false
     puppeteer: true
     unrs-resolver: true
 
