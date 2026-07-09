@@ -190,7 +190,7 @@
             "name": "python-crawlee-playwright",
             "label": "Crawlee + Playwright + Chrome",
             "category": "python",
-            "technologies": ["crawlee", "playwright"],
+            "technologies": ["crawlee", "playwright", "chrome"],
             "description": "Crawl and scrape websites using Crawlee and Playwright. Start from a URL and store results to your Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
