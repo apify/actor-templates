@@ -39,9 +39,6 @@ jobs:
       - name: Install pnpm and dependencies
         uses: apify/workflows/pnpm-install@v0.41.1
 
-      - name: Install apify CLI globally
-        run: npm install -g apify-cli
-
       - name: Install playwright browsers
         run: pnpm exec playwright install chromium --with-deps
 

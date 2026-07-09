@@ -19,7 +19,13 @@ const TEMPLATES_DIRECTORY = path.join(import.meta.dirname, '../templates');
 const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
 const PYTHON_COMMAND = /^win/.test(process.platform) ? 'python' : 'python3';
 const PYTHON_VENV_COMMAND = /^win/.test(process.platform) ? '.venv\\Scripts\\python.exe' : '.venv/bin/python3';
-const APIFY_COMMAND = /^win/.test(process.platform) ? 'apify.cmd' : 'apify';
+// The apify CLI comes from this repo's devDependencies (lockfile-pinned, cached by
+// the pnpm store) — use its .bin shim directly since the tests chdir into tmp dirs.
+const APIFY_COMMAND = path.join(
+    import.meta.dirname,
+    '../node_modules/.bin',
+    /^win/.test(process.platform) ? 'apify.cmd' : 'apify',
+);
 
 const windowsOptions = /^win/.test(process.platform) ? { shell: true, windowsHide: true } : {};
 
@@ -170,7 +176,15 @@ const checkPythonTemplate = () => {
     // If playwright is used in the template, we have to do a post-install step
     const pipShowPlaywrightSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'playwright']);
     if (pipShowPlaywrightSpawnResult.status === 0) {
-        const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'playwright', 'install']);
+        // Chromium only — the python templates don't use playwright's firefox/webkit
+        // (camoufox fetches its own browser), and a bare `playwright install` pulls
+        // all three (~350MB extra) on every playwright template.
+        const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, [
+            '-m',
+            'playwright',
+            'install',
+            'chromium',
+        ]);
         checkSpawnResult(playwrightInstallSpawnResult);
     }
 
