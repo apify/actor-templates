@@ -28,6 +28,15 @@ jobs:
       PUPPETEER_CACHE_DIR: ${{ github.workspace }}/.puppeteer-cache
 
     steps:
+      # Real-time scanning hooks every file write; template tests write tens of
+      # thousands of node_modules files, measured 3-10x slower than Linux. The
+      # runner VM is ephemeral and fork PRs get no secrets, so nothing of value
+      # is left unprotected.
+      - name: Disable Defender real-time scanning
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: Set-MpPreference -DisableRealtimeMonitoring $true
+
       - name: Checkout repo
         uses: actions/checkout@v7
 
