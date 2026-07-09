@@ -41,7 +41,7 @@ jobs:
           echo "BASE_IMAGE_FORMATTED=$(echo '${{ env.BASE_IMAGE_RAW }}' | sed 's/,/, /g')" >> $GITHUB_OUTPUT
 
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
           fetch-depth: 0
