@@ -49,5 +49,8 @@ jobs:
         run: pnpm run test-python-templates
         env:
           TEST_SHARD: ${{ matrix.shard }}
+          # The camoufox browser fetch hits the GitHub releases API —
+          # unauthenticated it flakes on runner-IP rate limits.
+          GITHUB_TOKEN: ${{ github.token }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
