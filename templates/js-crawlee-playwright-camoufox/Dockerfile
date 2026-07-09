@@ -1,7 +1,12 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://crawlee.dev/docs/guides/docker-images
 # You can also use any other image from Docker Hub.
-FROM apify/actor-node-playwright-camoufox:24-1.60.0
+#
+# Keep playwright pinned to 1.59.1 (here and in package.json)! 1.60+ crashes on
+# Firefox pageErrors without a source location (unguarded pageError.location.url),
+# so one broken page kills the run. Unpin once the camoufox v152.0.2-alpha /
+# upstream playwright fix is released (https://github.com/daijro/camoufox/pull/625).
+FROM apify/actor-node-playwright-camoufox:24-1.59.1
 
 # Check preinstalled packages
 RUN npm ls @crawlee/core apify playwright

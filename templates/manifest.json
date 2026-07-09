@@ -190,7 +190,7 @@
             "name": "python-crawlee-playwright",
             "label": "Crawlee + Playwright + Chrome",
             "category": "python",
-            "technologies": ["crawlee", "playwright"],
+            "technologies": ["crawlee", "playwright", "chrome"],
             "description": "Crawl and scrape websites using Crawlee and Playwright. Start from a URL and store results to your Apify dataset.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
@@ -284,6 +284,7 @@
             "id": "python-pydanticai",
             "name": "python-pydanticai",
             "label": "PydanticAI agent",
+            "skipRunTest": true,
             "category": "python",
             "technologies": ["pydanticai"],
             "description": "A PydanticAI agent designed to generate jokes, showcasing a minimal example using the Pydantic AI framework.",
@@ -689,6 +690,7 @@
             "id": "ts-beeai-agent",
             "name": "ts-beeai-agent",
             "label": "🐝 BeeAI agent",
+            "skipRunTest": true,
             "category": "typescript",
             "technologies": ["nodejs", "beeai"],
             "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis agent.",
