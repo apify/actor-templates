@@ -5,15 +5,16 @@ description = "An Apify Actor with dependencies managed by uv."
 requires-python = ">=3.14"
 dependencies = [
     "apify>=3.0.0,<4.0.0",
-    "beautifulsoup4[lxml]>=4.0.0,<5.0.0",
-    "httpx>=0.28.0,<1.0.0",
 ]
 
 [dependency-groups]
 # Development-only dependencies. They are installed by `uv sync` locally,
 # but skipped in the Actor's Docker image thanks to `uv sync --no-dev`.
 dev = [
-    "types-beautifulsoup4>=4.0.0,<5.0.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.15.21",
+    "ty>=0.0.58",
 ]
 
 [tool.uv]
@@ -21,3 +22,10 @@ dev = [
 # uv only manages its dependencies, the project itself is not built and installed
 # as a package.
 package = false
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+# Match the single-quote style used across the Apify Python codebase.
+quote-style = "single"

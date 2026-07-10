@@ -2,30 +2,25 @@
 
 <!-- This is an Apify template readme -->
 
-A template for [web scraping](https://apify.com/web-scraping) data from a single web page in Python, with the project and its dependencies managed by [uv](https://docs.astral.sh/uv/) - an extremely fast Python package and project manager. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses [HTTPX](https://www.python-httpx.org) to get the HTML of the page and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to parse the data from it. The data are then stored in a [dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets) where you can easily access them.
+A general-purpose [Actor](https://apify.com/actors) template for Python, with the project and its dependencies managed by [uv](https://docs.astral.sh/uv/) - a fast Python package and project manager. It's a minimal starting point for any kind of Actor, for example a scraper, a browser automation, an AI agent, an MCP server, a RAG pipeline, or a standby web server.
 
-The scraped data in this template are page headings, but you can easily edit the code to scrape whatever you want from the page.
+The example code reads an input, does a little work with it, logs its progress, and stores a result in a [dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets). Replace the body of `main()` with whatever your Actor should do. The only thing this template locks in is the tooling, uv, not the use case.
 
 ## Included features
 
 - **[uv](https://docs.astral.sh/uv/)** - a single fast tool that manages the project's Python version (`.python-version`), virtual environment (`.venv`), and dependencies (`pyproject.toml` + `uv.lock`)
 - **Reproducible builds** - the `uv.lock` lockfile guarantees that the Actor's Docker image is built with exactly the dependency versions you developed against
-- **[Apify SDK](https://docs.apify.com/sdk/python/)** for Python - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in Python
+- **[Apify SDK](https://docs.apify.com/sdk/python/)** for Python - a toolkit for building Apify [Actors](https://apify.com/actors) in Python
 - **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
 - **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
-- **[HTTPX](https://www.python-httpx.org)** - library for making asynchronous HTTP requests in Python
-- **[Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)** - library for pulling data out of HTML and XML files
 
 ## How it works
 
-1. `Actor.get_input()` gets the input where the page URL is defined
-2. `httpx.AsyncClient().get(url)` fetches the page
-3. `BeautifulSoup(response.content, 'lxml')` loads the page data and enables parsing the headings
-4. This parses the headings from the page and here you can edit the code to parse whatever you need from the page
-    ```python
-    for heading in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6"]):
-    ```
-5. `Actor.push_data(headings)` stores the headings in the dataset
+1. `Actor.get_input()` reads the input defined in the [input schema](https://docs.apify.com/platform/actors/development/input-schema)
+2. The Actor logs the Python version it runs on (managed by uv) and greets the given name a few times
+3. `Actor.push_data(...)` stores a structured result in the dataset
+
+This is only a placeholder so the template runs out of the box. Swap it for your own logic and add the dependencies you need with `uv add`.
 
 ## Working with uv
 
@@ -47,17 +42,16 @@ uv remove <package>
 uv lock --upgrade && uv sync
 ```
 
-The Actor's `Dockerfile` installs the dependencies with `uv sync --locked --no-dev`, so the image is built with exactly the versions recorded in `uv.lock`, skipping the development-only dependencies. Commit `uv.lock` and `.python-version` whenever they change.
+The Actor's `Dockerfile` installs the dependencies with `uv sync --locked --no-dev`, so the image is built with exactly the versions recorded in `uv.lock` (skipping any development-only dependencies you add under `[dependency-groups]`). Commit `uv.lock` and `.python-version` whenever they change.
 
 ## Resources
 
 - [Apify SDK for Python: uv guide](https://docs.apify.com/sdk/python/docs/guides/uv)
 - [uv: Official documentation](https://docs.astral.sh/uv/)
-- [BeautifulSoup Scraper](https://apify.com/apify/beautifulsoup-scraper)
+- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python/)
 - [Python tutorials in Academy](https://docs.apify.com/academy/python)
-- [Web scraping with Beautiful Soup and Requests](https://blog.apify.com/web-scraping-with-beautiful-soup/)
 - [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)
-- [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
-- A short guide on how to build web scrapers using code templates:
+- [Video guide on getting data using the Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
+- A short guide on how to build Actors using code templates:
 
-[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
+[Actor code templates](https://www.youtube.com/watch?v=u-i-Korzf8w)

@@ -6,17 +6,25 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["level", "text"]
+                "fields": ["greeting", "repeated", "python_version", "managed_by"]
             },
             "display": {
                 "component": "table",
                 "properties": {
-                    "level": {
-                        "label": "Level",
+                    "greeting": {
+                        "label": "Greeting",
                         "format": "text"
                     },
-                    "text": {
-                        "label": "Text",
+                    "repeated": {
+                        "label": "Repeated",
+                        "format": "number"
+                    },
+                    "python_version": {
+                        "label": "Python version",
+                        "format": "text"
+                    },
+                    "managed_by": {
+                        "label": "Managed by",
                         "format": "text"
                     }
                 }

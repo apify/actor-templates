@@ -37,11 +37,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      # Used by the uv-based templates (e.g. python-uv). uv installs the Python version
-      # pinned in the template's .python-version file on its own, so it intentionally
-      # does not get the matrix Python version passed in.
+      # For uv-based templates (e.g. python-uv); uv provides its own Python from .python-version.
       - name: Setup uv
-        uses: astral-sh/setup-uv@v8
+        uses: astral-sh/setup-uv@v8.3.2
 
       - name: Install Chrome and Chromedriver
         # Use pnpm dlx instead of npx — npx is the npm CLI and trips

@@ -68,10 +68,10 @@
         {
             "id": "python-uv",
             "name": "python-uv",
-            "label": "One‑Page HTML Scraper with uv",
+            "label": "Python project managed by uv",
             "category": "python",
-            "technologies": ["uv", "beautifulsoup", "httpx"],
-            "description": "Scrape single page with provided URL with HTTPX and extract data from page's HTML with Beautiful Soup. The project and its dependencies are managed by the uv package manager.",
+            "technologies": ["uv"],
+            "description": "A general-purpose Python Actor with its project and dependencies managed by the uv package manager. A minimal starting point for any use case.",
             "messages": {
                 "postCreate": "To install the dependencies, run \"uv sync\" in the Actor directory. It creates a virtual environment in the \".venv\" folder and installs the locked dependencies from \"uv.lock\". To install additional Python packages, use \"uv add <package>\"."
             },
@@ -82,7 +82,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "pyproject.toml", "my_actor/__main__.py"],
-            "useCases": ["STARTER", "WEB_SCRAPING"]
+            "useCases": ["STARTER"]
         },
         {
             "id": "python-beautifulsoup",

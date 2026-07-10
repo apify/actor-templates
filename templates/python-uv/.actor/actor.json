@@ -2,8 +2,8 @@
     "$schema": "https://apify.com/schemas/v1/actor.ide.json",
     "actorSpecification": 1,
     "name": "python-uv",
-    "title": "Scrape single page in Python with uv",
-    "description": "Scrape data from single page with provided URL, with project and dependencies managed by uv.",
+    "title": "Python Actor managed by uv",
+    "description": "A Python Actor with its project and dependencies managed by uv.",
     "version": "0.0",
     "buildTag": "latest",
     "meta": {
