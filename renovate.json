@@ -31,7 +31,7 @@
         },
         {
             "description": "Mirror pnpm-workspace.yaml minimumReleaseAgeExclude — we publish these ourselves",
-            "matchPackageNames": ["apify", "apify-client", "crawlee", "got-scraping", "@apify/**", "@crawlee/**"],
+            "matchPackageNames": ["apify", "apify-cli", "apify-client", "crawlee", "got-scraping", "@apify/**", "@crawlee/**"],
             "minimumReleaseAge": "0 days"
         }
     ],

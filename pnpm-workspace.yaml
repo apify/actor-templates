@@ -12,6 +12,7 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
     - '@apify/*'
     - '@crawlee/*'
+    - 'apify-cli'
     - 'apify-client'
     - 'apify'
     - 'crawlee'
