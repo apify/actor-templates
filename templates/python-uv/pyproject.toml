@@ -8,13 +8,11 @@ dependencies = [
 ]
 
 [dependency-groups]
-# Development-only dependencies. They are installed by `uv sync` locally,
-# but skipped in the Actor's Docker image thanks to `uv sync --no-dev`.
 dev = [
-    "pytest>=9.1.1",
-    "pytest-asyncio>=1.4.0",
-    "ruff>=0.15.21",
-    "ty>=0.0.58",
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+    "ty",
 ]
 
 [tool.uv]

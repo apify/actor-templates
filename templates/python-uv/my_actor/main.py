@@ -10,8 +10,6 @@ from __future__ import annotations
 
 import sys
 
-# Apify SDK - A toolkit for building Apify Actors. Read more at:
-# https://docs.apify.com/sdk/python
 from apify import Actor
 
 
