@@ -206,61 +206,9 @@ const checkTemplateRun = () => {
 // file, hence the env var. Unset = run everything.
 const [shardIndex, shardTotal] = (process.env.TEST_SHARD ?? '1/1').split('/').map(Number);
 
-// Approximate per-template cost in Windows-runner minutes (the slowest leg),
-// median over the Windows legs of runs 29044970343/29048231477/29050769423
-// (2026-07). Used to balance the shards — exact values don't matter, relative
-// size does. Unlisted templates default to 3.
-const TEMPLATE_WEIGHTS = {
-    'js-bootstrap-cheerio-crawler': 1.7,
-    'js-crawlee-cheerio': 2.9,
-    'js-crawlee-playwright-camoufox': 4.5,
-    'js-crawlee-playwright-chrome': 5.2,
-    'js-crawlee-puppeteer-chrome': 4.4,
-    'js-cypress': 3.9,
-    'js-empty': 1.6,
-    'js-langchain': 7.2,
-    'js-langgraph-agent': 4.8,
-    'js-start': 1.0,
-    'python-beautifulsoup': 0.7,
-    'python-crawlee-beautifulsoup': 0.4,
-    'python-crawlee-parsel': 0.4,
-    'python-crawlee-playwright': 2.5,
-    'python-crawlee-playwright-camoufox': 1.0,
-    'python-empty': 0.3,
-    'python-langgraph': 0.7,
-    'python-llamaindex-agent': 1.2,
-    'python-playwright': 3.6,
-    'python-pydanticai': 1.7,
-    'python-scrapy': 0.9,
-    'python-selenium': 1.7,
-    'python-smolagents': 1.3,
-    'python-start': 0.5,
-    'ts-beeai-agent': 3.5,
-    'ts-crawlee-cheerio': 3.2,
-    'ts-crawlee-playwright-camoufox': 4.8,
-    'ts-crawlee-playwright-chrome': 5.7,
-    'ts-crawlee-puppeteer-chrome': 4.6,
-    'ts-empty': 1.9,
-    'ts-mastraai': 5.9,
-    'ts-start': 2.1,
-    'ts-start-bun': 0,
-};
-
-// LPT scheduling: heaviest template first, each into the currently lightest
-// shard. Deterministic (weight desc, then name), so every shard process computes
-// the same partition without coordination.
-const shardSlice = (templateIds) => {
-    const loads = Array(shardTotal).fill(0);
-    const shards = Array.from({ length: shardTotal }, () => []);
-    const weight = (id) => TEMPLATE_WEIGHTS[id] ?? 3;
-    const sorted = [...templateIds].sort((a, b) => weight(b) - weight(a) || a.localeCompare(b));
-    for (const id of sorted) {
-        const lightest = loads.indexOf(Math.min(...loads));
-        loads[lightest] += weight(id);
-        shards[lightest].push(id);
-    }
-    return shards[shardIndex - 1];
-};
+// A/B experiment: plain round-robin instead of duration-weighted LPT, to measure
+// what balancing is actually worth. Revert this commit to restore balancing.
+const shardSlice = (templateIds) => templateIds.filter((_, index) => index % shardTotal === shardIndex - 1);
 
 const prepareActor = (templateId) => {
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), templateId));
