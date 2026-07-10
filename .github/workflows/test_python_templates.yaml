@@ -41,7 +41,7 @@ jobs:
       # pinned in the template's .python-version file on its own, so it intentionally
       # does not get the matrix Python version passed in.
       - name: Setup uv
-        uses: astral-sh/setup-uv@v8.1.0
+        uses: astral-sh/setup-uv@v8
 
       - name: Install Chrome and Chromedriver
         # Use pnpm dlx instead of npx — npx is the npm CLI and trips
