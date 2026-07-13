@@ -1,34 +1,36 @@
 [project]
 name = "actor-templates"
 version = "0.0.1"
-requires-python = ">= 3.10"
+requires-python = ">= 3.11"
 dependencies = [
-    "apify[scrapy] >= 3.0.0, < 4.0.0",
+    "apify[scrapy] >= 3.3.0, < 4.0.0",
     "apify-client",
-    # "arxiv-mcp-server >= 0.3.1, < 1.0.0",  # Requires Python >= 3.11, incompatible with requires-python >= 3.10
+    "arxiv-mcp-server >= 0.3.1, < 1.0.0",
     "beautifulsoup4[lxml] >= 4.0.0, < 5.0.0",
     "camoufox[geoip] >= 0.4.5, < 1.0.0",
     "crawlee[all] >= 1.7.0",
-    # "crewai[tools] >= 0.11.0, < 1.0.0",  # Pulls onnxruntime via chromadb, which requires Python >= 3.11
+    # crewai 1.x conflicts with the aggregate env (requires uv < 0.10, pydantic-settings < 2.11)
+    # "crewai[tools] >= 1.12.2, < 2.0.0",
     "fastapi >= 0.135.0, < 1.0.0",
-    "fastmcp>=3.2.0,<4.0.0",
+    "fastmcp >= 3.0.0, < 4.0.0",
     "httpx >= 0.28.0, < 1.0.0",
     "langchain >= 1.0.0, < 2.0.0",
-    # "langchain-apify >= 0.1.0, < 1.0.0",  # Incompatible with langchain >= 1.0.0 (requires langchain-core < 0.4.0)
-    "langchain-openai>=1.1.14,<2.0.0",
+    # langchain-apify conflicts with langchain >= 1.0.0 (requires langchain-core < 0.4.0)
+    # "langchain-apify >= 0.1.0, < 1.0.0",
+    "langchain-openai >= 1.0.0, < 2.0.0",
     "langgraph >= 1.0.0, < 2.0.0",
     "llama-index >= 0.14.0, < 1.0.0",
     "mcp >= 1.25.0, < 2.0.0",
     "playwright >= 1.58.0, < 2.0.0",
     "polars >= 1.0.0, < 2.0.0",
     "pydantic >= 2.0.0, < 3.0.0",
-    "pydantic-ai >= 1.99.0, < 2.0.0",  # >= 1.99.0 patches SSRF advisories GHSA-cqp8-fcvh-x7r3 and GHSA-2jrp-274c-jhv3
+    "pydantic-ai >= 2.0.0, < 3.0.0",
     "pyjwt >= 2.12.0",  # Transitive dep of mcp; direct pin until mcp bumps its floor above vulnerable < 2.12.0
-    "scrapy>=2.15.2,<3.0.0",
+    "scrapy >= 2.14.0, < 3.0.0",
     "selenium >= 4.41.0, < 5.0.0",
     "smolagents[openai] >= 1.0.0, < 2.0.0",
     "types-beautifulsoup4 >= 4.0.0, < 5.0.0",
-    "uv>=0.11.15,<1.0.0",
+    "uv >= 0.11.15, < 1.0.0",
     "uvicorn >= 0.27.0, < 1.0.0",
 ]
 
@@ -95,7 +97,7 @@ asyncio_mode = "auto"
 timeout = 1200
 
 [tool.ty.environment]
-python-version = "3.10"
+python-version = "3.11"
 
 [tool.ty.src]
 include = ["templates"]
