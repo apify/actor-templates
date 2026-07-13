@@ -378,7 +378,7 @@
             "label": "One‑Page HTML Scraper with Cheerio",
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "category": "javascript",
-            "technologies": ["nodejs", "cheerio", "axios"],
+            "technologies": ["nodejs", "cheerio"],
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -475,7 +475,7 @@
             "name": "getting_started_typescript",
             "label": "One‑Page HTML Scraper with Cheerio",
             "category": "typescript",
-            "technologies": ["nodejs", "cheerio", "axios"],
+            "technologies": ["nodejs", "cheerio"],
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
@@ -539,7 +539,7 @@
             "name": "project_playwright_test_runner",
             "label": "Playwright + Chrome Test Runner",
             "category": "typescript",
-            "technologies": ["nodejs", "playwright", "chrome"],
+            "technologies": ["nodejs", "playwright"],
             "skipTests": true,
             "description": "Example of using the Playwright Test project to run automated website tests in the cloud and display their results. Usable as an API.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-playwright-test-runner.zip?raw=true",
@@ -675,7 +675,7 @@
             "name": "getting_started_typescript_bun",
             "label": "Start with TypeScript on Bun",
             "category": "typescript",
-            "technologies": ["bun", "cheerio", "axios"],
+            "technologies": ["bun", "cheerio"],
             "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start-bun.zip?raw=true",
             "defaultRunOptions": {
@@ -692,7 +692,7 @@
             "label": "🐝 BeeAI agent",
             "skipRunTest": true,
             "category": "typescript",
-            "technologies": ["beeai"],
+            "technologies": ["nodejs", "beeai"],
             "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-beeai-agent.zip?raw=true",
             "defaultRunOptions": {
@@ -708,7 +708,7 @@
             "name": "ts-mastraai",
             "label": "Mastra agent",
             "category": "typescript",
-            "technologies": ["mastraai"],
+            "technologies": ["nodejs", "mastraai"],
             "description": "Example of how to use Mastra with Apify Actors to create a social media analysis agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mastraai.zip?raw=true",
             "defaultRunOptions": {
@@ -724,7 +724,7 @@
             "name": "ts-mcp-proxy",
             "label": "TypeScript MCP proxy",
             "category": "typescript",
-            "technologies": ["mcp"],
+            "technologies": ["nodejs", "mcp"],
             "description": "Example of how to turn a Model Context Protocol stdio, HTTP Streamable, or SSE server into an Apify Actor.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
@@ -741,7 +741,7 @@
             "name": "ts-mcp-empty",
             "label": "TypeScript MCP server",
             "category": "typescript",
-            "technologies": ["mcp"],
+            "technologies": ["nodejs", "mcp"],
             "description": "Create a Model Context Protocol server using TypeScript and Express with Apify Actor integration for pay-per-event monetization.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-empty.zip?raw=true",
             "defaultRunOptions": {
@@ -758,7 +758,6 @@
             "name": "cli-start",
             "label": "CLI-based Actor starter",
             "category": "javascript",
-            "technologies": ["jq"],
             "description": "Turn any CLI utility into an Apify Actor using the Apify CLI.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/cli-start.zip?raw=true",
             "defaultRunOptions": {
