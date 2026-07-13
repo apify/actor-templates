@@ -10,9 +10,11 @@ jobs:
       matrix:
         os: [ubuntu-24.04, windows-latest]
         python-version: ['3.11', '3.12', '3.13', '3.14']
+        # Duration-balanced template slice, see TEST_SHARD in test/templates.test.js.
+        shard: ['1/2', '2/2']
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 120
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repo
@@ -26,9 +28,6 @@ jobs:
       - name: Install pnpm and dependencies
         uses: apify/workflows/pnpm-install@v0.41.1
 
-      - name: Install apify CLI globally
-        run: npm install -g apify-cli
-
       - name: Install playwright browsers
         run: pnpm exec playwright install chromium --with-deps
 
@@ -36,6 +35,8 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: templates/**/requirements.txt
 
       - name: Install Chrome and Chromedriver
         # Use pnpm dlx instead of npx — npx is the npm CLI and trips
@@ -47,5 +48,9 @@ jobs:
       - name: Test Python templates
         run: pnpm run test-python-templates
         env:
+          TEST_SHARD: ${{ matrix.shard }}
+          # The camoufox browser fetch hits the GitHub releases API —
+          # unauthenticated it flakes on runner-IP rate limits.
+          GITHUB_TOKEN: ${{ github.token }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
