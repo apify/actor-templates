@@ -14,6 +14,7 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "test": "echo \"Error: no test specified\" && exit 1",
+        "// TODO": "revert postinstall to 'npx crawlee install-playwright-browsers' once https://github.com/patorjk/figlet.js/issues/167 is fixed/released",
         "postinstall": "node -e \"process.env.CRAWLEE_SKIP_BROWSER_INSTALL || require('node:child_process').execSync('npx playwright install', {stdio:'inherit'})\""
     },
     "keywords": [],
