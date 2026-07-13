@@ -22,7 +22,7 @@
         "lint": "eslint",
         "lint:fix": "eslint --fix",
         "test": "vitest run",
-        "postinstall": "npx crawlee install-playwright-browsers"
+        "postinstall": "node -e \"process.env.CRAWLEE_SKIP_BROWSER_INSTALL || require('node:child_process').execSync('npx playwright install', {stdio:'inherit'})\""
     },
     "author": "It's not you it's me",
     "license": "ISC"
