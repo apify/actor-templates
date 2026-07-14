@@ -10,15 +10,13 @@
 # we publish them ourselves.
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - '@apify/*'
-  - '@crawlee/*'
-  - 'apify-cli'
-  - 'apify-client'
-  - 'apify'
-  - 'crawlee'
-  - 'got-scraping'
-  # Renovate security update: pnpm@11.8.0
-  - pnpm@11.8.0
+    - '@apify/*'
+    - '@crawlee/*'
+    - 'apify-cli'
+    - 'apify-client'
+    - 'apify'
+    - 'crawlee'
+    - 'got-scraping'
 
 # Lets unknown build-requesting deps fall back to a warning instead of erroring
 # out, so a new build-requesting dev dep doesn't break the install before it
@@ -29,10 +27,10 @@ strictDepBuilds: false
 # Chrome binary; `unrs-resolver` builds native bindings for the eslint resolver
 # used by @apify/eslint-config.
 allowBuilds:
-  # apify-cli's postinstall only prints a Discord invite — skip it.
-  apify-cli: false
-  puppeteer: true
-  unrs-resolver: true
+    # apify-cli's postinstall only prints a Discord invite — skip it.
+    apify-cli: false
+    puppeteer: true
+    unrs-resolver: true
 
 # Force @puppeteer/browsers v3+ everywhere. Older versions (puppeteer 24.x pulls
 # 2.13.x transitively) use an extract-zip flow that freezes mid-extraction on
@@ -40,4 +38,4 @@ allowBuilds:
 # template installs. Mirrors the fix in apify/crawlee#3703.
 # Refs: nodejs/node#63495, puppeteer/puppeteer#14957.
 overrides:
-  '@puppeteer/browsers': ^3.0.4
+    '@puppeteer/browsers': ^3.0.4
