@@ -6,37 +6,25 @@ on:
 
 jobs:
   find-and-test-dockerfiles:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Each shard builds a round-robin slice of the Dockerfiles,
+        # see scripts/test_docker_builds.sh.
+        shard: ['1/4', '2/4', '3/4', '4/4']
+      fail-fast: false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Maximize available disk space
-        run: |
-          # Remove unnecessary pre-installed tools
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/lib/jvm  # Remove Java installations if unused
-          sudo rm -rf /usr/local/share/powershell  # Remove PowerShell
-          sudo rm -rf /usr/local/share/boost  # Remove Boost libraries
-          sudo apt-get remove -y --purge '^dotnet-.*' '^llvm-.*' 'libmono.*' 'mono-.*' 'ghc-.*' || true
-          sudo apt-get autoremove -y
-          sudo apt-get clean
-          # Remove .git directory from root after checkout
-          sudo rm -rf .git
-          # Aggressive Docker cleanup
-          sudo docker system prune -a -f
+      - name: Free disk space
+        # Only the fast rm -rf part of the old "maximize disk space" step — the
+        # apt-get purge took minutes and with ~11 builds per shard (plus the
+        # disk-pressure prune in the build script) this headroom is enough.
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/lib/jvm /usr/local/share/powershell /usr/local/share/boost
 
       - name: Test Dockerfile builds
         shell: bash
-        run: ./scripts/test_docker_builds.sh
-
-      - name: Cleanup
-        if: always()
-        run: |
-          docker image prune -f
+        run: ./scripts/test_docker_builds.sh ${{ matrix.shard }}
