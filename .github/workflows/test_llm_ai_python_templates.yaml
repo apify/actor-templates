@@ -12,7 +12,7 @@ jobs:
         python-version: ['3.11', '3.12', '3.13', '3.14']
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repo
@@ -26,13 +26,12 @@ jobs:
       - name: Install pnpm and dependencies
         uses: apify/workflows/pnpm-install@v0.41.1
 
-      - name: Install apify CLI globally
-        run: npm install -g apify-cli
-
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: templates/**/requirements.txt
 
       - name: Test LLM AI Python templates
         run: pnpm run test-llm-ai-python-templates
