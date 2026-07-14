@@ -22,8 +22,7 @@
         "lint": "eslint",
         "lint:fix": "eslint --fix",
         "test": "vitest run",
-        "// TODO": "revert postinstall to 'npx crawlee install-playwright-browsers' once https://github.com/patorjk/figlet.js/issues/167 is fixed/released",
-        "postinstall": "node -e \"process.env.CRAWLEE_SKIP_BROWSER_INSTALL || require('node:child_process').execSync('npx playwright install', {stdio:'inherit'})\""
+        "postinstall": "npx crawlee install-playwright-browsers"
     },
     "author": "It's not you it's me",
     "license": "ISC"
