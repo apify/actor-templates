@@ -6,16 +6,36 @@ import path from 'node:path';
 import JSON5 from 'json5';
 import semver from 'semver';
 
-import { AGENT_AI_TEMPLATE_IDS, NODE_TEMPLATE_IDS, PYTHON_TEMPLATE_IDS, SKIP_TESTS } from '../src/consts.js';
+import {
+    AGENT_AI_TEMPLATE_IDS,
+    NODE_TEMPLATE_IDS,
+    PYTHON_TEMPLATE_IDS,
+    SKIP_RUN_TESTS,
+    SKIP_TESTS,
+} from '../src/consts.js';
 
 const TEMPLATES_DIRECTORY = path.join(import.meta.dirname, '../templates');
 
 const NPM_COMMAND = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
 const PYTHON_COMMAND = /^win/.test(process.platform) ? 'python' : 'python3';
 const PYTHON_VENV_COMMAND = /^win/.test(process.platform) ? '.venv\\Scripts\\python.exe' : '.venv/bin/python3';
-const APIFY_COMMAND = /^win/.test(process.platform) ? 'apify.cmd' : 'apify';
+// The apify CLI comes from this repo's devDependencies (lockfile-pinned, cached by
+// the pnpm store) — use its .bin shim directly since the tests chdir into tmp dirs.
+const APIFY_COMMAND = path.join(
+    import.meta.dirname,
+    '../node_modules/.bin',
+    /^win/.test(process.platform) ? 'apify.cmd' : 'apify',
+);
 
 const windowsOptions = /^win/.test(process.platform) ? { shell: true, windowsHide: true } : {};
+
+// Puppeteer templates download their pinned Chrome during `npm install`. Pin that to
+// one explicit cache dir shared by the CI pre-install step, each template's install,
+// and the later `apify run` — the default per-user cache is reused across templates,
+// where a partial download from one poisons the next (mostly on Windows). Honor a
+// workflow-provided value; fall back to a temp dir locally.
+process.env.PUPPETEER_CACHE_DIR ||= path.join(os.tmpdir(), 'apify-templates-puppeteer-cache');
+const { PUPPETEER_CACHE_DIR } = process.env;
 
 function spawnSync(command, args, options = {}) {
     return _spawnSync(command, args, { ...options, ...windowsOptions });
@@ -106,7 +126,18 @@ const checkNodeTemplate = () => {
 
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
-    const npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    // Templates depending on puppeteer download Chrome during `npm install` (a
+    // postinstall hook). That download can be flaky and leave a corrupt entry in
+    // PUPPETEER_CACHE_DIR that wedges the install, so for those templates clear the
+    // cache and retry a couple of times.
+    const usesPuppeteer = Boolean(packageJson.dependencies?.puppeteer ?? packageJson.devDependencies?.puppeteer);
+
+    let npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    for (let retry = 0; usesPuppeteer && retry < 2 && npmInstallSpawnResult.status !== 0; retry++) {
+        console.log('npm install failed, clearing Puppeteer cache and retrying...');
+        fs.rmSync(PUPPETEER_CACHE_DIR, { recursive: true, force: true });
+        npmInstallSpawnResult = spawnSync(NPM_COMMAND, ['install']);
+    }
     checkSpawnResult(npmInstallSpawnResult);
 
     if (packageJson.scripts?.lint) {
@@ -145,7 +176,15 @@ const checkPythonTemplate = () => {
     // If playwright is used in the template, we have to do a post-install step
     const pipShowPlaywrightSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'pip', 'show', 'playwright']);
     if (pipShowPlaywrightSpawnResult.status === 0) {
-        const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, ['-m', 'playwright', 'install']);
+        // Chromium only — the python templates don't use playwright's firefox/webkit
+        // (camoufox fetches its own browser), and a bare `playwright install` pulls
+        // all three (~350MB extra) on every playwright template.
+        const playwrightInstallSpawnResult = spawnSync(PYTHON_VENV_COMMAND, [
+            '-m',
+            'playwright',
+            'install',
+            'chromium',
+        ]);
         checkSpawnResult(playwrightInstallSpawnResult);
     }
 
@@ -161,6 +200,68 @@ const checkTemplateRun = () => {
     checkSpawnResult(apifyRunSpawnResult);
 };
 
+// TEST_SHARD="2/4" (set by the CI matrix) makes this process run only its slice
+// of each template list, so the serial install+run loop can be parallelized
+// across jobs. Jest's own --shard splits by test *file* and this is a single
+// file, hence the env var. Unset = run everything.
+const [shardIndex, shardTotal] = (process.env.TEST_SHARD ?? '1/1').split('/').map(Number);
+
+// Approximate per-template cost in Windows-runner minutes (the slowest leg),
+// median over the Windows legs of runs 29044970343/29048231477/29050769423
+// (2026-07). Used to balance the shards — exact values don't matter, relative
+// size does. Unlisted templates default to 3.
+const TEMPLATE_WEIGHTS = {
+    'js-bootstrap-cheerio-crawler': 1.7,
+    'js-crawlee-cheerio': 2.9,
+    'js-crawlee-playwright-camoufox': 4.5,
+    'js-crawlee-playwright-chrome': 5.2,
+    'js-crawlee-puppeteer-chrome': 4.4,
+    'js-cypress': 3.9,
+    'js-empty': 1.6,
+    'js-langchain': 7.2,
+    'js-langgraph-agent': 4.8,
+    'js-start': 1.0,
+    'python-beautifulsoup': 0.7,
+    'python-crawlee-beautifulsoup': 0.4,
+    'python-crawlee-parsel': 0.4,
+    'python-crawlee-playwright': 2.5,
+    'python-crawlee-playwright-camoufox': 1.0,
+    'python-empty': 0.3,
+    'python-langgraph': 0.7,
+    'python-llamaindex-agent': 1.2,
+    'python-playwright': 3.6,
+    'python-pydanticai': 1.7,
+    'python-scrapy': 0.9,
+    'python-selenium': 1.7,
+    'python-smolagents': 1.3,
+    'python-start': 0.5,
+    'ts-beeai-agent': 3.5,
+    'ts-crawlee-cheerio': 3.2,
+    'ts-crawlee-playwright-camoufox': 4.8,
+    'ts-crawlee-playwright-chrome': 5.7,
+    'ts-crawlee-puppeteer-chrome': 4.6,
+    'ts-empty': 1.9,
+    'ts-mastraai': 5.9,
+    'ts-start': 2.1,
+    'ts-start-bun': 0,
+};
+
+// LPT scheduling: heaviest template first, each into the currently lightest
+// shard. Deterministic (weight desc, then name), so every shard process computes
+// the same partition without coordination.
+const shardSlice = (templateIds) => {
+    const loads = Array(shardTotal).fill(0);
+    const shards = Array.from({ length: shardTotal }, () => []);
+    const weight = (id) => TEMPLATE_WEIGHTS[id] ?? 3;
+    const sorted = [...templateIds].sort((a, b) => weight(b) - weight(a) || a.localeCompare(b));
+    for (const id of sorted) {
+        const lightest = loads.indexOf(Math.min(...loads));
+        loads[lightest] += weight(id);
+        shards[lightest].push(id);
+    }
+    return shards[shardIndex - 1];
+};
+
 const prepareActor = (templateId) => {
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), templateId));
     fs.cpSync(path.join(TEMPLATES_DIRECTORY, templateId), tmpDir, { recursive: true });
@@ -169,68 +270,72 @@ const prepareActor = (templateId) => {
 
 describe('templates-work', () => {
     describe('python-templates', () => {
-        PYTHON_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
-            // Skip AI templates
-            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
-            .forEach((templateId) => {
-                test(templateId, () => {
-                    prepareActor(templateId);
+        shardSlice(
+            PYTHON_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
+                // Skip AI templates
+                .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId)),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-                    checkCommonTemplateStructure(templateId);
-                    checkPythonTemplate();
-                    checkTemplateRun();
-                });
+                checkCommonTemplateStructure(templateId);
+                checkPythonTemplate();
+                checkTemplateRun();
             });
+        });
     });
 
     describe('node-js-templates', () => {
-        NODE_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
-            // Skip AI templates
-            .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId))
-            .forEach((templateId) => {
-                test(templateId, () => {
-                    prepareActor(templateId);
+        shardSlice(
+            NODE_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId))
+                // Skip AI templates
+                .filter((templateId) => !AGENT_AI_TEMPLATE_IDS.includes(templateId)),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-                    checkCommonTemplateStructure(templateId);
-                    if (!canNodeTemplateRun(templateId)) return;
+                checkCommonTemplateStructure(templateId);
+                if (!canNodeTemplateRun(templateId)) return;
 
-                    checkNodeTemplate();
-                    checkTemplateRun();
-                });
+                checkNodeTemplate();
+                checkTemplateRun();
             });
+        });
     });
 
     describe('python-llm-ai-templates', () => {
-        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
-            if (SKIP_TESTS.includes(templateId)) continue;
+        shardSlice(
+            AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId)).filter((templateId) =>
+                PYTHON_TEMPLATE_IDS.includes(templateId),
+            ),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-            if (PYTHON_TEMPLATE_IDS.includes(templateId)) {
-                test(templateId, () => {
-                    prepareActor(templateId);
-
-                    checkCommonTemplateStructure(templateId);
-                    checkPythonTemplate();
-                    checkTemplateRun();
-                });
-            }
-        }
+                checkCommonTemplateStructure(templateId);
+                checkPythonTemplate();
+                if (SKIP_RUN_TESTS.includes(templateId)) return;
+                checkTemplateRun();
+            });
+        });
     });
 
     describe('node-js-llm-ai-templates', () => {
-        for (const templateId of AGENT_AI_TEMPLATE_IDS) {
-            if (SKIP_TESTS.includes(templateId)) continue;
+        shardSlice(
+            AGENT_AI_TEMPLATE_IDS.filter((templateId) => !SKIP_TESTS.includes(templateId)).filter((templateId) =>
+                NODE_TEMPLATE_IDS.includes(templateId),
+            ),
+        ).forEach((templateId) => {
+            test(templateId, () => {
+                prepareActor(templateId);
 
-            if (NODE_TEMPLATE_IDS.includes(templateId)) {
-                test(templateId, () => {
-                    prepareActor(templateId);
+                checkCommonTemplateStructure(templateId);
+                if (!canNodeTemplateRun(templateId)) return;
 
-                    checkCommonTemplateStructure(templateId);
-                    if (!canNodeTemplateRun(templateId)) return;
-
-                    checkNodeTemplate();
-                    checkTemplateRun();
-                });
-            }
-        }
+                checkNodeTemplate();
+                if (SKIP_RUN_TESTS.includes(templateId)) return;
+                checkTemplateRun();
+            });
+        });
     });
 });

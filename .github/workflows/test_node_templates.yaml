@@ -13,13 +13,23 @@ jobs:
         # test harness only runs on Node 22 and 24. Users can still author templates
         # targeting older Node versions in their own Actors.
         node-version: [22, 24]
+        # Each shard runs a duration-balanced slice of the templates (TEST_SHARD in
+        # test/templates.test.js) — the per-template install+run loop is serial,
+        # so sharding is what parallelizes it.
+        shard: ['1/4', '2/4', '3/4', '4/4']
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 120
+    timeout-minutes: 30
+
+    # Pin Puppeteer's browser cache to one explicit dir shared by the pre-install step
+    # below and the per-template install/run in the harness (avoids cross-template
+    # cache corruption, mostly on Windows).
+    env:
+      PUPPETEER_CACHE_DIR: ${{ github.workspace }}/.puppeteer-cache
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
@@ -29,14 +39,20 @@ jobs:
       - name: Install pnpm and dependencies
         uses: apify/workflows/pnpm-install@v0.41.1
 
-      - name: Install apify CLI globally
-        run: npm install -g apify-cli
-
       - name: Install playwright browsers
         run: pnpm exec playwright install chromium --with-deps
+
+      # Warm PUPPETEER_CACHE_DIR with the pinned browsers so templates don't race to
+      # download Chrome during `npm install`.
+      - name: Install puppeteer browsers
+        run: pnpm exec puppeteer browsers install
 
       - name: Test Node.js templates
         run: pnpm run test-node-templates
         env:
+          TEST_SHARD: ${{ matrix.shard }}
+          # camoufox-js fetch (camoufox template postinstall) hits the GitHub
+          # releases API — unauthenticated it flakes on runner-IP rate limits.
+          GITHUB_TOKEN: ${{ github.token }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}

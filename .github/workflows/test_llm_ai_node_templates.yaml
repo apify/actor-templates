@@ -8,15 +8,20 @@ jobs:
     name: Test LLM AI Node.js templates
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-latest]
+        # windows-2022, not windows-latest: js-langchain's native hnswlib-node addon
+        # fails to build on windows-latest (VS 2026 isn't detected by node-gyp).
+        # Removing the native dependency is tracked in #813.
+        os: [ubuntu-24.04, windows-2022]
         node-version: [22]
+        # Duration-balanced template slice, see TEST_SHARD in test/templates.test.js.
+        shard: ['1/2', '2/2']
       fail-fast: false
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
@@ -26,11 +31,9 @@ jobs:
       - name: Install pnpm and dependencies
         uses: apify/workflows/pnpm-install@v0.41.1
 
-      - name: Install apify CLI globally
-        run: npm install -g apify-cli
-
       - name: Test LLM AI Node.js templates
         run: pnpm run test-llm-ai-node-templates
         env:
+          TEST_SHARD: ${{ matrix.shard }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}

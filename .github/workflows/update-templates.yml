@@ -26,6 +26,9 @@ env:
   DEFAULT_RUNTIME_VERSION: ${{ github.event.client_payload.default_runtime_version || inputs.default_runtime_version }}
   MODULE_VERSION: ${{ github.event.client_payload.module_version || inputs.module_version }}
 
+permissions:
+  contents: read
+
 jobs:
   update-templates:
     runs-on: ubuntu-latest
@@ -38,7 +41,7 @@ jobs:
           echo "BASE_IMAGE_FORMATTED=$(echo '${{ env.BASE_IMAGE_RAW }}' | sed 's/,/, /g')" >> $GITHUB_OUTPUT
 
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
           fetch-depth: 0
