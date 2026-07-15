@@ -26,7 +26,7 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.41.1
+        uses: apify/workflows/pnpm-install@v0.46.0
 
       - name: Install playwright browsers
         run: pnpm exec playwright install chromium --with-deps
