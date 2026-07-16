@@ -10,7 +10,7 @@
         "generatedBy": "<FILL-IN-MODEL>"
     },
     "dockerfile": "../Dockerfile",
-    "output": "./output_schema.json",
+    "outputSchema": "./output_schema.json",
     "storages": {
         "keyValueStore": "./key_value_store_schema.json"
     },
