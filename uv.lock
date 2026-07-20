@@ -53,7 +53,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "apify", extras = ["scrapy"], specifier = ">=3.3.0,<4.0.0" },
+    { name = "apify", extras = ["scrapy"], specifier = ">=4.0.0,<5.0.0" },
     { name = "apify-client" },
     { name = "arxiv-mcp-server", specifier = ">=0.3.1,<1.0.0" },
     { name = "beautifulsoup4", extras = ["lxml"], specifier = ">=4.0.0,<5.0.0" },
@@ -330,11 +330,10 @@ wheels = [
 
 [[package]]
 name = "apify"
-version = "3.4.1"
+version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "apify-client" },
-    { name = "apify-shared" },
+    { name = "apify-client", extra = ["brotli"] },
     { name = "cachetools" },
     { name = "crawlee" },
     { name = "cryptography" },
@@ -346,9 +345,9 @@ dependencies = [
     { name = "websockets" },
     { name = "yarl" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/49/12/d50a3741bf5ff8400a7e513671fe9b4027e9badeec757e2e8f29946d32da/apify-3.4.1.tar.gz", hash = "sha256:885beb717a384abbf1c2eaab605f20cd36bd057e3c3c1b51e3b465c6dc63f6b6", size = 97734, upload-time = "2026-05-29T10:05:51.766Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/31/e8/1c2cc7d93875d4c1d4920f25e92c84e5cf9312a64174262ffb581b9f044f/apify-4.0.0.tar.gz", hash = "sha256:14853f298f16b9f9dd37f68e5f36bc81cfe82116a0714bc227174e012ac41324", size = 116949, upload-time = "2026-07-20T09:35:42.717Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/dd/d2/2d477296ad44bf0b61e5c9ea881a7f5ce1c5f23821be0a42fc8f0e4cb736/apify-3.4.1-py3-none-any.whl", hash = "sha256:dd15d2224e30b8c8a48663db78d9d8bdbd4a2cbbeab0824573fdda0cbd29a585", size = 105858, upload-time = "2026-05-29T10:05:50.177Z" },
+    { url = "https://files.pythonhosted.org/packages/db/d7/954f76b2d0e07866557fc701c285cf77acbe35ca711eaaeff687a88a49ca/apify-4.0.0-py3-none-any.whl", hash = "sha256:8bedfbee68861a08cb91145714b626a03bb781494b8941de107b562485b1d35d", size = 123927, upload-time = "2026-07-20T09:35:41.232Z" },
 ]
 
 [package.optional-dependencies]
@@ -358,17 +357,22 @@ scrapy = [
 
 [[package]]
 name = "apify-client"
-version = "2.5.1"
+version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "apify-shared" },
     { name = "colorama" },
     { name = "impit" },
     { name = "more-itertools" },
+    { name = "pydantic", extra = ["email"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/51/e4/1eaee14189886362a7d5629c362fb1bdc5bb36d506c99e97e866eea5a0e9/apify_client-2.5.1.tar.gz", hash = "sha256:ff8457c9cc14cbfe0eefb337a8c0a33f4d81e7760768bdd036e7470a5bc63c24", size = 380576, upload-time = "2026-05-20T09:43:36.461Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1c/c8/6aaee683e2c94b6545dbf76ac361a7fa0866531a7747a2de15bc2a97162b/apify_client-3.1.0.tar.gz", hash = "sha256:08c2b31f7f74a36ab2abc6235bb118bb4d522a84e65a3f0b75c452c4872aa4fe", size = 128468, upload-time = "2026-07-20T07:07:06.601Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/32/13/56a809582558d3662c47b1d16cf8c0d979d658a08a6acaf83598319fa9ee/apify_client-2.5.1-py3-none-any.whl", hash = "sha256:5515f43fd6edd5388db0534660403662bfc0650febd69a6f0d8e58f32a6d7269", size = 86995, upload-time = "2026-05-20T09:43:34.739Z" },
+    { url = "https://files.pythonhosted.org/packages/4f/ed/485d8a065fc68637aa66936f68d28c4a702634878f26a1d98c173714e509/apify_client-3.1.0-py3-none-any.whl", hash = "sha256:52674943222e6986b5b5d8d6f3ad135ac84f6e2faafe7036abb4242ebc9e71b3", size = 149442, upload-time = "2026-07-20T07:07:05.183Z" },
+]
+
+[package.optional-dependencies]
+brotli = [
+    { name = "brotli" },
 ]
 
 [[package]]
@@ -378,15 +382,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f9/f1/b74f95767581372ab849c8b13e384b62f60d034584892c60c4a3442d9312/apify_fingerprint_datapoints-0.13.0.tar.gz", hash = "sha256:263141c19e9bc90a821e6b4e2b845925f17e0b8fbd53a897fc71546bd50df7f1", size = 934827, upload-time = "2026-05-04T09:08:45.036Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fc/58/8402442bf6af5a3a8068fe5431c42ea4f73c1eb18f621f9bf7c5de80caf5/apify_fingerprint_datapoints-0.13.0-py3-none-any.whl", hash = "sha256:0213d42297be19e8035202b41fb2e840a1e5d79874c99c882a5027a7d0b1a0eb", size = 761652, upload-time = "2026-05-04T09:08:43.347Z" },
-]
-
-[[package]]
-name = "apify-shared"
-version = "2.2.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/17/60/a4628f817a29f56a238bb4e5aec8e6d9ae11d7bdb40f75eb6dad4f812a03/apify_shared-2.2.1.tar.gz", hash = "sha256:5369b9f77daa2462eae31c58d59180071df0dcb4abdd611b8a03fc9d967dfeb1", size = 16738, upload-time = "2026-07-08T15:25:32.64Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/77/74/a614b72c91cfbbee54c34bf32b7e41a12de09ccf917e0a0ca74baf969148/apify_shared-2.2.1-py3-none-any.whl", hash = "sha256:3affbd1d82da2ee8593337d1bafd744d2b0041e0fbee8011266b4a7b9e871c18", size = 16460, upload-time = "2026-07-08T15:25:31.384Z" },
 ]
 
 [[package]]
