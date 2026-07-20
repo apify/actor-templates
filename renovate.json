@@ -41,6 +41,11 @@
                 "@crawlee/**"
             ],
             "minimumReleaseAge": "0 days"
+        },
+        {
+            "description": "Temporarily hold updates that currently break template CI (Camoufox/Playwright incompatibility and unresolved major bumps). No security fix is pending. Re-enable once the templates are compatible. See PRs #855, #805, #846, #797, #790.",
+            "matchPackageNames": ["playwright", "camoufox-js", "typescript", "eslint", "puppeteer"],
+            "enabled": false
         }
     ],
     "schedule": ["every weekday"],
