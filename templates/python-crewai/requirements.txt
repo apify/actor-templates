@@ -1,6 +1,9 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
+# Pinned to apify v3: crewai-tools' ApifyActorsTool needs langchain-apify, which requires
+# apify-client < 3.0.0, while apify v4 requires apify-client >= 3.0.0. Bump once langchain-apify
+# supports apify-client v3.
 apify >= 3.0.0, < 4.0.0
 apify-client
 langchain-apify >= 0.1.0, < 1.0.0
