@@ -6,7 +6,7 @@
     "dependencies": {
         "apify": "^3.7.0",
         "@crawlee/puppeteer": "^3.15.3",
-        "puppeteer": "24.43.1"
+        "puppeteer": "25.3.0"
     },
     "devDependencies": {
         "@apify/eslint-config": "^2.0.0",
