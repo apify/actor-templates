@@ -38,6 +38,10 @@ jobs:
           cache: pip
           cache-dependency-path: templates/**/requirements.txt
 
+      # For uv-based templates (e.g. python-uv); uv provides its own Python from .python-version.
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v8.3.2
+
       - name: Install Chrome and Chromedriver
         # Use pnpm dlx instead of npx — npx is the npm CLI and trips
         # devEngines.packageManager=pnpm at the repo root.

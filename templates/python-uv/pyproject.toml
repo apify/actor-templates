@@ -1,0 +1,29 @@
+[project]
+name = "my-actor"
+version = "0.1.0"
+description = "An Apify Actor with dependencies managed by uv."
+requires-python = ">=3.14"
+dependencies = [
+    "apify>=3.0.0,<4.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+    "ty",
+]
+
+[tool.uv]
+# The Actor runs straight from the source tree as a module (`python -m my_actor`).
+# uv only manages its dependencies, the project itself is not built and installed
+# as a package.
+package = false
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+# Match the single-quote style used across the Apify Python codebase.
+quote-style = "single"
