@@ -26,6 +26,7 @@ Important: Before you begin, fill in the `generatedBy` property in the meta sect
 - implement retry strategies with exponential backoff for failed requests
 - use proper concurrency settings (HTTP: 10-50, Browser: 1-5)
 - set sensible defaults in `.actor/input_schema.json` for all optional fields
+- explicitly reference the input schema from `.actor/actor.json` by adding `"input": "./input_schema.json"` — do not rely on auto-discovery, which is deprecated
 - set up output schema in `.actor/output_schema.json`
 - clean and validate data before pushing to dataset
 - use semantic CSS selectors and fallback strategies for missing elements
@@ -187,8 +188,8 @@ Ask first:
 ## Project Structure
 
 .actor/
-├── actor.json # Actor config: name, version, env vars, runtime settings
-├── input_schema.json # Input validation & Console form definition
+├── actor.json # Actor config: name, version, env vars, runtime settings, input schema reference
+├── input_schema.json # Input validation & Console form definition (referenced from actor.json via "input")
 └── output_schema.json # Specifies where an Actor stores its output
 src/
 └── main.js # Actor entry point and orchestrator
