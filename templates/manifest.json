@@ -13,10 +13,10 @@
         {
             "id": "python-crawlee-beautifulsoup",
             "name": "python-crawlee-beautifulsoup",
-            "label": "Crawlee + BeautifulSoup",
+            "label": "Crawl a whole website (fast)",
             "category": "python",
             "technologies": ["crawlee", "beautifulsoup"],
-            "description": "Crawl and scrape websites using Crawlee and BeautifulSoup. Start from a URL and store results to your Apify dataset.",
+            "description": "Crawl a whole website quickly and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -33,9 +33,9 @@
         {
             "id": "python-empty",
             "name": "python-empty",
-            "label": "Empty Python project",
+            "label": "Blank Actor",
             "category": "python",
-            "description": "Start with Apify SDK already set up, then build any features you need.",
+            "description": "A clean Actor with the Apify SDK set up, so you can build any tool from scratch.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -48,10 +48,10 @@
         {
             "id": "python-start",
             "name": "python-start",
-            "label": "One‑Page HTML Scraper with BeautifulSoup",
+            "label": "Scrape one web page",
             "category": "python",
             "technologies": ["beautifulsoup", "httpx"],
-            "description": "Scrape single page with provided URL with HTTPX and extract data from page's HTML with Beautiful Soup.",
+            "description": "Get data from one web page. The simplest way to start scraping.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -68,10 +68,10 @@
         {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
-            "label": "BeautifulSoup",
+            "label": "Scrape a list of web pages",
             "category": "python",
             "technologies": ["beautifulsoup", "httpx"],
-            "description": "Example of a web scraper that uses Python HTTPX to scrape HTML from URLs provided on input, parses it using BeautifulSoup and saves results to storage.",
+            "description": "Get data from a list of web pages. Fast and light for simple sites.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -87,10 +87,10 @@
         {
             "id": "python-playwright",
             "name": "python-playwright",
-            "label": "Playwright + Chrome",
+            "label": "Scrape sites that need JavaScript",
             "category": "python",
             "technologies": ["playwright", "chrome"],
-            "description": "Crawler example that uses headless Chrome driven by Playwright to scrape a website. Headless browsers render JavaScript and can help when getting blocked.",
+            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "messages": {
                 "postCreate": "To run this actor, you need to have Playwright's browsers installed.\nTo do so, activate the virtual environment in the \".venv\" folder in the actor directory, and run \"playwright install --with-deps\".\nTo install additional Python packages, you need also need to activate the virtual environment in the \".venv\" folder in the actor directory.\n"
             },
@@ -106,10 +106,10 @@
         {
             "id": "python-selenium",
             "name": "python-selenium",
-            "label": "Selenium + Chrome",
+            "label": "Scrape sites that need JavaScript",
             "category": "python",
             "technologies": ["selenium", "chrome"],
-            "description": "Scraper example built with Selenium and headless Chrome browser to scrape a website and save the results to storage. A popular alternative to Playwright.",
+            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "messages": {
                 "postCreate": "To run this actor, you need to have the Selenium ChromeDriver installed.\nTo install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -125,9 +125,9 @@
         {
             "id": "python-standby",
             "name": "python-standby",
-            "label": "Standby Python project",
+            "label": "Standby API Actor",
             "category": "python",
-            "description": "Start with a working Actor in Standby mode that stays ready in the background, then build any features you need.",
+            "description": "Keep an always-on Actor running so it responds to requests immediately. Good for APIs and real-time services.",
             "skipTests": true,
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-standby.zip?raw=true",
             "defaultRunOptions": {
@@ -141,10 +141,10 @@
         {
             "id": "python-scrapy",
             "name": "python-scrapy",
-            "label": "Scrapy",
+            "label": "Crawl a large website",
             "category": "python",
             "technologies": ["scrapy"],
-            "description": "This example Scrapy spider scrapes page titles from URLs defined in input parameter. It shows how to use Apify SDK for Python and Scrapy pipelines to save results.",
+            "description": "Crawl large websites in the cloud with the Scrapy framework.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -168,10 +168,10 @@
         {
             "id": "python-crawlee-parsel",
             "name": "python-crawlee-parsel",
-            "label": "Crawlee + Parsel",
+            "label": "Crawl a whole website (fast)",
             "category": "python",
             "technologies": ["crawlee", "parsel"],
-            "description": "Crawl and scrape websites using Crawlee and Parsel. Start from a URL and store results to your Apify dataset.",
+            "description": "Crawl a whole website quickly and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -188,10 +188,10 @@
         {
             "id": "python-crawlee-playwright",
             "name": "python-crawlee-playwright",
-            "label": "Crawlee + Playwright + Chrome",
+            "label": "Scrape sites that need JavaScript",
             "category": "python",
             "technologies": ["crawlee", "playwright", "chrome"],
-            "description": "Crawl and scrape websites using Crawlee and Playwright. Start from a URL and store results to your Apify dataset.",
+            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -208,10 +208,10 @@
         {
             "id": "python-crawlee-playwright-camoufox",
             "name": "python-crawlee-playwright-camoufox",
-            "label": "Crawlee + Playwright + Camoufox",
+            "label": "Scrape sites that block bots",
             "category": "python",
             "technologies": ["crawlee", "playwright", "camoufox"],
-            "description": "Crawl and scrape websites using Crawlee and Playwright with Camoufox. Start from a URL and store results to your Apify dataset.",
+            "description": "Scrape well-protected sites with a stealth-focused browser. Use it when a regular browser scraper gets blocked or challenged.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -228,10 +228,10 @@
         {
             "id": "python-langgraph",
             "name": "python-langgraph",
-            "label": "🦜️🔗 LangGraph AI agent",
+            "label": "AI agent that analyzes social media",
             "category": "python",
             "technologies": ["langgraph"],
-            "description": "Example of how to use LangGraph with Apify Actors to create a social media analysis tool-calling agent.",
+            "description": "An AI agent that researches and analyzes social media profiles.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langgraph.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -250,11 +250,11 @@
         {
             "id": "python-crewai",
             "name": "python-crewai",
-            "label": "CrewAI agent",
+            "label": "Team of AI agents for social media analysis",
             "category": "python",
             "technologies": ["crewai"],
             "skipTests": true,
-            "description": "Example of how to use CrewAI with Apify Actors to create a social media analysis tool-calling agent.",
+            "description": "A team of AI agents that research and analyze social media together.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crewai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -267,10 +267,10 @@
         {
             "id": "python-llamaindex-agent",
             "name": "python-llamaindex-agent",
-            "label": "LlamaIndex agent",
+            "label": "AI contact details extractor",
             "category": "python",
             "technologies": ["llamaindex"],
-            "description": "LlamaIndex agent to scrape, deduplicate and summarize contact details from a website",
+            "description": "An AI agent that finds and summarizes contact details from a website.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-llamaindex-agent.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -283,11 +283,11 @@
         {
             "id": "python-pydanticai",
             "name": "python-pydanticai",
-            "label": "PydanticAI agent",
+            "label": "Minimal AI agent (starter)",
             "skipRunTest": true,
             "category": "python",
             "technologies": ["pydanticai"],
-            "description": "A PydanticAI agent designed to generate jokes, showcasing a minimal example using the Pydantic AI framework.",
+            "description": "A tiny AI agent example to learn how to build agents.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -300,10 +300,10 @@
         {
             "id": "python-smolagents",
             "name": "python-smolagents",
-            "label": "Smolagents agent",
+            "label": "AI news aggregator",
             "category": "python",
             "technologies": ["smolagents"],
-            "description": "Create an AI news aggregator that fetches and summarizes the latest news based on your interests, using DuckDuckGo search and OpenAI models with Python Smolagents.",
+            "description": "An AI agent that finds and summarizes news on topics you choose.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -316,11 +316,11 @@
         {
             "id": "python-mcp-proxy",
             "name": "python-mcp-proxy",
-            "label": "Python MCP proxy",
+            "label": "Host an existing MCP server",
             "category": "python",
             "technologies": ["mcp"],
             "skipTests": true,
-            "description": "Demonstrates how to convert a Python stdio, HTTP-streamable, or SSE-based Model Context Protocol server into an Apify Actor.",
+            "description": "Run an existing MCP server in the cloud as a monetized Actor.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -341,11 +341,11 @@
         {
             "id": "python-mcp-empty",
             "name": "python-mcp-empty",
-            "label": "Python MCP server",
+            "label": "Build an AI tool server (MCP)",
             "category": "python",
             "technologies": ["mcp"],
             "skipTests": true,
-            "description": "Create a Model Context Protocol server using Python and FastMCP with Apify Actor integration for pay-per-event monetization.",
+            "description": "Give AI assistants like Claude and Cursor your own tools, with built-in pay-per-event billing.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -358,10 +358,10 @@
         {
             "id": "js-crawlee-cheerio",
             "name": "project_cheerio_crawler_js",
-            "label": "Crawlee + Cheerio",
+            "label": "Crawl a whole website (fast)",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
-            "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
+            "description": "Crawl a whole website quickly and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -375,8 +375,8 @@
         {
             "id": "js-start",
             "name": "getting_started_node",
-            "label": "One‑Page HTML Scraper with Cheerio",
-            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
+            "label": "Scrape one web page",
+            "description": "Get data from one web page. The simplest way to start scraping.",
             "category": "javascript",
             "technologies": ["nodejs", "cheerio"],
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-start.zip?raw=true",
@@ -391,10 +391,10 @@
         {
             "id": "ts-crawlee-cheerio",
             "name": "project_cheerio_crawler_ts",
-            "label": "Crawlee + Cheerio",
+            "label": "Crawl a whole website (fast)",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
-            "description": "A scraper example that uses Cheerio to parse HTML. It's fast, but it can't run the website's JavaScript or pass JS anti-scraping challenges.",
+            "description": "Crawl a whole website quickly and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-cheerio.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -408,10 +408,10 @@
         {
             "id": "js-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_js",
-            "label": "Crawlee + Puppeteer + Chrome",
+            "label": "Scrape sites that need JavaScript",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
-            "description": "Example of a Puppeteer and headless Chrome web scraper. Headless browsers render JavaScript and are harder to block, but they're slower than plain HTTP.",
+            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -424,10 +424,10 @@
         {
             "id": "js-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_js",
-            "label": "Crawlee + Playwright + Chrome",
+            "label": "Scrape sites that need JavaScript",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
-            "description": "Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.",
+            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -440,10 +440,10 @@
         {
             "id": "js-crawlee-playwright-camoufox",
             "name": "project_playwright_camoufox_crawler_js",
-            "label": "Crawlee + Playwright + Camoufox",
+            "label": "Scrape sites that block bots",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
-            "description": "Web scraper example with Crawlee, Playwright and Camoufox. Camoufox is a custom stealthy fork of Firefox. Try this template if you're facing anti-scraping challenges.",
+            "description": "Scrape well-protected sites with a stealth-focused browser. Use it when a regular browser scraper gets blocked or challenged.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -456,10 +456,10 @@
         {
             "id": "js-bootstrap-cheerio-crawler",
             "name": "js-bootstrap-cheerio-crawler",
-            "label": "Bootstrap CheerioCrawler",
+            "label": "Crawler starter for experienced developers",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "cheerio"],
-            "description": "Skeleton project that helps you quickly bootstrap `CheerioCrawler` in JavaScript. It's best for developers who already know Apify SDK and Crawlee.",
+            "description": "A bare-bones crawler for developers who already know the Apify SDK and Crawlee.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-bootstrap-cheerio-crawler.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -473,10 +473,10 @@
         {
             "id": "ts-start",
             "name": "getting_started_typescript",
-            "label": "One‑Page HTML Scraper with Cheerio",
+            "label": "Scrape one web page",
             "category": "typescript",
             "technologies": ["nodejs", "cheerio"],
-            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
+            "description": "Get data from one web page. The simplest way to start scraping.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -489,10 +489,10 @@
         {
             "id": "ts-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_ts",
-            "label": "Crawlee + Puppeteer + Chrome",
+            "label": "Scrape sites that need JavaScript",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
-            "description": "Example of a Puppeteer and headless Chrome web scraper. Headless browsers render JavaScript and are harder to block, but they're slower than plain HTTP.",
+            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -505,10 +505,10 @@
         {
             "id": "ts-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_ts",
-            "label": "Crawlee + Playwright + Chrome",
+            "label": "Scrape sites that need JavaScript",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
-            "description": "Web scraper example with Crawlee, Playwright and headless Chrome. Playwright is more modern, user-friendly and harder to block than Puppeteer.",
+            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -521,10 +521,10 @@
         {
             "id": "ts-crawlee-playwright-camoufox",
             "name": "project_playwright_camoufox_crawler_ts",
-            "label": "Crawlee + Playwright + Camoufox",
+            "label": "Scrape sites that block bots",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
-            "description": "Web scraper example with Crawlee, Playwright and headless Camoufox. Camoufox is a custom stealthy fork of Firefox. Try this template if you're facing anti-scraping challenges.",
+            "description": "Scrape well-protected sites with a stealth-focused browser. Use it when a regular browser scraper gets blocked or challenged.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -537,11 +537,11 @@
         {
             "id": "ts-playwright-test-runner",
             "name": "project_playwright_test_runner",
-            "label": "Playwright + Chrome Test Runner",
+            "label": "Run website tests in the cloud",
             "category": "typescript",
             "technologies": ["nodejs", "playwright"],
             "skipTests": true,
-            "description": "Example of using the Playwright Test project to run automated website tests in the cloud and display their results. Usable as an API.",
+            "description": "Run automated browser tests and see the results. Usable as an API.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-playwright-test-runner.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -554,10 +554,10 @@
         {
             "id": "ts-empty",
             "name": "ts_empty",
-            "label": "Empty TypeScript project",
+            "label": "Blank Actor",
             "category": "typescript",
             "technologies": ["nodejs"],
-            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
+            "description": "A clean Actor with the Apify SDK set up, so you can build any tool from scratch.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -570,11 +570,11 @@
         {
             "id": "ts-standby",
             "name": "ts_standby",
-            "label": "Standby TypeScript project",
+            "label": "Standby API Actor",
             "category": "typescript",
             "technologies": ["nodejs"],
             "skipTests": true,
-            "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
+            "description": "Keep an always-on Actor running so it responds to requests immediately. Good for APIs and real-time services.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-standby.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -587,10 +587,10 @@
         {
             "id": "js-cypress",
             "name": "project_cypress",
-            "label": "Cypress",
+            "label": "Run Cypress tests in the cloud",
             "category": "javascript",
             "technologies": ["nodejs", "cypress"],
-            "description": "Example of running Cypress tests and saving their results on the Apify platform. JSON results are saved to Dataset, videos to Key-value store.",
+            "description": "Run your Cypress tests in the cloud and save the results and videos.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-cypress.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -608,10 +608,10 @@
         {
             "id": "js-empty",
             "name": "project_empty",
-            "label": "Empty JavaScript Project",
+            "label": "Blank Actor",
             "category": "javascript",
             "technologies": ["nodejs"],
-            "description": "Empty template with basic structure for the Actor with Apify SDK that allows you to easily add your own functionality.",
+            "description": "A clean Actor with the Apify SDK set up, so you can build any tool from scratch.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -624,11 +624,11 @@
         {
             "id": "js-standby",
             "name": "js_standby",
-            "label": "Standby JavaScript Project",
+            "label": "Standby API Actor",
             "category": "javascript",
             "technologies": ["nodejs"],
             "skipTests": true,
-            "description": "Template with basic structure for an Actor using Standby mode that allows you to easily add your own functionality.",
+            "description": "Keep an always-on Actor running so it responds to requests immediately. Good for APIs and real-time services.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-standby.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -641,10 +641,10 @@
         {
             "id": "js-langchain",
             "name": "project_langchain_js",
-            "label": "🦜️🔗 LangChain",
+            "label": "Chat with a website",
             "category": "javascript",
             "technologies": ["nodejs", "langchain"],
-            "description": "Example of how to use LangChain.js with Apify to crawl, vectorize, and query web data with the OpenAI model.",
+            "description": "Crawl a website and ask an AI questions about its content.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langchain.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -657,10 +657,10 @@
         {
             "id": "js-langgraph-agent",
             "name": "project-langgraph-agent-javascript",
-            "label": "LangGraph agent",
+            "label": "AI agent that answers via web search",
             "category": "javascript",
             "technologies": ["nodejs", "langgraph"],
-            "description": "LangGraph agent in JavaScript for answering questions via web search.",
+            "description": "An AI agent that answers questions by searching the web.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langgraph-agent.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -673,10 +673,10 @@
         {
             "id": "ts-start-bun",
             "name": "getting_started_typescript_bun",
-            "label": "Start with TypeScript on Bun",
+            "label": "Scrape one web page (Bun runtime)",
             "category": "typescript",
             "technologies": ["bun", "cheerio"],
-            "description": "Scrape single page with provided URL with Axios and extract data from page's HTML with Cheerio.",
+            "description": "Get data from one web page, on the fast Bun runtime.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-start-bun.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -689,11 +689,11 @@
         {
             "id": "ts-beeai-agent",
             "name": "ts-beeai-agent",
-            "label": "🐝 BeeAI agent",
+            "label": "AI agent that analyzes social media",
             "skipRunTest": true,
             "category": "typescript",
             "technologies": ["nodejs", "beeai"],
-            "description": "Example of how to use Bee Agent Framework with Apify Actors to create a social media analysis agent.",
+            "description": "An AI agent that researches and analyzes social media profiles.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-beeai-agent.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -706,10 +706,10 @@
         {
             "id": "ts-mastraai",
             "name": "ts-mastraai",
-            "label": "Mastra agent",
+            "label": "AI agent that analyzes social media",
             "category": "typescript",
             "technologies": ["nodejs", "mastraai"],
-            "description": "Example of how to use Mastra with Apify Actors to create a social media analysis agent.",
+            "description": "An AI agent that researches and analyzes social media profiles.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mastraai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -722,10 +722,10 @@
         {
             "id": "ts-mcp-proxy",
             "name": "ts-mcp-proxy",
-            "label": "TypeScript MCP proxy",
+            "label": "Host an existing MCP server",
             "category": "typescript",
             "technologies": ["nodejs", "mcp"],
-            "description": "Example of how to turn a Model Context Protocol stdio, HTTP Streamable, or SSE server into an Apify Actor.",
+            "description": "Run an existing MCP server in the cloud as a monetized Actor.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -739,10 +739,10 @@
         {
             "id": "ts-mcp-empty",
             "name": "ts-mcp-empty",
-            "label": "TypeScript MCP server",
+            "label": "Build an AI tool server (MCP)",
             "category": "typescript",
             "technologies": ["nodejs", "mcp"],
-            "description": "Create a Model Context Protocol server using TypeScript and Express with Apify Actor integration for pay-per-event monetization.",
+            "description": "Give AI assistants like Claude and Cursor your own tools, with built-in pay-per-event billing.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -756,9 +756,9 @@
         {
             "id": "cli-start",
             "name": "cli-start",
-            "label": "CLI-based Actor starter",
+            "label": "Turn a CLI tool into an Actor",
             "category": "javascript",
-            "description": "Turn any CLI utility into an Apify Actor using the Apify CLI.",
+            "description": "Run command-line tools in the cloud as Actors, without rewriting them from scratch.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/cli-start.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
