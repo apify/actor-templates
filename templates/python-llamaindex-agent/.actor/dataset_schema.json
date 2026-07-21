@@ -1,12 +1,32 @@
 {
     "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
     "actorSpecification": 1,
-    "fields": {},
+    "fields": {
+        "title": "Overview",
+        "type": "object",
+        "properties": {
+            "answer": {
+                "type": "string",
+                "title": "Answer"
+            },
+            "query": {
+                "type": "string",
+                "title": "Query"
+            }
+        },
+        "required": [
+            "answer",
+            "query"
+        ]
+    },
     "views": {
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["query", "answer"]
+                "fields": [
+                    "query",
+                    "answer"
+                ]
             },
             "display": {
                 "component": "table",

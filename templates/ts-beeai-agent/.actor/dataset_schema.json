@@ -5,7 +5,11 @@
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["query", "response", "structuredResponse"]
+                "fields": [
+                    "query",
+                    "response",
+                    "structuredResponse"
+                ]
             },
             "display": {
                 "component": "table",
@@ -25,5 +29,29 @@
                 }
             }
         }
+    },
+    "fields": {
+        "title": "Overview",
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "title": "Query"
+            },
+            "response": {
+                "type": "string",
+                "title": "Response"
+            },
+            "structuredResponse": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Structured Response"
+            }
+        },
+        "required": [
+            "query",
+            "response",
+            "structuredResponse"
+        ]
     }
 }
