@@ -10,5 +10,10 @@
         "templateId": "js-empty",
         "generatedBy": "<FILL-IN-MODEL>"
     },
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
     "dockerfile": "../Dockerfile"
 }
