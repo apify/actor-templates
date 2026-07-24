@@ -29,7 +29,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.46.0
+        uses: apify/workflows/pnpm-install@v0.47.0
 
       - name: Test LLM AI Node.js templates
         run: pnpm run test-llm-ai-node-templates
