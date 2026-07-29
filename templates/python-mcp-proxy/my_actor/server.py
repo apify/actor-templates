@@ -118,6 +118,7 @@ class ProxyServer:
 
     def __init__(  # noqa: PLR0913
         self,
+        *,
         server_name: str,
         config: ServerParameters,
         host: str,
