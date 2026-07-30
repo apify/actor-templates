@@ -10,7 +10,7 @@
         "templateId": "cli-start",
         "generatedBy": "<FILL-IN-MODEL>"
     },
-    "input": {
+    "inputSchema": {
         "title": "Actor input",
         "description": "Actor input object",
         "type": "object",

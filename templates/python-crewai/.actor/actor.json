@@ -6,11 +6,11 @@
     "description": "CrewAI agent in python",
     "version": "0.0",
     "buildTag": "latest",
-    "input": "./input_schema.json",
+    "inputSchema": "./input_schema.json",
     "storages": {
         "dataset": "./dataset_schema.json"
     },
-    "output": "./output_schema.json",
+    "outputSchema": "./output_schema.json",
     "meta": {
         "templateId": "python-crewai",
         "generatedBy": "<FILL-IN-MODEL>"

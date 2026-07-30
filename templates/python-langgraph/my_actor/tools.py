@@ -52,7 +52,7 @@ async def tool_scrape_instagram_profile_posts(handle: str, max_posts: int = 30) 
         msg = 'Failed to start the Actor apify/instagram-scraper'
         raise RuntimeError(msg)
 
-    dataset_id = run['defaultDatasetId']
+    dataset_id = run.default_dataset_id
     dataset_items: list[dict] = (await Actor.apify_client.dataset(dataset_id).list_items()).items
     posts: list[InstagramPost] = []
     for item in dataset_items:

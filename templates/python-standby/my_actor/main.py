@@ -39,6 +39,6 @@ async def main() -> None:
     the field of web scraping significantly.
     """
     async with Actor:
-        # A simple HTTP server listening on Actor standby port.
-        with HTTPServer(('', Actor.configuration.standby_port), GetHandler) as http_server:
+        # A simple HTTP server listening on the Actor web server port.
+        with HTTPServer(('', Actor.configuration.web_server_port), GetHandler) as http_server:
             http_server.serve_forever()

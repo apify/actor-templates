@@ -101,11 +101,11 @@ async def main() -> None:
             # Pass Actor.charge to enable charging for MCP operations
             # The proxy server will use this to charge for different operations
             proxy_server = ProxyServer(
-                SERVER_NAME,
-                MCP_SERVER_PARAMS,
-                HOST,
-                PORT,
-                server_type,
+                server_name=SERVER_NAME,
+                config=MCP_SERVER_PARAMS,
+                host=HOST,
+                port=PORT,
+                server_type=server_type,
                 actor_charge_function=Actor.charge,
                 tool_whitelist=TOOL_WHITELIST,
                 session_timeout_secs=session_timeout_secs,
