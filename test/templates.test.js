@@ -180,7 +180,10 @@ const checkUvPythonTemplate = () => {
     // If playwright is used in the template, we have to do a post-install step
     const uvPipShowPlaywrightSpawnResult = spawnSync('uv', ['pip', 'show', 'playwright']);
     if (uvPipShowPlaywrightSpawnResult.status === 0) {
-        const playwrightInstallSpawnResult = spawnSync('uv', ['run', 'playwright', 'install']);
+        // Chromium only — the python templates don't use playwright's firefox/webkit
+        // (camoufox fetches its own browser), and a bare `playwright install` pulls
+        // all three (~350MB extra) on every playwright template.
+        const playwrightInstallSpawnResult = spawnSync('uv', ['run', 'playwright', 'install', 'chromium']);
         checkSpawnResult(playwrightInstallSpawnResult);
     }
 
