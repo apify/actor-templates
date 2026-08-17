@@ -13,10 +13,10 @@
         {
             "id": "python-crawlee-beautifulsoup",
             "name": "python-crawlee-beautifulsoup",
-            "label": "Crawl a whole website (fast)",
+            "label": "Crawl a whole website (fast, BeautifulSoup)",
             "category": "python",
             "technologies": ["crawlee", "beautifulsoup"],
-            "description": "Crawl a whole website quickly and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
+            "description": "Crawl a whole website and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -68,10 +68,10 @@
         {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
-            "label": "Scrape a list of web pages",
+            "label": "Scrape multiple web pages",
             "category": "python",
             "technologies": ["beautifulsoup", "httpx"],
-            "description": "Get data from a list of web pages. Fast and light for simple sites.",
+            "description": "Get data from multiple web pages. Fast and light for simple sites.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -87,12 +87,12 @@
         {
             "id": "python-playwright",
             "name": "python-playwright",
-            "label": "Scrape sites that need JavaScript",
+            "label": "Scrape JavaScript-heavy sites with Playwright",
             "category": "python",
             "technologies": ["playwright", "chrome"],
-            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
+            "description": "Scrape JavaScript-heavy sites with Playwright. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "messages": {
-                "postCreate": "To run this actor, you need to have Playwright's browsers installed.\nTo do so, activate the virtual environment in the \".venv\" folder in the actor directory, and run \"playwright install --with-deps\".\nTo install additional Python packages, you need also need to activate the virtual environment in the \".venv\" folder in the actor directory.\n"
+                "postCreate": "To run this Actor, you need Playwright's browsers installed.\nActivate the virtual environment in the \".venv\" folder, then run \"playwright install --with-deps\".\nUse the same virtual environment to install additional Python packages."
             },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-playwright.zip?raw=true",
             "defaultRunOptions": {
@@ -106,12 +106,12 @@
         {
             "id": "python-selenium",
             "name": "python-selenium",
-            "label": "Scrape sites that need JavaScript",
+            "label": "Scrape JavaScript-heavy sites with Selenium",
             "category": "python",
             "technologies": ["selenium", "chrome"],
-            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
+            "description": "Scrape JavaScript-heavy sites with Selenium and Chrome. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "messages": {
-                "postCreate": "To run this actor, you need to have the Selenium ChromeDriver installed.\nTo install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+                "postCreate": "To run this Actor, you need the Selenium ChromeDriver installed.\nTo install additional Python packages, activate the virtual environment in the \".venv\" folder in the actor directory."
             },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-selenium.zip?raw=true",
             "defaultRunOptions": {
@@ -168,10 +168,10 @@
         {
             "id": "python-crawlee-parsel",
             "name": "python-crawlee-parsel",
-            "label": "Crawl a whole website (fast)",
+            "label": "Crawl a whole website (fast, Parsel)",
             "category": "python",
             "technologies": ["crawlee", "parsel"],
-            "description": "Crawl a whole website quickly and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
+            "description": "Crawl a whole website and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -188,10 +188,10 @@
         {
             "id": "python-crawlee-playwright",
             "name": "python-crawlee-playwright",
-            "label": "Scrape sites that need JavaScript",
+            "label": "Scrape JavaScript-heavy sites with Crawlee",
             "category": "python",
             "technologies": ["crawlee", "playwright", "chrome"],
-            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
+            "description": "Scrape JavaScript-heavy sites with Crawlee. Use it when you need managed retries, queues, and proxies.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
@@ -287,7 +287,7 @@
             "skipRunTest": true,
             "category": "python",
             "technologies": ["pydanticai"],
-            "description": "A tiny AI agent example to learn how to build agents.",
+            "description": "A minimal AI agent that generates jokes, ready to build on.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -304,7 +304,7 @@
             "category": "python",
             "technologies": ["smolagents"],
             "description": "An AI agent that finds and summarizes news on topics you choose.",
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-smolagents.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 128,
@@ -408,10 +408,10 @@
         {
             "id": "js-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_js",
-            "label": "Scrape sites that need JavaScript",
+            "label": "Scrape JavaScript-heavy sites with Puppeteer",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
-            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
+            "description": "Scrape JavaScript-heavy sites with Puppeteer and Chrome. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -424,10 +424,10 @@
         {
             "id": "js-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_js",
-            "label": "Scrape sites that need JavaScript",
+            "label": "Scrape JavaScript-heavy sites with Playwright",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
-            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
+            "description": "Scrape JavaScript-heavy sites with Playwright. More modern than Puppeteer and harder to block.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -489,10 +489,10 @@
         {
             "id": "ts-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_ts",
-            "label": "Scrape sites that need JavaScript",
+            "label": "Scrape JavaScript-heavy sites with Puppeteer",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
-            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
+            "description": "Scrape JavaScript-heavy sites with Puppeteer and Chrome. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-puppeteer-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -505,10 +505,10 @@
         {
             "id": "ts-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_ts",
-            "label": "Scrape sites that need JavaScript",
+            "label": "Scrape JavaScript-heavy sites with Playwright",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
-            "description": "Scrape sites that load content with JavaScript, using a real browser. Use it when an HTTP scraper comes back empty, like on social feeds, dashboards, or single-page apps.",
+            "description": "Scrape JavaScript-heavy sites with Playwright. More modern than Puppeteer and harder to block.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -644,7 +644,7 @@
             "label": "Chat with a website",
             "category": "javascript",
             "technologies": ["nodejs", "langchain"],
-            "description": "Crawl a website and ask an AI questions about its content.",
+            "description": "Ask AI about a website's content.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langchain.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -689,7 +689,7 @@
         {
             "id": "ts-beeai-agent",
             "name": "ts-beeai-agent",
-            "label": "AI agent that analyzes social media",
+            "label": "Analyze social media with BeeAI",
             "skipRunTest": true,
             "category": "typescript",
             "technologies": ["nodejs", "beeai"],
@@ -706,7 +706,7 @@
         {
             "id": "ts-mastraai",
             "name": "ts-mastraai",
-            "label": "AI agent that analyzes social media",
+            "label": "Analyze social media with Mastra",
             "category": "typescript",
             "technologies": ["nodejs", "mastraai"],
             "description": "An AI agent that researches and analyzes social media profiles.",
