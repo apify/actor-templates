@@ -1,0 +1,25 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Input schema for a uv-managed Apify Actor",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "name": {
+            "title": "Name",
+            "type": "string",
+            "description": "The name the Actor greets in its output. Replace it with whatever input your Actor needs.",
+            "editor": "textfield",
+            "default": "world",
+            "prefill": "world"
+        },
+        "repeat": {
+            "title": "Repeat count",
+            "type": "integer",
+            "description": "How many times to log the greeting.",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 10
+        }
+    },
+    "required": []
+}

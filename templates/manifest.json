@@ -66,6 +66,25 @@
             "useCases": ["STARTER", "WEB_SCRAPING"]
         },
         {
+            "id": "python-uv",
+            "name": "python-uv",
+            "label": "Python project managed by uv",
+            "category": "python",
+            "technologies": ["uv"],
+            "description": "A general-purpose Python Actor with its project and dependencies managed by the uv package manager. A minimal starting point for any use case.",
+            "messages": {
+                "postCreate": "To install the dependencies, run \"uv sync\" in the Actor directory. It creates a virtual environment in the \".venv\" folder and installs the locked dependencies from \"uv.lock\". To install additional Python packages, use \"uv add <package>\"."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-uv.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": ["my_actor/main.py", "pyproject.toml", "my_actor/__main__.py"],
+            "useCases": ["STARTER"]
+        },
+        {
             "id": "python-beautifulsoup",
             "name": "python-beautifulsoup",
             "label": "BeautifulSoup",
