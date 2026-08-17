@@ -1,0 +1,39 @@
+# Git metadata - not needed inside the image
+.git
+
+# Apify storage folder
+storage/
+
+# Python virtual environment - recreated by `uv sync` during the Docker build
+.venv/
+.env/
+
+# Python (and Python tools) cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.ty_cache/
+
+# Python build files
+__pypackages__/
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Environment variables
+.env
+
+# Log files
+*.log
+
+# Editor / OS noise
+.idea/
+.vscode
+.zed
+.DS_Store
+.mise.toml
+.nvim.lua

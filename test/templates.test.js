@@ -162,7 +162,44 @@ const checkNodeTemplate = () => {
     expect(semver.satisfies(apifyModulePackageJson.version, expectedRange)).toBe(true);
 };
 
+// uv-based templates (recognized by the uv.lock lockfile) manage their dependencies with uv
+// instead of a requirements.txt file. `uv sync` creates the .venv virtual environment, which
+// is then picked up by `apify run` just like the pip-created one.
+const checkUvPythonTemplate = () => {
+    expect(fs.existsSync('pyproject.toml')).toBe(true);
+
+    // Upgrade to the latest versions allowed by pyproject.toml instead of the locked ones -
+    // this mirrors the requirements.txt flow, which also always installs the latest allowed
+    // versions, so the latest-SDK assertion below stays meaningful.
+    const uvSyncSpawnResult = spawnSync('uv', ['sync', '--upgrade']);
+    checkSpawnResult(uvSyncSpawnResult);
+
+    const uvPipShowApifySpawnResult = spawnSync('uv', ['pip', 'show', 'apify']);
+    checkSpawnResult(uvPipShowApifySpawnResult);
+
+    // If playwright is used in the template, we have to do a post-install step
+    const uvPipShowPlaywrightSpawnResult = spawnSync('uv', ['pip', 'show', 'playwright']);
+    if (uvPipShowPlaywrightSpawnResult.status === 0) {
+        // Chromium only — the python templates don't use playwright's firefox/webkit
+        // (camoufox fetches its own browser), and a bare `playwright install` pulls
+        // all three (~350MB extra) on every playwright template.
+        const playwrightInstallSpawnResult = spawnSync('uv', ['run', 'playwright', 'install', 'chromium']);
+        checkSpawnResult(playwrightInstallSpawnResult);
+    }
+
+    const installedApifySdkVersion = uvPipShowApifySpawnResult.stdout
+        .toString()
+        .match(/Version: (.*)/)[1]
+        .trim();
+    expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
+};
+
 const checkPythonTemplate = () => {
+    if (fs.existsSync('uv.lock')) {
+        checkUvPythonTemplate();
+        return;
+    }
+
     expect(fs.existsSync('requirements.txt')).toBe(true);
 
     spawnSync(PYTHON_COMMAND, ['-m', 'venv', '.venv']);
