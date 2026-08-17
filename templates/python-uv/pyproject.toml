@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "An Apify Actor with dependencies managed by uv."
 requires-python = ">=3.14"
 dependencies = [
-    "apify>=3.0.0,<4.0.0",
+    "apify>=4.0.0,<5.0.0",
 ]
 
 [dependency-groups]
@@ -23,6 +23,9 @@ package = false
 
 [tool.ruff]
 line-length = 120
+# Ruff also formats Python snippets embedded in Markdown files. The docs here are
+# prose, so keep Markdown out of scope and let Ruff manage the Python sources only.
+extend-exclude = ["*.md"]
 
 [tool.ruff.format]
 # Match the single-quote style used across the Apify Python codebase.
