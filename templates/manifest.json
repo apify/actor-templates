@@ -33,7 +33,7 @@
         {
             "id": "python-empty",
             "name": "python-empty",
-            "label": "Blank Actor",
+            "label": "Empty Python Actor",
             "category": "python",
             "description": "A clean Actor with the Apify SDK set up, so you can build any tool from scratch.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
@@ -554,7 +554,7 @@
         {
             "id": "ts-empty",
             "name": "ts_empty",
-            "label": "Blank Actor",
+            "label": "Empty TypeScript Actor",
             "category": "typescript",
             "technologies": ["nodejs"],
             "description": "A clean Actor with the Apify SDK set up, so you can build any tool from scratch.",
@@ -608,7 +608,7 @@
         {
             "id": "js-empty",
             "name": "project_empty",
-            "label": "Blank Actor",
+            "label": "Empty JavaScript Actor",
             "category": "javascript",
             "technologies": ["nodejs"],
             "description": "A clean Actor with the Apify SDK set up, so you can build any tool from scratch.",
