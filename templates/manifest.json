@@ -18,7 +18,7 @@
             "technologies": ["crawlee", "beautifulsoup"],
             "description": "Get data from every page on a site. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript. Uses BeautifulSoup, Python's most popular HTML parser.",
             "messages": {
-                "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
+                "postCreate": "Activate the virtual environment in the \".venv\" folder to install additional Python packages."
             },
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crawlee-beautifulsoup.zip?raw=true",
             "defaultRunOptions": {
