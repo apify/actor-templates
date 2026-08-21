@@ -16,7 +16,7 @@
             "label": "Crawl a whole website (fast, BeautifulSoup)",
             "category": "python",
             "technologies": ["crawlee", "beautifulsoup"],
-            "description": "Crawl a whole website and get its data. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript.",
+            "description": "Get data from every page on a site. Good for simple sites like blogs, news, or product listings, but it can't run client-side JavaScript. Uses BeautifulSoup, Python's most popular HTML parser.",
             "messages": {
                 "postCreate": "To install additional Python packages, you need to activate the virtual environment in the \".venv\" folder in the actor directory."
             },
