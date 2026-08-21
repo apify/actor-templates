@@ -33,7 +33,7 @@
         {
             "id": "python-empty",
             "name": "python-empty",
-            "label": "Empty Python Actor",
+            "label": "Build an empty Python Actor",
             "category": "python",
             "description": "A clean Actor with the Apify SDK set up, so you can build any tool from scratch.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-empty.zip?raw=true",
