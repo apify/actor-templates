@@ -320,7 +320,7 @@
             "category": "python",
             "technologies": ["mcp"],
             "skipTests": true,
-            "description": ""A monetized Actor from any existing MCP server. Supports stdio, HTTP, and SSE.",
+            "description": "A monetized Actor from any existing MCP server. Supports stdio, HTTP, and SSE.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -427,7 +427,7 @@
             "label": "Scrape JavaScript-heavy sites with Playwright",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
-            "description": "A Playwright-based browser scraper. More modern than Puppeteer and harder to block.",
+            "description": "A Playwright-based browser scraper supporting multiple browsers and contexts.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -443,7 +443,7 @@
             "label": "Scrape sites that block bots",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
-            "description": "A Camoufox-based browser built to bypass anti-bot protections undetected.",
+            "description": "A Firefox-based browser built to look like a real user and bypass bot protection.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -508,7 +508,7 @@
             "label": "Scrape JavaScript-heavy sites with Playwright",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
-            "description": "A Playwright-based browser scraper. More modern than Puppeteer and harder to block.",
+            "description": "A Playwright-based browser scraper supporting multiple browsers and contexts.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-chrome.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -524,7 +524,7 @@
             "label": "Scrape sites that block bots",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
-            "description": "A Camoufox-based browser built to bypass anti-bot protections undetected.",
+            "description": "A Firefox-based browser built to look like a real user and bypass bot protection.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-crawlee-playwright-camoufox.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -641,10 +641,10 @@
         {
             "id": "js-langchain",
             "name": "project_langchain_js",
-            "label": "Ask AI about any website",
+            "label": "Ask AI about website",
             "category": "javascript",
             "technologies": ["nodejs", "langchain"],
-            "description": "A site crawler that lets you ask AI questions about the content it finds.",
+            "description": "A site crawler that lets you ask AI questions about its content.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-langchain.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
