@@ -211,7 +211,7 @@
             "label": "Scrape sites that block bots",
             "category": "python",
             "technologies": ["crawlee", "playwright", "camoufox"],
-            "description": "A Camoufox-based browser that bypasses anti-bot protections undetected.",
+            "description": "A Firefox-based browser built to look like a real user and bypass bot protection.",
             "messages": {
                 "postCreate": "Activate the virtual environment in the \".venv\" folder to install additional Python packages."
             },
