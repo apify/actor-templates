@@ -13,7 +13,7 @@ wheels = [
 
 [[package]]
 name = "apify"
-version = "4.0.1"
+version = "4.0.2b5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "apify-client", extra = ["brotli"] },
@@ -28,9 +28,9 @@ dependencies = [
     { name = "websockets" },
     { name = "yarl" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/5b/61070741e4607a5477f7fda6da58904f9e63a1afa2be478d6f85752a7017/apify-4.0.1.tar.gz", hash = "sha256:8ac4b0551b4e1957a75fed3bc5ea2735c05631f7a3ef5c01be77068b1c8dd142", size = 116642, upload-time = "2026-08-07T07:12:44.598Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8d/4b/968fdd5a5bdb4c6927edd8b5060b68d7bbeab7e231d9db5dcc8c52e7153b/apify-4.0.2b5.tar.gz", hash = "sha256:739e6c46fc5ddecd644cbae70ccc16e36f25d1bf1d9d207a7e4861838de7d2b2", size = 127568, upload-time = "2026-08-31T07:10:44.463Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/be/5b/7f9f8f4507b8d0db5404ae79fc767effef6dfa78db772ac70ee3b732b8bf/apify-4.0.1-py3-none-any.whl", hash = "sha256:04581ef95500bcd839d0704671a39f7b746fe9a81d06fd6b3233001441ce2f9e", size = 122242, upload-time = "2026-08-07T07:12:43.117Z" },
+    { url = "https://files.pythonhosted.org/packages/2d/4d/ea392e9a773de275f7a08274d9778e5beb7f5f9f21b180b5a8f9effe6aee/apify-4.0.2b5-py3-none-any.whl", hash = "sha256:ae2f05cc25dcebece91fc9a0ddaedb765dbfce5cf45117e84573feab6241035c", size = 132184, upload-time = "2026-08-31T07:10:43.038Z" },
 ]
 
 [[package]]
@@ -430,7 +430,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "apify", specifier = ">=4.0.0,<5.0.0" }]
+requires-dist = [{ name = "apify", specifier = "==4.0.2b5" }]
 
 [package.metadata.requires-dev]
 dev = [
