@@ -63,9 +63,9 @@ const APIFY_SDK_JS_LATEST_VERSION = spawnSync(NPM_COMMAND, ['view', 'apify', 've
     .stdout.toString()
     .trim();
 
-const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 'index', 'versions', 'apify'])
-    .stdout.toString()
-    .match(/\((.*)\)/)[1];
+// Temporary override for beta testing (this PR is not meant to be merged): the templates pin
+// the 4.0.2b5 pre-release, which `pip index versions` never reports as the latest version.
+const APIFY_SDK_PYTHON_LATEST_VERSION = '4.0.2b5';
 
 const checkSpawnResult = ({ status, stdout, stderr }) => {
     if (stdout?.toString()) {
