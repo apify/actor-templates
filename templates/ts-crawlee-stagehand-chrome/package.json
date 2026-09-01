@@ -1,0 +1,42 @@
+{
+    "name": "crawlee-stagehand-typescript",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "This is an example of an Apify Actor.",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.5.2",
+        "@crawlee/stagehand": "^3.16.0",
+        "playwright": "1.58.1",
+        "openai": "^4.96.0",
+        "zod": "^3.25.0"
+    },
+    "devDependencies": {
+        "@apify/eslint-config": "^1.0.0",
+        "@apify/tsconfig": "^0.1.1",
+        "@types/node": "^22.15.32",
+        "eslint": "^9.29.0",
+        "eslint-config-prettier": "^10.1.5",
+        "globals": "^17.0.0",
+        "prettier": "^3.5.3",
+        "tsx": "^4.20.3",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.34.1"
+    },
+    "scripts": {
+        "start": "npm run start:dev",
+        "start:prod": "node dist/main.js",
+        "start:dev": "tsx src/main.ts",
+        "build": "tsc",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "test": "echo \"Error: oops, the Actor has no tests yet, sad!\" && exit 1",
+        "postinstall": "npx crawlee install-playwright-browsers"
+    },
+    "author": "It's not you it's me",
+    "license": "ISC"
+}
