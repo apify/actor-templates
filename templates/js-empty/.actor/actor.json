@@ -10,5 +10,6 @@
         "templateId": "js-empty",
         "generatedBy": "<FILL-IN-MODEL>"
     },
+    "input": "./input_schema.json",
     "dockerfile": "../Dockerfile"
 }
