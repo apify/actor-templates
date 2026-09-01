@@ -1,12 +1,66 @@
 {
     "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
     "actorSpecification": 1,
-    "fields": {},
+    "fields": {
+        "title": "Test Report",
+        "type": "object",
+        "properties": {
+            "duration": {
+                "type": "number",
+                "title": "Duration"
+            },
+            "errors": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "title": "Error messages"
+            },
+            "result": {
+                "type": "boolean",
+                "title": "Result"
+            },
+            "runnerName": {
+                "type": "string",
+                "title": "Runner"
+            },
+            "suiteName": {
+                "type": "string",
+                "title": "Test Suite"
+            },
+            "testName": {
+                "type": "string",
+                "title": "Name"
+            },
+            "video": {
+                "type": "string",
+                "format": "uri",
+                "title": "Video recording"
+            }
+        },
+        "required": [
+            "duration",
+            "errors",
+            "result",
+            "runnerName",
+            "suiteName",
+            "testName",
+            "video"
+        ]
+    },
     "views": {
         "overview": {
             "title": "Test Report",
             "transformation": {
-                "fields": ["suiteName", "testName", "runnerName", "result", "errors", "duration", "video"]
+                "fields": [
+                    "suiteName",
+                    "testName",
+                    "runnerName",
+                    "result",
+                    "errors",
+                    "duration",
+                    "video"
+                ]
             },
             "display": {
                 "component": "table",

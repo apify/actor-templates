@@ -1,0 +1,37 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "$comment": "Starter dataset schema. Replace the `value` field below with your Actor's actual output fields, then run `apify push` to upload.",
+    "actorSpecification": 1,
+    "fields": {
+        "title": "Records",
+        "type": "object",
+        "properties": {
+            "value": {
+                "type": "string",
+                "title": "Value"
+            }
+        },
+        "required": [
+            "value"
+        ]
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "value"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "value": {
+                        "label": "Value",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}

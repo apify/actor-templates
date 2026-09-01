@@ -1,0 +1,28 @@
+# .actorignore — files NOT included in `apify push` archives.
+# Mirrors .dockerignore where the rationale is "don't ship to the platform",
+# diverging only where Docker semantics need different contents.
+
+# Build artifacts (Dockerfile rebuilds these inside the image)
+dist/
+build/
+*.tsbuildinfo
+
+# Dependencies (installed by the platform image)
+node_modules/
+
+# Local-development storage
+storage/
+apify_storage/
+crawlee_storage/
+
+# Logs / env / IDE / OS
+*.log
+.env
+.env.*
+.idea/
+.vscode/
+.zed/
+.DS_Store
+
+# Git history
+.git/

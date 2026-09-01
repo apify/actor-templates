@@ -1,12 +1,26 @@
 {
     "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
     "actorSpecification": 1,
-    "fields": {},
+    "fields": {
+        "title": "Overview",
+        "type": "object",
+        "properties": {
+            "summary": {
+                "type": "string",
+                "title": "Summary"
+            }
+        },
+        "required": [
+            "summary"
+        ]
+    },
     "views": {
         "overview": {
             "title": "Overview",
             "transformation": {
-                "fields": ["summary"]
+                "fields": [
+                    "summary"
+                ]
             },
             "display": {
                 "component": "table",
