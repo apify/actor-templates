@@ -1,0 +1,14 @@
+name: Disk benchmark
+description: >
+    Diagnostic. Times a node_modules-shaped small-file workload against both
+    os.tmpdir() and RUNNER_TEMP, to find out whether the harness installs
+    templates onto the slower of the runner's two disks.
+
+# TEMPORARY: remove once the question is settled. See PR #907.
+
+runs:
+    using: composite
+    steps:
+        - name: Benchmark os.tmpdir() vs RUNNER_TEMP
+          shell: bash
+          run: node "${{ github.action_path }}/benchmark.mjs"
