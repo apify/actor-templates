@@ -24,6 +24,17 @@ const BULK_MB = Number(process.env.BENCH_BULK_MB ?? 64);
 const smallPayload = Buffer.alloc(FILE_BYTES, 0x61);
 const bulkChunk = Buffer.alloc(1024 * 1024, 0x62);
 
+// D: is the smaller of the two Windows disks and `prepareActor` never removes
+// its temp dirs, so headroom is part of the decision, not a footnote.
+const freeGiB = (p) => {
+    try {
+        const { bavail, bsize } = fs.statfsSync(p);
+        return (Number(bavail) * Number(bsize)) / 1024 ** 3;
+    } catch {
+        return null;
+    }
+};
+
 const time = (fn) => {
     const t0 = process.hrtime.bigint();
     fn();
@@ -79,6 +90,7 @@ const benchmark = (label, root) => {
             bulk: bulk.toFixed(2),
             bulkMBps: Math.round(BULK_MB / bulk),
             remove: remove.toFixed(2),
+            freeGiB: freeGiB(root)?.toFixed(1) ?? '?',
         };
     } finally {
         fs.rmSync(base, { recursive: true, force: true });
@@ -107,11 +119,11 @@ const pad = (s, n) => String(s).padEnd(n);
 // Keep the table readable when a temp path is long.
 const short = (p) => (p.length <= 42 ? p : `...${p.slice(-39)}`);
 console.log(
-    `${pad('target', 14)}${pad('path', 44)}${pad('create s', 10)}${pad('files/s', 9)}${pad('walk s', 8)}${pad('stats/s', 9)}${pad('bulk MB/s', 11)}rm s`,
+    `${pad('target', 14)}${pad('path', 44)}${pad('create s', 10)}${pad('files/s', 9)}${pad('walk s', 8)}${pad('stats/s', 9)}${pad('bulk MB/s', 11)}${pad('rm s', 7)}free GiB`,
 );
 for (const r of rows) {
     console.log(
-        `${pad(r.label, 14)}${pad(short(r.root), 44)}${pad(r.create, 10)}${pad(r.filesPerSec, 9)}${pad(r.walk, 8)}${pad(r.statsPerSec, 9)}${pad(r.bulkMBps, 11)}${r.remove}`,
+        `${pad(r.label, 14)}${pad(short(r.root), 44)}${pad(r.create, 10)}${pad(r.filesPerSec, 9)}${pad(r.walk, 8)}${pad(r.statsPerSec, 9)}${pad(r.bulkMBps, 11)}${pad(r.remove, 7)}${r.freeGiB}`,
     );
 }
 
