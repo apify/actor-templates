@@ -43,8 +43,12 @@ jobs:
       - name: Install pnpm and dependencies
         uses: apify/workflows/pnpm-install@v0.46.0
 
+      # --with-deps on Linux installs the apt libraries Chromium needs. On Windows it
+      # installs the Media Foundation feature instead, which cost 3m16s of this step's
+      # 3m30s — the browser downloads themselves take 15s. Media Foundation provides
+      # video codecs; these templates only crawl pages, so skip it there.
       - name: Install playwright browsers
-        run: pnpm exec playwright install chromium --with-deps
+        run: pnpm exec playwright install chromium ${{ runner.os == 'Linux' && '--with-deps' || '' }}
 
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
