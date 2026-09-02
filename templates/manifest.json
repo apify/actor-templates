@@ -106,7 +106,7 @@
         {
             "id": "python-selenium",
             "name": "python-selenium",
-            "label": "Selenium scraper",
+            "label": "Python Selenium scraper",
             "category": "python",
             "technologies": ["selenium", "chrome"],
             "description": "A Chrome browser scraper that renders JavaScript before extracting data. Good for social feeds, dashboards, or single-page apps.",
@@ -188,7 +188,7 @@
         {
             "id": "python-crawlee-playwright",
             "name": "python-crawlee-playwright",
-            "label": "Crawlee scraper",
+            "label": "Python Crawlee scraper",
             "category": "python",
             "technologies": ["crawlee", "playwright", "chrome"],
             "description": "A browser-based scraper with managed retries, queues, and proxies. Good for JavaScript-heavy sites like social feeds, dashboards, or single-page apps.",
@@ -228,10 +228,10 @@
         {
             "id": "python-langgraph",
             "name": "python-langgraph",
-            "label": "LangGraph agent",
+            "label": "LangGraph social media agent",
             "category": "python",
             "technologies": ["langgraph"],
-            "description": "An AI agent that researches and analyzes social media profiles. Built with LangGraph for graph-based, multi-step workflows.",
+            "description": "An AI agent for social media research, built on graph-based, multi-step workflows.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-langgraph.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -250,11 +250,11 @@
         {
             "id": "python-crewai",
             "name": "python-crewai",
-            "label": "CrewAI agent",
+            "label": "CrewAI social media agent",
             "category": "python",
             "technologies": ["crewai"],
             "skipTests": true,
-            "description": "A team of AI agents that research and analyze social media together.",
+            "description": "A team of AI agents that research and analyze social media.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-crewai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -657,7 +657,7 @@
         {
             "id": "js-langgraph-agent",
             "name": "project-langgraph-agent-javascript",
-            "label": "LangGraph agent",
+            "label": "LangGraph web search agent",
             "category": "javascript",
             "technologies": ["nodejs", "langgraph"],
             "description": "An AI agent that answers questions by searching the web.",
@@ -689,11 +689,11 @@
         {
             "id": "ts-beeai-agent",
             "name": "ts-beeai-agent",
-            "label": "BeeAI agent",
+            "label": "BeeAI social media agent",
             "skipRunTest": true,
             "category": "typescript",
             "technologies": ["nodejs", "beeai"],
-            "description": "An AI agent that researches and analyzes social media profiles. Built with BeeAI for built-in observability and tracing.",
+            "description": "An AI agent for social media research, with built-in observability and tracing.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-beeai-agent.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -706,10 +706,10 @@
         {
             "id": "ts-mastraai",
             "name": "ts-mastraai",
-            "label": "Mastra agent",
+            "label": "Mastra social media agent",
             "category": "typescript",
             "technologies": ["nodejs", "mastraai"],
-            "description": "An AI agent that researches and analyzes social media profiles. Built with Mastra, a TypeScript-native agent framework.",
+            "description": "An AI agent for social media research, built on a TypeScript-native framework.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mastraai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
