@@ -34,6 +34,10 @@ jobs:
         run: |
           echo "TMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
           echo "TEMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
+          # Playwright defaults to LOCALAPPDATA (C:) and always downloads fresh —
+          # there is no image-provided cache to lose by relocating it. The Chrome
+          # templates also pull Firefox and WebKit through a postinstall hook.
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/ms-playwright" >> "$GITHUB_ENV"
 
       - name: Checkout repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
