@@ -12,7 +12,7 @@ dependencies = [
     # crewai 1.x conflicts with the aggregate env (requires uv < 0.10, pydantic-settings < 2.11)
     # "crewai[tools] >= 1.12.2, < 2.0.0",
     "fastapi >= 0.135.0, < 1.0.0",
-    "fastmcp >= 3.0.0, < 4.0.0",
+    "fastmcp >=4.0.2, <4.1.0",
     "httpx >= 0.28.0, < 1.0.0",
     "langchain >= 1.0.0, < 2.0.0",
     # langchain-apify conflicts with langchain >= 1.0.0 (requires langchain-core < 0.4.0)
