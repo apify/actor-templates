@@ -28,15 +28,8 @@ jobs:
       PUPPETEER_CACHE_DIR: ${{ github.workspace }}/.puppeteer-cache
 
     steps:
-      # The Windows runners have two disks: C: is the network-backed Azure OS disk,
-      # D: is host-local SSD. RUNNER_TEMP and the workspace are on D:, but TEMP/TMP
-      # default to C:\Users\...\AppData\Local\Temp — and the harness installs every
-      # template under os.tmpdir(). Measured in #907, 10k small files in a
-      # node_modules-shaped tree: C: managed 744-1140 files/s against D:'s 4295-6008,
-      # and 55-202 MB/s against D:'s 1012-1365 on a bulk write. Moving the harness cut
-      # the Windows legs from a 12.1-15.3m mean to 6.7m, worst leg 24.3m -> 9.7m.
-      # Harmless on Linux, where both paths are on one disk.
-      # Set from a step because the `runner` context is not available in job-level env.
+      # The harness installs templates under os.tmpdir(); on Windows that is the
+      # network-backed C: disk, ~5x slower at small files than D: (RUNNER_TEMP). #907
       - name: Install templates on the runner's fast disk
         shell: bash
         run: |
