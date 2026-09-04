@@ -41,7 +41,7 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.46.0
+        uses: apify/actions/pnpm-install@v1.5.0
 
       # --with-deps on Linux installs the apt libraries Chromium needs. On Windows it
       # installs the Media Foundation feature instead, which cost 3m16s of this step's
