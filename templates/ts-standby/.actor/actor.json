@@ -9,7 +9,7 @@
     "usesStandbyMode": true,
     "meta": {
         "templateId": "ts-standby",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "dockerfile": "../Dockerfile"
 }
