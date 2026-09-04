@@ -11,12 +11,12 @@ import logging
 import time
 from typing import TYPE_CHECKING, Any
 
-import httpx
+import httpx2
 import uvicorn
 from mcp.client.session import ClientSession
 from mcp.client.sse import sse_client
 from mcp.client.stdio import StdioServerParameters, stdio_client
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.streamable_http import create_mcp_http_client, streamable_http_client
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from pydantic import ValidationError
 from starlette.applications import Starlette
@@ -338,7 +338,7 @@ class ProxyServer:
             """Handle OAuth authorization server well-known endpoint."""
             try:
                 # Some MCP clients do not follow redirects, so we need to fetch the data and return it directly.
-                async with httpx.AsyncClient() as client:
+                async with httpx2.AsyncClient() as client:
                     response = await client.get('https://api.apify.com/.well-known/oauth-authorization-server')
                     response.raise_for_status()
                     data = response.json()
@@ -430,9 +430,18 @@ class ProxyServer:
                 await self._run_server(app)
 
         elif self.server_type == ServerType.HTTP:
-            # HTTP streamable server needs to unpack three parameters
+            # streamable_http_client takes HTTP settings through a pre-built client, not as kwargs.
+            http_client = create_mcp_http_client(
+                headers=params.get('headers'),
+                timeout=httpx2.Timeout(
+                    params.get('timeout', 60),
+                    read=params.get('sse_read_timeout', 60 * 5),
+                ),
+                auth=params.get('auth'),
+            )
             async with (
-                streamablehttp_client(**params) as (read_stream, write_stream, _),
+                http_client,
+                streamable_http_client(params['url'], http_client=http_client) as (read_stream, write_stream),
                 ClientSession(read_stream, write_stream) as session,
             ):
                 mcp_server = await create_gateway(session, self.actor_charge_function, self.tool_whitelist)

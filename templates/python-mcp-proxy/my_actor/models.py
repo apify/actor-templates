@@ -1,7 +1,7 @@
 from enum import StrEnum
 from typing import Any, TypeAlias
 
-import httpx
+import httpx2
 from mcp.client.stdio import StdioServerParameters
 from pydantic import BaseModel, ConfigDict
 
@@ -28,7 +28,7 @@ class RemoteServerParameters(BaseModel):
     headers: dict[str, Any] | None = None
     timeout: float = 60  # HTTP timeout for regular operations
     sse_read_timeout: float = 60 * 5  # Timeout for SSE read operations
-    auth: httpx.Auth | None = None  # Optional HTTPX authentication handler
+    auth: httpx2.Auth | None = None  # Optional HTTPX authentication handler
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
