@@ -3,6 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "type": "module",
+    "trustedDependencies": [
+        "esbuild",
+        "unrs-resolver"
+    ],
     "scripts": {
         "start": "npm run start:dev",
         "start:dev": "tsx src/main.ts",
