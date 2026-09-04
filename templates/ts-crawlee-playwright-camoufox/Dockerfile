@@ -6,7 +6,7 @@
 # Firefox pageErrors without a source location (unguarded pageError.location.url),
 # so one broken page kills the run. Unpin once the camoufox v152.0.2-alpha /
 # upstream playwright fix is released (https://github.com/daijro/camoufox/pull/625).
-FROM apify/actor-node-playwright-camoufox:24-1.59.1 AS builder
+FROM apify/actor-node-playwright-camoufox:24-1.61.1 AS builder
 
 # Check preinstalled packages
 RUN npm ls @crawlee/core apify puppeteer playwright
@@ -30,7 +30,7 @@ COPY --chown=myuser:myuser . ./
 RUN npm run build
 
 # Create final image
-FROM apify/actor-node-playwright-camoufox:24-1.59.1
+FROM apify/actor-node-playwright-camoufox:24-1.61.1
 
 # Check preinstalled packages
 RUN npm ls @crawlee/core apify puppeteer playwright
