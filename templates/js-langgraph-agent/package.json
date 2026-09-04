@@ -30,6 +30,6 @@
         "eslint": "^9.39.2",
         "eslint-config-prettier": "^10.1.5",
         "prettier": "^3.8.1",
-        "vitest": "^4.1.0"
+        "vitest": "^5.0.0"
     }
 }
