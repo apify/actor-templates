@@ -20,6 +20,14 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      # The harness installs templates under os.tmpdir(); on Windows that is the
+      # network-backed C: disk, ~5x slower at small files than D: (RUNNER_TEMP). #907
+      - name: Install templates on the runner's fast disk
+        shell: bash
+        run: |
+          echo "TMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
+          echo "TEMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
+
       - name: Checkout repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -29,7 +37,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.46.0
+        uses: apify/actions/pnpm-install@v1.5.0
 
       - name: Test LLM AI Node.js templates
         run: pnpm run test-llm-ai-node-templates

@@ -17,6 +17,14 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      # The harness installs templates under os.tmpdir(); on Windows that is the
+      # network-backed C: disk, ~5x slower at small files than D: (RUNNER_TEMP). #907
+      - name: Install templates on the runner's fast disk
+        shell: bash
+        run: |
+          echo "TMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
+          echo "TEMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
+
       - name: Checkout repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -26,10 +34,14 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.46.0
+        uses: apify/actions/pnpm-install@v1.5.0
 
+      # --with-deps on Linux installs the apt libraries Chromium needs. On Windows it
+      # installs the Media Foundation feature instead, which cost 3m16s of this step's
+      # 3m30s — the browser downloads themselves take 15s. Media Foundation provides
+      # video codecs; these templates only crawl pages, so skip it there.
       - name: Install playwright browsers
-        run: pnpm exec playwright install chromium --with-deps
+        run: pnpm exec playwright install chromium ${{ runner.os == 'Linux' && '--with-deps' || '' }}
 
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -40,7 +52,7 @@ jobs:
 
       # For uv-based templates (e.g. python-uv); uv provides its own Python from .python-version.
       - name: Setup uv
-        uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
 
       - name: Install Chrome and Chromedriver
         # Use pnpm dlx instead of npx — npx is the npm CLI and trips

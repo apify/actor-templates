@@ -28,6 +28,14 @@ jobs:
       PUPPETEER_CACHE_DIR: ${{ github.workspace }}/.puppeteer-cache
 
     steps:
+      # The harness installs templates under os.tmpdir(); on Windows that is the
+      # network-backed C: disk, ~5x slower at small files than D: (RUNNER_TEMP). #907
+      - name: Install templates on the runner's fast disk
+        shell: bash
+        run: |
+          echo "TMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
+          echo "TEMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
+
       - name: Checkout repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -37,10 +45,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm and dependencies
-        uses: apify/workflows/pnpm-install@v0.46.0
+        uses: apify/actions/pnpm-install@v1.5.0
 
+      # --with-deps on Linux installs the apt libraries Chromium needs. On Windows it
+      # installs the Media Foundation feature instead, which cost 3m16s of this step's
+      # 3m30s — the browser downloads themselves take 15s. Media Foundation provides
+      # video codecs; these templates only crawl pages, so skip it there.
       - name: Install playwright browsers
-        run: pnpm exec playwright install chromium --with-deps
+        run: pnpm exec playwright install chromium ${{ runner.os == 'Linux' && '--with-deps' || '' }}
 
       # Warm PUPPETEER_CACHE_DIR with the pinned browsers so templates don't race to
       # download Chrome during `npm install`.
