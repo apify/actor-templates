@@ -4,7 +4,7 @@
     "type": "module",
     "description": "This is an example of an Apify Actor that uses Standby mode.",
     "engines": {
-        "node": ">=20.0.0"
+        "node": ">=22"
     },
     "dependencies": {
         "apify": "^3.7.0"
