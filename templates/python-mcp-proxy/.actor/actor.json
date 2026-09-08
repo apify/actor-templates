@@ -19,6 +19,10 @@
         "properties": {},
         "required": []
     },
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
     "dockerfile": "../Dockerfile",
     "webServerMcpPath": "/mcp"
 }
