@@ -1,0 +1,39 @@
+# Apify storage folder
+storage/
+
+# Python virtual environment - recreated by `uv sync`
+.venv/
+.env/
+
+# Python (and Python tools) cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.ty_cache/
+
+# Python build files
+__pypackages__/
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Environment variables
+.env
+
+# Log files
+*.log
+
+# Editor / OS noise
+.idea/
+.vscode
+.zed
+.DS_Store
+.mise.toml
+.nvim.lua
+
+# Note: .python-version and uv.lock are intentionally committed - uv uses them
+# to provide the same Python version and dependencies on every machine.
