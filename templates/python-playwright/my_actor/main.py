@@ -18,6 +18,9 @@ from playwright.async_api import async_playwright
 # When running on the Apify platform, these dependencies are already included
 # in the Actor's Docker image.
 
+# Limit the crawl to max requests. Remove or increase it for crawling all links.
+MAX_REQUESTS_PER_CRAWL = 10
+
 
 async def main() -> None:
     """Define a main entry point for the Apify Actor.
@@ -59,8 +62,10 @@ async def main() -> None:
             )
             context = await browser.new_context()
 
+            handled_requests = 0
+
             # Process the URLs from the request queue.
-            while request := await request_queue.fetch_next_request():
+            while handled_requests < MAX_REQUESTS_PER_CRAWL and (request := await request_queue.fetch_next_request()):
                 url = request.url
 
                 if not isinstance(request.user_data['depth'], (str, int)):
@@ -105,3 +110,4 @@ async def main() -> None:
                     await page.close()
                     # Mark the request as handled to ensure it is not processed again.
                     await request_queue.mark_request_as_handled(request)
+                    handled_requests += 1

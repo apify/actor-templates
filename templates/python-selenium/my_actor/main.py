@@ -22,6 +22,9 @@ from selenium.webdriver.common.by import By
 # When running on the Apify platform, the Chromedriver is already included
 # in the Actor's Docker image.
 
+# Limit the crawl to max requests. Remove or increase it for crawling all links.
+MAX_REQUESTS_PER_CRAWL = 10
+
 
 async def main() -> None:
     """Define a main entry point for the Apify Actor.
@@ -68,8 +71,10 @@ async def main() -> None:
         if driver.title != 'Example Domain':
             raise ValueError('Failed to open example page.')
 
+        handled_requests = 0
+
         # Process the URLs from the request queue.
-        while request := await request_queue.fetch_next_request():
+        while handled_requests < MAX_REQUESTS_PER_CRAWL and (request := await request_queue.fetch_next_request()):
             url = request.url
 
             if not isinstance(request.user_data['depth'], (str, int)):
@@ -113,5 +118,6 @@ async def main() -> None:
             finally:
                 # Mark the request as handled to ensure it is not processed again.
                 await request_queue.mark_request_as_handled(request)
+                handled_requests += 1
 
         driver.quit()

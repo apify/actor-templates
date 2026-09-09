@@ -67,13 +67,18 @@ const APIFY_SDK_PYTHON_LATEST_VERSION = spawnSync(PYTHON_COMMAND, ['-m', 'pip', 
     .stdout.toString()
     .match(/\((.*)\)/)[1];
 
-const checkSpawnResult = ({ status, stdout, stderr }) => {
+const checkSpawnResult = ({ status, stdout, stderr, error }) => {
     if (stdout?.toString()) {
         console.log('stdout', stdout.toString());
     }
 
     if (stderr?.toString()) {
         console.log('stderr', stderr?.toString());
+    }
+
+    // A timeout kill leaves status null and sets error — rethrow so the failure names the cause.
+    if (error) {
+        throw error;
     }
 
     expect(status).toBe(0);
@@ -229,10 +234,15 @@ const checkPythonTemplate = () => {
     expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
 };
 
+// Jest's `testTimeout` can't interrupt these synchronous bodies — bound the run here instead.
+const APIFY_RUN_TIMEOUT_MILLIS = 8 * 60 * 1000;
+
 const checkTemplateRun = () => {
     const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run', '--allow-missing-secrets'], {
         env: { ...process.env, APIFY_HEADLESS: '1' },
         stdio: ['pipe', 'inherit', 'inherit'],
+        timeout: APIFY_RUN_TIMEOUT_MILLIS,
+        killSignal: 'SIGKILL',
     });
     checkSpawnResult(apifyRunSpawnResult);
 };
