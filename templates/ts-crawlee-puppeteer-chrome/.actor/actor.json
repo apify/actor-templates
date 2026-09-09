@@ -7,7 +7,7 @@
     "version": "0.0",
     "meta": {
         "templateId": "ts-crawlee-puppeteer-chrome",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "inputSchema": "./input_schema.json",
     "outputSchema": "./output_schema.json",
