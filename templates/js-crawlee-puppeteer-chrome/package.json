@@ -3,6 +3,9 @@
     "version": "0.0.1",
     "type": "module",
     "description": "This is an example of an Apify Actor.",
+    "engines": {
+        "node": ">=22"
+    },
     "dependencies": {
         "apify": "^3.7.0",
         "@crawlee/puppeteer": "^3.15.3",
