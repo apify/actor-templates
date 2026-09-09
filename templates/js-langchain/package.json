@@ -4,7 +4,7 @@
     "type": "module",
     "description": "This is a boilerplate of an Apify Actor.",
     "engines": {
-        "node": ">=18.0.0"
+        "node": ">=22"
     },
     "dependencies": {
         "@langchain/classic": "^1.0.12",

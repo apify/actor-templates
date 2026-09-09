@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "type": "module",
+    "engines": {
+        "node": ">=22"
+    },
     "scripts": {
         "start": "npm run start:dev",
         "start:dev": "tsx src/main.ts",

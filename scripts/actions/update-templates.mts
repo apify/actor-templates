@@ -113,4 +113,6 @@ for await (const fileEntry of glob(['**/Dockerfile', '**/package.json'], { cwd: 
 
 const rootPackageJson = new URL('../../package.json', import.meta.url);
 await updatePackageJson(rootPackageJson);
-execSync('pnpm install', { cwd: new URL('../../', import.meta.url) });
+execSync('pnpm install --no-frozen-lockfile --lockfile-only', {
+    cwd: new URL('../../', import.meta.url),
+});

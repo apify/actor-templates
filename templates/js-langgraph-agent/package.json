@@ -4,7 +4,7 @@
     "type": "module",
     "description": "This is a template for a JavaScript Langchain agent Actor.",
     "engines": {
-        "node": ">=20.0.0"
+        "node": ">=22"
     },
     "dependencies": {
         "@langchain/community": "^1.1.9",
