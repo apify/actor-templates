@@ -22,7 +22,7 @@ from selenium.webdriver.common.by import By
 # When running on the Apify platform, the Chromedriver is already included
 # in the Actor's Docker image.
 
-# Limit the crawl to max requests. Remove or increase it for crawling all links.
+# Limit the crawl to max requests. Increase it to crawl more links.
 MAX_REQUESTS_PER_CRAWL = 10
 
 

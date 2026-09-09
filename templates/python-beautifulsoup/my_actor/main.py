@@ -14,7 +14,7 @@ from apify import Actor, Request
 from bs4 import BeautifulSoup
 from httpx import AsyncClient
 
-# Limit the crawl to max requests. Remove or increase it for crawling all links.
+# Limit the crawl to max requests. Increase it to crawl more links.
 MAX_REQUESTS_PER_CRAWL = 10
 
 
@@ -102,5 +102,5 @@ async def main() -> None:
 
                 finally:
                     # Mark the request as handled to ensure it is not processed again.
-                    await request_queue.mark_request_as_handled(new_request)
+                    await request_queue.mark_request_as_handled(request)
                     handled_requests += 1

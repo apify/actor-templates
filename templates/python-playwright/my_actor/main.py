@@ -18,7 +18,7 @@ from playwright.async_api import async_playwright
 # When running on the Apify platform, these dependencies are already included
 # in the Actor's Docker image.
 
-# Limit the crawl to max requests. Remove or increase it for crawling all links.
+# Limit the crawl to max requests. Increase it to crawl more links.
 MAX_REQUESTS_PER_CRAWL = 10
 
 
