@@ -1,0 +1,26 @@
+{
+    "js": {
+        "entry": "src/main.js",
+        "extraCommands": "",
+        "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
+        "plainLog": "`console.log`",
+        "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
+        "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log"
+    },
+    "ts": {
+        "entry": "src/main.ts",
+        "extraCommands": "apify actor generate-schema-types  # generate TypeScript types from the .actor schemas\n",
+        "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
+        "plainLog": "`console.log`",
+        "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
+        "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log"
+    },
+    "python": {
+        "entry": "my_actor/main.py",
+        "extraCommands": "",
+        "logger": "`Actor.log`",
+        "plainLog": "`print` and the standard `logging` module",
+        "sdkMethods": "`Actor.get_input()`, `Actor.push_data()`, `Actor.set_value()`",
+        "loggingDocs": "https://docs.apify.com/sdk/python/docs/concepts/logging"
+    }
+}
