@@ -22,6 +22,12 @@ from selenium.webdriver.common.by import By
 # When running on the Apify platform, the Chromedriver is already included
 # in the Actor's Docker image.
 
+# Limit the crawl to max requests. Increase it to crawl more links.
+MAX_REQUESTS_PER_CRAWL = 10
+
+# Matches Playwright's default navigation timeout, which the sibling templates rely on.
+PAGE_LOAD_TIMEOUT_SECS = 30
+
 
 async def main() -> None:
     """Define a main entry point for the Apify Actor.
@@ -63,13 +69,18 @@ async def main() -> None:
         chrome_options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(options=chrome_options)
 
+        # Without this a page that never finishes loading blocks for 120s, the client timeout.
+        driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT_SECS)
+
         # Test WebDriver setup by navigating to an example page.
         driver.get('http://www.example.com')
         if driver.title != 'Example Domain':
             raise ValueError('Failed to open example page.')
 
+        handled_requests = 0
+
         # Process the URLs from the request queue.
-        while request := await request_queue.fetch_next_request():
+        while handled_requests < MAX_REQUESTS_PER_CRAWL and (request := await request_queue.fetch_next_request()):
             url = request.url
 
             if not isinstance(request.user_data['depth'], (str, int)):
@@ -113,5 +124,6 @@ async def main() -> None:
             finally:
                 # Mark the request as handled to ensure it is not processed again.
                 await request_queue.mark_request_as_handled(request)
+                handled_requests += 1
 
         driver.quit()
