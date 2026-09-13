@@ -14,6 +14,10 @@
     "constraints": {
         "pnpm": "^11.0.0"
     },
+    "env": {
+        "PUPPETEER_SKIP_DOWNLOAD": "true",
+        "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
+    },
     "packageRules": [
         {
             "matchUpdateTypes": ["patch", "minor"],
