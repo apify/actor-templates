@@ -4,7 +4,7 @@
     "type": "module",
     "description": "Run Cypress via its module API",
     "engines": {
-        "node": ">=18.0.0"
+        "node": ">=22"
     },
     "dependencies": {
         "apify": "^3.7.0",

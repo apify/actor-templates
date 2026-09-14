@@ -3,7 +3,7 @@
     "pinVersions": false,
     "separateMajorMinor": false,
     "minimumReleaseAge": "1 day",
-    "dependencyDashboard": false,
+    "dependencyDashboard": true,
     "semanticCommits": "enabled",
     "lockFileMaintenance": {
         "enabled": true,
