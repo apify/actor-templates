@@ -14,6 +14,9 @@ from apify import Actor, Request
 from bs4 import BeautifulSoup
 from httpx import AsyncClient
 
+# Limit the crawl to max requests. Increase it to crawl more links.
+MAX_REQUESTS_PER_CRAWL = 10
+
 
 async def main() -> None:
     """Define a main entry point for the Apify Actor.
@@ -46,8 +49,10 @@ async def main() -> None:
 
         # Create an HTTPX client to fetch the HTML content of the URLs.
         async with AsyncClient() as client:
+            handled_requests = 0
+
             # Process the URLs from the request queue.
-            while request := await request_queue.fetch_next_request():
+            while handled_requests < MAX_REQUESTS_PER_CRAWL and (request := await request_queue.fetch_next_request()):
                 url = request.url
 
                 if not isinstance(request.user_data['depth'], (str, int)):
@@ -97,4 +102,5 @@ async def main() -> None:
 
                 finally:
                     # Mark the request as handled to ensure it is not processed again.
-                    await request_queue.mark_request_as_handled(new_request)
+                    await request_queue.mark_request_as_handled(request)
+                    handled_requests += 1
