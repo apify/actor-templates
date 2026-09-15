@@ -9,7 +9,7 @@
     "dependencies": {
         "apify": "^3.7.0",
         "console.table": "^0.10.0",
-        "cypress": "^15.0.0",
+        "cypress": "^16.0.0",
         "globby": "^16.0.0"
     },
     "devDependencies": {
