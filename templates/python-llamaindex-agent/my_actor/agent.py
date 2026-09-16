@@ -40,7 +40,9 @@ async def run_agent(query: str, llm: OpenAI, *, verbose: bool = False) -> AgentO
 
     # Run the agent and, when verbose logging is enabled, stream its workflow events to
     # surface the reasoning steps (tool calls and their results) as they happen.
-    handler = agent.run(user_msg=query)
+    # llama-index >=0.14.24 marks the positional `run` overload deprecated; the keyword call
+    # below still resolves to it because that overload accepts **kwargs.
+    handler = agent.run(user_msg=query)  # ty: ignore[deprecated]
     if verbose:
         async for event in handler.stream_events():
             if isinstance(event, ToolCall):

@@ -27,6 +27,8 @@ strictDepBuilds: false
 # Chrome binary; `unrs-resolver` builds native bindings for the eslint resolver
 # used by @apify/eslint-config.
 allowBuilds:
+    # @parcel/watcher is jest's optional native file watcher; CI never runs jest in watch mode.
+    '@parcel/watcher': false
     # apify-cli's postinstall only prints a Discord invite — skip it.
     apify-cli: false
     puppeteer: true

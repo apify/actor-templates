@@ -379,7 +379,8 @@ class ProxyServer:
             await session_manager.handle_request(scope, receive, capturing_send)  # ty: ignore[invalid-argument-type]
 
             # If this was an initialization (no session id in request), capture from response and touch
-            if not req_sid and session_id_from_resp['sid']:
+            # `capturing_send` fills the dict inside `handle_request`, which ty cannot follow.
+            if not req_sid and session_id_from_resp['sid']:  # ty: ignore[redundant-condition]
                 self._touch_session(session_id_from_resp['sid'], session_manager)
 
         return Starlette(
