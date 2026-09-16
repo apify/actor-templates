@@ -41,7 +41,6 @@ async def run_agent(query: str, llm: OpenAI, *, verbose: bool = False) -> AgentO
 
     # Run the agent and, when verbose logging is enabled, stream its workflow events to
     # surface the reasoning steps (tool calls and their results) as they happen.
-    # An explicit run context selects the standard `run(ctx, **kwargs)` signature over the deprecated overload.
     handler = agent.run(Context(agent), user_msg=query)
     if verbose:
         async for event in handler.stream_events():
