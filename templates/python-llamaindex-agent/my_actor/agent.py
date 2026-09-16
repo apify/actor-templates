@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from llama_index.core.agent import AgentOutput, ReActAgent, ToolCall, ToolCallResult
 from llama_index.core.tools import FunctionTool
+from llama_index.core.workflow import Context
 
 from .tools import LLMRegistry, call_contact_details_scraper, summarize_contact_information
 
@@ -40,7 +41,7 @@ async def run_agent(query: str, llm: OpenAI, *, verbose: bool = False) -> AgentO
 
     # Run the agent and, when verbose logging is enabled, stream its workflow events to
     # surface the reasoning steps (tool calls and their results) as they happen.
-    handler = agent.run(user_msg=query)
+    handler = agent.run(Context(agent), user_msg=query)
     if verbose:
         async for event in handler.stream_events():
             if isinstance(event, ToolCall):
