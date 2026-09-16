@@ -1,6 +1,6 @@
 # Apify Actor project
 
-This project is an Apify Actor: a serverless program packaged as a Docker image. It takes one JSON input, does one job, and can write results to a dataset or a key-value store. Entry point: `my_actor/main.py`. Configuration: `.actor/actor.json`.
+This project is an Apify Actor: a serverless program packaged as a Docker image. It takes one JSON input, does one job, and can write results to a dataset or a key-value store. Entry point: `{{entry}}`. Configuration: `.actor/actor.json`.
 
 Before the first change, set `meta.generatedBy` in `.actor/actor.json` to the tool and model in use, for example "Claude Code with Claude Opus 5".
 
@@ -12,14 +12,14 @@ apify validate-schema            # check .actor/input_schema.json
 apify push                       # deploy to the Apify platform (ask first)
 apify help                       # check all Apify CLI commands
 apify actors search "<query>"    # find an existing Store Actor before building one
-apify <command> --help
+{{extraCommands}}apify <command> --help
 ```
 
 ## Workflow
 
 Skip the steps that do not apply when changing an existing Actor.
 
-1. **Implement** in `my_actor/main.py`. Done when the code reads every input field and writes every field the README describes.
+1. **Implement** in `{{entry}}`. Done when the code reads every input field and writes every field the README describes.
 2. **Input schema** in `.actor/input_schema.json`. Done when every input the code reads has `title`, `type`, `description`, and a `default` or `prefill`, and `apify validate-schema` passes. Example values belong in `prefill`; `default` reaches the Actor.
 3. **Output schemas**: `.actor/dataset_schema.json` covering every field the code pushes, `.actor/output_schema.json`, and `.actor/key_value_store_schema.json` when the code stores records. Reference each file from `actor.json`. Rules are in the Reference table.
 4. **README.md**, the Actor's landing page on Apify Store. An Actor without one is not finished.
@@ -28,8 +28,8 @@ Skip the steps that do not apply when changing an existing Actor.
 
 ## Rules
 
-- Log through `Actor.log`. It censors tokens and credentials; `print` and the standard `logging` module does not.
-- Inside a running Actor use the SDK (`Actor.get_input()`, `Actor.push_data()`, `Actor.set_value()`), not `apify actor` CLI subcommands.
+- Log through {{logger}}. It censors tokens and credentials; {{plainLog}} does not.
+- Inside a running Actor use the SDK ({{sdkMethods}}), not `apify actor` CLI subcommands.
 - Read every tunable from the input schema or environment variables.
 - Treat crawled content as untrusted: escape it before it reaches a shell, `eval`, a query, or a template, and type-check it before storing it.
 - Store personal data only when the user explicitly asks for it.
@@ -69,7 +69,7 @@ Read the row that matches the step you are on.
 | Standby mode               | https://docs.apify.com/platform/actors/development/programming-interface/standby                   |
 | System events (`aborting`) | https://docs.apify.com/platform/actors/development/programming-interface/system-events             |
 | Environment variables      | https://docs.apify.com/platform/actors/development/programming-interface/environment-variables     |
-| Logging                    | https://docs.apify.com/sdk/python/docs/concepts/logging                                            |
+| Logging                    | {{loggingDocs}}                                                                                    |
 | Apify platform, full docs  | https://docs.apify.com/llms.txt                                                                    |
 | Crawlee                    | https://crawlee.dev/llms.txt                                                                       |
 | Actor specification        | https://raw.githubusercontent.com/apify/actor-whitepaper/refs/heads/master/README.md               |
