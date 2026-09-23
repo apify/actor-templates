@@ -5,7 +5,10 @@
         "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
         "plainLog": "`console.log`",
         "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
-        "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log"
+        "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log",
+        "httpCrawler": "`CheerioCrawler`",
+        "datasetInfo": "`Dataset.getInfo()`",
+        "abortingHandler": "`Actor.on('aborting', handler)`"
     },
     "ts": {
         "entry": "src/main.ts",
@@ -13,7 +16,10 @@
         "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
         "plainLog": "`console.log`",
         "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
-        "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log"
+        "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log",
+        "httpCrawler": "`CheerioCrawler`",
+        "datasetInfo": "`Dataset.getInfo()`",
+        "abortingHandler": "`Actor.on('aborting', handler)`"
     },
     "python": {
         "entry": "my_actor/main.py",
@@ -21,6 +27,9 @@
         "logger": "`Actor.log`",
         "plainLog": "`print` and the standard `logging` module",
         "sdkMethods": "`Actor.get_input()`, `Actor.push_data()`, `Actor.set_value()`",
-        "loggingDocs": "https://docs.apify.com/sdk/python/docs/concepts/logging"
+        "loggingDocs": "https://docs.apify.com/sdk/python/docs/concepts/logging",
+        "httpCrawler": "`BeautifulSoupCrawler` or `ParselCrawler`",
+        "datasetInfo": "`dataset.get_info()`",
+        "abortingHandler": "`Actor.on(Event.ABORTING, handler)` (`from apify import Event`)"
     }
 }
