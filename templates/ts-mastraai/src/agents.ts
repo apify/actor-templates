@@ -1,4 +1,3 @@
-import { openai } from '@ai-sdk/openai';
 // eslint-disable-next-line import-x/extensions
 import { Agent } from '@mastra/core/agent';
 
@@ -11,6 +10,6 @@ export const createSocialMediaAgent = (modelName: string): Agent =>
         instructions: `You are an expert social media analyst specializing in Instagram analysis.
         You help users understand social media data and extract meaningful insights from
         profiles and posts.`,
-        model: openai(modelName),
+        model: `openai/${modelName}`,
         tools: { instagramScraperTool },
     });
