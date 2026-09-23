@@ -36,7 +36,7 @@ if TYPE_CHECKING:
 
     from mcp.server import Server
     from starlette import types as st
-    from starlette.types import Receive, Scope, Send
+    from starlette.types import Message, Receive, Scope, Send
 
 logger = logging.getLogger('apify')
 
@@ -102,6 +102,22 @@ class McpPathRewriteMiddleware(BaseHTTPMiddleware):
             request.scope['path'] = '/mcp/'
             request.scope['raw_path'] = b'/mcp/'
         return await call_next(request)
+
+
+class SessionIdCapturingSend:
+    """ASGI `send` wrapper that records the session ID assigned by an initialization response."""
+
+    def __init__(self, send: Send) -> None:
+        self._send = send
+        self.session_id: str | None = None
+
+    async def __call__(self, message: Message) -> None:
+        """Forward the message downstream, capturing the session ID header on the way."""
+        if message.get('type') == 'http.response.start':
+            headers = {k.decode('latin-1').lower(): v.decode('latin-1') for k, v in message.get('headers', [])}
+            if sid := headers.get('mcp-session-id'):
+                self.session_id = sid
+        await self._send(message)
 
 
 class ProxyServer:
@@ -205,14 +221,14 @@ class ProxyServer:
                     'client': ('127.0.0.1', 0),
                 }
 
-                async def _receive() -> dict[str, Any]:
+                async def _receive() -> Message:
                     return {'type': 'http.request', 'body': b'', 'more_body': False}
 
-                async def _send(_message: dict[str, Any]) -> None:
+                async def _send(_message: Message) -> None:
                     # Ignore internal response
                     return
 
-                await session_manager.handle_request(scope, _receive, _send)  # ty: ignore[invalid-argument-type]
+                await session_manager.handle_request(scope, _receive, _send)
                 self._cleanup_session_last_activity(session_id)
                 self._cleanup_session_timer(session_id)
             except asyncio.CancelledError:
@@ -248,21 +264,6 @@ class ProxyServer:
                     raise ValueError(f'Unsupported server type: {client_type}')
         except ValidationError as e:
             raise ValueError(f'Invalid server configuration: {e}') from e
-
-    @staticmethod
-    def _create_capturing_send(
-        send: Send, session_id_from_resp: dict[str, str | None]
-    ) -> Callable[[dict[str, Any]], Awaitable[None]]:
-        """Create a send wrapper that captures session ID from response headers."""
-
-        async def capturing_send(message: dict[str, Any]) -> None:
-            if message.get('type') == 'http.response.start':
-                headers = {k.decode('latin-1').lower(): v.decode('latin-1') for k, v in message.get('headers', [])}
-                if sid := headers.get('mcp-session-id'):
-                    session_id_from_resp['sid'] = sid
-            await send(message)
-
-        return capturing_send
 
     @staticmethod
     def _get_session_id_from_headers(headers: Any) -> str | None:
@@ -369,18 +370,17 @@ class ProxyServer:
 
             # For non-browser requests or non-GET requests, delegate to session manager
             # Wrap `send` to capture the session ID from response headers of initialization
-            session_id_from_resp: dict[str, str | None] = {'sid': None}
-            capturing_send = self._create_capturing_send(send, session_id_from_resp)
+            capturing_send = SessionIdCapturingSend(send)
 
             # Log and touch existing session if present on request
             if req_sid := self._get_session_id_from_headers(request.headers):
                 self._touch_session(req_sid, session_manager)
 
-            await session_manager.handle_request(scope, receive, capturing_send)  # ty: ignore[invalid-argument-type]
+            await session_manager.handle_request(scope, receive, capturing_send)
 
             # If this was an initialization (no session id in request), capture from response and touch
-            if not req_sid and session_id_from_resp['sid']:
-                self._touch_session(session_id_from_resp['sid'], session_manager)
+            if not req_sid and capturing_send.session_id:
+                self._touch_session(capturing_send.session_id, session_manager)
 
         return Starlette(
             debug=True,

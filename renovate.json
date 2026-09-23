@@ -1,18 +1,16 @@
 {
-    "extends": ["config:base", ":semanticCommitTypeAll(chore)"],
-    "pinVersions": false,
+    "extends": ["config:recommended", ":semanticCommitTypeAll(chore)"],
+    "rangeStrategy": "replace",
     "separateMajorMinor": false,
     "minimumReleaseAge": "1 day",
-    "dependencyDashboard": false,
+    "internalChecksFilter": "strict",
+    "dependencyDashboard": true,
     "semanticCommits": "enabled",
     "lockFileMaintenance": {
         "enabled": true,
         "schedule": ["before 2am"],
         "automerge": true,
         "automergeType": "branch"
-    },
-    "constraints": {
-        "pnpm": "^11.0.0"
     },
     "packageRules": [
         {

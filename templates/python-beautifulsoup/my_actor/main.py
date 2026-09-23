@@ -12,7 +12,10 @@ from urllib.parse import urljoin
 
 from apify import Actor, Request
 from bs4 import BeautifulSoup
-from httpx import AsyncClient
+from httpx2 import AsyncClient
+
+# Limit the crawl to max requests. Increase it to crawl more links.
+MAX_REQUESTS_PER_CRAWL = 10
 
 
 async def main() -> None:
@@ -44,10 +47,12 @@ async def main() -> None:
             new_request = Request.from_url(url, user_data={'depth': 0})
             await request_queue.add_request(new_request)
 
-        # Create an HTTPX client to fetch the HTML content of the URLs.
+        # Create an HTTPX2 client to fetch the HTML content of the URLs.
         async with AsyncClient() as client:
+            handled_requests = 0
+
             # Process the URLs from the request queue.
-            while request := await request_queue.fetch_next_request():
+            while handled_requests < MAX_REQUESTS_PER_CRAWL and (request := await request_queue.fetch_next_request()):
                 url = request.url
 
                 if not isinstance(request.user_data['depth'], (str, int)):
@@ -57,7 +62,7 @@ async def main() -> None:
                 Actor.log.info(f'Scraping {url} (depth={depth}) ...')
 
                 try:
-                    # Fetch the HTTP response from the specified URL using HTTPX.
+                    # Fetch the HTTP response from the specified URL using HTTPX2.
                     response = await client.get(url, follow_redirects=True)
 
                     # Parse the HTML content using Beautiful Soup.
@@ -97,4 +102,5 @@ async def main() -> None:
 
                 finally:
                     # Mark the request as handled to ensure it is not processed again.
-                    await request_queue.mark_request_as_handled(new_request)
+                    await request_queue.mark_request_as_handled(request)
+                    handled_requests += 1

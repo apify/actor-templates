@@ -15,9 +15,9 @@ from __future__ import annotations
 from apify import Actor
 from bs4 import BeautifulSoup
 
-# HTTPX - A library for making asynchronous HTTP requests in Python. Read more at:
-# https://www.python-httpx.org/
-from httpx import AsyncClient
+# HTTPX2 - A library for making asynchronous HTTP requests in Python. Read more at:
+# https://github.com/pydantic/httpx2
+from httpx2 import AsyncClient
 
 
 async def main() -> None:
@@ -34,7 +34,7 @@ async def main() -> None:
         if not url:
             raise ValueError('Missing "url" attribute in input!')
 
-        # Create an asynchronous HTTPX client for making HTTP requests.
+        # Create an asynchronous HTTPX2 client for making HTTP requests.
         async with AsyncClient() as client:
             # Fetch the HTML content of the page, following redirects if necessary.
             Actor.log.info(f'Sending a request to {url}')
