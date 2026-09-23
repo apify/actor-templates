@@ -8,7 +8,6 @@ Before the first change, set `meta.generatedBy` in `.actor/actor.json` to the to
 
 ```bash
 apify run                        # run locally; the only command that sets up the Apify environment and local storage
-apify run --purge                # same, after clearing local storage from earlier runs
 apify validate-schema            # check the input, dataset, and key-value store schemas (not the output schema)
 apify push                       # deploy to the Apify platform (ask first)
 apify help                       # check all Apify CLI commands
