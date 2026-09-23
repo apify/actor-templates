@@ -64,7 +64,19 @@ jobs:
       - name: Detect changes
         id: stage
         run: |
-          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+          BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
+          git add -A
+
+          if git diff --quiet --cached HEAD; then
+            echo "has-changes=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Skip when the open branch already holds exactly this tree, so a
+          # repeated dispatch with an unchanged payload is a no-op.
+          if git fetch --no-tags origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" 2>/dev/null \
+            && [ "$(git write-tree)" = "$(git rev-parse "origin/$BRANCH^{tree}")" ]; then
+            echo "Branch $BRANCH already holds this change, nothing to do"
             echo "has-changes=false" >> "$GITHUB_OUTPUT"
           else
             echo "has-changes=true" >> "$GITHUB_OUTPUT"
@@ -77,19 +89,22 @@ jobs:
         run: |
           BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
 
+          if ! git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            exit 0
+          fi
+
           # If a PR already exists for this branch, disable auto-merge before
-          # we recreate the branch so the old commit can't be merged.
+          # we reset the branch so the old commit can't be merged.
           PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
           if [ -n "$PR_NUMBER" ]; then
             gh pr merge "$PR_NUMBER" --disable-auto || true
           fi
 
-          # Delete the remote branch if it exists. The commit action below
-          # will recreate it from the current HEAD (which is origin/master).
-          if git ls-remote --heads origin "$BRANCH" | grep -q "$BRANCH"; then
-            echo "Deleting existing remote branch $BRANCH"
-            git push origin --delete "$BRANCH"
-          fi
+          # Force-move the branch back onto master rather than deleting it.
+          # Deleting the ref makes GitHub close the open PR, which is why every
+          # run used to abandon its predecessor and open a fresh one.
+          gh api -X PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
+            -f sha="$(git rev-parse HEAD)" -F force=true >/dev/null
 
       - name: Commit and push changes
         id: commit-and-push
@@ -127,6 +142,7 @@ jobs:
               --body "$PR_BODY" \
               --base master \
               --head "$BRANCH" \
+              --label dependencies \
               --reviewer B4nan \
               --reviewer vladfrangu
 
@@ -134,7 +150,7 @@ jobs:
             PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
           else
             echo "PR #$PR_NUMBER already exists for branch $BRANCH, updating it"
-            gh pr edit "$PR_NUMBER" --body "$PR_BODY"
+            gh pr edit "$PR_NUMBER" --body "$PR_BODY" --add-label dependencies
           fi
 
           # Validate that we have a PR number before proceeding
