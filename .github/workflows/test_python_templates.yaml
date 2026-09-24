@@ -34,7 +34,7 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install pnpm and dependencies
-        uses: apify/actions/pnpm-install@v1.5.0
+        uses: apify/actions/pnpm-install@v1.6.1
 
       # --with-deps on Linux installs the apt libraries Chromium needs. On Windows it
       # installs the Media Foundation feature instead, which cost 3m16s of this step's
@@ -52,7 +52,7 @@ jobs:
 
       # For uv-based templates (e.g. python-uv); uv provides its own Python from .python-version.
       - name: Setup uv
-        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
 
       - name: Install Chrome and Chromedriver
         # Use pnpm dlx instead of npx — npx is the npm CLI and trips
