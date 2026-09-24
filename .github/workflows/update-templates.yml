@@ -63,6 +63,8 @@ jobs:
 
       - name: Detect changes
         id: stage
+        env:
+          GH_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
         run: |
           BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
           git add -A
@@ -72,39 +74,22 @@ jobs:
             exit 0
           fi
 
-          # Skip when the open branch already holds exactly this tree, so a
-          # repeated dispatch with an unchanged payload is a no-op.
+          # A repeated dispatch with an unchanged payload must be a no-op.
           if git fetch --no-tags origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" 2>/dev/null \
-            && [ "$(git write-tree)" = "$(git rev-parse "origin/$BRANCH^{tree}")" ]; then
+            && [ "$(git write-tree)" = "$(git rev-parse "origin/$BRANCH^{tree}")" ] \
+            && [ -n "$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')" ]; then
             echo "Branch $BRANCH already holds this change, nothing to do"
             echo "has-changes=false" >> "$GITHUB_OUTPUT"
           else
             echo "has-changes=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Reset existing branch
+      - name: Delete stale staging branch
         if: steps.stage.outputs.has-changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
         run: |
-          BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
-
-          if ! git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
-            exit 0
-          fi
-
-          # If a PR already exists for this branch, disable auto-merge before
-          # we reset the branch so the old commit can't be merged.
-          PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
-          if [ -n "$PR_NUMBER" ]; then
-            gh pr merge "$PR_NUMBER" --disable-auto || true
-          fi
-
-          # Force-move the branch back onto master rather than deleting it.
-          # Deleting the ref makes GitHub close the open PR, which is why every
-          # run used to abandon its predecessor and open a fresh one.
-          gh api -X PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
-            -f sha="$(git rev-parse HEAD)" -F force=true >/dev/null
+          gh api -X DELETE "repos/${{ github.repository }}/git/refs/heads/${{ steps.branch-name.outputs.BRANCH_NAME }}-next" >/dev/null 2>&1 || true
 
       - name: Commit and push changes
         id: commit-and-push
@@ -113,8 +98,34 @@ jobs:
         with:
           message: 'chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}'
           github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
-          branch: ${{ steps.branch-name.outputs.BRANCH_NAME }}
+          branch: ${{ steps.branch-name.outputs.BRANCH_NAME }}-next
           create-branch: 'true'
+
+      - name: Move branch to the new commit
+        if: steps.commit-and-push.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+        run: |
+          BRANCH="${{ steps.branch-name.outputs.BRANCH_NAME }}"
+          SHA="${{ steps.commit-and-push.outputs.commit_long_sha }}"
+
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            # If a PR already exists for this branch, disable auto-merge before
+            # we reset the branch so the old commit can't be merged.
+            PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
+            if [ -n "$PR_NUMBER" ]; then
+              gh pr merge "$PR_NUMBER" --disable-auto || true
+            fi
+
+            # One move straight to the new commit: a head equal to master, even briefly, closes the PR.
+            gh api -X PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
+              -f sha="$SHA" -F force=true >/dev/null
+          else
+            gh api -X POST "repos/${{ github.repository }}/git/refs" \
+              -f ref="refs/heads/$BRANCH" -f sha="$SHA" >/dev/null
+          fi
+
+          gh api -X DELETE "repos/${{ github.repository }}/git/refs/heads/$BRANCH-next" >/dev/null
 
       - name: Create or update Pull Request
         env:
@@ -141,8 +152,7 @@ jobs:
               --title "chore: Update templates for base image: ${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}" \
               --body "$PR_BODY" \
               --base master \
-              --head "$BRANCH" \
-              --label dependencies
+              --head "$BRANCH"
 
             # Retrieve PR number by head branch after creation
             PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
