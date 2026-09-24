@@ -152,7 +152,8 @@ jobs:
               --title "chore: Update templates for base image: ${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}" \
               --body "$PR_BODY" \
               --base master \
-              --head "$BRANCH"
+              --head "$BRANCH" \
+              --label dependencies
 
             # Retrieve PR number by head branch after creation
             PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
