@@ -333,6 +333,26 @@
             "useCases": ["AI"]
         },
         {
+            "id": "python-browser-use",
+            "name": "python-browser-use",
+            "label": "Browser Use agent",
+            "skipRunTest": true,
+            "category": "python",
+            "technologies": ["browseruse", "chrome"],
+            "description": "An AI agent that browses a website in a real Chrome browser and returns structured data. Good for pages that are hard to scrape with fixed selectors.",
+            "messages": {
+                "postCreate": "To run this Actor locally, you need Google Chrome or Chromium installed.\nActivate the virtual environment in the \".venv\" folder to install additional Python packages."
+            },
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-browser-use.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 4096,
+                "timeoutSecs": 600
+            },
+            "showcaseFiles": ["my_actor/main.py", "my_actor/config.py", "my_actor/compat.py", "my_actor/__main__.py"],
+            "useCases": ["AI", "WEB_SCRAPING"]
+        },
+        {
             "id": "python-mcp-proxy",
             "name": "python-mcp-proxy",
             "label": "Python MCP proxy",

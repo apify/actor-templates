@@ -1,0 +1,7 @@
+# Feel free to add your Python dependencies below. For formatting guidelines, see:
+# https://pip.pypa.io/en/latest/reference/requirements-file-format/
+
+apify >= 4.0.0, < 5.0.0
+# Pinned: `my_actor/compat.py` patches Browser Use internals of this exact release. Newer releases pin their
+# whole dependency graph exactly.
+browser-use == 0.11.5

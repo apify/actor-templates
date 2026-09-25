@@ -1,0 +1,92 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Browser Use agent input",
+    "description": "Run one bounded Browser Use agent in an isolated local Chromium session. The default extracts the first five Hacker News posts.",
+    "type": "object",
+    "schemaVersion": 1,
+    "additionalProperties": false,
+    "properties": {
+        "startUrl": {
+            "title": "Start URL",
+            "type": "string",
+            "description": "HTTP or HTTPS page the agent should open before completing the extraction instruction.",
+            "editor": "textfield",
+            "pattern": "^https?://",
+            "default": "https://news.ycombinator.com/",
+            "prefill": "https://news.ycombinator.com/",
+            "example": "https://news.ycombinator.com/"
+        },
+        "task": {
+            "title": "Extraction instruction",
+            "type": "string",
+            "description": "Instruction whose result must fit the template's post schema: a list of titles and destination URLs.",
+            "editor": "textarea",
+            "minLength": 1,
+            "maxLength": 4000,
+            "default": "Return the title and exact destination URL of the first 5 post-title hyperlinks on the page, preserving their displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title text, including its full path and query; never use a source-domain label, vote, comments, user, age, or navigation link.",
+            "prefill": "Return the title and exact destination URL of the first 5 post-title hyperlinks on the page, preserving their displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title text, including its full path and query; never use a source-domain label, vote, comments, user, age, or navigation link."
+        },
+        "model": {
+            "title": "LLM model",
+            "type": "string",
+            "description": "OpenRouter provider/model ID. On Apify, the keyless apify/openrouter proxy is used by default; set OPENROUTER_API_KEY for direct OpenRouter or local runs.",
+            "editor": "textfield",
+            "minLength": 3,
+            "default": "google/gemini-2.5-flash",
+            "prefill": "google/gemini-2.5-flash",
+            "example": "google/gemini-2.5-flash"
+        },
+        "maxPosts": {
+            "title": "Maximum posts",
+            "type": "integer",
+            "description": "Maximum number of validated dataset rows to keep from the structured agent result.",
+            "editor": "number",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 5,
+            "sectionCaption": "Runtime limits",
+            "sectionDescription": "Every limit is enforced again in code when API callers bypass schema validation."
+        },
+        "maxSteps": {
+            "title": "Maximum agent steps",
+            "type": "integer",
+            "description": "Hard upper bound on autonomous Browser Use steps and LLM calls.",
+            "editor": "number",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 15
+        },
+        "deadlineSecs": {
+            "title": "Run deadline",
+            "type": "integer",
+            "description": "Wall-clock deadline in seconds for browser initialization and agent execution.",
+            "editor": "number",
+            "minimum": 30,
+            "maximum": 300,
+            "default": 180
+        },
+        "actionDelaySecs": {
+            "title": "Delay between browser actions",
+            "type": "number",
+            "description": "Minimum pacing delay between agent actions. The 0.5 second default limits top-level actions to at most two per second.",
+            "editor": "number",
+            "minimum": 0.5,
+            "maximum": 5,
+            "default": 0.5
+        },
+        "proxyConfiguration": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "description": "Route the isolated Chromium session through Apify Proxy. Disable it for direct local browsing.",
+            "editor": "proxy",
+            "prefill": {
+                "useApifyProxy": true
+            },
+            "default": {
+                "useApifyProxy": true
+            },
+            "sectionCaption": "Browser connection"
+        }
+    },
+    "required": ["startUrl", "task"]
+}
