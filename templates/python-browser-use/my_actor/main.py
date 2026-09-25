@@ -21,7 +21,7 @@ from browser_use.browser import ProxySettings
 from browser_use.dom.views import DEFAULT_INCLUDE_ATTRIBUTES
 from pydantic import BaseModel, Field, HttpUrl
 
-from .compat import run_agent_with_actor_signals
+from .compat import agent_signal_options, run_agent_with_actor_signals
 from .config import MAX_POSTS, RunConfig, normalize_input
 
 if TYPE_CHECKING:
@@ -159,6 +159,7 @@ def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agen
         include_attributes=[*DEFAULT_INCLUDE_ATTRIBUTES, 'href'],
         use_vision=False,
         use_judge=False,
+        **agent_signal_options(),
     )
 
 

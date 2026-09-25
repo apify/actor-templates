@@ -50,7 +50,7 @@ For local runs, set `OPENROUTER_API_KEY` to call OpenRouter directly with your o
 - To extract something else, change the `task` input together with the `Post` and `Posts` models in [`my_actor/main.py`](my_actor/main.py), the dataset schema in [`.actor/dataset_schema.json`](.actor/dataset_schema.json), and the output example above.
 - To change the input limits, update both [`.actor/input_schema.json`](.actor/input_schema.json) and [`my_actor/config.py`](my_actor/config.py).
 - The template runs one agent with one browser. If you add more agents running at the same time, give each one its own `Browser` and profile directory.
-- `browser-use` is pinned to `0.11.5`. That release predates the `enable_signal_handler` option, so [`my_actor/compat.py`](my_actor/compat.py) stops Browser Use from taking over the Actor's SIGINT and SIGTERM handlers. After upgrading to a release that has the option, pass `enable_signal_handler=False` to `Agent` and remove `compat.py`.
+- Browser Use installs its own SIGINT and SIGTERM handlers during a run. [`my_actor/compat.py`](my_actor/compat.py) keeps them with the Actor: it passes `enable_signal_handler=False` on Browser Use 0.12.6 and later, and replaces the handler with a no-op on older releases.
 
 ## Included features
 

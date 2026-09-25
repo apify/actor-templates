@@ -57,7 +57,7 @@ requires-dist = [
     { name = "apify-client" },
     { name = "arxiv-mcp-server", specifier = ">=0.3.1,<1.0.0" },
     { name = "beautifulsoup4", extras = ["lxml"], specifier = ">=4.0.0,<5.0.0" },
-    { name = "browser-use", specifier = "==0.11.5" },
+    { name = "browser-use", specifier = ">=0.11.0,<1.0.0" },
     { name = "camoufox", extras = ["geoip"], specifier = ">=0.4.5,<1.0.0" },
     { name = "crawlee", extras = ["all"], specifier = ">=1.7.0" },
     { name = "fastapi", specifier = ">=0.135.0,<1.0.0" },
@@ -762,7 +762,7 @@ wheels = [
 
 [[package]]
 name = "browser-use"
-version = "0.11.5"
+version = "0.11.13"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -803,9 +803,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "uuid7" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/28/af/8b791890f5f087830f58905ff4ae78013acc903b4f44f896ad4075489861/browser_use-0.11.5.tar.gz", hash = "sha256:be8de3491f7e4dbbe75f09be8cd9f1a3caa7c5d984fc6b732bf92ca2f7da2cea", size = 537197, upload-time = "2026-01-28T04:53:22.386Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9f/86/40464b112d01dfedf2433570a6537dea1656715bf8631d18a6eaa2dce28b/browser_use-0.11.13.tar.gz", hash = "sha256:c20d029f17c44add2047a72c836cb589b85e90a31a91cf3632a22a2de1928dfe", size = 628359, upload-time = "2026-02-25T05:20:10.662Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/5c/3f40f08b3b919d56dcca38d8ddadbc0fd5badfe4e2cbe6f2dfbe133484af/browser_use-0.11.5-py3-none-any.whl", hash = "sha256:667a34daf30287e1d24c0cc67429b72d6067a1dcfd3c3276203da19e20f8693c", size = 660137, upload-time = "2026-01-28T04:53:20.404Z" },
+    { url = "https://files.pythonhosted.org/packages/c6/ae/011c8a99708c82a2f8b75c5f24fb62541460fcb648050227db67d361bbe4/browser_use-0.11.13-py3-none-any.whl", hash = "sha256:f5232309213715e66e8f2079fb7097ac79a880728735968e4c7d41031ed15e83", size = 745686, upload-time = "2026-02-25T05:20:11.939Z" },
 ]
 
 [[package]]
