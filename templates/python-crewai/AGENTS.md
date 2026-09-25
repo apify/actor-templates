@@ -19,12 +19,12 @@ apify <command> --help
 
 Skip the steps that do not apply when changing an existing Actor.
 
-1. **Implement** in `my_actor/main.py`. Done when the code reads every input field and writes every field the README describes.
+1. **Implement** in `my_actor/main.py`. Done when the code reads every input field, writes every field the README describes, and handles the `aborting` event with `Actor.on(Event.ABORTING, handler)` (`from apify import Event`).
 2. **Input schema** in `.actor/input_schema.json`. Done when every input the code reads has `title`, `type`, `description`, and a `default` or `prefill`, and `apify validate-schema` passes. Example values belong in `prefill`; `default` reaches the Actor.
 3. **Output schemas**: `.actor/dataset_schema.json` covering every field the code pushes, `.actor/output_schema.json`, and `.actor/key_value_store_schema.json` when the code stores records. Reference each file from `actor.json`. Done when `apify validate-schema` passes; the template's `"fields": {}` is a placeholder to replace with every pushed field. Rules are in the Reference table.
 4. **README.md**, the Actor's landing page on Apify Store. An Actor without one is not finished.
 5. **Test locally**: put input in `storage/key_value_stores/default/INPUT.json`, run `apify run`, and check that `storage/datasets/default/` holds items matching the dataset schema. Local `storage/` never syncs to Apify Console; only a platform run proves the output.
-6. **Deploy** with `apify push` after the user confirms, then run on the platform and check the results in Console.
+6. **Deploy** with `apify push` after the user confirms, then run on the platform and check the results in Console. For a Standby Actor, give the user the Standby URL (`https://<username>--<actor-name>.apify.actor`).
 
 ## Rules
 
@@ -36,7 +36,7 @@ Skip the steps that do not apply when changing an existing Actor.
 - Check which crawler packages are installed before applying crawler advice. Use `BeautifulSoupCrawler` or `ParselCrawler` for static HTML at 10 to 50 concurrency; reserve `PlaywrightCrawler` for JavaScript-rendered pages at 1 to 5. Add delays and respect robots.txt and terms of service.
 - Use the router pattern when a crawl has more than one page type.
 - Count results with your own tally; `dataset.get_info()` lags on the platform.
-- Handle the `aborting` event with `Actor.on(Event.ABORTING, handler)` (`from apify import Event`): persist state, then `await Actor.exit()`, so a stopped run ends quickly and cheaply.
+- In the `aborting` handler, persist state, then `await Actor.exit()`, so a stopped run ends quickly and cheaply.
 - On the platform the SDK reads the token from `APIFY_TOKEN` (not `APIFY_API_TOKEN`); locally it uses the credentials stored by `apify login`. Keep the token out of code, config, and logs.
 - Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200.
 
