@@ -1,0 +1,56 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "rank": {
+                "type": "integer",
+                "title": "Rank",
+                "description": "One-based position of the post in the extracted page order.",
+                "example": 1
+            },
+            "title": {
+                "type": "string",
+                "title": "Title",
+                "description": "Post title as displayed on the source page.",
+                "example": "Show HN: An example project"
+            },
+            "url": {
+                "type": "string",
+                "title": "URL",
+                "description": "Absolute destination URL of the post.",
+                "example": "https://example.com/project"
+            }
+        },
+        "required": ["rank", "title", "url"]
+    },
+    "views": {
+        "posts": {
+            "title": "Posts",
+            "description": "Extracted posts in their displayed order.",
+            "transformation": {
+                "fields": ["rank", "title", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "rank": {
+                        "label": "Rank",
+                        "format": "number"
+                    },
+                    "title": {
+                        "label": "Title",
+                        "format": "text"
+                    },
+                    "url": {
+                        "label": "URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "$schema": "https://apify.com/schemas/v1/output.ide.json",
+    "actorOutputSchemaVersion": 1,
+    "title": "Browser Use agent output",
+    "description": "Validated post rows and a bounded execution summary.",
+    "type": "object",
+    "properties": {
+        "results": {
+            "type": "string",
+            "title": "Extracted posts",
+            "description": "Validated post rows in the default dataset.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        },
+        "summary": {
+            "type": "string",
+            "title": "Run summary",
+            "description": "Framework, status, model, source URL, row count, and elapsed time.",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/OUTPUT"
+        }
+    }
+}

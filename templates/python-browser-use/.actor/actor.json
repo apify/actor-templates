@@ -1,0 +1,19 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "python-browser-use",
+    "title": "Python AI browser agent in Browser Use",
+    "description": "An AI agent that browses a website like a person and returns structured data. Good for sites that change often or are hard to scrape with selectors.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "python-browser-use",
+        "generatedBy": "<FILL-IN-MODEL>"
+    },
+    "dockerfile": "../Dockerfile",
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    }
+}
