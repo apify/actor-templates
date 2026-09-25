@@ -14,6 +14,7 @@ DEFAULT_TASK = (
 )
 DEFAULT_MODEL = 'google/gemini-2.5-flash'
 MAX_TASK_CHARS = 4_000
+MAX_POSTS = 10
 
 
 @dataclass(frozen=True, slots=True)
@@ -73,11 +74,11 @@ def normalize_input(input_data: Mapping[str, object]) -> RunConfig:
         msg = 'task must not be empty'
         raise ValueError(msg)
     if len(task) > MAX_TASK_CHARS:
-        msg = 'task must contain at most 4000 characters'
+        msg = f'task must contain at most {MAX_TASK_CHARS} characters'
         raise ValueError(msg)
 
     model = str(input_data.get('model') or DEFAULT_MODEL).strip()
-    if not model or '/' not in model:
+    if '/' not in model:
         msg = 'model must be a non-empty OpenRouter provider/model ID'
         raise ValueError(msg)
 
@@ -85,7 +86,7 @@ def normalize_input(input_data: Mapping[str, object]) -> RunConfig:
         start_url=start_url,
         task=task,
         model=model,
-        max_posts=_bounded_integer(input_data.get('maxPosts'), 5, 1, 10, 'maxPosts'),
+        max_posts=_bounded_integer(input_data.get('maxPosts'), 5, 1, MAX_POSTS, 'maxPosts'),
         max_steps=_bounded_integer(input_data.get('maxSteps'), 15, 1, 50, 'maxSteps'),
         deadline_secs=_bounded_integer(input_data.get('deadlineSecs'), 180, 30, 300, 'deadlineSecs'),
         action_delay_secs=_bounded_number(input_data.get('actionDelaySecs'), 0.5, 0.5, 5, 'actionDelaySecs'),

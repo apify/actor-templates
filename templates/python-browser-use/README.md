@@ -9,7 +9,7 @@ An AI agent that opens a website in a real Chrome browser, completes a task writ
 1. The Actor reads the input and checks every limit (steps, deadline, number of results) again in code, so API calls that skip input validation can't raise them.
 2. It launches one Chrome browser, routed through [Apify Proxy](https://docs.apify.com/platform/proxy) when enabled.
 3. A single Browser Use agent opens `startUrl` and follows the `task` instruction. It returns a list of posts that matches the `Posts` Pydantic model in [`my_actor/main.py`](my_actor/main.py).
-4. The Actor replaces each URL from the model with the exact link it finds on the page under the same title, so the stored URLs are real links from the page.
+4. The Actor replaces each URL from the model with the exact link it finds on the page under the same title, so the stored URLs are real links from the page. Posts with no matching link, or with a title that links to several different URLs, are dropped.
 5. Each post is saved to the default dataset, and a run summary is written to the `OUTPUT` record in the key-value store. The browser is closed even if the run fails.
 
 ## Input
@@ -50,7 +50,7 @@ For local runs, set `OPENROUTER_API_KEY` to call OpenRouter directly with your o
 - To extract something else, change the `task` input together with the `Post` and `Posts` models in [`my_actor/main.py`](my_actor/main.py), the dataset schema in [`.actor/dataset_schema.json`](.actor/dataset_schema.json), and the output example above.
 - To change the input limits, update both [`.actor/input_schema.json`](.actor/input_schema.json) and [`my_actor/config.py`](my_actor/config.py).
 - The template runs one agent with one browser. If you add more agents running at the same time, give each one its own `Browser` and profile directory.
-- `browser-use` is pinned to `0.11.5`. That release predates the `enable_signal_handler` option, so [`my_actor/compat.py`](my_actor/compat.py) stops Browser Use from taking over the Actor's SIGINT and SIGTERM handlers. You can remove it after upgrading to a release that has the option.
+- `browser-use` is pinned to `0.11.5`. That release predates the `enable_signal_handler` option, so [`my_actor/compat.py`](my_actor/compat.py) stops Browser Use from taking over the Actor's SIGINT and SIGTERM handlers. After upgrading to a release that has the option, pass `enable_signal_handler=False` to `Agent` and remove `compat.py`.
 
 ## Included features
 

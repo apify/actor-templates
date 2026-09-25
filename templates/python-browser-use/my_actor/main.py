@@ -22,7 +22,7 @@ from browser_use.dom.views import DEFAULT_INCLUDE_ATTRIBUTES
 from pydantic import BaseModel, Field, HttpUrl
 
 from .compat import run_agent_with_actor_signals
-from .config import RunConfig, normalize_input
+from .config import MAX_POSTS, RunConfig, normalize_input
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping
@@ -47,11 +47,11 @@ class Post(BaseModel):
 class Posts(BaseModel):
     """Structured result returned by Browser Use."""
 
-    posts: list[Post] = Field(min_length=1, max_length=10, description='posts in displayed order')
+    posts: list[Post] = Field(min_length=1, max_length=MAX_POSTS, description='posts in displayed order')
 
 
 def make_llm(model: str) -> ChatOpenAI:
-    """Build the shared OpenRouter client before allocating a browser."""
+    """Build the OpenRouter chat client from the available credentials."""
     direct_key = os.getenv('OPENROUTER_API_KEY')
     apify_token = os.getenv('APIFY_TOKEN')
     if direct_key:
@@ -80,13 +80,11 @@ def normalize_posts(posts: Iterable[Post], *, limit: int) -> list[dict[str, obje
     rows: list[dict[str, object]] = []
     seen: set[str] = set()
     for post in posts:
-        title = post.title.strip()
         url = str(post.url)
-        parts = urlsplit(url)
-        if not title or parts.scheme not in {'http', 'https'} or not parts.hostname or url in seen:
+        if url in seen:
             continue
         seen.add(url)
-        rows.append({'rank': len(rows) + 1, 'title': title, 'url': url})
+        rows.append({'rank': len(rows) + 1, 'title': post.title, 'url': url})
         if len(rows) >= limit:
             break
     return rows
@@ -107,7 +105,7 @@ def reconcile_post_links(posts: Iterable[Post], links: Iterable[Mapping[str, obj
         if not exact.title:
             continue
 
-        key = _normalize_title(exact.title)
+        key = exact.title
         previous = exact_links.get(key)
         if key not in exact_links:
             exact_links[key] = exact
@@ -146,7 +144,7 @@ def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -
 
 
 def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agent:
-    """Construct one guide-aligned Browser Use agent."""
+    """Construct the Browser Use agent for the configured task."""
     task = (
         f'Open {config.start_url}. {config.task} '
         f'Return no more than {config.max_posts} posts and do not invent missing titles or URLs.'
@@ -156,19 +154,26 @@ def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agen
         llm=llm,
         browser=browser,
         output_model_schema=Posts,
-        # Browser Use omits href from its default DOM representation. Without
-        # this, models tend to mistake HN's visible source-domain label for the
-        # title link's full destination.
+        # Browser Use omits href from its default DOM representation. Without this, models tend to mistake HN's
+        # visible source-domain label for the title link's full destination.
         include_attributes=[*DEFAULT_INCLUDE_ATTRIBUTES, 'href'],
         use_vision=False,
         use_judge=False,
     )
 
 
+def require_result(result: Posts | None) -> Posts:
+    """Reject an agent run that ended without a structured result."""
+    if result is None:
+        msg = 'The agent stopped without returning a structured result.'
+        raise RuntimeError(msg)
+    return result
+
+
 def require_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     """Reject a nominally successful agent response with no usable records."""
     if not rows:
-        msg = 'The agent returned no valid posts.'
+        msg = 'The agent returned no posts that match a link on the final page.'
         raise RuntimeError(msg)
     return rows
 
@@ -192,7 +197,7 @@ async def _write_failure(config: RunConfig, started_at: float, error: Exception)
             'startUrl': config.start_url,
             'itemCount': 0,
             'elapsedSecs': round(time.monotonic() - started_at, 2),
-            'error': str(error)[:500],
+            'error': (str(error) or type(error).__name__)[:500],
         },
     )
 
@@ -206,11 +211,11 @@ async def main() -> None:
             raise TypeError(msg)
 
         config = normalize_input(raw_input)
-        llm = make_llm(config.model)
         started_at = time.monotonic()
         browser: Browser | None = None
 
         try:
+            llm = make_llm(config.model)
             proxy_configuration = await Actor.create_proxy_configuration(
                 actor_proxy_input=config.proxy_configuration,
             )
@@ -224,13 +229,12 @@ async def main() -> None:
 
             async with asyncio.timeout(config.deadline_secs):
                 history = await run_agent_with_actor_signals(agent, max_steps=config.max_steps)
-                result = history.structured_output
+                result = require_result(history.structured_output)
                 page_links = await read_page_links(browser)
-            grounded_posts = reconcile_post_links(result.posts if result else [], page_links)
+            grounded_posts = reconcile_post_links(result.posts, page_links)
             rows = require_rows(normalize_posts(grounded_posts, limit=config.max_posts))
 
-            for row in rows:
-                await Actor.push_data(row)
+            await Actor.push_data(rows)
             summary = {
                 'framework': 'browser-use',
                 'status': 'succeeded',
