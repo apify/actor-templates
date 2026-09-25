@@ -335,11 +335,11 @@
         {
             "id": "python-browser-use",
             "name": "python-browser-use",
-            "label": "Browser Use agent",
+            "label": "Browser Use scraping agent",
             "skipRunTest": true,
             "category": "python",
             "technologies": ["browseruse", "chrome"],
-            "description": "An AI agent that browses a website in a real Chrome browser and returns structured data. Good for pages that are hard to scrape with fixed selectors.",
+            "description": "An AI agent that browses a website like a person and returns structured data. Good for sites that change often or are hard to scrape with selectors.",
             "messages": {
                 "postCreate": "To run this Actor locally, you need Google Chrome or Chromium installed.\nActivate the virtual environment in the \".venv\" folder to install additional Python packages."
             },

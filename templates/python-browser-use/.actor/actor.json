@@ -3,7 +3,7 @@
     "actorSpecification": 1,
     "name": "python-browser-use",
     "title": "Python AI browser agent in Browser Use",
-    "description": "An AI agent that browses a website in a real Chrome browser and returns structured data, built with Browser Use.",
+    "description": "An AI agent that browses a website like a person and returns structured data. Good for sites that change often or are hard to scrape with selectors.",
     "version": "0.0",
     "buildTag": "latest",
     "meta": {
