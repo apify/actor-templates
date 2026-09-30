@@ -207,7 +207,7 @@
         {
             "id": "python-crawlee-playwright",
             "name": "python-crawlee-playwright",
-            "label": "Python browser crawler (Crawlee + Playwright)",
+            "label": "Python browser crawler (Crawlee + Playwright + Chrome)",
             "category": "python",
             "technologies": ["crawlee", "playwright", "chrome"],
             "description": "A browser crawler that renders JavaScript, with Crawlee handling retries and request queues. Good for social feeds, dashboards, or single-page apps.",
@@ -227,7 +227,7 @@
         {
             "id": "python-crawlee-playwright-camoufox",
             "name": "python-crawlee-playwright-camoufox",
-            "label": "Python stealth crawler (Crawlee + Camoufox)",
+            "label": "Python stealth crawler (Crawlee + Playwright + Camoufox)",
             "category": "python",
             "technologies": ["crawlee", "playwright", "camoufox"],
             "description": "A browser crawler built to get past bot protection. Uses Camoufox, a Firefox build that looks like a real user.",
@@ -427,7 +427,7 @@
         {
             "id": "js-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_js",
-            "label": "JavaScript browser crawler (Crawlee + Puppeteer)",
+            "label": "JavaScript browser crawler (Crawlee + Puppeteer + Chrome)",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
             "description": "A browser crawler that renders JavaScript in headless Chrome, with Crawlee handling retries, queues, and proxies. Good for social feeds, dashboards, or single-page apps.",
@@ -443,7 +443,7 @@
         {
             "id": "js-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_js",
-            "label": "JavaScript browser crawler (Crawlee + Playwright)",
+            "label": "JavaScript browser crawler (Crawlee + Playwright + Chrome)",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
             "description": "A browser crawler that renders JavaScript, with Crawlee handling retries, queues, and proxies. Good for social feeds, dashboards, or single-page apps.",
@@ -459,7 +459,7 @@
         {
             "id": "js-crawlee-playwright-camoufox",
             "name": "project_playwright_camoufox_crawler_js",
-            "label": "JavaScript stealth crawler (Crawlee + Camoufox)",
+            "label": "JavaScript stealth crawler (Crawlee + Playwright + Camoufox)",
             "category": "javascript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
             "description": "A browser crawler built to get past bot protection. Uses Camoufox, a Firefox build that looks like a real user.",
@@ -508,7 +508,7 @@
         {
             "id": "ts-crawlee-puppeteer-chrome",
             "name": "project_puppeteer_crawler_ts",
-            "label": "TypeScript browser crawler (Crawlee + Puppeteer)",
+            "label": "TypeScript browser crawler (Crawlee + Puppeteer + Chrome)",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "puppeteer", "chrome"],
             "description": "A browser crawler that renders JavaScript in headless Chrome, with Crawlee handling retries, queues, and proxies. Good for social feeds, dashboards, or single-page apps.",
@@ -524,7 +524,7 @@
         {
             "id": "ts-crawlee-playwright-chrome",
             "name": "project_playwright_crawler_ts",
-            "label": "TypeScript browser crawler (Crawlee + Playwright)",
+            "label": "TypeScript browser crawler (Crawlee + Playwright + Chrome)",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "chrome"],
             "description": "A browser crawler that renders JavaScript, with Crawlee handling retries, queues, and proxies. Good for social feeds, dashboards, or single-page apps.",
@@ -540,7 +540,7 @@
         {
             "id": "ts-crawlee-playwright-camoufox",
             "name": "project_playwright_camoufox_crawler_ts",
-            "label": "TypeScript stealth crawler (Crawlee + Camoufox)",
+            "label": "TypeScript stealth crawler (Crawlee + Playwright + Camoufox)",
             "category": "typescript",
             "technologies": ["nodejs", "crawlee", "playwright", "camoufox"],
             "description": "A browser crawler built to get past bot protection. Uses Camoufox, a Firefox build that looks like a real user.",
