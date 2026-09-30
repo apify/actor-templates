@@ -16,7 +16,7 @@
             "label": "Python site crawler (Crawlee + BeautifulSoup)",
             "category": "python",
             "technologies": ["crawlee", "beautifulsoup"],
-            "description": "A crawler that follows links and gets data from static pages, with Crawlee handling retries, queues, and proxies. Uses BeautifulSoup, Python's most popular HTML parser. Can't run client-side JavaScript.",
+            "description": "A crawler that follows links and gets data from static pages, with Crawlee handling retries and request queues. Uses BeautifulSoup, Python's most popular HTML parser. Can't run client-side JavaScript.",
             "messages": {
                 "postCreate": "Activate the virtual environment in the \".venv\" folder to install additional Python packages."
             },
@@ -71,7 +71,7 @@
             "label": "Empty Python Actor (uv)",
             "category": "python",
             "technologies": ["uv"],
-            "description": "A general-purpose Python Actor with its project and dependencies managed by the uv package manager. A minimal starting point for any use case.",
+            "description": "An Actor with the Apify SDK set up and dependencies managed by the uv package manager, so you can build any tool you need.",
             "messages": {
                 "postCreate": "To install the dependencies, run \"uv sync\" in the Actor directory. It creates a virtual environment in the \".venv\" folder and installs the locked dependencies from \"uv.lock\". To install additional Python packages, use \"uv add <package>\"."
             },
@@ -190,7 +190,7 @@
             "label": "Python site crawler (Crawlee + Parsel)",
             "category": "python",
             "technologies": ["crawlee", "parsel"],
-            "description": "A crawler that follows links and gets data from static pages, with Crawlee handling retries, queues, and proxies. Uses Parsel, with native XPath and CSS selectors. Can't run client-side JavaScript.",
+            "description": "A crawler that follows links and gets data from static pages, with Crawlee handling retries and request queues. Uses Parsel, with native XPath and CSS selectors. Can't run client-side JavaScript.",
             "messages": {
                 "postCreate": "Activate the virtual environment in the \".venv\" folder to install additional Python packages."
             },
@@ -210,7 +210,7 @@
             "label": "Python browser crawler (Crawlee + Playwright)",
             "category": "python",
             "technologies": ["crawlee", "playwright", "chrome"],
-            "description": "A browser crawler that renders JavaScript, with Crawlee handling retries, queues, and proxies. Good for social feeds, dashboards, or single-page apps.",
+            "description": "A browser crawler that renders JavaScript, with Crawlee handling retries and request queues. Good for social feeds, dashboards, or single-page apps.",
             "messages": {
                 "postCreate": "Activate the virtual environment in the \".venv\" folder to install additional Python packages."
             },
@@ -306,7 +306,7 @@
             "skipRunTest": true,
             "category": "python",
             "technologies": ["pydanticai"],
-            "description": "A joke generator built with PydanticAI. A starting point for any AI agent.",
+            "description": "An AI agent that tells jokes, built with PydanticAI. A starting point for any AI agent.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-pydanticai.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -339,7 +339,7 @@
             "category": "python",
             "technologies": ["mcp"],
             "skipTests": true,
-            "description": "A monetized Actor from any existing MCP server. Supports stdio, HTTP, and SSE.",
+            "description": "A proxy that turns any existing MCP server into a monetized Actor. Supports stdio, HTTP, and SSE.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -364,7 +364,7 @@
             "category": "python",
             "technologies": ["mcp"],
             "skipTests": true,
-            "description": "Give AI assistants like Claude and Cursor your own tools, with built-in pay-per-event billing.",
+            "description": "An MCP server that gives AI assistants like Claude and Cursor your own tools, with built-in pay-per-event billing.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -744,7 +744,7 @@
             "label": "TypeScript MCP proxy",
             "category": "typescript",
             "technologies": ["nodejs", "mcp"],
-            "description": "A monetized Actor from any existing MCP server. Supports stdio, HTTP, and SSE.",
+            "description": "A proxy that turns any existing MCP server into a monetized Actor. Supports stdio, HTTP, and SSE.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-proxy.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -761,7 +761,7 @@
             "label": "TypeScript MCP server",
             "category": "typescript",
             "technologies": ["nodejs", "mcp"],
-            "description": "Give AI assistants like Claude and Cursor your own tools, with built-in pay-per-event billing.",
+            "description": "An MCP server that gives AI assistants like Claude and Cursor your own tools, with built-in pay-per-event billing.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-mcp-empty.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
