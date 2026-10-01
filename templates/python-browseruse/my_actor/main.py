@@ -15,6 +15,7 @@ import time
 from typing import TYPE_CHECKING
 from urllib.parse import unquote, urlsplit
 
+import psutil
 from apify import Actor
 from browser_use import ActionResult, Agent, Browser, ChatOpenAI, Tools
 from browser_use.browser import ProxySettings
@@ -226,6 +227,21 @@ def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -
     )
 
 
+def kill_browser_processes(user_data_dir: object) -> None:
+    """Kill this process's descendants that run a browser on `user_data_dir`.
+
+    Browser Use leaves a browser it gave up on during start running, and `Browser.kill` can't reach it, since the
+    session never registered the process.
+    """
+    marker = f'--user-data-dir={user_data_dir}'
+    for process in psutil.Process().children(recursive=True):
+        try:
+            if marker in process.cmdline():
+                process.kill()
+        except psutil.Error:
+            continue
+
+
 async def start_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -> Browser:
     """Start a browser, retrying with a fresh one when a start fails."""
     attempt = 1
@@ -235,6 +251,7 @@ async def start_browser(config: RunConfig, *, headless: bool, proxy_url: str | N
             await browser.start()
         except Exception:
             await _safe_kill(browser)
+            kill_browser_processes(browser.browser_profile.user_data_dir)
             if attempt >= BROWSER_START_ATTEMPTS:
                 raise
             Actor.log.warning('Browser failed to start (attempt %d/%d); retrying.', attempt, BROWSER_START_ATTEMPTS)
