@@ -52,9 +52,11 @@ PAGE_LINKS_SCRIPT = """() => Array.from(document.querySelectorAll('a[href]'))
         url: anchor.href,
     }))"""
 # Browser Use waits at most 30 s for a launched Chrome and does not retry a slow start, while a cold start on a small
-# machine (e.g. a CI runner) can take that long. `start_browser` retries with a fresh browser, which starts faster
-# once the disk and font caches are warm.
-BROWSER_START_ATTEMPTS = 3
+# machine (e.g. a CI runner) can take that long, and a busy machine can also fail the first CDP connection.
+# `start_browser` retries with a fresh browser, which starts faster once the disk and font caches are warm, after a
+# pause that lets the previous browser exit.
+BROWSER_START_ATTEMPTS = 4
+BROWSER_START_RETRY_DELAY_SECS = 2
 # Browser Use event timeouts, read from these environment variables when each event is created. Its 30 s start limits
 # would cut a slow start short of the launch's own timeout, and its 15 s navigation limit in older releases is tight
 # for a first page load through a proxy. Values set in the environment win.
@@ -256,6 +258,7 @@ async def start_browser(config: RunConfig, *, headless: bool, proxy_url: str | N
                 raise
             Actor.log.warning('Browser failed to start (attempt %d/%d); retrying.', attempt, BROWSER_START_ATTEMPTS)
             attempt += 1
+            await asyncio.sleep(BROWSER_START_RETRY_DELAY_SECS)
         else:
             return browser
 

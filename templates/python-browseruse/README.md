@@ -7,7 +7,7 @@ An AI agent that opens a website in a real Chrome browser, completes a task writ
 ## How it works
 
 1. The Actor reads the input and checks every limit (steps, deadline, number of results) again in code, so API calls that skip input validation can't raise them.
-2. It launches one Chrome browser, routed through [Apify Proxy](https://docs.apify.com/platform/proxy) when enabled. A start that times out is retried with a fresh browser, up to three times.
+2. It launches one Chrome browser, routed through [Apify Proxy](https://docs.apify.com/platform/proxy) when enabled. A start that times out is retried with a fresh browser, up to four attempts in total.
 3. The browser opens `startUrl`, and a single Browser Use agent follows the `task` instruction. It returns at most `maxItems` items that match the `Items` Pydantic model in [`my_actor/main.py`](my_actor/main.py).
 4. If the final page has exactly one link with an item's title, the Actor stores that link's URL, because models sometimes shorten or mistype long URLs. Other items keep the URL the model returned.
 5. Each item is saved to the default dataset, and a run summary is written to the `OUTPUT` record in the key-value store. The browser is closed even if the run fails.
