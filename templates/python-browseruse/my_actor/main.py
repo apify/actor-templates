@@ -67,7 +67,8 @@ def make_llm(model_name: str) -> ChatOpenAI:
     if not os.getenv('OPENAI_API_KEY'):
         msg = 'OPENAI_API_KEY is not set - add it to the Actor environment variables or export it for local runs'
         raise RuntimeError(msg)
-    return ChatOpenAI(model=model_name)
+    # Temperature 0 keeps the agent's choices repeatable for the same page.
+    return ChatOpenAI(model=model_name, temperature=0)
 
 
 def is_http_url(value: str) -> bool:

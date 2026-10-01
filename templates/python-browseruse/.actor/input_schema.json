@@ -31,8 +31,8 @@
             "type": "string",
             "description": "OpenAI model that drives the agent. Requires the OPENAI_API_KEY environment variable.",
             "editor": "select",
-            "enum": ["gpt-4o-mini", "gpt-4o", "gpt-4.1-mini", "gpt-4.1"],
-            "default": "gpt-4o-mini"
+            "enum": ["gpt-4.1-mini", "gpt-4.1", "gpt-4o", "gpt-4o-mini"],
+            "default": "gpt-4.1-mini"
         },
         "maxItems": {
             "title": "Maximum items",
@@ -52,7 +52,7 @@
             "editor": "number",
             "minimum": 1,
             "maximum": 50,
-            "default": 10
+            "default": 8
         },
         "deadlineSecs": {
             "title": "Run deadline",
@@ -61,7 +61,7 @@
             "editor": "number",
             "minimum": 30,
             "maximum": 300,
-            "default": 180
+            "default": 240
         },
         "actionDelaySecs": {
             "title": "Delay between browser actions",

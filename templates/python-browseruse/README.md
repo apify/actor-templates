@@ -18,10 +18,10 @@ An AI agent that opens a website in a real Chrome browser, completes a task writ
 | -------------------- | ------------------------------- | --------------------------------------------------- |
 | `startUrl`           | `https://news.ycombinator.com/` | Page the agent opens                                |
 | `task`               | post titles and URLs            | Instruction whose result must fit the `Items` model |
-| `modelName`          | `gpt-4o-mini`                   | OpenAI model that drives the agent                  |
+| `modelName`          | `gpt-4.1-mini`                  | OpenAI model that drives the agent                  |
 | `maxItems`           | `5`                             | Maximum number of items and dataset rows            |
-| `maxSteps`           | `10`                            | Maximum number of agent steps (and LLM calls)       |
-| `deadlineSecs`       | `180`                           | Time limit for the whole agent run                  |
+| `maxSteps`           | `8`                             | Maximum number of agent steps (and LLM calls)       |
+| `deadlineSecs`       | `240`                           | Time limit for the whole agent run                  |
 | `actionDelaySecs`    | `0.5`                           | Minimum delay between browser actions               |
 | `proxyConfiguration` | Apify Proxy enabled             | Proxy for the browser                               |
 
