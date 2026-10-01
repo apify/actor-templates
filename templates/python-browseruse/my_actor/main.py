@@ -50,6 +50,19 @@ PAGE_LINKS_SCRIPT = """() => Array.from(document.querySelectorAll('a[href]'))
         title: (anchor.textContent || '').replace(/\\s+/g, ' ').trim(),
         url: anchor.href,
     }))"""
+# Browser Use waits at most 30 s for a launched Chrome and does not retry a slow start, while a cold start on a small
+# machine (e.g. a CI runner) can take that long. `start_browser` retries with a fresh browser, which starts faster
+# once the disk and font caches are warm.
+BROWSER_START_ATTEMPTS = 3
+# Browser Use event timeouts, read from these environment variables when each event is created. Its 30 s start limits
+# would cut a slow start short of the launch's own timeout, and its 15 s navigation limit in older releases is tight
+# for a first page load through a proxy. Values set in the environment win.
+BROWSER_EVENT_TIMEOUTS_SECS = {
+    'TIMEOUT_BrowserStartEvent': 60,
+    'TIMEOUT_BrowserLaunchEvent': 60,
+    'TIMEOUT_BrowserConnectedEvent': 60,
+    'TIMEOUT_NavigateToUrlEvent': 60,
+}
 # Upper bound on the links `read_page_links` hands to the model, which keeps its prompt small on link-heavy pages.
 MAX_ACTION_LINKS = 300
 
@@ -197,6 +210,8 @@ def build_tools() -> Tools:
 
 def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -> Browser:
     """Create a browser that remains available for post-agent link grounding."""
+    for name, secs in BROWSER_EVENT_TIMEOUTS_SECS.items():
+        os.environ.setdefault(name, str(secs))
     executable_path = os.getenv('APIFY_CHROME_EXECUTABLE_PATH')
     return Browser(
         # Chrome's sandbox fails to start on hosts that restrict user namespaces (e.g. Ubuntu 24.04). Browser Use only
@@ -209,6 +224,23 @@ def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -
         proxy=to_browser_use_proxy(proxy_url) if proxy_url else None,
         wait_between_actions=config.action_delay_secs,
     )
+
+
+async def start_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -> Browser:
+    """Start a browser, retrying with a fresh one when a start fails."""
+    attempt = 1
+    while True:
+        browser = build_browser(config, headless=headless, proxy_url=proxy_url)
+        try:
+            await browser.start()
+        except Exception:
+            await _safe_kill(browser)
+            if attempt >= BROWSER_START_ATTEMPTS:
+                raise
+            Actor.log.warning('Browser failed to start (attempt %d/%d); retrying.', attempt, BROWSER_START_ATTEMPTS)
+            attempt += 1
+        else:
+            return browser
 
 
 def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agent:
@@ -295,14 +327,13 @@ async def main() -> None:
                 actor_proxy_input=config.proxy_configuration,
             )
             proxy_url = await proxy_configuration.new_url() if proxy_configuration else None
-            browser = build_browser(
-                config,
-                headless=Actor.configuration.headless,
-                proxy_url=proxy_url,
-            )
-            agent = build_agent(config, llm=llm, browser=browser)
-
             async with asyncio.timeout(config.deadline_secs):
+                browser = await start_browser(
+                    config,
+                    headless=Actor.configuration.headless,
+                    proxy_url=proxy_url,
+                )
+                agent = build_agent(config, llm=llm, browser=browser)
                 history = await run_agent_with_actor_signals(agent, max_steps=config.max_steps)
                 result = require_result(history.structured_output)
                 page_links = await try_read_page_links(browser)
