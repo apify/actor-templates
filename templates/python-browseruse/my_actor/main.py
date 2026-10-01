@@ -28,8 +28,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping
 
 # The result reaches the Actor only through `done`. File-system, `extract`, and page-query actions let a model collect
-# the data again and again without finishing; the page's elements are already in the agent's browser state. The rest
-# have no use in an extraction run.
+# the data again and again without finishing, and `search` takes it off the start page to a web search; the page's
+# elements are already in the agent's browser state. The rest have no use in an extraction run.
 EXCLUDED_ACTIONS = [
     'evaluate',
     'extract',
@@ -39,6 +39,7 @@ EXCLUDED_ACTIONS = [
     'replace_file',
     'save_as_pdf',
     'screenshot',
+    'search',
     'search_page',
     'upload_file',
     'write_file',
@@ -175,6 +176,8 @@ def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agen
     task = (
         f'{config.task}\n\n'
         f'Return at most {config.max_items} items. Use only titles and URLs shown on the pages; never invent them. '
+        "Read the items directly from the page elements in your browser state, which include each link's href; "
+        'there is no separate extraction tool. Do not click links or search the web just to read them. '
         'As soon as you have the items, call done with them.'
     )
     return Agent(

@@ -47,7 +47,7 @@ The agent calls the [OpenAI API](https://platform.openai.com/) with your own key
 
 - To extract something else, change the `task` input together with the `Item` and `Items` models in [`my_actor/main.py`](my_actor/main.py), the dataset schema in [`.actor/dataset_schema.json`](.actor/dataset_schema.json), and the output example above.
 - To change the input limits, update both [`.actor/input_schema.json`](.actor/input_schema.json) and [`my_actor/config.py`](my_actor/config.py).
-- The agent can't use Browser Use's file-system, `extract`, page-query (`find_elements`, `find_text`, `search_page`), `evaluate`, or screenshot actions (see `EXCLUDED_ACTIONS` in [`my_actor/main.py`](my_actor/main.py)), so it returns its result through `done`. On its last step it can only call `done`, so keep `deadlineSecs` long enough for `maxSteps` steps.
+- The agent can't use Browser Use's file-system, `extract`, page-query (`find_elements`, `find_text`, `search_page`), web `search`, `evaluate`, or screenshot actions (see `EXCLUDED_ACTIONS` in [`my_actor/main.py`](my_actor/main.py)), so it returns its result through `done`. On its last step it can only call `done`, so keep `deadlineSecs` long enough for `maxSteps` steps.
 - The template runs one agent with one browser. If you add more agents running at the same time, give each one its own `Browser` and profile directory.
 - Browser Use installs its own SIGINT and SIGTERM handlers during a run. [`my_actor/compat.py`](my_actor/compat.py) keeps them with the Actor: it passes `enable_signal_handler=False` on Browser Use 0.12.6 and later, and replaces the handler with a no-op on older releases.
 
