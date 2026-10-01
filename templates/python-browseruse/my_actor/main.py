@@ -9,16 +9,24 @@ https://docs.apify.com/sdk/python
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import json
 import os
+import shutil
+import subprocess
+import tempfile
 import time
+import urllib.request
+from dataclasses import dataclass
+from pathlib import Path
 from typing import TYPE_CHECKING
 from urllib.parse import unquote, urlsplit
 
 import psutil
 from apify import Actor
 from browser_use import ActionResult, Agent, Browser, ChatOpenAI, Tools
-from browser_use.browser import ProxySettings
+from browser_use.browser import BrowserProfile, ProxySettings
+from browser_use.browser.watchdogs.local_browser_watchdog import LocalBrowserWatchdog
 from browser_use.dom.views import DEFAULT_INCLUDE_ATTRIBUTES
 from pydantic import BaseModel, Field
 
@@ -51,21 +59,17 @@ PAGE_LINKS_SCRIPT = """() => Array.from(document.querySelectorAll('a[href]'))
         title: (anchor.textContent || '').replace(/\\s+/g, ' ').trim(),
         url: anchor.href,
     }))"""
-# Browser Use waits at most 30 s for a launched Chrome and does not retry a slow start, while a cold start on a small
-# machine (e.g. a CI runner) can take that long, and a busy machine can also fail the first CDP connection.
-# `start_browser` retries with a fresh browser, which starts faster once the disk and font caches are warm, after a
-# pause that lets the previous browser exit.
-BROWSER_START_ATTEMPTS = 4
-BROWSER_START_RETRY_DELAY_SECS = 2
-# Browser Use event timeouts, read from these environment variables when each event is created. Its 30 s start limits
-# would cut a slow start short of the launch's own timeout, and its 15 s navigation limit in older releases is tight
-# for a first page load through a proxy. Values set in the environment win.
-BROWSER_EVENT_TIMEOUTS_SECS = {
-    'TIMEOUT_BrowserStartEvent': 60,
-    'TIMEOUT_BrowserLaunchEvent': 60,
-    'TIMEOUT_BrowserConnectedEvent': 60,
-    'TIMEOUT_NavigateToUrlEvent': 60,
-}
+# The template launches Chrome itself and hands Browser Use the running browser, since Browser Use's own launch gives
+# Chrome a fixed 30 s to open its debugging port and the first tab 4 s to attach, which a cold start on a small machine
+# (e.g. a CI runner) can exceed. A launch that doesn't come up in time is retried with a fresh browser, and a failed
+# connection to a running browser is retried after a pause.
+BROWSER_LAUNCH_ATTEMPTS = 2
+BROWSER_LAUNCH_TIMEOUT_SECS = 90
+BROWSER_CONNECT_ATTEMPTS = 5
+BROWSER_RETRY_DELAY_SECS = 2
+# Browser Use's 15 s navigation limit in older releases is tight for a first page load through a proxy. A value set in
+# the environment wins.
+BROWSER_EVENT_TIMEOUTS_SECS = {'TIMEOUT_NavigateToUrlEvent': 60}
 # Upper bound on the links `read_page_links` hands to the model, which keeps its prompt small on link-heavy pages.
 MAX_ACTION_LINKS = 300
 
@@ -211,54 +215,129 @@ def build_tools() -> Tools:
     return tools
 
 
-def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -> Browser:
-    """Create a browser that remains available for post-agent link grounding."""
-    for name, secs in BROWSER_EVENT_TIMEOUTS_SECS.items():
-        os.environ.setdefault(name, str(secs))
-    executable_path = os.getenv('APIFY_CHROME_EXECUTABLE_PATH')
-    return Browser(
+@dataclass
+class LaunchedChrome:
+    """A Chrome process started by the template, with its debugging endpoint."""
+
+    process: subprocess.Popen[bytes]
+    user_data_dir: str
+    cdp_url: str
+
+
+def find_chrome() -> str:
+    """Return the Chrome executable: the one in the Apify image, else one Browser Use finds on the machine."""
+    path = os.getenv('APIFY_CHROME_EXECUTABLE_PATH') or LocalBrowserWatchdog._find_installed_browser_path()  # noqa: SLF001
+    if not path:
+        msg = 'No Chrome found - install one (e.g. `playwright install chromium`) or set APIFY_CHROME_EXECUTABLE_PATH'
+        raise RuntimeError(msg)
+    return path
+
+
+def chrome_args(*, headless: bool, proxy: ProxySettings | None, user_data_dir: str) -> list[str]:
+    """Build Chrome's command-line flags, the same set Browser Use launches its own browser with."""
+    profile = BrowserProfile(
         # Chrome's sandbox fails to start on hosts that restrict user namespaces (e.g. Ubuntu 24.04). Browser Use only
         # disables it inside Docker, while Playwright and the other Chrome templates disable it everywhere.
         chromium_sandbox=False,
         enable_default_extensions=False,
-        executable_path=executable_path or None,
+        headless=headless,
+        proxy=proxy,
+        user_data_dir=user_data_dir,
+    )
+    # Port 0 lets Chrome pick a free port and write it to `DevToolsActivePort` in the profile directory.
+    return [*profile.get_args(), '--remote-debugging-port=0', 'about:blank']
+
+
+def read_cdp_url(user_data_dir: str) -> str | None:
+    """Return the debugging endpoint once Chrome has opened its port and answers on it."""
+    try:
+        port = int((Path(user_data_dir) / 'DevToolsActivePort').read_text().split()[0])
+        cdp_url = f'http://127.0.0.1:{port}'
+        with urllib.request.urlopen(f'{cdp_url}/json/version', timeout=2):  # noqa: S310
+            return cdp_url
+    except (OSError, ValueError, IndexError):
+        return None
+
+
+def kill_chrome(chrome: LaunchedChrome) -> None:
+    """Kill the Chrome process tree and remove its profile directory."""
+    try:
+        root = psutil.Process(chrome.process.pid)
+        processes = [*root.children(recursive=True), root]
+    except psutil.Error:
+        processes = []
+    for process in processes:
+        with contextlib.suppress(psutil.Error):
+            process.kill()
+    psutil.wait_procs(processes, timeout=5)
+    shutil.rmtree(chrome.user_data_dir, ignore_errors=True)
+
+
+async def launch_chrome(*, headless: bool, proxy: ProxySettings | None) -> LaunchedChrome:
+    """Start Chrome and wait until its debugging endpoint answers."""
+    executable = find_chrome()
+    for attempt in range(1, BROWSER_LAUNCH_ATTEMPTS + 1):
+        # `BrowserProfile` copies a profile directory to a new temporary one unless its name has this prefix.
+        user_data_dir = tempfile.mkdtemp(prefix='browser-use-user-data-dir-')
+        process = subprocess.Popen(  # noqa: ASYNC220, S603
+            [executable, *chrome_args(headless=headless, proxy=proxy, user_data_dir=user_data_dir)],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        chrome = LaunchedChrome(process=process, user_data_dir=user_data_dir, cdp_url='')
+        deadline = time.monotonic() + BROWSER_LAUNCH_TIMEOUT_SECS
+        try:
+            while process.poll() is None and time.monotonic() < deadline:
+                cdp_url = await asyncio.to_thread(read_cdp_url, user_data_dir)
+                if cdp_url:
+                    chrome.cdp_url = cdp_url
+                    return chrome
+                await asyncio.sleep(0.25)
+        finally:
+            if not chrome.cdp_url:
+                kill_chrome(chrome)
+        reason = f'exited with code {process.returncode}' if process.returncode is not None else 'timed out'
+        Actor.log.warning('Chrome launch %s (attempt %d/%d).', reason, attempt, BROWSER_LAUNCH_ATTEMPTS)
+    msg = f'Chrome did not start after {BROWSER_LAUNCH_ATTEMPTS} attempts'
+    raise RuntimeError(msg)
+
+
+def build_browser(config: RunConfig, *, cdp_url: str, headless: bool, proxy: ProxySettings | None) -> Browser:
+    """Create a Browser Use session on the launched Chrome, kept open for post-agent link grounding."""
+    for name, secs in BROWSER_EVENT_TIMEOUTS_SECS.items():
+        os.environ.setdefault(name, str(secs))
+    return Browser(
+        cdp_url=cdp_url,
         headless=headless,
         keep_alive=True,
-        proxy=to_browser_use_proxy(proxy_url) if proxy_url else None,
+        # Browser Use answers the proxy's authentication challenge with these credentials.
+        proxy=proxy,
         wait_between_actions=config.action_delay_secs,
     )
 
 
-def kill_browser_processes(user_data_dir: object) -> None:
-    """Kill this process's descendants that run a browser on `user_data_dir`.
-
-    Browser Use leaves a browser it gave up on during start running, and `Browser.kill` can't reach it, since the
-    session never registered the process.
-    """
-    marker = f'--user-data-dir={user_data_dir}'
-    for process in psutil.Process().children(recursive=True):
-        try:
-            if marker in process.cmdline():
-                process.kill()
-        except psutil.Error:
-            continue
-
-
-async def start_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -> Browser:
-    """Start a browser, retrying with a fresh one when a start fails."""
+async def connect_browser(
+    config: RunConfig,
+    chrome: LaunchedChrome,
+    *,
+    headless: bool,
+    proxy: ProxySettings | None,
+) -> Browser:
+    """Connect Browser Use to the launched Chrome, retrying while its first tab is still coming up."""
     attempt = 1
     while True:
-        browser = build_browser(config, headless=headless, proxy_url=proxy_url)
+        browser = build_browser(config, cdp_url=chrome.cdp_url, headless=headless, proxy=proxy)
         try:
             await browser.start()
         except Exception:
+            # `kill` on a session started from `cdp_url` only disconnects; Chrome itself stays up for the next attempt.
             await _safe_kill(browser)
-            kill_browser_processes(browser.browser_profile.user_data_dir)
-            if attempt >= BROWSER_START_ATTEMPTS:
+            if attempt >= BROWSER_CONNECT_ATTEMPTS:
                 raise
-            Actor.log.warning('Browser failed to start (attempt %d/%d); retrying.', attempt, BROWSER_START_ATTEMPTS)
+            Actor.log.warning('Browser connection failed (attempt %d/%d); retrying.', attempt, BROWSER_CONNECT_ATTEMPTS)
             attempt += 1
-            await asyncio.sleep(BROWSER_START_RETRY_DELAY_SECS)
+            await asyncio.sleep(BROWSER_RETRY_DELAY_SECS)
         else:
             return browser
 
@@ -339,6 +418,7 @@ async def main() -> None:
 
         config = normalize_input(raw_input)
         started_at = time.monotonic()
+        chrome: LaunchedChrome | None = None
         browser: Browser | None = None
 
         try:
@@ -347,12 +427,11 @@ async def main() -> None:
                 actor_proxy_input=config.proxy_configuration,
             )
             proxy_url = await proxy_configuration.new_url() if proxy_configuration else None
+            proxy = to_browser_use_proxy(proxy_url) if proxy_url else None
+            headless = Actor.configuration.headless
             async with asyncio.timeout(config.deadline_secs):
-                browser = await start_browser(
-                    config,
-                    headless=Actor.configuration.headless,
-                    proxy_url=proxy_url,
-                )
+                chrome = await launch_chrome(headless=headless, proxy=proxy)
+                browser = await connect_browser(config, chrome, headless=headless, proxy=proxy)
                 agent = build_agent(config, llm=llm, browser=browser)
                 history = await run_agent_with_actor_signals(agent, max_steps=config.max_steps)
                 result = require_result(history.structured_output)
@@ -377,3 +456,5 @@ async def main() -> None:
             raise
         finally:
             await _safe_kill(browser)
+            if chrome is not None:
+                kill_chrome(chrome)
