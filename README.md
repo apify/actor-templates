@@ -86,10 +86,15 @@ If you want to change a template, you will have to update the template files and
 
 ### Update the AGENTS.md file
 
-The AGENTS.md file is provided in templates. Each file has a prefix in the name, which matches the prefix of the template in the templates directory.
-For example, for all `js` templates (so `js-start`, `js-empty`, `js-crawlee-cheerio`, etc.), the AGENTS.md file is located in the `./agent-bases/js.AGENTS.md` file.
-To update the AGENTS.md file, you will have to update the file in the `./agent-bases` directory. Once merged, the GitHub workflow will automatically update the
-templates with the new content.
+Every template ships an `AGENTS.md` (and a `CLAUDE.md` that imports it). All of them are rendered from a single source,
+[`./agent-bases/AGENTS.md`](./agent-bases/AGENTS.md). The few language-specific values (entry file, logger, SDK method
+names) are `{{placeholders}}` in that file, filled from [`./agent-bases/languages.json`](./agent-bases/languages.json)
+by template prefix (`js`, `ts`, `python`).
+
+To change the instructions, edit `agent-bases/AGENTS.md` (or `languages.json` for a language-specific value) and run
+`pnpm run build`, which renders the file into every template. Do not edit `templates/*/AGENTS.md` directly; the build
+overwrites them. Keep the file short: it is loaded into the agent's context on every turn, so anything that only some
+tasks need belongs behind a link or in the `apify-actor-development` skill in [apify/agent-skills](https://github.com/apify/agent-skills).
 
 ## How to propagate templates into Apify CLI?
 
