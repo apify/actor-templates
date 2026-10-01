@@ -41,6 +41,19 @@ jobs:
           cache: pip
           cache-dependency-path: templates/**/requirements.txt
 
+      - name: Diagnose Chrome startup (temporary)
+        if: runner.os == 'Linux'
+        continue-on-error: true
+        timeout-minutes: 15
+        shell: bash
+        run: |
+          nproc; free -m; uptime; df -h "$RUNNER_TEMP" | tail -1
+          python -m venv "$RUNNER_TEMP/diag-venv"
+          "$RUNNER_TEMP/diag-venv/bin/pip" install -q "browser-use>=0.11.0,<1.0.0" playwright
+          "$RUNNER_TEMP/diag-venv/bin/python" -m playwright install chromium
+          export DIAG_PLAYWRIGHT_CHROMIUM="$("$RUNNER_TEMP/diag-venv/bin/python" -c 'from playwright.sync_api import sync_playwright; p = sync_playwright().start(); print(p.chromium.executable_path); p.stop()')"
+          "$RUNNER_TEMP/diag-venv/bin/python" .github/scripts/chrome_start_diag.py
+
       - name: Test LLM AI Python templates
         run: pnpm run test-llm-ai-python-templates
         env:
