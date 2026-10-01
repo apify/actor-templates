@@ -88,7 +88,7 @@ def normalize_input(input_data: Mapping[str, object]) -> RunConfig:
         task=task,
         model_name=model_name,
         max_items=_bounded_integer(input_data.get('maxItems'), 5, 1, MAX_ITEMS, 'maxItems'),
-        max_steps=_bounded_integer(input_data.get('maxSteps'), 15, 1, 50, 'maxSteps'),
+        max_steps=_bounded_integer(input_data.get('maxSteps'), 10, 1, 50, 'maxSteps'),
         deadline_secs=_bounded_integer(input_data.get('deadlineSecs'), 180, 30, 300, 'deadlineSecs'),
         action_delay_secs=_bounded_number(input_data.get('actionDelaySecs'), 0.5, 0.5, 5, 'actionDelaySecs'),
         proxy_configuration=_proxy_configuration(input_data.get('proxyConfiguration')),

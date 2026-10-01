@@ -20,7 +20,7 @@ An AI agent that opens a website in a real Chrome browser, completes a task writ
 | `task`               | post titles and URLs            | Instruction whose result must fit the `Items` model |
 | `modelName`          | `gpt-4o-mini`                   | OpenAI model that drives the agent                  |
 | `maxItems`           | `5`                             | Maximum number of items and dataset rows            |
-| `maxSteps`           | `15`                            | Maximum number of agent steps (and LLM calls)       |
+| `maxSteps`           | `10`                            | Maximum number of agent steps (and LLM calls)       |
 | `deadlineSecs`       | `180`                           | Time limit for the whole agent run                  |
 | `actionDelaySecs`    | `0.5`                           | Minimum delay between browser actions               |
 | `proxyConfiguration` | Apify Proxy enabled             | Proxy for the browser                               |
@@ -47,6 +47,7 @@ The agent calls the [OpenAI API](https://platform.openai.com/) with your own key
 
 - To extract something else, change the `task` input together with the `Item` and `Items` models in [`my_actor/main.py`](my_actor/main.py), the dataset schema in [`.actor/dataset_schema.json`](.actor/dataset_schema.json), and the output example above.
 - To change the input limits, update both [`.actor/input_schema.json`](.actor/input_schema.json) and [`my_actor/config.py`](my_actor/config.py).
+- The agent can't use Browser Use's file-system, `extract`, `evaluate`, or screenshot actions (see `EXCLUDED_ACTIONS` in [`my_actor/main.py`](my_actor/main.py)), so it returns its result through `done`. On its last step it can only call `done`, so keep `deadlineSecs` long enough for `maxSteps` steps.
 - The template runs one agent with one browser. If you add more agents running at the same time, give each one its own `Browser` and profile directory.
 - Browser Use installs its own SIGINT and SIGTERM handlers during a run. [`my_actor/compat.py`](my_actor/compat.py) keeps them with the Actor: it passes `enable_signal_handler=False` on Browser Use 0.12.6 and later, and replaces the handler with a no-op on older releases.
 

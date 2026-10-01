@@ -16,7 +16,7 @@ from typing import TYPE_CHECKING
 from urllib.parse import unquote, urlsplit
 
 from apify import Actor
-from browser_use import Agent, Browser, ChatOpenAI
+from browser_use import Agent, Browser, ChatOpenAI, Tools
 from browser_use.browser import ProxySettings
 from browser_use.dom.views import DEFAULT_INCLUDE_ATTRIBUTES
 from pydantic import BaseModel, Field
@@ -27,6 +27,18 @@ from .config import MAX_ITEMS, RunConfig, normalize_input
 if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping
 
+# The result reaches the Actor only through `done`. File-system and `extract` actions let a model collect the data
+# again and again without finishing, and the rest have no use in an extraction run.
+EXCLUDED_ACTIONS = [
+    'evaluate',
+    'extract',
+    'read_file',
+    'replace_file',
+    'save_as_pdf',
+    'screenshot',
+    'upload_file',
+    'write_file',
+]
 PAGE_LINKS_SCRIPT = """() => Array.from(document.querySelectorAll('a[href]'))
     .slice(0, 2000)
     .map((anchor) => ({
@@ -157,12 +169,14 @@ def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agen
     """Construct the Browser Use agent for the configured task."""
     task = (
         f'{config.task}\n\n'
-        f'Return at most {config.max_items} items. Use only titles and URLs shown on the pages; never invent them.'
+        f'Return at most {config.max_items} items. Use only titles and URLs shown on the pages; never invent them. '
+        'As soon as you have the items, call done with them.'
     )
     return Agent(
         task=task,
         llm=llm,
         browser=browser,
+        tools=Tools(exclude_actions=EXCLUDED_ACTIONS),
         # Open the start page before the first LLM step, so the agent never spends a step or guesses the URL.
         initial_actions=[{'navigate': {'url': config.start_url, 'new_tab': False}}],
         output_model_schema=Items,

@@ -48,11 +48,11 @@
         "maxSteps": {
             "title": "Maximum agent steps",
             "type": "integer",
-            "description": "Hard upper bound on autonomous Browser Use steps and LLM calls.",
+            "description": "Hard upper bound on autonomous Browser Use steps and LLM calls. On the last step the agent can only return its result, so keep the run deadline long enough to reach it.",
             "editor": "number",
             "minimum": 1,
             "maximum": 50,
-            "default": 15
+            "default": 10
         },
         "deadlineSecs": {
             "title": "Run deadline",
