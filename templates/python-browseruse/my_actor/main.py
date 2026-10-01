@@ -27,15 +27,19 @@ from .config import MAX_ITEMS, RunConfig, normalize_input
 if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping
 
-# The result reaches the Actor only through `done`. File-system and `extract` actions let a model collect the data
-# again and again without finishing, and the rest have no use in an extraction run.
+# The result reaches the Actor only through `done`. File-system, `extract`, and page-query actions let a model collect
+# the data again and again without finishing; the page's elements are already in the agent's browser state. The rest
+# have no use in an extraction run.
 EXCLUDED_ACTIONS = [
     'evaluate',
     'extract',
+    'find_elements',
+    'find_text',
     'read_file',
     'replace_file',
     'save_as_pdf',
     'screenshot',
+    'search_page',
     'upload_file',
     'write_file',
 ]
