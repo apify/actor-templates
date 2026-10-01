@@ -16,7 +16,7 @@ from typing import TYPE_CHECKING
 from urllib.parse import unquote, urlsplit
 
 from apify import Actor
-from browser_use import Agent, Browser, ChatOpenAI, Tools
+from browser_use import ActionResult, Agent, Browser, ChatOpenAI, Tools
 from browser_use.browser import ProxySettings
 from browser_use.dom.views import DEFAULT_INCLUDE_ATTRIBUTES
 from pydantic import BaseModel, Field
@@ -27,9 +27,9 @@ from .config import MAX_ITEMS, RunConfig, normalize_input
 if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping
 
-# The result reaches the Actor only through `done`. File-system, `extract`, and page-query actions let a model collect
-# the data again and again without finishing, and `search` takes it off the start page to a web search; the page's
-# elements are already in the agent's browser state. The rest have no use in an extraction run.
+# The agent reads links through the `read_page_links` action below and returns the result through `done`. The built-in
+# file-system, `extract`, and page-query actions let a model collect the data again and again without finishing, and
+# `search` takes it off the start page to a web search. The rest have no use in an extraction run.
 EXCLUDED_ACTIONS = [
     'evaluate',
     'extract',
@@ -50,6 +50,8 @@ PAGE_LINKS_SCRIPT = """() => Array.from(document.querySelectorAll('a[href]'))
         title: (anchor.textContent || '').replace(/\\s+/g, ' ').trim(),
         url: anchor.href,
     }))"""
+# Upper bound on the links `read_page_links` hands to the model, which keeps its prompt small on link-heavy pages.
+MAX_ACTION_LINKS = 300
 
 
 class Item(BaseModel):
@@ -136,7 +138,7 @@ def ground_item_links(items: Iterable[Item], links: Iterable[Mapping[str, object
     return [exact_links.get(_normalize_title(item.title)) or item for item in items]
 
 
-async def read_page_links(browser: Browser) -> list[Mapping[str, object]]:
+async def snapshot_page_links(browser: Browser) -> list[Mapping[str, object]]:
     """Read a bounded set of exact absolute anchor hrefs from the active page."""
     page = await browser.must_get_current_page()
     payload = json.loads(await page.evaluate(PAGE_LINKS_SCRIPT))
@@ -149,10 +151,48 @@ async def read_page_links(browser: Browser) -> list[Mapping[str, object]]:
 async def try_read_page_links(browser: Browser) -> list[Mapping[str, object]]:
     """Read the page links, or return none when the final page can't be inspected (e.g. a PDF or an error page)."""
     try:
-        return await read_page_links(browser)
+        return await snapshot_page_links(browser)
     except Exception:
         Actor.log.warning('Could not read links from the final page; keeping the URLs returned by the model.')
         return []
+
+
+def format_page_links(links: Iterable[Mapping[str, object]]) -> str:
+    """Render the titled, absolute HTTP(S) links of a page as JSON lines, de-duplicated and in page order."""
+    lines: list[str] = []
+    seen: set[tuple[str, str]] = set()
+    for link in links:
+        title = _normalize_title(str(link.get('title', '')))
+        url = str(link.get('url', ''))
+        if not title or not is_http_url(url) or (title, url) in seen:
+            continue
+        seen.add((title, url))
+        lines.append(json.dumps({'title': title, 'url': url}, ensure_ascii=False))
+        if len(lines) >= MAX_ACTION_LINKS:
+            break
+    return '\n'.join(lines)
+
+
+def build_tools() -> Tools:
+    """Create the agent's actions: the built-in ones minus `EXCLUDED_ACTIONS`, plus `read_page_links`."""
+    tools = Tools(exclude_actions=EXCLUDED_ACTIONS)
+
+    @tools.action(
+        'Return the title and exact absolute URL (href) of every link on the current page, in page order. '
+        'Use it to read the items, then call done.'
+    )
+    # Browser Use injects `browser_session` by name and rejects a string annotation, which `from __future__ import
+    # annotations` would turn the type into, so the parameter stays unannotated.
+    async def read_page_links(browser_session) -> ActionResult:  # noqa: ANN001
+        page_links = format_page_links(await snapshot_page_links(browser_session))
+        return ActionResult(
+            extracted_content=(
+                f'Links on the current page, one JSON object per line:\n{page_links}\n'
+                'Pick the requested items from these links and call done with them now.'
+            ),
+        )
+
+    return tools
 
 
 def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -> Browser:
@@ -176,15 +216,15 @@ def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agen
     task = (
         f'{config.task}\n\n'
         f'Return at most {config.max_items} items. Use only titles and URLs shown on the pages; never invent them. '
-        "Read the items directly from the page elements in your browser state, which include each link's href; "
-        'there is no separate extraction tool. Do not click links or search the web just to read them. '
+        'Call read_page_links to get the exact titles and URLs of the links on the current page, and pick the items '
+        'from its result. Do not click links or search the web just to read them. '
         'As soon as you have the items, call done with them.'
     )
     return Agent(
         task=task,
         llm=llm,
         browser=browser,
-        tools=Tools(exclude_actions=EXCLUDED_ACTIONS),
+        tools=build_tools(),
         # Open the start page before the first LLM step, so the agent never spends a step or guesses the URL.
         initial_actions=[{'navigate': {'url': config.start_url, 'new_tab': False}}],
         output_model_schema=Items,
