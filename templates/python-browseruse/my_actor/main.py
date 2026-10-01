@@ -19,7 +19,7 @@ from apify import Actor
 from browser_use import Agent, Browser, ChatOpenAI
 from browser_use.browser import ProxySettings
 from browser_use.dom.views import DEFAULT_INCLUDE_ATTRIBUTES
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 
 from .compat import agent_signal_options, run_agent_with_actor_signals
 from .config import MAX_ITEMS, RunConfig, normalize_input
@@ -39,7 +39,9 @@ class Item(BaseModel):
     """One item extracted by the browser agent."""
 
     title: str = Field(description='item title exactly as displayed')
-    url: HttpUrl = Field(description='exact absolute HTTP(S) URL of the item, including path and query')
+    # A plain string, since OpenAI structured outputs reject the `uri` format that `HttpUrl` adds to the schema.
+    # `is_http_url` validates it after the run.
+    url: str = Field(description='exact absolute HTTP(S) URL of the item, including path and query')
 
 
 class Items(BaseModel):
@@ -56,6 +58,12 @@ def make_llm(model_name: str) -> ChatOpenAI:
     return ChatOpenAI(model=model_name)
 
 
+def is_http_url(value: str) -> bool:
+    """Check that a value is an absolute HTTP(S) URL."""
+    parts = urlsplit(value)
+    return parts.scheme in {'http', 'https'} and bool(parts.hostname)
+
+
 def to_browser_use_proxy(proxy_url: str) -> ProxySettings:
     """Convert an Apify Proxy URL to Browser Use's structured settings."""
     parts = urlsplit(proxy_url)
@@ -70,12 +78,12 @@ def to_browser_use_proxy(proxy_url: str) -> ProxySettings:
 
 
 def normalize_items(items: Iterable[Item], *, limit: int) -> list[dict[str, object]]:
-    """Create flat, ordered, de-duplicated dataset rows."""
+    """Create flat, ordered, de-duplicated dataset rows from items with an absolute HTTP(S) URL."""
     rows: list[dict[str, object]] = []
     seen: set[str] = set()
     for item in items:
-        url = str(item.url)
-        if url in seen:
+        url = item.url.strip()
+        if url in seen or not is_http_url(url):
             continue
         seen.add(url)
         rows.append({'rank': len(rows) + 1, 'title': item.title, 'url': url})
@@ -96,11 +104,8 @@ def ground_item_links(items: Iterable[Item], links: Iterable[Mapping[str, object
     """
     exact_links: dict[str, Item | None] = {}
     for link in links:
-        try:
-            exact = Item(title=_normalize_title(str(link.get('title', ''))), url=str(link.get('url', '')))
-        except ValueError:
-            continue
-        if not exact.title:
+        exact = Item(title=_normalize_title(str(link.get('title', ''))), url=str(link.get('url', '')))
+        if not exact.title or not is_http_url(exact.url):
             continue
 
         key = exact.title
@@ -136,6 +141,9 @@ def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -
     """Create a browser that remains available for post-agent link grounding."""
     executable_path = os.getenv('APIFY_CHROME_EXECUTABLE_PATH')
     return Browser(
+        # Chrome's sandbox fails to start on hosts that restrict user namespaces (e.g. Ubuntu 24.04). Browser Use only
+        # disables it inside Docker, while Playwright and the other Chrome templates disable it everywhere.
+        chromium_sandbox=False,
         enable_default_extensions=False,
         executable_path=executable_path or None,
         headless=headless,
@@ -173,6 +181,14 @@ def require_result(result: Items | None) -> Items:
         msg = 'The agent stopped without returning a structured result.'
         raise RuntimeError(msg)
     return result
+
+
+def require_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    """Reject an agent result with no usable rows."""
+    if not rows:
+        msg = 'The agent returned no items with an absolute HTTP(S) URL.'
+        raise RuntimeError(msg)
+    return rows
 
 
 async def _safe_kill(browser: Browser | None) -> None:
@@ -229,7 +245,7 @@ async def main() -> None:
                 result = require_result(history.structured_output)
                 page_links = await try_read_page_links(browser)
             grounded_items = ground_item_links(result.items, page_links)
-            rows = normalize_items(grounded_items, limit=config.max_items)
+            rows = require_rows(normalize_items(grounded_items, limit=config.max_items))
 
             await Actor.push_data(rows)
             summary = {
