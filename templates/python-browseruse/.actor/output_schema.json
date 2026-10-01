@@ -2,13 +2,13 @@
     "$schema": "https://apify.com/schemas/v1/output.ide.json",
     "actorOutputSchemaVersion": 1,
     "title": "Browser Use agent output",
-    "description": "Validated post rows and a bounded execution summary.",
+    "description": "Extracted item rows and a bounded execution summary.",
     "type": "object",
     "properties": {
         "results": {
             "type": "string",
-            "title": "Extracted posts",
-            "description": "Validated post rows in the default dataset.",
+            "title": "Extracted items",
+            "description": "Extracted item rows in the default dataset.",
             "template": "{{links.apiDefaultDatasetUrl}}/items"
         },
         "summary": {

@@ -8,13 +8,14 @@ from urllib.parse import urlsplit
 
 DEFAULT_START_URL = 'https://news.ycombinator.com/'
 DEFAULT_TASK = (
-    'Return the title and exact destination URL of the first 5 post-title hyperlinks on the page, preserving their '
-    'displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title text, including '
-    'its full path and query; never use a source-domain label, vote, comments, user, age, or navigation link.'
+    'Return the title and exact destination URL of the post-title hyperlinks on the page, starting from the top and '
+    'preserving their displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title '
+    'text, including its full path and query; never use a source-domain label, vote, comments, user, age, or '
+    'navigation link.'
 )
-DEFAULT_MODEL = 'google/gemini-2.5-flash'
+DEFAULT_MODEL = 'gpt-4o-mini'
 MAX_TASK_CHARS = 4_000
-MAX_POSTS = 10
+MAX_ITEMS = 10
 
 
 @dataclass(frozen=True, slots=True)
@@ -23,8 +24,8 @@ class RunConfig:
 
     start_url: str
     task: str
-    model: str
-    max_posts: int
+    model_name: str
+    max_items: int
     max_steps: int
     deadline_secs: int
     action_delay_secs: float
@@ -77,16 +78,16 @@ def normalize_input(input_data: Mapping[str, object]) -> RunConfig:
         msg = f'task must contain at most {MAX_TASK_CHARS} characters'
         raise ValueError(msg)
 
-    model = str(input_data.get('model') or DEFAULT_MODEL).strip()
-    if '/' not in model:
-        msg = 'model must be a non-empty OpenRouter provider/model ID'
+    model_name = str(input_data.get('modelName') or DEFAULT_MODEL).strip()
+    if not model_name:
+        msg = 'modelName must be a non-empty OpenAI model name'
         raise ValueError(msg)
 
     return RunConfig(
         start_url=start_url,
         task=task,
-        model=model,
-        max_posts=_bounded_integer(input_data.get('maxPosts'), 5, 1, MAX_POSTS, 'maxPosts'),
+        model_name=model_name,
+        max_items=_bounded_integer(input_data.get('maxItems'), 5, 1, MAX_ITEMS, 'maxItems'),
         max_steps=_bounded_integer(input_data.get('maxSteps'), 15, 1, 50, 'maxSteps'),
         deadline_secs=_bounded_integer(input_data.get('deadlineSecs'), 180, 30, 300, 'deadlineSecs'),
         action_delay_secs=_bounded_number(input_data.get('actionDelaySecs'), 0.5, 0.5, 5, 'actionDelaySecs'),

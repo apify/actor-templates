@@ -333,17 +333,16 @@
             "useCases": ["AI"]
         },
         {
-            "id": "python-browser-use",
-            "name": "python-browser-use",
+            "id": "python-browseruse",
+            "name": "python-browseruse",
             "label": "Browser Use scraping agent",
-            "skipRunTest": true,
             "category": "python",
             "technologies": ["browseruse", "chrome"],
             "description": "An AI agent that browses a website like a person and returns structured data. Good for sites that change often or are hard to scrape with selectors.",
             "messages": {
-                "postCreate": "To run this Actor locally, you need Google Chrome or Chromium installed.\nActivate the virtual environment in the \".venv\" folder to install additional Python packages."
+                "postCreate": "To run this Actor locally, you need Google Chrome or Chromium installed and the OPENAI_API_KEY environment variable set.\nActivate the virtual environment in the \".venv\" folder to install additional Python packages."
             },
-            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-browser-use.zip?raw=true",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-browseruse.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
                 "memoryMbytes": 4096,

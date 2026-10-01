@@ -19,27 +19,25 @@
         "task": {
             "title": "Extraction instruction",
             "type": "string",
-            "description": "Instruction whose result must fit the template's post schema: a list of titles and destination URLs.",
+            "description": "Instruction whose result must fit the template's item schema: a list of titles and URLs. The number of items comes from \"Maximum items\".",
             "editor": "textarea",
             "minLength": 1,
             "maxLength": 4000,
-            "default": "Return the title and exact destination URL of the first 5 post-title hyperlinks on the page, preserving their displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title text, including its full path and query; never use a source-domain label, vote, comments, user, age, or navigation link.",
-            "prefill": "Return the title and exact destination URL of the first 5 post-title hyperlinks on the page, preserving their displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title text, including its full path and query; never use a source-domain label, vote, comments, user, age, or navigation link."
+            "default": "Return the title and exact destination URL of the post-title hyperlinks on the page, starting from the top and preserving their displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title text, including its full path and query; never use a source-domain label, vote, comments, user, age, or navigation link.",
+            "prefill": "Return the title and exact destination URL of the post-title hyperlinks on the page, starting from the top and preserving their displayed order. Each URL must be the complete absolute HTTP or HTTPS href attached to the title text, including its full path and query; never use a source-domain label, vote, comments, user, age, or navigation link."
         },
-        "model": {
-            "title": "LLM model",
+        "modelName": {
+            "title": "OpenAI model",
             "type": "string",
-            "description": "OpenRouter provider/model ID. On Apify, the keyless apify/openrouter proxy is used by default; set OPENROUTER_API_KEY for direct OpenRouter or local runs.",
-            "editor": "textfield",
-            "minLength": 3,
-            "default": "google/gemini-2.5-flash",
-            "prefill": "google/gemini-2.5-flash",
-            "example": "google/gemini-2.5-flash"
+            "description": "OpenAI model that drives the agent. Requires the OPENAI_API_KEY environment variable.",
+            "editor": "select",
+            "enum": ["gpt-4o-mini", "gpt-4o", "gpt-4.1-mini", "gpt-4.1"],
+            "default": "gpt-4o-mini"
         },
-        "maxPosts": {
-            "title": "Maximum posts",
+        "maxItems": {
+            "title": "Maximum items",
             "type": "integer",
-            "description": "Maximum number of validated dataset rows to keep from the structured agent result.",
+            "description": "Maximum number of items the agent is asked to return, and of dataset rows kept from its result.",
             "editor": "number",
             "minimum": 1,
             "maximum": 10,

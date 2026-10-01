@@ -22,13 +22,11 @@ from browser_use.dom.views import DEFAULT_INCLUDE_ATTRIBUTES
 from pydantic import BaseModel, Field, HttpUrl
 
 from .compat import agent_signal_options, run_agent_with_actor_signals
-from .config import MAX_POSTS, RunConfig, normalize_input
+from .config import MAX_ITEMS, RunConfig, normalize_input
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping
 
-OPENROUTER_DIRECT = 'https://openrouter.ai/api/v1'
-OPENROUTER_PROXY = 'https://openrouter.apify.actor/api/v1'
 PAGE_LINKS_SCRIPT = """() => Array.from(document.querySelectorAll('a[href]'))
     .slice(0, 2000)
     .map((anchor) => ({
@@ -37,29 +35,25 @@ PAGE_LINKS_SCRIPT = """() => Array.from(document.querySelectorAll('a[href]'))
     }))"""
 
 
-class Post(BaseModel):
-    """One post extracted by the browser agent."""
+class Item(BaseModel):
+    """One item extracted by the browser agent."""
 
-    title: str = Field(description='post title exactly as displayed')
-    url: HttpUrl = Field(description='exact absolute HTTP(S) href attached to the post title, including path and query')
+    title: str = Field(description='item title exactly as displayed')
+    url: HttpUrl = Field(description='exact absolute HTTP(S) URL of the item, including path and query')
 
 
-class Posts(BaseModel):
+class Items(BaseModel):
     """Structured result returned by Browser Use."""
 
-    posts: list[Post] = Field(min_length=1, max_length=MAX_POSTS, description='posts in displayed order')
+    items: list[Item] = Field(min_length=1, max_length=MAX_ITEMS, description='items in displayed order')
 
 
-def make_llm(model: str) -> ChatOpenAI:
-    """Build the OpenRouter chat client from the available credentials."""
-    direct_key = os.getenv('OPENROUTER_API_KEY')
-    apify_token = os.getenv('APIFY_TOKEN')
-    if direct_key:
-        return ChatOpenAI(model=model, base_url=OPENROUTER_DIRECT, api_key=direct_key)
-    if apify_token:
-        return ChatOpenAI(model=model, base_url=OPENROUTER_PROXY, api_key=apify_token)
-    msg = 'LLM credentials missing - set OPENROUTER_API_KEY locally or run on Apify with APIFY_TOKEN'
-    raise RuntimeError(msg)
+def make_llm(model_name: str) -> ChatOpenAI:
+    """Build the OpenAI chat client, which reads its key from `OPENAI_API_KEY`."""
+    if not os.getenv('OPENAI_API_KEY'):
+        msg = 'OPENAI_API_KEY is not set - add it to the Actor environment variables or export it for local runs'
+        raise RuntimeError(msg)
+    return ChatOpenAI(model=model_name)
 
 
 def to_browser_use_proxy(proxy_url: str) -> ProxySettings:
@@ -75,16 +69,16 @@ def to_browser_use_proxy(proxy_url: str) -> ProxySettings:
     )
 
 
-def normalize_posts(posts: Iterable[Post], *, limit: int) -> list[dict[str, object]]:
+def normalize_items(items: Iterable[Item], *, limit: int) -> list[dict[str, object]]:
     """Create flat, ordered, de-duplicated dataset rows."""
     rows: list[dict[str, object]] = []
     seen: set[str] = set()
-    for post in posts:
-        url = str(post.url)
+    for item in items:
+        url = str(item.url)
         if url in seen:
             continue
         seen.add(url)
-        rows.append({'rank': len(rows) + 1, 'title': post.title, 'url': url})
+        rows.append({'rank': len(rows) + 1, 'title': item.title, 'url': url})
         if len(rows) >= limit:
             break
     return rows
@@ -94,12 +88,16 @@ def _normalize_title(value: str) -> str:
     return ' '.join(value.split())
 
 
-def reconcile_post_links(posts: Iterable[Post], links: Iterable[Mapping[str, object]]) -> list[Post]:
-    """Replace model URLs with unambiguous hrefs observed for the same page title."""
-    exact_links: dict[str, Post | None] = {}
+def ground_item_links(items: Iterable[Item], links: Iterable[Mapping[str, object]]) -> list[Item]:
+    """Swap each model URL for the page href under the same title, when exactly one such href exists.
+
+    Models tend to shorten or mistype long URLs, so a link the page shows for the title is more reliable. Items whose
+    title matches no link, or several different links, pass through with the model's URL.
+    """
+    exact_links: dict[str, Item | None] = {}
     for link in links:
         try:
-            exact = Post(title=_normalize_title(str(link.get('title', ''))), url=str(link.get('url', '')))
+            exact = Item(title=_normalize_title(str(link.get('title', ''))), url=str(link.get('url', '')))
         except ValueError:
             continue
         if not exact.title:
@@ -112,12 +110,7 @@ def reconcile_post_links(posts: Iterable[Post], links: Iterable[Mapping[str, obj
         elif previous is not None and previous.url != exact.url:
             exact_links[key] = None
 
-    grounded: list[Post] = []
-    for post in posts:
-        exact = exact_links.get(_normalize_title(post.title))
-        if exact is not None:
-            grounded.append(exact)
-    return grounded
+    return [exact_links.get(_normalize_title(item.title)) or item for item in items]
 
 
 async def read_page_links(browser: Browser) -> list[Mapping[str, object]]:
@@ -128,6 +121,15 @@ async def read_page_links(browser: Browser) -> list[Mapping[str, object]]:
         msg = 'Browser returned an invalid page-link snapshot.'
         raise RuntimeError(msg)
     return payload
+
+
+async def try_read_page_links(browser: Browser) -> list[Mapping[str, object]]:
+    """Read the page links, or return none when the final page can't be inspected (e.g. a PDF or an error page)."""
+    try:
+        return await read_page_links(browser)
+    except Exception:
+        Actor.log.warning('Could not read links from the final page; keeping the URLs returned by the model.')
+        return []
 
 
 def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -> Browser:
@@ -146,14 +148,16 @@ def build_browser(config: RunConfig, *, headless: bool, proxy_url: str | None) -
 def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agent:
     """Construct the Browser Use agent for the configured task."""
     task = (
-        f'Open {config.start_url}. {config.task} '
-        f'Return no more than {config.max_posts} posts and do not invent missing titles or URLs.'
+        f'{config.task}\n\n'
+        f'Return at most {config.max_items} items. Use only titles and URLs shown on the pages; never invent them.'
     )
     return Agent(
         task=task,
         llm=llm,
         browser=browser,
-        output_model_schema=Posts,
+        # Open the start page before the first LLM step, so the agent never spends a step or guesses the URL.
+        initial_actions=[{'navigate': {'url': config.start_url, 'new_tab': False}}],
+        output_model_schema=Items,
         # Browser Use omits href from its default DOM representation. Without this, models tend to mistake HN's
         # visible source-domain label for the title link's full destination.
         include_attributes=[*DEFAULT_INCLUDE_ATTRIBUTES, 'href'],
@@ -163,20 +167,12 @@ def build_agent(config: RunConfig, *, llm: ChatOpenAI, browser: Browser) -> Agen
     )
 
 
-def require_result(result: Posts | None) -> Posts:
+def require_result(result: Items | None) -> Items:
     """Reject an agent run that ended without a structured result."""
     if result is None:
         msg = 'The agent stopped without returning a structured result.'
         raise RuntimeError(msg)
     return result
-
-
-def require_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
-    """Reject a nominally successful agent response with no usable records."""
-    if not rows:
-        msg = 'The agent returned no posts that match a link on the final page.'
-        raise RuntimeError(msg)
-    return rows
 
 
 async def _safe_kill(browser: Browser | None) -> None:
@@ -194,7 +190,7 @@ async def _write_failure(config: RunConfig, started_at: float, error: Exception)
         {
             'framework': 'browser-use',
             'status': 'failed',
-            'model': config.model,
+            'model': config.model_name,
             'startUrl': config.start_url,
             'itemCount': 0,
             'elapsedSecs': round(time.monotonic() - started_at, 2),
@@ -216,7 +212,7 @@ async def main() -> None:
         browser: Browser | None = None
 
         try:
-            llm = make_llm(config.model)
+            llm = make_llm(config.model_name)
             proxy_configuration = await Actor.create_proxy_configuration(
                 actor_proxy_input=config.proxy_configuration,
             )
@@ -231,21 +227,21 @@ async def main() -> None:
             async with asyncio.timeout(config.deadline_secs):
                 history = await run_agent_with_actor_signals(agent, max_steps=config.max_steps)
                 result = require_result(history.structured_output)
-                page_links = await read_page_links(browser)
-            grounded_posts = reconcile_post_links(result.posts, page_links)
-            rows = require_rows(normalize_posts(grounded_posts, limit=config.max_posts))
+                page_links = await try_read_page_links(browser)
+            grounded_items = ground_item_links(result.items, page_links)
+            rows = normalize_items(grounded_items, limit=config.max_items)
 
             await Actor.push_data(rows)
             summary = {
                 'framework': 'browser-use',
                 'status': 'succeeded',
-                'model': config.model,
+                'model': config.model_name,
                 'startUrl': config.start_url,
                 'itemCount': len(rows),
                 'elapsedSecs': round(time.monotonic() - started_at, 2),
             }
             await Actor.set_value('OUTPUT', summary)
-            await Actor.set_status_message(f'Extracted {len(rows)} post(s).')
+            await Actor.set_status_message(f'Extracted {len(rows)} item(s).')
             Actor.log.info('Done; wrote %d dataset row(s) and OUTPUT.', len(rows))
         except Exception as error:
             await _write_failure(config, started_at, error)
