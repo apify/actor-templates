@@ -120,7 +120,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["WEB_SCRAPING", "AUTOMATION"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-selenium",
@@ -139,7 +139,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["WEB_SCRAPING", "AUTOMATION"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-standby",
@@ -202,7 +202,7 @@
             },
             "aliases": ["getting_started_crawlee_parsel"],
             "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
-            "useCases": ["STARTER", "WEB_SCRAPING"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-crawlee-playwright",
@@ -222,7 +222,7 @@
             },
             "aliases": ["getting_started_crawlee_playwright"],
             "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
-            "useCases": ["STARTER", "WEB_SCRAPING"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-crawlee-playwright-camoufox",
@@ -242,7 +242,7 @@
             },
             "aliases": ["getting_started_crawlee_playwright_camoufox"],
             "showcaseFiles": ["my_actor/main.py", "my_actor/routes.py", "my_actor/__main__.py"],
-            "useCases": ["STARTER", "WEB_SCRAPING"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-langgraph",
@@ -314,7 +314,7 @@
                 "timeoutSecs": 60
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/agents.py", "my_actor/__main__.py"],
-            "useCases": ["AI"]
+            "useCases": ["STARTER", "AI"]
         },
         {
             "id": "python-smolagents",
@@ -391,7 +391,7 @@
                 "timeoutSecs": 60
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["AI", "INTEGRATION"]
+            "useCases": ["STARTER", "AI", "INTEGRATION"]
         },
         {
             "id": "js-crawlee-cheerio",
@@ -789,7 +789,7 @@
             },
             "skipTests": true,
             "showcaseFiles": ["src/main.ts"],
-            "useCases": ["AI", "INTEGRATION"]
+            "useCases": ["STARTER", "AI", "INTEGRATION"]
         },
         {
             "id": "cli-start",
