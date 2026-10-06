@@ -120,7 +120,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["WEB_SCRAPING", "AUTOMATION"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-selenium",
@@ -139,7 +139,7 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["my_actor/main.py", "my_actor/__main__.py"],
-            "useCases": ["WEB_SCRAPING", "AUTOMATION"]
+            "useCases": ["WEB_SCRAPING"]
         },
         {
             "id": "python-standby",
