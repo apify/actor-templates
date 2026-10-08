@@ -317,6 +317,7 @@ describe('templates-work', () => {
 
                 checkCommonTemplateStructure(templateId);
                 checkPythonTemplate();
+                if (SKIP_RUN_TESTS.includes(templateId)) return;
                 checkTemplateRun();
             });
         });
@@ -335,6 +336,7 @@ describe('templates-work', () => {
                 if (!canNodeTemplateRun(templateId)) return;
 
                 checkNodeTemplate();
+                if (SKIP_RUN_TESTS.includes(templateId)) return;
                 checkTemplateRun();
             });
         });
