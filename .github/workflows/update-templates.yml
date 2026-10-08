@@ -153,6 +153,7 @@ jobs:
               --body "$PR_BODY" \
               --base master \
               --head "$BRANCH" \
+              --reviewer l2ysho \
               --label dependencies
 
             # Retrieve PR number by head branch after creation
