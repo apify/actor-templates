@@ -14,7 +14,8 @@ jobs:
               with:
                   node-version: 24
                   cache: npm
-            - run: npm ci
+                  cache-dependency-path: package*.json
+            - run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
             - run: npx playwright install --with-deps chromium
             - run: npm run build
             - run: npm test
