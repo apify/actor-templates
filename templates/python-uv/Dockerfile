@@ -2,7 +2,7 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-FROM apify/actor-python:3.14
+FROM apify/actor-python:3.15
 
 # Add the uv binary from its official distroless image (pinned to the 0.11.x line).
 COPY --from=ghcr.io/astral-sh/uv:0.11 /uv /uvx /bin/
