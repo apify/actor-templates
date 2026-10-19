@@ -6,10 +6,13 @@ To build Apify Actors, utilize the Apify SDK toolkit, read more at the official 
 https://docs.apify.com/sdk/python
 """
 
+from __future__ import annotations
+
 import os
 import sys
 from io import TextIOWrapper
 
+import requests
 from apify import Actor
 from smolagents import CodeAgent, OpenAIServerModel, WebSearchTool
 
@@ -22,6 +25,34 @@ else:
 
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 OPENAI_API_BASE = 'https://api.openai.com/v1'
+
+# Bounds that keep a run short when the search engine is slow or blocks the client.
+SEARCH_TIMEOUT_SECS = 15
+MAX_AGENT_STEPS = 6
+
+
+class BoundedWebSearchTool(WebSearchTool):
+    """DuckDuckGo search with a request timeout.
+
+    The stock tool sends its request without a timeout, so a stalled connection blocks the agent step for minutes.
+    """
+
+    def search_duckduckgo(self, query: str) -> list:
+        """Search DuckDuckGo Lite and parse its result rows."""
+        try:
+            response = requests.get(
+                'https://lite.duckduckgo.com/lite/',
+                params={'q': query},
+                headers={'User-Agent': 'Mozilla/5.0'},
+                timeout=SEARCH_TIMEOUT_SECS,
+            )
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            msg = f'Web search failed: {exc}. Try again later or answer from the results you already have.'
+            raise RuntimeError(msg) from exc
+        parser = self._create_duckduckgo_parser()
+        parser.feed(response.text)
+        return parser.results
 
 
 async def main() -> None:
@@ -43,6 +74,9 @@ async def main() -> None:
         if not user_interests:
             raise ValueError('Missing "interests" attribute in Actor input!')
 
+        if not OPENAI_API_KEY:
+            raise ValueError('Missing OPENAI_API_KEY environment variable!')
+
         # Initialize the OpenAI model for text processing
         model = OpenAIServerModel(
             model_id=model,
@@ -50,22 +84,18 @@ async def main() -> None:
             api_key=OPENAI_API_KEY,
         )
 
-        # Create the search tool and AI agent
-        search_tool = WebSearchTool()
-        agent = CodeAgent(tools=[search_tool], model=model)
+        # Create the search tool and AI agent. The step cap bounds the run even when every search fails.
+        search_tool = BoundedWebSearchTool()
+        agent = CodeAgent(tools=[search_tool], model=model, max_steps=MAX_AGENT_STEPS)
 
-        # Construct a query using user-defined interests
-        query = f'Give me latest news on {", ".join(user_interests)}'
-
-        # Use the agent to fetch search results
-        search_results = agent.run(query)
-        Actor.log.info('News search operation completed successfully.')
-
-        # Generate a summary of the retrieved news articles
-        summary_prompt = f'Summarize the following news articles: {search_results}'
-        summary = agent.run(summary_prompt)
-        Actor.log.info('News summarization operation completed successfully.')
+        # Search and summarize in one run, so the agent doesn't search again for the summary.
+        query = (
+            f'Find the latest news on {", ".join(user_interests)} and return a concise summary of the most important '
+            'stories as plain text. If a search fails, summarize what you found so far.'
+        )
+        summary = agent.run(query)
+        Actor.log.info('News search and summarization completed successfully.')
 
         # Push the results to the dataset by wrapping it in an object.
         Actor.log.info('The results will be stored in the dataset.')
-        await Actor.push_data({'summary': summary})
+        await Actor.push_data({'summary': str(summary)})

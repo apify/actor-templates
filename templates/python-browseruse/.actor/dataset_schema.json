@@ -1,0 +1,56 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "rank": {
+                "type": "integer",
+                "title": "Rank",
+                "description": "One-based position of the item in the extracted order.",
+                "example": 1
+            },
+            "title": {
+                "type": "string",
+                "title": "Title",
+                "description": "Item title as displayed on the source page.",
+                "example": "Show HN: An example project"
+            },
+            "url": {
+                "type": "string",
+                "title": "URL",
+                "description": "Absolute URL of the item.",
+                "example": "https://example.com/project"
+            }
+        },
+        "required": ["rank", "title", "url"]
+    },
+    "views": {
+        "items": {
+            "title": "Items",
+            "description": "Extracted items in their displayed order.",
+            "transformation": {
+                "fields": ["rank", "title", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "rank": {
+                        "label": "Rank",
+                        "format": "number"
+                    },
+                    "title": {
+                        "label": "Title",
+                        "format": "text"
+                    },
+                    "url": {
+                        "label": "URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}
