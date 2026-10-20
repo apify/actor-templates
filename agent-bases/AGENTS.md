@@ -35,8 +35,8 @@ Skip the steps that do not apply when changing an existing Actor.
 - Check which crawler packages are installed before applying crawler advice. Use {{httpCrawler}} for static HTML at 10 to 50 concurrency; reserve `PlaywrightCrawler` for JavaScript-rendered pages at 1 to 5. Add delays and respect robots.txt and terms of service.
 - Use the router pattern when a crawl has more than one page type.
 - Count results with your own tally; {{datasetInfo}} lags on the platform.
-- In the `aborting` handler, persist state, then `await Actor.exit()`, so a stopped run ends quickly and cheaply.
-- On the platform the SDK reads the token from `APIFY_TOKEN` (not `APIFY_API_TOKEN`); locally it uses the credentials stored by `apify login`. Keep the token out of code, config, and logs.
+- {{abortingRule}}
+- On the platform the SDK reads the token from `APIFY_TOKEN` (not `APIFY_API_TOKEN`); {{localToken}} Keep the token out of code, config, and logs.
 - Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200.
 
 ## Ask first

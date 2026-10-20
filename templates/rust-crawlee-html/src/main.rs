@@ -1,6 +1,8 @@
 // Crawlee - web scraping and browser automation library (Read more at https://crawlee.dev)
 // Apify SDK - toolkit for building Apify Actors (Read more at https://github.com/apify/apify-sdk-rs)
-use apify::crawlee::HtmlCrawler;
+use std::collections::BTreeMap;
+
+use apify::crawlee::{HtmlCrawler, Request};
 use apify::{Actor, ActorInputErrorCode, ExitOptions, InitOptions, ProxyConfigurationOptions};
 use serde::Deserialize;
 use tracing_subscriber::EnvFilter;
@@ -16,8 +18,30 @@ struct Input {
 }
 
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 struct StartUrl {
     url: String,
+    method: Option<String>,
+    #[serde(default)]
+    headers: BTreeMap<String, String>,
+    payload: Option<String>,
+    #[serde(default)]
+    user_data: serde_json::Map<String, serde_json::Value>,
+}
+
+impl StartUrl {
+    fn into_request(self) -> anyhow::Result<Request> {
+        let mut request = Request::builder(self.url)
+            .headers(self.headers)
+            .user_data_map(self.user_data);
+        if let Some(method) = self.method {
+            request = request.method(method);
+        }
+        if let Some(payload) = self.payload {
+            request = request.payload(payload);
+        }
+        Ok(request.build()?)
+    }
 }
 
 impl Default for Input {
@@ -25,6 +49,10 @@ impl Default for Input {
         Self {
             start_urls: vec![StartUrl {
                 url: "https://apify.com".to_owned(),
+                method: None,
+                headers: BTreeMap::new(),
+                payload: None,
+                user_data: serde_json::Map::new(),
             }],
             max_requests_per_crawl: 100,
         }
@@ -78,8 +106,11 @@ async fn run() -> anyhow::Result<()> {
     }
     let crawler = crawler.build()?;
 
-    crawler
-        .run(input.start_urls.into_iter().map(|start_url| start_url.url))
-        .await?;
+    let start_requests = input
+        .start_urls
+        .into_iter()
+        .map(StartUrl::into_request)
+        .collect::<anyhow::Result<Vec<_>>>()?;
+    crawler.run(start_requests).await?;
     Ok(())
 }
