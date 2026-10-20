@@ -12,6 +12,7 @@ import logging
 
 from apify import Actor
 from langchain.agents import create_agent
+from langchain.agents.structured_output import ToolStrategy
 from langchain_openai import ChatOpenAI
 
 from .models import AgentStructuredOutput
@@ -50,7 +51,9 @@ async def main() -> None:
         # Create the agent graph
         # see https://docs.langchain.com/oss/python/langchain/agents
         tools = [tool_calculator_sum, tool_scrape_instagram_profile_posts]
-        graph = create_agent(llm, tools, response_format=AgentStructuredOutput)
+        # `ToolStrategy` makes the agent retry when the model returns output that does not match the schema.
+        # Passing the model directly would use the provider's native structured output, which fails the run instead.
+        graph = create_agent(llm, tools, response_format=ToolStrategy(AgentStructuredOutput))
 
         inputs: dict = {'messages': [('user', query)]}
         response: AgentStructuredOutput | None = None
