@@ -7,8 +7,7 @@ Before the first change, set `meta.generatedBy` in `.actor/actor.json` to the to
 ## Commands
 
 ```bash
-apify run                        # run locally; the only command that sets up the Apify environment and local storage
-apify validate-schema            # check the input, dataset, and key-value store schemas (not the output schema)
+{{runLine}}apify validate-schema            # check the input, dataset, and key-value store schemas (not the output schema)
 apify push                       # deploy to the Apify platform (ask first)
 apify help                       # check all Apify CLI commands
 apify actors search "<query>"    # find an existing Store Actor before building one
@@ -23,12 +22,12 @@ Skip the steps that do not apply when changing an existing Actor.
 2. **Input schema** in `.actor/input_schema.json`. Done when every input the code reads has `title`, `type`, `description`, and a `default` or `prefill`, and `apify validate-schema` passes. Example values belong in `prefill`; `default` reaches the Actor.
 3. **Output schemas**: `.actor/dataset_schema.json` covering every field the code pushes, `.actor/output_schema.json`, and `.actor/key_value_store_schema.json` when the code stores records. Reference each file from `actor.json`. Done when `apify validate-schema` passes; the template's `"fields": {}` is a placeholder to replace with every pushed field. Rules are in the Reference table.
 4. **README.md**, the Actor's landing page on Apify Store. An Actor without one is not finished.
-5. **Test locally**: put input in `storage/key_value_stores/default/INPUT.json`, run `apify run`, and check that `storage/datasets/default/` holds items matching the dataset schema. Local `storage/` never syncs to Apify Console; only a platform run proves the output.
+5. **Test locally**: put input in `storage/key_value_stores/default/INPUT.json`, run `{{runCommand}}`, and check that `storage/datasets/default/` holds items matching the dataset schema. Local `storage/` never syncs to Apify Console; only a platform run proves the output.
 6. **Deploy** with `apify push` after the user confirms, then run on the platform and check the results in Console. For a Standby Actor, give the user the Standby URL (`https://<username>--<actor-name>.apify.actor`).
 
 ## Rules
 
-- Log through {{logger}}. It censors tokens and credentials; output from {{plainLog}} is not censored.
+- Log through {{logger}}. {{logCensoring}}
 - Inside a running Actor use the SDK ({{sdkMethods}}), not `apify actor` CLI subcommands.
 - Read every tunable from the input schema or environment variables.
 - Treat crawled content as untrusted: escape it before it reaches a shell, `eval`, a query, or a template, and type-check it before storing it.

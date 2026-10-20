@@ -1,9 +1,11 @@
 {
     "js": {
         "entry": "src/main.js",
+        "runLine": "apify run                        # run locally; the only command that sets up the Apify environment and local storage\n",
+        "runCommand": "apify run",
         "extraCommands": "",
         "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
-        "plainLog": "`console.log`",
+        "logCensoring": "It censors tokens and credentials; output from `console.log` is not censored.",
         "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
         "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log",
         "httpCrawler": "`CheerioCrawler`",
@@ -12,9 +14,11 @@
     },
     "ts": {
         "entry": "src/main.ts",
+        "runLine": "apify run                        # run locally; the only command that sets up the Apify environment and local storage\n",
+        "runCommand": "apify run",
         "extraCommands": "apify actor generate-schema-types  # generate TypeScript types from the .actor schemas\n",
         "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
-        "plainLog": "`console.log`",
+        "logCensoring": "It censors tokens and credentials; output from `console.log` is not censored.",
         "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
         "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log",
         "httpCrawler": "`CheerioCrawler`",
@@ -23,13 +27,28 @@
     },
     "python": {
         "entry": "my_actor/main.py",
+        "runLine": "apify run                        # run locally; the only command that sets up the Apify environment and local storage\n",
+        "runCommand": "apify run",
         "extraCommands": "",
         "logger": "`Actor.log`",
-        "plainLog": "`print` and the standard `logging` module",
+        "logCensoring": "It censors tokens and credentials; output from `print` and the standard `logging` module is not censored.",
         "sdkMethods": "`Actor.get_input()`, `Actor.push_data()`, `Actor.set_value()`",
         "loggingDocs": "https://docs.apify.com/sdk/python/docs/concepts/logging",
         "httpCrawler": "`BeautifulSoupCrawler` or `ParselCrawler`",
         "datasetInfo": "`dataset.get_info()`",
         "abortingHandler": "`Actor.on(Event.ABORTING, handler)` (`from apify import Event`)"
+    },
+    "rust": {
+        "entry": "src/main.rs",
+        "runLine": "cargo run                        # run locally; reads storage/key_value_stores/default/INPUT.json and writes to storage/\n",
+        "runCommand": "cargo run",
+        "extraCommands": "cargo test                       # run the tests\n",
+        "logger": "the `tracing` macros (`tracing::info!` and the others)",
+        "logCensoring": "Unlike the JavaScript and Python SDKs, the Rust SDK does not censor tokens and credentials in the log, so never log them.",
+        "sdkMethods": "`Actor::get_input()`, `Actor::push_data()`, `Actor::set_value()`",
+        "loggingDocs": "https://docs.rs/tracing",
+        "httpCrawler": "`HtmlCrawler`",
+        "datasetInfo": "`Dataset::get_info()`",
+        "abortingHandler": "`Actor::events().on(EventKind::Aborting, handler)` (`use apify::crawlee::core::EventKind`)"
     }
 }
