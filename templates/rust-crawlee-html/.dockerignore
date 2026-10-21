@@ -1,0 +1,15 @@
+# configurations
+.idea
+.vscode
+.zed
+
+# crawlee and apify storage folders
+apify_storage
+crawlee_storage
+storage
+
+# build output
+target
+
+# git folder
+.git
