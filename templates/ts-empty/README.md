@@ -2,16 +2,17 @@
 
 <!-- This is an Apify template readme -->
 
-Start a new [web scraping](https://apify.com/web-scraping) project quickly and easily in TypeScript (Node.js) with our empty project template. It provides a basic structure for the Actor with [Apify SDK](https://docs.apify.com/sdk/js/) and allows you to easily add your own functionality.
+Start a new Apify Actor project in TypeScript (Node.js) with only the [Apify SDK](https://docs.apify.com/sdk/js/) preinstalled. Add whatever dependencies and functionality your Actor needs.
 
 ## Included features
 
 - **[Apify SDK](https://docs.apify.com/sdk/js/)** - a toolkit for building [Actors](https://apify.com/actors)
-- **[Crawlee](https://crawlee.dev/)** - web scraping and browser automation library
 
 ## How it works
 
-Insert your own code between `await Actor.init()` and `await Actor.exit()`. If you would like to use the [Crawlee](https://crawlee.dev/) library simply uncomment its import `import { CheerioCrawler } from '@crawlee/cheerio';`.
+Insert your own code between `await Actor.init()` and `await Actor.exit()`. Install additional dependencies as needed.
+
+If you want to build a web scraper on top of [Crawlee](https://crawlee.dev/), start from the **Crawlee + Cheerio** template instead — it comes preconfigured with `@crawlee/cheerio` and an example crawler.
 
 ## Resources
 
