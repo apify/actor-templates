@@ -23,7 +23,7 @@ dependencies = [
     "llama-index >= 0.14.24, < 1.0.0",
     "mcp >= 2.0.0, < 3.0.0",
     "playwright >= 1.58.0, < 2.0.0",
-    "polars >= 1.0.0, < 2.0.0",
+    "polars >=2.0.0, <2.1.0",
     "pydantic >= 2.0.0, < 3.0.0",
     "pydantic-ai >= 2.0.0, < 3.0.0",
     "pyjwt >= 2.12.0",  # Transitive dep of mcp; direct pin until mcp bumps its floor above vulnerable < 2.12.0
@@ -31,14 +31,14 @@ dependencies = [
     "selenium >= 4.41.0, < 5.0.0",
     "smolagents[openai] >= 1.15.0, < 2.0.0",
     "types-beautifulsoup4 >= 4.0.0, < 5.0.0",
-    "uv >= 0.11.15, < 1.0.0",
+    "uv >= 0.13.0, < 1.0.0",
     "uvicorn >= 0.27.0, < 1.0.0",
 ]
 
 [dependency-groups]
 dev = [
     "poethepoet < 1.0.0",
-    "ruff ~=0.16.0",
+    "ruff ~=0.17.1",
     "ty ~= 0.0.0",
 ]
 
