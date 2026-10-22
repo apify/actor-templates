@@ -31,12 +31,15 @@ async def run_agent(query: str, llm: OpenAI, *, verbose: bool = False) -> AgentO
     LLMRegistry.set(llm)
 
     # Initialize the ReAct Agent with the Tools (LLM not pre-instantiated)
+    # Streaming is off because a mid-stream connection drop escapes both retry layers and fails
+    # the whole run: the network call happens after the retry-wrapped function has returned.
     agent = ReActAgent(
         tools=[
             FunctionTool.from_defaults(fn=call_contact_details_scraper),
             FunctionTool.from_defaults(fn=summarize_contact_information),
         ],
         llm=llm,
+        streaming=False,
     )
 
     # Run the agent and, when verbose logging is enabled, stream its workflow events to
