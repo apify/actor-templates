@@ -31,7 +31,7 @@ dependencies = [
     "selenium >= 4.41.0, < 5.0.0",
     "smolagents[openai] >= 1.15.0, < 2.0.0",
     "types-beautifulsoup4 >= 4.0.0, < 5.0.0",
-    "uv >= 0.13.0, < 1.0.0",
+    "uv>=0.13.4,<1.0.0",
     "uvicorn >= 0.27.0, < 1.0.0",
 ]
 

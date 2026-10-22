@@ -77,7 +77,7 @@ requires-dist = [
     { name = "selenium", specifier = ">=4.41.0,<5.0.0" },
     { name = "smolagents", extras = ["openai"], specifier = ">=1.15.0,<2.0.0" },
     { name = "types-beautifulsoup4", specifier = ">=4.0.0,<5.0.0" },
-    { name = "uv", specifier = ">=0.13.0,<1.0.0" },
+    { name = "uv", specifier = ">=0.13.4,<1.0.0" },
     { name = "uvicorn", specifier = ">=0.27.0,<1.0.0" },
 ]
 
