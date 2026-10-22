@@ -7,7 +7,7 @@ import { ApifyDatasetLoader } from '@langchain/community/document_loaders/web/ap
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
 import { Document } from '@langchain/core/documents';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { OpenAI, OpenAIEmbeddings } from '@langchain/openai';
+import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
 import { Actor, log } from 'apify';
 
 // This is ESM project, and as such, it requires you to specify extensions in your relative imports.
@@ -93,7 +93,7 @@ if (!vectorStore) {
 }
 
 // Next, create the retrieval chain and enter a query:
-const llm = new OpenAI({ openAIApiKey });
+const llm = new ChatOpenAI({ openAIApiKey, model: 'gpt-4o-mini' });
 const combineDocsChain = await createStuffDocumentsChain({
     llm,
     prompt,

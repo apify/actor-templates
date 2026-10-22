@@ -12,6 +12,7 @@ import logging
 
 from apify import Actor
 from langchain.agents import create_agent
+from langchain.agents.structured_output import ToolStrategy
 from langchain_openai import ChatOpenAI
 
 from .models import AgentStructuredOutput
@@ -50,22 +51,26 @@ async def main() -> None:
         # Create the agent graph
         # see https://docs.langchain.com/oss/python/langchain/agents
         tools = [tool_calculator_sum, tool_scrape_instagram_profile_posts]
-        graph = create_agent(llm, tools, response_format=AgentStructuredOutput)
+        # `ToolStrategy` makes the agent retry when the model returns output that does not match the schema.
+        # Passing the schema directly would use the provider's native structured output, which fails the run instead.
+        graph = create_agent(llm, tools, response_format=ToolStrategy(AgentStructuredOutput))
 
         inputs: dict = {'messages': [('user', query)]}
         response: AgentStructuredOutput | None = None
-        last_message: str | None = None
         async for state in graph.astream(inputs, stream_mode='values'):
             log_state(state)
             if 'structured_response' in state:
                 response = state['structured_response']
-                last_message = state['messages'][-1].content
                 break
 
-        if not response or not last_message:
+        if not response:
             Actor.log.error('Failed to get a response from the agent!')
             await Actor.fail(status_message='Failed to get a response from the agent!')
             return
+
+        # Serialize the agent's answer for the text output. The last message in the stream is a LangChain
+        # bookkeeping message, not the answer, so build the text from the structured response instead.
+        last_message = response.model_dump_json()
 
         # Charge for task completion
         await Actor.charge('task-completed')

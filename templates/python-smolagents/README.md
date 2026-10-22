@@ -10,7 +10,8 @@ This Actor works as an AI-powered news aggregator:
 
 - The user provides a list of topics they are interested in.
 - The Actor searches for relevant news articles using DuckDuckGo.
-- The retrieved articles are processed and summarized using an OpenAI model.
+- The retrieved articles are processed and summarized using an OpenAI model, all in one agent run.
+- Each search times out after 15 seconds and the agent stops after 6 steps, so a slow or blocked search can't stall the run.
 - The final summarized news output is stored in a dataset.
 
 ## How to use
@@ -22,7 +23,7 @@ This Actor works as an AI-powered news aggregator:
 
 ## Modifying the Agent
 
-- You can modify the `src/main.py` file to adjust the query structure or change how the results are summarized.
+- You can modify the `my_actor/main.py` file to adjust the query structure or change how the results are summarized.
 - If needed, you can replace the `DuckDuckGo` search tool with another search API.
 - Update the prompt used for summarization to fine-tune the output.
 
