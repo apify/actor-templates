@@ -57,14 +57,19 @@ async def main() -> None:
 
         inputs: dict = {'messages': [('user', query)]}
         response: AgentStructuredOutput | None = None
+        messages: list = []
         async for state in graph.astream(inputs, stream_mode='values'):
             log_state(state)
-            if 'structured_response' in state:
+            messages = state['messages']
+            # LangChain >= 1.3.15 writes `structured_response: None` into the state on every model turn,
+            # so checking only for the key's presence ends the loop on the agent's first tool call.
+            if state.get('structured_response') is not None:
                 response = state['structured_response']
                 break
 
         if not response:
-            Actor.log.error('Failed to get a response from the agent!')
+            # The agent can end its turn with a plain text reply instead of calling the structured output tool.
+            Actor.log.error('Failed to get a response from the agent! Agent messages: %s', messages)
             await Actor.fail(status_message='Failed to get a response from the agent!')
             return
 
