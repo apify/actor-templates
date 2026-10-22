@@ -10,7 +10,8 @@ export const NODE_TEMPLATE_IDS = templateManifest.templates
     .map((t) => t.id);
 export const SKIP_TESTS = templateManifest.templates.filter((t) => t.skipTests).map((t) => t.id);
 // Templates whose actor run can't be smoke-tested locally (e.g. the LLM proxy at
-// openrouter.apify.actor only serves on-platform runs). Structure/install still checked.
+// openrouter.apify.actor only serves on-platform runs, standby servers never exit).
+// Structure/install/lint/format still checked.
 export const SKIP_RUN_TESTS = templateManifest.templates.filter((t) => t.skipRunTest).map((t) => t.id);
 export const PYTHON_TEMPLATE_IDS = templateManifest.templates.filter((t) => t.category === 'python').map((t) => t.id);
 
