@@ -1,35 +1,62 @@
 {
     "js": {
         "entry": "src/main.js",
+        "runLine": "apify run                        # run locally; the only command that sets up the Apify environment and local storage\n",
+        "runCommand": "apify run",
         "extraCommands": "",
         "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
-        "plainLog": "`console.log`",
+        "logCensoring": "It censors tokens and credentials; output from `console.log` is not censored.",
         "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
         "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log",
         "httpCrawler": "`CheerioCrawler`",
         "datasetInfo": "`Dataset.getInfo()`",
-        "abortingHandler": "`Actor.on('aborting', handler)`"
+        "abortingHandler": "`Actor.on('aborting', handler)`",
+        "abortingRule": "In the `aborting` handler, persist state, then `await Actor.exit()`, so a stopped run ends quickly and cheaply.",
+        "localToken": "locally it uses the credentials stored by `apify login`."
     },
     "ts": {
         "entry": "src/main.ts",
+        "runLine": "apify run                        # run locally; the only command that sets up the Apify environment and local storage\n",
+        "runCommand": "apify run",
         "extraCommands": "apify actor generate-schema-types  # generate TypeScript types from the .actor schemas\n",
         "logger": "`log` from the `apify` package (`import { log } from 'apify'`)",
-        "plainLog": "`console.log`",
+        "logCensoring": "It censors tokens and credentials; output from `console.log` is not censored.",
         "sdkMethods": "`Actor.getInput()`, `Actor.pushData()`, `Actor.setValue()`",
         "loggingDocs": "https://docs.apify.com/sdk/js/reference/class/Log",
         "httpCrawler": "`CheerioCrawler`",
         "datasetInfo": "`Dataset.getInfo()`",
-        "abortingHandler": "`Actor.on('aborting', handler)`"
+        "abortingHandler": "`Actor.on('aborting', handler)`",
+        "abortingRule": "In the `aborting` handler, persist state, then `await Actor.exit()`, so a stopped run ends quickly and cheaply.",
+        "localToken": "locally it uses the credentials stored by `apify login`."
     },
     "python": {
         "entry": "my_actor/main.py",
+        "runLine": "apify run                        # run locally; the only command that sets up the Apify environment and local storage\n",
+        "runCommand": "apify run",
         "extraCommands": "",
         "logger": "`Actor.log`",
-        "plainLog": "`print` and the standard `logging` module",
+        "logCensoring": "It censors tokens and credentials; output from `print` and the standard `logging` module is not censored.",
         "sdkMethods": "`Actor.get_input()`, `Actor.push_data()`, `Actor.set_value()`",
         "loggingDocs": "https://docs.apify.com/sdk/python/docs/concepts/logging",
         "httpCrawler": "`BeautifulSoupCrawler` or `ParselCrawler`",
         "datasetInfo": "`dataset.get_info()`",
-        "abortingHandler": "`Actor.on(Event.ABORTING, handler)` (`from apify import Event`)"
+        "abortingHandler": "`Actor.on(Event.ABORTING, handler)` (`from apify import Event`)",
+        "abortingRule": "In the `aborting` handler, persist state, then `await Actor.exit()`, so a stopped run ends quickly and cheaply.",
+        "localToken": "locally it uses the credentials stored by `apify login`."
+    },
+    "rust": {
+        "entry": "src/main.rs",
+        "runLine": "cargo run                        # run locally; reads storage/key_value_stores/default/INPUT.json and writes to storage/\n",
+        "runCommand": "cargo run",
+        "extraCommands": "cargo test                       # run the tests\n",
+        "logger": "the `tracing` macros (`tracing::info!` and the others)",
+        "logCensoring": "Unlike the JavaScript and Python SDKs, the Rust SDK does not censor tokens and credentials in the log, so never log them.",
+        "sdkMethods": "`Actor::get_input()`, `Actor::push_data()`, `Actor::set_value()`",
+        "loggingDocs": "https://docs.rs/tracing",
+        "httpCrawler": "`HtmlCrawler`",
+        "datasetInfo": "`Dataset::get_info()`",
+        "abortingHandler": "`Actor::events().on(EventKind::Aborting, handler)` (`use apify::crawlee::core::EventKind`)",
+        "abortingRule": "On `aborting`, the SDK exits the Actor by itself (`Actor::init` sets that up). In an `aborting` handler only persist state; never call `Actor::exit()` inside an event handler, as `exit` waits for the handlers to finish.",
+        "localToken": "locally `cargo run` does not read the credentials stored by `apify login`, so set `APIFY_TOKEN` in the environment when the code needs the API."
     }
 }
