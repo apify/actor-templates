@@ -147,7 +147,7 @@
             "label": "Python API Actor",
             "category": "python",
             "description": "An Actor that stays running, ready to respond to HTTP requests. Good for APIs and real-time services.",
-            "skipTests": true,
+            "skipRunTest": true,
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-standby.zip?raw=true",
             "defaultRunOptions": {
                 "build": "latest",
@@ -382,7 +382,7 @@
             "label": "Python MCP server",
             "category": "python",
             "technologies": ["mcp"],
-            "skipTests": true,
+            "skipRunTest": true,
             "description": "An MCP server that gives AI assistants like Claude and Cursor your own tools, with built-in pay-per-event billing.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-mcp-empty.zip?raw=true",
             "defaultRunOptions": {
@@ -611,7 +611,7 @@
             "label": "TypeScript API Actor",
             "category": "typescript",
             "technologies": ["nodejs"],
-            "skipTests": true,
+            "skipRunTest": true,
             "description": "An Actor that stays running, ready to respond to HTTP requests. Good for APIs and real-time services.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-standby.zip?raw=true",
             "defaultRunOptions": {
@@ -665,7 +665,7 @@
             "label": "JavaScript API Actor",
             "category": "javascript",
             "technologies": ["nodejs"],
-            "skipTests": true,
+            "skipRunTest": true,
             "description": "An Actor that stays running, ready to respond to HTTP requests. Good for APIs and real-time services.",
             "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/js-standby.zip?raw=true",
             "defaultRunOptions": {
@@ -787,7 +787,7 @@
                 "memoryMbytes": 512,
                 "timeoutSecs": 600
             },
-            "skipTests": true,
+            "skipRunTest": true,
             "showcaseFiles": ["src/main.ts"],
             "useCases": ["AI", "INTEGRATION"]
         },
