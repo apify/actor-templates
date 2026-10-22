@@ -37,8 +37,8 @@ jobs:
       - name: Sanitize base image
         id: branch-name
         run: |
-          echo "BRANCH_NAME=$(echo '${{ env.RAW_BRANCH_NAME }}' | sed 's/,/_/g')" >> $GITHUB_OUTPUT
-          echo "BASE_IMAGE_FORMATTED=$(echo '${{ env.BASE_IMAGE_RAW }}' | sed 's/,/, /g')" >> $GITHUB_OUTPUT
+          echo "BRANCH_NAME=$(echo '${{ env.RAW_BRANCH_NAME }}' | sed 's/,/_/g')" >> "$GITHUB_OUTPUT"
+          echo "BASE_IMAGE_FORMATTED=$(echo '${{ env.BASE_IMAGE_RAW }}' | sed 's/,/, /g')" >> "$GITHUB_OUTPUT"
 
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -122,12 +122,15 @@ jobs:
 
           if [ -z "$PR_NUMBER" ]; then
             echo "Creating new PR"
+            # No --reviewer here: CODEOWNERS already requests the code owners
+            # when the PR is created, and the extra request races that
+            # assignment and fails the step before auto-merge is enabled.
             gh pr create \
               --title "chore: Update templates for base image: ${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}" \
               --body "$PR_BODY" \
               --base master \
               --head "$BRANCH" \
-              --reviewer l2ysho
+              || echo "::warning::gh pr create reported an error; checking whether the PR was created anyway."
 
             # Retrieve PR number by head branch after creation
             PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')
