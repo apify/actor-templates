@@ -1,0 +1,23 @@
+{
+    "$comment": "Runtime configuration of the agent. Input fields with the same names (maxBudgetUsd, maxSteps, model) can lower these values per run, never raise them.",
+    "model": {
+        "id": "anthropic/claude-haiku-4.5",
+        "usdPerMillionInputTokens": 1,
+        "usdPerMillionOutputTokens": 5
+    },
+    "limits": {
+        "maxSteps": 60,
+        "maxBudgetUsd": 3,
+        "maxActorRunBudgetUsd": 1,
+        "commandTimeoutSecs": 120
+    },
+    "actors": {
+        "allow": [
+            "apify/instagram-hashtag-scraper",
+            "apify/instagram-profile-scraper",
+            "clockworks/tiktok-scraper",
+            "streamers/youtube-scraper"
+        ],
+        "allowDiscovery": false
+    }
+}

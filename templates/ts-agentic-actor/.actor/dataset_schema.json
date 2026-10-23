@@ -1,0 +1,33 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "type": "object",
+        "properties": {
+            "platform": { "type": "string", "enum": ["instagram", "tiktok", "youtube"] },
+            "handle": { "type": "string" },
+            "profileUrl": { "type": ["string", "null"] },
+            "followers": { "type": "integer" },
+            "postsOnTopic": { "type": "integer" },
+            "avgEngagementRate": { "type": "number" },
+            "score": { "type": "number", "minimum": 0, "maximum": 1 },
+            "whyRelevant": { "type": "string" }
+        },
+        "required": ["platform", "handle", "followers", "score", "whyRelevant"]
+    },
+    "views": {
+        "overview": {
+            "title": "Influencers",
+            "transformation": {
+                "fields": ["platform", "handle", "profileUrl", "followers", "postsOnTopic", "avgEngagementRate", "score", "whyRelevant"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "profileUrl": { "label": "Profile", "format": "link" },
+                    "followers": { "format": "number" },
+                    "score": { "format": "number" }
+                }
+            }
+        }
+    }
+}

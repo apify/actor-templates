@@ -1,0 +1,19 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "topic-influencer-finder",
+    "title": "Topic Influencer Finder (agentic)",
+    "description": "Finds and scores influencers who post often about a topic on Instagram, TikTok and YouTube. Runs an AI agent over a packaged procedure, skills and scripts.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "input": "./input_schema.json",
+    "output": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "meta": {
+        "templateId": "ts-agentic-actor",
+        "agentPackage": "../agent"
+    },
+    "dockerfile": "../Dockerfile"
+}

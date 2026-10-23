@@ -1,0 +1,21 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Influencers and report",
+    "properties": {
+        "influencers": {
+            "type": "string",
+            "title": "Influencers",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+        },
+        "report": {
+            "type": "string",
+            "title": "Report",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/REPORT.md"
+        },
+        "trace": {
+            "type": "string",
+            "title": "Agent events",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/AGENT_EVENTS"
+        }
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "permissions": {
+        "allow": [
+            "Skill",
+            "Read",
+            "Write",
+            "Edit",
+            "Glob",
+            "Grep",
+            "Bash"
+        ],
+        "deny": [
+            "WebFetch",
+            "WebSearch",
+            "Bash(env:*)",
+            "Bash(printenv:*)"
+        ]
+    },
+    "hooks": {
+        "PreToolUse": [
+            {
+                "matcher": "Bash",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "sh .claude/hooks/actor-allowlist.sh"
+                    }
+                ]
+            }
+        ]
+    }
+}

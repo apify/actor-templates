@@ -1,0 +1,52 @@
+{
+    "title": "Topic Influencer Finder",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "topic": {
+            "title": "Topic",
+            "type": "string",
+            "description": "What the influencers post about, e.g. \"vegan cooking\".",
+            "editor": "textfield",
+            "prefill": "vegan cooking"
+        },
+        "platforms": {
+            "title": "Platforms",
+            "type": "array",
+            "description": "Where to look.",
+            "editor": "select",
+            "items": { "type": "string", "enum": ["instagram", "tiktok", "youtube"] },
+            "default": ["instagram", "tiktok", "youtube"]
+        },
+        "maxInfluencers": {
+            "title": "Max influencers",
+            "type": "integer",
+            "description": "How many influencers to return.",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 20
+        },
+        "instructions": {
+            "title": "Extra instructions",
+            "type": "string",
+            "description": "Optional. Anything the agent should take into account, e.g. \"only creators based in Germany\".",
+            "editor": "textarea",
+            "sectionCaption": "Agent"
+        },
+        "maxBudgetUsd": {
+            "title": "Max budget (USD)",
+            "type": "number",
+            "description": "Stops the agent when LLM tokens plus the Actor runs it starts reach this amount. Cannot exceed the Actor's own limit.",
+            "minimum": 0.1,
+            "default": 3
+        },
+        "maxSteps": {
+            "title": "Max agent steps",
+            "type": "integer",
+            "description": "Stops the agent after this many model calls.",
+            "minimum": 1,
+            "default": 60
+        }
+    },
+    "required": ["topic"]
+}

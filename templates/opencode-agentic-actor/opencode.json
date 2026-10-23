@@ -1,0 +1,53 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "model": "apify/anthropic/claude-haiku-4.5",
+    "small_model": "apify/anthropic/claude-haiku-4.5",
+    "autoupdate": false,
+    "share": "disabled",
+    "instructions": [
+        "CLAUDE.md"
+    ],
+    "skills": {
+        "paths": [
+            ".claude/skills"
+        ]
+    },
+    "provider": {
+        "apify": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "Apify LLM gateway (apify/openrouter)",
+            "options": {
+                "baseURL": "https://openrouter.apify.actor/api/v1",
+                "apiKey": "{env:APIFY_TOKEN}"
+            },
+            "models": {
+                "anthropic/claude-haiku-4.5": {
+                    "name": "Claude Haiku 4.5",
+                    "limit": {
+                        "context": 200000,
+                        "output": 2048
+                    }
+                }
+            }
+        }
+    },
+    "permission": {
+        "read": "allow",
+        "edit": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "bash": "allow",
+        "skill": "allow",
+        "task": "allow",
+        "todowrite": "allow",
+        "external_directory": {
+            "*": "deny",
+            "/tmp/**": "allow"
+        },
+        "doom_loop": "allow",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "question": "deny"
+    }
+}
