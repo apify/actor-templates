@@ -10,7 +10,7 @@
         "generatedBy": "<FILL-IN-MODEL>"
     },
     "inputSchema": "./input_schema.json",
-    "readme": "./README.md",
+    "readme": "../README.md",
     "dockerfile": "../Dockerfile",
     "storages": {
         "dataset": "./dataset_schema.json",
