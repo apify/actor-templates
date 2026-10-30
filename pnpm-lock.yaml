@@ -7,53 +7,52 @@ importers:
     configDependencies: {}
     packageManagerDependencies:
       '@pnpm/exe':
-        specifier: 11.13.0
-        version: 11.13.0
+        specifier: 11.13.1
+        version: 11.13.1
       pnpm:
-        specifier: 11.13.0
-        version: 11.13.0
+        specifier: 11.13.1
+        version: 11.13.1
 
 packages:
 
-  '@pnpm/exe@11.13.0':
-    resolution: {integrity: sha512-aXsm4VW1awRuh4X4G4fl+1xdV+L9DElKrgc4Yq/3zgGQQ12ATj1n3MMeosfa68aX/i7E9VyWT42adDSg8+kEFQ==}
-    deprecated: This is a broken version. Please install pnpm v11.13.1 or newer
+  '@pnpm/exe@11.13.1':
+    resolution: {integrity: sha512-P4euEK6lOFnd5oTHEc5M/HhvyF4XUhTnVsklEcM6rmY0QJxPD6xbT+u1+gskEIBp4nSRorz20IJQtAU1Nerggg==}
     hasBin: true
 
-  '@pnpm/linux-arm64@11.13.0':
-    resolution: {integrity: sha512-86ri9P/i3Enbv0NBAEtz27lBHHwCJqsC7YxHX56+jXPyFobGbsDVR5OUyoCCVVNz/Phs2O7c9SaDVdqKPzUFCA==}
+  '@pnpm/linux-arm64@11.13.1':
+    resolution: {integrity: sha512-wB8zloqrYrudPyuA5qbuTCnJGe4eETPwqOjoPjoyyyvA4zFI5XfLpxgqOOcaY5UJBoqzckcGpRVDwhSRfsQ/6A==}
     cpu: [arm64]
     os: [linux]
 
-  '@pnpm/linux-x64@11.13.0':
-    resolution: {integrity: sha512-ZXvUMP5ew1WZllTq1f7Tm3l6sF5LK5sMesfdu9J6uxsznK/3tTi6edUeiNN6dA22mAHhjvrzVj+MeQ6X3DG0tA==}
+  '@pnpm/linux-x64@11.13.1':
+    resolution: {integrity: sha512-A+wnEvzfWEvanXiwww3tnOPmtjPSrrf5tOP6vk8+K0BRFEe/Df0oPytm2nWgGcn5iwPnqtr1Btkof913McnSPA==}
     cpu: [x64]
     os: [linux]
 
-  '@pnpm/linuxstatic-arm64@11.13.0':
-    resolution: {integrity: sha512-elwRj0sE3W54gDECgbHu2/TerpZsHXRmLSXfzuIvReumGuOYk5zlUhD5dJqzp0B1ktetVNU4Rb1keENz5/Gb/Q==}
+  '@pnpm/linuxstatic-arm64@11.13.1':
+    resolution: {integrity: sha512-k4t65VeqRX4COMFe45TF58CVmCpmAsKZShaR1HobmUeleo98mWTctggKolrA2MHcVUeSS+12yB5Urb3uDazhmw==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@pnpm/linuxstatic-x64@11.13.0':
-    resolution: {integrity: sha512-PQyfFMRA6/uYB+1vqx0wSXfOirC5CUOKRlTjXNgI1q/R1Ug/NMDfKOr52qbWFllcG9pIHKV8hZTo4WyBUjS1mA==}
+  '@pnpm/linuxstatic-x64@11.13.1':
+    resolution: {integrity: sha512-A65GqPzwCl0bAMk3kRWfbjSRBm5RRaqR2oMxV/9AYZrwO0X9yEfngbLBISCPHjt6/Qe4nH7DFemyhy6yODYwEw==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@pnpm/macos-arm64@11.13.0':
-    resolution: {integrity: sha512-qWf2wbvESMICLJcVfWNh4pwIsr2oK6yFwbuv1uHi0UY3OnWNt0+POmhqWtYWtDj+EPWM3pSfEAc+KFQAiaBCvg==}
+  '@pnpm/macos-arm64@11.13.1':
+    resolution: {integrity: sha512-MJvOtyGOWSfBoqdVEfAH8ljmHs13mt82k/UxN4f+q7koDxJRR2n4Nie6Og6RwbnbaubCz0Fh2bTeL1+MxDSFpA==}
     cpu: [arm64]
     os: [darwin]
 
-  '@pnpm/win-arm64@11.13.0':
-    resolution: {integrity: sha512-ZvbGFdjU3cX32+/sHOhV9VkkbBucJ9QyW/F6VSsqgkvmTZTXlQglYp4K1KBbKWxYKz4i6M9p5PStI6yYB+y0jA==}
+  '@pnpm/win-arm64@11.13.1':
+    resolution: {integrity: sha512-kl/g1cCKOJPe4HntspyrAJW0LRco0UHnVfxHSspezo4Zj4AanJAZ8WzLqfa6/w3lBSKHTEN4x0pb3m4J7B7Vpw==}
     cpu: [arm64]
     os: [win32]
 
-  '@pnpm/win-x64@11.13.0':
-    resolution: {integrity: sha512-5KX2lMFbXZNvKC+gLftR5FiU25j/jMp24Zi9JB01T3r42uxrHt12GQP7CNkNjxCXdi8jioUB7e3iT1eINS8qVQ==}
+  '@pnpm/win-x64@11.13.1':
+    resolution: {integrity: sha512-Bcb14NeBlbHS2Gq1qr8VnCiAz5eC1lYzXOls7zH0bnV0Taaj4/xyfm0HVO4dn9R2TQtVtz1qnBZHHL9PDFumqQ==}
     cpu: [x64]
     os: [win32]
 
@@ -117,46 +116,45 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  pnpm@11.13.0:
-    resolution: {integrity: sha512-iNlHJNjy5sGGdEpVhMblnsrIaex7oV6ctM1ijo3HBmggskgdjuO1HqjaMjpzeAaKpYxVajcg0yt8IKBR0Ig2Og==}
+  pnpm@11.13.1:
+    resolution: {integrity: sha512-svx2g7imUlQU59E+G6KMqt3elr9m7FQL+ut+cCuB8+C+TR8pXt9/n+A5Z0Co3ORQnFgt33mJH0VD/qMtN2RfJQ==}
     engines: {node: '>=22.13'}
-    deprecated: This is a broken version. Please install pnpm v11.13.1 or newer
     hasBin: true
 
 snapshots:
 
-  '@pnpm/exe@11.13.0':
+  '@pnpm/exe@11.13.1':
     dependencies:
       '@reflink/reflink': 0.1.19
       detect-libc: 2.1.2
     optionalDependencies:
-      '@pnpm/linux-arm64': 11.13.0
-      '@pnpm/linux-x64': 11.13.0
-      '@pnpm/linuxstatic-arm64': 11.13.0
-      '@pnpm/linuxstatic-x64': 11.13.0
-      '@pnpm/macos-arm64': 11.13.0
-      '@pnpm/win-arm64': 11.13.0
-      '@pnpm/win-x64': 11.13.0
+      '@pnpm/linux-arm64': 11.13.1
+      '@pnpm/linux-x64': 11.13.1
+      '@pnpm/linuxstatic-arm64': 11.13.1
+      '@pnpm/linuxstatic-x64': 11.13.1
+      '@pnpm/macos-arm64': 11.13.1
+      '@pnpm/win-arm64': 11.13.1
+      '@pnpm/win-x64': 11.13.1
 
-  '@pnpm/linux-arm64@11.13.0':
+  '@pnpm/linux-arm64@11.13.1':
     optional: true
 
-  '@pnpm/linux-x64@11.13.0':
+  '@pnpm/linux-x64@11.13.1':
     optional: true
 
-  '@pnpm/linuxstatic-arm64@11.13.0':
+  '@pnpm/linuxstatic-arm64@11.13.1':
     optional: true
 
-  '@pnpm/linuxstatic-x64@11.13.0':
+  '@pnpm/linuxstatic-x64@11.13.1':
     optional: true
 
-  '@pnpm/macos-arm64@11.13.0':
+  '@pnpm/macos-arm64@11.13.1':
     optional: true
 
-  '@pnpm/win-arm64@11.13.0':
+  '@pnpm/win-arm64@11.13.1':
     optional: true
 
-  '@pnpm/win-x64@11.13.0':
+  '@pnpm/win-x64@11.13.1':
     optional: true
 
   '@reflink/reflink-darwin-arm64@0.1.19':
@@ -196,7 +194,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  pnpm@11.13.0: {}
+  pnpm@11.13.1: {}
 
 ---
 lockfileVersion: '9.0'
@@ -229,7 +227,7 @@ importers:
         version: 1.10.0(@types/node@26.5.1)
       crawlee:
         specifier: ^3.15.3
-        version: 3.18.1(@types/node@26.5.1)(playwright@1.61.1)(puppeteer@25.15.0)
+        version: 3.18.1(@types/node@26.5.1)(playwright@1.64.1)(puppeteer@25.15.0)
       eslint:
         specifier: ^9.29.0
         version: 9.39.5
@@ -255,8 +253,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       playwright:
-        specifier: 1.61.1
-        version: 1.61.1
+        specifier: 1.64.1
+        version: 1.64.1
       prettier:
         specifier: ^3.9.1
         version: 3.9.6
@@ -2443,11 +2441,6 @@ packages:
     resolution: {integrity: sha512-EQsFzMUJkCKGr1ePqlYADkIUmHW1s3ZXr5Yqy6wbGrfUCphpl2maM/kyOIRA2HpP3AaFQTZXD4ldjek+nccddA==}
     engines: {node: '>=14.14'}
 
-  fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
@@ -3491,14 +3484,14 @@ packages:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
 
-  playwright-core@1.61.1:
-    resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}
-    engines: {node: '>=18'}
+  playwright-core@1.64.1:
+    resolution: {integrity: sha512-BC4s8y6SEVA6Q1rSxZTto8hI1KUI3xXlHGZgvGqP4IqPdI/a6FX9H29IDNz7vKo9l21b6LfYosScPL6M3xxyDQ==}
+    engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.61.1:
-    resolution: {integrity: sha512-DWnY5o3YbLWK4GovuAVwpqL+1VwGNdUGrRr++8j8PtQQzvAVZUIMjKQ90fY689sEJZJBbZVw1rXaOKSTitkzPQ==}
-    engines: {node: '>=18'}
+  playwright@1.64.1:
+    resolution: {integrity: sha512-HCrVhHr5QQuwYoswEUGTb7gGp522yflbv/ST8nF4sFWGuLjQCt17Q/EubpGGSNKYn1tsTCPZxqHhHCfVURu7UA==}
+    engines: {node: '>=20'}
     hasBin: true
 
   possible-typed-array-names@1.1.0:
@@ -4583,14 +4576,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@crawlee/browser-pool@3.18.1(playwright@1.61.1)(puppeteer@25.15.0)':
+  '@crawlee/browser-pool@3.18.1(playwright@1.64.1)(puppeteer@25.15.0)':
     dependencies:
       '@apify/log': 2.5.54
       '@apify/timeout': 0.4.14
       '@crawlee/core': 3.18.1
       '@crawlee/types': 3.18.1
       fingerprint-generator: 2.1.88
-      fingerprint-injector: 2.1.88(playwright@1.61.1)(puppeteer@25.15.0)
+      fingerprint-injector: 2.1.88(playwright@1.64.1)(puppeteer@25.15.0)
       lodash.merge: 4.6.2
       nanoid: 3.3.19
       ow: 0.28.2
@@ -4600,23 +4593,23 @@ snapshots:
       tiny-typed-emitter: 2.1.0
       tslib: 2.8.1
     optionalDependencies:
-      playwright: 1.61.1
+      playwright: 1.64.1
       puppeteer: 25.15.0
     transitivePeerDependencies:
       - supports-color
 
-  '@crawlee/browser@3.18.1(playwright@1.61.1)(puppeteer@25.15.0)':
+  '@crawlee/browser@3.18.1(playwright@1.64.1)(puppeteer@25.15.0)':
     dependencies:
       '@apify/timeout': 0.4.14
       '@crawlee/basic': 3.18.1
-      '@crawlee/browser-pool': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
+      '@crawlee/browser-pool': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
       '@crawlee/types': 3.18.1
       '@crawlee/utils': 3.18.1
       ow: 0.28.2
       tslib: 2.8.1
       type-fest: 4.41.0
     optionalDependencies:
-      playwright: 1.61.1
+      playwright: 1.64.1
       puppeteer: 25.15.0
     transitivePeerDependencies:
       - supports-color
@@ -4739,13 +4732,13 @@ snapshots:
       proper-lockfile: 4.1.2
       tslib: 2.8.1
 
-  '@crawlee/playwright@3.18.1(playwright@1.61.1)(puppeteer@25.15.0)':
+  '@crawlee/playwright@3.18.1(playwright@1.64.1)(puppeteer@25.15.0)':
     dependencies:
       '@apify/datastructures': 2.0.6
       '@apify/log': 2.5.54
       '@apify/timeout': 0.4.14
-      '@crawlee/browser': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
-      '@crawlee/browser-pool': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
+      '@crawlee/browser': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
+      '@crawlee/browser-pool': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
       '@crawlee/core': 3.18.1
       '@crawlee/types': 3.18.1
       '@crawlee/utils': 3.18.1
@@ -4759,17 +4752,17 @@ snapshots:
       tslib: 2.8.1
       type-fest: 4.41.0
     optionalDependencies:
-      playwright: 1.61.1
+      playwright: 1.64.1
     transitivePeerDependencies:
       - puppeteer
       - supports-color
 
-  '@crawlee/puppeteer@3.18.1(playwright@1.61.1)(puppeteer@25.15.0)':
+  '@crawlee/puppeteer@3.18.1(playwright@1.64.1)(puppeteer@25.15.0)':
     dependencies:
       '@apify/datastructures': 2.0.6
       '@apify/log': 2.5.54
-      '@crawlee/browser': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
-      '@crawlee/browser-pool': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
+      '@crawlee/browser': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
+      '@crawlee/browser-pool': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
       '@crawlee/types': 3.18.1
       '@crawlee/utils': 3.18.1
       cheerio: 1.0.0-rc.12
@@ -6174,11 +6167,11 @@ snapshots:
 
   countries-list@3.4.1: {}
 
-  crawlee@3.18.1(@types/node@26.5.1)(playwright@1.61.1)(puppeteer@25.15.0):
+  crawlee@3.18.1(@types/node@26.5.1)(playwright@1.64.1)(puppeteer@25.15.0):
     dependencies:
       '@crawlee/basic': 3.18.1
-      '@crawlee/browser': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
-      '@crawlee/browser-pool': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
+      '@crawlee/browser': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
+      '@crawlee/browser-pool': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
       '@crawlee/cheerio': 3.18.1
       '@crawlee/cli': 3.18.1(@types/node@26.5.1)
       '@crawlee/core': 3.18.1
@@ -6186,13 +6179,13 @@ snapshots:
       '@crawlee/jsdom': 3.18.1
       '@crawlee/linkedom': 3.18.1
       '@crawlee/memory-storage': 3.18.1
-      '@crawlee/playwright': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
-      '@crawlee/puppeteer': 3.18.1(playwright@1.61.1)(puppeteer@25.15.0)
+      '@crawlee/playwright': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
+      '@crawlee/puppeteer': 3.18.1(playwright@1.64.1)(puppeteer@25.15.0)
       '@crawlee/utils': 3.18.1
       import-local: 3.2.0
       tslib: 2.8.1
     optionalDependencies:
-      playwright: 1.61.1
+      playwright: 1.64.1
       puppeteer: 25.15.0
     transitivePeerDependencies:
       - '@types/node'
@@ -6790,12 +6783,12 @@ snapshots:
       header-generator: 2.1.88
       tslib: 2.8.1
 
-  fingerprint-injector@2.1.88(playwright@1.61.1)(puppeteer@25.15.0):
+  fingerprint-injector@2.1.88(playwright@1.64.1)(puppeteer@25.15.0):
     dependencies:
       fingerprint-generator: 2.1.88
       tslib: 2.8.1
     optionalDependencies:
-      playwright: 1.61.1
+      playwright: 1.64.1
       puppeteer: 25.15.0
 
   flat-cache@4.0.1:
@@ -6835,9 +6828,6 @@ snapshots:
       graceful-fs: 4.2.11
       jsonfile: 6.2.1
       universalify: 2.0.1
-
-  fsevents@2.3.2:
-    optional: true
 
   function-bind@1.1.2: {}
 
@@ -8133,13 +8123,11 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
-  playwright-core@1.61.1: {}
+  playwright-core@1.64.1: {}
 
-  playwright@1.61.1:
+  playwright@1.64.1:
     dependencies:
-      playwright-core: 1.61.1
-    optionalDependencies:
-      fsevents: 2.3.2
+      playwright-core: 1.64.1
 
   possible-typed-array-names@1.1.0: {}
 
