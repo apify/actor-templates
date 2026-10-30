@@ -229,11 +229,23 @@ const checkPythonTemplate = () => {
     expect(installedApifySdkVersion).toEqual(APIFY_SDK_PYTHON_LATEST_VERSION);
 };
 
-const checkTemplateRun = () => {
-    const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run', '--allow-missing-secrets'], {
+const runTemplate = () =>
+    spawnSync(APIFY_COMMAND, ['run', '--allow-missing-secrets'], {
         env: { ...process.env, APIFY_HEADLESS: '1' },
         stdio: ['pipe', 'inherit', 'inherit'],
     });
+
+const checkTemplateRun = (templateId) => {
+    // LLM agent templates let a model browse live websites, so one slow or failed page
+    // load ends the run with no results and reds the leg. Give those a single retry;
+    // the deterministic templates stay on one attempt, where a failure is a real break.
+    const isAgentTemplate = AGENT_AI_TEMPLATE_IDS.includes(templateId);
+
+    let apifyRunSpawnResult = runTemplate();
+    for (let retry = 0; isAgentTemplate && retry < 1 && apifyRunSpawnResult.status !== 0; retry++) {
+        console.log(`apify run failed for ${templateId}, retrying...`);
+        apifyRunSpawnResult = runTemplate();
+    }
     checkSpawnResult(apifyRunSpawnResult);
 };
 
@@ -318,7 +330,7 @@ describe('templates-work', () => {
                 checkCommonTemplateStructure(templateId);
                 checkPythonTemplate();
                 if (SKIP_RUN_TESTS.includes(templateId)) return;
-                checkTemplateRun();
+                checkTemplateRun(templateId);
             });
         });
     });
@@ -337,7 +349,7 @@ describe('templates-work', () => {
 
                 checkNodeTemplate();
                 if (SKIP_RUN_TESTS.includes(templateId)) return;
-                checkTemplateRun();
+                checkTemplateRun(templateId);
             });
         });
     });
@@ -354,7 +366,7 @@ describe('templates-work', () => {
                 checkCommonTemplateStructure(templateId);
                 checkPythonTemplate();
                 if (SKIP_RUN_TESTS.includes(templateId)) return;
-                checkTemplateRun();
+                checkTemplateRun(templateId);
             });
         });
     });
@@ -373,7 +385,7 @@ describe('templates-work', () => {
 
                 checkNodeTemplate();
                 if (SKIP_RUN_TESTS.includes(templateId)) return;
-                checkTemplateRun();
+                checkTemplateRun(templateId);
             });
         });
     });
