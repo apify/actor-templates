@@ -1,2 +1,5 @@
+# The Update Templates workflow relies on this line to get a reviewer onto
+# its PRs. If these owners go away, put `--reviewer` back on this call:
+# https://github.com/apify/actor-templates/blob/16d62acd85312d9d10b56b74cd69ef665fe9550a/.github/workflows/update-templates.yml#L125-L129
 * @l2ysho @DaveHanns
 /.github/workflows/factory_review.yaml @mtrunkat
