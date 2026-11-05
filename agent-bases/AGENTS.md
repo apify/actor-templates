@@ -73,4 +73,4 @@ Read the row that matches the step you are on.
 | Crawlee                    | https://crawlee.dev/llms.txt                                                                       |
 | Actor specification        | https://raw.githubusercontent.com/apify/actor-whitepaper/refs/heads/master/README.md               |
 
-With the Apify MCP server (`https://mcp.apify.com/?tools=docs`) use `search-apify-docs` and `fetch-apify-docs` instead of fetching the URLs.
+With the Apify MCP server (`https://mcp.apify.com/?tools=docs,builds`) use `search-apify-docs` and `fetch-apify-docs` instead of fetching the URLs, and `get-actor-build-log` when a platform build fails.
