@@ -24,4 +24,4 @@ const server = http.createServer((req, res) => {
 });
 
 // Listen on the standby port
-server.listen(Actor.config.get('standbyPort'));
+server.listen(Actor.config.get('containerPort'));
