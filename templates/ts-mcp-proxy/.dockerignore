@@ -16,3 +16,9 @@ node_modules
 
 # dist folder
 dist
+
+# CI configuration
+.github
+
+# tests do not run in the image
+test

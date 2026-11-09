@@ -11,3 +11,12 @@ node_modules
 
 # git folder
 .git
+
+# build output, the Docker build creates it
+dist
+
+# CI configuration
+.github
+
+# tests do not run in the image
+test

@@ -11,3 +11,9 @@ node_modules
 
 # git folder
 .git
+
+# CI configuration
+.github
+
+# tests do not run in the image
+test

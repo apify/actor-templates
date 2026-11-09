@@ -18,3 +18,6 @@ node_modules
 
 # git folder
 .git
+
+# CI configuration
+.github
