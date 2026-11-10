@@ -8,7 +8,7 @@
     "buildTag": "latest",
     "meta": {
         "templateId": "ts-crawlee-cheerio",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "inputSchema": "./input_schema.json",
     "outputSchema": "./output_schema.json",

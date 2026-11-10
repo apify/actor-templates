@@ -12,7 +12,7 @@
     "outputSchema": "./output_schema.json",
     "meta": {
         "templateId": "ts-beeai-agent",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "inputSchema": "./input_schema.json",
     "dockerfile": "../Dockerfile"
