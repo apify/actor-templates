@@ -59,7 +59,9 @@ async def main() -> None:
         response: AgentStructuredOutput | None = None
         async for state in graph.astream(inputs, stream_mode='values'):
             log_state(state)
-            if 'structured_response' in state:
+            # LangChain >= 1.3.15 writes `structured_response: None` into the state on every model turn,
+            # so checking only for the key's presence ends the loop on the agent's first tool call.
+            if state.get('structured_response') is not None:
                 response = state['structured_response']
                 break
 
