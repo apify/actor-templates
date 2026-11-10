@@ -19,3 +19,15 @@ node_modules
 
 # CI configuration
 .github
+
+# git hooks
+.husky
+lefthook.yml
+
+# agent instructions and settings
+.claude
+AGENTS.md
+CLAUDE.md
+
+# test config
+vitest.config.ts
