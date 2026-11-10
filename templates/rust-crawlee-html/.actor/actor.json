@@ -1,0 +1,19 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "project-html-crawler-rust",
+    "title": "Project HTML Crawler Rust",
+    "description": "Crawlee and HtmlCrawler project in Rust.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "rust-crawlee-html",
+        "generatedBy": "<FILL-IN-MODEL>"
+    },
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}
