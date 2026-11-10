@@ -1,0 +1,33 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["title", "heading", "description", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "title": {
+                        "label": "Page Title",
+                        "format": "text"
+                    },
+                    "heading": {
+                        "label": "Heading",
+                        "format": "text"
+                    },
+                    "description": {
+                        "label": "Description",
+                        "format": "text"
+                    },
+                    "url": {
+                        "label": "URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}
