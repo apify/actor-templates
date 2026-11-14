@@ -49,18 +49,18 @@
         "jest": "^30.5.2",
         "json5": "^2.2.3",
         "mustache": "^4.2.0",
-        "playwright": "1.64.1",
+        "playwright": "1.65.0",
         "prettier": "^3.9.10",
-        "puppeteer": "25.16.0",
+        "puppeteer": "25.17.0",
         "semver": "^7.8.6",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.72.2"
     },
-    "packageManager": "pnpm@12.16.1",
+    "packageManager": "pnpm@12.18.0",
     "devEngines": {
         "packageManager": {
             "name": "pnpm",
-            "version": "12.16.1",
+            "version": "12.18.0",
             "onFail": "error"
         }
     }
