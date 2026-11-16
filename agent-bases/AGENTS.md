@@ -37,8 +37,7 @@ Skip the steps that do not apply when changing an existing Actor.
 - Count results with your own tally; {{datasetInfo}} lags on the platform.
 - {{abortingRule}}
 - On the platform the SDK reads the token from `APIFY_TOKEN` (not `APIFY_API_TOKEN`); {{localToken}} Keep the token out of code, config, and logs.
-- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200.
-- Make a Standby Actor discoverable to a program that knows only its URL. Serve the main handler at `/`, or answer `/` with JSON that lists each endpoint's path, method, and parameters, or serve an OpenAPI spec at `/openapi.json`. Describe the same endpoints in `webServerSchema` in `actor.json`.
+- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200. Answer any other `GET /` with the Actor's main response or a JSON list of its endpoints.
 
 ## Ask first
 
@@ -67,7 +66,6 @@ Read the row that matches the step you are on.
 | actor.json                 | https://docs.apify.com/platform/actors/development/actor-definition/actor-json                     |
 | README structure           | https://docs.apify.com/academy/actor-marketing-playbook/actor-basics/how-to-create-an-actor-readme |
 | Standby mode               | https://docs.apify.com/platform/actors/development/programming-interface/standby                   |
-| Web server schema          | https://docs.apify.com/actors/development/actor-definition/web-server-schema                       |
 | System events (`aborting`) | https://docs.apify.com/platform/actors/development/programming-interface/system-events             |
 | Environment variables      | https://docs.apify.com/platform/actors/development/programming-interface/environment-variables     |
 | Logging                    | {{loggingDocs}}                                                                                    |
