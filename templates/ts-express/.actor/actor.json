@@ -1,0 +1,21 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "ts-express",
+    "title": "Server Actor in TypeScript with Express",
+    "description": "Server Actor in TypeScript with Express that charges for each request.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "usesStandbyMode": true,
+    "webServerSchema": "./openapi.json",
+    "meta": {
+        "templateId": "ts-express",
+        "generatedBy": "<FILL-IN-MODEL>"
+    },
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}

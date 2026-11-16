@@ -1,0 +1,36 @@
+# configurations
+.idea
+.vscode
+.zed
+
+# crawlee and apify storage folders
+apify_storage
+crawlee_storage
+storage
+
+# installed files
+node_modules
+
+# git folder
+.git
+
+# dist folder
+dist
+
+# CI configuration
+.github
+
+# tests do not run in the image
+test
+
+# git hooks
+.husky
+lefthook.yml
+
+# agent instructions and settings
+.claude
+AGENTS.md
+CLAUDE.md
+
+# test config
+vitest.config.ts
