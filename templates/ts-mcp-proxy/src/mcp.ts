@@ -18,7 +18,8 @@ import { log } from 'apify';
  * - Forwards requests and notifications to the shared proxy client.
  *
  * The server keeps no state of its own, so creating one for each request is cheap.
- * Notifications that the proxied MCP server sends on its own are not forwarded,
+ * Progress notifications of a request are sent on the response stream of that request.
+ * Other notifications from the proxied MCP server are not forwarded,
  * because a stateless server has no open stream to deliver them on.
  *
  * @param proxyClient - The connected proxy client shared by all requests.
@@ -51,7 +52,7 @@ export function getMcpServer(
     for (const schema of ClientRequestSchema.options) {
         const method = schema.shape.method.value;
         // Forward requests to the proxy client and return its response
-        server.server.setRequestHandler(schema, async (req) => {
+        server.server.setRequestHandler(schema, async (req, extra) => {
             if (req.method === 'initialize') {
                 // Handle the 'initialize' request separately and do not forward it to the proxy client
                 // this is needed for mcp-remote servers to work correctly
@@ -70,8 +71,26 @@ export function getMcpServer(
                 method,
                 request: req,
             });
+            // eslint-disable-next-line no-underscore-dangle
+            const progressToken = req.params?._meta?.progressToken;
             return proxyClient.request(req, ResultSchema, {
                 timeout: options?.timeout || DEFAULT_REQUEST_TIMEOUT_MSEC,
+                // Send progress on the response stream of this request, the only stream a stateless server has
+                onprogress:
+                    progressToken === undefined
+                        ? undefined
+                        : (progress) => {
+                              extra
+                                  .sendNotification({
+                                      method: 'notifications/progress',
+                                      params: { ...progress, progressToken },
+                                  })
+                                  .catch((error) => {
+                                      log.warning('Error forwarding MCP progress notification', {
+                                          error,
+                                      });
+                                  });
+                          },
             });
         });
     }
