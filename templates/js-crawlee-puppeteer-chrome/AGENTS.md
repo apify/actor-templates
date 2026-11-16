@@ -38,7 +38,7 @@ Skip the steps that do not apply when changing an existing Actor.
 - Count results with your own tally; `Dataset.getInfo()` lags on the platform.
 - In the `aborting` handler, persist state, then `await Actor.exit()`, so a stopped run ends quickly and cheaply.
 - On the platform the SDK reads the token from `APIFY_TOKEN` (not `APIFY_API_TOKEN`); locally it uses the credentials stored by `apify login`. Keep the token out of code, config, and logs.
-- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200. Answer any other `GET /` with the Actor's main response or a JSON list of its endpoints.
+- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200.
 
 ## Ask first
 

@@ -39,7 +39,7 @@ Skip the steps that do not apply when changing an existing Actor.
 - Count results with your own tally; `Dataset::get_info()` lags on the platform.
 - On `aborting`, the SDK exits the Actor by itself (`Actor::init` sets that up). In an `aborting` handler only persist state; never call `Actor::exit()` inside an event handler, as `exit` waits for the handlers to finish.
 - On the platform the SDK reads the token from `APIFY_TOKEN` (not `APIFY_API_TOKEN`); locally `cargo run` does not read the credentials stored by `apify login`, so set `APIFY_TOKEN` in the environment when the code needs the API. Keep the token out of code, config, and logs.
-- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200. Answer any other `GET /` with the Actor's main response or a JSON list of its endpoints.
+- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200.
 
 ## Ask first
 
