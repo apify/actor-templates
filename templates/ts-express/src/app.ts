@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
 import { Actor, log } from 'apify';
@@ -50,7 +49,7 @@ async function chargeRequest(requestId: string | undefined) {
         eventName: CHARGED_EVENT,
         requestId,
         // The platform ignores a repeated charge with the same key, so a retry does not charge the user twice.
-        idempotencyKey: `${requestId ?? randomUUID()}:${CHARGED_EVENT}`,
+        idempotencyKey: requestId ? `${requestId}:${CHARGED_EVENT}` : undefined,
     });
 }
 

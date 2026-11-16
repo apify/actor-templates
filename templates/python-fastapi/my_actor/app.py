@@ -28,7 +28,7 @@ async def charge_request(request_id: str | None) -> None:
 
     Call this before you return the response. After the request ends, its ID stops working.
     """
-    if request_id is None:
+    if not request_id:
         await Actor.charge(CHARGED_EVENT)
         return
 

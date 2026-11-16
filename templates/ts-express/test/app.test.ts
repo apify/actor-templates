@@ -69,7 +69,17 @@ describe('Server Actor', () => {
         const response = await fetch(`${baseUrl}/greet`);
 
         expect(await response.json()).toEqual({ message: 'Hello, World!' });
-        expect(charge).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ requestId: undefined }));
+        expect(charge).toHaveBeenCalledExactlyOnceWith({
+            eventName: 'api-request',
+            requestId: undefined,
+            idempotencyKey: undefined,
+        });
+    });
+
+    it('does not share one idempotency key between requests with an empty request ID', async () => {
+        await fetch(`${baseUrl}/greet`, { headers: { 'x-actor-request-id': '' } });
+
+        expect(charge).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ idempotencyKey: undefined }));
     });
 
     it('returns an error and no result when the charge fails', async () => {
