@@ -4,7 +4,7 @@ import os
 
 from apify import Actor
 
-from .const import SESSION_TIMEOUT_SECS, TOOL_WHITELIST
+from .const import TOOL_WHITELIST
 from .models import ServerType
 from .server import ProxyServer
 
@@ -13,7 +13,8 @@ STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
 # Bind to all interfaces (0.0.0.0) as this is running in a containerized environment (Apify Actor)
 # The container's network is isolated, so this is safe
 HOST = '0.0.0.0'  # noqa: S104 - Required for container networking at Apify platform
-PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT') or '5001')) or 5001
+# The platform sets ACTOR_WEB_SERVER_PORT to the port it routes requests to; 5001 is the local default
+PORT = int(os.environ.get('ACTOR_WEB_SERVER_PORT') or '5001')
 SERVER_NAME = 'arxiv-mcp-server'  # Name of the MCP server, without spaces
 
 # EDIT THIS SECTION ------------------------------------------------------------
@@ -37,8 +38,6 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 #     headers={'Authorization':  'Bearer YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
 # )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
-
-session_timeout_secs = int(os.getenv('SESSION_TIMEOUT_SECS', SESSION_TIMEOUT_SECS))
 
 
 async def main() -> None:
@@ -108,7 +107,6 @@ async def main() -> None:
                 server_type=server_type,
                 actor_charge_function=Actor.charge,
                 tool_whitelist=TOOL_WHITELIST,
-                session_timeout_secs=session_timeout_secs,
             )
             await proxy_server.start()
         except Exception as e:

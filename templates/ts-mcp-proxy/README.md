@@ -31,6 +31,17 @@ const MCP_COMMAND = [
 
 Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/billing.ts`.
 
+### Stateless server
+
+The server runs the Streamable HTTP transport in stateless mode:
+
+- `POST /mcp` handles each request on its own. The server returns no `Mcp-Session-Id` and keeps nothing in memory between requests, so any run of the Actor can answer any request.
+- `GET /mcp` and `DELETE /mcp` return `405`. The server has no session to stream from or to delete.
+
+Keep it this way. A long-lived `GET /mcp` stream can keep a run alive after the client disconnects, and you pay for the idle run. A session kept in memory breaks when the platform starts a second run, because requests that land there fail.
+
+The stdio MCP server is started once when the run starts and shared by all requests. Notifications that it sends on its own, outside of a response, are not forwarded to clients.
+
 [Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform, configure [standby mode](https://docs.apify.com/platform/actors/development/programming-interface/standby), and then connect to the Actor standby URL with your MCP client using the endpoint: `https://me--my-mcp-server.apify.actor/mcp` ([streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http)).
 
 **Important:** When connecting to your deployed MCP server, you must pass your Apify API token in the `Authorization` header as a Bearer token. For example:

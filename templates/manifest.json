@@ -368,7 +368,6 @@
             "showcaseFiles": [
                 "my_actor/main.py",
                 "my_actor/const.py",
-                "my_actor/event_store.py",
                 "my_actor/mcp_gateway.py",
                 "my_actor/models.py",
                 "my_actor/server.py",

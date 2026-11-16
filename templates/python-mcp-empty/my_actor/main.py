@@ -18,8 +18,11 @@ def get_server() -> FastMCP:
     server = FastMCP('python-mcp-empty', '1.0.0')
 
     @server.tool()
-    def add(a: float, b: float) -> dict:
+    async def add(a: float, b: float) -> dict:
         """Add two numbers together and return the sum."""
+        # Charge for the tool call. The event is defined in .actor/pay_per_event.json.
+        await Actor.charge(event_name='tool-call')
+
         result = a + b
         return {
             'type': 'text',
