@@ -2,6 +2,11 @@ name: Test Python templates
 
 on:
   workflow_call:
+    secrets:
+      APIFY_TEST_USER_API_TOKEN:
+        required: false
+      APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY:
+        required: false
 
 jobs:
   test-python-templates:
@@ -68,5 +73,7 @@ jobs:
           # The camoufox browser fetch hits the GitHub releases API —
           # unauthenticated it flakes on runner-IP rate limits.
           GITHUB_TOKEN: ${{ github.token }}
-          APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
+          # Pull requests run PR-controlled template code, so keep their env on
+          # dummy credentials. Trusted callers can pass the real secrets.
+          APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN || 'DUMMY_APIFY_TOKEN' }}
+          OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY || 'DUMMY_OPENAI_API_KEY' }}

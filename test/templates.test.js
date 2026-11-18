@@ -237,7 +237,20 @@ const checkTemplateRun = () => {
     checkSpawnResult(apifyRunSpawnResult);
 };
 
-// TEST_SHARD="2/4" (set by the CI matrix) makes this process run only its slice
+const canPythonLlMAgentTemplateRun = (templateId) => {
+    if (process.env.HAS_REAL_SERVICE_SECRETS === 'true') {
+        return true;
+    }
+
+    if (process.env.HAS_REAL_SERVICE_SECRETS !== 'false' && process.env.APIFY_TOKEN && process.env.OPENAI_API_KEY) {
+        return true;
+    }
+
+    console.log(`Skipping ${templateId} run test because service secrets are unavailable.`);
+    return false;
+};
+
+// TEST_SHARD=""2/4" (set by the CI matrix) makes this process run only its slice
 // of each template list, so the serial install+run loop can be parallelized
 // across jobs. Jest's own --shard splits by test *file* and this is a single
 // file, hence the env var. Unset = run everything.
@@ -353,7 +366,7 @@ describe('templates-work', () => {
 
                 checkCommonTemplateStructure(templateId);
                 checkPythonTemplate();
-                if (SKIP_RUN_TESTS.includes(templateId)) return;
+                if (SKIP_RUN_TESTS.includes(templateId) || !canPythonLlMAgentTemplateRun(templateId)) return;
                 checkTemplateRun();
             });
         });
