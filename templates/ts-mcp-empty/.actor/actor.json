@@ -9,7 +9,7 @@
     "usesStandbyMode": true,
     "meta": {
         "templateId": "ts-mcp-empty",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "inputSchema": {
         "title": "Actor input schema",
