@@ -63,14 +63,30 @@ jobs:
     secrets: inherit
 
   test-python-templates:
+    if: github.event_name == 'pull_request'
     name: Test Python templates
     uses: ./.github/workflows/test_python_templates.yaml
-    secrets: inherit
+
+  test-python-templates-trusted:
+    if: github.event_name != 'pull_request'
+    name: Test Python templates
+    uses: ./.github/workflows/test_python_templates.yaml
+    secrets:
+      APIFY_TEST_USER_API_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+      APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
 
   test-llm-ai-python-templates:
+    if: github.event_name == 'pull_request'
     name: Test LLM AI Python templates
     uses: ./.github/workflows/test_llm_ai_python_templates.yaml
-    secrets: inherit
+
+  test-llm-ai-python-templates-trusted:
+    if: github.event_name != 'pull_request'
+    name: Test LLM AI Python templates
+    uses: ./.github/workflows/test_llm_ai_python_templates.yaml
+    secrets:
+      APIFY_TEST_USER_API_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
+      APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
 
   test-llm-ai-node-templates:
     name: Test LLM AI Node.js templates
@@ -90,7 +106,9 @@ jobs:
       - lint_and_test
       - test-node-templates
       - test-python-templates
+      - test-python-templates-trusted
       - test-llm-ai-python-templates
+      - test-llm-ai-python-templates-trusted
       - test-llm-ai-node-templates
       - test-docker-builds
     runs-on: ubuntu-latest

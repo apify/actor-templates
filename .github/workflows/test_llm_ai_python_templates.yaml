@@ -2,6 +2,11 @@ name: Test LLM AI Python templates
 
 on:
   workflow_call:
+    secrets:
+      APIFY_TEST_USER_API_TOKEN:
+        required: false
+      APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY:
+        required: false
 
 jobs:
   test-llm-ai-python-templates:
@@ -44,5 +49,8 @@ jobs:
       - name: Test LLM AI Python templates
         run: pnpm run test-llm-ai-python-templates
         env:
+          # Pull requests omit these secrets, so the harness limits itself to
+          # structure and install checks instead of running the template code.
+          HAS_REAL_SERVICE_SECRETS: ${{ secrets.APIFY_TEST_USER_API_TOKEN != '' && secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY != '' }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
