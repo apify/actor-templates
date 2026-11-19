@@ -36,7 +36,8 @@
                 "crawlee",
                 "got-scraping",
                 "@apify/**",
-                "@crawlee/**"
+                "@crawlee/**",
+                "apify/apify-cli"
             ],
             "minimumReleaseAge": "0 days"
         }

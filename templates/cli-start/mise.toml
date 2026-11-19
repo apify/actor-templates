@@ -1,0 +1,5 @@
+# Command-line tools installed into the Docker image by mise (https://mise.jdx.dev).
+# Pin exact versions; Renovate (https://docs.renovatebot.com/modules/manager/mise/) can keep them up to date.
+[tools]
+"github:apify/apify-cli" = { version = "1.13.0", matching_regex = "^apify-cli-", bin = "apify" }
+# "github:BurntSushi/ripgrep" = "15.1.0"
