@@ -231,7 +231,15 @@ const checkPythonTemplate = () => {
 
 const checkTemplateRun = () => {
     const apifyRunSpawnResult = spawnSync(APIFY_COMMAND, ['run', '--allow-missing-secrets'], {
-        env: { ...process.env, APIFY_HEADLESS: '1' },
+        env: {
+            ...process.env,
+            APIFY_HEADLESS: '1',
+            // Crawlee's filesystem request queue locks each `<requestId>.json` with
+            // proper-lockfile, which a browser template stalling the event loop past
+            // the 10s stale window loses mid-write — apify/crawlee#2107, #1853. The
+            // platform doesn't use this backend, so keep the queue in memory.
+            CRAWLEE_PERSIST_STORAGE: 'false',
+        },
         stdio: ['pipe', 'inherit', 'inherit'],
     });
     checkSpawnResult(apifyRunSpawnResult);
