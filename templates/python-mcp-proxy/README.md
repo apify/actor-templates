@@ -20,7 +20,7 @@ This template enables you to:
     - Prompt operations
     - List operations
 - **Gateway**: Acts as a controlled entry point to MCP servers with charging and authorization logic
-- **Session management**: Automatic session timeout and cleanup for idle connections (see [Session management challenges](#session-management-challenges) for details)
+- **Stateless**: Keeps no MCP session in memory, so it works when the platform starts more than one run (see [Stateless server](#stateless-server))
 
 ## Quick Start
 
@@ -246,8 +246,7 @@ Key components:
 - `create_gateway`: Creates an MCP server instance that acts as a gateway
 - `charge_mcp_operation`: Handles charging for different MCP operations
 - `TOOL_WHITELIST`: Dictionary mapping tool names to (event_name, count) tuples for authorization and charging
-- `ProxyServer`: Main server class with session management and timeout handling
-- `SESSION_TIMEOUT_SECS`: Configurable timeout for idle session termination
+- `ProxyServer`: Main server class that serves the gateway over stateless Streamable HTTP
 
 ### MCP operations
 
@@ -262,18 +261,16 @@ The MCP gateway supports all standard MCP operations:
 
 Each operation can be configured for charging in the PPE model.
 
-## Session management challenges
+## Stateless server
 
-MCP connections may not properly close when clients disconnect, keeping containers alive indefinitely.
+The server runs the Streamable HTTP transport in stateless mode:
 
-- Containers remain running even after client disconnection
-- Setting `stateless` mode and `json_response=true` doesn't resolve the issue
-- Only manual session deletion via `DELETE /mcp` properly terminates connections
+- `POST /mcp` handles each request on its own. The server returns no `Mcp-Session-Id` and keeps nothing in memory between requests, so any run of the Actor can answer any request.
+- `GET /mcp` and `DELETE /mcp` return `405`. The server has no session to stream from or to delete.
 
-**Workaround**:
-The template implements automatic session cleanup using internal DELETE requests after a configurable timeout (`SESSION_TIMEOUT_SECS = 300` seconds). This ensures containers are properly terminated when idle.
+Keep it this way. A long-lived `GET /mcp` stream can keep a run alive after the client disconnects, and you pay for the idle run. A session kept in memory breaks when the platform starts a second run, because requests that land there fail with `Session not found`.
 
-This is a temporary solution until the MCP specification or client implementations provide a more robust mechanism for session management.
+The connection to the wrapped MCP server is opened once when the run starts and shared by all requests.
 
 ## 📚 Resources
 

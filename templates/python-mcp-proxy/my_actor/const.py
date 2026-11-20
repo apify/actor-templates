@@ -1,7 +1,5 @@
 from enum import StrEnum
 
-SESSION_TIMEOUT_SECS = 300  # 5 minutes
-
 
 class ChargeEvents(StrEnum):
     """Event types for charging MCP operations.

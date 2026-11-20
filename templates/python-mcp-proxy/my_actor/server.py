@@ -5,10 +5,8 @@ Heavily inspired by: https://github.com/sparfenyuk/mcp-proxy
 
 from __future__ import annotations
 
-import asyncio
 import contextlib
 import logging
-import time
 from typing import TYPE_CHECKING, Any
 
 import httpx2
@@ -26,8 +24,6 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.routing import Mount, Route
 
-from .const import SESSION_TIMEOUT_SECS
-from .event_store import InMemoryEventStore
 from .mcp_gateway import create_gateway
 from .models import RemoteServerParameters, ServerParameters, ServerType
 
@@ -36,7 +32,7 @@ if TYPE_CHECKING:
 
     from mcp.server import Server
     from starlette import types as st
-    from starlette.types import Message, Receive, Scope, Send
+    from starlette.types import Receive, Scope, Send
 
 logger = logging.getLogger('apify')
 
@@ -104,22 +100,6 @@ class McpPathRewriteMiddleware(BaseHTTPMiddleware):
         return await call_next(request)
 
 
-class SessionIdCapturingSend:
-    """ASGI `send` wrapper that records the session ID assigned by an initialization response."""
-
-    def __init__(self, send: Send) -> None:
-        self._send = send
-        self.session_id: str | None = None
-
-    async def __call__(self, message: Message) -> None:
-        """Forward the message downstream, capturing the session ID header on the way."""
-        if message.get('type') == 'http.response.start':
-            headers = {k.decode('latin-1').lower(): v.decode('latin-1') for k, v in message.get('headers', [])}
-            if sid := headers.get('mcp-session-id'):
-                self.session_id = sid
-        await self._send(message)
-
-
 class ProxyServer:
     """Main class implementing the proxy functionality using MCP SDK.
 
@@ -142,7 +122,6 @@ class ProxyServer:
         server_type: ServerType,
         actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
         tool_whitelist: dict[str, tuple[str, int]] | None = None,
-        session_timeout_secs: int = SESSION_TIMEOUT_SECS,
     ) -> None:
         """Initialize the proxy server.
 
@@ -159,7 +138,6 @@ class ProxyServer:
             tool_whitelist: Optional dict mapping tool names to (event_name, default_count) tuples.
                            If provided, only whitelisted tools will be allowed and charged.
                            If None, all tools are allowed without specific charging.
-            session_timeout_secs: Inactivity timeout in seconds before terminating idle sessions
         """
         self.server_name = server_name
         self.server_type = server_type
@@ -168,11 +146,6 @@ class ProxyServer:
         self.port: int = port
         self.actor_charge_function = actor_charge_function
         self.tool_whitelist = tool_whitelist
-        # Track per-session activity and timers for inactivity shutdown
-        self._session_last_activity: dict[str, float] = {}
-        self._session_timers: dict[str, asyncio.Task] = {}
-        # Inactivity window (seconds) before we terminate a session (DELETE)
-        self._session_timeout_secs: int = session_timeout_secs
 
     @staticmethod
     def _log_request(request: Request) -> None:
@@ -182,74 +155,8 @@ class ProxyServer:
             extra={
                 'method': request.method,
                 'path': str(request.url.path),
-                'mcp_session_id': request.headers.get('mcp-session-id'),
             },
         )
-
-    def _touch_session(self, session_id: str, session_manager: StreamableHTTPSessionManager) -> None:
-        """Record activity for a session and (re)schedule inactivity termination."""
-        self._session_last_activity[session_id] = time.time()
-
-        # Cancel existing timer if present
-        timer = self._session_timers.get(session_id)
-        if timer and not timer.done():
-            timer.cancel()
-
-        async def _idle_close() -> None:
-            try:
-                await asyncio.sleep(self._session_timeout_secs)
-                # Verify that no new activity occurred during wait
-                last = self._session_last_activity.get(session_id, 0)
-                if time.time() - last < self._session_timeout_secs * 0.9:
-                    return  # Activity happened; skip
-                logger.info(f'Terminating idle MCP session {session_id}')
-
-                # Craft an internal ASGI DELETE request to close the session
-                scope = {
-                    'type': 'http',
-                    'http_version': '1.1',
-                    'method': 'DELETE',
-                    'scheme': 'http',
-                    'path': '/mcp/',
-                    'raw_path': b'/mcp/',
-                    'query_string': b'',
-                    'headers': [
-                        (b'mcp-session-id', session_id.encode('utf-8')),
-                        (b'accept', b'application/json, text/event-stream'),
-                    ],
-                    'server': (self.host, self.port),
-                    'client': ('127.0.0.1', 0),
-                }
-
-                async def _receive() -> Message:
-                    return {'type': 'http.request', 'body': b'', 'more_body': False}
-
-                async def _send(_message: Message) -> None:
-                    # Ignore internal response
-                    return
-
-                await session_manager.handle_request(scope, _receive, _send)
-                self._cleanup_session_last_activity(session_id)
-                self._cleanup_session_timer(session_id)
-            except asyncio.CancelledError:
-                return
-            except Exception:
-                logger.exception('Failed to terminate idle session')
-
-        self._session_timers[session_id] = asyncio.create_task(_idle_close())
-
-    def _cleanup_session_last_activity(self, session_id: str) -> None:
-        """Cleanup session tracking data."""
-        if session_id in self._session_last_activity:
-            del self._session_last_activity[session_id]
-
-    def _cleanup_session_timer(self, session_id: str) -> None:
-        """Cancel and cleanup session timer."""
-        if session_id in self._session_timers:
-            timer = self._session_timers[session_id]
-            if not timer.done():
-                timer.cancel()
-            del self._session_timers[session_id]
 
     @staticmethod
     def _validate_config(client_type: ServerType, config: ServerParameters) -> ServerParameters | None:
@@ -265,32 +172,14 @@ class ProxyServer:
         except ValidationError as e:
             raise ValueError(f'Invalid server configuration: {e}') from e
 
-    @staticmethod
-    def _get_session_id_from_headers(headers: Any) -> str | None:
-        """Extract session ID from headers, trying both hyphen and underscore variants.
-
-        HTTP headers are case-insensitive per spec, and Starlette's Request.headers
-        handles this automatically. We only need to check for hyphen vs underscore variants.
-
-        Args:
-            headers: Either a Starlette Request.headers object or a dict
-
-        Returns:
-            Session ID string if found, None otherwise
-        """
-        # Try both hyphen and underscore variants
-        # Case is handled automatically by Starlette's case-insensitive headers
-        for key in ('mcp-session-id', 'mcp_session_id'):
-            if value := headers.get(key):
-                return value
-        return None
-
     async def create_starlette_app(self, mcp_server: Server) -> Starlette:
         """Create a Starlette app that exposes /mcp endpoint for Streamable HTTP transport."""
-        event_store = InMemoryEventStore()
+        # Stateless mode: each request gets a fresh transport and no session is kept in memory.
+        # The platform starts more runs under load and sends each request to any of them, so a session
+        # kept in the memory of one run would be missing in the others ("Session not found").
         session_manager = StreamableHTTPSessionManager(
             app=mcp_server,
-            event_store=event_store,  # Enable resume ability for Streamable HTTP connections
+            stateless=True,
             json_response=False,
         )
 
@@ -361,26 +250,19 @@ class ProxyServer:
                 await response(scope, receive, send)
                 return
 
-            if scope['method'] == 'DELETE':
-                await session_manager.handle_request(scope, receive, send)
-                if req_sid := self._get_session_id_from_headers(request.headers):
-                    self._cleanup_session_last_activity(req_sid)
-                    self._cleanup_session_timer(req_sid)
+            # A stateless server has no session to stream from or to delete, so only POST is served.
+            # Refusing the long-lived GET stream also matters for cost: an open stream can keep a run
+            # alive after the client is gone, and the Actor owner pays for the idle run.
+            if scope['method'] != 'POST':
+                response = JSONResponse(
+                    {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'Method not allowed.'}, 'id': None},
+                    status_code=405,
+                    headers={'Allow': 'POST'},
+                )
+                await response(scope, receive, send)
                 return
 
-            # For non-browser requests or non-GET requests, delegate to session manager
-            # Wrap `send` to capture the session ID from response headers of initialization
-            capturing_send = SessionIdCapturingSend(send)
-
-            # Log and touch existing session if present on request
-            if req_sid := self._get_session_id_from_headers(request.headers):
-                self._touch_session(req_sid, session_manager)
-
-            await session_manager.handle_request(scope, receive, capturing_send)
-
-            # If this was an initialization (no session id in request), capture from response and touch
-            if not req_sid and capturing_send.session_id:
-                self._touch_session(capturing_send.session_id, session_manager)
+            await session_manager.handle_request(scope, receive, send)
 
         return Starlette(
             debug=True,
