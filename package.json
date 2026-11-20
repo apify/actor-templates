@@ -38,7 +38,7 @@
         "@apify/eslint-config": "^2.0.6",
         "@apify/tsconfig": "0.2.0",
         "@types/jest": "^30.0.0",
-        "apify": "^3.7.2",
+        "apify": "^3.8.0",
         "apify-cli": "latest",
         "crawlee": "^3.18.2",
         "eslint": "^9.39.5",
