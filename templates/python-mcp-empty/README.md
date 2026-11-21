@@ -19,6 +19,8 @@ This template includes a simple example MCP server with:
 
 The server runs on port 3000 (or APIFY_CONTAINER_PORT if set) and exposes the MCP protocol at the `/mcp` endpoint.
 
+The server runs in [stateless HTTP mode](https://gofastmcp.com/deployment/http#horizontal-scaling), so it keeps no MCP session in memory. The platform can start more runs of your Actor under load and send each request to any of them. Keep it stateless: store anything that must outlive a request in a [dataset or key-value store](https://docs.apify.com/platform/storage).
+
 ## Running locally
 
 ```bash
