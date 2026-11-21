@@ -158,6 +158,23 @@
             "useCases": ["STARTER", "INTEGRATION"]
         },
         {
+            "id": "python-fastapi",
+            "name": "python-fastapi",
+            "label": "Python API Actor (FastAPI)",
+            "category": "python",
+            "technologies": ["fastapi"],
+            "description": "A FastAPI server that stays running and charges for each request. Works as a single-tenant or multi-tenant Server Actor.",
+            "skipRunTest": true,
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/python-fastapi.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": ["my_actor/main.py", "my_actor/app.py", "my_actor/run_pool.py"],
+            "useCases": ["STARTER", "INTEGRATION"]
+        },
+        {
             "id": "python-scrapy",
             "name": "python-scrapy",
             "label": "Python site crawler (Scrapy)",
@@ -620,6 +637,23 @@
                 "timeoutSecs": 3600
             },
             "showcaseFiles": ["src/main.ts"],
+            "useCases": ["STARTER", "INTEGRATION"]
+        },
+        {
+            "id": "ts-express",
+            "name": "ts-express",
+            "label": "TypeScript API Actor (Express)",
+            "category": "typescript",
+            "technologies": ["nodejs", "express"],
+            "skipRunTest": true,
+            "description": "An Express server that stays running and charges for each request. Works as a single-tenant or multi-tenant Server Actor.",
+            "archiveUrl": "https://github.com/apify/actor-templates/blob/master/dist/templates/ts-express.zip?raw=true",
+            "defaultRunOptions": {
+                "build": "latest",
+                "memoryMbytes": 1024,
+                "timeoutSecs": 3600
+            },
+            "showcaseFiles": ["src/main.ts", "src/app.ts", "src/run_pool.ts"],
             "useCases": ["STARTER", "INTEGRATION"]
         },
         {

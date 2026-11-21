@@ -1,0 +1,7 @@
+{
+    "api-request": {
+        "eventTitle": "Price for one API request",
+        "eventDescription": "Flat fee for each request that the Actor completes.",
+        "eventPriceUsd": 0.001
+    }
+}
