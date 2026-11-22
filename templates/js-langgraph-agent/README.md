@@ -34,7 +34,7 @@ For local runs, copy `.env.example` to `.env` and fill in `OPENAI_API_KEY`. `api
 cp .env.example .env
 ```
 
-On the Apify platform, run `apify env push` after `apify push` to upload the values from `.env` to the Actor, or set `OPENAI_API_KEY` in the **Environment variables** section of the Actor's **Source** page in Apify Console. Then rebuild the Actor so runs get the value.
+On the Apify platform, run `apify env push` after `apify push` to upload the values from `.env` to the Actor, or set `OPENAI_API_KEY` in Apify Console under **Source** > **Code** > **Environment variables**. Then rebuild the Actor so runs get the value.
 
 ## Monetization
 
