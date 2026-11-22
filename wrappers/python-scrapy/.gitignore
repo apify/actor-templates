@@ -12,3 +12,6 @@ __pycache__
 venv
 
 storage
+
+# Local environment variables, loaded by `apify run`
+.env

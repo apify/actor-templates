@@ -41,7 +41,7 @@ The `OUTPUT` record contains `framework`, `status`, `model`, `startUrl`, `itemCo
 
 ## LLM provider
 
-The agent calls the [OpenAI API](https://platform.openai.com/) with your own key. On the Apify platform, add your key as the `OPENAI_API_KEY` secret in the Actor's **Environment variables**. For local runs, export `OPENAI_API_KEY` in your shell.
+The agent calls the [OpenAI API](https://platform.openai.com/) with your own key. For local runs, put `OPENAI_API_KEY` in a `.env` file next to `.actor/`. `apify run` loads it, and Git ignores it. On the Apify platform, run `apify env push` to upload it as a secret, or set it in the **Environment variables** section of the Actor's **Source** page in Apify Console.
 
 ## Modifying the agent
 
@@ -61,10 +61,10 @@ The agent calls the [OpenAI API](https://platform.openai.com/) with your own key
 
 ## Getting started
 
-To run the Actor locally, you need Google Chrome or Chromium installed. The Docker image used on the Apify platform already includes Chrome. Set your OpenAI key and start the Actor:
+To run the Actor locally, you need Google Chrome or Chromium installed. The Docker image used on the Apify platform already includes Chrome. Put your OpenAI key in `.env` and start the Actor:
 
 ```bash
-export OPENAI_API_KEY=sk-...
+echo 'OPENAI_API_KEY=sk-...' > .env
 apify run
 ```
 

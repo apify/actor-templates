@@ -12,3 +12,6 @@ storage/key_value_stores/*
 !storage/key_value_stores/default
 storage/key_value_stores/default/*
 !storage/key_value_stores/default/INPUT.json
+
+# Local environment variables, loaded by `apify run`
+.env

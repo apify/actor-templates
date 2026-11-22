@@ -225,7 +225,7 @@ Note: SSE transport is also supported by setting `server_type = ServerType.SSE`.
 
 #### Environment variables:
 
-Environment variables can be securely stored and managed at the Actor level on the [Apify platform](https://docs.apify.com/platform/actors/development/programming-interface/environment-variables#custom-environment-variables). These variables are automatically injected into the Actor's runtime environment, allowing you to:
+For local runs, put environment variables in a `.env` file. `apify run` loads it, and Git ignores it. On the [Apify platform](https://docs.apify.com/platform/actors/development/programming-interface/environment-variables#custom-environment-variables), upload them with `apify env push`, or set them in the **Environment variables** section of the Actor's **Source** page in Apify Console. The platform injects them into the Actor's runtime environment, allowing you to:
 
 - Keep sensitive information like API keys secure.
 - Simplify configuration by avoiding hardcoded values in your code.

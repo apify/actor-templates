@@ -28,14 +28,13 @@ To run this template locally or on the Apify platform, you need:
 - An [Apify account](https://console.apify.com/) and an [Apify API token](https://docs.apify.com/platform/integrations/api#api-token).
 - An [OpenAI](https://openai.com/) account and API key.
 
-When running the agent locally, set the OpenAI API key as an environment variable:
+For local runs, copy `.env.example` to `.env` and fill in `OPENAI_API_KEY`. `apify run` loads `.env`, and Git ignores it.
 
 ```bash
-export OPENAI_API_KEY=your-openai-api-key
+cp .env.example .env
 ```
 
-When running the agent on the Apify platform, set the OpenAI API key in the environment variables of the Actor.
-To do this, go to **Actor settings** → **Source** → **Code**, then scroll down to the **Environment variables** tab and add a new variable named `OPENAI_API_KEY` with your OpenAI API key.
+On the Apify platform, run `apify env push` after `apify push` to upload the values from `.env` to the Actor, then rebuild the Actor so runs get them. You can also set `OPENAI_API_KEY` in the **Environment variables** section of the Actor's **Source** page in Apify Console.
 
 ## Monetization
 

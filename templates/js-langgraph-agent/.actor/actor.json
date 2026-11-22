@@ -14,8 +14,5 @@
     "outputSchema": "./output_schema.json",
     "storages": {
         "dataset": "./dataset_schema.json"
-    },
-    "environmentVariables": {
-        "OPENAI_API_KEY": "@OPENAI_API_KEY"
     }
 }

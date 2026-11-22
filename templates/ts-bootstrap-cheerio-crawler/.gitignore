@@ -7,3 +7,6 @@
 dist
 node_modules
 storage
+
+# Local environment variables, loaded by `apify run`
+.env
