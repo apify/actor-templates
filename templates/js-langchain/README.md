@@ -37,7 +37,7 @@ For local runs, copy `.env.example` to `.env` and fill in `OPENAI_API_KEY`. `api
 cp .env.example .env
 ```
 
-On the Apify platform, run `apify env push` after `apify push` to upload the values from `.env` to the Actor, then rebuild the Actor so runs get them. You can also set `OPENAI_API_KEY` in the **Environment variables** section of the Actor's **Source** page in Apify Console, or paste the key into the **OpenAI API key** input field.
+On the Apify platform, run `apify env push` after `apify push` to upload the values from `.env` to the Actor, or set `OPENAI_API_KEY` in the **Environment variables** section of the Actor's **Source** page in Apify Console. Then rebuild the Actor so runs get the value. You can also paste the key into the **OpenAI API key** input field.
 
 ## Production use
 

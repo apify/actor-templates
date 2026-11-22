@@ -41,7 +41,7 @@ The `OUTPUT` record contains `framework`, `status`, `model`, `startUrl`, `itemCo
 
 ## LLM provider
 
-The agent calls the [OpenAI API](https://platform.openai.com/) with your own key. For local runs, put `OPENAI_API_KEY` in a `.env` file next to `.actor/`. `apify run` loads it, and Git ignores it. On the Apify platform, run `apify env push` to upload it as a secret, or set it in the **Environment variables** section of the Actor's **Source** page in Apify Console.
+The agent calls the [OpenAI API](https://platform.openai.com/) with your own key. For local runs, put `OPENAI_API_KEY` in a `.env` file next to `.actor/`. `apify run` loads it, and Git ignores it. On the Apify platform, run `apify env push` to upload it as a secret, or set it in the **Environment variables** section of the Actor's **Source** page in Apify Console. Then rebuild the Actor so runs get the value.
 
 ## Modifying the agent
 
