@@ -47,7 +47,7 @@ await Actor.charge(
 
 The `api-request` event and its price are in `.actor/pay_per_event.json`. Configure the same event in the Actor's pay-per-event pricing in Apify Console.
 
-This needs a version of the SDK where `Actor.charge()` accepts `request_id`. The first one is `apify` 4.2.2b6.
+This needs `apify` 4.3.0 or later, the first version where `Actor.charge()` accepts `request_id`.
 
 ## Run pools
 

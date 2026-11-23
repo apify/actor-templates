@@ -7,7 +7,7 @@
         "node": ">=22"
     },
     "dependencies": {
-        "apify": "^3.7.3-beta.98",
+        "apify": "^3.8.0",
         "express": "^5.1.0"
     },
     "devDependencies": {
