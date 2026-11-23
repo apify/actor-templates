@@ -28,11 +28,13 @@ from .mcp_gateway import create_gateway
 from .models import RemoteServerParameters, ServerParameters, ServerType
 
 if TYPE_CHECKING:
-    from collections.abc import AsyncIterator, Awaitable, Callable
+    from collections.abc import AsyncIterator, Callable
 
     from mcp.server import Server
     from starlette import types as st
     from starlette.types import Receive, Scope, Send
+
+    from .mcp_gateway import ChargeFunction
 
 logger = logging.getLogger('apify')
 
@@ -120,7 +122,7 @@ class ProxyServer:
         host: str,
         port: int,
         server_type: ServerType,
-        actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
+        actor_charge_function: ChargeFunction | None = None,
         tool_whitelist: dict[str, tuple[str, int]] | None = None,
     ) -> None:
         """Initialize the proxy server.
@@ -132,7 +134,7 @@ class ProxyServer:
             port: Port to bind the server to
             server_type: Type of server to connect (stdio, SSE, or HTTP)
             actor_charge_function: Optional function to charge for operations.
-                           Should accept (event_name: str, count: int).
+                           Called as `charge(event_name, count=count)`.
                            Typically, Actor.charge in Apify Actors.
                            If None, no charging will occur.
             tool_whitelist: Optional dict mapping tool names to (event_name, default_count) tuples.

@@ -11,14 +11,14 @@ like tool calls, prompt operations, or resource access.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Protocol
 
 from mcp import server, types
 
 from .const import ChargeEvents
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Callable
+    from collections.abc import Awaitable
 
     from mcp.client.session import ClientSession
     from mcp.server.context import ServerRequestContext
@@ -26,9 +26,15 @@ if TYPE_CHECKING:
 logger = logging.getLogger('apify')
 
 
-async def charge_mcp_operation(
-    charge_function: Callable[[str, int], Awaitable[Any]] | None, event_name: str | None, count: int = 1
-) -> None:
+class ChargeFunction(Protocol):
+    """The part of the `Actor.charge` signature that the gateway uses."""
+
+    def __call__(self, event_name: str, *, count: int = 1) -> Awaitable[Any]:
+        """Charge for `count` occurrences of the event."""
+        ...
+
+
+async def charge_mcp_operation(charge_function: ChargeFunction | None, event_name: str | None, count: int = 1) -> None:
     """Charge for an MCP operation.
 
     Args:
@@ -43,7 +49,8 @@ async def charge_mcp_operation(
         return
 
     try:
-        await charge_function(event_name, count)
+        # `count` is keyword-only in Actor.charge
+        await charge_function(event_name, count=count)
         logger.info(f'Charged for event: {event_name}')
     except Exception:
         logger.exception(f'Failed to charge for event {event_name}')
@@ -52,7 +59,7 @@ async def charge_mcp_operation(
 
 async def create_gateway(  # noqa: PLR0915
     client_session: ClientSession,
-    actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
+    actor_charge_function: ChargeFunction | None = None,
     tool_whitelist: dict[str, tuple[str, int]] | None = None,
 ) -> server.Server[object]:
     """Create a server instance from a remote app.
@@ -60,7 +67,7 @@ async def create_gateway(  # noqa: PLR0915
     Args:
         client_session: The MCP client session to proxy requests through
         actor_charge_function: Optional function to charge for operations.
-                       Should accept (event_name: str, count: int).
+                       Called as `charge(event_name, count=count)`.
                        Typically, Actor.charge in Apify Actors.
                        If None, no charging will occur.
         tool_whitelist: Optional dict mapping tool names to (event_name, default_count) tuples.
