@@ -32,6 +32,7 @@ permissions:
 jobs:
   update-templates:
     runs-on: ubuntu-latest
+    environment: automation
 
     steps:
       - name: Sanitize base image
