@@ -24,8 +24,8 @@ const server = app.listen(port, (error) => {
     log.info(`Server is listening on port ${port}`);
 });
 
-// Stop quickly when the platform aborts the run
-Actor.on('aborting', async () => {
+// When the platform aborts the run, stop accepting requests. The SDK then exits the Actor by itself.
+// Do not call Actor.exit() here: it waits for this handler to finish, so the Actor would exit 30 seconds late.
+Actor.on('aborting', () => {
     server.close();
-    await Actor.exit();
 });
