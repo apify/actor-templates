@@ -1,8 +1,8 @@
-## Standby TypeScript template
+## Server Actor TypeScript template
 
 <!-- This is an Apify template readme -->
 
-Start a new [web scraping](https://apify.com/web-scraping) project quickly and easily in TypeScript (Node.js) with our Standby project template. It provides a basic structure for building an Actor with [Apify SDK](https://docs.apify.com/sdk/js/) and allows you to easily add your own functionality.
+Start a new [web scraping](https://apify.com/web-scraping) project quickly and easily in TypeScript (Node.js) with our Server Actor project template. It provides a basic structure for building an Actor with [Apify SDK](https://docs.apify.com/sdk/js/) and allows you to easily add your own functionality.
 
 ## Included features
 
@@ -10,4 +10,4 @@ Start a new [web scraping](https://apify.com/web-scraping) project quickly and e
 
 ## Resources
 
-- [Actor Standby documentation](https://docs.apify.com/platform/actors/development/programming-interface/standby)
+- [Develop Server Actors](https://docs.apify.com/actors/development/programming-interface/server-actors) (formerly Actor Standby mode)

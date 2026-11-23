@@ -30,7 +30,7 @@ The server will start and listen for MCP requests at `http://localhost:3000/mcp`
 
 ## Deploying to Apify
 
-[Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform and configure [standby mode](https://docs.apify.com/platform/actors/development/programming-interface/standby).
+[Push your Actor](https://docs.apify.com/academy/deploying-your-code/deploying) to the Apify platform and enable the [server interface](https://docs.apify.com/actors/development/programming-interface/server-actors).
 
 Then connect to the Actor endpoint with your MCP client: `https://me--my-mcp-server.apify.actor/mcp` using the [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http).
 

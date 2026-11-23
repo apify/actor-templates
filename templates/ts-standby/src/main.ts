@@ -13,15 +13,15 @@ await Actor.init();
 
 // Create a simple HTTP server that will respond with a message
 const server = http.createServer((req, res) => {
-    // Handle Apify standby readiness probe
-    // https://docs.apify.com/platform/actors/development/programming-interface/standby#readiness-probe
+    // Handle the Apify readiness probe
+    // https://docs.apify.com/actors/development/programming-interface/server-actors#readiness-probe
     if (req.headers['x-apify-container-server-readiness-probe']) {
         res.writeHead(200);
         res.end('ok');
         return;
     }
     res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello from Actor Standby!\n');
+    res.end('Hello from a Server Actor!\n');
 });
 
 // Listen on the standby port

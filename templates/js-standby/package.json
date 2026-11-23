@@ -2,7 +2,7 @@
     "name": "js-standby-project",
     "version": "0.0.1",
     "type": "module",
-    "description": "This is an example of an Apify Actor that uses Standby mode.",
+    "description": "This is an example of an Apify Server Actor.",
     "engines": {
         "node": ">=22"
     },

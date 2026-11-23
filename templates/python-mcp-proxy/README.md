@@ -42,7 +42,7 @@ This template enables you to:
     ```
 
 2. Add any required dependencies to the `requirements.txt` file (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)).
-3. Deploy to Apify and enable standby mode.
+3. Deploy to Apify and enable the server interface.
 4. Connect using an MCP client:
     - Using [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http):
         ```json

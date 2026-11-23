@@ -21,7 +21,7 @@ import { startServer } from './server.js';
 // TODO: Do not forget to install the MCP server in package.json (using `npm install ...`)
 const MCP_COMMAND = ['npx', '@modelcontextprotocol/server-everything'];
 
-// Check if the Actor is running in standby mode
+// Check if the server interface started the run
 const STANDBY_MODE = process.env.APIFY_META_ORIGIN === 'STANDBY';
 const SERVER_PORT = parseInt(process.env.ACTOR_WEB_SERVER_PORT || '3001', 10);
 
@@ -33,8 +33,8 @@ await Actor.init();
 await Actor.charge({ eventName: 'actor-start' });
 
 if (!STANDBY_MODE) {
-    // If the Actor is not in standby mode, we should not run the MCP server
-    const msg = 'This Actor is not meant to be run directly. It should be run in standby mode.';
+    // If the input interface started the run, we should not run the MCP server
+    const msg = 'This Actor is not meant to be run directly. Send requests to its server interface instead.';
     log.error(msg);
     await Actor.exit({ statusMessage: msg });
 }
