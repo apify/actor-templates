@@ -51,6 +51,26 @@
                             }
                         }
                     },
+                    "402": {
+                        "description": "The spending limit of the run is reached, so nothing was charged",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The request failed, for example because the charge failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
                     "422": {
                         "description": "Validation Error",
                         "content": {
@@ -67,6 +87,18 @@
     },
     "components": {
         "schemas": {
+            "Error": {
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "title": "Error"
+                    }
+                },
+                "type": "object",
+                "required": ["error"],
+                "title": "Error",
+                "description": "Response of a request that failed."
+            },
             "Greeting": {
                 "properties": {
                     "message": {

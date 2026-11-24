@@ -14,7 +14,7 @@ await Actor.init();
 const pool = await getRunPool();
 log.info(pool ? `This run serves the ${pool} pool` : 'This run was not started through the server interface');
 
-const app = createApp({ pool });
+const app = createApp({ pool, finishRun });
 
 // Listen on the port the platform routes requests to (ACTOR_WEB_SERVER_PORT)
 const port = Actor.config.get('containerPort');
@@ -29,3 +29,13 @@ const server = app.listen(port, (error) => {
 Actor.on('aborting', () => {
     server.close();
 });
+
+/**
+ * Finishes the run with a success exit code. The app calls this when the spending limit of a single-tenant run
+ * is reached. The server stops accepting requests and lets the ones in progress finish first.
+ */
+function finishRun() {
+    server.close(() => {
+        void Actor.exit('The run finished because its spending limit is reached.');
+    });
+}

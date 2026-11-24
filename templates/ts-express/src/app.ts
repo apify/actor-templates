@@ -8,6 +8,8 @@ import type { RunPool } from './run_pool.js';
 // The event charged for each request. Define its price in .actor/pay_per_event.json.
 const CHARGED_EVENT = 'api-request';
 
+const SPENDING_LIMIT_REACHED = 'The spending limit of this run is reached.';
+
 // .actor/openapi.json is the single description of the endpoints. Apify Console renders it on the Actor's
 // Server tab (see `webServerSchema` in .actor/actor.json), and this server returns it from GET /openapi.json.
 interface OpenApiSpec {
@@ -36,7 +38,7 @@ function listEndpoints() {
 }
 
 /**
- * Charges the user who sent the request for one event.
+ * Charges the user who sent the request for one event, and returns the result of the charge.
  *
  * The platform adds an `X-Actor-Request-ID` header to every request it forwards to a Server Actor. In a multi-tenant
  * run, the ID tells the platform which user to charge. A single-tenant run ignores it, so the same code works
@@ -45,7 +47,7 @@ function listEndpoints() {
  * Call this before you send the response. After the request ends, its ID stops working.
  */
 async function chargeRequest(requestId: string | undefined) {
-    await Actor.charge({
+    return Actor.charge({
         eventName: CHARGED_EVENT,
         requestId,
         // The platform ignores a repeated charge with the same key, so a retry does not charge the user twice.
@@ -53,7 +55,14 @@ async function chargeRequest(requestId: string | undefined) {
     });
 }
 
-export function createApp({ pool }: { pool: RunPool | null }): Express {
+interface AppOptions {
+    /** The pool of the current run. See src/run_pool.ts. */
+    pool: RunPool | null;
+    /** Finishes the run. The app calls it when the spending limit of a single-tenant run is reached. */
+    finishRun: () => void;
+}
+
+export function createApp({ pool, finishRun }: AppOptions): Express {
     const app = express();
 
     app.get('/', (req, res) => {
@@ -87,7 +96,18 @@ export function createApp({ pool }: { pool: RunPool | null }): Express {
         const name = typeof req.query.name === 'string' && req.query.name !== '' ? req.query.name : 'World';
         const result = { message: `Hello, ${name}!` };
 
-        await chargeRequest(requestId);
+        const { chargedCount, eventChargeLimitReached } = await chargeRequest(requestId);
+
+        // The user's spending limit for the run is reached. A single-tenant run belongs to that user, so finish it
+        // once the response is sent. A multi-tenant run keeps serving other users.
+        if (eventChargeLimitReached && pool === 'SINGLE_TENANT') res.once('finish', finishRun);
+
+        // Nothing was charged for this request, so do not return its result. A run without pay-per-event pricing
+        // never reports that the limit is reached, so its requests always get the result.
+        if (eventChargeLimitReached && chargedCount === 0) {
+            res.status(402).json({ error: SPENDING_LIMIT_REACHED });
+            return;
+        }
 
         res.json(result);
     });

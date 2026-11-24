@@ -27,7 +27,7 @@ The example endpoint is `GET /greet?name=World`. Replace it with the work your A
 The platform adds an `X-Actor-Request-ID` header to every request it forwards to a Server Actor. The template passes it to `Actor.charge()` as `requestId`:
 
 ```ts
-await Actor.charge({
+const { chargedCount, eventChargeLimitReached } = await Actor.charge({
     eventName: 'api-request',
     requestId,
     idempotencyKey: `${requestId}:api-request`,
@@ -38,6 +38,17 @@ await Actor.charge({
 - A single-tenant Server Actor ignores the request ID, so you can switch the tenancy without changing the code.
 - Charge before you send the response. After the request ends, its ID stops working.
 - Requests you send to a local run have no request ID, and locally `Actor.charge()` charges nothing.
+
+The template reads the result of each charge:
+
+| Result of the charge                                          | Response                                               |
+| ------------------------------------------------------------- | ------------------------------------------------------ |
+| The event was charged                                         | `200` with the result                                  |
+| The user's spending limit is reached, and nothing was charged | `402` with a JSON error, without the result            |
+| The charge failed                                             | `500` with a JSON error, and the cause is in the log   |
+| The Actor does not use pay-per-event pricing, or runs locally | `200` with the result, because there is nothing to pay |
+
+A user sets the spending limit for a run, and `Actor.charge()` stops charging when it is reached. In a single-tenant Server Actor, the run belongs to that user, so the template finishes the run after it sends the response. In a multi-tenant Server Actor, the run keeps serving other users.
 
 The `api-request` event and its price are in `.actor/pay_per_event.json`. Configure the same event in the Actor's pay-per-event pricing in Apify Console.
 

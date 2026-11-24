@@ -55,8 +55,31 @@
                                 }
                             }
                         }
+                    },
+                    "402": {
+                        "description": "The spending limit of the run is reached, so nothing was charged",
+                        "content": {
+                            "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+                        }
+                    },
+                    "500": {
+                        "description": "The request failed, for example because the charge failed",
+                        "content": {
+                            "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+                        }
                     }
                 }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "error": { "type": "string", "example": "The spending limit of this run is reached." }
+                },
+                "required": ["error"]
             }
         }
     }

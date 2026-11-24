@@ -31,10 +31,16 @@ async def main() -> None:
             f'This run serves the {pool} pool' if pool else 'This run was not started through the server interface'
         )
 
+        # Finish the run with a success exit code. The app calls this when the spending limit of a single-tenant run
+        # is reached. The server stops accepting requests and lets the ones in progress finish first.
+        def finish_run() -> None:
+            Actor.status_message = 'The run finished because its spending limit is reached.'
+            server.should_exit = True
+
         # Listen on the port the platform routes requests to (ACTOR_WEB_SERVER_PORT).
         # Bind to all interfaces, because the server runs in a container and the platform connects from outside it.
         config = uvicorn.Config(
-            create_app(pool),
+            create_app(pool, finish_run),
             host='0.0.0.0',  # noqa: S104
             port=Actor.configuration.web_server_port,
         )
