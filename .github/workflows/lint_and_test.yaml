@@ -18,16 +18,26 @@ concurrency:
 
 jobs:
   python_lint_check:
-    name: Python lint check
-    uses: apify/workflows/.github/workflows/python_lint_check.yaml@main
-    with:
-      python_versions: '["3.11", "3.12", "3.13", "3.14"]'
+    name: Python lint check (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12', '3.13', '3.14']
+    steps:
+      - uses: apify/actions/python-lint-check@v1.9.0
+        with:
+          python-version: ${{ matrix.python-version }}
 
   python_type_check:
-    name: Python type check
-    uses: apify/workflows/.github/workflows/python_type_check.yaml@main
-    with:
-      python_versions: '["3.11", "3.12", "3.13", "3.14"]'
+    name: Python type check (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12', '3.13', '3.14']
+    steps:
+      - uses: apify/actions/python-type-check@v1.9.0
+        with:
+          python-version: ${{ matrix.python-version }}
 
   lint_and_test:
     name: Lint and test (without templates)
@@ -35,10 +45,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        uses: actions/setup-node@v7.1.0
         with:
           node-version-file: .nvmrc
 
