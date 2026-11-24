@@ -59,8 +59,10 @@ To charge users, define events in JSON format and save them on the Apify platfor
 In the Actor, trigger the event with:
 
 ```python
-await Actor.charge(event_name='tool-call')
+await Actor.charge(event_name='tool-call', request_id=request_id)
 ```
+
+`request_id` is the value of the `X-Actor-Request-ID` header that the platform adds to every request. In a [multi-tenant Server Actor](https://docs.apify.com/actors/monetize/server-actors) it tells the platform which user to charge. A single-tenant run ignores it, and a local run has none. Charge before you return the result, because the ID stops working when the request ends.
 
 This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services.
 

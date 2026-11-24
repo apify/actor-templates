@@ -14,7 +14,6 @@ This template enables you to:
 
 - Support for **stdio-based, Streamable HTTP**, and SSE-based MCP servers
 - **Built-in charging**: Integrated [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) for:
-    - Server startup
     - Tool calls
     - Resource access
     - Prompt operations
@@ -41,7 +40,7 @@ This template enables you to:
     # )
     ```
 
-2. Add any required dependencies to the `requirements.txt` file (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)).
+2. Install the stdio MCP server in the `Dockerfile` with `uv tool install` (e.g. [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server)) and start it with `uv tool run`. The server then has an environment of its own. Do not add it to `requirements.txt`: its dependencies can conflict with the template's, for example when it needs another major version of `mcp`.
 3. Deploy to Apify and enable standby mode.
 4. Connect using an MCP client:
     - Using [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http):
@@ -94,22 +93,22 @@ Charge different amounts for different tools based on computational cost:
 
 ```json
 {
-    "search_papers": {
+    "search-papers": {
         "eventTitle": "arXiv paper search",
         "eventDescription": "Fee for searching papers on arXiv using the search_papers tool.",
         "eventPriceUsd": 0.001
     },
-    "list_papers": {
+    "list-papers": {
         "eventTitle": "arXiv paper listing",
         "eventDescription": "Fee for listing available papers using the list_papers tool.",
         "eventPriceUsd": 0.001
     },
-    "download_paper": {
+    "download-paper": {
         "eventTitle": "arXiv paper download",
         "eventDescription": "Fee for downloading a paper from arXiv using the download_paper tool.",
         "eventPriceUsd": 0.01
     },
-    "read_paper": {
+    "read-paper": {
         "eventTitle": "arXiv paper reading",
         "eventDescription": "Fee for reading the full content of a paper using the read_paper tool.",
         "eventPriceUsd": 0.01
@@ -129,12 +128,14 @@ Comment out all charging lines in the code for a free service.
 
     ```python
     # For generic charging:
-    await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL)
+    await charge_mcp_operation(actor_charge_function, ChargeEvents.TOOL_CALL, request_id=get_request_id(ctx))
 
     # For domain-specific charging:
     if tool_name == 'search_papers':
-        await charge_mcp_operation(actor_charge_function, ChargeEvents.SEARCH_PAPERS)
+        await charge_mcp_operation(actor_charge_function, ChargeEvents.SEARCH_PAPERS, request_id=get_request_id(ctx))
     ```
+
+    `get_request_id` reads the `X-Actor-Request-ID` header that the platform adds to every request. In a [multi-tenant Server Actor](https://docs.apify.com/actors/monetize/server-actors) the ID tells the platform which user to charge. A single-tenant run ignores it, and a local run has none. Charge before the handler returns, because the ID stops working when the request ends.
 
 3. **Add custom events** to `src/const.py` if needed:
 
@@ -163,10 +164,10 @@ To add new authorized tools, add an entry with the tool name and its charging co
 
 ```python
 TOOL_WHITELIST = {
-    ChargeEvents.SEARCH_PAPERS.value: (ChargeEvents.SEARCH_PAPERS.value, 1),
-    ChargeEvents.LIST_PAPERS.value: (ChargeEvents.LIST_PAPERS.value, 1),
-    ChargeEvents.DOWNLOAD_PAPER.value: (ChargeEvents.DOWNLOAD_PAPER.value, 1),
-    ChargeEvents.READ_PAPER.value: (ChargeEvents.READ_PAPER.value, 1),
+    'search_papers': (ChargeEvents.SEARCH_PAPERS.value, 1),
+    'list_papers': (ChargeEvents.LIST_PAPERS.value, 1),
+    'download_paper': (ChargeEvents.DOWNLOAD_PAPER.value, 1),
+    'read_paper': (ChargeEvents.READ_PAPER.value, 1),
 }
 ```
 
@@ -196,7 +197,7 @@ Example:
 server_type = ServerType.STDIO
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
-    args=['run', 'arxiv-mcp-server'],
+    args=['tool', 'run', 'arxiv-mcp-server'],
     env={'YOUR_ENV_VAR': os.getenv('YOUR-ENV-VAR')},  # Optional environment variables
 )
 ```

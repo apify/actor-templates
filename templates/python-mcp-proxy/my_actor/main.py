@@ -22,10 +22,12 @@ SERVER_NAME = 'arxiv-mcp-server'  # Name of the MCP server, without spaces
 # 1) If you are wrapping stdio server type, you need to provide the command and args
 from mcp.client.stdio import StdioServerParameters  # noqa: E402
 
+# `uv tool run` runs the server in an environment of its own, so that its dependencies cannot conflict
+# with the ones in requirements.txt. The Dockerfile installs the server at build time with `uv tool install`.
 server_type = ServerType.STDIO
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
-    args=['run', 'arxiv-mcp-server'],
+    args=['tool', 'run', 'arxiv-mcp-server'],
     env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
@@ -45,9 +47,8 @@ async def main() -> None:
 
     This function:
     1. Initializes the Actor
-    2. Charges for Actor startup
-    3. Creates and starts the proxy server
-    4. Configures charging for MCP operations using Actor.charge
+    2. Creates and starts the proxy server
+    3. Configures charging for MCP operations using Actor.charge
 
     CHARGING STRATEGIES:
     The template supports multiple charging approaches:
@@ -111,5 +112,9 @@ async def main() -> None:
             await proxy_server.start()
         except Exception as e:
             Actor.log.exception(f'Server failed to start: {e}')
-            await Actor.exit()
+            # Fail the run. A run that ends as succeeded is started again by the next request.
+            reason: BaseException = e
+            while isinstance(reason, BaseExceptionGroup):
+                reason = reason.exceptions[0]
+            await Actor.fail(status_message=f'The MCP server failed to start: {reason}')
             raise

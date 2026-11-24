@@ -12,7 +12,6 @@ import { log } from 'apify';
 import type { Request, Response } from 'express';
 import express from 'express';
 
-import { chargeMessageRequest } from './billing.js';
 import { getMcpProxyClient, getMcpServer } from './mcp.js';
 
 // The proxy client is started once per Actor run and shared by all requests
@@ -22,7 +21,6 @@ let isShuttingDown = false;
 /**
  * Handles POST requests to the /mcp endpoint.
  * - Creates an MCP server and a transport for this request only.
- * - Charges for each message request.
  */
 async function mcpPostHandler(req: Request, res: Response) {
     // Ensure the proxy client is connected
@@ -41,20 +39,12 @@ async function mcpPostHandler(req: Request, res: Response) {
         body: req.body,
     });
     try {
-        const server = getMcpServer(proxyClient);
+        // The MCP server charges for each message request. It needs the request ID to charge the right user.
+        const server = getMcpServer(proxyClient, { requestId: req.get('x-actor-request-id') });
         // No session ID generator means the transport is stateless
         const transport = new StreamableHTTPServerTransport({
             sessionIdGenerator: undefined,
         });
-
-        // Charge for each message request received on this transport
-        transport.onmessage = (message) => {
-            chargeMessageRequest(message as { method: string }).catch((error) => {
-                log.error('Error charging for message request:', {
-                    error,
-                });
-            });
-        };
 
         // Release the transport and the server when the response ends
         res.on('close', () => {

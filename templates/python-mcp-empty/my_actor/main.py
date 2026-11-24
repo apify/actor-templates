@@ -9,6 +9,7 @@ from typing import Any
 import uvicorn
 from apify import Actor
 from fastmcp import FastMCP
+from fastmcp.server.dependencies import get_http_headers
 from starlette.requests import Request
 from starlette.types import Receive, Scope, Send
 
@@ -21,7 +22,14 @@ def get_server() -> FastMCP:
     async def add(a: float, b: float) -> dict:
         """Add two numbers together and return the sum."""
         # Charge for the tool call. The event is defined in .actor/pay_per_event.json.
-        await Actor.charge(event_name='tool-call')
+        # The platform adds an X-Actor-Request-ID header to every request it forwards to a Server Actor.
+        # In a multi-tenant run, the ID tells the platform which user to charge. A single-tenant run ignores it,
+        # and requests you send to a local run have none.
+        request_id = get_http_headers().get('x-actor-request-id')
+        if request_id:
+            await Actor.charge(event_name='tool-call', request_id=request_id)
+        else:
+            await Actor.charge(event_name='tool-call')
 
         result = a + b
         return {

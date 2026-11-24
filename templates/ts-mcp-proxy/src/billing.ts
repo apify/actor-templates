@@ -8,33 +8,41 @@ import { Actor, log } from 'apify';
  * Charges the user for a message request based on the method type.
  * Supported method types are mapped to specific billing events.
  *
+ * The platform adds an `X-Actor-Request-ID` header to every request it forwards to a Server Actor. In a multi-tenant
+ * run, the ID tells the platform which user to charge. A single-tenant run ignores it, so the same code works
+ * for both tenancies. Requests you send to a local run have no ID, and locally `Actor.charge()` charges nothing.
+ *
+ * The SDK sends its own idempotency key with each charge. Do not build one from the request ID alone:
+ * one HTTP request can carry several MCP messages, and each of them is charged.
+ *
  * @param request - The request object containing the method string.
+ * @param requestId - The value of the `X-Actor-Request-ID` header of the HTTP request, if it has one.
  * @returns Promise<void>
  */
-export async function chargeMessageRequest(request: { method: string }): Promise<void> {
+export async function chargeMessageRequest(request: { method: string }, requestId?: string): Promise<void> {
     const { method } = request;
 
     // See https://modelcontextprotocol.io/specification/2025-06-18/server for more details
     // on the method names and protocol messages
     // Charge for list requests (e.g., tools/list, resources/list, etc.)
     if (method.endsWith('/list')) {
-        await Actor.charge({ eventName: 'list-request' });
+        await Actor.charge({ eventName: 'list-request', requestId });
         log.info(`Charged for list request: ${method}`);
         // Charge for tool-related requests
     } else if (method.startsWith('tools/')) {
-        await Actor.charge({ eventName: 'tool-request' });
+        await Actor.charge({ eventName: 'tool-request', requestId });
         log.info(`Charged for tool request: ${method}`);
         // Charge for resource-related requests
     } else if (method.startsWith('resources/')) {
-        await Actor.charge({ eventName: 'resource-request' });
+        await Actor.charge({ eventName: 'resource-request', requestId });
         log.info(`Charged for resource request: ${method}`);
         // Charge for prompt-related requests
     } else if (method.startsWith('prompts/')) {
-        await Actor.charge({ eventName: 'prompt-request' });
+        await Actor.charge({ eventName: 'prompt-request', requestId });
         log.info(`Charged for prompt request: ${method}`);
         // Charge for completion-related requests
     } else if (method.startsWith('completion/')) {
-        await Actor.charge({ eventName: 'completion-request' });
+        await Actor.charge({ eventName: 'completion-request', requestId });
         log.info(`Charged for completion request: ${method}`);
         // Do not charge for other methods
     } else {

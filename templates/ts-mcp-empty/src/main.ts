@@ -10,7 +10,9 @@ import { log, Actor } from 'apify';
 // This call configures the Actor for its environment and should be called at startup
 await Actor.init();
 
-const getServer = () => {
+// A server is created for each HTTP request. `requestId` is the value of the `X-Actor-Request-ID` header
+// that the platform adds to every request it forwards to a Server Actor.
+const getServer = (requestId?: string) => {
     // Create an MCP server with implementation details
     const server = new McpServer(
         {
@@ -40,8 +42,11 @@ const getServer = () => {
         },
         async ({ a, b }): Promise<CallToolResult> => {
             try {
-                // Charge for the tool call
-                await Actor.charge({ eventName: 'tool-call' });
+                // Charge for the tool call. In a multi-tenant run, the request ID tells the platform which user
+                // to charge. A single-tenant run ignores it, and requests you send to a local run have none.
+                // The SDK sends its own idempotency key with each charge. Do not build one from the request ID
+                // alone: one HTTP request can carry several tool calls, and each of them is charged.
+                await Actor.charge({ eventName: 'tool-call', requestId });
                 log.info('Charged for tool-call event');
 
                 const sum = a + b;
@@ -111,7 +116,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.post('/mcp', async (req: Request, res: Response) => {
-    const server = getServer();
+    const server = getServer(req.get('x-actor-request-id'));
     try {
         const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
             sessionIdGenerator: undefined,

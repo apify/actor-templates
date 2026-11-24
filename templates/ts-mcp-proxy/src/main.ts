@@ -29,9 +29,6 @@ const SERVER_PORT = parseInt(process.env.ACTOR_WEB_SERVER_PORT || '3001', 10);
 // The init() call configures the Actor to correctly work with the Apify-provided environment - mainly the storage infrastructure. It is necessary that every Actor performs an init() call.
 await Actor.init();
 
-// Charge for Actor start
-await Actor.charge({ eventName: 'actor-start' });
-
 if (!STANDBY_MODE) {
     // If the Actor is not in standby mode, we should not run the MCP server
     const msg = 'This Actor is not meant to be run directly. It should be run in standby mode.';

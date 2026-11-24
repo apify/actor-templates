@@ -1,9 +1,4 @@
 {
-    "actor-start": {
-        "eventTitle": "Price for Actor start",
-        "eventDescription": "Flat fee for starting an Actor run.",
-        "eventPriceUsd": 0.1
-    },
     "tool-request": {
         "eventTitle": "Price for completing a tool request",
         "eventDescription": "Flat fee for completing a tool request.",
