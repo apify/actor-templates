@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11", "3.12", "3.13", "3.14"]
+        python-version: ['3.11', '3.12', '3.13', '3.14']
     steps:
       - uses: apify/actions/python-lint-check@v1.9.0
         with:
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11", "3.12", "3.13", "3.14"]
+        python-version: ['3.11', '3.12', '3.13', '3.14']
     steps:
       - uses: apify/actions/python-type-check@v1.9.0
         with:
