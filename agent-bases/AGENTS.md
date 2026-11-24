@@ -23,7 +23,7 @@ Skip the steps that do not apply when changing an existing Actor.
 3. **Output schemas**: `.actor/dataset_schema.json` covering every field the code pushes, `.actor/output_schema.json`, and `.actor/key_value_store_schema.json` when the code stores records. Reference each file from `actor.json`. Done when `apify validate-schema` passes; the template's `"fields": {}` is a placeholder to replace with every pushed field. Rules are in the Reference table.
 4. **README.md**, the Actor's landing page on Apify Store. An Actor without one is not finished.
 5. **Test locally**: put input in `storage/key_value_stores/default/INPUT.json`, run `{{runCommand}}`, and check that `storage/datasets/default/` holds items matching the dataset schema. Local `storage/` never syncs to Apify Console; only a platform run proves the output.
-6. **Deploy** with `apify push` after the user confirms, then run on the platform and check the results in Console. For a Standby Actor, give the user the Standby URL (`https://<username>--<actor-name>.apify.actor`).
+6. **Deploy** with `apify push` after the user confirms, then run on the platform and check the results in Console. For a Server Actor, give the user the server interface URL (`https://<username>--<actor-name>.apify.actor`).
 
 ## Rules
 
@@ -49,7 +49,7 @@ Skip the steps that do not apply when changing an existing Actor.
 
 ## Reference
 
-The `apify-actor-development` skill carries the full workflow, schema rules, README structure, and standby details. When it is available, follow it. When it is not, suggest once that the user install it, then continue with the links below:
+The `apify-actor-development` skill carries the full workflow, schema rules, README structure, and Server Actor details. When it is available, follow it. When it is not, suggest once that the user install it, then continue with the links below:
 
 ```bash
 npx skills add https://github.com/apify/agent-skills --skill apify-actor-development
@@ -65,7 +65,7 @@ Read the row that matches the step you are on.
 | Key-value store schema     | https://docs.apify.com/platform/actors/development/actor-definition/key-value-store-schema         |
 | actor.json                 | https://docs.apify.com/platform/actors/development/actor-definition/actor-json                     |
 | README structure           | https://docs.apify.com/academy/actor-marketing-playbook/actor-basics/how-to-create-an-actor-readme |
-| Standby mode               | https://docs.apify.com/platform/actors/development/programming-interface/standby                   |
+| Server Actors              | https://docs.apify.com/actors/development/programming-interface/server-actors                      |
 | System events (`aborting`) | https://docs.apify.com/platform/actors/development/programming-interface/system-events             |
 | Environment variables      | https://docs.apify.com/platform/actors/development/programming-interface/environment-variables     |
 | Logging                    | {{loggingDocs}}                                                                                    |

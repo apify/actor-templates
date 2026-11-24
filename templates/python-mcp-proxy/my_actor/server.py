@@ -306,7 +306,7 @@ class ProxyServer:
 
         async def handle_root(request: Request) -> st.Response:
             """Handle root endpoint."""
-            # Handle Apify standby readiness probe
+            # Handle the Apify readiness probe
             if 'x-apify-container-server-readiness-probe' in request.headers:
                 return Response(
                     content=b'ok',

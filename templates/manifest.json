@@ -3,9 +3,9 @@
     "localReadmeSuffixUrl": "https://raw.githubusercontent.com/apify/actor-templates/master/templates/local_readme_suffix.md",
     "_useCaseDescriptions": {
         "_note": "Reference for what each value in a template's `useCases` array represents. Templates may carry multiple use cases; pick the tag(s) that reflect what the template actually IS, not what it could become.",
-        "STARTER": "Entry-level scaffold for a user's first Actor — language quickstarts, empty projects, standby starters, generic wrappers (e.g. cli-start).",
+        "STARTER": "Entry-level scaffold for a user's first Actor — language quickstarts, empty projects, Server Actor starters, generic wrappers (e.g. cli-start).",
         "WEB_SCRAPING": "Extracting structured data from websites — HTTP scrapers, browser scrapers, crawlers. The template's primary output is scraped data.",
-        "INTEGRATION": "Bridges Apify with external systems — Standby mode (serves HTTP), MCP servers (callable by AI clients), or templates that call out to external APIs, services, or CLIs.",
+        "INTEGRATION": "Bridges Apify with external systems — Server Actors (serve HTTP), MCP servers (callable by AI clients), or templates that call out to external APIs, services, or CLIs.",
         "AUTOMATION": "Performs actions rather than extracting data — test runners, browser automation (Playwright/Selenium/Cypress used for interaction), CLI orchestration.",
         "AI": "LLM-powered agents, AI tool servers (MCP), and AI framework integration demos (LangChain, CrewAI, etc.)."
     },

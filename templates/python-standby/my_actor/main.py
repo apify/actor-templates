@@ -18,8 +18,8 @@ class GetHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         """Handle GET request and respond with a message."""
-        # Handle Apify standby readiness probe
-        # https://docs.apify.com/platform/actors/development/programming-interface/standby#readiness-probe
+        # Handle the Apify readiness probe
+        # https://docs.apify.com/actors/development/programming-interface/server-actors#readiness-probe
         if 'x-apify-container-server-readiness-probe' in self.headers:
             self.send_response(200)
             self.end_headers()
@@ -28,7 +28,7 @@ class GetHandler(SimpleHTTPRequestHandler):
 
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b'Hello from Actor Standby!')
+        self.wfile.write(b'Hello from a Server Actor!')
 
 
 async def main() -> None:
