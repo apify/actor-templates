@@ -5,11 +5,18 @@ import os
 import uvicorn
 from apify import Actor
 from fastmcp import FastMCP
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 
 
 def get_server() -> FastMCP:
     """Create an MCP server with tools and resources."""
     server = FastMCP('python-mcp-empty', '1.0.0')
+
+    @server.custom_route('/', methods=['GET'])
+    async def readiness_probe(_request: Request) -> PlainTextResponse:
+        """Answer the readiness probe that the platform sends before it routes requests to the run."""
+        return PlainTextResponse('ok')
 
     @server.tool()
     def add(a: float, b: float) -> dict:
