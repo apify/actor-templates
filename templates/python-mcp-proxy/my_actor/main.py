@@ -34,7 +34,7 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 # server_type = ServerType.HTTP # or ServerType.SSE, depending on your server type # noqa: ERA001
 # MCP_SERVER_PARAMS = RemoteServerParameters( # noqa: ERA001, RUF100
 #     url='https://your-mcp-server',  # noqa: ERA001
-#     headers={'Authorization':  'Bearer YOUR-API-KEY'},  # Optional headers, e.g., for authentication  # noqa: ERA001
+#     headers={'Authorization': f'Bearer {os.getenv("UPSTREAM_TOKEN")}'},  # Read secrets from Actor env vars  # noqa: ERA001
 # )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
 

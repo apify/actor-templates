@@ -25,9 +25,11 @@ const MCP_COMMAND = [
     'mcp-remote',
     'https://mcp.apify.com',
     '--header',
-    'Authorization: Bearer TOKEN',
+    `Authorization: Bearer ${process.env.UPSTREAM_TOKEN}`,
 ];
 ```
+
+Store the token as a secret [environment variable](https://docs.apify.com/platform/actors/development/programming-interface/environment-variables) of the Actor (here `UPSTREAM_TOKEN`) and never write it into the source code.
 
 Feel free to configure billing logic in `.actor/pay_per_event.json` and `src/billing.ts`.
 
