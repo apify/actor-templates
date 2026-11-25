@@ -2,6 +2,11 @@ name: Test Python templates
 
 on:
   workflow_call:
+    secrets:
+      APIFY_TEST_USER_API_TOKEN:
+        required: false
+      APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY:
+        required: false
 
 jobs:
   test-python-templates:
@@ -26,10 +31,10 @@ jobs:
           echo "TEMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
 
       - name: Checkout repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        uses: actions/setup-node@v7.1.0
         with:
           node-version-file: .nvmrc
 
@@ -44,7 +49,7 @@ jobs:
         run: pnpm exec playwright install chromium ${{ runner.os == 'Linux' && '--with-deps' || '' }}
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        uses: actions/setup-python@v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -52,7 +57,7 @@ jobs:
 
       # For uv-based templates (e.g. python-uv); uv provides its own Python from .python-version.
       - name: Setup uv
-        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        uses: astral-sh/setup-uv@v10.3.0
 
       - name: Install Chrome and Chromedriver
         # Use pnpm dlx instead of npx — npx is the npm CLI and trips
@@ -68,5 +73,7 @@ jobs:
           # The camoufox browser fetch hits the GitHub releases API —
           # unauthenticated it flakes on runner-IP rate limits.
           GITHUB_TOKEN: ${{ github.token }}
-          APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}
+          # Pull requests run PR-controlled template code, so keep their env on
+          # dummy credentials. Trusted callers can pass the real secrets.
+          APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN || 'DUMMY_APIFY_TOKEN' }}
+          OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY || 'DUMMY_OPENAI_API_KEY' }}

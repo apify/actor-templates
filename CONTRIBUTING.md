@@ -1,5 +1,11 @@
 # Contributing to actor-templates
 
+## Before you start
+
+Issues labeled [`good first issue`](https://github.com/apify/actor-templates/labels/good%20first%20issue) or [`help wanted`](https://github.com/apify/actor-templates/labels/help%20wanted) are open to anyone. You don't need our permission to pick one up — comment on it so two people don't solve the same problem, and we'll assign it to you.
+
+Check in on the issue first if it carries neither label. Most of those are on our roadmap, still in design, or part of a larger epic, so an unassigned issue isn't an open invitation. We'd rather answer a comment than close your PR.
+
 ## Tests
 
 Tests are implemented using the [Jest](https://jestjs.io/) framework.
@@ -44,3 +50,7 @@ To enable verbose output, add `verbose: true` to the `jest.config.js` file:
    This happens with Github actions.
 
 2. If you want to add some templates or rename some, you need to change all Actor templates list on [apify shared package](https://github.com/apify/apify-shared-js).
+
+## GitHub Actions
+
+Workflows reference actions by version tag (`actions/checkout@v7.0.1`), never by commit SHA. [`.github/workflows/actions.lock`](.github/workflows/actions.lock) pins every tag, including those called by composite actions, to its commit. After adding or changing a `uses:` line, run `gh actions-lock` ([extension](https://github.com/github/gh-actions-lock)) and commit the lockfile. Prefer composite actions from `apify/actions` over reusable workflows from `apify/workflows`, which the lockfile can't pin.
