@@ -263,7 +263,9 @@ class ProxyServer:
                 case _:
                     raise ValueError(f'Unsupported server type: {client_type}')
         except ValidationError as e:
-            raise ValueError(f'Invalid server configuration: {e}') from e
+            # The raw error and its chained cause echo the offending input, which may hold headers or env secrets.
+            details = e.errors(include_input=False, include_url=False)
+            raise ValueError(f'Invalid server configuration: {details}') from None
 
     @staticmethod
     def _get_session_id_from_headers(headers: Any) -> str | None:
