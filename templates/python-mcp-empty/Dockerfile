@@ -30,5 +30,9 @@ COPY --chown=myuser:myuser . ./
 # Use compileall to ensure the runnability of the Actor Python code.
 RUN python -m compileall -q my_actor/
 
+# Make FastMCP refuse the long-lived `subscriptions/listen` stream of the 2026-07-28 MCP protocol.
+# An open stream can keep a run alive after the client is gone, and you pay for the idle run.
+ENV FASTMCP_ENABLE_SUBSCRIPTIONS_LISTEN=false
+
 # Specify how to launch the source code of your Actor.
 CMD ["python", "-m", "my_actor"]
