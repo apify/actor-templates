@@ -213,7 +213,7 @@ Example:
 server_type = ServerType.HTTP
 MCP_SERVER_PARAMS = RemoteServerParameters(
     url='https://mcp.apify.com',
-    headers={'Authorization': 'Bearer YOUR-API-KEY'},  # Replace with your authentication token
+    headers={'Authorization': f'Bearer {os.getenv("UPSTREAM_MCP_TOKEN")}'},  # Token from a secret Actor environment variable
 )
 ```
 

@@ -194,7 +194,7 @@ async function mcpDeleteHandler(req: Request, res: Response) {
 export async function startServer(options: { serverPort: number; command: string[] }) {
     log.info('Starting MCP HTTP Server', {
         serverPort: options.serverPort,
-        command: options.command,
+        executable: options.command[0],
     });
     const { serverPort, command } = options;
     // Initialize the MCP client

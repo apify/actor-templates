@@ -17,7 +17,7 @@ const MCP_COMMAND = [
 ];
 ```
 
-Alternatively, you can use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) tool to turn a remote MCP server into an Actor. For example, to connect to a remote server with authentication:
+Alternatively, you can use the [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) tool to turn a remote MCP server into an Actor. For example, to connect to a remote server with authentication, read the token from a [secret environment variable](https://docs.apify.com/platform/actors/development/programming-interface/environment-variables#custom-environment-variables) instead of writing it into the code:
 
 ```
 const MCP_COMMAND = [
@@ -25,7 +25,7 @@ const MCP_COMMAND = [
     'mcp-remote',
     'https://mcp.apify.com',
     '--header',
-    'Authorization: Bearer TOKEN',
+    `Authorization: Bearer ${process.env.UPSTREAM_MCP_TOKEN}`,
 ];
 ```
 
