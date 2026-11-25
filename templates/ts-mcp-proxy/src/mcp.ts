@@ -137,7 +137,7 @@ export async function getMcpServer(
  */
 export async function getMcpProxyClient(command: string[]): Promise<Client> {
     log.info('Starting MCP Proxy Client', {
-        command,
+        executable: command[0],
     });
     // Create a stdio transport for the proxy client
     const transport = new StdioClientTransport({
