@@ -37,7 +37,7 @@ Skip the steps that do not apply when changing an existing Actor.
 - Count results with your own tally; {{datasetInfo}} lags on the platform.
 - {{abortingRule}}
 - On the platform the SDK reads the token from `APIFY_TOKEN` (not `APIFY_API_TOKEN`); {{localToken}} Keep the token out of code, config, and logs.
-- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200.
+- Leave `usesStandbyMode` in `actor.json` as it is. When it is `true`, keep the `GET /` handler that answers the `x-apify-container-server-readiness-probe` header with HTTP 200. Answer any other `GET /` with the Actor's main response or a JSON list of its endpoints.
 
 ## Ask first
 
