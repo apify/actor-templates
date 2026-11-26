@@ -1,7 +1,5 @@
 from enum import StrEnum
 
-SESSION_TIMEOUT_SECS = 300  # 5 minutes
-
 
 class ChargeEvents(StrEnum):
     """Event types for charging MCP operations.
@@ -18,10 +16,11 @@ class ChargeEvents(StrEnum):
     TOOL_CALL = 'tool-call'
 
     # arXiv-specific operations (example for domain-specific charging)
-    SEARCH_PAPERS = 'search_papers'
-    LIST_PAPERS = 'list_papers'
-    DOWNLOAD_PAPER = 'download_paper'
-    READ_PAPER = 'read_paper'
+    # The names must match the events defined in .actor/pay_per_event.json
+    SEARCH_PAPERS = 'search-papers'
+    LIST_PAPERS = 'list-papers'
+    DOWNLOAD_PAPER = 'download-paper'
+    READ_PAPER = 'read-paper'
 
 
 # Tool whitelist for MCP server
@@ -29,8 +28,8 @@ class ChargeEvents(StrEnum):
 # Format of the dictionary: {tool_name: (charge_event_name, default_count)}
 # To add new authorized tools, add an entry with the tool name and its charging configuration.
 TOOL_WHITELIST = {
-    ChargeEvents.SEARCH_PAPERS.value: (ChargeEvents.SEARCH_PAPERS.value, 1),
-    ChargeEvents.LIST_PAPERS.value: (ChargeEvents.LIST_PAPERS.value, 1),
-    ChargeEvents.DOWNLOAD_PAPER.value: (ChargeEvents.DOWNLOAD_PAPER.value, 1),
-    ChargeEvents.READ_PAPER.value: (ChargeEvents.READ_PAPER.value, 1),
+    'search_papers': (ChargeEvents.SEARCH_PAPERS.value, 1),
+    'list_papers': (ChargeEvents.LIST_PAPERS.value, 1),
+    'download_paper': (ChargeEvents.DOWNLOAD_PAPER.value, 1),
+    'read_paper': (ChargeEvents.READ_PAPER.value, 1),
 }

@@ -1,38 +1,52 @@
 /**
- * This module provides functions to create and manage an MCP server and its proxy client.
- * It registers protocol capabilities, request handlers, and notification handlers for the MCP server,
- * and spawns a proxy client that communicates with another MCP process over stdio.
+ * This module provides functions to create an MCP server and its proxy client.
+ * The proxy client talks to another MCP process over stdio and is started once per Actor run.
+ * The MCP server is a thin object created for each HTTP request. It forwards requests
+ * and notifications to the shared proxy client.
  */
+import { randomUUID } from 'node:crypto';
+
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { DEFAULT_REQUEST_TIMEOUT_MSEC } from '@modelcontextprotocol/sdk/shared/protocol.js';
+import type { Progress } from '@modelcontextprotocol/sdk/types.js';
 import {
     ClientNotificationSchema,
     ClientRequestSchema,
+    ProgressNotificationSchema,
     ResultSchema,
-    ServerNotificationSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { log } from 'apify';
 
+import { chargeMessageRequest } from './billing.js';
+
+// Progress forwarders of the requests in flight, by the progress token sent to the proxied MCP server
+const progressForwarders = new Map<string, (progress: Progress) => void>();
+
 /**
- * Creates and configures an MCP server instance.
+ * Creates and configures an MCP server instance for one HTTP request.
  *
  * - Registers all protocol capabilities except experimental.
- * - Spawns a proxy client to forward requests and notifications.
- * - Sets up handlers for requests and notifications between the server and proxy client.
- * - Handles server shutdown and proxy client cleanup.
+ * - Forwards requests and notifications to the shared proxy client.
  *
- * @param command - The command to start the MCP proxy process.
- * @param options - Optional configuration (e.g., request timeout).
- * @returns A Promise that resolves to a configured McpServer instance.
+ * The server keeps no state of its own, so creating one for each request is cheap.
+ * Progress notifications of a request are sent on the response stream of that request.
+ * Other notifications from the proxied MCP server are not forwarded,
+ * because a stateless server has no open stream to deliver them on.
+ *
+ * @param proxyClient - The connected proxy client shared by all requests.
+ * @param options - Optional configuration: the request timeout, and the `X-Actor-Request-ID` header
+ *   of the HTTP request, which is passed to the charges.
+ * @returns A configured McpServer instance.
  */
-export async function getMcpServer(
-    command: string[],
+export function getMcpServer(
+    proxyClient: Client,
     options?: {
         timeout?: number;
+        requestId?: string;
     },
-): Promise<McpServer> {
+): McpServer {
     // Create the MCP server instance
     const server = new McpServer({
         name: 'mcp-server',
@@ -49,14 +63,11 @@ export async function getMcpServer(
         tasks: {},
     });
 
-    // Spawn MCP proxy client for the stdio MCP server
-    const proxyClient = await getMcpProxyClient(command);
-
     // Register request handlers for all client requests
     for (const schema of ClientRequestSchema.options) {
         const method = schema.shape.method.value;
         // Forward requests to the proxy client and return its response
-        server.server.setRequestHandler(schema, async (req) => {
+        server.server.setRequestHandler(schema, async (req, extra) => {
             if (req.method === 'initialize') {
                 // Handle the 'initialize' request separately and do not forward it to the proxy client
                 // this is needed for mcp-remote servers to work correctly
@@ -75,9 +86,43 @@ export async function getMcpServer(
                 method,
                 request: req,
             });
-            return proxyClient.request(req, ResultSchema, {
-                timeout: options?.timeout || DEFAULT_REQUEST_TIMEOUT_MSEC,
+            // Charge before the response is sent. After the HTTP request ends, its request ID stops working.
+            await chargeMessageRequest(req, options?.requestId).catch((error) => {
+                log.error('Error charging for message request:', {
+                    error,
+                });
             });
+            // eslint-disable-next-line no-underscore-dangle
+            const progressToken = req.params?._meta?.progressToken;
+            if (progressToken === undefined) {
+                return proxyClient.request(req, ResultSchema, {
+                    timeout: options?.timeout || DEFAULT_REQUEST_TIMEOUT_MSEC,
+                });
+            }
+            // Send progress on the response stream of this request, the only stream a stateless server has.
+            // The proxied MCP server gets a token of our own, because tokens of different clients can collide.
+            const proxyToken = randomUUID();
+            progressForwarders.set(proxyToken, (progress) => {
+                extra
+                    .sendNotification({
+                        method: 'notifications/progress',
+                        params: { ...progress, progressToken },
+                    })
+                    .catch((error) => {
+                        log.warning('Error forwarding MCP progress notification', {
+                            error,
+                        });
+                    });
+            });
+            try {
+                // eslint-disable-next-line no-underscore-dangle
+                const _meta = { ...req.params?._meta, progressToken: proxyToken };
+                return await proxyClient.request({ ...req, params: { ...req.params, _meta } }, ResultSchema, {
+                    timeout: options?.timeout || DEFAULT_REQUEST_TIMEOUT_MSEC,
+                });
+            } finally {
+                progressForwarders.delete(proxyToken);
+            }
         });
     }
 
@@ -98,29 +143,6 @@ export async function getMcpServer(
             await proxyClient.notification(notification);
         });
     }
-
-    // Register notification handlers for all proxy client notifications
-    for (const schema of ServerNotificationSchema.options) {
-        const method = schema.shape.method.value;
-        // Forward notifications from the proxy client to the server
-        proxyClient.setNotificationHandler(schema, async (notification) => {
-            log.info('Sending MCP notification', {
-                method,
-                notification,
-            });
-            await server.server.notification(notification);
-        });
-    }
-
-    // Handle server shutdown and cleanup proxy client
-    server.server.onclose = () => {
-        log.info('MCP Server is closing, shutting down the proxy client');
-        proxyClient.close().catch((error) => {
-            log.error('Error closing MCP Proxy Client', {
-                error,
-            });
-        });
-    };
 
     return server;
 }
@@ -149,6 +171,14 @@ export async function getMcpProxyClient(command: string[]): Promise<Client> {
     const client = new Client({
         name: 'mcp-proxy-client',
         version: '1.0.0',
+    });
+
+    // Route progress notifications to the request they belong to.
+    // The `onprogress` request option is not used: the SDK drops a progress notification
+    // that arrives in the same chunk as the response to its request.
+    client.setNotificationHandler(ProgressNotificationSchema, ({ params }) => {
+        const { progressToken, ...progress } = params;
+        progressForwarders.get(String(progressToken))?.(progress);
     });
 
     // Connect the client to the transport

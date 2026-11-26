@@ -1,9 +1,8 @@
 # Feel free to add your Python dependencies below. For formatting guidelines, see:
 # https://pip.pypa.io/en/latest/reference/requirements-file-format/
 
-apify >= 4.0.0, < 5.0.0
+apify >= 4.3.0, < 5.0.0  # The first version where Actor.charge() accepts request_id
 apify-client
-arxiv-mcp-server >= 0.3.1, < 1.0.0
 fastapi >= 0.135.0, < 1.0.0
 httpx2 >= 2.5.0, < 3.0.0
 mcp >= 2.0.0, < 3.0.0

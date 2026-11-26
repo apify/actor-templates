@@ -11,14 +11,15 @@ like tool calls, prompt operations, or resource access.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Protocol
 
 from mcp import server, types
+from starlette.requests import Request
 
 from .const import ChargeEvents
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Callable
+    from collections.abc import Awaitable
 
     from mcp.client.session import ClientSession
     from mcp.server.context import ServerRequestContext
@@ -26,15 +27,37 @@ if TYPE_CHECKING:
 logger = logging.getLogger('apify')
 
 
+class ChargeFunction(Protocol):
+    """The part of the `Actor.charge` signature that the gateway uses."""
+
+    def __call__(self, event_name: str, *, count: int = 1, request_id: str | None = None) -> Awaitable[Any]:
+        """Charge for `count` occurrences of the event."""
+        ...
+
+
+def get_request_id(ctx: ServerRequestContext[object]) -> str | None:
+    """Return the request ID of the HTTP request that carries the MCP request.
+
+    The platform adds an `X-Actor-Request-ID` header to every request it forwards to a Server Actor. In a multi-tenant
+    run, the ID tells the platform which user to charge. A single-tenant run ignores it, so the same code works
+    for both tenancies. Requests you send to a local run have no ID, and locally `Actor.charge()` charges nothing.
+    """
+    request = ctx.request
+    return request.headers.get('x-actor-request-id') if isinstance(request, Request) else None
+
+
 async def charge_mcp_operation(
-    charge_function: Callable[[str, int], Awaitable[Any]] | None, event_name: str | None, count: int = 1
+    charge_function: ChargeFunction | None, event_name: str | None, count: int = 1, *, request_id: str | None = None
 ) -> None:
     """Charge for an MCP operation.
+
+    Call it before the handler returns. After the HTTP request ends, its request ID stops working.
 
     Args:
         charge_function: Function to call for charging, or None if charging is disabled
         event_name: The type of event to charge for
         count: The number of times the event occurred (typically 1, but can be more)
+        request_id: The request ID from `get_request_id`, or None if the request has none
     """
     if not charge_function:
         return
@@ -43,7 +66,8 @@ async def charge_mcp_operation(
         return
 
     try:
-        await charge_function(event_name, count)
+        # `count` and `request_id` are keyword-only in Actor.charge
+        await charge_function(event_name, count=count, request_id=request_id)
         logger.info(f'Charged for event: {event_name}')
     except Exception:
         logger.exception(f'Failed to charge for event {event_name}')
@@ -52,7 +76,7 @@ async def charge_mcp_operation(
 
 async def create_gateway(  # noqa: PLR0915
     client_session: ClientSession,
-    actor_charge_function: Callable[[str, int], Awaitable[Any]] | None = None,
+    actor_charge_function: ChargeFunction | None = None,
     tool_whitelist: dict[str, tuple[str, int]] | None = None,
 ) -> server.Server[object]:
     """Create a server instance from a remote app.
@@ -60,7 +84,7 @@ async def create_gateway(  # noqa: PLR0915
     Args:
         client_session: The MCP client session to proxy requests through
         actor_charge_function: Optional function to charge for operations.
-                       Should accept (event_name: str, count: int).
+                       Called as `charge(event_name, count=count)`.
                        Typically, Actor.charge in Apify Actors.
                        If None, no charging will occur.
         tool_whitelist: Optional dict mapping tool names to (event_name, default_count) tuples.
@@ -152,7 +176,7 @@ async def create_gateway(  # noqa: PLR0915
             return tools
 
         async def _call_tool(
-            _ctx: ServerRequestContext[object], params: types.CallToolRequestParams
+            ctx: ServerRequestContext[object], params: types.CallToolRequestParams
         ) -> types.CallToolResult | types.InputRequiredResult:
             tool_name = params.name
             arguments = params.arguments or {}
@@ -179,7 +203,9 @@ async def create_gateway(  # noqa: PLR0915
                 event_name, default_count = (
                     tool_whitelist.get(tool_name, default_tool_call) if tool_whitelist else default_tool_call
                 )
-                await charge_mcp_operation(actor_charge_function, event_name, default_count)
+                await charge_mcp_operation(
+                    actor_charge_function, event_name, default_count, request_id=get_request_id(ctx)
+                )
             except Exception as e:
                 error_details = f"SERVER FAILED. Tool: '{tool_name}'. Arguments: {arguments}. Full exception: {e}"
                 logger.exception(error_details)

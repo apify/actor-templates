@@ -22,6 +22,10 @@ RUN echo "Python version:" \
  && echo "All installed Python packages:" \
  && pip freeze
 
+# Install the stdio MCP server that the Actor wraps. As a uv tool it gets an environment of its own,
+# so its dependencies cannot conflict with the ones in requirements.txt.
+RUN uv tool install arxiv-mcp-server
+
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after installing the dependencies, quick builds will be really fast
 # for most source file changes.

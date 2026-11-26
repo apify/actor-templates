@@ -41,6 +41,17 @@ Authorization: Bearer <YOUR_APIFY_API_TOKEN>
 
 This is required for authentication and to access your Actor endpoint.
 
+### Stateless server
+
+The server runs the Streamable HTTP transport in stateless mode:
+
+- `POST /mcp` handles each request on its own. The server returns no `Mcp-Session-Id` and keeps nothing in memory between requests, so any run of the Actor can answer any request.
+- `GET /mcp` and `DELETE /mcp` return `405`. The server has no session to stream from or to delete.
+
+Keep it this way. A long-lived `GET /mcp` stream can keep a run alive after the client disconnects, and you pay for the idle run. A session kept in memory breaks when the platform starts a second run, because requests that land there fail.
+
+The stdio MCP server is started once when the run starts and shared by all requests. Its progress notifications for a request are sent on the response to that request. Its other notifications, such as log messages and list changes, are not forwarded to clients.
+
 ### Pay per event
 
 This template uses the [Pay Per Event (PPE)](https://docs.apify.com/platform/actors/publishing/monetize#pay-per-event-pricing-model) monetization model, which provides flexible pricing based on defined events.
@@ -62,10 +73,14 @@ To charge users, define events in JSON format and save them on the Apify platfor
 In the Actor, trigger the event with:
 
 ```typescript
-await Actor.charge({ eventName: 'tool-request' });
+await Actor.charge({ eventName: 'tool-request', requestId });
 ```
 
+`requestId` is the value of the `X-Actor-Request-ID` header that the platform adds to every request. In a [multi-tenant Server Actor](https://docs.apify.com/actors/monetize/server-actors) it tells the platform which user to charge. A single-tenant run ignores it, and a local run has none. Charge before you send the response, because the ID stops working when the request ends.
+
 This approach allows you to programmatically charge users directly from your Actor, covering the costs of execution and related services.
+
+The template charges no custom event for the start of a run. Use the synthetic [`apify-actor-start`](https://docs.apify.com/actors/monetize/pay-per-event#use-apify-actor-start) event for that, which the platform charges by itself.
 
 To set up the PPE model for this Actor:
 

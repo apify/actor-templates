@@ -4,7 +4,7 @@ import os
 
 from apify import Actor
 
-from .const import SESSION_TIMEOUT_SECS, TOOL_WHITELIST
+from .const import TOOL_WHITELIST
 from .models import ServerType
 from .server import ProxyServer
 
@@ -13,7 +13,8 @@ STANDBY_MODE = os.environ.get('APIFY_META_ORIGIN') == 'STANDBY'
 # Bind to all interfaces (0.0.0.0) as this is running in a containerized environment (Apify Actor)
 # The container's network is isolated, so this is safe
 HOST = '0.0.0.0'  # noqa: S104 - Required for container networking at Apify platform
-PORT = (Actor.is_at_home() and int(os.environ.get('ACTOR_STANDBY_PORT') or '5001')) or 5001
+# The platform sets ACTOR_WEB_SERVER_PORT to the port it routes requests to; 5001 is the local default
+PORT = int(os.environ.get('ACTOR_WEB_SERVER_PORT') or '5001')
 SERVER_NAME = 'arxiv-mcp-server'  # Name of the MCP server, without spaces
 
 # EDIT THIS SECTION ------------------------------------------------------------
@@ -21,10 +22,12 @@ SERVER_NAME = 'arxiv-mcp-server'  # Name of the MCP server, without spaces
 # 1) If you are wrapping stdio server type, you need to provide the command and args
 from mcp.client.stdio import StdioServerParameters  # noqa: E402
 
+# `uv tool run` runs the server in an environment of its own, so that its dependencies cannot conflict
+# with the ones in requirements.txt. The Dockerfile installs the server at build time with `uv tool install`.
 server_type = ServerType.STDIO
 MCP_SERVER_PARAMS = StdioServerParameters(
     command='uv',
-    args=['run', 'arxiv-mcp-server'],
+    args=['tool', 'run', 'arxiv-mcp-server'],
     env={'YOUR-ENV_VAR': os.getenv('YOUR-ENV-VAR') or ''},  # Optional environment variables
 )
 
@@ -38,17 +41,14 @@ MCP_SERVER_PARAMS = StdioServerParameters(
 # )  # noqa: ERA001, RUF100
 # ------------------------------------------------------------------------------
 
-session_timeout_secs = int(os.getenv('SESSION_TIMEOUT_SECS', SESSION_TIMEOUT_SECS))
-
 
 async def main() -> None:
     """Run the MCP Server Actor.
 
     This function:
     1. Initializes the Actor
-    2. Charges for Actor startup
-    3. Creates and starts the proxy server
-    4. Configures charging for MCP operations using Actor.charge
+    2. Creates and starts the proxy server
+    3. Configures charging for MCP operations using Actor.charge
 
     CHARGING STRATEGIES:
     The template supports multiple charging approaches:
@@ -108,10 +108,13 @@ async def main() -> None:
                 server_type=server_type,
                 actor_charge_function=Actor.charge,
                 tool_whitelist=TOOL_WHITELIST,
-                session_timeout_secs=session_timeout_secs,
             )
             await proxy_server.start()
         except Exception as e:
             Actor.log.exception(f'Server failed to start: {e}')
-            await Actor.exit()
+            # Fail the run. A run that ends as succeeded is started again by the next request.
+            reason: BaseException = e
+            while isinstance(reason, BaseExceptionGroup):
+                reason = reason.exceptions[0]
+            await Actor.fail(status_message=f'The MCP server failed to start: {reason}')
             raise

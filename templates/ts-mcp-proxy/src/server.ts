@@ -1,37 +1,30 @@
 /**
  * This module implements the HTTP server for the MCP protocol.
- * It manages session-based transports, request routing, and billing for protocol messages.
  *
- * The server supports streamable HTTP endpoints and handles session
- * initialization, message routing, and resource cleanup on shutdown.
+ * The server is stateless: each POST request gets its own MCP server and transport,
+ * and nothing is kept in memory between requests. The platform starts more runs under load
+ * and sends each request to any of them, so a session kept in the memory of one run
+ * would be missing in the others.
  */
-import { randomUUID } from 'node:crypto';
-
-import { InMemoryEventStore } from '@modelcontextprotocol/sdk/examples/shared/inMemoryEventStore.js';
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
-import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 import { log } from 'apify';
 import type { Request, Response } from 'express';
 import express from 'express';
 
-import { chargeMessageRequest } from './billing.js';
-import { getMcpServer as getMCPServerWithCommand } from './mcp.js';
+import { getMcpProxyClient, getMcpServer } from './mcp.js';
 
-let getMcpServer: null | (() => Promise<McpServer>) = null;
-
-// Map to store transports by session ID
-const transports: { [sessionId: string]: StreamableHTTPServerTransport } = {};
+// The proxy client is started once per Actor run and shared by all requests
+let proxyClient: Client | null = null;
+let isShuttingDown = false;
 
 /**
  * Handles POST requests to the /mcp endpoint.
- * - Initializes new sessions and transports if needed.
- * - Routes requests to the correct transport based on session ID.
- * - Charges for each message request.
+ * - Creates an MCP server and a transport for this request only.
  */
 async function mcpPostHandler(req: Request, res: Response) {
-    // Ensure the MCP server is initialized
-    if (!getMcpServer) {
+    // Ensure the proxy client is connected
+    if (!proxyClient) {
         res.status(500).json({
             jsonrpc: '2.0',
             error: {
@@ -42,80 +35,30 @@ async function mcpPostHandler(req: Request, res: Response) {
         });
         return;
     }
-    const sessionId = req.headers['mcp-session-id'] as string | undefined;
     log.info('Received MCP request', {
-        sessionId: sessionId || null,
         body: req.body,
     });
     try {
-        let transport: StreamableHTTPServerTransport;
-        if (sessionId && transports[sessionId]) {
-            // Reuse existing transport for the session
-            transport = transports[sessionId] as StreamableHTTPServerTransport;
-        } else if (!sessionId && isInitializeRequest(req.body)) {
-            // New initialization request: create a new transport and event store
-            const eventStore = new InMemoryEventStore();
-            transport = new StreamableHTTPServerTransport({
-                sessionIdGenerator: () => randomUUID(),
-                eventStore, // Enable resumability
-                onsessioninitialized: (initializedSessionId) => {
-                    // Store the transport by session ID when session is initialized
-                    // This avoids race conditions where requests might come in before the session is stored
-                    log.info('Session initialized', {
-                        sessionId: initializedSessionId,
-                    });
-                    transports[initializedSessionId] = transport;
-                },
-            });
+        // The MCP server charges for each message request. It needs the request ID to charge the right user.
+        const server = getMcpServer(proxyClient, { requestId: req.get('x-actor-request-id') });
+        // No session ID generator means the transport is stateless
+        const transport = new StreamableHTTPServerTransport({
+            sessionIdGenerator: undefined,
+        });
 
-            // Charge for each message request received on this transport
-            transport.onmessage = (message) => {
-                chargeMessageRequest(message as { method: string }).catch((error) => {
-                    log.error('Error charging for message request:', {
-                        error,
-                        sessionId: transport.sessionId || null,
-                    });
-                });
-            };
+        // Release the transport and the server when the response ends
+        res.on('close', () => {
+            void transport.close();
+            void server.close();
+        });
 
-            // Clean up transport when closed
-            transport.onclose = () => {
-                const sid = transport.sessionId;
-                if (sid && transports[sid]) {
-                    log.info('Transport closed', {
-                        sessionId: sid,
-                    });
-                    delete transports[sid];
-                }
-            };
-
-            // Connect the transport to the MCP server BEFORE handling the request
-            // so responses can flow back through the same transport
-            const server = await getMcpServer();
-            await server.connect(transport);
-
-            await transport.handleRequest(req, res, req.body);
-            return; // Already handled
-        } else {
-            // Invalid request - no session ID or not initialization request
-            res.status(400).json({
-                jsonrpc: '2.0',
-                error: {
-                    code: -32000,
-                    message: 'Bad Request: No valid session ID provided',
-                },
-                id: null,
-            });
-            return;
-        }
-
-        // Handle the request with existing transport - no need to reconnect
-        // The existing transport is already connected to the server
+        // Connect the transport to the MCP server BEFORE handling the request
+        // so responses can flow back through the same transport
+        await server.connect(transport);
         await transport.handleRequest(req, res, req.body);
     } catch (error) {
         log.error('Error handling MCP request:', {
             error,
-            sessionId: sessionId || null,
         });
         if (!res.headersSent) {
             res.status(500).json({
@@ -131,65 +74,31 @@ async function mcpPostHandler(req: Request, res: Response) {
 }
 
 /**
- * Handles GET requests to the /mcp endpoint for streaming responses.
- * - Validates session ID and resumes or establishes SSE streams as needed.
+ * Handles GET and DELETE requests to the /mcp endpoint.
+ *
+ * A stateless server has no session to stream from or to delete, so only POST is served.
+ * Refusing the long-lived GET stream also matters for cost: an open stream can keep a run
+ * alive after the client is gone, and the Actor owner pays for the idle run.
  */
-async function mcpGetHandler(req: Request, res: Response) {
-    const sessionId = req.headers['mcp-session-id'] as string | undefined;
-    if (!sessionId || !transports[sessionId]) {
-        res.status(400).send('Invalid or missing session ID');
-        return;
-    }
-
-    // Check for Last-Event-ID header for resumability
-    const lastEventId = req.headers['last-event-id'] as string | undefined;
-    if (lastEventId) {
-        log.info('Client reconnecting', {
-            lastEventId: lastEventId || null,
-        });
-    } else {
-        log.info('Establishing new SSE stream', {
-            sessionId: sessionId || null,
-        });
-    }
-
-    const transport = transports[sessionId] as StreamableHTTPServerTransport;
-    await transport.handleRequest(req, res);
-}
-
-/**
- * Handles DELETE requests to the /mcp endpoint for session termination.
- * - Cleans up and closes the transport for the given session.
- */
-async function mcpDeleteHandler(req: Request, res: Response) {
-    const sessionId = req.headers['mcp-session-id'] as string | undefined;
-    if (!sessionId || !transports[sessionId]) {
-        res.status(400).send('Invalid or missing session ID');
-        return;
-    }
-
-    log.info('Received session termination request', {
-        sessionId: sessionId || null,
-    });
-
-    try {
-        const transport = transports[sessionId] as StreamableHTTPServerTransport;
-        await transport.handleRequest(req, res);
-    } catch (error) {
-        log.error('Error handling session termination:', {
-            error,
-        });
-        if (!res.headersSent) {
-            res.status(500).send('Error processing session termination');
-        }
-    }
+function mcpMethodNotAllowedHandler(req: Request, res: Response) {
+    log.info(`Received ${req.method} MCP request`);
+    res.writeHead(405, { Allow: 'POST', 'Content-Type': 'application/json' }).end(
+        JSON.stringify({
+            jsonrpc: '2.0',
+            error: {
+                code: -32000,
+                message: 'Method not allowed.',
+            },
+            id: null,
+        }),
+    );
 }
 
 /**
  * Starts the MCP HTTP server and sets up all endpoints.
- * - Initializes the MCP server factory.
+ * - Starts the proxy client shared by all requests.
  * - Registers all HTTP endpoints.
- * - Handles graceful shutdown and resource cleanup.
+ * - Handles shutdown and resource cleanup.
  */
 export async function startServer(options: { serverPort: number; command: string[] }) {
     log.info('Starting MCP HTTP Server', {
@@ -197,8 +106,15 @@ export async function startServer(options: { serverPort: number; command: string
         executable: options.command[0],
     });
     const { serverPort, command } = options;
-    // Initialize the MCP client
-    getMcpServer = async () => getMCPServerWithCommand(command);
+
+    // Start the proxied MCP server. Without it no request can be served,
+    // so exit when it stops and let the platform start a new run.
+    proxyClient = await getMcpProxyClient(command);
+    proxyClient.onclose = () => {
+        if (isShuttingDown) return;
+        log.error('The proxied MCP server stopped, exiting');
+        process.exit(1);
+    };
 
     const app = express();
 
@@ -230,30 +146,27 @@ export async function startServer(options: { serverPort: number; command: string
 
     // Streamable HTTP endpoints
     app.post('/mcp', mcpPostHandler);
-    app.get('/mcp', mcpGetHandler);
-    app.delete('/mcp', mcpDeleteHandler);
+    app.get('/mcp', mcpMethodNotAllowedHandler);
+    app.delete('/mcp', mcpMethodNotAllowedHandler);
 
     app.listen(serverPort, () => {
         log.info(`MCP HTTP Server listening on port ${serverPort}`);
     });
 
     // Handle server shutdown
-    process.on('SIGINT', async () => {
+    const shutdown = async () => {
         log.info('Shutting down server...');
-
-        // Close all active transports to properly clean up resources
-        for (const sessionId of Object.keys(transports)) {
-            try {
-                log.info(`Closing transport for session ${sessionId}`);
-                await transports[sessionId].close();
-                delete transports[sessionId];
-            } catch (error) {
-                log.error(`Error closing transport for session ${sessionId}:`, {
-                    error,
-                });
-            }
+        isShuttingDown = true;
+        try {
+            await proxyClient?.close();
+        } catch (error) {
+            log.error('Error closing the proxy client:', {
+                error,
+            });
         }
         log.info('Server shutdown complete');
         process.exit(0);
-    });
+    };
+    process.on('SIGINT', shutdown);
+    process.on('SIGTERM', shutdown);
 }
