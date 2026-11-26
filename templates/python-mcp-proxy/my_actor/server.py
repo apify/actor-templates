@@ -406,7 +406,7 @@ class ProxyServer:
 
     async def start(self) -> None:
         """Start Starlette app and connect to stdio, Streamable HTTP, or SSE based MCP server."""
-        logger.info(f'Starting MCP server with client type: {self.server_type} and config {self.config}')
+        logger.info(f'Starting MCP server with client type: {self.server_type}')
         params: dict = (self.config and self.config.model_dump(exclude_unset=True)) or {}
 
         if self.server_type == ServerType.STDIO:

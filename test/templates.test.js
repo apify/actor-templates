@@ -37,8 +37,10 @@ const windowsOptions = /^win/.test(process.platform) ? { shell: true, windowsHid
 process.env.PUPPETEER_CACHE_DIR ||= path.join(os.tmpdir(), 'apify-templates-puppeteer-cache');
 const { PUPPETEER_CACHE_DIR } = process.env;
 
+// Only `apify run` needs the service tokens; it passes its own `env`.
 function spawnSync(command, args, options = {}) {
-    return _spawnSync(command, args, { ...options, ...windowsOptions });
+    const { APIFY_TOKEN, OPENAI_API_KEY, ...env } = process.env;
+    return _spawnSync(command, args, { env, ...options, ...windowsOptions });
 }
 
 // `npm view apify version` from a tmp dir gives us the absolute latest version
