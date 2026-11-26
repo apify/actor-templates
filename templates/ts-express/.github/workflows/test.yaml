@@ -1,0 +1,20 @@
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches: [main, master]
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: 24
+                  cache: npm
+                  cache-dependency-path: package*.json
+            - run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+            - run: npm run build
+            - run: npm test

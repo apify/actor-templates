@@ -1,0 +1,86 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Express Server Actor",
+        "description": "An example API served by an Apify Server Actor.",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "List the endpoints of this API",
+                "responses": {
+                    "200": {
+                        "description": "The endpoints, the pool of the run, and the path of the OpenAPI spec",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": { "type": "string" },
+                                        "pool": { "type": "string", "nullable": true },
+                                        "endpoints": { "type": "array", "items": { "type": "object" } },
+                                        "openapi": { "type": "string" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/greet": {
+            "get": {
+                "summary": "Return a greeting. Charges one api-request event.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "description": "Who to greet",
+                        "schema": { "type": "string", "default": "World" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The greeting",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": { "type": "string", "example": "Hello, World!" }
+                                    },
+                                    "required": ["message"]
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "The spending limit of the run is reached, so nothing was charged",
+                        "content": {
+                            "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+                        }
+                    },
+                    "500": {
+                        "description": "The request failed, for example because the charge failed",
+                        "content": {
+                            "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "error": { "type": "string", "example": "The spending limit of this run is reached." }
+                },
+                "required": ["error"]
+            }
+        }
+    }
+}
