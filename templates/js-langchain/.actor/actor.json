@@ -14,8 +14,5 @@
     "outputSchema": "./output_schema.json",
     "storages": {
         "keyValueStore": "./key_value_store_schema.json"
-    },
-    "environmentVariables": {
-        "OPENAI_API_KEY": "@OPENAI_API_KEY"
     }
 }

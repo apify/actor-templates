@@ -28,8 +28,16 @@ To be able to run this template both locally and on the Apify platform, you need
 
 - Have an [Apify account](https://console.apify.com/) and sign into it using `apify login` command in your terminal. Without this, you won't be able to run the required [Website Content Crawler](https://apify.com/apify/website-content-crawler) Actor to gather the data.
 - Have an [OpenAI](https://openai.com/) account and an API key. This is needed for vectorizing the data and also to be able to prompt the OpenAI model.
-    - When running locally store this as OPENAI_API_KEY environment variable (https://docs.apify.com/cli/docs/vars#set-up-environment-variables-in-apify-console).
-    - When running on Apify platform, you can simply paste this into the input field in the input UI.
+
+### Set the OpenAI API key
+
+For local runs, copy `.env.example` to `.env` and fill in `OPENAI_API_KEY`. `apify run` loads `.env`, and Git ignores it.
+
+```bash
+cp .env.example .env
+```
+
+On the Apify platform, run `apify env push` after `apify push` to upload the values from `.env` to the Actor, or set `OPENAI_API_KEY` in Apify Console under **Source** > **Code** > **Environment variables**. Then rebuild the Actor so runs get the value. You can also paste the key into the **OpenAI API key** input field.
 
 ## Production use
 

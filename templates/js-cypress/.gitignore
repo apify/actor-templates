@@ -1,3 +1,6 @@
 storage
 node_modules
 cypress/videos
+
+# Local environment variables, loaded by `apify run`
+.env

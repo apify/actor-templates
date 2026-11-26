@@ -20,9 +20,8 @@ await Actor.init();
 // 1. If running locally, authenticate to the Apify platform by executing `apify login` in your terminal.
 //    This is necessary to run the Website Content Crawler Actor for data gathering.
 // 2. Set the `OPENAI_API_KEY` environment variable with your OpenAI API key, which can be obtained from
-//    https://platform.openai.com/account/api-keys. Refer to
-//    https://docs.apify.com/cli/docs/vars#set-up-environment-variables-in-apify-console for guidance
-//    on setting environment variables.
+//    https://platform.openai.com/account/api-keys. For local runs, copy `.env.example` to `.env` and fill
+//    in the key. `apify run` loads it. On the Apify platform, run `apify env push` to upload it.
 const { OPENAI_API_KEY, APIFY_TOKEN } = process.env;
 
 // You can configure the input for the Actor in the Apify UI when running on the Apify platform or editing

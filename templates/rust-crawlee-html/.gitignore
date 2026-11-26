@@ -7,3 +7,6 @@
 target
 apify_storage
 storage
+
+# Local environment variables, loaded by `apify run`
+.env

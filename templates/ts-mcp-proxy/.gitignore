@@ -12,3 +12,6 @@ tsconfig.tsbuildinfo
 
 # Added by Apify CLI
 .venv
+
+# Local environment variables, loaded by `apify run`
+.env

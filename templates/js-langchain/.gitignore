@@ -8,3 +8,6 @@ storage
 
 # This location is used to locally cache
 vector_index
+
+# Local environment variables, loaded by `apify run`
+.env
