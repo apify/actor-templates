@@ -1,4 +1,4 @@
-FROM cypress/browsers:node-24.14.0-chrome-145.0.7632.116-1-ff-148.0-edge-145.0.3800.70-1
+FROM cypress/browsers:node-26.13.1-chrome-158.0.8127.88-1-ff-161.0-edge-158.0.4370.33-1
 # cypress image entrypoint runs the tests right away
 # we want to run our own CMD
 ENTRYPOINT [""]
