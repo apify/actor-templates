@@ -54,7 +54,7 @@
         "puppeteer": "25.16.0",
         "semver": "^7.8.6",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.73.0"
+        "typescript-eslint": "^8.74.0"
     },
     "packageManager": "pnpm@12.16.1",
     "devEngines": {
