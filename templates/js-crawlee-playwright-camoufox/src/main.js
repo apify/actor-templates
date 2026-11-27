@@ -24,7 +24,8 @@ const { startUrls = ['https://apify.com'] } = (await Actor.getInput()) ?? {};
 // Disable it for short runs if you are sure your proxy configuration is correct
 const proxyConfiguration = await Actor.createProxyConfiguration({ checkAccess: true });
 // Camoufox takes the proxy as a Playwright proxy object, not as a URL
-const proxy = new URL(await proxyConfiguration.newUrl());
+const proxyUrl = await proxyConfiguration?.newUrl();
+const proxy = proxyUrl ? new URL(proxyUrl) : undefined;
 
 const crawler = new PlaywrightCrawler({
     proxyConfiguration,
@@ -33,7 +34,7 @@ const crawler = new PlaywrightCrawler({
         launcher: firefox,
         launchOptions: await camoufoxLaunchOptions({
             headless: true,
-            proxy: {
+            proxy: proxy && {
                 server: `${proxy.protocol}//${proxy.host}`,
                 username: decodeURIComponent(proxy.username),
                 password: decodeURIComponent(proxy.password),
