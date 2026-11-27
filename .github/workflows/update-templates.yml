@@ -32,6 +32,9 @@ permissions:
 jobs:
   update-templates:
     runs-on: ubuntu-latest
+    environment:
+      name: automation
+      deployment: false
 
     steps:
       - name: Sanitize base image
@@ -41,18 +44,18 @@ jobs:
           echo "BASE_IMAGE_FORMATTED=$(echo '${{ env.BASE_IMAGE_RAW }}' | sed 's/,/, /g')" >> $GITHUB_OUTPUT
 
       - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24
 
       - name: Install pnpm and dependencies
-        uses: apify/actions/pnpm-install@v1.5.0
+        uses: apify/actions/pnpm-install@v1.6.2
 
       - name: Run update script
         env:
@@ -94,7 +97,7 @@ jobs:
       - name: Commit and push changes
         id: commit-and-push
         if: steps.stage.outputs.has-changes == 'true'
-        uses: apify/actions/signed-commit@v1.4.0
+        uses: apify/actions/signed-commit@v1.6.2
         with:
           message: 'chore: Update templates for base image: ${{ env.BASE_IMAGE_RAW }}'
           github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
@@ -126,8 +129,7 @@ jobs:
               --title "chore: Update templates for base image: ${{ steps.branch-name.outputs.BASE_IMAGE_FORMATTED }}" \
               --body "$PR_BODY" \
               --base master \
-              --head "$BRANCH" \
-              --reviewer l2ysho
+              --head "$BRANCH"
 
             # Retrieve PR number by head branch after creation
             PR_NUMBER=$(gh pr list --head "$BRANCH" --base master --json number --jq '.[0].number // empty')

@@ -115,4 +115,5 @@ const rootPackageJson = new URL('../../package.json', import.meta.url);
 await updatePackageJson(rootPackageJson);
 execSync('pnpm install --no-frozen-lockfile --lockfile-only', {
     cwd: new URL('../../', import.meta.url),
+    stdio: 'inherit',
 });

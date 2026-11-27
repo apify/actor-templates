@@ -2,6 +2,11 @@ name: Test LLM AI Python templates
 
 on:
   workflow_call:
+    secrets:
+      APIFY_TEST_USER_API_TOKEN:
+        required: false
+      APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY:
+        required: false
 
 jobs:
   test-llm-ai-python-templates:
@@ -24,18 +29,18 @@ jobs:
           echo "TEMP=$RUNNER_TEMP" >> "$GITHUB_ENV"
 
       - name: Checkout repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@v7.1.0
         with:
           node-version-file: .nvmrc
 
       - name: Install pnpm and dependencies
-        uses: apify/actions/pnpm-install@v1.5.0
+        uses: apify/actions/pnpm-install@v1.6.2
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        uses: actions/setup-python@v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -44,5 +49,8 @@ jobs:
       - name: Test LLM AI Python templates
         run: pnpm run test-llm-ai-python-templates
         env:
+          # Pull requests omit these secrets, so the harness limits itself to
+          # structure and install checks instead of running the template code.
+          HAS_REAL_SERVICE_SECRETS: ${{ secrets.APIFY_TEST_USER_API_TOKEN != '' && secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY != '' }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.APIFY_SERVICE_ACCOUNT_OPENAI_API_KEY }}

@@ -37,8 +37,10 @@ const windowsOptions = /^win/.test(process.platform) ? { shell: true, windowsHid
 process.env.PUPPETEER_CACHE_DIR ||= path.join(os.tmpdir(), 'apify-templates-puppeteer-cache');
 const { PUPPETEER_CACHE_DIR } = process.env;
 
+// Only `apify run` needs the service tokens; it passes its own `env`.
 function spawnSync(command, args, options = {}) {
-    return _spawnSync(command, args, { ...options, ...windowsOptions });
+    const { APIFY_TOKEN, OPENAI_API_KEY, ...env } = process.env;
+    return _spawnSync(command, args, { env, ...options, ...windowsOptions });
 }
 
 // `npm view apify version` from a tmp dir gives us the absolute latest version
@@ -237,7 +239,20 @@ const checkTemplateRun = () => {
     checkSpawnResult(apifyRunSpawnResult);
 };
 
-// TEST_SHARD="2/4" (set by the CI matrix) makes this process run only its slice
+const canPythonLlMAgentTemplateRun = (templateId) => {
+    if (process.env.HAS_REAL_SERVICE_SECRETS === 'true') {
+        return true;
+    }
+
+    if (process.env.HAS_REAL_SERVICE_SECRETS !== 'false' && process.env.APIFY_TOKEN && process.env.OPENAI_API_KEY) {
+        return true;
+    }
+
+    console.log(`Skipping ${templateId} run test because service secrets are unavailable.`);
+    return false;
+};
+
+// TEST_SHARD=""2/4" (set by the CI matrix) makes this process run only its slice
 // of each template list, so the serial install+run loop can be parallelized
 // across jobs. Jest's own --shard splits by test *file* and this is a single
 // file, hence the env var. Unset = run everything.
@@ -353,7 +368,7 @@ describe('templates-work', () => {
 
                 checkCommonTemplateStructure(templateId);
                 checkPythonTemplate();
-                if (SKIP_RUN_TESTS.includes(templateId)) return;
+                if (SKIP_RUN_TESTS.includes(templateId) || !canPythonLlMAgentTemplateRun(templateId)) return;
                 checkTemplateRun();
             });
         });
