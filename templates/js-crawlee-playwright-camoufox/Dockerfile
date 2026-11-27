@@ -32,6 +32,9 @@ RUN npm --quiet set progress=false \
     && npm --version \
     && rm -r ~/.npm
 
+# Download the Camoufox browser build the camoufox package is paired with, unless the base image already ships it.
+RUN npx camoufox fetch
+
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after NPM install, quick build will be really fast
 # for most source file changes.

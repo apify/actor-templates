@@ -63,7 +63,7 @@ jobs:
         run: pnpm run test-node-templates
         env:
           TEST_SHARD: ${{ matrix.shard }}
-          # camoufox-js fetch (camoufox template postinstall) hits the GitHub
+          # camoufox downloads its browser (camoufox templates) through the GitHub
           # releases API — unauthenticated it flakes on runner-IP rate limits.
           GITHUB_TOKEN: ${{ github.token }}
           APIFY_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
