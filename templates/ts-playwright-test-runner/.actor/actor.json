@@ -8,7 +8,7 @@
     "buildTag": "latest",
     "meta": {
         "templateId": "ts-playwright-test-runner",
-        "generatedBy": "<FILL-IN-MODEL>"
+        "generatedBy": ""
     },
     "storages": {
         "dataset": "./dataset_schema.json",
