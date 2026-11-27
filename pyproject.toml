@@ -1,7 +1,7 @@
 [project]
 name = "actor-templates"
 version = "0.0.1"
-requires-python = ">= 3.11"
+requires-python = ">= 3.11.5"
 dependencies = [
     "apify[scrapy] >= 4.0.0, < 5.0.0",
     "apify-client",
