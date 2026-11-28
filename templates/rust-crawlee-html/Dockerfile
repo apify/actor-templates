@@ -15,7 +15,8 @@ RUN mkdir src && echo 'fn main() {}' > src/main.rs \
 COPY src ./src
 RUN touch src/main.rs && cargo build --release --locked
 
-# Create final image
+# Create final image.
+# We use `debian:trixie-slim` because it is the base of the Apify Python and Node.js images, so it is often cached on the platform.
 FROM debian:trixie-slim
 
 # Install root certificates for HTTPS.
