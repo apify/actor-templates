@@ -25,14 +25,14 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install pnpm and dependencies
-        uses: apify/actions/pnpm-install@v1.6.2
+        uses: apify/actions/pnpm-install@v1.9.0
 
       # TODO: Also replace links in manifest.json
       - name: Build template archives
         run: pnpm run build
 
       - name: Commit the updated template archives
-        uses: apify/actions/signed-commit@v1.6.2
+        uses: apify/actions/signed-commit@v1.9.0
         with:
           message: 'chore: Update template archives [skip ci]'
           add: 'dist/* templates/*'

@@ -37,10 +37,10 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install pnpm and dependencies
-        uses: apify/actions/pnpm-install@v1.6.2
+        uses: apify/actions/pnpm-install@v1.9.0
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v7.0.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip

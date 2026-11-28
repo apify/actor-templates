@@ -7,153 +7,172 @@ importers:
     configDependencies: {}
     packageManagerDependencies:
       pnpm:
-        specifier: 12.16.1
-        version: 12.16.1
+        specifier: 12.23.0
+        version: 12.23.0
 
 packages:
 
-  '@pnpm/exe.android-arm64@12.16.1':
-    resolution: {integrity: sha512-PKf78Ew+i0CBYf0Xc+eMcqQiqyBT+u8XCVg1F5roc98/6wWfdYlWhrUMmEBiKWaJ3JqHxrtt8l1NwZ7qfJt2/Q==}
+  '@pnpm/exe.android-arm64@12.23.0':
+    resolution: {integrity: sha512-oqZu9yFInENTRA9BKiOnEqOcpr5dNMDbquxq9zKFKJy0nEC385Vw0e4wlsOAlDh90iX94GND6Fc22FVL2O2SmQ==}
     cpu: [arm64]
     os: [android]
 
-  '@pnpm/exe.android-x64@12.16.1':
-    resolution: {integrity: sha512-xdu7gMbB98pdvhwMeA6612Of515FDlRUtfA/1f7nWPZfPLnEdSRBO2u+1N0XBtQ/ennhPH/lrxB1gC6gnR/cdg==}
+  '@pnpm/exe.android-x64@12.23.0':
+    resolution: {integrity: sha512-fQRjE4Wno8ye0lxhYGmyqdcc6tv+tDGktEmgFzffZ7flp4BG/84VtdXn3i/O4BazgMbNuPdbM75aj7uDZwL7GQ==}
     cpu: [x64]
     os: [android]
 
-  '@pnpm/exe.darwin-arm64@12.16.1':
-    resolution: {integrity: sha512-pVbmIIbhixiLvADLu1WA3TaW8FZy/D72R1De27WbbFx8/2mxvnsTyFVm4fO9kjpjMY7RzJd48CiQ96p8fO3ebQ==}
+  '@pnpm/exe.darwin-arm64@12.23.0':
+    resolution: {integrity: sha512-ny5+L92frsfyV3/B3zadYQuU5kBV8o2TXB5WnhBUoJ/9Mz32FVglMr8g1HmUc01yfKkjopZ4rmF1G7vs68JxIg==}
     cpu: [arm64]
     os: [darwin]
 
-  '@pnpm/exe.darwin-x64@12.16.1':
-    resolution: {integrity: sha512-xZvQBFqcZjO7vFKTK3XsJpqY6lnBL9EWSLCzVUPq3kZ94+D96gwJCa76xxGNK8Cj32f4eeM91Qg+yNRR4sRpDw==}
+  '@pnpm/exe.darwin-x64@12.23.0':
+    resolution: {integrity: sha512-+MNmpJSAzb9yc80d5l4VbZ/3Teh8xtlacATUyTAx6fELUK0xwmgFi05hqzg1sXLdAPij5gcIp82VvrqY5tzPrQ==}
     cpu: [x64]
     os: [darwin]
 
-  '@pnpm/exe.freebsd-x64@12.16.1':
-    resolution: {integrity: sha512-zTtunfi9mBhRXiXEJYfwiJj0tk7MgTSfqDSRh+Az9FZ9THazVIiQiVNS8jpcsftDOqu7LKNffQdjmgwHDThfUg==}
+  '@pnpm/exe.freebsd-x64@12.23.0':
+    resolution: {integrity: sha512-AGfkooje58I9hh4xdSDyZCPLKvjrjuvlkKTK2gsTtj6wfhVTw1jz33wB1XbERt2/0odJdEfgnBPUIdalRnb7Fw==}
     cpu: [x64]
     os: [freebsd]
 
-  '@pnpm/exe.linux-arm64-musl@12.16.1':
-    resolution: {integrity: sha512-BJ3mOmcmQgcUo92Ee/WfEOt1pRiv3y2MMAkhEiYHd85UiPpHTfFhv+SpCbALmfExzXk3UlaRtMYwHlkQymc4VA==}
+  '@pnpm/exe.linux-arm64-musl@12.23.0':
+    resolution: {integrity: sha512-C09Z3tFnPz7CYiae326dGlJcRUNCBtlJvMc04S9M8YKACebHHyamxCItLAisvGdHVf1BawtU9shV0FngjYxMwA==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@pnpm/exe.linux-arm64@12.16.1':
-    resolution: {integrity: sha512-JaRd5gNxwdNGBBkrZFt8bknrK4YmHVJBW0JMhUQ0fJ0dEYp6C2GT9ExaCqOO8EwYEyqM+jpKgJIK+8WFaJy3ew==}
+  '@pnpm/exe.linux-arm64@12.23.0':
+    resolution: {integrity: sha512-RLby8T0CIWAbljrbmjaX6S3PYhMHnLbUp+IDcOmZIY1/+wy8hJoQpjMPZlV4VJIGl8lZKUXtxJcLJ2XZ1z2SVw==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@pnpm/exe.linux-ppc64@12.16.1':
-    resolution: {integrity: sha512-FnSV0Jv40S1cMv7vFNWwvu0X567Lec4L4HCRead3CFcD6zQDNbGw81s8N5bcKPahtPD9ApVuhsbmFCx4rw6RMw==}
+  '@pnpm/exe.linux-loong64@12.23.0':
+    resolution: {integrity: sha512-XytxNoKD9/PcugxRHmBptRNDxUYwBtQZwBauJ3lKXFJ3sqHPZSjjFxIMX4HTWQn7FqCVnQlF+tbewjUnvQz0dQ==}
+    cpu: [loong64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.linux-ppc64@12.23.0':
+    resolution: {integrity: sha512-1h9+mBpdmlFA5LW6fAfd5UnLgHakNkEsS1R67mEXY1J6WLLnZcWFJs7Cbde0BD034CRTUa99MaILAuSs2ERf7Q==}
     cpu: [ppc64]
     os: [linux]
     libc: [glibc]
 
-  '@pnpm/exe.linux-riscv64@12.16.1':
-    resolution: {integrity: sha512-C1Sww4FN5IttD4atRRhAKmQtSGWVp04ZAKNxO8pfu2bkRPwOW+7v+2DH1Xs1W+kZYYpO86BYDvUcadefF+AgaQ==}
+  '@pnpm/exe.linux-riscv64@12.23.0':
+    resolution: {integrity: sha512-SlPz2UxUshIxgyBRKT0PHncYr2pIoFOxf6WR68HCkhGmASGljYlYYwRVfefgoIPM603x4Fcge9/B1Z3aIq1bSQ==}
     cpu: [riscv64]
     os: [linux]
     libc: [glibc]
 
-  '@pnpm/exe.linux-s390x@12.16.1':
-    resolution: {integrity: sha512-kn2fautsTcxIMODoovQVqZyfpDRdNgGkoeVqNdrKqbeBBvrEl+fXLkmZiq5xDht1LMr4sYiCNcsMfNMT6JPFmg==}
+  '@pnpm/exe.linux-s390x@12.23.0':
+    resolution: {integrity: sha512-Hk8jKY0i9sjyKPJFYC71lu7Mq5ahb5sWT2zCqNxzzBCrivvCqv5GVfZurLETC5TsSusE9TRWFpynLgG+iaXmSA==}
     cpu: [s390x]
     os: [linux]
     libc: [glibc]
 
-  '@pnpm/exe.linux-x64-musl@12.16.1':
-    resolution: {integrity: sha512-PM6ccHCOe/O9SsTflTJTYWfwogJZa6EmUvpnwZgiPguJBddh20wDQKgxUPXf48rDsPm9vMsIij0uHswwwbXL8g==}
+  '@pnpm/exe.linux-x64-musl@12.23.0':
+    resolution: {integrity: sha512-7+9bD4LBQ5r+7nLnIhDgMnvMm7a7cfc28NogU3NY1sM0+0Jz7K+IwxZb4BJDY/AN1s3F26TgZ3az/bjeCshmXA==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@pnpm/exe.linux-x64@12.16.1':
-    resolution: {integrity: sha512-RK//8ZLcXGW8A2k8bQOXZDBN1Qu92zN4dYnG1bzj1zoQ1fkZ6jNzZ1AvXtsfGVma795CJtvoaF5bLXf4l/FIUw==}
+  '@pnpm/exe.linux-x64@12.23.0':
+    resolution: {integrity: sha512-vu/N1nUJxLA0IIumbxL/rR6leGA+++SQY0XL+5KPJ1O2kyvzJoLQYL1ibLGO7TRqsZ90wclboEdhIIWvr3Qsig==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@pnpm/exe.win32-arm64@12.16.1':
-    resolution: {integrity: sha512-Ox3kNNVxtGw6pK7SVejmeOUgHhUTZgAM7NQQ6cU7frPw3ix9+j7d2MGbRg3fyEFAaKWq8ZAZLTQGcDyLnAu+qA==}
+  '@pnpm/exe.netbsd-x64@12.23.0':
+    resolution: {integrity: sha512-c85UPtAJfPR5+ghXS8UGRQlgxwqvz2PFaPaEzIVwUdBU+5DB4X2iuMAMlMXWS6hJ/OjqhKM6tpwyEc4Kkz40Fg==}
+    cpu: [x64]
+    os: [netbsd]
+
+  '@pnpm/exe.win32-arm64@12.23.0':
+    resolution: {integrity: sha512-lx0B8HPaUEG/ovIC0PmA6HhMhXh6ud0pAWVTDNxZvAfAzuGm0RM78SCT/oBY80lbJnwA9al4sTUroqozZK9hVA==}
     cpu: [arm64]
     os: [win32]
 
-  '@pnpm/exe.win32-x64@12.16.1':
-    resolution: {integrity: sha512-k+FhRJ0ttphFoFIVB1Sk4v76YJAulafmA/Ly57cysesUhhIzVlApeOShUz0jXubKx317TThlEfpQrukldnqORA==}
+  '@pnpm/exe.win32-x64@12.23.0':
+    resolution: {integrity: sha512-OnbBaQWQcw31m5APFNKcM8kdmM6H7k8MoaOnA2m1LsWAHX7AZKB5cdJfNwhHGBfkURcwWk1bnMXBdllujMiCFw==}
     cpu: [x64]
     os: [win32]
 
-  pnpm@12.16.1:
-    resolution: {integrity: sha512-CR0d7nknV1Zhsl2rPCrjHK/BxU1rce1qZgDPDByxBDSkR+rhQBXxsj4ua+3u1535SpMuIWTSgyKA3OP7MvZW0Q==}
+  pnpm@12.23.0:
+    resolution: {integrity: sha512-AtqU/68TP0YHQyKv5VL5DUC19xriWa77zNrMUIWx1hfpjWXgEx9XSLm2dEWXjuUFXX1ZpHPx7vDVBIVP781ZdQ==}
     engines: {node: '>=18'}
     hasBin: true
 
 snapshots:
 
-  '@pnpm/exe.android-arm64@12.16.1':
+  '@pnpm/exe.android-arm64@12.23.0':
     optional: true
 
-  '@pnpm/exe.android-x64@12.16.1':
+  '@pnpm/exe.android-x64@12.23.0':
     optional: true
 
-  '@pnpm/exe.darwin-arm64@12.16.1':
+  '@pnpm/exe.darwin-arm64@12.23.0':
     optional: true
 
-  '@pnpm/exe.darwin-x64@12.16.1':
+  '@pnpm/exe.darwin-x64@12.23.0':
     optional: true
 
-  '@pnpm/exe.freebsd-x64@12.16.1':
+  '@pnpm/exe.freebsd-x64@12.23.0':
     optional: true
 
-  '@pnpm/exe.linux-arm64-musl@12.16.1':
+  '@pnpm/exe.linux-arm64-musl@12.23.0':
     optional: true
 
-  '@pnpm/exe.linux-arm64@12.16.1':
+  '@pnpm/exe.linux-arm64@12.23.0':
     optional: true
 
-  '@pnpm/exe.linux-ppc64@12.16.1':
+  '@pnpm/exe.linux-loong64@12.23.0':
     optional: true
 
-  '@pnpm/exe.linux-riscv64@12.16.1':
+  '@pnpm/exe.linux-ppc64@12.23.0':
     optional: true
 
-  '@pnpm/exe.linux-s390x@12.16.1':
+  '@pnpm/exe.linux-riscv64@12.23.0':
     optional: true
 
-  '@pnpm/exe.linux-x64-musl@12.16.1':
+  '@pnpm/exe.linux-s390x@12.23.0':
     optional: true
 
-  '@pnpm/exe.linux-x64@12.16.1':
+  '@pnpm/exe.linux-x64-musl@12.23.0':
     optional: true
 
-  '@pnpm/exe.win32-arm64@12.16.1':
+  '@pnpm/exe.linux-x64@12.23.0':
     optional: true
 
-  '@pnpm/exe.win32-x64@12.16.1':
+  '@pnpm/exe.netbsd-x64@12.23.0':
     optional: true
 
-  pnpm@12.16.1:
+  '@pnpm/exe.win32-arm64@12.23.0':
+    optional: true
+
+  '@pnpm/exe.win32-x64@12.23.0':
+    optional: true
+
+  pnpm@12.23.0:
     optionalDependencies:
-      '@pnpm/exe.android-arm64': 12.16.1
-      '@pnpm/exe.android-x64': 12.16.1
-      '@pnpm/exe.darwin-arm64': 12.16.1
-      '@pnpm/exe.darwin-x64': 12.16.1
-      '@pnpm/exe.freebsd-x64': 12.16.1
-      '@pnpm/exe.linux-arm64': 12.16.1
-      '@pnpm/exe.linux-arm64-musl': 12.16.1
-      '@pnpm/exe.linux-ppc64': 12.16.1
-      '@pnpm/exe.linux-riscv64': 12.16.1
-      '@pnpm/exe.linux-s390x': 12.16.1
-      '@pnpm/exe.linux-x64': 12.16.1
-      '@pnpm/exe.linux-x64-musl': 12.16.1
-      '@pnpm/exe.win32-arm64': 12.16.1
-      '@pnpm/exe.win32-x64': 12.16.1
+      '@pnpm/exe.android-arm64': 12.23.0
+      '@pnpm/exe.android-x64': 12.23.0
+      '@pnpm/exe.darwin-arm64': 12.23.0
+      '@pnpm/exe.darwin-x64': 12.23.0
+      '@pnpm/exe.freebsd-x64': 12.23.0
+      '@pnpm/exe.linux-arm64': 12.23.0
+      '@pnpm/exe.linux-arm64-musl': 12.23.0
+      '@pnpm/exe.linux-loong64': 12.23.0
+      '@pnpm/exe.linux-ppc64': 12.23.0
+      '@pnpm/exe.linux-riscv64': 12.23.0
+      '@pnpm/exe.linux-s390x': 12.23.0
+      '@pnpm/exe.linux-x64': 12.23.0
+      '@pnpm/exe.linux-x64-musl': 12.23.0
+      '@pnpm/exe.netbsd-x64': 12.23.0
+      '@pnpm/exe.win32-arm64': 12.23.0
+      '@pnpm/exe.win32-x64': 12.23.0
 
 ---
 lockfileVersion: '9.0'
@@ -180,10 +199,10 @@ importers:
         version: 3.8.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       apify-cli:
         specifier: latest
-        version: 1.13.0(@types/node@26.6.6)(bare-buffer@3.7.3)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 1.14.0(@types/node@26.6.6)(bare-buffer@3.7.3)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       crawlee:
         specifier: ^3.18.2
-        version: 3.18.2(@types/node@26.6.6)(idcac-playwright@0.2.0)(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
+        version: 3.18.2(@types/node@26.6.6)(idcac-playwright@0.2.0)(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
       eslint:
         specifier: ^9.39.5
         version: 9.39.5(supports-color@8.1.1)
@@ -209,14 +228,14 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       playwright:
-        specifier: 1.64.1
-        version: 1.64.1
+        specifier: 1.65.1
+        version: 1.65.1
       prettier:
         specifier: ^3.10.1
         version: 3.10.1
       puppeteer:
-        specifier: 25.16.0
-        version: 25.16.0
+        specifier: 25.19.0
+        version: 25.19.0
       semver:
         specifier: ^7.8.6
         version: 7.8.6
@@ -1053,8 +1072,8 @@ packages:
     resolution: {integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
-  '@puppeteer/browsers@3.2.6':
-    resolution: {integrity: sha512-MJP29gVoHznmqmwhH1tlZqzfeQ3aylTpSSa6WKZXtkwYUH02i9imBmWGTyZrbnAou5paX78SE4jMAUqnEPf8ug==}
+  '@puppeteer/browsers@3.3.0':
+    resolution: {integrity: sha512-ZiOVHQ5KmsinwZJMwRc/a3xsGHbi9dRuAyf2gq4i9J5vRaI4r7SSIaJUniF1JVClG+qNoVdtBBWfL08N9Oib6g==}
     engines: {node: '>=22.12.0'}
     hasBin: true
     peerDependencies:
@@ -1073,22 +1092,22 @@ packages:
     resolution: {integrity: sha512-cvGzxbba6sav2zZkH8GPf2oGk9yYoD5qrNWdu9fRehifgnFZJMV+nuy2nON2roRO4yQQ+v7MK/Pktl/HgfsUXg==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
-  '@sapphire/duration@1.2.0':
-    resolution: {integrity: sha512-LxjOAFXz81WmrI8XX9YaVcAZDjQj/1p78lZCvkAWZB1nphOwz/D0dU3CBejmhOWx5dO5CszTkLJMNR0xuCK+Zg==}
-    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+  '@sapphire/duration@2.0.0':
+    resolution: {integrity: sha512-nkksFA1WSzdNcNoh05JCtwPcGbtU0lTZZGdbNgoEhX9xTC3svBEJJN881T+wFmB3RpnOONEcxp/6pv7el7dZyw==}
+    engines: {node: '>=v24.0.0', npm: '>=11.0.0'}
 
-  '@sapphire/result@2.8.0':
-    resolution: {integrity: sha512-693yWouX+hR9uJm1Jgq0uSSjbSD3UrblMaxiuGbHPjSwzLCSZTcm0h3kvdVhq3o/yl4+oeAWW3hiaJ0TELuRJQ==}
-    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+  '@sapphire/result@3.0.0':
+    resolution: {integrity: sha512-HIK0PwBYfM26CewxqAi61SI710HiRzEpYL9K1WPDKGyVyWrqm0rC2CDJUeSZQhXwTNaCqfLMvz5lvnyv+5wW+g==}
+    engines: {node: '>=v24.0.0', npm: '>=11.0.0'}
 
   '@sapphire/shapeshift@3.9.7':
     resolution: {integrity: sha512-4It2mxPSr4OGn4HSQWGmhFMsNFGfFVhWeRPCRwbH972Ek2pzfGRZtb0pJ4Ze6oIzcyh2jw7nUDa6qGlWofgd9g==}
     engines: {node: '>=v16'}
     deprecated: Shapeshift was created when other validation libraries had significant limitations in performance and error reporting. Those advantages have diminished as libraries such as Zod have become faster and improved their error messages, while also gaining broader environment support, a larger community, and custom error printers.
 
-  '@sapphire/timestamp@1.0.5':
-    resolution: {integrity: sha512-oNwWyNdbt5wm4aYZvlHl1+64U3g0xrFmRIHsnER7RgMxNnp/wmAE4yTK2oUHeadg3t4V9iYctPAQCF+aINke4g==}
-    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+  '@sapphire/timestamp@2.0.0':
+    resolution: {integrity: sha512-iM1W6KgxBQSHp/LLXv6bkLP+tqFJAl1KyueQuCcwKEHTMqhqqYpmkHthcvcy3L7toij55JaBOKJLSmT98Y6g8Q==}
+    engines: {node: '>=v24.0.0', npm: '>=11.0.0'}
 
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
@@ -1456,8 +1475,8 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  apify-cli@1.13.0:
-    resolution: {integrity: sha512-tM7LeMm9mUeVwuKupjLuyCDXLlXdD6Ya84wWtjxO/biUbWJ4XnRM8CoDG1HHJOdTJwycgkOxDUJT9MYmL2Xitw==}
+  apify-cli@1.14.0:
+    resolution: {integrity: sha512-zZ1DkBQuSmll6ru+B+naq0G3JlE/CuU4vmxfo/Ku67O6o+ADlhpcB/k+GcRcuS7V+ANHQ8NlBqEnqDH8Jam8FQ==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -1990,8 +2009,8 @@ packages:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
 
-  devtools-protocol@0.0.1704951:
-    resolution: {integrity: sha512-GQhQOs9u/Mvm1zMtJIH872JS4AskuZdUSsPNPk4ChahtWAUqgz6atEtIsMt+nO7MqF1Ic4HxII/k8Cu36JivNg==}
+  devtools-protocol@0.0.1724436:
+    resolution: {integrity: sha512-GcO1782pvzpmY4pQO1zjr8WZ95Wv8GodOs0v5J9QWwLGulTzfYIYECEd9iUsnqJmcehu+VMKxZquvjY8T2jhAA==}
 
   devtools-protocol@0.0.1751165:
     resolution: {integrity: sha512-c5uFkYZ3XwKtVUqJLv7UlQP1iH+UM3QDptFazl7OSoHYqwVBILbQzrtf5f4RxynQdX3Kk9ESW1bLlx3ke4YRrw==}
@@ -2650,9 +2669,9 @@ packages:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
 
-  indent-string@5.0.0:
-    resolution: {integrity: sha512-m6FAo/spmsW2Ab2fU35JTYwtOKa2yAwXSwgjSv1TJzh4Mh7mC3lzAOVLBprb72XsTrgkEIsl7YrFNAiDiRhIGg==}
-    engines: {node: '>=12'}
+  indent-string@6.0.0:
+    resolution: {integrity: sha512-ZMCYzmA/BncvpLUiwm2fWEpw885/IVMse/dB+VfxiRNmRWjO2Oj0BJYFhcT9ov5xbpYZwynBu3tl6RT5CJP2Ag==}
+    engines: {node: '>=22'}
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -3467,13 +3486,13 @@ packages:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
 
-  playwright-core@1.64.1:
-    resolution: {integrity: sha512-BC4s8y6SEVA6Q1rSxZTto8hI1KUI3xXlHGZgvGqP4IqPdI/a6FX9H29IDNz7vKo9l21b6LfYosScPL6M3xxyDQ==}
+  playwright-core@1.65.1:
+    resolution: {integrity: sha512-hqPpz7blSMPxWVdoeE1yiBSzXsKiVOd2k+kjCvmUywD2GPO2Dd9HfcWnq9NN0GHbNZDFgZ9JfBFr+X5/BLo0qw==}
     engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.64.1:
-    resolution: {integrity: sha512-HCrVhHr5QQuwYoswEUGTb7gGp522yflbv/ST8nF4sFWGuLjQCt17Q/EubpGGSNKYn1tsTCPZxqHhHCfVURu7UA==}
+  playwright@1.65.1:
+    resolution: {integrity: sha512-vJ1FuoOrNwOKHUIVEvSt3jT1L+wjjDpwhwIstKtfvTh8XIG4FG4bIFuvNdMxi81LGfAhUgUZleVFaOLY4RIUUw==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -3531,12 +3550,12 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  puppeteer-core@25.16.0:
-    resolution: {integrity: sha512-VA5Pf54N8shfopNkZZXCdiiwfnnY8ZJYAMqFQRhlH5mGUhfwf53Ar770GPtdpTDLUqvQeYpIBtC9/G2Jij2IJw==}
+  puppeteer-core@25.19.0:
+    resolution: {integrity: sha512-F4pw8kpSczJS3TCHBw7/qskDxv4cMj09oOv7BwhHGYOerxLF1Sk2t4tpWlLvy6Vx/mM6TuqkDj4j0j3PRN1FiA==}
     engines: {node: '>=22.12.0'}
 
-  puppeteer@25.16.0:
-    resolution: {integrity: sha512-LOr3reYnxAYYfQkpopz1fQnL0LdvqhpR5U2Fu+QnwzTX2gpVTHsn91UETo5NNC1md2/oC54Zu1ChBXgZDNSP1A==}
+  puppeteer@25.19.0:
+    resolution: {integrity: sha512-38yJg6bAi6TOfQr/UTKllIVfm5zMWxBzURETCF3mzSylKQr9yUMyLz7YMl2yJCgfkJfhRl+j0qeKtm++X4J68w==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
@@ -3821,6 +3840,10 @@ packages:
     resolution: {integrity: sha512-ZbmZM0JCihQN91dWnxoipT2KOEyHqEyfRXUyjuRhW8b/xnqPDoq4gWEVApTVa9db2wN8mmoikgFBbjh71+cGeQ==}
     engines: {node: '>=20'}
 
+  string-width@9.0.0:
+    resolution: {integrity: sha512-2MOboAIRIszVGZVPA2Zqwj0ujd0o+xAZ5y2ft4OcD4kuVQ4phZxq0Sv7YTY8yaDA2CSMXch1EWTkJw+tTJZTzA==}
+    engines: {node: '>=22'}
+
   string.prototype.trim@1.2.11:
     resolution: {integrity: sha512-PwvK7BU+CMTJGYQCTZb5RWXIML92lftJLhQz1tBzgKiqGxJaMlBAa48POXaNAC2s4y8jr3EFqrkF9+44neS46w==}
     engines: {node: '>= 0.4'}
@@ -4087,8 +4110,8 @@ packages:
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
 
-  webdriver-bidi-protocol@1.0.1:
-    resolution: {integrity: sha512-WXWs/aXF2a6Al1Z2/V/7Gp2oPZOAAmHjJOTmv4KCXRJ122IMj3tSSMc6a4q3K4QOmhQbse/Ahr+oTVJOU2dUiw==}
+  webdriver-bidi-protocol@1.0.2:
+    resolution: {integrity: sha512-nghazPI+J5RrLZ+qb6vMjC6l1/tnwqr2muVEax4Ufd6eIdcjeqNnhLsAxTG9s+7Zf4umgf0DrEwDC8CoU91nAA==}
 
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
@@ -4564,14 +4587,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@crawlee/browser-pool@3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)':
+  '@crawlee/browser-pool@3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)':
     dependencies:
       '@apify/log': 2.5.54
       '@apify/timeout': 0.4.14
       '@crawlee/core': 3.18.2(supports-color@8.1.1)
       '@crawlee/types': 3.18.2
       fingerprint-generator: 2.1.90
-      fingerprint-injector: 2.1.90(playwright@1.64.1)(puppeteer@25.16.0)
+      fingerprint-injector: 2.1.90(playwright@1.65.1)(puppeteer@25.19.0)
       lodash.merge: 4.6.2
       nanoid: 3.3.20
       ow: 0.28.2
@@ -4581,24 +4604,24 @@ snapshots:
       tiny-typed-emitter: 2.1.0
       tslib: 2.9.1
     optionalDependencies:
-      playwright: 1.64.1
-      puppeteer: 25.16.0
+      playwright: 1.65.1
+      puppeteer: 25.19.0
     transitivePeerDependencies:
       - supports-color
 
-  '@crawlee/browser@3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)':
+  '@crawlee/browser@3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)':
     dependencies:
       '@apify/timeout': 0.4.14
       '@crawlee/basic': 3.18.2(supports-color@8.1.1)
-      '@crawlee/browser-pool': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
+      '@crawlee/browser-pool': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
       '@crawlee/types': 3.18.2
       '@crawlee/utils': 3.18.2(supports-color@8.1.1)
       ow: 0.28.2
       tslib: 2.9.1
       type-fest: 4.41.0
     optionalDependencies:
-      playwright: 1.64.1
-      puppeteer: 25.16.0
+      playwright: 1.65.1
+      puppeteer: 25.19.0
     transitivePeerDependencies:
       - supports-color
 
@@ -4720,13 +4743,13 @@ snapshots:
       proper-lockfile: 4.1.2
       tslib: 2.9.1
 
-  '@crawlee/playwright@3.18.2(idcac-playwright@0.2.0)(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)':
+  '@crawlee/playwright@3.18.2(idcac-playwright@0.2.0)(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)':
     dependencies:
       '@apify/datastructures': 2.0.6
       '@apify/log': 2.5.54
       '@apify/timeout': 0.4.14
-      '@crawlee/browser': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
-      '@crawlee/browser-pool': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
+      '@crawlee/browser': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
+      '@crawlee/browser-pool': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
       '@crawlee/core': 3.18.2(supports-color@8.1.1)
       '@crawlee/types': 3.18.2
       '@crawlee/utils': 3.18.2(supports-color@8.1.1)
@@ -4741,17 +4764,17 @@ snapshots:
       type-fest: 4.41.0
     optionalDependencies:
       idcac-playwright: 0.2.0
-      playwright: 1.64.1
+      playwright: 1.65.1
     transitivePeerDependencies:
       - puppeteer
       - supports-color
 
-  '@crawlee/puppeteer@3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)':
+  '@crawlee/puppeteer@3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)':
     dependencies:
       '@apify/datastructures': 2.0.6
       '@apify/log': 2.5.54
-      '@crawlee/browser': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
-      '@crawlee/browser-pool': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
+      '@crawlee/browser': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
+      '@crawlee/browser-pool': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
       '@crawlee/types': 3.18.2
       '@crawlee/utils': 3.18.2(supports-color@8.1.1)
       cheerio: 1.0.0-rc.12
@@ -4761,7 +4784,7 @@ snapshots:
       ow: 0.28.2
       tslib: 2.9.1
     optionalDependencies:
-      puppeteer: 25.16.0
+      puppeteer: 25.19.0
     transitivePeerDependencies:
       - playwright
       - supports-color
@@ -5290,7 +5313,7 @@ snapshots:
 
   '@pkgr/core@0.3.6': {}
 
-  '@puppeteer/browsers@3.2.6':
+  '@puppeteer/browsers@3.3.0':
     dependencies:
       modern-tar: 0.8.6
       yargs: 18.2.0
@@ -5299,16 +5322,16 @@ snapshots:
 
   '@sapphire/async-queue@1.5.5': {}
 
-  '@sapphire/duration@1.2.0': {}
+  '@sapphire/duration@2.0.0': {}
 
-  '@sapphire/result@2.8.0': {}
+  '@sapphire/result@3.0.0': {}
 
   '@sapphire/shapeshift@3.9.7':
     dependencies:
       fast-deep-equal: 3.1.3
       lodash: 4.18.1
 
-  '@sapphire/timestamp@1.0.5': {}
+  '@sapphire/timestamp@2.0.0': {}
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -5642,7 +5665,7 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.2
 
-  apify-cli@1.13.0(@types/node@26.6.6)(bare-buffer@3.7.3)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+  apify-cli@1.14.0(@types/node@26.6.6)(bare-buffer@3.7.3)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@apify/actor-memory-expression': 1.0.3
       '@apify/actor-templates': 0.1.5
@@ -5658,9 +5681,9 @@ snapshots:
       '@inquirer/select': 5.3.1(@types/node@26.6.6)
       '@napi-rs/keyring': 2.1.2
       '@root/walk': 1.1.0
-      '@sapphire/duration': 1.2.0
-      '@sapphire/result': 2.8.0
-      '@sapphire/timestamp': 1.0.5
+      '@sapphire/duration': 2.0.0
+      '@sapphire/result': 3.0.0
+      '@sapphire/timestamp': 2.0.0
       '@skyra/jaro-winkler': 1.1.1
       adm-zip: 0.6.1
       ajv: 8.20.0
@@ -5678,7 +5701,7 @@ snapshots:
       giget: 3.3.1
       handlebars: 4.7.10
       ignore: 7.0.16
-      indent-string: 5.0.0
+      indent-string: 6.0.0
       istextorbinary: 9.5.0
       jju: 1.4.0
       js-levenshtein: 1.1.6
@@ -5686,7 +5709,7 @@ snapshots:
       mime: 4.1.2
       open: 11.0.4
       semver: 7.8.6
-      string-width: 8.3.0
+      string-width: 9.0.0
       strip-ansi: 7.2.0
       tinyglobby: 0.2.17
       which: 7.0.0
@@ -6051,9 +6074,9 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
 
-  chromium-bidi@157.0.8090-0(devtools-protocol@0.0.1704951):
+  chromium-bidi@157.0.8090-0(devtools-protocol@0.0.1724436):
     dependencies:
-      devtools-protocol: 0.0.1704951
+      devtools-protocol: 0.0.1724436
       mitt: 3.0.1
       zod: 4.6.7
 
@@ -6137,11 +6160,11 @@ snapshots:
 
   countries-list@3.4.1: {}
 
-  crawlee@3.18.2(@types/node@26.6.6)(idcac-playwright@0.2.0)(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1):
+  crawlee@3.18.2(@types/node@26.6.6)(idcac-playwright@0.2.0)(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1):
     dependencies:
       '@crawlee/basic': 3.18.2(supports-color@8.1.1)
-      '@crawlee/browser': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
-      '@crawlee/browser-pool': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
+      '@crawlee/browser': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
+      '@crawlee/browser-pool': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
       '@crawlee/cheerio': 3.18.2(supports-color@8.1.1)
       '@crawlee/cli': 3.18.2(@types/node@26.6.6)
       '@crawlee/core': 3.18.2(supports-color@8.1.1)
@@ -6149,15 +6172,15 @@ snapshots:
       '@crawlee/jsdom': 3.18.2(supports-color@8.1.1)
       '@crawlee/linkedom': 3.18.2(supports-color@8.1.1)
       '@crawlee/memory-storage': 3.18.2
-      '@crawlee/playwright': 3.18.2(idcac-playwright@0.2.0)(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
-      '@crawlee/puppeteer': 3.18.2(playwright@1.64.1)(puppeteer@25.16.0)(supports-color@8.1.1)
+      '@crawlee/playwright': 3.18.2(idcac-playwright@0.2.0)(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
+      '@crawlee/puppeteer': 3.18.2(playwright@1.65.1)(puppeteer@25.19.0)(supports-color@8.1.1)
       '@crawlee/utils': 3.18.2(supports-color@8.1.1)
       import-local: 3.2.0
       tslib: 2.9.1
     optionalDependencies:
       idcac-playwright: 0.2.0
-      playwright: 1.64.1
-      puppeteer: 25.16.0
+      playwright: 1.65.1
+      puppeteer: 25.19.0
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -6295,7 +6318,7 @@ snapshots:
 
   detect-newline@3.1.0: {}
 
-  devtools-protocol@0.0.1704951: {}
+  devtools-protocol@0.0.1724436: {}
 
   devtools-protocol@0.0.1751165: {}
 
@@ -6763,13 +6786,13 @@ snapshots:
       header-generator: 2.1.90
       tslib: 2.9.1
 
-  fingerprint-injector@2.1.90(playwright@1.64.1)(puppeteer@25.16.0):
+  fingerprint-injector@2.1.90(playwright@1.65.1)(puppeteer@25.19.0):
     dependencies:
       fingerprint-generator: 2.1.90
       tslib: 2.9.1
     optionalDependencies:
-      playwright: 1.64.1
-      puppeteer: 25.16.0
+      playwright: 1.65.1
+      puppeteer: 25.19.0
 
   flat-cache@4.0.1:
     dependencies:
@@ -7091,7 +7114,7 @@ snapshots:
 
   imurmurhash@0.1.4: {}
 
-  indent-string@5.0.0: {}
+  indent-string@6.0.0: {}
 
   inherits@2.0.4: {}
 
@@ -8116,11 +8139,11 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
-  playwright-core@1.64.1: {}
+  playwright-core@1.65.1: {}
 
-  playwright@1.64.1:
+  playwright@1.65.1:
     dependencies:
-      playwright-core: 1.64.1
+      playwright-core: 1.65.1
 
   possible-typed-array-names@1.1.0: {}
 
@@ -8178,13 +8201,13 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@25.16.0:
+  puppeteer-core@25.19.0:
     dependencies:
-      '@puppeteer/browsers': 3.2.6
-      chromium-bidi: 157.0.8090-0(devtools-protocol@0.0.1704951)
-      devtools-protocol: 0.0.1704951
+      '@puppeteer/browsers': 3.3.0
+      chromium-bidi: 157.0.8090-0(devtools-protocol@0.0.1724436)
+      devtools-protocol: 0.0.1724436
       typed-query-selector: 2.12.4
-      webdriver-bidi-protocol: 1.0.1
+      webdriver-bidi-protocol: 1.0.2
       ws: 8.23.0
     transitivePeerDependencies:
       - bufferutil
@@ -8192,13 +8215,13 @@ snapshots:
       - utf-8-validate
       - yauzl
 
-  puppeteer@25.16.0:
+  puppeteer@25.19.0:
     dependencies:
-      '@puppeteer/browsers': 3.2.6
-      chromium-bidi: 157.0.8090-0(devtools-protocol@0.0.1704951)
-      devtools-protocol: 0.0.1704951
+      '@puppeteer/browsers': 3.3.0
+      chromium-bidi: 157.0.8090-0(devtools-protocol@0.0.1724436)
+      devtools-protocol: 0.0.1724436
       lilconfig: 3.1.5
-      puppeteer-core: 25.16.0
+      puppeteer-core: 25.19.0
       typed-query-selector: 2.12.4
     transitivePeerDependencies:
       - bufferutil
@@ -8508,6 +8531,11 @@ snapshots:
       get-east-asian-width: 1.7.0
       strip-ansi: 7.2.0
 
+  string-width@9.0.0:
+    dependencies:
+      get-east-asian-width: 1.7.0
+      strip-ansi: 7.2.0
+
   string.prototype.trim@1.2.11:
     dependencies:
       call-bind: 1.0.9
@@ -8807,7 +8835,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  webdriver-bidi-protocol@1.0.1: {}
+  webdriver-bidi-protocol@1.0.2: {}
 
   webidl-conversions@7.0.0: {}
 
