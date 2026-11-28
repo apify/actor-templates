@@ -1,6 +1,6 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://hub.docker.com/_/rust
-FROM rust:1-slim-bookworm AS builder
+FROM rust:1-slim-trixie AS builder
 WORKDIR /usr/src/app
 
 # Copy just Cargo.toml and Cargo.lock and build the dependencies first,
@@ -16,7 +16,7 @@ COPY src ./src
 RUN touch src/main.rs && cargo build --release --locked
 
 # Create final image
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 # Install root certificates for HTTPS.
 RUN apt-get update \
