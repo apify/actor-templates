@@ -1,6 +1,6 @@
 # Specify the base Docker image. You can read more about
 # the available images at https://hub.docker.com/_/rust
-FROM rust:1-slim-bookworm AS builder
+FROM rust:1-slim-trixie AS builder
 WORKDIR /usr/src/app
 
 # Copy just Cargo.toml and Cargo.lock and build the dependencies first,
@@ -15,8 +15,9 @@ RUN mkdir src && echo 'fn main() {}' > src/main.rs \
 COPY src ./src
 RUN touch src/main.rs && cargo build --release --locked
 
-# Create final image
-FROM debian:bookworm-slim
+# Create final image.
+# We use `debian:trixie-slim` because it is the base of the Apify Python and Node.js images, so it is often cached on the platform.
+FROM debian:trixie-slim
 
 # Install root certificates for HTTPS.
 RUN apt-get update \
